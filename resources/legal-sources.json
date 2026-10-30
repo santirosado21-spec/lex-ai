@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "description": "Fuentes oficiales acotadas para descarga de copias en cuarentena. La disponibilidad no acredita vigencia jurídica.",
+  "sources": [
+    {"id":"ccf","prefix":"MX-CCF","title":"Código Civil Federal","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Civil","Comercial"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf","articles":[1796,1797,1832]},
+    {"id":"cpeum","prefix":"MX-CPEUM","title":"Constitución Política de los Estados Unidos Mexicanos","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Constitucional"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf","articles":[1,14,16,17]},
+    {"id":"ccom","prefix":"MX-CCOM","title":"Código de Comercio","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Comercial"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf","articles":[1,2,78]},
+    {"id":"lft","prefix":"MX-LFT","title":"Ley Federal del Trabajo","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Laboral"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf","articles":[20,21,24]},
+    {"id":"lfpc","prefix":"MX-LFPC","title":"Ley Federal de Protección al Consumidor","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Consumo","Comercial"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf","articles":[7,10,85]},
+    {"id":"lfda","prefix":"MX-LFDA","title":"Ley Federal del Derecho de Autor","authority":"Cámara de Diputados del H. Congreso de la Unión","jurisdiction":"MX-FED","practiceAreas":["Propiedad intelectual"],"url":"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf","articles":[11,12,14]},
+    {"id":"cdmx","prefix":"MX-CMX-CC","title":"Código Civil para el Distrito Federal","authority":"Congreso de la Ciudad de México","jurisdiction":"MX-CMX","practiceAreas":["Civil","Comercial"],"url":"https://www.congresocdmx.gob.mx/archivo-750c763f50e26a46afd73e40dca4c4bc8a4cb741.pdf","articles":[1796,1797,1832],"editorialWarning":"La copia inicial contiene texto ajeno en portada; no se considera certificación de vigencia."}
+  ]
+}

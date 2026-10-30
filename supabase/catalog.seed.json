@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "publicationState": "offline-draft-unpublished",
+  "app_releases": [
+    {
+      "id": "lex-ai-0.3.0-macos-arm64",
+      "version": "0.3.0",
+      "artifact_sha256": "58de3bfc32119f1fbf00db90c34b1770f2db94d31ff7889d15e64c8e56d5d83d",
+      "artifact_bytes": 372979191,
+      "download_url": null,
+      "release_status": "experimental",
+      "legal_status": "not-validated",
+      "published": false,
+      "released_at": "2026-10-30T14:57:07.325452+00:00",
+      "platform": "macos",
+      "architecture": "arm64",
+      "default_model_replaced": false
+    }
+  ],
+  "model_releases": [
+    {
+      "id": "lex-gemma4-v2-r2",
+      "version": "v2-r2",
+      "artifact_sha256": "2b172c99001ab5de8e28ff9d469e0655101b559bcd36464ec2a4b364f84a558b",
+      "artifact_bytes": 14372300800,
+      "download_url": null,
+      "release_status": "experimental",
+      "legal_status": "not-validated",
+      "published": false,
+      "released_at": "2026-10-30T14:57:07.325452+00:00",
+      "model_name": "LEX Gemma 4 experimental v2-r2",
+      "base_model": "Gemma 4 26B-A4B IT",
+      "training_steps": 400,
+      "behavior_cases": 32,
+      "behavior_scope": "Technical behavior checks on synthetic held-out cases; not legal accuracy, generalization or professional validation.",
+      "installation": "manual-separate-ollama-import",
+      "is_default": false
+    }
+  ],
+  "legal_library_snapshots": [
+    {
+      "id": "lex-public-library-v2",
+      "version": "v2",
+      "artifact_sha256": "ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588",
+      "artifact_bytes": 153014272,
+      "download_url": null,
+      "release_status": "experimental",
+      "legal_status": "not-validated",
+      "published": false,
+      "released_at": "2026-10-30T14:57:07.325452+00:00",
+      "corpus_sha256": "e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11",
+      "instruments": 303,
+      "articles": 35452,
+      "sample_audit_cases": 910,
+      "currentness": "unverified",
+      "coverage_scope": "Conservative public source subset: 303 instruments and 35,452 articles. Sample fidelity audit only; no complete coverage or current-law guarantee."
+    }
+  ]
+}

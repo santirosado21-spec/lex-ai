@@ -1,0 +1,12 @@
+{
+  "id": "gemma4:26b-a4b",
+  "label": "Gemma 4 26B-A4B",
+  "manifestDigest": "48eb98ec778c163d87f69d735fcdd79e345063af9af4685613fd018ae5debf5e",
+  "minMemoryGB": 24,
+  "downloadGB": 16,
+  "license": "Apache-2.0",
+  "licenseUrl": "https://ai.google.dev/gemma/apache_2",
+  "platform": "darwin",
+  "arch": "arm64",
+  "contextLength": 8192
+}

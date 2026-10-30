@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "product": "LEX AI",
+  "version": "0.3.1",
+  "releaseStatus": "experimental",
+  "platform": "macOS Apple Silicon",
+  "unifiedMemoryGB": 24,
+  "initialBaseModelFreeDiskGB": 20,
+  "notarized": false,
+  "signing": "ad-hoc",
+  "publicDownloadUrl": null,
+  "defaultModel": "Gemma base",
+  "trainedCandidate": {
+    "name": "Gemma 4 26B-A4B experimental v2",
+    "trainingSteps": 400,
+    "technicalCasesPassed": 32,
+    "technicalCasesEvaluated": 32,
+    "syntheticWorkflowPassed": true,
+    "professionalLegalValidation": false,
+    "distribution": "separate manual import",
+    "selectedByDefault": false
+  },
+  "publicCorpus": {
+    "snapshotDate": "2026-10-30",
+    "articles": 35452,
+    "instruments": 303,
+    "independentlyCheckedSamples": 910,
+    "exhaustiveReview": false,
+    "currentLawGuaranteed": false
+  },
+  "site": {
+    "acceptsDocuments": false,
+    "modelExecution": false,
+    "analytics": false,
+    "remoteCatalogueConfigured": false
+  }
+}

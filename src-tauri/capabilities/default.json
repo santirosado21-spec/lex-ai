@@ -1,0 +1,1 @@
+{"identifier":"main","description":"Only core window functionality; no filesystem, shell or remote command permissions.","windows":["main"],"permissions":["core:default"]}

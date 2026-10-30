@@ -1,0 +1,27 @@
+{
+  "source": {
+    "path": "artifacts/release-0.3.0.json",
+    "sha256": "5ea941ce948d42f2cfb177a88c67dae36f2b217e8db4deb17fcde321471b87fc"
+  },
+  "release": {
+    "applicationVersion": "0.3.0",
+    "releaseStatus": "experimental",
+    "legalAccuracy": "not-evaluated",
+    "artifacts": [
+      {
+        "file": "artifacts/LEX-Gemma4-Experimental-v2.tar",
+        "bytes": 14372300800,
+        "sha256": "2b172c99001ab5de8e28ff9d469e0655101b559bcd36464ec2a4b364f84a558b"
+      },
+      {
+        "file": "artifacts/LEX-AI-0.3.0-arm64.dmg",
+        "bytes": 372979191,
+        "sha256": "58de3bfc32119f1fbf00db90c34b1770f2db94d31ff7889d15e64c8e56d5d83d"
+      }
+    ],
+    "model": {
+      "steps": 400,
+      "behaviorCases": 32
+    }
+  }
+}

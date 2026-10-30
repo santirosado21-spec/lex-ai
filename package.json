@@ -1,0 +1,47 @@
+{
+  "name": "lex-ai",
+  "version": "0.3.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "node scripts/e2e.mjs",
+    "desktop": "tauri dev",
+    "desktop:build": "npm run build && node scripts/prepare-desktop.mjs && tauri build --bundles app",
+    "server": "node server/main.mjs",
+    "test:ui": "node scripts/ui-smoke.mjs",
+    "sources:sync": "node scripts/legal-sync.mjs --once",
+    "sources:discover": "node scripts/discover-legal-repos.mjs",
+    "watch:start": "node scripts/night-watch-control.mjs start",
+    "watch:status": "node scripts/night-watch-control.mjs status",
+    "watch:stop": "node scripts/night-watch-control.mjs stop",
+    "watch:unload": "node scripts/night-watch-control.mjs unload"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/source-serif-4": "^5.3.1",
+    "@tauri-apps/api": "^2.0.0",
+    "docx": "^9.0.0",
+    "lucide-react": "^0.468.0",
+    "mammoth": "^1.8.0",
+    "pdf-parse": "1.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "yauzl": "^3.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

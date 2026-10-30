@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LEX AI es un espacio jurídico local para Mac. Organiza expedientes, consulta pasajes y comprueba citas contra sus fuentes. Versión experimental para Apple Silicon.">
+  <meta name="theme-color" content="#f5f5f4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LEX AI — Cada respuesta, con el pasaje que la sostiene.">
+  <meta property="og:description" content="Un espacio de trabajo jurídico en tu Mac. Documentos, búsqueda e inferencia local, con fuentes a la vista.">
+  <title>LEX AI — El expediente, con sus fuentes a la vista</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/source-serif-4-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header shell">
+    <a class="wordmark" href="#inicio" aria-label="LEX AI, inicio">LEX<span>AI</span></a>
+    <nav aria-label="Navegación principal">
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#local">En tu Mac</a>
+      <a href="#requisitos">Requisitos</a>
+    </nav>
+    <a class="header-release" href="#version">Versión experimental <span class="status-dot" aria-hidden="true"></span></a>
+  </header>
+  <main id="contenido">
+    <section class="hero shell" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-photo">
+        <img src="assets/lex-cover.webp" width="1536" height="1024" alt="Expediente de papel cosido con hilo sobre piedra oscura" fetchpriority="high">
+        <span class="photo-caption">El expediente como punto de partida.</span>
+      </div>
+      <div class="hero-copy">
+        <h1 id="hero-title">Cada respuesta,<br>con el pasaje<br>que la sostiene.<a class="footnote-link" href="#nota-verificacion" aria-label="Leer nota 1 sobre verificación textual">¹</a></h1>
+        <p class="hero-description">Ordena tus expedientes en tu Mac, encuentra los pasajes relevantes y trabaja con respuestas cuyas citas puedes comprobar en la fuente.</p>
+        <a class="button button-primary" href="#como-funciona">Ver cómo funciona</a>
+        <p class="hero-local"><span class="local-symbol" aria-hidden="true"></span>Documentos y modelo, en tu equipo.</p>
+      </div>
+      <div class="hero-preview" aria-label="Ejemplo sintético de respuesta vinculada a su fuente">
+        <div class="preview-heading"><span>Expediente de ejemplo con datos ficticios</span><span class="folio">Folio 01</span></div>
+        <div class="preview-pair">
+          <div class="preview-answer">
+            <span class="document-label">Nota de revisión</span>
+            <p>El documento prevé conservar una constancia de recepción.<a class="citation-link" href="#pasaje-ejemplo" aria-describedby="pasaje-ejemplo">[D1]</a></p>
+            <span class="verified"><span aria-hidden="true">✓</span> Cita localizada en la fuente</span>
+          </div>
+          <div class="verification-bridge" aria-hidden="true"><span></span></div>
+          <div class="preview-source" id="pasaje-ejemplo" tabindex="-1">
+            <span class="document-label">Documento interno · Pasaje D1</span>
+            <blockquote><mark>«La recepción del inventario se documentará mediante una constancia escrita.»</mark></blockquote>
+          </div>
+        </div>
+      </div>
+      <p class="verification-note" id="nota-verificacion"><span>1</span> La verificación textual comprueba la cita contra el pasaje aportado. No acredita que la conclusión sea correcta ni sustituye la revisión de un abogado.</p>
+    </section>
+
+    <section class="workflow section shell" id="como-funciona" aria-labelledby="workflow-title">
+      <div class="section-heading"><h2 id="workflow-title">Del documento<br>al pasaje comprobable.</h2><p>Un recorrido que mantiene la fuente cerca de lo que escribes.</p></div>
+      <div class="workflow-layout">
+        <div class="workflow-tabs" role="tablist" aria-label="Pasos del trabajo con un expediente" aria-orientation="vertical">
+          <button class="workflow-tab" id="tab-importar" role="tab" aria-selected="true" aria-controls="panel-importar" tabindex="0"><span class="step-number">1</span><span>Importar<small>Abre un expediente.</small></span></button>
+          <button class="workflow-tab" id="tab-recuperar" role="tab" aria-selected="false" aria-controls="panel-recuperar" tabindex="-1"><span class="step-number">2</span><span>Recuperar pasajes<small>Busca dentro del asunto.</small></span></button>
+          <button class="workflow-tab" id="tab-responder" role="tab" aria-selected="false" aria-controls="panel-responder" tabindex="-1"><span class="step-number">3</span><span>Responder<small>Trabaja con evidencia.</small></span></button>
+          <button class="workflow-tab" id="tab-verificar" role="tab" aria-selected="false" aria-controls="panel-verificar" tabindex="-1"><span class="step-number">4</span><span>Verificar la cita<small>Vuelve al texto original.</small></span></button>
+          <button class="workflow-tab" id="tab-exportar" role="tab" aria-selected="false" aria-controls="panel-exportar" tabindex="-1"><span class="step-number">5</span><span>Exportar a DOCX<small>Continúa la revisión.</small></span></button>
+        </div>
+        <div class="workflow-preview">
+          <div class="workspace-bar"><span class="workspace-mark">LEX</span><span>Despacho de ejemplo / Asunto de práctica</span><span class="workspace-local">Local</span></div>
+          <div class="workflow-panel" id="panel-importar" role="tabpanel" aria-labelledby="tab-importar" tabindex="0">
+            <div class="panel-kicker">Documentos del asunto</div><h3>Todo empieza<br>con un documento.</h3><p>Incorpora archivos TXT, Markdown, PDF o DOCX al asunto que estás revisando.</p>
+            <div class="file-row"><span class="file-icon" aria-hidden="true">↳</span><div><strong>Acuerdo de práctica.docx</strong><span>Datos ficticios · Documento interno</span></div><span class="file-state">Importado</span></div>
+            <div class="file-row muted-file"><span class="file-icon" aria-hidden="true">↳</span><div><strong>Anexo de inventario.pdf</strong><span>Datos ficticios · Documento interno</span></div><span class="file-state">Importado</span></div>
+            <p class="panel-note">Esta es una demostración. No se suben archivos desde este sitio.</p>
+          </div>
+          <div class="workflow-panel" id="panel-recuperar" role="tabpanel" aria-labelledby="tab-recuperar" tabindex="0" hidden>
+            <div class="panel-kicker">Búsqueda en el asunto</div><h3>Encuentra el pasaje,<br>con su contexto.</h3><p>Consulta documentos internos y distingue las fuentes públicas aportadas al análisis.</p>
+            <div class="sample-query"><span aria-hidden="true">⌕</span> ¿Cómo se documenta la recepción?</div>
+            <div class="passage-result"><span class="document-label">D1 · Acuerdo de práctica</span><p>La recepción del inventario se documentará mediante una <mark>constancia escrita</mark>.</p><span class="result-origin">Documento del asunto seleccionado</span></div>
+            <p class="panel-note">La búsqueda se limita al contexto autorizado del despacho y el asunto.</p>
+          </div>
+          <div class="workflow-panel" id="panel-responder" role="tabpanel" aria-labelledby="tab-responder" tabindex="0" hidden>
+            <div class="panel-kicker">Borrador para revisar</div><h3>Una respuesta<br>con referencias visibles.</h3><p>El modelo local redacta a partir de los pasajes que recibe. Sus conclusiones necesitan revisión profesional.</p>
+            <div class="answer-sheet"><span class="document-label">Análisis del ejemplo</span><p>El pasaje prevé documentar la recepción mediante una constancia escrita. <span class="inline-cite">[D1]</span></p><p>Para revisar el alcance de esa constancia, consulta el documento completo. <span class="inline-cite">[D1]</span></p></div>
+          </div>
+          <div class="workflow-panel" id="panel-verificar" role="tabpanel" aria-labelledby="tab-verificar" tabindex="0" hidden>
+            <div class="panel-kicker">Comprobación de fuente</div><h3>La cita debe volver<br>al documento.</h3><p>Se comprueba que el identificador pertenezca a la evidencia y que la cita aparezca en su texto.</p>
+            <div class="passage-result verified-passage"><span class="verified">✓ Pasaje localizado</span><blockquote>«La recepción del inventario se documentará mediante una constancia escrita.»</blockquote><span class="document-label">D1 · Acuerdo de práctica.docx</span></div>
+            <p class="panel-note">Si la referencia no se puede comprobar, el análisis se rechaza. Una cita correcta no garantiza una conclusión correcta.</p>
+          </div>
+          <div class="workflow-panel" id="panel-exportar" role="tabpanel" aria-labelledby="tab-exportar" tabindex="0" hidden>
+            <div class="panel-kicker">Documento de trabajo</div><h3>La revisión continúa<br>fuera de LEX.</h3><p>Exporta el análisis y sus referencias a DOCX para seguir trabajando en tu editor.</p>
+            <div class="export-preview"><span class="export-file" aria-hidden="true">W</span><div><strong>Nota de revisión.docx</strong><span>Análisis y referencias del expediente</span></div></div>
+            <p class="panel-note">El documento es un borrador sujeto a revisión. Exportarlo no lo convierte en una opinión jurídica validada.</p>
+          </div>
+          <div class="workspace-footer"><span class="status-dot" aria-hidden="true"></span> Vista ilustrativa con datos ficticios. No ejecuta el modelo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities section shell" aria-labelledby="capabilities-title">
+      <div class="capabilities-heading"><h2 id="capabilities-title">Un lugar para trabajar<br>el expediente.</h2><p class="margin-note">Para la práctica jurídica en México.<br>El asunto define el trabajo, no una sola especialidad.</p></div>
+      <dl class="capability-list">
+        <div><dt>Despachos y asuntos</dt><dd>Organiza documentos y notas dentro de su contexto de trabajo.</dd></div>
+        <div><dt>Lectura y búsqueda</dt><dd>Localiza pasajes, consulta su fuente y conserva la distinción entre documento interno y legislación.</dd></div>
+        <div><dt>Respuestas con citas</dt><dd>Comprueba las referencias textuales antes de guardar un análisis.</dd></div>
+        <div><dt>Documentos de trabajo</dt><dd>Lleva el análisis a DOCX para editar, comentar y revisar.</dd></div>
+        <div><dt>Notas y retroalimentación</dt><dd>Registra observaciones. Los cambios de aprendizaje requieren evaluación y aprobación; no se activan solos.</dd></div>
+      </dl>
+    </section>
+
+    <section class="local-section section" id="local" aria-labelledby="local-title"><div class="shell local-layout">
+      <div><h2 id="local-title">El trabajo vive<br>en tu Mac.</h2><p>Después de preparar el modelo y los archivos, la búsqueda y la inferencia funcionan localmente.</p><p class="local-detail">La conexión se utiliza para la preparación inicial y para obtener fuentes públicas cuando se solicita una actualización.</p><button class="text-button" type="button" data-open-privacy>Leer cómo se tratan los datos</button></div>
+      <div class="local-diagram" role="img" aria-label="En tu Mac se encuentran los documentos, el índice de búsqueda y el modelo. Separado de ellos, este sitio muestra únicamente información pública del producto.">
+        <div class="mac-boundary"><div class="diagram-title"><span class="local-symbol" aria-hidden="true"></span> Tu Mac</div><div class="local-components"><span>Documentos<small>Despacho y asunto</small></span><span>Índice de búsqueda<small>Pasajes locales</small></span><span>Modelo<small>Inferencia en el equipo</small></span></div><p>El expediente no pasa por este sitio.</p></div>
+        <div class="public-site"><span class="public-site-symbol" aria-hidden="true">◎</span><div>Este sitio web<small>Información pública y requisitos</small></div><span class="separate-label">Separado</span></div>
+      </div>
+    </div></section>
+
+    <section class="corpus section shell" aria-labelledby="corpus-title">
+      <div class="section-heading"><h2 id="corpus-title">Una biblioteca federal.<br>Con su fecha a la vista.</h2><p>Copias de fuentes públicas para consultar junto a los documentos del asunto.</p></div>
+      <div class="corpus-ledger"><div class="corpus-count"><strong>35.452</strong><span>artículos en el snapshot</span></div><div class="corpus-count"><strong>303</strong><span>instrumentos federales</span></div><div class="corpus-date"><span>Fecha de corte</span><strong>30 octubre 2026</strong><p>Fuente: Cámara de Diputados.<br>Versiones y procedencia conservadas.</p></div></div>
+      <div class="corpus-note"><span class="note-mark" aria-hidden="true">*</span><p>Se cotejaron 910 muestras con otro extractor. Es una comprobación parcial: no equivale a revisar toda la legislación mexicana ni acredita vigencia actual. Consulta siempre la publicación oficial y sus reformas.</p></div>
+    </section>
+
+    <section class="release section shell" id="version" aria-labelledby="release-title"><div class="release-inner">
+      <div class="release-heading"><span class="release-tag">Versión experimental 0.3.1</span><h2 id="release-title">Una herramienta en desarrollo.<br>Con límites declarados.</h2></div>
+      <div class="release-content"><p>La app utiliza el modelo Gemma base. Existe además un <strong>candidato ajustado localmente durante 400 pasos</strong>, distribuido por separado para importación manual en un runtime compatible.</p><p>Ese candidato pasó 32 casos técnicos y un recorrido sintético de contrato, fuentes y DOCX. Son pruebas de protocolo y citas; <strong>no acreditan exactitud jurídica ni validación profesional.</strong></p><div class="release-status"><span class="status-dot" aria-hidden="true"></span>El candidato no se activa por defecto ni se selecciona desde esta página.</div><a class="text-link" href="#requisitos">Consultar requisitos</a></div>
+    </div></section>
+
+    <section class="requirements section shell" id="requisitos" aria-labelledby="requirements-title">
+      <div><h2 id="requirements-title">Preparar el equipo.</h2><p>Primero, un Mac compatible y espacio para el modelo.</p><a class="text-link" href="#version">Ver versión experimental</a></div>
+      <dl class="requirements-list"><div><dt>Equipo</dt><dd>Mac con Apple Silicon</dd></div><div><dt>Memoria unificada</dt><dd>24 GB para el recorrido probado</dd></div><div><dt>Espacio libre</dt><dd>20 GB como mínimo para la preparación inicial del modelo base; reserva espacio adicional para documentos y candidatos separados.</dd></div><div><dt>Conexión inicial</dt><dd>Necesaria para obtener el modelo. El trabajo local posterior no requiere inferencia en la nube.</dd></div><div><dt>Instalación experimental</dt><dd>Versión 0.3.1 con firma ad hoc, sin notarización. No se ha verificado aún en un segundo Mac limpio.</dd></div><div><dt>Disponibilidad</dt><dd>Los artefactos están preparados localmente. Esta página todavía no ofrece una descarga pública.</dd></div></dl>
+    </section>
+
+    <section class="faq section shell" aria-labelledby="faq-title"><h2 id="faq-title">Antes de abrir<br>el primer expediente.</h2><div class="faq-list">
+      <details><summary>¿Mis documentos se envían a un modelo externo?</summary><p>El diseño de la app mantiene documentos, búsqueda e inferencia en tu equipo. Este sitio no permite subir expedientes y no se conecta al runtime local. Las descargas iniciales y consultas a fuentes públicas sí requieren conexión.</p></details>
+      <details><summary>¿La biblioteca contiene ley vigente?</summary><p>El snapshot tiene fecha de corte del 30 de octubre de 2026. Una copia y su procedencia no bastan para afirmar vigencia actual: hay que revisar la publicación oficial, reformas y aplicación al caso.</p></details>
+      <details><summary>¿Una cita comprobada significa una respuesta correcta?</summary><p>No. La comprobación establece que la cita pertenece al material aportado. El razonamiento, la pertinencia y la conclusión pueden estar equivocados y requieren revisión profesional.</p></details>
+      <details><summary>¿La app incluye el modelo entrenado como predeterminado?</summary><p>No. La app conserva el modelo Gemma base. El candidato entrenado es un artefacto experimental separado de importación manual; su integración predeterminada requiere una evaluación adicional.</p></details>
+      <details><summary>¿Se entrena automáticamente con mis documentos?</summary><p>No. El experimento descrito utilizó fuentes públicas y datos sintéticos. La retroalimentación y las propuestas de aprendizaje no activan cambios de modelo automáticamente.</p></details>
+      <details><summary>¿Puedo descargar LEX AI desde aquí?</summary><p>Todavía no hay una URL pública de descarga. Puedes consultar aquí el funcionamiento, los requisitos y el alcance de la versión experimental. No solicitamos registro ni datos de contacto.</p></details>
+    </div></section>
+
+    <section class="closing shell" aria-labelledby="closing-title"><h2 id="closing-title">Tu criterio.<br>Las fuentes, a la vista.</h2><a class="button button-primary" href="#requisitos">Consultar requisitos</a></section>
+  </main>
+  <footer class="site-footer shell"><div><a class="wordmark" href="#inicio" aria-label="LEX AI, volver al inicio">LEX<span>AI</span></a><p>Espacio jurídico local para Mac.</p></div><div class="footer-links"><button class="text-button" type="button" data-open-privacy>Privacidad de este sitio</button><a href="catalogue.json">Ficha pública de la versión</a><span>© 2026 LEX AI</span></div><p class="footer-disclaimer">Información del producto. No constituye asesoría jurídica. El repositorio de desarrollo es privado; esta página no ofrece un enlace público de descarga.</p></footer>
+  <dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-heading"><h2 id="privacy-title">Tus datos y este sitio</h2><button class="dialog-close" type="button" data-close-privacy aria-label="Cerrar información de privacidad">×</button></div><p>Esta página es informativa. No recibe documentos del despacho, no ejecuta modelos y no tiene acceso a los expedientes de tu Mac.</p><p>No incorpora formularios, cookies de aplicación, analítica ni scripts de terceros. Las fuentes tipográficas y las imágenes se sirven desde el mismo sitio. El proveedor de alojamiento puede registrar datos técnicos de las solicitudes, como dirección IP y fecha de acceso.</p><p>En la app, los documentos, el índice y la inferencia permanecen locales. Preparar el modelo o actualizar fuentes públicas puede requerir conexión. No se presenta esta arquitectura como una certificación de seguridad.</p><button class="button button-primary" type="button" data-close-privacy>Entendido</button></dialog>
+</body>
+</html>

@@ -1,0 +1,40 @@
+[
+  {
+    "package": "@fontsource/ibm-plex-sans",
+    "version": "5.3.0",
+    "subset": "latin",
+    "format": "woff2",
+    "license": "OFL-1.1",
+    "files": [
+      {
+        "name": "ibm-plex-sans-latin-400-normal.woff2",
+        "sha256": "3b646991d30055a93a4ecc499713d4347953a74a947ecab435ab72070cbdab0e"
+      },
+      {
+        "name": "ibm-plex-sans-latin-500-normal.woff2",
+        "sha256": "0717336fb31fcdcde4b8deb3675bb4a0f7f6d484864afcd6751ac29975962203"
+      },
+      {
+        "name": "ibm-plex-sans-latin-600-normal.woff2",
+        "sha256": "8960851d691c054ed38e259bdcf1a6190d157b4203ed5bb32c632a863fb8ec2f"
+      }
+    ]
+  },
+  {
+    "package": "@fontsource/source-serif-4",
+    "version": "5.3.1",
+    "subset": "latin",
+    "format": "woff2",
+    "license": "OFL-1.1",
+    "files": [
+      {
+        "name": "source-serif-4-latin-400-normal.woff2",
+        "sha256": "02194deb92d3975dd30e11a3824a1f1db32b48c93654e60560cb81ce8e7b5f95"
+      },
+      {
+        "name": "source-serif-4-latin-500-normal.woff2",
+        "sha256": "d3e119de0b756d9fa6d368de570f7168bb74eedf3289aaeae22dd97b900918d1"
+      }
+    ]
+  }
+]

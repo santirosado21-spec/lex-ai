@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.data/
+*.log
+src-tauri/target/
+src-tauri/binaries/
+resources/runtime/
+resources/models/
+artifacts/
+.DS_Store
+
+.desktop/
+.venv-training/
+__pycache__/
+*.pyc
+
+# Local credentials, deployment bindings and generated corpus index.
+.env
+.env.*
+!.env.example
+.vercel/
+**/.vercel/
+resources/public-library.sqlite
+resources/public-library.sqlite-*
+supabase/.temp/
+supabase/.branches/

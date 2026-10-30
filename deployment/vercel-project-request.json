@@ -1,0 +1,16 @@
+{
+  "teamId": "team_oTe9d80pIj0d4tSxGQaAUr6N",
+  "requestBody": {
+    "name": "lex-ai",
+    "framework": null,
+    "rootDirectory": "landing",
+    "buildCommand": "",
+    "installCommand": "",
+    "outputDirectory": ".",
+    "gitRepository": {
+      "type": "github",
+      "repo": "santirosado21-spec/lex-ai"
+    },
+    "publicSource": false
+  }
+}

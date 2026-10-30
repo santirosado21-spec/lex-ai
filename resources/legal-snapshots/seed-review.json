@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-29",
+  "reviewScope": "Source transcription only; not professional legal accuracy or currentness.",
+  "sources": [
+    {
+      "id": "ccf",
+      "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+      "retrievedAt": "2026-10-30T05:19:09.638Z",
+      "declaredAmendedAt": "2025-11-14",
+      "articles": [
+        {
+          "number": 1796,
+          "reviewedTextSha256": "3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b"
+        },
+        {
+          "number": 1797,
+          "reviewedTextSha256": "b3c00a20af5471f7da32c75634ceae74741e23e2437ca4f073ee2941c56f1134"
+        },
+        {
+          "number": 1832,
+          "reviewedTextSha256": "bf7bba2477191a86675deb729d826aa6f3165871202bdb704b6b8474470b2b8e"
+        }
+      ]
+    },
+    {
+      "id": "cpeum",
+      "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+      "retrievedAt": "2026-10-30T05:19:12.402Z",
+      "declaredAmendedAt": null,
+      "articles": [
+        {
+          "number": 1,
+          "reviewedTextSha256": "bf4065163e7822c8b801a7b9a242d8b39ca915bf2a6ec20d64b031dd5153435b"
+        },
+        {
+          "number": 14,
+          "reviewedTextSha256": "2a40601349fc7791161450c15841523287393c0e42716aec92d9de1ade56392b"
+        },
+        {
+          "number": 17,
+          "reviewedTextSha256": "4f87908a218dc1fdede472205f03c265dfc573ecc476109e8fc766bb9aee1f91"
+        }
+      ]
+    },
+    {
+      "id": "ccom",
+      "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+      "retrievedAt": "2026-10-30T05:19:14.285Z",
+      "declaredAmendedAt": null,
+      "articles": [
+        {
+          "number": 1,
+          "reviewedTextSha256": "cf6ba61bd0f089d1728cc8b61521ccbdb7d7e01efbf8c0777cee5bd5c63fda92"
+        },
+        {
+          "number": 2,
+          "reviewedTextSha256": "17a2c973c050909bc81fc857ee708632af6b363d2fcfe761025450c96782a96c"
+        },
+        {
+          "number": 78,
+          "reviewedTextSha256": "00978cffc63815aee893d5e5515e99fa8268bd9601329e9dd88d0618a717c506"
+        }
+      ]
+    },
+    {
+      "id": "lft",
+      "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+      "retrievedAt": "2026-10-30T05:19:16.284Z",
+      "declaredAmendedAt": null,
+      "articles": [
+        {
+          "number": 20,
+          "reviewedTextSha256": "93b06e8b40d78a1bf8f66078bc0fbff437c8286dce409aadf801c7de475c2db2"
+        },
+        {
+          "number": 21,
+          "reviewedTextSha256": "134441b1053962323b22ef94695856b4626b78b39a6a3f20323cd61ddc7b7628"
+        },
+        {
+          "number": 24,
+          "reviewedTextSha256": "3e60f6247831a36d2c3db7dad1bdd278024ba0fe03d2807feadb03e8b288f294"
+        }
+      ]
+    },
+    {
+      "id": "lfpc",
+      "pdfSha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55",
+      "retrievedAt": "2026-10-30T05:19:18.394Z",
+      "declaredAmendedAt": null,
+      "articles": [
+        {
+          "number": 7,
+          "reviewedTextSha256": "c9a7edc6728f23e2dd3d5ed5bfdd87e5d128da65b60672c9d7a0c9b9a1049f4f"
+        },
+        {
+          "number": 10,
+          "reviewedTextSha256": "10bae4948fe0cb41059d34d90be6c03f7347dcc92419da940f8dbfae92332348"
+        },
+        {
+          "number": 85,
+          "reviewedTextSha256": "ba5a06b4297652f3a798e08894a0e2ba98b8cd5648631bd8998612c4d5889f16"
+        }
+      ]
+    },
+    {
+      "id": "lfda",
+      "pdfSha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5",
+      "retrievedAt": "2026-10-30T05:19:20.056Z",
+      "declaredAmendedAt": null,
+      "articles": [
+        {
+          "number": 11,
+          "reviewedTextSha256": "5d30466cff26e69a8772e26ae3e8ccad895b01c918b6be493524903473f95fb3"
+        },
+        {
+          "number": 12,
+          "reviewedTextSha256": "20ba3d07e0071e7652bf4f979a7d8cda01440e54ec3af5a5aec03bdd965977b2"
+        },
+        {
+          "number": 14,
+          "reviewedTextSha256": "489ec6a3c79470f31e4542e8dd231de8db59adf785536ea394540e94944b2357"
+        }
+      ]
+    },
+    {
+      "id": "cdmx",
+      "pdfSha256": "694ce3bb40ab0833470dd0ab316b0db43ee67ada86e77a5c6b2b37f640a91b2e",
+      "retrievedAt": "2026-10-29",
+      "declaredAmendedAt": "2024-09-27",
+      "articles": [
+        {
+          "number": 1796,
+          "reviewedTextSha256": "758813640c139a89edf25e6f83ad0acf5a1484a498d7bec4a6c52fd809d5df3a"
+        },
+        {
+          "number": 1797,
+          "reviewedTextSha256": "c38d4aa5e382a223841fdd4b92ba8cc118c5974dd642ef1c8d257e1191fafcd0"
+        },
+        {
+          "number": 1832,
+          "reviewedTextSha256": "40aa85fcd1e65308c17a30f2a88b6ec7164ec0833973955d08f6684940ddd8fb"
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "independentTextComparison": "artifacts/legal-sync/transcription-crosscheck.json",
+    "comparedArticles": 21,
+    "allMatch": true,
+    "visualSpotChecks": [
+      "ccf PDF page 175",
+      "lft PDF page 7",
+      "lfda PDF page 4"
+    ],
+    "professionalLegalReview": false
+  }
+}

@@ -1,0 +1,2139 @@
+{
+  "schemaVersion": 1,
+  "kind": "public-legal-library",
+  "builtAt": "2026-10-30T13:30:25.149Z",
+  "corpusSha256": "e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11",
+  "articles": 35452,
+  "laws": [
+    {
+      "id": "MX-FED-10",
+      "title": "ESTATUTO de Gobierno del Distrito Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 142
+    },
+    {
+      "id": "MX-FED-105",
+      "title": "LEY Federal de Correduría Pública",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 23
+    },
+    {
+      "id": "MX-FED-109",
+      "title": "LEY Federal de Juegos y Sorteos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 15
+    },
+    {
+      "id": "MX-FED-124",
+      "title": "LEY Federal del Mar",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 57
+    },
+    {
+      "id": "MX-FED-136",
+      "title": "LEY Federal de Deuda Pública",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 29
+    },
+    {
+      "id": "MX-FED-157",
+      "title": "LEY Orgánica de la Universidad Autónoma Metropolitana",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 30
+    },
+    {
+      "id": "MX-FED-158",
+      "title": "LEY Orgánica de la Universidad Nacional Autónoma de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 13
+    },
+    {
+      "id": "MX-FED-159",
+      "title": "LEY Orgánica de los Tribunales Agrarios",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-162",
+      "title": "LEY Orgánica de Nacional Financiera",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 36
+    },
+    {
+      "id": "MX-FED-164",
+      "title": "LEY Orgánica del Banco del Bienestar",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 37
+    },
+    {
+      "id": "MX-FED-167",
+      "title": "LEY Orgánica del Banco Nacional del Ejército, Fuerza Aérea y Armada",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 48
+    },
+    {
+      "id": "MX-FED-170",
+      "title": "LEY Orgánica del Instituto Nacional de Antropología e Historia",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 9
+    },
+    {
+      "id": "MX-FED-171",
+      "title": "LEY Orgánica del Instituto Politécnico Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 24
+    },
+    {
+      "id": "MX-FED-177",
+      "title": "LEY para el Diálogo, la Conciliación y la Paz Digna en Chiapas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 10
+    },
+    {
+      "id": "MX-FED-187",
+      "title": "LEY que Aprueba la Adhesión de México al Convenio Constitutivo del Banco de Desarrollo del Caribe y su Ejecución",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 10
+    },
+    {
+      "id": "MX-FED-19",
+      "title": "LEY de Amnistía",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 4
+    },
+    {
+      "id": "MX-FED-192",
+      "title": "LEY que Crea el Fondo de Garantía y Fomento para la Agricultura, Ganadería y Avicultura",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 14
+    },
+    {
+      "id": "MX-FED-193",
+      "title": "LEY que crea el Instituto Nacional de Bellas Artes y Literatura",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 16
+    },
+    {
+      "id": "MX-FED-195",
+      "title": "LEY que crea la Universidad Autónoma Chapingo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 16
+    },
+    {
+      "id": "MX-FED-196",
+      "title": "LEY que Crea la Universidad del Ejército y Fuerza Aérea",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 6
+    },
+    {
+      "id": "MX-FED-197",
+      "title": "LEY que Declara Reservas Mineras Nacionales los Yacimientos de Uranio, Torio y las demás Substancias de las cuales se Obtengan Isótopos Hendibles que puedan Producir Energía Nuclear",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 15
+    },
+    {
+      "id": "MX-FED-200",
+      "title": "LEY que Establece Bases para la Ejecución en México, por el Poder Ejecutivo Federal, del Convenio Constitutivo del Banco Interamericano de Desarrollo",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 11
+    },
+    {
+      "id": "MX-FED-202",
+      "title": "LEY Reglamentaria de la Fracción V del Artículo 76 de la Constitución General de la República",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 13
+    },
+    {
+      "id": "MX-FED-207",
+      "title": "LEY Reglamentaria del Artículo 27 Constitucional en Materia Nuclear",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-208",
+      "title": "LEY Reglamentaria del Artículo 5o. Constitucional, relativo al ejercicio de las profesiones en la Ciudad de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 70
+    },
+    {
+      "id": "MX-FED-211",
+      "title": "LEY Sobre el Contrato de Seguro",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 209
+    },
+    {
+      "id": "MX-FED-218",
+      "title": "ORDENANZA General de la Armada",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 1000
+    },
+    {
+      "id": "MX-FED-219",
+      "title": "REGLAMENTO para el Gobierno Interior del Congreso General de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 214
+    },
+    {
+      "id": "MX-FED-23",
+      "title": "LEY sobre Cámaras Agrícolas, que en lo sucesivo se denominarán Asociaciones Agrícolas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 19
+    },
+    {
+      "id": "MX-FED-238",
+      "title": "LEY de Capitalización del Procampo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 19
+    },
+    {
+      "id": "MX-FED-246",
+      "title": "LEY de Energía para el Campo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 14
+    },
+    {
+      "id": "MX-FED-252",
+      "title": "LEY de Disciplina para el Personal de la Armada de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 69
+    },
+    {
+      "id": "MX-FED-256",
+      "title": "LEY de Transparencia y de Fomento a la Competencia en el Crédito Garantizado",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 19
+    },
+    {
+      "id": "MX-FED-260",
+      "title": "LEY del Servicio Profesional de Carrera en la Administración Pública Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 80
+    },
+    {
+      "id": "MX-FED-268",
+      "title": "LEY para la Comprobación, Ajuste y Cómputo de Servicios de la Armada de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 25
+    },
+    {
+      "id": "MX-FED-269",
+      "title": "LEY del Registro Público Vehicular",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 27
+    },
+    {
+      "id": "MX-FED-271",
+      "title": "LEY Sobre la Aprobación de Tratados Internacionales en Materia Económica",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 12
+    },
+    {
+      "id": "MX-FED-30",
+      "title": "LEY de Contribución de Mejoras por Obras Públicas Federales de Infraestructura Hidráulica",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 11
+    },
+    {
+      "id": "MX-FED-35",
+      "title": "LEY de Expropiación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 25
+    },
+    {
+      "id": "MX-FED-36",
+      "title": "LEY de Extradición Internacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 38
+    },
+    {
+      "id": "MX-FED-53",
+      "title": "LEY de Nacionalidad",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 37
+    },
+    {
+      "id": "MX-FED-57",
+      "title": "LEY de Organizaciones Ganaderas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 26
+    },
+    {
+      "id": "MX-FED-63",
+      "title": "LEY de Protección al Comercio y la Inversión de Normas Extranjeras que Contravengan el Derecho Internacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 9
+    },
+    {
+      "id": "MX-FED-65",
+      "title": "LEY de Puertos",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 72
+    },
+    {
+      "id": "MX-FED-70",
+      "title": "LEY de Sociedades de Responsabilidad Limitada de Interés Público",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 13
+    },
+    {
+      "id": "MX-FED-71",
+      "title": "LEY de Sociedades de Solidaridad Social",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 43
+    },
+    {
+      "id": "MX-FED-74",
+      "title": "LEY del Banco de México",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 72
+    },
+    {
+      "id": "MX-FED-75",
+      "title": "LEY del Diario Oficial de la Federación y Gacetas Gubernamentales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 17
+    },
+    {
+      "id": "MX-FED-93",
+      "title": "LEY del Servicio de Administración Tributaria",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 40
+    },
+    {
+      "id": "MX-FED-96",
+      "title": "LEY del Servicio Exterior Mexicano",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 83
+    },
+    {
+      "id": "MX-FED-CCF",
+      "title": "CÓDIGO Civil Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 2893
+    },
+    {
+      "id": "MX-FED-CCOM",
+      "title": "CÓDIGO de Comercio",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 780
+    },
+    {
+      "id": "MX-FED-CFF",
+      "title": "CÓDIGO Fiscal de la Federación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 336
+    },
+    {
+      "id": "MX-FED-CFPC",
+      "title": "CÓDIGO Federal de Procedimientos Civiles",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 617
+    },
+    {
+      "id": "MX-FED-CJM",
+      "title": "CÓDIGO de Justicia Militar",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 404
+    },
+    {
+      "id": "MX-FED-CMPP",
+      "title": "CÓDIGO Militar de Procedimientos Penales",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 324
+    },
+    {
+      "id": "MX-FED-CNPCF",
+      "title": "CÓDIGO Nacional de Procedimientos Civiles y Familiares",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 1183
+    },
+    {
+      "id": "MX-FED-CNPP",
+      "title": "CÓDIGO Nacional de Procedimientos Penales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 363
+    },
+    {
+      "id": "MX-FED-CPEUM",
+      "title": "CONSTITUCIÓN Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 135
+    },
+    {
+      "id": "MX-FED-CPF",
+      "title": "CÓDIGO Penal Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 453
+    },
+    {
+      "id": "MX-FED-LAAM",
+      "title": "LEY de Ascensos de la Armada de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 56
+    },
+    {
+      "id": "MX-FED-LAASSP",
+      "title": "LEY de Adquisiciones, Arrendamientos y Servicios del Sector Público",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 77
+    },
+    {
+      "id": "MX-FED-LAAT",
+      "title": "LEY de Ayuda Alimentaria para los Trabajadores",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 17
+    },
+    {
+      "id": "MX-FED-LAC",
+      "title": "LEY de Aviación Civil",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 133
+    },
+    {
+      "id": "MX-FED-LACP",
+      "title": "LEY de Ahorro y Crédito Popular",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 205
+    },
+    {
+      "id": "MX-FED-LAEM",
+      "title": "LEY que crea la Agencia Espacial Mexicana",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 11
+    },
+    {
+      "id": "MX-FED-LAERO",
+      "title": "LEY de Aeropuertos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 95
+    },
+    {
+      "id": "MX-FED-LAGRA",
+      "title": "LEY Agraria",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 201
+    },
+    {
+      "id": "MX-FED-LAMN",
+      "title": "LEY de Amnistía",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 9
+    },
+    {
+      "id": "MX-FED-LAMP",
+      "title": "LEY de Amparo, Reglamentaria de los artículos 103 y 107 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 266
+    },
+    {
+      "id": "MX-FED-LAN",
+      "title": "LEY de Aguas Nacionales",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 207
+    },
+    {
+      "id": "MX-FED-LANSI",
+      "title": "LEY de la Agencia Nacional de Seguridad Industrial y de Protección al Medio Ambiente del Sector Hidrocarburos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 38
+    },
+    {
+      "id": "MX-FED-LAPP",
+      "title": "LEY de Asociaciones Público Privadas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 142
+    },
+    {
+      "id": "MX-FED-LARCP",
+      "title": "LEY de Asociaciones Religiosas y Culto Público",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 37
+    },
+    {
+      "id": "MX-FED-LAREFAGN",
+      "title": "LEY de Ascensos y Recompensas del Ejército, Fuerza Aérea y Guardia Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 75
+    },
+    {
+      "id": "MX-FED-LASOC",
+      "title": "LEY de Asistencia Social",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 68
+    },
+    {
+      "id": "MX-FED-LBIO",
+      "title": "LEY de Biocombustibles",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LBOGM",
+      "title": "LEY de Bioseguridad de Organismos Genéticamente Modificados",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 123
+    },
+    {
+      "id": "MX-FED-LCACSEFAM",
+      "title": "LEY para la Comprobación, Ajuste y Cómputo de Servicios en el Ejército y Fuerza Aérea Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 37
+    },
+    {
+      "id": "MX-FED-LCCAIF",
+      "title": "LEY que Establece Bases para la Ejecución en México, por el Poder Ejecutivo Federal, del Convenio Constitutivo de la Asociación Internacional de Fomento",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 9
+    },
+    {
+      "id": "MX-FED-LCE",
+      "title": "LEY de Comercio Exterior",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 97
+    },
+    {
+      "id": "MX-FED-LCEC",
+      "title": "LEY de Cámaras Empresariales y sus Confederaciones",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 45
+    },
+    {
+      "id": "MX-FED-LCF",
+      "title": "LEY de Coordinación Fiscal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 66
+    },
+    {
+      "id": "MX-FED-LCID",
+      "title": "LEY de Cooperación Internacional para el Desarrollo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 36
+    },
+    {
+      "id": "MX-FED-LCJPJF",
+      "title": "LEY de Carrera Judicial del Poder Judicial de la Federación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 54
+    },
+    {
+      "id": "MX-FED-LCM",
+      "title": "LEY de Concursos Mercantiles",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 354
+    },
+    {
+      "id": "MX-FED-LCMM",
+      "title": "LEY de la Casa de Moneda de México",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 17
+    },
+    {
+      "id": "MX-FED-LCNBV",
+      "title": "LEY de la Comisión Nacional Bancaria y de Valores",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 31
+    },
+    {
+      "id": "MX-FED-LCNDH",
+      "title": "LEY de la Comisión Nacional de los Derechos Humanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 86
+    },
+    {
+      "id": "MX-FED-LCNE",
+      "title": "LEY de la Comisión Nacional de Energía",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 18
+    },
+    {
+      "id": "MX-FED-LCPAF",
+      "title": "LEY de Caminos, Puentes y Autotransporte Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 93
+    },
+    {
+      "id": "MX-FED-LDCMPME",
+      "title": "LEY para el Desarrollo de la Competitividad de la Micro, Pequeña y Mediana Empresa",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 26
+    },
+    {
+      "id": "MX-FED-LDEFAGN",
+      "title": "LEY de Disciplina del Ejército, Fuerza Aérea y Guardia Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 53
+    },
+    {
+      "id": "MX-FED-LDFEFM",
+      "title": "LEY de Disciplina Financiera de las Entidades Federativas y los Municipios",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 64
+    },
+    {
+      "id": "MX-FED-LDPAM",
+      "title": "LEY de los Derechos de las Personas Adultas Mayores",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LDRS",
+      "title": "LEY de Desarrollo Rural Sustentable",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 193
+    },
+    {
+      "id": "MX-FED-LDSC",
+      "title": "LEY de Desarrollo Sustentable de la Cafeticultura",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 72
+    },
+    {
+      "id": "MX-FED-LDSCA",
+      "title": "LEY de Desarrollo Sustentable de la Caña de Azúcar",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 150
+    },
+    {
+      "id": "MX-FED-LDVUMA",
+      "title": "LEY para Determinar el Valor de la Unidad de Medida y Actualización",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 4
+    },
+    {
+      "id": "MX-FED-LEBHN",
+      "title": "LEY sobre el Escudo, la Bandera y el Himno Nacionales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 66
+    },
+    {
+      "id": "MX-FED-LEMEFAGN",
+      "title": "LEY de Educación Militar del Ejército, Fuerza Aérea y Guardia Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LEN",
+      "title": "LEY de Educación Naval",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 24
+    },
+    {
+      "id": "MX-FED-LEPECFE",
+      "title": "LEY de la Empresa Pública del Estado, Comisión Federal de Electricidad",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 97
+    },
+    {
+      "id": "MX-FED-LEPEPM",
+      "title": "LEY de la Empresa Pública del Estado, Petróleos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 89
+    },
+    {
+      "id": "MX-FED-LESS",
+      "title": "LEY de la Economía Social y Solidaria",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 47
+    },
+    {
+      "id": "MX-FED-LFAAR",
+      "title": "LEY de Fondos de Aseguramiento Agropecuario y Rural",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 96
+    },
+    {
+      "id": "MX-FED-LFAEBSP",
+      "title": "LEY Federal para la Administración y Enajenación de Bienes del Sector Público",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 97
+    },
+    {
+      "id": "MX-FED-LFAFE",
+      "title": "LEY Federal de Armas de Fuego y Explosivos",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 116
+    },
+    {
+      "id": "MX-FED-LFAR",
+      "title": "LEY Federal de Austeridad Republicana",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 29
+    },
+    {
+      "id": "MX-FED-LFC",
+      "title": "LEY Federal de Cinematografía",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LFCA",
+      "title": "LEY Federal de Cine y el Audiovisual",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LFCC",
+      "title": "LEY de Fomento a la Confianza Ciudadana",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 13
+    },
+    {
+      "id": "MX-FED-LFCDO",
+      "title": "LEY Federal contra la Delincuencia Organizada",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 50
+    },
+    {
+      "id": "MX-FED-LFCE",
+      "title": "LEY Federal de Competencia Económica",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 135
+    },
+    {
+      "id": "MX-FED-LFCPO",
+      "title": "LEY Federal de Consulta Popular",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 65
+    },
+    {
+      "id": "MX-FED-LFCPQ",
+      "title": "LEY Federal para el Control de Precursores Químicos, Productos Químicos Esenciales y Máquinas para Elaborar Cápsulas, Tabletas y/o Comprimidos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 31
+    },
+    {
+      "id": "MX-FED-LFCSQ",
+      "title": "LEY Federal para el Control de Sustancias Químicas Susceptibles de Desvío para la Fabricación de Armas Químicas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 74
+    },
+    {
+      "id": "MX-FED-LFDA",
+      "title": "LEY Federal del Derecho de Autor",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 254
+    },
+    {
+      "id": "MX-FED-LFDC",
+      "title": "LEY Federal de los Derechos del Contribuyente",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 20
+    },
+    {
+      "id": "MX-FED-LFDEAPD",
+      "title": "LEY Federal de Declaración Especial de Ausencia para Personas Desaparecidas",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 32
+    },
+    {
+      "id": "MX-FED-LFDEFP",
+      "title": "LEY Federal de Defensoría Pública",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 41
+    },
+    {
+      "id": "MX-FED-LFEA",
+      "title": "LEY de Firma Electrónica Avanzada",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 31
+    },
+    {
+      "id": "MX-FED-LFEP",
+      "title": "LEY Federal de las Entidades Paraestatales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 69
+    },
+    {
+      "id": "MX-FED-LFFAOSC",
+      "title": "LEY Federal de Fomento a las Actividades Realizadas por Organizaciones de la Sociedad Civil",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 32
+    },
+    {
+      "id": "MX-FED-LFFMAA",
+      "title": "LEY Federal para el Fomento de la Microindustria y la Actividad Artesanal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 45
+    },
+    {
+      "id": "MX-FED-LFFPMN",
+      "title": "LEY Federal para el Fomento y Protección del Maíz Nativo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 10
+    },
+    {
+      "id": "MX-FED-LFGR",
+      "title": "LEY de la Fiscalía General de la República",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 100
+    },
+    {
+      "id": "MX-FED-LFI",
+      "title": "LEY de Fondos de Inversión",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 193
+    },
+    {
+      "id": "MX-FED-LFIIEDB",
+      "title": "LEY para el Fomento de la Inversión en Infraestructura Estratégica para el Desarrollo con Bienestar",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 113
+    },
+    {
+      "id": "MX-FED-LFISAN",
+      "title": "LEY Federal del Impuesto sobre Automóviles Nuevos",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 14
+    },
+    {
+      "id": "MX-FED-LFIV",
+      "title": "LEY de Fomento a la Industria Vitivinícola",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LFLL",
+      "title": "LEY de Fomento para la Lectura y el Libro",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LFMPED",
+      "title": "LEY del Fondo Mexicano del Petróleo para la Estabilización y el Desarrollo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 25
+    },
+    {
+      "id": "MX-FED-LFMZAAH",
+      "title": "LEY Federal sobre Monumentos y Zonas Arqueológicos, Artísticos e Históricos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 62
+    },
+    {
+      "id": "MX-FED-LFPA",
+      "title": "LEY Federal de Procedimiento Administrativo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 101
+    },
+    {
+      "id": "MX-FED-LFPC",
+      "title": "LEY Federal de Protección al Consumidor",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 180
+    },
+    {
+      "id": "MX-FED-LFPCA",
+      "title": "LEY Federal de Procedimiento Contencioso Administrativo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 130
+    },
+    {
+      "id": "MX-FED-LFPCCS",
+      "title": "LEY Federal de Producción, Certificación y Comercio de Semillas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 42
+    },
+    {
+      "id": "MX-FED-LFPDPPP",
+      "title": "LEY Federal de Protección de Datos Personales en Posesión de los Particulares",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 63
+    },
+    {
+      "id": "MX-FED-LFPED",
+      "title": "LEY Federal para Prevenir y Eliminar la Discriminación",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 83
+    },
+    {
+      "id": "MX-FED-LFPIORPI",
+      "title": "LEY Federal para la Prevención e Identificación de Operaciones con Recursos de Procedencia Ilícita",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 73
+    },
+    {
+      "id": "MX-FED-LFPPCPCIA",
+      "title": "Ley Federal de Protección del Patrimonio Cultural de los Pueblos y Comunidades Indígenas y Afromexicanas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 75
+    },
+    {
+      "id": "MX-FED-LFPPI",
+      "title": "LEY Federal de Protección a la Propiedad Industrial",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 420
+    },
+    {
+      "id": "MX-FED-LFPPIPP",
+      "title": "LEY Federal para la Protección a Personas que Intervienen en el Procedimiento Penal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LFPRH",
+      "title": "LEY Federal de Presupuesto y Responsabilidad Hacendaria",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 115
+    },
+    {
+      "id": "MX-FED-LFPSDMH",
+      "title": "LEY Federal para Prevenir y Sancionar los Delitos Cometidos en Materia de Hidrocarburos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 23
+    },
+    {
+      "id": "MX-FED-LFRA",
+      "title": "LEY Federal de Responsabilidad Ambiental",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 55
+    },
+    {
+      "id": "MX-FED-LFRCF",
+      "title": "LEY de Fiscalización y Rendición de Cuentas de la Federación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 114
+    },
+    {
+      "id": "MX-FED-LFREMSP",
+      "title": "LEY Federal de Remuneraciones de los Servidores Públicos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 23
+    },
+    {
+      "id": "MX-FED-LFRM",
+      "title": "LEY Federal de Revocación de Mandato",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 50
+    },
+    {
+      "id": "MX-FED-LFRPE",
+      "title": "LEY Federal de Responsabilidad Patrimonial del Estado",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 34
+    },
+    {
+      "id": "MX-FED-LFRSP",
+      "title": "LEY Federal de Responsabilidades de los Servidores Públicos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 43
+    },
+    {
+      "id": "MX-FED-LFSA",
+      "title": "LEY Federal de Sanidad Animal",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 176
+    },
+    {
+      "id": "MX-FED-LFSP",
+      "title": "LEY Federal de Seguridad Privada",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 50
+    },
+    {
+      "id": "MX-FED-LFSV",
+      "title": "LEY Federal de Sanidad Vegetal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 94
+    },
+    {
+      "id": "MX-FED-LFT",
+      "title": "LEY Federal del Trabajo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 1115
+    },
+    {
+      "id": "MX-FED-LFTSE",
+      "title": "LEY Federal de los Trabajadores al Servicio del Estado, Reglamentaria del Apartado B) del Artículo 123 Constitucional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 174
+    },
+    {
+      "id": "MX-FED-LFVV",
+      "title": "LEY Federal de Variedades Vegetales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 48
+    },
+    {
+      "id": "MX-FED-LFZEE",
+      "title": "LEY Federal de Zonas Económicas Especiales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 49
+    },
+    {
+      "id": "MX-FED-LGA",
+      "title": "LEY General de Archivos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 123
+    },
+    {
+      "id": "MX-FED-LGAAS",
+      "title": "LEY General de la Alimentación Adecuada y Sostenible",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 85
+    },
+    {
+      "id": "MX-FED-LGAG",
+      "title": "LEY General de Aguas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 32
+    },
+    {
+      "id": "MX-FED-LGAHOTDU",
+      "title": "LEY General de Asentamientos Humanos, Ordenamiento Territorial y Desarrollo Urbano",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 118
+    },
+    {
+      "id": "MX-FED-LGAMVLV",
+      "title": "LEY General de Acceso de las Mujeres a una Vida Libre de Violencias",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 82
+    },
+    {
+      "id": "MX-FED-LGAPPCEA",
+      "title": "LEY General para la Atención y Protección a Personas con la Condición del Espectro Autista",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 12
+    },
+    {
+      "id": "MX-FED-LGB",
+      "title": "LEY General de Bibliotecas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 45
+    },
+    {
+      "id": "MX-FED-LGBN",
+      "title": "LEY General de Bienes Nacionales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 156
+    },
+    {
+      "id": "MX-FED-LGCC",
+      "title": "LEY General de Cambio Climático",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 113
+    },
+    {
+      "id": "MX-FED-LGCDC",
+      "title": "LEY General de Cultura y Derechos Culturales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 42
+    },
+    {
+      "id": "MX-FED-LGCFD",
+      "title": "LEY General de Cultura Física y Deporte",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 157
+    },
+    {
+      "id": "MX-FED-LGCG",
+      "title": "LEY General de Contabilidad Gubernamental",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 87
+    },
+    {
+      "id": "MX-FED-LGCS",
+      "title": "LEY General de Comunicación Social",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 44
+    },
+    {
+      "id": "MX-FED-LGCT",
+      "title": "LEY General para el Control del Tabaco",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 57
+    },
+    {
+      "id": "MX-FED-LGDFS",
+      "title": "LEY General de Desarrollo Forestal Sustentable",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 169
+    },
+    {
+      "id": "MX-FED-LGDLPI",
+      "title": "LEY General de Derechos Lingüísticos de los Pueblos Indígenas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 24
+    },
+    {
+      "id": "MX-FED-LGDNNA",
+      "title": "LEY General de los Derechos de Niñas, Niños y Adolescentes",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 179
+    },
+    {
+      "id": "MX-FED-LGDOCIA",
+      "title": "LEY General para la Detección Oportuna del Cáncer en la Infancia y la Adolescencia",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 23
+    },
+    {
+      "id": "MX-FED-LGDS",
+      "title": "LEY General de Desarrollo Social",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 82
+    },
+    {
+      "id": "MX-FED-LGE",
+      "title": "LEY General de Educación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 183
+    },
+    {
+      "id": "MX-FED-LGEC",
+      "title": "LEY General de Economía Circular",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 34
+    },
+    {
+      "id": "MX-FED-LGEEPA",
+      "title": "LEY General del Equilibrio Ecológico y la Protección al Ambiente",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 250
+    },
+    {
+      "id": "MX-FED-LGEO",
+      "title": "LEY de Geotermia",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 47
+    },
+    {
+      "id": "MX-FED-LGES",
+      "title": "LEY General de Educación Superior",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 41
+    },
+    {
+      "id": "MX-FED-LGIPD",
+      "title": "LEY General para la Inclusión de las Personas con Discapacidad",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 60
+    },
+    {
+      "id": "MX-FED-LGIPE",
+      "title": "LEY General de Instituciones y Procedimientos Electorales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 528
+    },
+    {
+      "id": "MX-FED-LGISMH",
+      "title": "LEY General para la Igualdad Sustantiva entre Mujeres y Hombres",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LGMASC",
+      "title": "LEY General de Mecanismos Alternativos de Solución de Controversias",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 111
+    },
+    {
+      "id": "MX-FED-LGMDE",
+      "title": "LEY General en Materia de Delitos Electorales",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 29
+    },
+    {
+      "id": "MX-FED-LGMDFP",
+      "title": "LEY General en Materia de Desaparición Forzada de Personas, Desaparición Cometida por Particulares y del Sistema Nacional de Búsqueda de Personas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 183
+    },
+    {
+      "id": "MX-FED-LGMHCTI",
+      "title": "LEY General en materia de Humanidades, Ciencias, Tecnologías e Innovación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 59
+    },
+    {
+      "id": "MX-FED-LGMIME",
+      "title": "LEY General de los Medios de Impugnación en Materia Electoral",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 44
+    },
+    {
+      "id": "MX-FED-LGMSV",
+      "title": "LEY General de Movilidad y Seguridad Vial",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 82
+    },
+    {
+      "id": "MX-FED-LGN",
+      "title": "LEY de la Guardia Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 77
+    },
+    {
+      "id": "MX-FED-LGP",
+      "title": "LEY General de Población",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 48
+    },
+    {
+      "id": "MX-FED-LGPAS",
+      "title": "LEY General de Pesca y Acuacultura Sustentables",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 167
+    },
+    {
+      "id": "MX-FED-LGPC",
+      "title": "LEY General de Protección Civil",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 94
+    },
+    {
+      "id": "MX-FED-LGPDPPSO",
+      "title": "LEY General de Protección de Datos Personales en Posesión de Sujetos Obligados",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 135
+    },
+    {
+      "id": "MX-FED-LGPGIR",
+      "title": "LEY General para la Prevención y Gestión Integral de los Residuos",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 126
+    },
+    {
+      "id": "MX-FED-LGPISDME",
+      "title": "Ley General para Prevenir, Investigar y Sancionar los Delitos en Materia de Extorsión, Reglamentaria de la fracción XXI del artículo 73 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 32
+    },
+    {
+      "id": "MX-FED-LGPIST",
+      "title": "LEY General para Prevenir, Investigar y Sancionar la Tortura y Otros Tratos o Penas Crueles, Inhumanos o Degradantes",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 95
+    },
+    {
+      "id": "MX-FED-LGPP",
+      "title": "LEY General de Partidos Políticos",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 97
+    },
+    {
+      "id": "MX-FED-LGPSACDII",
+      "title": "LEY General de Prestación de Servicios para la Atención, Cuidado y Desarrollo Integral Infantil",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 76
+    },
+    {
+      "id": "MX-FED-LGPSDMS",
+      "title": "LEY General para Prevenir y Sancionar los Delitos en Materia de Secuestro, Reglamentaria de la fracción XXI del artículo 73 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 47
+    },
+    {
+      "id": "MX-FED-LGPSEDMTP",
+      "title": "LEY General para Prevenir, Sancionar y Erradicar los Delitos en Materia de Trata de Personas y para la Protección y Asistencia a las Víctimas de estos Delitos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 126
+    },
+    {
+      "id": "MX-FED-LGPSVD",
+      "title": "LEY General para la Prevención Social de la Violencia y la Delincuencia",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 30
+    },
+    {
+      "id": "MX-FED-LGRA",
+      "title": "LEY General de Responsabilidades Administrativas",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 234
+    },
+    {
+      "id": "MX-FED-LGS",
+      "title": "LEY General de Salud",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 678
+    },
+    {
+      "id": "MX-FED-LGSC",
+      "title": "LEY General de Sociedades Cooperativas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 122
+    },
+    {
+      "id": "MX-FED-LGSCMM",
+      "title": "LEY General del Sistema para la Carrera de las Maestras y los Maestros",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 81
+    },
+    {
+      "id": "MX-FED-LGSM",
+      "title": "LEY General de Sociedades Mercantiles",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 273
+    },
+    {
+      "id": "MX-FED-LGSNA",
+      "title": "LEY General del Sistema Nacional Anticorrupción",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 59
+    },
+    {
+      "id": "MX-FED-LGSNSP",
+      "title": "LEY General del Sistema Nacional de Seguridad Pública",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 107
+    },
+    {
+      "id": "MX-FED-LGT",
+      "title": "LEY General de Turismo",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 68
+    },
+    {
+      "id": "MX-FED-LGTAIP",
+      "title": "LEY General de Transparencia y Acceso a la Información Pública",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 170
+    },
+    {
+      "id": "MX-FED-LGTOC",
+      "title": "LEY General de Títulos y Operaciones de Crédito",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 433
+    },
+    {
+      "id": "MX-FED-LGV",
+      "title": "LEY General de Víctimas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 178
+    },
+    {
+      "id": "MX-FED-LGVS",
+      "title": "LEY General de Vida Silvestre",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 141
+    },
+    {
+      "id": "MX-FED-LHHEUM",
+      "title": "LEY de los Husos Horarios en los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 7
+    },
+    {
+      "id": "MX-FED-LIC",
+      "title": "LEY de Instituciones de Crédito",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 421
+    },
+    {
+      "id": "MX-FED-LICAL",
+      "title": "LEY de Infraestructura de la Calidad",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 120
+    },
+    {
+      "id": "MX-FED-LIE",
+      "title": "LEY de Inversión Extranjera",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 38
+    },
+    {
+      "id": "MX-FED-LIF_2026",
+      "title": "LEY de Ingresos de la Federación para el Ejercicio Fiscal de 2026",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 20
+    },
+    {
+      "id": "MX-FED-LIFNCT",
+      "title": "LEY del Instituto del Fondo Nacional para el Consumo de los Trabajadores",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 33
+    },
+    {
+      "id": "MX-FED-LIFNVT",
+      "title": "LEY del Instituto del Fondo Nacional de la Vivienda para los Trabajadores",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 90
+    },
+    {
+      "id": "MX-FED-LIGIE_2022",
+      "title": "LEY de los Impuestos Generales de Importación y de Exportación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 2
+    },
+    {
+      "id": "MX-FED-LIH",
+      "title": "LEY de Ingresos sobre Hidrocarburos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 59
+    },
+    {
+      "id": "MX-FED-LIISPCEN",
+      "title": "LEY para Impulsar el Incremento Sostenido de la Productividad y la Competitividad de la Economía Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 20
+    },
+    {
+      "id": "MX-FED-LIMJ",
+      "title": "LEY del Instituto Mexicano de la Juventud",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 20
+    },
+    {
+      "id": "MX-FED-LINPI",
+      "title": "LEY del Instituto Nacional de los Pueblos Indígenas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 29
+    },
+    {
+      "id": "MX-FED-LINS",
+      "title": "LEY de los Institutos Nacionales de Salud",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 60
+    },
+    {
+      "id": "MX-FED-LISF",
+      "title": "LEY de Instituciones de Seguros y de Fianzas",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 502
+    },
+    {
+      "id": "MX-FED-LISR",
+      "title": "LEY del Impuesto sobre la Renta",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 224
+    },
+    {
+      "id": "MX-FED-LISSFAM",
+      "title": "LEY del Instituto de Seguridad Social para las Fuerzas Armadas Mexicanas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 231
+    },
+    {
+      "id": "MX-FED-LISSSTE",
+      "title": "LEY del Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 257
+    },
+    {
+      "id": "MX-FED-LMIGRA",
+      "title": "LEY de Migración",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 162
+    },
+    {
+      "id": "MX-FED-LMIN",
+      "title": "LEY de Minería",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 74
+    },
+    {
+      "id": "MX-FED-LMTR",
+      "title": "LEY en Materia de Telecomunicaciones y Radiodifusión",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 229
+    },
+    {
+      "id": "MX-FED-LMV",
+      "title": "LEY del Mercado de Valores",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 462
+    },
+    {
+      "id": "MX-FED-LNCM",
+      "title": "LEY de Navegación y Comercio Marítimos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 331
+    },
+    {
+      "id": "MX-FED-LNED",
+      "title": "LEY Nacional de Extinción de Dominio",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 249
+    },
+    {
+      "id": "MX-FED-LNEP",
+      "title": "LEY Nacional de Ejecución Penal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 207
+    },
+    {
+      "id": "MX-FED-LNETB",
+      "title": "LEY Nacional para Eliminar Trámites Burocráticos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 90
+    },
+    {
+      "id": "MX-FED-LNMASCMP",
+      "title": "LEY Nacional de Mecanismos Alternativos de Solución de Controversias en Materia Penal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 51
+    },
+    {
+      "id": "MX-FED-LNRD",
+      "title": "LEY Nacional del Registro de Detenciones",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 31
+    },
+    {
+      "id": "MX-FED-LNSIJPA",
+      "title": "LEY Nacional del Sistema Integral de Justicia Penal para Adolescentes",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 265
+    },
+    {
+      "id": "MX-FED-LNUF",
+      "title": "LEY Nacional sobre el Uso de la Fuerza",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 44
+    },
+    {
+      "id": "MX-FED-LOAM",
+      "title": "LEY Orgánica de la Armada de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 82
+    },
+    {
+      "id": "MX-FED-LOAPF",
+      "title": "LEY Orgánica de la Administración Pública Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 62
+    },
+    {
+      "id": "MX-FED-LOBNCE",
+      "title": "LEY Orgánica del Banco Nacional de Comercio Exterior",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LOBNOSP",
+      "title": "LEY Orgánica del Banco Nacional de Obras y Servicios Públicos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 24
+    },
+    {
+      "id": "MX-FED-LOCFCRL",
+      "title": "LEY Orgánica del Centro Federal de Conciliación y Registro Laboral",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 18
+    },
+    {
+      "id": "MX-FED-LOCGEUM",
+      "title": "LEY Orgánica del Congreso General de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 140
+    },
+    {
+      "id": "MX-FED-LOPDC",
+      "title": "LEY Orgánica de la Procuraduría de la Defensa del Contribuyente",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LOPGJDF",
+      "title": "LEY Orgánica de la Procuraduría General de Justicia del Distrito Federal",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 52
+    },
+    {
+      "id": "MX-FED-LOPJF",
+      "title": "LEY Orgánica del Poder Judicial de la Federación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 305
+    },
+    {
+      "id": "MX-FED-LOPSRM",
+      "title": "LEY de Obras Públicas y Servicios Relacionados con las Mismas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 123
+    },
+    {
+      "id": "MX-FED-LOSCM",
+      "title": "LEY Orgánica del Seminario de Cultura Mexicana",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 16
+    },
+    {
+      "id": "MX-FED-LOSHF",
+      "title": "LEY Orgánica de Sociedad Hipotecaria Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 34
+    },
+    {
+      "id": "MX-FED-LOTFJA",
+      "title": "LEY Orgánica del Tribunal Federal de Justicia Administrativa",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 69
+    },
+    {
+      "id": "MX-FED-LOUAAAN",
+      "title": "LEY Orgánica de la Universidad Autónoma Agraria Antonio Narro",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 21
+    },
+    {
+      "id": "MX-FED-LPAB",
+      "title": "LEY de Protección al Ahorro Bancario",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 55
+    },
+    {
+      "id": "MX-FED-LPDUSF",
+      "title": "LEY de Protección y Defensa al Usuario de Servicios Financieros",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 125
+    },
+    {
+      "id": "MX-FED-LPEAM",
+      "title": "LEY de Protección del Espacio Aéreo Mexicano",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 19
+    },
+    {
+      "id": "MX-FED-LPERC",
+      "title": "LEY de Premios, Estímulos y Recompensas Civiles",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 141
+    },
+    {
+      "id": "MX-FED-LPF",
+      "title": "LEY de la Policía Federal",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 55
+    },
+    {
+      "id": "MX-FED-LPLAN",
+      "title": "LEY de Planeación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 47
+    },
+    {
+      "id": "MX-FED-LPO",
+      "title": "LEY de Productos Orgánicos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 42
+    },
+    {
+      "id": "MX-FED-LPPDDHP",
+      "title": "LEY para la Protección de Personas Defensoras de Derechos Humanos y Periodistas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 62
+    },
+    {
+      "id": "MX-FED-LPTE",
+      "title": "LEY de Planeación y Transición Energética",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 82
+    },
+    {
+      "id": "MX-FED-LRAF",
+      "title": "LEY para Regular las Agrupaciones Financieras",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 189
+    },
+    {
+      "id": "MX-FED-LRAM",
+      "title": "LEY de Recompensas de la Armada de México",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 70
+    },
+    {
+      "id": "MX-FED-LRART3_MMCE",
+      "title": "LEY Reglamentaria del Artículo 3o. de la Constitución Política de los Estados Unidos Mexicanos, en materia de Mejora Continua de la Educación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 53
+    },
+    {
+      "id": "MX-FED-LRART6_MDR",
+      "title": "LEY Reglamentaria del artículo 6o., párrafo primero, de la Constitución Política de los Estados Unidos Mexicanos, en materia del Derecho de Réplica",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 42
+    },
+    {
+      "id": "MX-FED-LRART76_FRACVI",
+      "title": "LEY Reglamentaria de la fracción VI del artículo 76 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 25
+    },
+    {
+      "id": "MX-FED-LRCDN",
+      "title": "LEY de Responsabilidad Civil por Daños Nucleares",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 31
+    },
+    {
+      "id": "MX-FED-LRFIYII_ART105",
+      "title": "LEY Reglamentaria de las Fracciones I y II del Artículo 105 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 70
+    },
+    {
+      "id": "MX-FED-LRFXIIIB_ART123",
+      "title": "LEY Reglamentaria de la Fracción XIII Bis del Apartado B, del Artículo 123 de la Constitución Política de los Estados Unidos Mexicanos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 25
+    },
+    {
+      "id": "MX-FED-LRITF",
+      "title": "LEY para Regular las Instituciones de Tecnología Financiera",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 142
+    },
+    {
+      "id": "MX-FED-LRPCAP",
+      "title": "LEY sobre Refugiados, Protección Complementaria y Asilo Político",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 79
+    },
+    {
+      "id": "MX-FED-LRSF",
+      "title": "LEY Reglamentaria del Servicio Ferroviario",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 66
+    },
+    {
+      "id": "MX-FED-LRSIC",
+      "title": "LEY para Regular las Sociedades de Información Crediticia",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 85
+    },
+    {
+      "id": "MX-FED-LSAR",
+      "title": "LEY de los Sistemas de Ahorro para el Retiro",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 141
+    },
+    {
+      "id": "MX-FED-LSCT",
+      "title": "LEY sobre la Celebración de Tratados",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 11
+    },
+    {
+      "id": "MX-FED-LSE",
+      "title": "LEY del Sector Eléctrico",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 147
+    },
+    {
+      "id": "MX-FED-LSH",
+      "title": "LEY del Sector Hidrocarburos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 120
+    },
+    {
+      "id": "MX-FED-LSM",
+      "title": "LEY del Servicio Militar",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 61
+    },
+    {
+      "id": "MX-FED-LSN",
+      "title": "LEY de Seguridad Nacional",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 76
+    },
+    {
+      "id": "MX-FED-LSNIEG",
+      "title": "LEY del Sistema Nacional de Información Estadística y Geográfica",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 133
+    },
+    {
+      "id": "MX-FED-LSNIIMSP",
+      "title": "LEY del Sistema Nacional de Investigación e Inteligencia en Materia de Seguridad Pública",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 28
+    },
+    {
+      "id": "MX-FED-LSP",
+      "title": "LEY de Sistemas de Pagos",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 44
+    },
+    {
+      "id": "MX-FED-LSPM",
+      "title": "LEY del Servicio Postal Mexicano",
+      "jurisdiction": "MX-FED",
+      "split": "validation",
+      "articles": 72
+    },
+    {
+      "id": "MX-FED-LSPREM",
+      "title": "LEY del Sistema Público de Radiodifusión del Estado Mexicano",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 32
+    },
+    {
+      "id": "MX-FED-LSS",
+      "title": "LEY del Seguro Social",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 336
+    },
+    {
+      "id": "MX-FED-LTF",
+      "title": "LEY de Tesorería de la Federación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 45
+    },
+    {
+      "id": "MX-FED-LTOSF",
+      "title": "LEY para la Transparencia y Ordenamiento de los Servicios Financieros",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 84
+    },
+    {
+      "id": "MX-FED-LTPCPIMCP",
+      "title": "LEY para la Transparencia, Prevención y Combate de Prácticas Indebidas en Materia de Contratación de Publicidad",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 10
+    },
+    {
+      "id": "MX-FED-LUC",
+      "title": "LEY de Uniones de Crédito",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 139
+    },
+    {
+      "id": "MX-FED-LUPDECR",
+      "title": "LEY para el uso y protección de la denominación y del emblema de la Cruz Roja",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 16
+    },
+    {
+      "id": "MX-FED-LVGC",
+      "title": "LEY de Vías Generales de Comunicación",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 162
+    },
+    {
+      "id": "MX-FED-LVIV",
+      "title": "LEY de Vivienda",
+      "jurisdiction": "MX-FED",
+      "split": "test",
+      "articles": 97
+    },
+    {
+      "id": "MX-FED-LVZMM",
+      "title": "LEY de Vertimientos en las Zonas Marinas Mexicanas",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 68
+    },
+    {
+      "id": "MX-FED-PEF_2026",
+      "title": "PRESUPUESTO de Egresos de la Federación para el Ejercicio Fiscal 2026",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 39
+    },
+    {
+      "id": "MX-FED-REG_DIPUTADOS",
+      "title": "REGLAMENTO de la Cámara de Diputados",
+      "jurisdiction": "MX-FED",
+      "split": "train",
+      "articles": 311
+    }
+  ],
+  "audit": {
+    "checked": 910,
+    "passed": 910,
+    "scope": "independent sample fidelity only"
+  },
+  "status": "structurally-verified-currentness-unverified",
+  "privateDocumentsIncluded": false,
+  "indexSha256": "ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588",
+  "bytes": 153014272
+}

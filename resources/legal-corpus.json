@@ -1,0 +1,755 @@
+[
+  {
+    "name": "ccf",
+    "prefix": "MX-CCF",
+    "id": "MX-CCF-1796",
+    "title": "Código Civil Federal",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 1796",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+    "retrievedAt": "2026-10-30T05:19:09.638Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 1796.- Los contratos se perfeccionan por el mero consentimiento, excepto aquellos que deben revestir una forma establecida por la ley. Desde que se perfeccionan obligan a los contratantes, no sólo al cumplimiento de lo expresamente pactado, sino también a las consecuencias que, según su naturaleza, son conforme a la buena fe, al uso o a la ley.",
+    "pages": [
+      175
+    ],
+    "amendmentNotes": [],
+    "sha256": "3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b",
+    "originalSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+    "snapshotPath": "legal-snapshots/ccf.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "ccf",
+    "prefix": "MX-CCF",
+    "id": "MX-CCF-1797",
+    "title": "Código Civil Federal",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 1797",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+    "retrievedAt": "2026-10-30T05:19:09.638Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 1797.- La validez y el cumplimiento de los contratos no puede dejarse al arbitrio de uno de los contratantes.",
+    "pages": [
+      175
+    ],
+    "amendmentNotes": [],
+    "sha256": "b3c00a20af5471f7da32c75634ceae74741e23e2437ca4f073ee2941c56f1134",
+    "originalSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+    "snapshotPath": "legal-snapshots/ccf.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "ccf",
+    "prefix": "MX-CCF",
+    "id": "MX-CCF-1832",
+    "title": "Código Civil Federal",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 1832",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+    "retrievedAt": "2026-10-30T05:19:09.638Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 1832.- En los contratos civiles cada uno se obliga en la manera y términos que aparezca que quiso obligarse, sin que para la validez del contrato se requieran formalidades determinadas, fuera de los casos expresamente designados por la ley.",
+    "pages": [
+      178
+    ],
+    "amendmentNotes": [],
+    "sha256": "bf7bba2477191a86675deb729d826aa6f3165871202bdb704b6b8474470b2b8e",
+    "originalSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+    "snapshotPath": "legal-snapshots/ccf.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "cpeum",
+    "prefix": "MX-CPEUM",
+    "id": "MX-CPEUM-1",
+    "title": "Constitución Política de los Estados Unidos Mexicanos",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Constitucional"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-10-07",
+    "version": "Última reforma declarada por el PDF: 2026-10-07; vigencia no verificada",
+    "article": "Artículo 1",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+    "retrievedAt": "2026-10-30T05:19:12.402Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 1o. En los Estados Unidos Mexicanos todas las personas gozarán de los derechos humanos reconocidos en esta Constitución y en los tratados internacionales de los que el Estado Mexicano sea parte, así como de las garantías para su protección, cuyo ejercicio no podrá restringirse ni suspenderse, salvo en los casos y bajo las condiciones que esta Constitución establece. Las normas relativas a los derechos humanos se interpretarán de conformidad con esta Constitución y con los tratados internacionales de la materia favoreciendo en todo tiempo a las personas la protección más amplia. Todas las autoridades, en el ámbito de sus competencias, tienen la obligación de promover, respetar, proteger y garantizar los derechos humanos de conformidad con los principios de universalidad, interdependencia, indivisibilidad y progresividad. En consecuencia, el Estado deberá prevenir, investigar, sancionar y reparar las violaciones a los derechos humanos, en los términos que establezca la ley. Está prohibida la esclavitud en los Estados Unidos Mexicanos. Los esclavos del extranjero que entren al territorio nacional alcanzarán, por este solo hecho, su libertad y la protección de las leyes. Queda prohibida toda discriminación motivada por origen étnico o nacional, el género, la edad, las discapacidades, la condición social, las condiciones de salud, la religión, las opiniones, las preferencias sexuales, el estado civil o cualquier otra que atente contra la dignidad humana y tenga por objeto anular o menoscabar los derechos y libertades de las personas.",
+    "pages": [
+      1,
+      2
+    ],
+    "amendmentNotes": [
+      "Párrafo reformado DOF 10-06-2011",
+      "Párrafo adicionado DOF 10-06-2011",
+      "Párrafo adicionado DOF 10-06-2011",
+      "Párrafo reformado DOF 04-12-2006, 10-06-2011",
+      "Artículo reformado DOF 14-08-2001"
+    ],
+    "sha256": "bf4065163e7822c8b801a7b9a242d8b39ca915bf2a6ec20d64b031dd5153435b",
+    "originalSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+    "snapshotPath": "legal-snapshots/cpeum.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "cpeum",
+    "prefix": "MX-CPEUM",
+    "id": "MX-CPEUM-14",
+    "title": "Constitución Política de los Estados Unidos Mexicanos",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Constitucional"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-10-07",
+    "version": "Última reforma declarada por el PDF: 2026-10-07; vigencia no verificada",
+    "article": "Artículo 14",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+    "retrievedAt": "2026-10-30T05:19:12.402Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 14. A ninguna ley se dará efecto retroactivo en perjuicio de persona alguna. Nadie podrá ser privado de la libertad o de sus propiedades, posesiones o derechos, sino mediante juicio seguido ante los tribunales previamente establecidos, en el que se cumplan las formalidades esenciales del procedimiento y conforme a las Leyes expedidas con anterioridad al hecho. En los juicios del orden criminal queda prohibido imponer, por simple analogía, y aún por mayoría de razón, pena alguna que no esté decretada por una ley exactamente aplicable al delito de que se trata. En los juicios del orden civil, la sentencia definitiva deberá ser conforme a la letra o a la interpretación jurídica de la ley, y a falta de ésta se fundará en los principios generales del derecho.",
+    "pages": [
+      19
+    ],
+    "amendmentNotes": [
+      "Párrafo reformado DOF 09-12-2005"
+    ],
+    "sha256": "2a40601349fc7791161450c15841523287393c0e42716aec92d9de1ade56392b",
+    "originalSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+    "snapshotPath": "legal-snapshots/cpeum.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "cpeum",
+    "prefix": "MX-CPEUM",
+    "id": "MX-CPEUM-17",
+    "title": "Constitución Política de los Estados Unidos Mexicanos",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Constitucional"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-10-07",
+    "version": "Última reforma declarada por el PDF: 2026-10-07; vigencia no verificada",
+    "article": "Artículo 17",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+    "retrievedAt": "2026-10-30T05:19:12.402Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 17. Ninguna persona podrá hacerse justicia por sí misma, ni ejercer violencia para reclamar su derecho. Toda persona tiene derecho a que se le administre justicia por tribunales que estarán expeditos para impartirla en los plazos y términos que fijen las leyes, emitiendo sus resoluciones de manera pronta, completa e imparcial. Su servicio será gratuito, quedando, en consecuencia, prohibidas las costas judiciales. Las leyes preverán las cuantías y supuestos en materia tributaria en las cuales tanto los Tribunales Administrativos como las Juezas y Jueces de Distrito y Tribunales de Circuito del Poder Judicial de la Federación o, en su caso, la Suprema Corte de Justicia de la Nación, deberán resolver en un máximo de seis meses, contados a partir del conocimiento del asunto por parte de la autoridad competente. En caso de cumplirse con el plazo señalado y que no se haya dictado sentencia, el órgano jurisdiccional que conozca del asunto deberá dar aviso inmediato al Tribunal de Disciplina Judicial y justificar las razones de dicha demora o, en su caso, dar vista al órgano interno de control tratándose de Tribunales Administrativos. Siempre que no se afecte la igualdad entre las partes, el debido proceso u otros derechos en los juicios o procedimientos seguidos en forma de juicio, las autoridades deberán privilegiar la solución del conflicto sobre los formalismos procedimentales. El Congreso de la Unión expedirá las leyes que regulen las acciones colectivas. Tales leyes determinarán las materias de aplicación, los procedimientos judiciales y los mecanismos de reparación del daño. Los jueces federales conocerán de forma exclusiva sobre estos procedimientos y mecanismos. Las leyes preverán mecanismos alternativos de solución de controversias. En la materia penal regularán su aplicación, asegurarán la reparación del daño y establecerán los casos en los que se requerirá supervisión judicial. Las sentencias que pongan fin a los procedimientos orales deberán ser explicadas en audiencia pública previa citación de las partes. Las leyes federales y locales establecerán los medios necesarios para que se garantice la independencia de los tribunales y la plena ejecución de sus resoluciones. La Federación y las entidades federativas garantizarán la existencia de un servicio de defensoría pública de calidad para la población y asegurarán las condiciones para un servicio profesional de carrera para los defensores. Las percepciones de los defensores no podrán ser inferiores a las que correspondan a los agentes del Ministerio Público. Nadie puede ser aprisionado por deudas de carácter puramente civil.",
+    "pages": [
+      21,
+      22
+    ],
+    "amendmentNotes": [
+      "Párrafo reformado DOF 15-09-2024",
+      "Párrafo adicionado DOF 15-09-2017",
+      "Párrafo reformado DOF 29-01-2016",
+      "Artículo reformado DOF 17-03-1987, 18-06-2008, 29-07-2010"
+    ],
+    "sha256": "4f87908a218dc1fdede472205f03c265dfc573ecc476109e8fc766bb9aee1f91",
+    "originalSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+    "snapshotPath": "legal-snapshots/cpeum.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "ccom",
+    "prefix": "MX-CCOM",
+    "id": "MX-CCOM-1",
+    "title": "Código de Comercio",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 1",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+    "retrievedAt": "2026-10-30T05:19:14.285Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 1o.- Los actos comerciales sólo se regirán por lo dispuesto en este Código y las demás leyes mercantiles aplicables.",
+    "pages": [
+      1
+    ],
+    "amendmentNotes": [
+      "Artículo reformado DOF 24-05-1996"
+    ],
+    "sha256": "cf6ba61bd0f089d1728cc8b61521ccbdb7d7e01efbf8c0777cee5bd5c63fda92",
+    "originalSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+    "snapshotPath": "legal-snapshots/ccom.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "ccom",
+    "prefix": "MX-CCOM",
+    "id": "MX-CCOM-2",
+    "title": "Código de Comercio",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 2",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+    "retrievedAt": "2026-10-30T05:19:14.285Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 2o.- A falta de disposiciones de este ordenamiento y las demás leyes mercantiles, serán aplicables a los actos de comercio las del derecho común contenidas en el Código Civil aplicable en materia federal.",
+    "pages": [
+      1
+    ],
+    "amendmentNotes": [
+      "Artículo reformado DOF 24-05-1996"
+    ],
+    "sha256": "17a2c973c050909bc81fc857ee708632af6b363d2fcfe761025450c96782a96c",
+    "originalSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+    "snapshotPath": "legal-snapshots/ccom.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "ccom",
+    "prefix": "MX-CCOM",
+    "id": "MX-CCOM-78",
+    "title": "Código de Comercio",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-11-14",
+    "version": "Última reforma declarada por el PDF: 2025-11-14; vigencia no verificada",
+    "article": "Artículo 78",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+    "retrievedAt": "2026-10-30T05:19:14.285Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 78.- En las convenciones mercantiles cada uno se obliga en la manera y términos que aparezca que quiso obligarse, sin que la validez del acto comercial dependa de la observancia de formalidades o requisitos determinados.",
+    "pages": [
+      19
+    ],
+    "amendmentNotes": [],
+    "sha256": "00978cffc63815aee893d5e5515e99fa8268bd9601329e9dd88d0618a717c506",
+    "originalSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+    "snapshotPath": "legal-snapshots/ccom.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lft",
+    "prefix": "MX-LFT",
+    "id": "MX-LFT-20",
+    "title": "Ley Federal del Trabajo",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Laboral"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 20",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+    "retrievedAt": "2026-10-30T05:19:16.284Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 20.- Se entiende por relación de trabajo, cualquiera que sea el acto que le dé origen, la prestación de un trabajo personal subordinado a una persona, mediante el pago de un salario. Contrato individual de trabajo, cualquiera que sea su forma o denominación, es aquel por virtud del cual una persona se obliga a prestar a otra un trabajo personal subordinado, mediante el pago de un salario. La prestación de un trabajo a que se refiere el párrafo primero y el contrato celebrado producen los mismos efectos.",
+    "pages": [
+      6,
+      7
+    ],
+    "amendmentNotes": [],
+    "sha256": "93b06e8b40d78a1bf8f66078bc0fbff437c8286dce409aadf801c7de475c2db2",
+    "originalSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+    "snapshotPath": "legal-snapshots/lft.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lft",
+    "prefix": "MX-LFT",
+    "id": "MX-LFT-21",
+    "title": "Ley Federal del Trabajo",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Laboral"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 21",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+    "retrievedAt": "2026-10-30T05:19:16.284Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 21.- Se presumen la existencia del contrato y de la relación de trabajo entre el que presta un trabajo personal y el que lo recibe.",
+    "pages": [
+      7
+    ],
+    "amendmentNotes": [],
+    "sha256": "134441b1053962323b22ef94695856b4626b78b39a6a3f20323cd61ddc7b7628",
+    "originalSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+    "snapshotPath": "legal-snapshots/lft.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lft",
+    "prefix": "MX-LFT",
+    "id": "MX-LFT-24",
+    "title": "Ley Federal del Trabajo",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Laboral"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 24",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+    "retrievedAt": "2026-10-30T05:19:16.284Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 24.- Las condiciones de trabajo deben hacerse constar por escrito cuando no existan contratos colectivos aplicables. Se harán dos ejemplares, por lo menos, de los cuales quedará uno en poder de cada parte.",
+    "pages": [
+      7
+    ],
+    "amendmentNotes": [],
+    "sha256": "3e60f6247831a36d2c3db7dad1bdd278024ba0fe03d2807feadb03e8b288f294",
+    "originalSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+    "snapshotPath": "legal-snapshots/lft.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfpc",
+    "prefix": "MX-LFPC",
+    "id": "MX-LFPC-7",
+    "title": "Ley Federal de Protección al Consumidor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Consumo",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-12-12",
+    "version": "Última reforma declarada por el PDF: 2025-12-12; vigencia no verificada",
+    "article": "Artículo 7",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf",
+    "retrievedAt": "2026-10-30T05:19:18.394Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 7.- Todo proveedor está obligado a informar y a respetar los precios, tarifas, garantías, cantidades, calidades, medidas, intereses, cargos, términos, restricciones, plazos, fechas, modalidades, reservaciones y demás condiciones aplicables en la comercialización de bienes, productos o servicios, sobre todos aquellos que se hubiera ofrecido, obligado o convenido con el consumidor para la entrega del bien o prestación del servicio, y bajo ninguna circunstancia serán negados estos bienes, productos o servicios a persona alguna, así como la información de los mismos.",
+    "pages": [
+      3
+    ],
+    "amendmentNotes": [
+      "Artículo reformado DOF 05-08-1994, 04-02-2004, 11-01-2018"
+    ],
+    "sha256": "c9a7edc6728f23e2dd3d5ed5bfdd87e5d128da65b60672c9d7a0c9b9a1049f4f",
+    "originalSha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55",
+    "snapshotPath": "legal-snapshots/lfpc.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfpc",
+    "prefix": "MX-LFPC",
+    "id": "MX-LFPC-10",
+    "title": "Ley Federal de Protección al Consumidor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Consumo",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-12-12",
+    "version": "Última reforma declarada por el PDF: 2025-12-12; vigencia no verificada",
+    "article": "Artículo 10",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf",
+    "retrievedAt": "2026-10-30T05:19:18.394Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 10.- Queda prohibido a cualquier proveedor de bienes o servicios llevar a cabo acciones que atenten contra la libertad o seguridad o integridad personales de los consumidores bajo pretexto de registro o averiguación. En el caso de que alguien sea sorprendido en la comisión flagrante de un delito, los proveedores, sus agentes o empleados se limitarán, bajo su responsabilidad, a poner sin demora al presunto infractor a disposición de la autoridad competente. La infracción de esta disposición se sancionará de acuerdo con lo previsto en esta ley, independientemente de la reparación del daño moral y la indemnización por los daños y perjuicios ocasionados en caso de no comprobarse el delito imputado. Los proveedores no podrán aplicar métodos o prácticas comerciales coercitivas y desleales, ni cláusulas o condiciones abusivas o impuestas en el abastecimiento de productos o servicios. Asimismo, tampoco podrán prestar servicios adicionales a los originalmente contratados que no hubieren sido solicitados o aceptados expresamente, por escrito o por vía electrónica, por el consumidor, ni podrán aplicar cargos sin previo consentimiento del consumidor o que no se deriven del contrato correspondiente.",
+    "pages": [
+      4
+    ],
+    "amendmentNotes": [
+      "Párrafo adicionado DOF 04-02-2004. Reformado DOF 11-01-2018"
+    ],
+    "sha256": "10bae4948fe0cb41059d34d90be6c03f7347dcc92419da940f8dbfae92332348",
+    "originalSha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55",
+    "snapshotPath": "legal-snapshots/lfpc.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfpc",
+    "prefix": "MX-LFPC",
+    "id": "MX-LFPC-85",
+    "title": "Ley Federal de Protección al Consumidor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Consumo",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2025-12-12",
+    "version": "Última reforma declarada por el PDF: 2025-12-12; vigencia no verificada",
+    "article": "Artículo 85",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf",
+    "retrievedAt": "2026-10-30T05:19:18.394Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 85.- Para los efectos de esta ley, se entiende por contrato de adhesión el documento elaborado unilateralmente por el proveedor, para establecer en formatos uniformes los términos y condiciones aplicables a la adquisición de un producto o la prestación de un servicio, aun cuando dicho documento no contenga todas las cláusulas ordinarias de un contrato. Todo contrato de adhesión celebrado en territorio nacional, para su validez, deberá estar escrito en idioma español y sus caracteres tendrán que ser legibles a simple vista y en un tamaño y tipo de letra uniforme. Además, no podrá implicar prestaciones desproporcionadas a cargo de los consumidores, obligaciones inequitativas o abusivas, o cualquier otra cláusula o texto que viole las disposiciones de esta ley.",
+    "pages": [
+      35
+    ],
+    "amendmentNotes": [
+      "Artículo reformado DOF 04-02-2004, 30-11-2010"
+    ],
+    "sha256": "ba5a06b4297652f3a798e08894a0e2ba98b8cd5648631bd8998612c4d5889f16",
+    "originalSha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55",
+    "snapshotPath": "legal-snapshots/lfpc.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfda",
+    "prefix": "MX-LFDA",
+    "id": "MX-LFDA-11",
+    "title": "Ley Federal del Derecho de Autor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Propiedad intelectual"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 11",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "retrievedAt": "2026-10-30T05:19:20.056Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 11.- El derecho de autor es el reconocimiento que hace el Estado en favor de todo creador de obras literarias y artísticas previstas en el artículo 13 de esta Ley, en virtud del cual otorga su protección para que el autor goce de prerrogativas y privilegios exclusivos de carácter personal y patrimonial. Los primeros integran el llamado derecho moral y los segundos, el patrimonial.",
+    "pages": [
+      3
+    ],
+    "amendmentNotes": [],
+    "sha256": "5d30466cff26e69a8772e26ae3e8ccad895b01c918b6be493524903473f95fb3",
+    "originalSha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5",
+    "snapshotPath": "legal-snapshots/lfda.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfda",
+    "prefix": "MX-LFDA",
+    "id": "MX-LFDA-12",
+    "title": "Ley Federal del Derecho de Autor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Propiedad intelectual"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 12",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "retrievedAt": "2026-10-30T05:19:20.056Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 12.- Autor es la persona física que ha creado una obra literaria y artística.",
+    "pages": [
+      4
+    ],
+    "amendmentNotes": [],
+    "sha256": "20ba3d07e0071e7652bf4f979a7d8cda01440e54ec3af5a5aec03bdd965977b2",
+    "originalSha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5",
+    "snapshotPath": "legal-snapshots/lfda.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "lfda",
+    "prefix": "MX-LFDA",
+    "id": "MX-LFDA-14",
+    "title": "Ley Federal del Derecho de Autor",
+    "authority": "Cámara de Diputados del H. Congreso de la Unión",
+    "jurisdiction": "MX-FED",
+    "practiceAreas": [
+      "Propiedad intelectual"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2026-05-14",
+    "version": "Última reforma declarada por el PDF: 2026-05-14; vigencia no verificada",
+    "article": "Artículo 14",
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "retrievedAt": "2026-10-30T05:19:20.056Z",
+    "status": "snapshot-current-validity-unverified",
+    "text": "Artículo 14.- No son objeto de la protección como derecho de autor a que se refiere esta Ley: I. Las ideas en sí mismas, las fórmulas, soluciones, conceptos, métodos, sistemas, principios, descubrimientos, procesos e invenciones de cualquier tipo; II. El aprovechamiento industrial o comercial de las ideas contenidas en las obras; III. Los esquemas, planes o reglas para realizar actos mentales, juegos o negocios; IV. Las letras, los dígitos o los colores aislados, a menos que su estilización sea tal que las conviertan en dibujos originales; V. Los nombres y títulos o frases aislados; VI. Los simples formatos o formularios en blanco para ser llenados con cualquier tipo de información, así como sus instructivos; VII. Las reproducciones o imitaciones, sin autorización, de escudos, banderas o emblemas de cualquier país, estado, municipio o división política equivalente, ni las denominaciones, siglas, símbolos o emblemas de organizaciones internacionales gubernamentales, no gubernamentales, o de cualquier otra organización reconocida oficialmente, así como la designación verbal de los mismos; VIII. Los textos legislativos, reglamentarios, administrativos o judiciales, así como sus traducciones oficiales. En caso de ser publicados, deberán apegarse al texto oficial y no conferirán derecho exclusivo de edición; Sin embargo, serán objeto de protección las concordancias, interpretaciones, estudios comparativos, anotaciones, comentarios y demás trabajos similares que entrañen, por parte de su autor, la creación de una obra original; IX. El contenido informativo de las noticias, pero sí su forma de expresión, y X. La información de uso común tal como los refranes, dichos, leyendas, hechos, calendarios y las escalas métricas.",
+    "pages": [
+      4,
+      5
+    ],
+    "amendmentNotes": [],
+    "sha256": "489ec6a3c79470f31e4542e8dd231de8db59adf785536ea394540e94944b2357",
+    "originalSha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5",
+    "snapshotPath": "legal-snapshots/lfda.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual."
+  },
+  {
+    "name": "cdmx",
+    "prefix": "MX-CMX-CC",
+    "id": "MX-CMX-CC-1796",
+    "title": "Código Civil para el Distrito Federal",
+    "authority": "Congreso de la Ciudad de México",
+    "jurisdiction": "MX-CMX",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2024-09-27",
+    "version": "Última reforma declarada por el PDF: 2024-09-27; vigencia no verificada",
+    "article": "Artículo 1796",
+    "url": "https://www.congresocdmx.gob.mx/archivo-750c763f50e26a46afd73e40dca4c4bc8a4cb741.pdf",
+    "retrievedAt": "2026-10-29",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 1796.- Los contratos se perfeccionan por el mero consentimiento, excepto aquellos que deben revestir una forma establecida por la Ley. Desde que se perfeccionan obligan a los contratantes no sólo al cumplimiento de lo expresamente pactado, sino también a las consecuencias que, según su naturaleza son conforme a la buena fe, al uso o a la ley, con excepción de aquellos contratos que se encuentren en el supuesto señalado en el párrafo siguiente. Salvo aquellos contratos que aparezcan celebrados con carácter aleatorio, cuando en los contratos sujetos a plazo, condición o de tracto sucesivo, surjan en el intervalo acontecimientos extraordinarios de carácter nacional que no fuesen posibles de prever y que generen que las obligaciones de una de las partes sean más onerosas, dicha parte podrá intentar la acción tendiente a recuperar el equilibrio entre las obligaciones conforme al procedimiento señalado en el siguiente artículo.",
+    "pages": [
+      292
+    ],
+    "amendmentNotes": [],
+    "sha256": "758813640c139a89edf25e6f83ad0acf5a1484a498d7bec4a6c52fd809d5df3a",
+    "originalSha256": "694ce3bb40ab0833470dd0ab316b0db43ee67ada86e77a5c6b2b37f640a91b2e",
+    "snapshotPath": "legal-snapshots/cdmx.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual.",
+    "editorialWarning": "La copia inicial contiene texto ajeno en portada; no se considera certificación de vigencia."
+  },
+  {
+    "name": "cdmx",
+    "prefix": "MX-CMX-CC",
+    "id": "MX-CMX-CC-1797",
+    "title": "Código Civil para el Distrito Federal",
+    "authority": "Congreso de la Ciudad de México",
+    "jurisdiction": "MX-CMX",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2024-09-27",
+    "version": "Última reforma declarada por el PDF: 2024-09-27; vigencia no verificada",
+    "article": "Artículo 1797",
+    "url": "https://www.congresocdmx.gob.mx/archivo-750c763f50e26a46afd73e40dca4c4bc8a4cb741.pdf",
+    "retrievedAt": "2026-10-29",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 1797.- La validez y el cumplimiento de los contratos no puede dejarse al arbitrio de uno de los contratantes.",
+    "pages": [
+      293
+    ],
+    "amendmentNotes": [],
+    "sha256": "c38d4aa5e382a223841fdd4b92ba8cc118c5974dd642ef1c8d257e1191fafcd0",
+    "originalSha256": "694ce3bb40ab0833470dd0ab316b0db43ee67ada86e77a5c6b2b37f640a91b2e",
+    "snapshotPath": "legal-snapshots/cdmx.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual.",
+    "editorialWarning": "La copia inicial contiene texto ajeno en portada; no se considera certificación de vigencia."
+  },
+  {
+    "name": "cdmx",
+    "prefix": "MX-CMX-CC",
+    "id": "MX-CMX-CC-1832",
+    "title": "Código Civil para el Distrito Federal",
+    "authority": "Congreso de la Ciudad de México",
+    "jurisdiction": "MX-CMX",
+    "practiceAreas": [
+      "Civil",
+      "Comercial"
+    ],
+    "category": "legislation-snapshot",
+    "publishedAt": null,
+    "effectiveAt": null,
+    "amendedAt": "2024-09-27",
+    "version": "Última reforma declarada por el PDF: 2024-09-27; vigencia no verificada",
+    "article": "Artículo 1832",
+    "url": "https://www.congresocdmx.gob.mx/archivo-750c763f50e26a46afd73e40dca4c4bc8a4cb741.pdf",
+    "retrievedAt": "2026-10-29",
+    "status": "snapshot-current-validity-unverified",
+    "text": "ARTÍCULO 1832.- En los contratos civiles cada uno se obliga en la manera y términos que aparezca que quiso obligarse, sin que para la validez del contrato se requieran formalidades determinadas, fuera de los casos expresamente designados por la ley.",
+    "pages": [
+      297
+    ],
+    "amendmentNotes": [],
+    "sha256": "40aa85fcd1e65308c17a30f2a88b6ec7164ec0833973955d08f6684940ddd8fb",
+    "originalSha256": "694ce3bb40ab0833470dd0ab316b0db43ee67ada86e77a5c6b2b37f640a91b2e",
+    "snapshotPath": "legal-snapshots/cdmx.pdf",
+    "review": {
+      "type": "source-transcription",
+      "reviewedAt": "2026-10-29",
+      "legalAccuracy": "not-professionally-evaluated"
+    },
+    "accessNote": "Texto legislativo oficial de acceso público. Copia acotada; LFDA artículo 14 fracción VIII excluye textos legislativos de protección autoral, no comentarios editoriales. No se eluden controles. No se afirma vigencia actual.",
+    "editorialWarning": "La copia inicial contiene texto ajeno en portada; no se considera certificación de vigencia."
+  }
+]

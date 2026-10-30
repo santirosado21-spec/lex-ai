@@ -1,0 +1,24 @@
+{
+  "version": "0.3.1",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T15:16:12.593901+00:00",
+  "defaultModelReplaced": false,
+  "legalValidation": "not-performed",
+  "changes": [
+    "Editorial app welcome cover",
+    "Public product landing",
+    "Offline Supabase public metadata schema"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.1-arm64.dmg",
+      "bytes": 375055123,
+      "sha256": "7e9f7b0779721a20086e4562140fe8db9530b533742df127a2dca6eaba894e6d",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "package": "PASS",
+    "landing": "PASS"
+  }
+}

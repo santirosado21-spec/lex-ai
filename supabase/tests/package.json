@@ -1,0 +1,7 @@
+{
+  "name": "lex-public-catalog-sql-tests",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test catalog-static.test.mjs catalog-sql.test.mjs" },
+  "devDependencies": { "@electric-sql/pglite": "0.5.13" }
+}
