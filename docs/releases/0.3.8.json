@@ -1,0 +1,30 @@
+{
+  "version": "0.3.8",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T16:40:34.750168+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Dashboard mode with workspace or matter scope independent from active chat context",
+    "Real counts, eight-week task creation/completion-event chart and equivalent accessible table",
+    "Matter task progress and recent document/answer/task activity with dossier navigation",
+    "Lazy-loaded local Recharts, mobile More access and preserved chat draft"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.8-arm64.dmg",
+      "bytes": 397272638,
+      "sha256": "d1a6b6e02775d7812203128fb74d08cb8986eff1b639c76d8cf8b310d90c1013",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "automatedTests": "101/101 PASS",
+    "dashboardUI": "PASS",
+    "fullUI": "PASS (synthetic inference)",
+    "desktopBuild": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}
