@@ -4,7 +4,7 @@
 
 - Repositorio privado: https://github.com/santirosado21-spec/lex-ai. Código inicial publicado; pesos, índice SQLite generado, documentos operativos y secretos excluidos.
 - Dirección visual real de Claude Opus 5.5: «Expediente foliado». Cover original generado por imagegen, integrado en onboarding de la app y en la landing. Original y procedencia conservados.
-- App 0.3.1 compilada, firmada ad hoc y DMG verificado. Manifiesto sin rutas privadas: `docs/releases/0.3.1.json`. No notarizada ni probada en un segundo Mac limpio.
+- App 0.3.1 compilada, firmada ad hoc y DMG verificado. [Pre-release en el repositorio privado](https://github.com/santirosado21-spec/lex-ai/releases/tag/v0.3.1) con instalador y SHA256; tamaño y digest reportados por GitHub coinciden con el archivo local. Manifiesto sin rutas privadas: `docs/releases/0.3.1.json`. No notarizada ni probada en un segundo Mac limpio.
 - Landing estática en `landing/`: demo HTML con datos ficticios, cinco pasos por teclado, diálogo de privacidad, FAQ, requisitos, modelo experimental separado y ausencia explícita de descarga pública. Tipografía e imagen propias del sitio, sin scripts externos.
 - Smoke de navegador PASS a 1440/768/390 px: sin overflow, errores de consola ni recursos fallidos; cover, fuentes, fragmentos, teclado y recuperación de foco comprobados con la CSP de producción.
 - Onboarding de escritorio/móvil PASS con imagen real, etiquetas y creación de despacho conservadas. Las pruebas de UI usan inferencia simulada, no son evaluación del modelo.
