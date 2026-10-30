@@ -1,0 +1,27 @@
+{
+  "version": "0.3.6",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T16:10:37.402597+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Inline circular loader around static assistant avatar",
+    "Staggered status letters with reduced-motion support",
+    "Cancellation remains visible; no full-screen overlay or extra dependencies"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.6-arm64.dmg",
+      "bytes": 376544241,
+      "sha256": "2945ede9fa2efbf9c7f3bc1f1429da01dcf8deea6eb05ffaf0ad575448e536cc",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "avatarAndLoader": "PASS",
+    "fullUI": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}
