@@ -1,6 +1,6 @@
 {
   "name": "lex-ai",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "private": true,
   "type": "module",
   "scripts": {
@@ -28,6 +28,7 @@
     "docx": "^9.0.0",
     "lucide-react": "^0.468.0",
     "mammoth": "^1.8.0",
+    "metal-fx": "2.0.11",
     "pdf-parse": "1.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

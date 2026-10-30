@@ -58,7 +58,7 @@ El repositorio de desarrollo es privado: https://github.com/santirosado21-spec/l
 
 ## Entrega actual
 
-Aplicación: `src-tauri/target/release/bundle/macos/LEX AI.app`. Instalador con cover, dock, inicio bento, avatar e indicador de proceso: `artifacts/LEX-AI-0.3.6-arm64.dmg` y SHA256 adyacente. Las versiones 0.3.0 a 0.3.5 anteriores se conservan. El backend empaquetado comprueba la biblioteca real, búsqueda, integridad de módulos y estado de entrenamiento. La UI se verifica en Chromium con fixtures sintéticos y en una prueba separada contra la biblioteca real. El instalador tiene firma ad hoc de desarrollo; no está notarizado y no ha sido probado en un segundo Mac limpio.
+Aplicación: `src-tauri/target/release/bundle/macos/LEX AI.app`. Instalador con cover, dock, inicio bento, avatar, indicador de proceso y barra de chat: `artifacts/LEX-AI-0.3.7-arm64.dmg` y SHA256 adyacente. Las versiones 0.3.0 a 0.3.6 anteriores se conservan. El backend empaquetado comprueba la biblioteca real, búsqueda, integridad de módulos y estado de entrenamiento. La UI se verifica en Chromium con fixtures sintéticos y en una prueba separada contra la biblioteca real. El instalador tiene firma ad hoc de desarrollo; no está notarizado y no ha sido probado en un segundo Mac limpio.
 
 El candidato local `artifacts/training/lex-gemma4-lora-v2` completó 400 pasos QLoRA sobre datos públicos depurados. Los pesos completos están en [LEX-Gemma4-Experimental-v2.tar](artifacts/LEX-Gemma4-Experimental-v2.tar) (14,37 GB), con licencia, configuración, informes y SHA256 adyacente. Pasó 32 casos técnicos emparejados y un flujo sintético de contrato → recuperación → citas → DOCX. Este último usa generación sin esquema y normalización acotada de caracteres de control dentro de strings JSON antes de comprobar todas las citas; importar el modelo en otro cliente no incorpora esas validaciones.
 
@@ -75,3 +75,5 @@ La versión 0.3.4 integra el avatar aportado por el dueño como identidad visual
 La versión 0.3.5 presenta el asistente como LEX AI en onboarding, estado, configuración, evaluación y landing. Los diagnósticos técnicos del runtime no se muestran directamente. [Criterio de identidad del producto](docs/architecture/product-identity.md).
 
 La versión 0.3.6 integra el loader circular aportado por el dueño dentro de la consulta: anillo alrededor del avatar estático, letras escalonadas, Cancelar accesible y movimiento reducido. [Integración del loader](docs/ui-resources/loader-integration.md).
+
+La versión 0.3.7 integra la barra de chat MetalPromptBar: adjuntos por asunto, habilidad real, crecimiento hasta seis líneas, atajos y conservación del borrador ante error o cancelación. El efecto metálico es local y opcional. [Integración del chat](docs/ui-resources/chat-composer-integration.md).

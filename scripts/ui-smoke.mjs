@@ -39,8 +39,10 @@ try {
  let options={headless:true};
  try {await access(chromium.executablePath());}catch{options={...options,channel:'chrome'};}
  browser=await chromium.launch(options);
- const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
+ const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true,reducedMotion:'reduce'});
  const page=await context.newPage();
+ // Keep this fake-clock functional suite free of GPU animation timing.
+ // ui-chat-smoke.mjs separately verifies the live shader and its fallback.
  await page.clock.install();
  let sourceStatusReads=0;
  page.on('request',request=>{if(request.url().endsWith('/api')&&request.postData()?.includes('sources.status'))sourceStatusReads++;});

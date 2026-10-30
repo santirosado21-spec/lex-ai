@@ -1,0 +1,31 @@
+{
+  "version": "0.3.7",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T16:27:26.677763+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Controlled MetalPromptBar in Home and Assistant with scoped attachments and actual skills",
+    "Enter/Shift+Enter/IME handling, six-line autogrow, draft preservation on failure or cancellation",
+    "Local optional metallic send effect with static fallback and no GPU effect during inference",
+    "Always-visible send control; preserved third-party licenses and notices"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.7-arm64.dmg",
+      "bytes": 377564686,
+      "sha256": "a5bdb5f141496537a3beff2316816c12fca14c379ec30315638f5da7e43bdca9",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "chat": "PASS",
+    "avatarAndLoader": "PASS",
+    "dock": "PASS",
+    "fullUI": "PASS (reduced motion, synthetic inference)",
+    "backend": "94/94 PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}

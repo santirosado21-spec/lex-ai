@@ -1,3 +1,4 @@
+import MetalPromptBar, {type PromptSelection} from './components/ui/metal-prompt-bar';
 import {AILoader} from './components/ui/ai-loader';
 import {assistantPresentation} from './assistant-presentation';
 import Avatar from './components/ui/components-primitives-avatar';
@@ -6,8 +7,8 @@ import {version as appVersion} from '../package.json';
 import Dock from './components/ui/dock';
 import AppCover from './components/AppCover';
 import PublicLibrary from './PublicLibrary';
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { ArrowUp, BookOpen, Check, CheckCircle2, ChevronRight, CircleHelp, Download, FileText, FolderOpen, Home, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy, Paperclip } from 'lucide-react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { BookOpen, Check, CheckCircle2, ChevronRight, CircleHelp, Download, FileText, FolderOpen, Home, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy } from 'lucide-react';
 import CommandPalette, { type CommandItem } from './CommandPalette';
 import DocumentText from './DocumentText';
 import DocumentLibrary from './DocumentLibrary';
@@ -64,6 +65,7 @@ export default function App() {
   const [showMatter,setShowMatter] = useState(false);
   const [viewer,setViewer] = useState<{name:string;text:string}|null>(null);
   const [question,setQuestion] = useState('');
+  const promptSelection=useRef<PromptSelection|null>(null);
   const [skillId,setSkillId] = useState('contract-reviewer');
   const [stream,setStream] = useState('');
   const [generating,setGenerating] = useState(false);
@@ -118,17 +120,17 @@ export default function App() {
     if(!matterId) return;
     await perform('import',async()=>{await api('document.import',{matterId,name:file.name,base64:await fileBase64(file)});await refresh();setNotice(`«${file.name}» se importó y se indexó en este asunto.`);});
   }
-  async function ask(event:FormEvent) {
-    event.preventDefault();if(question.trim().length<3 || !matterId || generating || state!=='ready' || !documents.length || busy) return;
+  async function ask(text:string) {
+    if(text.trim().length<3 || text.length>4000 || !matterId || generating || state!=='ready' || !documents.length || busy) return;
     const id=matterId; const controller=new AbortController();streamController.current=controller;
     setGenerating(true);setError('');setNotice('');setStream('');streamText.current='';
     try {
-      const answer=await analyze({matterId:id,question:question.trim(),skillId},text=>{
+      const answer=await analyze({matterId:id,question:text.trim(),skillId},text=>{
         if(currentMatter.current!==id || controller.signal.aborted) return;
         streamText.current+=text;
         if(streamFrame.current===null) streamFrame.current=requestAnimationFrame(()=>{if(currentMatter.current===id&&!controller.signal.aborted)setStream(streamText.current);streamFrame.current=null;});
       },controller.signal);
-      if(currentMatter.current===id && !controller.signal.aborted) {await refresh();setSelectedAnswer(answer.id);setQuestion('');setStream('');setRailOpen(true);setRailTab('sources');}
+      if(currentMatter.current===id && !controller.signal.aborted) {await refresh();if(currentMatter.current!==id||controller.signal.aborted)return;setSelectedAnswer(answer.id);setQuestion('');setStream('');setRailOpen(true);setRailTab('sources');}
     } catch(e) {if(!controller.signal.aborted) setError(e instanceof Error?e.message:'El análisis no pudo completarse.');}
     finally {if(streamController.current===controller) {setGenerating(false);streamController.current=null;}}
   }
@@ -139,14 +141,7 @@ export default function App() {
   const importInputRef = useRef<HTMLInputElement>(null);
   const importControl = <><button type="button" className="secondary" disabled={Boolean(busy)||!matterId} onClick={()=>importInputRef.current?.click()}><Upload size={15}/>{busy==='import'?'Importando…':'Importar documento'}</button><input ref={importInputRef} aria-label="Seleccionar documento" type="file" accept=".pdf,.docx,.txt,.md" hidden disabled={Boolean(busy)||!matterId} onChange={event=>{const file=event.target.files?.[0];if(file) void importFile(file);event.target.value='';}}/></>;
 
-  const composer = <form className="composer" onSubmit={event=>{if(page==='home')setPage('workspace');void ask(event);}}>
-    <label className="sr-only" htmlFor="question">Pregunta sobre el asunto</label>
-    <textarea id="question" value={question} onChange={e=>setQuestion(e.target.value)} onKeyDown={event=>{if((event.metaKey||event.ctrlKey)&&event.key==='Enter'){event.preventDefault();event.currentTarget.form?.requestSubmit();}}} placeholder="Pregunta, analiza o prepara un borrador…" rows={3} maxLength={4000} disabled={generating||!matter}/>
-    <div className="composer-tools"><div className="composer-context"><label role="button" tabIndex={0} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();event.currentTarget.querySelector('input')?.click();}}} className="attach-button" title="Adjuntar documento al asunto"><Paperclip size={17}/><span className="sr-only">Adjuntar documento</span><input type="file" accept=".pdf,.docx,.txt,.md" hidden disabled={Boolean(busy)||!matterId||generating} onChange={event=>{const file=event.target.files?.[0];if(file)void importFile(file);event.target.value='';}}/></label><label className="sr-only" htmlFor="skill">Habilidad</label><select id="skill" value={skillId} onChange={e=>setSkillId(e.target.value)} disabled={generating}>{data.skills.length?data.skills.map(skill=><option key={skill.id} value={skill.id}>{skill.name}</option>):<option value="contract-reviewer">Revisión de contratos</option>}</select></div>{generating?<button type="button" className="secondary" onClick={()=>{streamController.current?.abort();setGenerating(false);setStream('');}}>Cancelar</button>:<button className="primary" type="submit" disabled={question.trim().length<3||state!=='ready'||!documents.length||Boolean(busy)}><ArrowUp size={16}/> Preguntar</button>}</div>
-    <div className="composer-footer"><span>{matter?`${matter.title} · ${documents.length} documentos`:'Crea o selecciona un asunto para empezar.'}</span><span>⌘ ↵</span></div>
-    {matter&&state!=='ready'&&<p className="composer-requirement">LEX AI aún no está listo. <button type="button" className="text-button" onClick={()=>setPage('settings')}>Preparar LEX AI</button></p>}
-    {matter&&state==='ready'&&!documents.length&&<p className="composer-requirement">Adjunta un documento para trabajar con evidencia del asunto.</p>}
-  </form>;
+  const composer = <MetalPromptBar value={question} onChange={setQuestion} onSubmit={text=>{if(page==='home')setPage('workspace');void ask(text);}} onCancel={()=>{streamController.current?.abort();if(streamFrame.current!==null){cancelAnimationFrame(streamFrame.current);streamFrame.current=null;}streamText.current='';setGenerating(false);setStream('');}} matter={matter} documentCount={documents.length} engineReady={state==='ready'} busy={Boolean(busy)} generating={generating} skills={data.skills} skillId={skillId} onSkillChange={setSkillId} onAttach={selected=>void importFile(selected)} onPrepare={()=>setPage('settings')} selectionRef={promptSelection}/>;
   return <div className={`app-shell ${sidebarCollapsed?'sidebar-collapsed':''} ${dockMode?'dock-mode':''}`}>
 
     <aside className="sidebar" hidden={dockMode}>
