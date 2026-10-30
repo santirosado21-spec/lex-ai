@@ -8,7 +8,7 @@ Three tables in `public`:
 
 | Table | Meaning | Version prepared |
 | --- | --- | --- |
-| `product_app_releases` | App version, platform/architecture, digest, bytes, nullable download link | 0.3.0, macOS arm64 |
+| `product_app_releases` | App version, platform/architecture, digest, bytes, nullable download link | 0.3.0 historical and 0.3.1, macOS arm64 |
 | `product_model_releases` | Optional experimental model version, digest, bytes, technical evaluation scope | v2-r2; separate manual Ollama import |
 | `product_legal_library_snapshots` | Snapshot/index metadata and bounded coverage claims | v2; 303 instruments, 35,452 articles |
 
@@ -48,7 +48,7 @@ Only a non-null verified public HTTPS URL enables a download action. Neither a s
 
 ## Verification status and remaining integration work
 
-`npm test --prefix supabase/tests`: 13 tests/subtests passed locally, including real PostgreSQL execution in isolated in-memory PGlite 0.5.13. The tests create only ephemeral `anon`/`authenticated` roles, execute the declared schema and seed, confirm unpublished rows are invisible, publish synthetic fixtures, and verify each role sees only those fixtures. INSERT, UPDATE, DELETE, TRUNCATE and ALTER are denied on every catalog table; actual PostgreSQL ACLs contain no PUBLIC SELECT grant. Invalid hashes, sizes, URL schemes/credentials, legal-validation claims and default-model changes are rejected by CHECK constraints. Seed reruns preserve existing rows.
+`npm test --prefix supabase/tests`: 14 tests/subtests passed locally, including real PostgreSQL execution in isolated in-memory PGlite 0.5.13. The tests create only ephemeral `anon`/`authenticated` roles, execute the declared schema and seed, confirm unpublished rows are invisible, publish synthetic fixtures, and verify each role sees only those fixtures. INSERT, UPDATE, DELETE, TRUNCATE and ALTER are denied on every catalog table; actual PostgreSQL ACLs contain no PUBLIC SELECT grant. Invalid hashes, sizes, URL schemes/credentials, legal-validation claims and default-model changes are rejected by CHECK constraints. Seed reruns preserve existing rows.
 
 PGlite is a pinned test-only dependency under `supabase/tests/package.json` and its lockfile. No root app dependency, Docker, native database service, Supabase project, Auth/session or PostgREST endpoint was changed. The initial child-agent npm attempt failed DNS; the root installed the same pinned dependency, after which SQL tests ran locally. Native PostgreSQL executables remain unnecessary for this test path. See [PGlite's official in-memory PostgreSQL documentation](https://pglite.dev/docs/).
 
@@ -56,4 +56,4 @@ The static checks use a sanitized checked-in release-provenance fixture with sou
 
 This verifies PostgreSQL syntax, constraints and role behavior in PGlite; it does **not** verify a hosted Supabase deployment, role inheritance outside the declared test setup, exposed Data API schemas, gateway keys, JWT/Auth behavior or network access. Those target-environment checks remain necessary once remote access is authorized. No remote project identifier or migration application history was fabricated.
 
-The cover/build work handles app 0.3.1 separately. The seed intentionally preserves verified historical 0.3.0 metadata. No 0.3.1 hash, size, URL or publication state is invented before its completed build manifest exists; the root integrator may add that version afterward.
+App 0.3.1 is now seeded from the verified tracked `docs/releases/0.3.1.json`: 375,055,123 bytes and SHA-256 `7e9f7b0779721a20086e4562140fe8db9530b533742df127a2dca6eaba894e6d`. Historical 0.3.0 remains intact. Both app rows are unpublished and have NULL download URLs.

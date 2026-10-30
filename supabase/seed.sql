@@ -13,4 +13,8 @@ insert into public.product_legal_library_snapshots (id, version, artifact_sha256
 values ('lex-public-library-v2', 'v2', 'ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588', 153014272, null, 'experimental', 'not-validated', false, '2026-10-30T14:57:07.325452+00:00', 'e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11', 303, 35452, 910, 'unverified', 'Conservative public source subset: 303 instruments and 35,452 articles. Sample fidelity audit only; no complete coverage or current-law guarantee.')
 on conflict (id) do nothing;
 
+insert into public.product_app_releases (id, version, artifact_sha256, artifact_bytes, download_url, release_status, legal_status, published, released_at, platform, architecture, default_model_replaced)
+values ('lex-ai-0.3.1-macos-arm64', '0.3.1', '7e9f7b0779721a20086e4562140fe8db9530b533742df127a2dca6eaba894e6d', 375055123, null, 'experimental', 'not-validated', false, '2026-10-30T15:16:12.593901+00:00', 'macos', 'arm64', false)
+on conflict (id) do nothing;
+
 commit;
