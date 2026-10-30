@@ -1,0 +1,28 @@
+{
+  "version": "0.3.2",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T15:31:26.749645+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Owner-provided dock adapted to real navigation",
+    "Tailwind 4 utilities without Preflight and shadcn-compatible structure",
+    "Scoped keyboard focus and composer layout"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.2-arm64.dmg",
+      "bytes": 375653087,
+      "sha256": "d09958c9e68f2bf5d499ec20c67f23336f37d5ff8c23f87e311f6517178fec4a",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "nodeTests": 94,
+    "dock": "PASS",
+    "fullUI": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}

@@ -1,0 +1,16 @@
+/* Utilities for imported UI resources. Keep the existing application's reset. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw) source(none);
+@source "./components/ui";
+
+@theme inline {
+  --color-background: #fcfcfb;
+  --color-foreground: #141414;
+  --color-primary: #1f4a73;
+  --color-primary-foreground: #ffffff;
+  --color-muted: #f5f5f4;
+  --color-muted-foreground: #62625e;
+  --color-border: #dcdcd8;
+  --color-ring: #1f4a73;
+}

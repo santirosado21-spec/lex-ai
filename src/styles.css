@@ -424,3 +424,23 @@ button,input,select,textarea,.button{border-radius:6px}.primary{background:var(-
 @media(max-width:1150px){.onboarding.onboarding-with-cover{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}.onboarding-with-cover .onboarding-content{padding:30px}.app-cover-steps{gap:10px}.onboarding-with-cover .practice-options{gap:8px}.app-cover img{min-height:720px}}
 @media(max-width:900px){.onboarding.onboarding-with-cover{display:flex;flex-direction:column;min-height:0}.app-cover{height:240px;flex:none}.app-cover img{min-height:0;height:205px;object-position:25% 53%}.app-cover figcaption{padding:8px 24px;font-size:11px}.onboarding-with-cover .onboarding-content{padding:30px;align-self:stretch}.onboarding-with-cover .onboarding-intro h1{max-width:22ch;font-size:34px}.onboarding-with-cover .onboarding-intro>p{max-width:60ch}}
 @media(max-width:480px){.onboarding-with-cover .onboarding-content{padding:25px 20px}.onboarding-with-cover .onboarding-intro h1{font-size:29px}.app-cover{height:205px}.app-cover img{height:170px}.app-cover figcaption{padding-inline:20px}.app-cover-steps{flex-direction:column;gap:8px;margin-block:22px}.app-cover-steps li{font-size:12px}.onboarding-with-cover .practice-options{grid-template-columns:1fr}.onboarding-with-cover .onboarding-form .privacy-caption{line-height:1.7}}
+/* Dock mode substitutes navigation, with real layout room below the composer. */
+.app-shell.dock-mode{--lex-dock-reserve:calc(86px + env(safe-area-inset-bottom,0px))}
+.app-shell.dock-mode>.sidebar{display:none}
+.app-shell.dock-mode>.app-content{margin-left:0;width:100%;padding-bottom:var(--lex-dock-reserve)}
+.app-shell.dock-mode main{scroll-padding-bottom:var(--lex-dock-reserve)}
+.app-shell.dock-mode .workspace-grid,.app-shell.dock-mode .analysis-pane{height:calc(100dvh - 59px - var(--lex-dock-reserve));min-height:400px}
+.app-shell.dock-mode .workspace-composer{flex-shrink:0}
+.app-shell.dock-mode .context-bar>.breadcrumb{flex:1}
+.dock-expand-navigation{flex:none;margin-right:12px}
+@media(max-width:780px){.app-shell.dock-mode .context-bar{height:auto;min-height:55px;gap:8px;padding:9px 16px;flex-wrap:wrap}.app-shell.dock-mode .breadcrumb{flex-basis:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.app-shell.dock-mode .breadcrumb>svg{display:none}.app-shell.dock-mode .breadcrumb>span:not(:first-child){display:none}.app-shell.dock-mode .breadcrumb>strong{margin-left:10px}.app-shell.dock-mode .context-controls{width:100%;justify-content:space-between;gap:8px;min-width:0}.app-shell.dock-mode .context-controls select{max-width:180px;min-width:0;flex:1}.app-shell.dock-mode .workspace-grid,.app-shell.dock-mode .analysis-pane{height:auto;min-height:calc(100dvh - 90px - var(--lex-dock-reserve))}.app-shell.dock-mode .analysis-scroll{max-height:none;min-height:200px;overflow:visible}.app-shell.dock-mode .workspace-composer{margin-top:auto}.app-shell.dock-mode .evidence-rail{height:100dvh}.app-shell.dock-mode .page{padding-inline:20px}}
+@media(max-width:380px){.app-shell.dock-mode .context-bar{padding-inline:12px}.app-shell.dock-mode .context-controls select{max-width:150px}.app-shell.dock-mode .page{padding-inline:14px}.app-shell.dock-mode .analysis-header,.app-shell.dock-mode .analysis-scroll{padding-inline:14px}.app-shell.dock-mode .workspace-composer{padding-inline:14px}.app-shell.dock-mode .composer-context select{max-width:150px}.app-shell.dock-mode .composer-tools{gap:6px}.app-shell.dock-mode .composer-tools>.primary{padding-inline:9px}.app-shell.dock-mode .composer-footer{gap:8px;overflow-wrap:anywhere}}
+/* Bound dock workspaces to the viewport; only the answer scrolls above the composer. */
+.app-shell.dock-mode>.app-content{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden}
+.app-shell.dock-mode .context-bar,.app-shell.dock-mode .banner{flex-shrink:0}
+.app-shell.dock-mode main{flex:1;min-height:0;overflow:auto}
+.app-shell.dock-mode .workspace-grid{height:100%;min-height:0}
+.app-shell.dock-mode .analysis-pane{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.app-shell.dock-mode .analysis-header,.app-shell.dock-mode .workspace-composer{flex-shrink:0}
+.app-shell.dock-mode .analysis-scroll{flex:1;min-height:0;max-height:none;overflow:auto}
+.app-shell.dock-mode .workspace-composer{margin-top:0}

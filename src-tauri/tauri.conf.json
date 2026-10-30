@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "LEX AI",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "identifier": "mx.lexai.desktop",
   "build": {
     "frontendDist": "../dist",

@@ -249,7 +249,10 @@ try {
  await page.getByText('Modelo detenido',{exact:true}).last().waitFor();
  report.checks.push('official corpus search and local engine stop');
  await page.setViewportSize({width:700,height:900});
- await page.getByRole('button',{name:'Asistente',exact:true}).click();
+ // This test controls animation time; flush resize before targeting the new nav.
+ await page.clock.runFor(30);
+ await expect(page.locator('.lex-dock')).toBeVisible();
+ await page.locator('.lex-dock').getByRole('button',{name:'Asistente',exact:true}).click();
  if(await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).isVisible())await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).click();
  await page.getByRole('button',{name:/Ver fuente 1:/}).click();
  await page.clock.runFor(30);
