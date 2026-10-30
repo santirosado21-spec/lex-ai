@@ -1,0 +1,28 @@
+{
+  "version": "0.3.4",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T15:51:22.420697+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Owner-provided avatar adapted to assistant identity",
+    "Animation follows processing, completion, cancellation and errors",
+    "Shared global design skills with Claude; reduced motion and local assets"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.4-arm64.dmg",
+      "bytes": 377276679,
+      "sha256": "75679e96bd967ed5d7012471d360c45390c23d8131b050f41e4a6dda1b1dfef1",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "nodeTests": 94,
+    "avatar": "PASS",
+    "fullUI": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}
