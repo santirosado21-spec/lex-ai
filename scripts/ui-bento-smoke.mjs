@@ -39,7 +39,7 @@ try{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow at ${width}`);
   for(const button of await bento.getByRole('button').all()){const rect=await button.boundingBox();assert.ok(rect.width>=44&&rect.height>=44,`touch target at ${width}`);}
  }
- engineState='error';await home();await expect(card('engine')).toContainText('Revisar modelo');engineState='ready';await home();await expect(card('engine')).toContainText('Modelo listo');
+ engineState='error';await home();await expect(card('engine')).toContainText('Revisar LEX AI');engineState='ready';await home();await expect(card('engine')).toContainText('LEX AI listo');
  await page.emulateMedia({reducedMotion:'reduce'});await card('matter').hover();await expect(card('matter')).not.toHaveAttribute('data-pointer','active');await card('matter').getByRole('button').first().focus();await expect(card('matter').getByRole('button').first()).toBeFocused();
  const motions=await bento.evaluate(el=>[...el.querySelectorAll('*')].map(e=>getComputedStyle(e).animationName).filter(n=>n!=='none'));assert.deepEqual(motions,[]);
  await card('engine').scrollIntoViewIfNeeded();

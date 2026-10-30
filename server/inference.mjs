@@ -92,7 +92,7 @@ export function createInference({dataDir, runtimePath=process.env.LEX_OLLAMA_BIN
   status:async()=>({...state,busy}),
   initialize:async()=>{if(stopPromise)await stopPromise;if(initializing||state.state==='ready')return {...state};shutdown=false;stopping=false;initController=new AbortController();initializing=true;set({state:'starting',message:'Iniciando motor local…',progress:0});bootTask=boot();return {...state};},
   async *generate(messages,{signal,outputSchema}={}){
-   if(state.state!=='ready')throw Error('Inicializa Gemma antes de analizar documentos.');
+   if(state.state!=='ready')throw Error('Prepara LEX AI antes de analizar documentos.');
    if(busy)throw Error('Ya hay un análisis en curso.');busy=true;controller=new AbortController();const timer=setTimeout(()=>controller.abort(),300_000);
    try{
     // MLX prefix snapshots accumulate between requests in Ollama 0.40.6.

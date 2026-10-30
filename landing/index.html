@@ -36,7 +36,7 @@
         <h1 id="hero-title">Cada respuesta,<br>con el pasaje<br>que la sostiene.<a class="footnote-link" href="#nota-verificacion" aria-label="Leer nota 1 sobre verificación textual">¹</a></h1>
         <p class="hero-description">Ordena tus expedientes en tu Mac, encuentra los pasajes relevantes y trabaja con respuestas cuyas citas puedes comprobar en la fuente.</p>
         <a class="button button-primary" href="#como-funciona">Ver cómo funciona</a>
-        <p class="hero-local"><span class="local-symbol" aria-hidden="true"></span>Documentos y modelo, en tu equipo.</p>
+        <p class="hero-local"><span class="local-symbol" aria-hidden="true"></span>Documentos y asistente, en tu equipo.</p>
       </div>
       <div class="hero-preview" aria-label="Ejemplo sintético de respuesta vinculada a su fuente">
         <div class="preview-heading"><span>Expediente de ejemplo con datos ficticios</span><span class="folio">Folio 01</span></div>
@@ -81,7 +81,7 @@
             <p class="panel-note">La búsqueda se limita al contexto autorizado del despacho y el asunto.</p>
           </div>
           <div class="workflow-panel" id="panel-responder" role="tabpanel" aria-labelledby="tab-responder" tabindex="0" hidden>
-            <div class="panel-kicker">Borrador para revisar</div><h3>Una respuesta<br>con referencias visibles.</h3><p>El modelo local redacta a partir de los pasajes que recibe. Sus conclusiones necesitan revisión profesional.</p>
+            <div class="panel-kicker">Borrador para revisar</div><h3>Una respuesta<br>con referencias visibles.</h3><p>LEX AI prepara el borrador con las instrucciones de la tarea y los pasajes recuperados. Sus conclusiones necesitan revisión profesional.</p>
             <div class="answer-sheet"><span class="document-label">Análisis del ejemplo</span><p>El pasaje prevé documentar la recepción mediante una constancia escrita. <span class="inline-cite">[D1]</span></p><p>Para revisar el alcance de esa constancia, consulta el documento completo. <span class="inline-cite">[D1]</span></p></div>
           </div>
           <div class="workflow-panel" id="panel-verificar" role="tabpanel" aria-labelledby="tab-verificar" tabindex="0" hidden>
@@ -94,7 +94,7 @@
             <div class="export-preview"><span class="export-file" aria-hidden="true">W</span><div><strong>Nota de revisión.docx</strong><span>Análisis y referencias del expediente</span></div></div>
             <p class="panel-note">El documento es un borrador sujeto a revisión. Exportarlo no lo convierte en una opinión jurídica validada.</p>
           </div>
-          <div class="workspace-footer"><span class="status-dot" aria-hidden="true"></span> Vista ilustrativa con datos ficticios. No ejecuta el modelo.</div>
+          <div class="workspace-footer"><span class="status-dot" aria-hidden="true"></span> Vista ilustrativa con datos ficticios. No ejecuta el asistente.</div>
         </div>
       </div>
     </section>
@@ -111,9 +111,9 @@
     </section>
 
     <section class="local-section section" id="local" aria-labelledby="local-title"><div class="shell local-layout">
-      <div><h2 id="local-title">El trabajo vive<br>en tu Mac.</h2><p>Después de preparar el modelo y los archivos, la búsqueda y la inferencia funcionan localmente.</p><p class="local-detail">La conexión se utiliza para la preparación inicial y para obtener fuentes públicas cuando se solicita una actualización.</p><button class="text-button" type="button" data-open-privacy>Leer cómo se tratan los datos</button></div>
-      <div class="local-diagram" role="img" aria-label="En tu Mac se encuentran los documentos, el índice de búsqueda y el modelo. Separado de ellos, este sitio muestra únicamente información pública del producto.">
-        <div class="mac-boundary"><div class="diagram-title"><span class="local-symbol" aria-hidden="true"></span> Tu Mac</div><div class="local-components"><span>Documentos<small>Despacho y asunto</small></span><span>Índice de búsqueda<small>Pasajes locales</small></span><span>Modelo<small>Inferencia en el equipo</small></span></div><p>El expediente no pasa por este sitio.</p></div>
+      <div><h2 id="local-title">El trabajo vive<br>en tu Mac.</h2><p>Después de preparar LEX AI y los archivos, la búsqueda y la inferencia funcionan localmente.</p><p class="local-detail">La conexión se utiliza para la preparación inicial y para obtener fuentes públicas cuando se solicita una actualización.</p><button class="text-button" type="button" data-open-privacy>Leer cómo se tratan los datos</button></div>
+      <div class="local-diagram" role="img" aria-label="En tu Mac se encuentran los documentos, el índice de búsqueda y el asistente. Separado de ellos, este sitio muestra únicamente información pública del producto.">
+        <div class="mac-boundary"><div class="diagram-title"><span class="local-symbol" aria-hidden="true"></span> Tu Mac</div><div class="local-components"><span>Documentos<small>Despacho y asunto</small></span><span>Índice de búsqueda<small>Pasajes locales</small></span><span>LEX AI<small>Asistente local</small></span></div><p>El expediente no pasa por este sitio.</p></div>
         <div class="public-site"><span class="public-site-symbol" aria-hidden="true">◎</span><div>Este sitio web<small>Información pública y requisitos</small></div><span class="separate-label">Separado</span></div>
       </div>
     </div></section>
@@ -125,27 +125,27 @@
     </section>
 
     <section class="release section shell" id="version" aria-labelledby="release-title"><div class="release-inner">
-      <div class="release-heading"><span class="release-tag">Versión experimental 0.3.1</span><h2 id="release-title">Una herramienta en desarrollo.<br>Con límites declarados.</h2></div>
-      <div class="release-content"><p>La app utiliza el modelo Gemma base. Existe además un <strong>candidato ajustado localmente durante 400 pasos</strong>, distribuido por separado para importación manual en un runtime compatible.</p><p>Ese candidato pasó 32 casos técnicos y un recorrido sintético de contrato, fuentes y DOCX. Son pruebas de protocolo y citas; <strong>no acreditan exactitud jurídica ni validación profesional.</strong></p><div class="release-status"><span class="status-dot" aria-hidden="true"></span>El candidato no se activa por defecto ni se selecciona desde esta página.</div><a class="text-link" href="#requisitos">Consultar requisitos</a></div>
+      <div class="release-heading"><span class="release-tag">Versión experimental 0.3.5</span><h2 id="release-title">Una herramienta en desarrollo.<br>Con límites declarados.</h2></div>
+      <div class="release-content"><p>LEX AI combina habilidades jurídicas, fuentes recuperadas y el contexto de cada asunto. Existe además una <strong>mejora experimental preparada localmente durante 400 pasos</strong>, distribuida por separado para evaluación técnica.</p><p>Esa mejora pasó 32 casos técnicos y un recorrido sintético de contrato, fuentes y DOCX. Son pruebas de protocolo y citas; <strong>no acreditan exactitud jurídica ni validación profesional.</strong></p><div class="release-status"><span class="status-dot" aria-hidden="true"></span>La mejora experimental no se activa por defecto ni se selecciona desde esta página.</div><a class="text-link" href="#requisitos">Consultar requisitos</a></div>
     </div></section>
 
     <section class="requirements section shell" id="requisitos" aria-labelledby="requirements-title">
-      <div><h2 id="requirements-title">Preparar el equipo.</h2><p>Primero, un Mac compatible y espacio para el modelo.</p><a class="text-link" href="#version">Ver versión experimental</a></div>
-      <dl class="requirements-list"><div><dt>Equipo</dt><dd>Mac con Apple Silicon</dd></div><div><dt>Memoria unificada</dt><dd>24 GB para el recorrido probado</dd></div><div><dt>Espacio libre</dt><dd>20 GB como mínimo para la preparación inicial del modelo base; reserva espacio adicional para documentos y candidatos separados.</dd></div><div><dt>Conexión inicial</dt><dd>Necesaria para obtener el modelo. El trabajo local posterior no requiere inferencia en la nube.</dd></div><div><dt>Instalación experimental</dt><dd>Versión 0.3.1 con firma ad hoc, sin notarización. No se ha verificado aún en un segundo Mac limpio.</dd></div><div><dt>Disponibilidad</dt><dd>Los artefactos están preparados localmente. Esta página todavía no ofrece una descarga pública.</dd></div></dl>
+      <div><h2 id="requirements-title">Preparar el equipo.</h2><p>Primero, un Mac compatible y espacio para el asistente.</p><a class="text-link" href="#version">Ver versión experimental</a></div>
+      <dl class="requirements-list"><div><dt>Equipo</dt><dd>Mac con Apple Silicon</dd></div><div><dt>Memoria unificada</dt><dd>24 GB para el recorrido probado</dd></div><div><dt>Espacio libre</dt><dd>20 GB como mínimo para la preparación inicial de LEX AI; reserva espacio adicional para documentos y mejoras experimentales separadas.</dd></div><div><dt>Conexión inicial</dt><dd>Necesaria para preparar los componentes de LEX AI. El trabajo local posterior no requiere inferencia en la nube.</dd></div><div><dt>Instalación experimental</dt><dd>Versión 0.3.5 con firma ad hoc, sin notarización. No se ha verificado aún en un segundo Mac limpio.</dd></div><div><dt>Disponibilidad</dt><dd>Los artefactos están preparados localmente. Esta página todavía no ofrece una descarga pública.</dd></div></dl>
     </section>
 
     <section class="faq section shell" aria-labelledby="faq-title"><h2 id="faq-title">Antes de abrir<br>el primer expediente.</h2><div class="faq-list">
-      <details><summary>¿Mis documentos se envían a un modelo externo?</summary><p>El diseño de la app mantiene documentos, búsqueda e inferencia en tu equipo. Este sitio no permite subir expedientes y no se conecta al runtime local. Las descargas iniciales y consultas a fuentes públicas sí requieren conexión.</p></details>
+      <details><summary>¿Mis documentos se envían a un servicio externo de IA?</summary><p>El diseño de la app mantiene documentos, búsqueda e inferencia en tu equipo. Este sitio no permite subir expedientes y no se conecta al asistente local. Las descargas iniciales y consultas a fuentes públicas sí requieren conexión.</p></details>
       <details><summary>¿La biblioteca contiene ley vigente?</summary><p>El snapshot tiene fecha de corte del 30 de octubre de 2026. Una copia y su procedencia no bastan para afirmar vigencia actual: hay que revisar la publicación oficial, reformas y aplicación al caso.</p></details>
       <details><summary>¿Una cita comprobada significa una respuesta correcta?</summary><p>No. La comprobación establece que la cita pertenece al material aportado. El razonamiento, la pertinencia y la conclusión pueden estar equivocados y requieren revisión profesional.</p></details>
-      <details><summary>¿La app incluye el modelo entrenado como predeterminado?</summary><p>No. La app conserva el modelo Gemma base. El candidato entrenado es un artefacto experimental separado de importación manual; su integración predeterminada requiere una evaluación adicional.</p></details>
-      <details><summary>¿Se entrena automáticamente con mis documentos?</summary><p>No. El experimento descrito utilizó fuentes públicas y datos sintéticos. La retroalimentación y las propuestas de aprendizaje no activan cambios de modelo automáticamente.</p></details>
+      <details><summary>¿Las mejoras experimentales se activan automáticamente?</summary><p>No. La app conserva la versión actual de LEX AI. La mejora experimental se distribuye por separado para evaluación; incorporarla al asistente requiere comprobaciones adicionales.</p></details>
+      <details><summary>¿Se entrena automáticamente con mis documentos?</summary><p>No. El experimento descrito utilizó fuentes públicas y datos sintéticos. La retroalimentación y las propuestas de aprendizaje no cambian automáticamente el comportamiento del asistente.</p></details>
       <details><summary>¿Puedo descargar LEX AI desde aquí?</summary><p>Todavía no hay una URL pública de descarga. Puedes consultar aquí el funcionamiento, los requisitos y el alcance de la versión experimental. No solicitamos registro ni datos de contacto.</p></details>
     </div></section>
 
     <section class="closing shell" aria-labelledby="closing-title"><h2 id="closing-title">Tu criterio.<br>Las fuentes, a la vista.</h2><a class="button button-primary" href="#requisitos">Consultar requisitos</a></section>
   </main>
   <footer class="site-footer shell"><div><a class="wordmark" href="#inicio" aria-label="LEX AI, volver al inicio">LEX<span>AI</span></a><p>Espacio jurídico local para Mac.</p></div><div class="footer-links"><button class="text-button" type="button" data-open-privacy>Privacidad de este sitio</button><a href="catalogue.json">Ficha pública de la versión</a><span>© 2026 LEX AI</span></div><p class="footer-disclaimer">Información del producto. No constituye asesoría jurídica. El repositorio de desarrollo es privado; esta página no ofrece un enlace público de descarga.</p></footer>
-  <dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-heading"><h2 id="privacy-title">Tus datos y este sitio</h2><button class="dialog-close" type="button" data-close-privacy aria-label="Cerrar información de privacidad">×</button></div><p>Esta página es informativa. No recibe documentos del despacho, no ejecuta modelos y no tiene acceso a los expedientes de tu Mac.</p><p>No incorpora formularios, cookies de aplicación, analítica ni scripts de terceros. Las fuentes tipográficas y las imágenes se sirven desde el mismo sitio. El proveedor de alojamiento puede registrar datos técnicos de las solicitudes, como dirección IP y fecha de acceso.</p><p>En la app, los documentos, el índice y la inferencia permanecen locales. Preparar el modelo o actualizar fuentes públicas puede requerir conexión. No se presenta esta arquitectura como una certificación de seguridad.</p><button class="button button-primary" type="button" data-close-privacy>Entendido</button></dialog>
+  <dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-heading"><h2 id="privacy-title">Tus datos y este sitio</h2><button class="dialog-close" type="button" data-close-privacy aria-label="Cerrar información de privacidad">×</button></div><p>Esta página es informativa. No recibe documentos del despacho, no ejecuta el asistente y no tiene acceso a los expedientes de tu Mac.</p><p>No incorpora formularios, cookies de aplicación, analítica ni scripts de terceros. Las fuentes tipográficas y las imágenes se sirven desde el mismo sitio. El proveedor de alojamiento puede registrar datos técnicos de las solicitudes, como dirección IP y fecha de acceso.</p><p>En la app, los documentos, el índice y la inferencia permanecen locales. Preparar LEX AI o actualizar fuentes públicas puede requerir conexión. No se presenta esta arquitectura como una certificación de seguridad.</p><button class="button button-primary" type="button" data-close-privacy>Entendido</button></dialog>
 </body>
 </html>

@@ -6,5 +6,5 @@ test('cancel startup and concurrent stops converge without spawning a late runti
  await new Promise(r=>setTimeout(r,300));assert.equal((await engine.status()).state,'stopped');
 });
 test('generation fails closed before verified initialization',async()=>{
- const engine=createInference({dataDir:os.tmpdir()});await assert.rejects(async()=>{for await(const _ of engine.generate([])){}},/Inicializa/);
+ const engine=createInference({dataDir:os.tmpdir()});await assert.rejects(async()=>{for await(const _ of engine.generate([])){}},/Prepara LEX AI antes de analizar documentos/);
 });

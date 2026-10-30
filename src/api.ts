@@ -33,7 +33,12 @@ async function request(path: string, body: unknown, signal?: AbortSignal) {
   return response;
 }
 export async function api<T = unknown>(action: string, payload: unknown = {}): Promise<T> {
-  return (await request('/api', { action, payload })).json() as Promise<T>;
+  try { return await (await request('/api', { action, payload })).json() as T; }
+  catch (error) {
+    // Keep runtime diagnostics out of product UI, including errors thrown during setup.
+    if (action.startsWith('engine.')) throw new Error('No se pudo completar la operación de LEX AI. Actualiza el estado y vuelve a intentarlo.');
+    throw error;
+  }
 }
 export async function analyze(payload: unknown, onToken: (text: string) => void, signal?: AbortSignal): Promise<Answer> {
   const response = await request('/analyze', payload, signal);

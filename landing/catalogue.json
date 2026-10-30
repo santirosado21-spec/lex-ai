@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "product": "LEX AI",
-  "version": "0.3.1",
+  "version": "0.3.5",
   "releaseStatus": "experimental",
   "platform": "macOS Apple Silicon",
   "unifiedMemoryGB": 24,
@@ -9,9 +9,8 @@
   "notarized": false,
   "signing": "ad-hoc",
   "publicDownloadUrl": null,
-  "defaultModel": "Gemma base",
   "trainedCandidate": {
-    "name": "Gemma 4 26B-A4B experimental v2",
+    "name": "LEX AI \u2014 mejora experimental v2",
     "trainingSteps": 400,
     "technicalCasesPassed": 32,
     "technicalCasesEvaluated": 32,
@@ -33,5 +32,6 @@
     "modelExecution": false,
     "analytics": false,
     "remoteCatalogueConfigured": false
-  }
+  },
+  "assistantName": "LEX AI"
 }

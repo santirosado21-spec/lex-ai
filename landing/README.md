@@ -10,4 +10,6 @@ Interacciones: cinco pestañas ARIA (flechas según orientación, Home/End), anc
 
 Las fuentes provienen de las dependencias locales @fontsource: IBM Plex Sans (400/500/600 normal) y Source Serif 4 (400/500 normal), únicamente archivos Latin WOFF2. Se incluyen las licencias OFL completas en `assets/fonts/`. Las versiones exactas se registran en `assets/fonts/provenance.json`.
 
-Límites de producto en el copy: app 0.3.1 experimental, firma ad hoc, sin notarización; candidato entrenado separado y de importación manual, nunca predeterminado. 32 casos técnicos no equivalen a validación jurídica. Corpus snapshot 30/10/2026, 35.452 artículos y 303 instrumentos, 910 muestras cotejadas: no exhaustivo ni garantía de vigencia. No hay URL pública de descarga por ahora.
+Límites de producto en el copy: app 0.3.5 experimental, firma ad hoc, sin notarización; candidato entrenado separado y de importación manual, nunca predeterminado. 32 casos técnicos no equivalen a validación jurídica. Corpus snapshot 30/10/2026, 35.452 artículos y 303 instrumentos, 910 muestras cotejadas: no exhaustivo ni garantía de vigencia. No hay URL pública de descarga por ahora.
+
+Identidad pública: LEX AI. La UI y el catálogo no muestran nombres del runtime/modelo base. `assistantName` sustituye el identificador técnico en el catálogo; procedencia y licencias permanecen en la documentación técnica/legal.

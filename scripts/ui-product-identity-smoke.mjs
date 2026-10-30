@@ -1,0 +1,26 @@
+/** Product identity through real local API routes with deliberately technical synthetic diagnostics. */
+import {chromium,expect} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';import os from 'node:os';
+import {startServer} from '../server/main.mjs';
+const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-brand-')),monitorDir=path.join(dataDir,'monitor');await mkdir(monitorDir);
+const identity='Gemma 4 secret-model-id via Ollama /runtime/private-path';let state='stopped';
+const inference={async status(){return {state,model:identity,modelId:identity,message:identity,error:identity,progress:37,supported:state!=='unsupported',hardware:{platform:'darwin',arch:'arm64',memoryGB:24}};},async initialize(){throw Error(identity);},async stop(){state='stopped';return this.status();},async *generate(){throw Error('No inference in this test');}};
+await writeFile(path.join(monitorDir,'training.json'),JSON.stringify({state:'training',releaseStatus:'experimental',baseModel:identity,candidateModel:identity,message:identity,progress:{step:3,totalSteps:10},dataset:{train:20,[identity]:42},metrics:{[identity]:3},evaluation:{passed:true,scope:identity,baseline:{[identity]:1},candidate:{[identity]:2}},updatedAt:new Date().toISOString()}));
+const app=await startServer({dataDir,inference,monitorDir,libraryPath:path.join(dataDir,'absent.sqlite')});let browser;
+const report={mode:'synthetic product-identity test; no inference',checks:[],startedAt:new Date().toISOString()};
+const api=async(action,payload={})=>{const r=await fetch(app.connection.url+'/api',{method:'POST',headers:{Authorization:`Bearer ${app.connection.token}`,'Content-Type':'application/json'},body:JSON.stringify({action,payload})});assert.equal(r.status,200);return r.json();};
+try{
+ await mkdir('artifacts/product-identity',{recursive:true});browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const clean=async()=>assert.doesNotMatch(await page.locator('body').evaluate(e=>e.outerHTML),/Gemma|Ollama|secret-model-id|private-path/i);
+ await page.goto(`${app.connection.url}/#token=${app.connection.token}`);await expect(page.locator('.app-cover-steps')).toContainText('Preparar LEX AI');await clean();
+ await api('workspace.create',{name:'Despacho de prueba de identidad',practiceAreas:['Civil']});await page.reload();await expect(page.locator('.lex-bento')).toBeVisible();await clean();await expect(page.getByRole('button',{name:'Configurar LEX AI',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Configuración',exact:true}).click();
+ for(const next of ['ready','starting','downloading','verifying','error','unsupported','secret-model-id','stopped']){state=next;await page.getByRole('button',{name:'Actualizar estado',exact:true}).click();await expect(page.locator('.engine-panel')).toContainText(next==='ready'?'LEX AI listo':next==='stopped'?'LEX AI detenido':next==='secret-model-id'?'Estado no disponible':next==='unsupported'?'Equipo no compatible':next==='error'?'Revisar LEX AI':next==='verifying'?'Verificando LEX AI':next==='starting'?'Preparando LEX AI':'Descargando LEX AI');await clean();}
+ await page.getByRole('button',{name:'Preparar LEX AI',exact:true}).click();await expect(page.getByRole('alert')).toContainText('No se pudo completar la operación de LEX AI');await clean();await page.screenshot({path:'artifacts/product-identity/settings.png',fullPage:true});
+ await page.getByRole('button',{name:'Evaluación de LEX AI',exact:true}).click();await expect(page.getByRole('heading',{name:'Preparando una mejora',exact:true})).toBeVisible();await expect(page.locator('#training-progress')).toHaveAttribute('value','3');await expect(page.getByText('Contexto y habilidades',{exact:true})).toBeVisible();await clean();await page.screenshot({path:'artifacts/product-identity/evaluation.png',fullPage:true});
+ await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();await expect(page.getByRole('dialog')).toBeVisible();await clean();await page.keyboard.press('Escape');
+ await page.setViewportSize({width:390,height:900});await expect(page.locator('.lex-dock')).toBeVisible();await clean();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);
+ report.checks.push('onboarding, home, sidebar, settings, command palette and evaluation show product identity only','known and unknown engine states, messages, identifiers and errors never rendered verbatim','engine action exception becomes actionable product message','training progress and results preserved; raw names, scopes and metric keys excluded','390px no overflow or page errors');report.status='PASS';
+}catch(error){report.status='FAIL';report.error=error.message;process.exitCode=1;}finally{await browser?.close();await app.close();report.finishedAt=new Date().toISOString();await writeFile('artifacts/product-identity/smoke.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));}

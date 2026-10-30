@@ -1,0 +1,30 @@
+{
+  "version": "0.3.5",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T16:02:39.160768+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "LEX AI product identity across onboarding, status, settings, evaluation and landing",
+    "Known product messages replace raw runtime identifiers and diagnostics",
+    "Assistant instructions describe LEX AI task skills and matter context"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.5-arm64.dmg",
+      "bytes": 377204319,
+      "sha256": "732ff0fdb458dd3adceb57f0ed59a9ebb0e9ccdc8d35d6fce9a91ad3a844c5cf",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "nodeTests": 94,
+    "productIdentity": "PASS",
+    "fullUI": "PASS",
+    "landingLocal": "PASS",
+    "realLocalInference": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}

@@ -58,8 +58,8 @@ try {
  await page.getByLabel('Nombre del despacho').fill('Despacho sintético UI');
  await page.getByRole('button',{name:'Crear espacio privado',exact:true}).click();
  await page.getByRole('heading',{name:'Configuración',exact:true}).waitFor();
- await page.getByRole('button',{name:'Preparar Gemma local',exact:true}).click();
- await page.getByText('Modelo listo',{exact:true}).last().waitFor();
+ await page.getByRole('button',{name:'Preparar LEX AI',exact:true}).click();
+ await page.getByText('LEX AI listo',{exact:true}).last().waitFor();
  report.checks.push('onboarding firm and explicit local model initialization');
  await page.getByRole('button',{name:'Asuntos',exact:true}).click();
  await page.getByRole('button',{name:'Nuevo asunto',exact:true}).click();
@@ -164,7 +164,7 @@ try {
 
  await page.screenshot({path:'artifacts/ui-dossier.png',fullPage:true});
  await page.keyboard.press('Control+k');
- await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).fill('Modelos y evaluación');
+ await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).fill('Evaluación de LEX AI');
  await page.screenshot({path:'artifacts/ui-command-palette.png',fullPage:true});
  await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).press('Escape');
  await expect(page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'})).toHaveValue('');
@@ -235,8 +235,8 @@ try {
  await page.screenshot({path:'artifacts/ui-sources.png',fullPage:true});
  report.checks.push('real sources.status API with explicit synthetic monitor fixture: unconfigured, partial, quarantined, failure, filters and 15s visible polling');
  await writeFile(path.join(monitorDir,'training.json'),JSON.stringify({state:'training',id:'synthetic-ui-training',baseModel:'Synthetic base model — UI fixture',candidateModel:'Synthetic adapter',updatedAt:new Date().toISOString(),progress:{step:3,totalSteps:10},metrics:{trainLoss:1.25},dataset:{train:20,validation:4,test:4,laws:2},releaseStatus:'experimental'}));
- await page.getByRole('button',{name:'Modelos y evaluación',exact:true}).click();
- await page.getByRole('heading',{name:'Entrenamiento en curso',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Evaluación de LEX AI',exact:true}).click();
+ await page.getByRole('heading',{name:'Preparando una mejora',exact:true}).waitFor();
  await page.getByText('Experimental',{exact:true}).waitFor();
  await expect(page.locator('#training-progress')).toHaveAttribute('value','3');
  await page.screenshot({path:'artifacts/ui-training.png',fullPage:true});
@@ -246,7 +246,7 @@ try {
  await page.clock.runFor(31_000);
  assert.equal(sourceStatusReads,readsAfterLeaving,'sources polling stops when leaving sources view');
  await page.getByRole('button',{name:'Detener',exact:true}).click();
- await page.getByText('Modelo detenido',{exact:true}).last().waitFor();
+ await page.getByText('LEX AI detenido',{exact:true}).last().waitFor();
  report.checks.push('official corpus search and local engine stop');
  await page.setViewportSize({width:700,height:900});
  // This test controls animation time; flush resize before targeting the new nav.
