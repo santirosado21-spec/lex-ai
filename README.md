@@ -58,7 +58,7 @@ El repositorio de desarrollo es privado: https://github.com/santirosado21-spec/l
 
 ## Entrega actual
 
-Aplicación: `src-tauri/target/release/bundle/macos/LEX AI.app`. Instalador con cover y dock: `artifacts/LEX-AI-0.3.2-arm64.dmg` y SHA256 adyacente. Las versiones 0.3.0 y 0.3.1 anteriores se conservan. El backend empaquetado comprueba la biblioteca real, búsqueda, integridad de módulos y estado de entrenamiento. La UI se verifica en Chromium con fixtures sintéticos y en una prueba separada contra la biblioteca real. El instalador tiene firma ad hoc de desarrollo; no está notarizado y no ha sido probado en un segundo Mac limpio.
+Aplicación: `src-tauri/target/release/bundle/macos/LEX AI.app`. Instalador con cover, dock e inicio bento: `artifacts/LEX-AI-0.3.3-arm64.dmg` y SHA256 adyacente. Las versiones 0.3.0, 0.3.1 y 0.3.2 anteriores se conservan. El backend empaquetado comprueba la biblioteca real, búsqueda, integridad de módulos y estado de entrenamiento. La UI se verifica en Chromium con fixtures sintéticos y en una prueba separada contra la biblioteca real. El instalador tiene firma ad hoc de desarrollo; no está notarizado y no ha sido probado en un segundo Mac limpio.
 
 El candidato local `artifacts/training/lex-gemma4-lora-v2` completó 400 pasos QLoRA sobre datos públicos depurados. Los pesos completos están en [LEX-Gemma4-Experimental-v2.tar](artifacts/LEX-Gemma4-Experimental-v2.tar) (14,37 GB), con licencia, configuración, informes y SHA256 adyacente. Pasó 32 casos técnicos emparejados y un flujo sintético de contrato → recuperación → citas → DOCX. Este último usa generación sin esquema y normalización acotada de caracteres de control dentro de strings JSON antes de comprobar todas las citas; importar el modelo en otro cliente no incorpora esas validaciones.
 
@@ -67,3 +67,5 @@ El ajuste enseña citas textuales, JSON y abstención; no acredita razonamiento 
 ## Recursos UI
 
 La versión 0.3.2 integra el dock aportado por el dueño: contraer la navegación activa los accesos rápidos; expandirla recupera la barra lateral. En ventanas web estrechas el dock aparece automáticamente. Mantiene el asunto y el borrador, y Más abre la paleta completa. Implementación, estructura shadcn y Tailwind sin reset global: [integración del dock](docs/ui-resources/dock-integration.md).
+
+La versión 0.3.3 adapta el bento aportado por el dueño al Inicio: asunto activo, documentos y consultas de ese asunto, asuntos recientes y estado real del motor. Conserva el compositor y añade foco luminoso con teclado y movimiento reducido. [Integración del bento](docs/ui-resources/bento-integration.md).

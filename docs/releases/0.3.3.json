@@ -1,0 +1,29 @@
+{
+  "version": "0.3.3",
+  "releaseStatus": "experimental",
+  "createdAt": "2026-10-30T15:42:52.339522+00:00",
+  "defaultModelReplaced": false,
+  "changes": [
+    "Owner-provided bento adapted to local matter workspace",
+    "Scoped documents and saved answers with real navigation",
+    "Pointer spotlight, keyboard focus and reduced motion"
+  ],
+  "artifacts": [
+    {
+      "file": "LEX-AI-0.3.3-arm64.dmg",
+      "bytes": 375652358,
+      "sha256": "b1b097e039fc5b2511e531e364fc0eedc5ef7df361a34d625920342e9a08b71f",
+      "publicDownloadUrl": null
+    }
+  ],
+  "verification": {
+    "nodeTests": 94,
+    "bento": "PASS",
+    "dock": "PASS",
+    "fullUI": "PASS",
+    "package": "PASS"
+  },
+  "notarized": false,
+  "nativeMinimumWidth": 1000,
+  "mobileTestScope": "frontend Chromium only"
+}
