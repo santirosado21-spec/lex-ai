@@ -133,4 +133,5 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Instalador 0.4.2 (403.415.775 B, SHA-256 7ff5b5e8…23ad) construido tras instalar Rust; `verify-package` PASS; escaneo de secretos limpio. Publicado en repo público solo de descargas `santirosado21-spec/lex-ai-descargas` (release v0.4.2, prerelease, sin notarizar).
 - Landing rediseñada por Codex; Claude rellenó `catalogue.json` y ajustó smoke (PASS); despliegue automático por push a main.
 - Harvey/agentes: solo fuentes públicas (`docs/product/competitor-research-2026-11-02.md`); sin ingeniería inversa de productos de terceros.
+- 0.4.3: el aviso «no hay RAM» persistía por la medición (libre + mitad de inactiva = 2,6 GiB frente a 43 % libre del sistema = ~10 GiB). Ahora `kern.memorystatus_level`, con respaldo al cálculo anterior; umbral de 3 GB intacto. 182/182 tests; instalador 0.4.3 (401.541.849 B, SHA-256 85526589…34e4) publicado como v0.4.3.
 - Entrenamiento: no reanudado; RAM libre ~2,4 GB. Último candidato ligero rechazado en calidad.

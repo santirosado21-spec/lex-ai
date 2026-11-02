@@ -56,18 +56,18 @@ try {
     await expect(page.getByText(name, {exact:true})).toBeVisible();
   }
   // Live catalogue: the published release must be offered with its real hash.
-  await expect(page.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.2');
+  await expect(page.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.3');
   await expect(page.locator('#download-button')).toHaveAttribute('aria-disabled', 'false');
-  await expect(page.locator('#download-button')).toHaveAttribute('href', /^https:\/\/github\.com\/santirosado21-spec\/lex-ai-descargas\/releases\/download\/v0\.4\.2\/LEX-AI-0\.4\.2-arm64\.dmg$/);
-  await expect(page.locator('#download-sha')).toHaveText('7ff5b5e87f99ec5777833d51b4eff7c491866d3b42be951d8258b4bb25bf23ad');
+  await expect(page.locator('#download-button')).toHaveAttribute('href', /^https:\/\/github\.com\/santirosado21-spec\/lex-ai-descargas\/releases\/download\/v0\.4\.3\/LEX-AI-0\.4\.3-arm64\.dmg$/);
+  await expect(page.locator('#download-sha')).toHaveText('85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4');
   await expect(page.locator('#copy-sha')).toBeEnabled();
 
   const catalogueResponse = await page.request.get(base + '/catalogue.json');
   assert.equal(catalogueResponse.status(), 200);
   const catalogue = JSON.parse(await catalogueResponse.text());
   assert.equal(catalogue.schemaVersion, 2);
-  assert.equal(catalogue.version, '0.4.2');
-  assert.equal(catalogue.bytes, 403415775);
+  assert.equal(catalogue.version, '0.4.3');
+  assert.equal(catalogue.bytes, 401541849);
   assert.match(catalogue.sha256, /^[a-f0-9]{64}$/);
   assert.doesNotMatch(await page.locator('body').innerText(), /Gemma|Ollama/i);
   assert.equal(await page.evaluate(() => document.fonts.check('18px Newsreader')), true);
@@ -104,7 +104,7 @@ try {
   };
   await availablePage.route('**/catalogue.json', route => route.fulfill({contentType:'application/json', body:JSON.stringify(testOnlyCatalogue)}));
   await availablePage.goto(base, {waitUntil:'networkidle'});
-  await expect(availablePage.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.2');
+  await expect(availablePage.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.3');
   await expect(availablePage.locator('#download-button')).toHaveAttribute('aria-disabled', 'false');
   await expect(availablePage.locator('#download-button')).toHaveAttribute('href', /test-only-available-download\.dmg$/);
   await expect(availablePage.locator('#download-size')).toHaveText('3.22 GB');

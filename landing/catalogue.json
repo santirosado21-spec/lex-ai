@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "product": "LEX AI",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "releaseStatus": "experimental",
   "platform": "macOS Apple Silicon (arm64)",
   "requirements": {
@@ -10,9 +10,9 @@
     "firstRunAssistantComponentsGB": 1.95
   },
   "notarized": false,
-  "downloadUrl": "https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v0.4.2/LEX-AI-0.4.2-arm64.dmg",
-  "bytes": 403415775,
-  "sha256": "7ff5b5e87f99ec5777833d51b4eff7c491866d3b42be951d8258b4bb25bf23ad",
+  "downloadUrl": "https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v0.4.3/LEX-AI-0.4.3-arm64.dmg",
+  "bytes": 401541849,
+  "sha256": "85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4",
   "publicCorpus": {
     "snapshotDate": "2026-10-30",
     "exhaustive": false,

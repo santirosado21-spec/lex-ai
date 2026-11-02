@@ -51,7 +51,7 @@ async function loadCatalogue() {
     const response = await fetch('catalogue.json', {credentials: 'same-origin'});
     if (!response.ok) throw new Error('No se pudo leer el catálogo.');
     const catalogue = await response.json();
-    versionNodes.forEach(node => { node.textContent = catalogue.version || '0.4.2'; });
+    versionNodes.forEach(node => { node.textContent = catalogue.version || '0.4.3'; });
     const available = typeof catalogue.downloadUrl === 'string' && isSafeDownloadUrl(catalogue.downloadUrl)
       && Number.isFinite(catalogue.bytes) && catalogue.bytes > 0
       && typeof catalogue.sha256 === 'string' && /^[a-f0-9]{64}$/i.test(catalogue.sha256);
