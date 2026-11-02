@@ -41,6 +41,7 @@ try {
  browser=await chromium.launch(options);
  const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true,reducedMotion:'reduce'});
  const page=await context.newPage();
+ const openTool=async label=>{await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();const search=page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'});await search.fill(label);await search.press('Enter');};
  // Keep this fake-clock functional suite free of GPU animation timing.
  // ui-chat-smoke.mjs separately verifies the live shader and its fallback.
  await page.clock.install();
@@ -97,10 +98,9 @@ try {
  assert.match(await page.getByLabel('Pregunta sobre el asunto').inputValue(),/contrato-ui/);
  report.checks.push('library name and format filters; command palette keyboard opens scoped document; document question handoff');
 
- await page.getByRole('button',{name:'Inicio',exact:true}).click();
- await page.getByRole('heading',{name:'¿En qué asunto trabajamos hoy?',exact:true}).waitFor();
- await page.screenshot({path:'artifacts/ui-home.png',fullPage:true});
  await page.getByRole('button',{name:'Asistente',exact:true}).click();
+ await page.getByRole('heading',{name:'Asistente',exact:true}).waitFor();
+ await page.screenshot({path:'artifacts/ui-assistant.png',fullPage:true});
  await page.getByLabel('Pregunta sobre el asunto').fill('¿Qué obligaciones y condiciones establece el contrato por consentimiento?');
  await page.getByRole('button',{name:'Preguntar',exact:true}).click();
  await page.getByRole('button',{name:'Exportar DOCX',exact:true}).waitFor();
@@ -115,9 +115,9 @@ try {
  await page.getByRole('tab',{name:'Resultados',exact:true}).click();
  await page.getByRole('button',{name:'Descargar DOCX',exact:true}).waitFor();
  await page.getByRole('tab',{name:/Fuentes/}).click();
- await page.getByRole('button',{name:'Contraer navegación',exact:true}).click();
+ await page.getByRole('button',{name:'Ocultar barra lateral',exact:true}).click();
  await expect(page.locator('.app-shell')).toHaveClass(/sidebar-collapsed/);
- await page.getByRole('button',{name:'Expandir navegación',exact:true}).click();
+ await page.getByRole('button',{name:'Mostrar barra lateral',exact:true}).click();
  report.checks.push('validated mocked structured analysis, citation opens collapsed evidence rail, outputs tab and sidebar controls');
  const downloadPromise=page.waitForEvent('download');
  await page.getByRole('button',{name:'Exportar DOCX',exact:true}).click();
@@ -130,7 +130,7 @@ try {
  await page.getByLabel('Corrección o comentario').fill('Verificar el consentimiento expreso de ambas partes en este asunto sintético.');
  await page.getByRole('button',{name:'Guardar feedback',exact:true}).click();
  await page.getByText('Feedback guardado.',{exact:false}).waitFor();
- await page.getByRole('button',{name:'Conocimiento',exact:true}).click();
+ await openTool('Conocimiento');
  await page.getByRole('button',{name:'Crear propuesta inactiva',exact:true}).click();
  await page.getByRole('button',{name:'Evaluar propuesta',exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'Aprobar y activar',exact:true}).isEnabled(),false);
@@ -173,7 +173,7 @@ try {
  await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).press('Escape');
  report.checks.push('dossier activity derives actual import, saved analysis and feedback; Cmd/Ctrl+K search and Escape');
 
- await page.getByRole('button',{name:'Biblioteca federal',exact:true}).click();
+ await openTool('Biblioteca federal');
  await page.getByText('12 artículos',{exact:true}).waitFor();
  await page.getByLabel('Buscar artículos federales').fill('sintética');
  await page.getByRole('button',{name:'Buscar artículos',exact:true}).click();
@@ -196,8 +196,8 @@ try {
  let unavailableReason='not-indexed';
  const unavailableRoute=async route=>{const request=route.request();if(request.method()==='POST'&&request.postDataJSON()?.action==='library.status')await route.fulfill({json:{available:false,reason:unavailableReason}});else await route.continue();};
  await page.route('**/api',unavailableRoute);
- await page.getByRole('button',{name:'Inicio',exact:true}).click();
- await page.getByRole('button',{name:'Biblioteca federal',exact:true}).click();
+ await page.getByRole('button',{name:'Asistente',exact:true}).click();
+ await openTool('Biblioteca federal');
  await page.getByRole('heading',{name:'Biblioteca aún no instalada',exact:true}).waitFor();
  unavailableReason='invalid-index';
  await page.getByRole('button',{name:'Reintentar estado',exact:true}).click();
@@ -206,12 +206,12 @@ try {
  await page.unroute('**/api',unavailableRoute);
  report.checks.push('explicit library.status transport fixtures distinguish missing and invalid index; neither exposes search');
 
- await page.getByRole('button',{name:'Investigación',exact:true}).click();
+ await openTool('Investigación');
  await page.getByLabel('Buscar en fuentes oficiales').fill('contrato');
  await page.getByRole('button',{name:'Buscar',exact:true}).click();
  await page.getByRole('heading',{name:'Resultados',exact:true}).waitFor();
  assert.ok(await page.locator('.research-results .source-card').count()>0);
- await page.getByRole('button',{name:'Fuentes públicas',exact:true}).click();
+ await openTool('Fuentes públicas');
  await page.getByText('No configurado',{exact:true}).waitFor();
  await page.getByText('Sin consultas registradas',{exact:true}).waitFor();
  const catalog=JSON.parse(await readFile('resources/legal-sources.json','utf8')).sources;
@@ -237,13 +237,13 @@ try {
  await page.screenshot({path:'artifacts/ui-sources.png',fullPage:true});
  report.checks.push('real sources.status API with explicit synthetic monitor fixture: unconfigured, partial, quarantined, failure, filters and 15s visible polling');
  await writeFile(path.join(monitorDir,'training.json'),JSON.stringify({state:'training',id:'synthetic-ui-training',baseModel:'Synthetic base model — UI fixture',candidateModel:'Synthetic adapter',updatedAt:new Date().toISOString(),progress:{step:3,totalSteps:10},metrics:{trainLoss:1.25},dataset:{train:20,validation:4,test:4,laws:2},releaseStatus:'experimental'}));
- await page.getByRole('button',{name:'Evaluación de LEX AI',exact:true}).click();
+ await openTool('Evaluación de LEX AI');
  await page.getByRole('heading',{name:'Preparando una mejora',exact:true}).waitFor();
  await page.getByText('Experimental',{exact:true}).waitFor();
  await expect(page.locator('#training-progress')).toHaveAttribute('value','3');
  await page.screenshot({path:'artifacts/ui-training.png',fullPage:true});
  report.checks.push('real training.status reads explicit temp synthetic progress and experimental release state');
- await page.getByRole('button',{name:'Configuración',exact:true}).click();
+ await openTool('Configuración');
  const readsAfterLeaving=sourceStatusReads;
  await page.clock.runFor(31_000);
  assert.equal(sourceStatusReads,readsAfterLeaving,'sources polling stops when leaving sources view');
@@ -253,8 +253,8 @@ try {
  await page.setViewportSize({width:700,height:900});
  // This test controls animation time; flush resize before targeting the new nav.
  await page.clock.runFor(30);
- await expect(page.locator('.lex-dock')).toBeVisible();
- await page.locator('.lex-dock').getByRole('button',{name:'Asistente',exact:true}).click();
+ await expect(page.getByRole('navigation',{name:'Navegación principal'})).toBeVisible();
+ await page.getByRole('button',{name:'Asistente',exact:true}).click();
  if(await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).isVisible())await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).click();
  await page.getByRole('button',{name:/Ver fuente 1:/}).click();
  await page.clock.runFor(30);
