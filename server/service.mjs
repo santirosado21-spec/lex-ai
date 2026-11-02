@@ -6,6 +6,7 @@ import { createStore, searchTerms } from './store.mjs';
 import { extractDocument, chunkText } from './extraction.mjs';
 import { skills, validateSkillInput, validateModelOutput } from './skills.mjs';
 import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
+import { pendingToday, proposeFollowUps } from './planner.mjs';
 
 const now=()=>new Date().toISOString();
 const identifier=v=>typeof v==='string'&&/^[a-zA-Z0-9-]{1,100}$/.test(v);
@@ -13,7 +14,7 @@ const text=(v,label,max=200,min=1)=>{if(typeof v!=='string'||v.trim().length<min
 const normalize=s=>s.toLowerCase().normalize('NFD').replace(/\p{M}/gu,'');
 const sha=s=>createHash('sha256').update(s).digest('hex');
 
-export async function createService({dataDir,corpusPath,inference,publicLibrary=null,openFile=null}) {
+export async function createService({dataDir,corpusPath,inference,publicLibrary=null,openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City'}) {
   const store=createStore(dataDir);
   let corpus=[];
   try {
@@ -29,11 +30,31 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
     }
   } catch(e) {store.close();throw e;}
   let busy=false;
+  function plannerNow(){const value=clock();const date=value instanceof Date?new Date(value.getTime()):new Date(value);if(Number.isNaN(date.getTime()))throw new Error('Reloj del planificador inválido.');return date;}
   function workspace() {return store.list('workspace')[0]??null;}
   function requireWorkspace(){const w=workspace();if(!w)throw new Error('Primero crea el espacio del despacho.');return w;}
   function matter(id){requireWorkspace();if(!identifier(id))throw new Error('Asunto inválido.');const m=store.get('matter',id);if(!m)throw new Error('Asunto no encontrado en este despacho.');return m;}
   function scoped(kind,id,matterId){matter(matterId);if(!identifier(id))throw new Error('Identificador inválido.');const result=store.get(kind,id,matterId);if(!result)throw new Error('Registro no encontrado en este asunto.');return result;}
   function record(kind,payload,action=kind+'.create') {const entity={id:randomUUID(),...payload,createdAt:now()};store.put(kind,entity);store.audit(action,entity.id);return entity;}
+  function reminderFields(payload,allowed){for(const key of Object.keys(payload))if(!allowed.includes(key))throw new Error(`Campo de recordatorio no admitido: ${key}.`);}
+  function reminderDueAt(value){
+    if(value===undefined||value===null||value==='')return null;
+    if(typeof value!=='string'||value.length>40)throw new Error('Fecha y hora inválidas.');
+    const dueAt=value.trim();const datePart=dueAt.slice(0,10);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(datePart)||datePart.startsWith('0000'))throw new Error('Fecha y hora inválidas.');
+    const calendar=new Date(`${datePart}T12:00:00.000Z`);if(Number.isNaN(calendar.getTime())||calendar.toISOString().slice(0,10)!==datePart)throw new Error('La fecha no existe.');
+    if(/^\d{4}-\d{2}-\d{2}$/.test(dueAt))return dueAt;
+    if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/.test(dueAt)||Number.isNaN(new Date(dueAt).getTime()))throw new Error('Fecha y hora inválidas: usa ISO 8601 con zona horaria.');
+    return dueAt;
+  }
+  function reminder(matterId,id){const m=matter(matterId);if(!identifier(id))throw new Error('Identificador de recordatorio inválido.');const result=store.getReminder(id,m.workspaceId,m.id);if(!result)throw new Error('Recordatorio no encontrado en este asunto.');return result;}
+  function createReminder(m,payload,{source,status,plannerRule=null}){
+    const stamp=plannerNow().toISOString();const kind=payload.kind;
+    if(!['deadline','followup','draft-suggestion'].includes(kind))throw new Error('Tipo de recordatorio inválido.');
+    const enteredNote=text(payload.note??'','Nota',3600,0);const legalNotice='Plazo capturado manualmente. LEX AI no calcula términos legales (días hábiles ni surtimiento de notificaciones); revísalo profesionalmente.';
+    const entity={id:randomUUID(),workspaceId:m.workspaceId,matterId:m.id,kind,title:text(payload.title,'Título',200),dueAt:reminderDueAt(payload.dueAt),note:kind==='deadline'?[enteredNote,legalNotice].filter(Boolean).join('\n\n'):enteredNote,status,source,createdAt:stamp,updatedAt:stamp,plannerRule};
+    store.createReminder(entity);store.audit(source==='planner'?'planner.propose':'reminder.create',entity.id);return entity;
+  }
   const tasks=createMatterTasks({store,matter,scoped,record});
   const researchStop=new Set(['articulo','articulos','ley','leyes','puede','pueden','debe','deben','explica','explicar','necesito','saber','quiero','cual','cuando','donde','relacion','establece','establecen','favor','mexico','mexicano','federal','juridico','juridica']);
   function researchWords(query){let size=0;return searchTerms(query).filter(t=>!researchStop.has(t)&&t.length<=40).filter(t=>{size+=t.length+1;return size<=300;}).slice(0,12);}
@@ -67,7 +88,7 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       .map(s=>({source:s,score:terms.reduce((n,t)=>n+(normalize(`${s.title} ${s.article} ${s.text}`).includes(t)?1:0),0)}))
       .filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5).map(x=>({...x.source,relevance:x.score}));
   }
-  function state(){return {workspace:workspace(),matters:store.list('matter'),documents:store.list('document').map(({text:_,...d})=>d),answers:store.list('answer'),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),skills,sources:corpus};}
+  function state(){const w=workspace(),matters=store.list('matter');return {workspace:w,matters,documents:store.list('document').map(({text:_,...d})=>d),answers:store.list('answer'),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),reminders:w?matters.flatMap(m=>store.listReminders(w.id,m.id)):[],skills,sources:corpus};}
 
   async function dispatch(action,p={}) {
     if(!p||typeof p!=='object'||Array.isArray(p))throw new Error('Parámetros inválidos.');
@@ -76,6 +97,31 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       case 'task.create':return tasks.create(p);
       case 'task.list':return tasks.list(p);
       case 'task.update':return tasks.update(p);
+      case 'reminder.create': {
+        reminderFields(p,['matterId','kind','title','dueAt','note']);const m=matter(p.matterId);
+        return createReminder(m,p,{source:'user',status:'approved'});
+      }
+      case 'reminder.list': {
+        reminderFields(p,['matterId','status']);const m=matter(p.matterId);
+        if(p.status!==undefined&&!['proposed','approved','done','dismissed'].includes(p.status))throw new Error('Estado de recordatorio inválido.');
+        return store.listReminders(m.workspaceId,m.id).filter(item=>p.status===undefined||item.status===p.status);
+      }
+      case 'reminder.update': {
+        reminderFields(p,['matterId','reminderId','status']);
+        if(!['approved','done','dismissed'].includes(p.status))throw new Error('Solo puedes aprobar, completar o descartar un recordatorio.');
+        const item=reminder(p.matterId,p.reminderId);if(item.status===p.status)return item;
+        const updated={...item,status:p.status,updatedAt:plannerNow().toISOString()};
+        return store.transaction(()=>{store.updateReminder(updated);store.audit('reminder.update',updated.id);return updated;});
+      }
+      case 'planner.today': {
+        reminderFields(p,['matterId','timeZone']);const m=matter(p.matterId);const timeZone=p.timeZone===undefined?plannerTimeZone:p.timeZone;
+        try{return pendingToday(store.listReminders(m.workspaceId,m.id),plannerNow(),timeZone);}catch(e){throw new Error(`Planificador: ${e.message}`);}
+      }
+      case 'planner.propose': {
+        reminderFields(p,['matterId']);const m=matter(p.matterId);const items=store.listReminders(m.workspaceId,m.id);
+        const suggestions=proposeFollowUps({matter:m,documents:store.list('document',m.id),answers:store.list('answer',m.id),items,now:plannerNow(),timeZone:plannerTimeZone});
+        return store.transaction(()=>suggestions.map(suggestion=>createReminder(m,suggestion,{source:'planner',status:'proposed',plannerRule:suggestion.plannerRule})));
+      }
       case 'workspace.create': {
         if(workspace())throw new Error('Este almacenamiento ya pertenece a un despacho. No se puede reemplazar.');
         const name=text(p.name,'Nombre',120);

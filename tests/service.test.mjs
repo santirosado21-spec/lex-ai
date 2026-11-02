@@ -10,10 +10,10 @@ import { extractDocument } from '../server/extraction.mjs';
 
 const lawText='Texto sintético para pruebas. Las obligaciones del contrato deben quedar descritas por las partes.';
 function source(jurisdiction='MX-FED') {return {id:jurisdiction==='MX-FED'?'MX-TEST-FED':'MX-TEST-CMX',title:'Fuente sintética de pruebas',authority:'Fixture',jurisdiction,practiceAreas:['civil'],category:'legislation',publishedAt:null,effectiveAt:null,amendedAt:null,version:'test-only',article:'prueba',url:'https://www.diputados.gob.mx/test-only',retrievedAt:'2026-10-29',status:'unknown-currentness',text:lawText,sha256:createHash('sha256').update(lawText).digest('hex'),accessNote:'Synthetic test data; not legal authority'};}
-async function fixture(t,inference){
+async function fixture(t,inference,serviceOptions={}){
   const dir=mkdtempSync(join(tmpdir(),'lex-backend-test-'));const corpusPath=join(dir,'corpus.json');
   writeFileSync(corpusPath,JSON.stringify([source(),source('MX-CMX')]));
-  const service=await createService({dataDir:join(dir,'firm'),corpusPath,inference:inference??validModel()});
+  const service=await createService({dataDir:join(dir,'firm'),corpusPath,inference:inference??validModel(),...serviceOptions});
   t.after(()=>{service.close();rmSync(dir,{recursive:true,force:true});});
   await service.dispatch('workspace.create',{name:'Despacho sintético',practiceAreas:['civil']});
   const a=await service.dispatch('matter.create',{title:'Contrato A',client:'Cliente sintético A',jurisdiction:'MX-FED'});
@@ -31,6 +31,26 @@ test('workspace ownership and scoped document retrieval persist in a private SQL
   assert.match((await service.dispatch('document.text',{documentId:doc.id,matterId:a.id})).text,/100 pesos/);
   const state=await service.dispatch('state');assert.equal(state.documents[0].text,undefined);
   assert.equal(statSync(join(dir,'firm','lex.sqlite')).mode&0o777,0o600);
+});
+
+test('local reminders enforce firm and matter scope, require human approval, and validate manual dates',async t=>{
+  let inferenceCalled=false;
+  const clock=()=>new Date('2026-01-15T05:30:00Z');
+  const {service,a,b}=await fixture(t,{async *generate(){inferenceCalled=true;yield ''; }},{clock});
+  const deadline=await service.dispatch('reminder.create',{matterId:a.id,kind:'deadline',title:'Presentar promoción',dueAt:'2026-01-13',note:'Confirmar con el equipo.'});
+  assert.equal(deadline.status,'approved');assert.match(deadline.note,/no calcula términos legales/);
+  const today=await service.dispatch('planner.today',{matterId:a.id});assert.deepEqual(today.overdue.map(item=>item.id),[deadline.id]);
+  const proposed=await service.dispatch('planner.propose',{matterId:a.id});
+  assert.ok(proposed.length>0);assert.ok(proposed.every(item=>item.status==='proposed'&&item.source==='planner'));
+  await assert.rejects(service.dispatch('reminder.update',{matterId:b.id,reminderId:proposed[0].id,status:'approved'}),/este asunto/);
+  const approved=await service.dispatch('reminder.update',{matterId:a.id,reminderId:proposed[0].id,status:'approved'});assert.equal(approved.status,'approved');
+  assert.equal((await service.dispatch('reminder.list',{matterId:b.id})).length,0);
+  const other=await fixture(t);
+  await assert.rejects(other.service.dispatch('reminder.list',{matterId:a.id}),/Asunto no encontrado/);
+  await assert.rejects(other.service.dispatch('reminder.update',{matterId:a.id,reminderId:deadline.id,status:'done'}),/Asunto no encontrado/);
+  await assert.rejects(service.dispatch('reminder.create',{matterId:a.id,kind:'deadline',title:'Fecha inválida',dueAt:'2026-02-30'}),/no existe/);
+  await assert.rejects(service.dispatch('reminder.create',{matterId:a.id,kind:'followup',title:'T'.repeat(201)}),/Título/);
+  assert.equal(inferenceCalled,false);
 });
 
 test('retrieval and model context exclude other matters and jurisdiction sources',async t=>{

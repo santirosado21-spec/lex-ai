@@ -16,7 +16,22 @@ export function createStore(dataDir) {
     CREATE TABLE IF NOT EXISTS chunks (id TEXT PRIMARY KEY, document_id TEXT NOT NULL REFERENCES records(id), matter_id TEXT NOT NULL, text TEXT NOT NULL);
     CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(id UNINDEXED,matter_id UNINDEXED,text,tokenize='unicode61 remove_diacritics 2');
     CREATE TABLE IF NOT EXISTS audit (id TEXT PRIMARY KEY, action TEXT NOT NULL, entity_id TEXT, created_at TEXT NOT NULL);
-    PRAGMA user_version=1;`);
+    CREATE TABLE IF NOT EXISTS reminders (
+      id TEXT PRIMARY KEY,
+      workspace_id TEXT NOT NULL,
+      matter_id TEXT NOT NULL,
+      kind TEXT NOT NULL CHECK(kind IN ('deadline','followup','draft-suggestion')),
+      title TEXT NOT NULL,
+      due_at TEXT,
+      note TEXT NOT NULL,
+      status TEXT NOT NULL CHECK(status IN ('proposed','approved','done','dismissed')),
+      source TEXT NOT NULL CHECK(source IN ('user','planner')),
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      planner_rule TEXT
+    );
+    CREATE INDEX IF NOT EXISTS reminders_scope ON reminders(workspace_id,matter_id,status,due_at);
+    PRAGMA user_version=2;`);
   const parse = r => r ? JSON.parse(r.payload) : null;
   return {
     db,
@@ -44,6 +59,34 @@ export function createStore(dataDir) {
     },
     audit(action, id) {
       db.prepare('INSERT INTO audit VALUES(?,?,?,?)').run(randomUUID(), action, id ?? null, new Date().toISOString());
+    },
+    createReminder(reminder) {
+      db.prepare(`INSERT INTO reminders
+        (id,workspace_id,matter_id,kind,title,due_at,note,status,source,created_at,updated_at,planner_rule)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`).run(
+        reminder.id,reminder.workspaceId,reminder.matterId,reminder.kind,reminder.title,reminder.dueAt,
+        reminder.note,reminder.status,reminder.source,reminder.createdAt,reminder.updatedAt,reminder.plannerRule ?? null,
+      );
+      return reminder;
+    },
+    getReminder(id, workspaceId, matterId) {
+      return db.prepare(`SELECT id,workspace_id AS workspaceId,matter_id AS matterId,kind,title,due_at AS dueAt,note,status,source,
+        created_at AS createdAt,updated_at AS updatedAt,planner_rule AS plannerRule
+        FROM reminders WHERE id=? AND workspace_id=? AND matter_id=?`).get(id,workspaceId,matterId) ?? null;
+    },
+    listReminders(workspaceId, matterId) {
+      return db.prepare(`SELECT id,workspace_id AS workspaceId,matter_id AS matterId,kind,title,due_at AS dueAt,note,status,source,
+        created_at AS createdAt,updated_at AS updatedAt,planner_rule AS plannerRule
+        FROM reminders WHERE workspace_id=? AND matter_id=? ORDER BY due_at IS NULL,due_at,title,id`).all(workspaceId,matterId);
+    },
+    updateReminder(reminder) {
+      const result=db.prepare(`UPDATE reminders SET kind=?,title=?,due_at=?,note=?,status=?,source=?,updated_at=?,planner_rule=?
+        WHERE id=? AND workspace_id=? AND matter_id=?`).run(
+        reminder.kind,reminder.title,reminder.dueAt,reminder.note,reminder.status,reminder.source,reminder.updatedAt,
+        reminder.plannerRule ?? null,reminder.id,reminder.workspaceId,reminder.matterId,
+      );
+      if(result.changes!==1)throw new Error('Recordatorio no encontrado en este asunto.');
+      return reminder;
     },
     insertDocument(document, bytes, chunks) {
       this.transaction(() => {
