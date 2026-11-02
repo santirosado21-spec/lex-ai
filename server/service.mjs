@@ -285,7 +285,7 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
         if(p.matterId!==undefined)matter(p.matterId);
         const result=checkConflict(p,listMatters().filter(item=>item.workspaceId===w.id));
         store.audit('conflict.check',sha(`conflict.check:${normalizePartyName(result.candidate)}`));
-        return {...result,notice:'Este es un chequeo léxico, no una determinación jurídica de conflicto de intereses; la ausencia de coincidencias no es autorización ni clearance.'};
+        return {...result,notice:'Este es un chequeo léxico, no una determinación jurídica de conflicto de intereses; la ausencia de coincidencias no es autorización ni descarta un conflicto.'};
       }
       case 'document.import': {
         return importDocument(p);

@@ -48,7 +48,7 @@ try {
   await page.getByLabel('Nombre para revisar',{exact:true}).fill('Nombre sin coincidencia sintético');
   await page.getByRole('button',{name:'Revisar',exact:true}).click();
   await expect(page.getByText('Sin coincidencias en los datos de este equipo',{exact:true})).toBeVisible();
-  await expect(page.getByText(/ausencia de coincidencias no es autorización ni clearance/i).last()).toBeVisible();
+  await expect(page.getByText(/ausencia de coincidencias no es autorización ni descarta un conflicto/i).last()).toBeVisible();
 
   for(const width of [1440,1024,768,390]) {
     await page.setViewportSize({width,height:1000});

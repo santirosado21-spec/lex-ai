@@ -1,6 +1,6 @@
 # Chequeo local de conflicto de intereses
 
-`conflict.check` es una comprobación determinista y local de nombres. No usa modelos, red, documentos ni herramientas del sistema. Su único propósito es producir pistas para revisión humana: **es un chequeo léxico, no una determinación jurídica de conflicto de intereses; la ausencia de coincidencias no es autorización ni clearance**.
+`conflict.check` es una comprobación determinista y local de nombres. No usa modelos, red, documentos ni herramientas del sistema. Su único propósito es producir pistas para revisión humana: **es un chequeo léxico, no una determinación jurídica de conflicto de intereses; la ausencia de coincidencias no es autorización ni descarta un conflicto**.
 
 ## Alcance y datos
 
