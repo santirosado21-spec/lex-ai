@@ -21,3 +21,7 @@ No hay proyecto ni deployment de LEX AI creados en esta comprobación. La solici
 ## Preparación independiente
 
 Landing y catálogo local actualizados a 0.3.8, preservando versiones históricas del seed y URLs de descarga NULL. El repositorio de desarrollo sigue privado. La landing no ofrece descargas públicas ni envía documentos a la nube. Las pruebas locales no equivalen a despliegue remoto.
+
+## Resolución de Vercel el mismo día
+
+Después de que el dueño pulsó Allow y confirmó el mensaje final, listar proyectos y leer el equipo funcionaron. Se creó el proyecto `lex-ai` y se desplegó la landing en producción. URL pública https://lex-ai-rust.vercel.app/ verificada con HTTP200 y pruebas de navegador PASS. Detalles en `vercel-production.json`. El bloqueo de Supabase permanece sin cambios.

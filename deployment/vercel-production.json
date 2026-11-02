@@ -1,0 +1,29 @@
+{
+  "status": "READY",
+  "environment": "production",
+  "publicUrl": "https://lex-ai-rust.vercel.app",
+  "projectId": "prj_lD5B5QTEd7XauHZi3LBRMsd6wmox",
+  "projectName": "lex-ai",
+  "teamId": "team_oTe9d80pIj0d4tSxGQaAUr6N",
+  "deploymentId": "dpl_wsp9EDjDARuxyuyMGDgtwE8tQCDA",
+  "deploymentUrl": "https://lex-lj0x4ms9t-santirosado21-8807s-projects.vercel.app",
+  "sourceCommit": "1c3a9eb6bb72068114c44abfb41bd39ed600a8ae",
+  "sourceRepository": "santirosado21-spec/lex-ai",
+  "repositoryPrivate": true,
+  "rootDirectory": "landing",
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": ".",
+  "releaseVersion": "0.3.8",
+  "verifiedAt": "2026-11-02T03:46:35.106Z",
+  "verification": {
+    "publicHTTP": 200,
+    "browserSmoke": "PASS",
+    "assetsMatchLocal": "PASS",
+    "productionSecurityHeaders": "PASS",
+    "internalProjectPaths": "7/7 returned 404",
+    "previewProtectionPreserved": true
+  },
+  "supabase": "not-created; connector unavailable and browser permission blocked"
+}

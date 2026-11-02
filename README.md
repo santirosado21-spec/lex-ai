@@ -79,3 +79,5 @@ La versión 0.3.6 integra el loader circular aportado por el dueño dentro de la
 La versión 0.3.7 integra la barra de chat MetalPromptBar: adjuntos por asunto, habilidad real, crecimiento hasta seis líneas, atajos y conservación del borrador ante error o cancelación. El efecto metálico es local y opcional. [Integración del chat](docs/ui-resources/chat-composer-integration.md).
 
 La versión 0.3.8 añade Dashboard: indicadores reales del despacho, ámbito independiente del asunto activo, gráfica y tabla semanal de tareas, asuntos con seguimiento manual y actividad reciente. Disponible en la navegación lateral, Inicio y Más en móvil. [Integración del dashboard](docs/ui-resources/dashboard-integration.md).
+
+Landing pública: https://lex-ai-rust.vercel.app/ (Vercel, verificada el 1 de noviembre de 2026). Publica únicamente información del producto; documentos e inferencia siguen locales. [Estado del despliegue](deployment/README.md).
