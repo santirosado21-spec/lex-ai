@@ -1,39 +1,39 @@
 [
   {
-    "package": "@fontsource/ibm-plex-sans",
+    "package": "@fontsource/newsreader",
     "version": "5.3.0",
     "subset": "latin",
     "format": "woff2",
     "license": "OFL-1.1",
     "files": [
       {
-        "name": "ibm-plex-sans-latin-400-normal.woff2",
-        "sha256": "3b646991d30055a93a4ecc499713d4347953a74a947ecab435ab72070cbdab0e"
+        "name": "newsreader-latin-400-normal.woff2",
+        "sha256": "e66067814f1c672d33a457e4f4d102c818b481420e2234cf685ebdbf2f443904"
       },
       {
-        "name": "ibm-plex-sans-latin-500-normal.woff2",
-        "sha256": "0717336fb31fcdcde4b8deb3675bb4a0f7f6d484864afcd6751ac29975962203"
-      },
-      {
-        "name": "ibm-plex-sans-latin-600-normal.woff2",
-        "sha256": "8960851d691c054ed38e259bdcf1a6190d157b4203ed5bb32c632a863fb8ec2f"
+        "name": "newsreader-latin-600-normal.woff2",
+        "sha256": "05c91a26d19a61eafe7ce8e0b77eff3fd279ce994dc89f432f4cd06784935e84"
       }
     ]
   },
   {
-    "package": "@fontsource/source-serif-4",
-    "version": "5.3.1",
+    "package": "@fontsource/schibsted-grotesk",
+    "version": "5.3.0",
     "subset": "latin",
     "format": "woff2",
     "license": "OFL-1.1",
     "files": [
       {
-        "name": "source-serif-4-latin-400-normal.woff2",
-        "sha256": "02194deb92d3975dd30e11a3824a1f1db32b48c93654e60560cb81ce8e7b5f95"
+        "name": "schibsted-grotesk-latin-400-normal.woff2",
+        "sha256": "437cd97c802be9f10f60b4db8a723261e5c35dfe1529de0562981871028bd670"
       },
       {
-        "name": "source-serif-4-latin-500-normal.woff2",
-        "sha256": "d3e119de0b756d9fa6d368de570f7168bb74eedf3289aaeae22dd97b900918d1"
+        "name": "schibsted-grotesk-latin-500-normal.woff2",
+        "sha256": "83c497a1c028bfc2ae231f88c49ec7da542e1e4bbdfe23ad207a6dbb91d4f15d"
+      },
+      {
+        "name": "schibsted-grotesk-latin-600-normal.woff2",
+        "sha256": "d00ac8735bf6b96cc4cfbfb22576c4168645547a264bd22d127c46519cab3250"
       }
     ]
   }

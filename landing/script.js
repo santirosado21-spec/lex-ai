@@ -1,60 +1,75 @@
 'use strict';
 
-const tablist = document.querySelector('[role="tablist"]');
-const tabs = [...tablist.querySelectorAll('[role="tab"]')];
-const narrowLayout = window.matchMedia('(max-width: 760px)');
+const downloadButton = document.getElementById('download-button');
+const downloadState = document.getElementById('download-state');
+const downloadSize = document.getElementById('download-size');
+const downloadSha = document.getElementById('download-sha');
+const copyButton = document.getElementById('copy-sha');
+const copyStatus = document.getElementById('copy-status');
+const versionNodes = document.querySelectorAll('[data-release-version]');
 
-function updateOrientation() {
-  tablist.setAttribute('aria-orientation', narrowLayout.matches ? 'horizontal' : 'vertical');
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) return 'Tamaño pendiente de publicación';
+  const gib = bytes / 1e9;
+  return `${gib >= 1 ? gib.toFixed(2) : (bytes / 1e6).toFixed(1)} ${gib >= 1 ? 'GB' : 'MB'}`;
 }
-updateOrientation();
-narrowLayout.addEventListener('change', updateOrientation);
 
-function activateTab(tab, focus = false) {
-  for (const item of tabs) {
-    const selected = item === tab;
-    item.setAttribute('aria-selected', String(selected));
-    item.tabIndex = selected ? 0 : -1;
-    document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
+function setUnavailable(message = 'La descarga aún no está publicada.') {
+  downloadButton.removeAttribute('href');
+  downloadButton.setAttribute('aria-disabled', 'true');
+  downloadButton.setAttribute('tabindex', '-1');
+  downloadButton.textContent = 'Disponible muy pronto';
+  downloadState.textContent = message;
+  downloadSize.textContent = 'Tamaño pendiente de publicación';
+  downloadSha.textContent = 'Pendiente de publicación';
+  copyButton.disabled = true;
+}
+
+function setAvailable(catalogue) {
+  downloadButton.href = catalogue.downloadUrl;
+  downloadButton.setAttribute('download', '');
+  downloadButton.setAttribute('aria-disabled', 'false');
+  downloadButton.removeAttribute('tabindex');
+  downloadButton.textContent = `Descargar LEX AI ${catalogue.version}`;
+  downloadState.textContent = 'La descarga incluye un archivo DMG para Apple Silicon.';
+  downloadSize.textContent = formatBytes(catalogue.bytes);
+  downloadSha.textContent = catalogue.sha256;
+  copyButton.disabled = false;
+}
+
+function isSafeDownloadUrl(value) {
+  try {
+    const url = new URL(value, window.location.href);
+    return url.origin === window.location.origin || url.protocol === 'https:';
+  } catch {
+    return false;
   }
-  if (focus) tab.focus();
 }
 
-for (const tab of tabs) {
-  tab.addEventListener('click', () => activateTab(tab));
-  tab.addEventListener('keydown', event => {
-    const current = tabs.indexOf(tab);
-    let next;
-    const horizontal = narrowLayout.matches;
-    if (event.key === (horizontal ? 'ArrowRight' : 'ArrowDown')) next = (current + 1) % tabs.length;
-    if (event.key === (horizontal ? 'ArrowLeft' : 'ArrowUp')) next = (current - 1 + tabs.length) % tabs.length;
-    if (event.key === 'Home') next = 0;
-    if (event.key === 'End') next = tabs.length - 1;
-    if (next !== undefined) {
-      event.preventDefault();
-      activateTab(tabs[next], true);
-    }
-  });
+async function loadCatalogue() {
+  try {
+    const response = await fetch('catalogue.json', {credentials: 'same-origin'});
+    if (!response.ok) throw new Error('No se pudo leer el catálogo.');
+    const catalogue = await response.json();
+    versionNodes.forEach(node => { node.textContent = catalogue.version || '0.4.2'; });
+    const available = typeof catalogue.downloadUrl === 'string' && isSafeDownloadUrl(catalogue.downloadUrl)
+      && Number.isFinite(catalogue.bytes) && catalogue.bytes > 0
+      && typeof catalogue.sha256 === 'string' && /^[a-f0-9]{64}$/i.test(catalogue.sha256);
+    if (!available) return setUnavailable();
+    setAvailable(catalogue);
+  } catch {
+    setUnavailable('La descarga no está disponible en este momento.');
+  }
 }
 
-const privacy = document.getElementById('privacy-dialog');
-let privacyTrigger;
-for (const button of document.querySelectorAll('[data-open-privacy]')) {
-  button.addEventListener('click', () => {
-    privacyTrigger = button;
-    privacy.showModal();
-    document.body.classList.add('dialog-open');
-  });
-}
-for (const button of document.querySelectorAll('[data-close-privacy]')) {
-  button.addEventListener('click', () => privacy.close());
-}
-privacy.addEventListener('close', () => {
-  document.body.classList.remove('dialog-open');
-  privacyTrigger?.focus();
+copyButton.addEventListener('click', async () => {
+  if (copyButton.disabled) return;
+  try {
+    await navigator.clipboard.writeText(downloadSha.textContent);
+    copyStatus.textContent = 'SHA-256 copiado.';
+  } catch {
+    copyStatus.textContent = 'No se pudo copiar; selecciona el SHA-256 manualmente.';
+  }
 });
-privacy.addEventListener('click', event => {
-  if (event.target !== privacy) return;
-  const bounds = privacy.getBoundingClientRect();
-  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) privacy.close();
-});
+
+loadCatalogue();

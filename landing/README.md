@@ -1,15 +1,11 @@
-# Landing pública LEX AI
+# Landing pública de LEX AI
 
-Sitio estático sin framework ni dependencias de ejecución. Raíz de despliegue: este directorio `landing/`. Sirve `index.html`, CSS, JS, catálogo y assets locales. No necesita build. Para revisión local: `python3 -m http.server 4175 --directory landing` desde la raíz del repositorio.
+Sitio estático, sin framework ni dependencias de ejecución. La raíz de despliegue es `landing/`: sirve HTML, CSS, JavaScript, catálogo y assets locales. Para revisión local normal puede usarse `python3 -m http.server 4175 --directory landing` desde la raíz del repositorio.
 
-Dirección visual: propuesta real de Claude Opus 5.5 «Expediente foliado», en `docs/architecture/landing-design.md`; implementación de Codex siguiendo la skill frontend-design suministrada. La foto de portada se espera en `assets/lex-cover.webp`, creada por el coordinador. No se distribuyen capturas con datos reales: el preview es HTML con datos ficticios.
+La dirección visual es “Sello y pizarra”: pizarra clara, papel, tinta y un solo acento granate. Newsreader se usa para títulos y Schibsted Grotesk para interfaz. Las fuentes son WOFF2 locales de `@fontsource`; sus licencias OFL y hashes están en `assets/fonts/`. El logo de la página es la copia de `src/assets/lex-mark.svg`; `assets/favicon.svg` conserva el icono de la app.
 
-Interacciones: cinco pestañas ARIA (flechas según orientación, Home/End), anclas, preguntas expandibles y diálogo de privacidad. El único movimiento automático es la línea de verificación, desactivado por prefers-reduced-motion. No hay formularios, tracking, cookies de aplicación, llamadas remotas ni conexión al runtime del escritorio. `catalogue.json` es metadata pública estática; no hay Supabase configurado ni fetch pendiente que pueda ejecutarse accidentalmente.
+`catalogue.json` es la única fuente de disponibilidad de la descarga. `script.js` la solicita desde el mismo origen. Mientras `downloadUrl`, `bytes` o `sha256` sean `null`, el control muestra “Disponible muy pronto”, queda deshabilitado y no contiene un enlace. Cuando se publiquen los tres valores reales, el botón, tamaño y SHA-256 se actualizan sin cambiar el HTML. Nunca introducir una URL, tamaño o hash de ejemplo.
 
-`vercel.json` restringe scripts, estilos, imágenes y fuentes al mismo origen; bloquea conexiones, formularios, objetos y marcos. Debe desplegarse con raíz `landing/` para aplicar esa configuración. No contiene rutas fuera de esta carpeta ni URLs falsas de descarga. No implica que se haya publicado el sitio.
+`vercel.json` permite solamente recursos y conexiones del mismo origen; no hay formularios, analítica, cookies de aplicación ni recursos remotos. La página no recibe documentos ni se conecta al runtime de escritorio.
 
-Las fuentes provienen de las dependencias locales @fontsource: IBM Plex Sans (400/500/600 normal) y Source Serif 4 (400/500 normal), únicamente archivos Latin WOFF2. Se incluyen las licencias OFL completas en `assets/fonts/`. Las versiones exactas se registran en `assets/fonts/provenance.json`.
-
-Límites de producto en el copy: app 0.3.5 experimental, firma ad hoc, sin notarización; candidato entrenado separado y de importación manual, nunca predeterminado. 32 casos técnicos no equivalen a validación jurídica. Corpus snapshot 30/10/2026, 35.452 artículos y 303 instrumentos, 910 muestras cotejadas: no exhaustivo ni garantía de vigencia. No hay URL pública de descarga por ahora.
-
-Identidad pública: LEX AI. La UI y el catálogo no muestran nombres del runtime/modelo base. `assistantName` sustituye el identificador técnico en el catálogo; procedencia y licencias permanecen en la documentación técnica/legal.
+La versión 0.4.2 se presenta como experimental y sin notarización de Apple. La página declara que requiere Apple Silicon, 8 GB de RAM, ~3 GB libres y una preparación inicial de ~1.95 GB. El snapshot de la Biblioteca federal es 30/10/2026, no exhaustivo, y la versión todavía no se ha probado en una Mac física de 8 GB.

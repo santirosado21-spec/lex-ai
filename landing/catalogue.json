@@ -1,37 +1,22 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "product": "LEX AI",
-  "version": "0.3.8",
+  "version": "0.4.2",
   "releaseStatus": "experimental",
-  "platform": "macOS Apple Silicon",
-  "unifiedMemoryGB": 24,
-  "initialBaseModelFreeDiskGB": 20,
-  "notarized": false,
-  "signing": "ad-hoc",
-  "publicDownloadUrl": null,
-  "trainedCandidate": {
-    "name": "LEX AI — mejora experimental v2",
-    "trainingSteps": 400,
-    "technicalCasesPassed": 32,
-    "technicalCasesEvaluated": 32,
-    "syntheticWorkflowPassed": true,
-    "professionalLegalValidation": false,
-    "distribution": "separate manual import",
-    "selectedByDefault": false
+  "platform": "macOS Apple Silicon (arm64)",
+  "requirements": {
+    "minimumMemoryGB": 8,
+    "minimumFreeDiskGB": 3,
+    "firstRunAssistantComponentsGB": 1.95
   },
+  "notarized": false,
+  "downloadUrl": "https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v0.4.2/LEX-AI-0.4.2-arm64.dmg",
+  "bytes": 403415775,
+  "sha256": "7ff5b5e87f99ec5777833d51b4eff7c491866d3b42be951d8258b4bb25bf23ad",
   "publicCorpus": {
     "snapshotDate": "2026-10-30",
-    "articles": 35452,
-    "instruments": 303,
-    "independentlyCheckedSamples": 910,
-    "exhaustiveReview": false,
+    "exhaustive": false,
     "currentLawGuaranteed": false
-  },
-  "site": {
-    "acceptsDocuments": false,
-    "modelExecution": false,
-    "analytics": false,
-    "remoteCatalogueConfigured": false
   },
   "assistantName": "LEX AI"
 }
