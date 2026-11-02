@@ -80,3 +80,7 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Frente G (servidor) entregado por Codex: tabla `reminders` aislada por despacho/asunto, `server/planner.mjs` con reloj inyectado, métodos `reminder.create/list/update`, `planner.today`, `planner.propose`; propuestas del planificador inactivas hasta aprobación; los plazos los captura el abogado y la app no calcula términos legales. Codex reportó 149/152 por EPERM de loopback en su sandbox; en shell normal pasó 152/152.
 - Revisión de Claude encontró y corrigió dos defectos: (1) `proposeFollowUps` calculaba «hoy» en UTC en vez de la zona del planificador (la regla de plazo a 3 días se descuadraba hasta un día por la tarde-noche en CDMX); (2) una propuesta descartada se volvía a proponer en cada llamada. Dos pruebas nuevas cubren ambos. `npm test` 154/154, build PASS.
 - Falta de Frente G: interfaz de «pendientes del día» y aprobación en la UI (src/**), y preguntas de seguimiento con el modelo ligero (opcional, sin evidencia aún).
+
+## Iteración 7 (04:22 CST) — Claude orquestador
+- Frente G UI entregado por Codex: `src/PendingView.tsx` («Pendientes» en Más herramientas/paleta, sin añadir un cuarto destino principal), estilos al final de `src/macos.css`, `scripts/ui-pending-smoke.mjs`. Verificado por Claude en shell normal: build PASS, `npm test` 154/154, 11/11 smokes UI PASS, capturas revisadas. Pulido menor anotado en `docs/qa/ui-pending.md`.
+- Frente G completo salvo preguntas de seguimiento con el modelo ligero (sin evidencia).

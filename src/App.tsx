@@ -8,20 +8,21 @@ import {version as appVersion} from '../package.json';
 import AppCover from './components/AppCover';
 import PublicLibrary from './PublicLibrary';
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
-import { BookOpen, Check, CheckCircle2, ChevronRight, CircleHelp, Download, FileText, FolderOpen, Home, LayoutDashboard, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy } from 'lucide-react';
+import { BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, CircleHelp, Download, FileText, FolderOpen, Home, LayoutDashboard, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy } from 'lucide-react';
 import CommandPalette, { type CommandItem } from './CommandPalette';
 import DocumentText from './DocumentText';
 import DocumentLibrary from './DocumentLibrary';
 import MatterOverview from './MatterOverview';
+import PendingView from './PendingView';
 import TrainingView from './TrainingView';
 import SourcesView from './SourcesView';
 import { analyze, api, downloadFile, emptyState, fileBase64, type DocumentRecord, type Answer, type AppState, type EngineStatus, type Feedback, type Matter, type Proposal, type Source } from './api';
 
 const Dashboard = lazy(()=>import('./components/ui/app-1'));
 
-type Page = 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library';
+type Page = 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library' | 'pending';
 const pages: {id: Page; label: string; icon: typeof Home}[] = [
-  {id:'drafts',label:'Escritos',icon:FileText},{id:'dashboard',label:'Dashboard',icon:LayoutDashboard},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'training',label:'Evaluación de LEX AI',icon:Sparkles},{id:'home',label:'Inicio',icon:Home},{id:'workspace',label:'Asistente',icon:MessageSquare},{id:'matters',label:'Asuntos',icon:FolderOpen},{id:'documents',label:'Documentos',icon:FileText},{id:'research',label:'Investigación',icon:Search},{id:'skills',label:'Habilidades',icon:Sparkles},{id:'sources',label:'Fuentes públicas',icon:BookOpen},{id:'knowledge',label:'Conocimiento',icon:Library},{id:'settings',label:'Configuración',icon:Settings}
+  {id:'drafts',label:'Escritos',icon:FileText},{id:'dashboard',label:'Dashboard',icon:LayoutDashboard},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'training',label:'Evaluación de LEX AI',icon:Sparkles},{id:'home',label:'Inicio',icon:Home},{id:'workspace',label:'Asistente',icon:MessageSquare},{id:'matters',label:'Asuntos',icon:FolderOpen},{id:'documents',label:'Documentos',icon:FileText},{id:'research',label:'Investigación',icon:Search},{id:'skills',label:'Habilidades',icon:Sparkles},{id:'sources',label:'Fuentes públicas',icon:BookOpen},{id:'knowledge',label:'Conocimiento',icon:Library},{id:'settings',label:'Configuración',icon:Settings},{id:'pending',label:'Pendientes',icon:CalendarDays}
 ];
 const practiceOptions = ['Civil','Mercantil','Corporativo','Laboral','Fiscal','Administrativo','Constitucional','Litigio','Comercio internacional','Propiedad intelectual','Cumplimiento'];
 const jurisdictionLabel = (value?: string) => value === 'MX-CMX' ? 'Ciudad de México' : value === 'MX-FED' ? 'Federal' : value || 'Sin jurisdicción';
@@ -165,6 +166,7 @@ export default function App() {
           {page==='matters' && <section className="page"><div className="page-heading"><div><h1>Asuntos</h1><p>Cada asunto delimita los documentos que puede consultar el asistente.</p></div>{newMatterButton}</div>{data.matters.length ? <div className="table-wrap"><table><thead><tr><th>Asunto</th><th>Cliente</th><th>Jurisdicción</th><th>Documentos</th><th><span className="sr-only">Acciones</span></th></tr></thead><tbody>{data.matters.map(m=><tr key={m.id}><td><strong>{m.title}</strong></td><td>{m.client}</td><td>{jurisdictionLabel(m.jurisdiction)}</td><td>{data.documents.filter(d=>d.matterId===m.id).length}</td><td><button className="text-button" onClick={()=>{chooseMatter(m.id);setPage('dossier');}}>Abrir <ChevronRight size={14}/></button></td></tr>)}</tbody></table></div>:<Empty title="Aún no hay asuntos">Organiza el trabajo por cliente, expediente o proyecto interno.</Empty>}</section>}
 
           {page==='documents' && (matter?<DocumentLibrary key={matter.id} matter={matter} documents={documents} importControl={importControl} onOpenOriginal={doc=>void openOriginal(doc)} onOpen={doc=>void openDocument(doc)} onAsk={askAboutDocument}/>:<section className="page"><h1>Documentos</h1><Empty title="Selecciona o crea un asunto" action={newMatterButton}>Los documentos se organizan dentro de un asunto.</Empty></section>)}
+          {page==='pending' && (matter?<PendingView key={matter.id} matter={matter}/>:<section className="page"><h1>Pendientes</h1><Empty icon={CalendarDays} title="Selecciona o crea un asunto" action={newMatterButton}>Los pendientes se organizan dentro de un asunto.</Empty></section>)}
           {page==='dossier'&&matter&&<MatterOverview tasks={data.tasks.filter(task=>task.matterId===matterId)} onTaskAction={async(action,payload)=>{await api(action,{...payload,matterId});await refresh();}} matter={matter} documents={documents} answers={answers} feedback={data.feedback.filter(item=>item.matterId===matterId)} onDocument={doc=>void openDocument(doc)} onAnswer={answer=>{setSelectedAnswer(answer.id);setPage('workspace');}} onAssistant={()=>setPage('workspace')}/>}
           {page==='training'&&<TrainingView/>}
 
