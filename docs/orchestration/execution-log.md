@@ -124,3 +124,13 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Push de `main` a GitHub (`ff99fe1..998af92`).
 - H#3 Checklist documental entregado por Codex (la entrega anunciada en la iteración 12 no existía; se relanzó) y verificado por Claude en shell normal: `npm run build` PASS, `npm test` 179/179, `ui-checklist-smoke` PASS (1440/1024/768/390; captura 1440 revisada). Esquema cerrado, máx. 40 elementos, aislamiento por despacho/asunto, auditoría sin texto, plantillas organizativas que no declaran requisitos legales. Sin migración (usa el almacén de registros por asunto).
 - Límite honesto: no hay validación con abogados; las plantillas son genéricas. Frente C sigue bloqueado por memoria (~4,7 GiB libres con otras apps abiertas); sin cambios.
+
+## Iteración 14 (2026-11-02, tarde) — Claude orquestador (dsystem)
+- Petición del dueño: todas las herramientas en el menú, descarga del modelo rota, landing lista para enseñar a su socio, diseño y logo nuevos, estudio de agentes similares, seguir entrenando.
+- Descarga del modelo: causa raíz verificada (`start()` exigía 3 GB de RAM libre antes de descargar; Mac con 2,4 GB disponibles). Codex separó descarga y generación (umbral de 3 GB intacto al generar, `memoryWarning` no bloqueante); tests 21/21 y descarga real arrancó (5 %).
+- Rediseño «Sello y pizarra» (brief: `docs/brand/redesign-brief-2026-11-02.md`): Codex implementó tokens, barra lateral con 3 grupos y todas las herramientas; Claude verificó en shell normal: 13/13 smokes UI, 181/181 tests. Defectos reales hallados y corregidos: el cajón móvil no se podía cerrar (cabecera tapada). Fuentes locales Newsreader/Schibsted instaladas con licencias OFL.
+- Logo: 4 candidatas de Codex (A/B/C, luego A2/D); A y B rechazadas (A se leía «C», B ilegible); elegida A2. Figma no disponible en esta sesión; SVG como fuente.
+- Instalador 0.4.2 (403.415.775 B, SHA-256 7ff5b5e8…23ad) construido tras instalar Rust; `verify-package` PASS; escaneo de secretos limpio. Publicado en repo público solo de descargas `santirosado21-spec/lex-ai-descargas` (release v0.4.2, prerelease, sin notarizar).
+- Landing rediseñada por Codex; Claude rellenó `catalogue.json` y ajustó smoke (PASS); despliegue automático por push a main.
+- Harvey/agentes: solo fuentes públicas (`docs/product/competitor-research-2026-11-02.md`); sin ingeniería inversa de productos de terceros.
+- Entrenamiento: no reanudado; RAM libre ~2,4 GB. Último candidato ligero rechazado en calidad.
