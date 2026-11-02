@@ -14,10 +14,25 @@ export function parseVmMemory(text,totalBytes){
  if(![4096,16384].includes(pageSize)||![free,inactive].every(n=>Number.isSafeInteger(n)&&n>=0)||!Number.isFinite(totalBytes)||totalBytes<=0||(free+inactive)*pageSize>totalBytes)throw Error('No se pudo medir la memoria disponible.');
  return {freeBytes:free*pageSize,availableBytes:(free+Math.floor(inactive/2))*pageSize,reclaimableCreditBytes:Math.floor(inactive/2)*pageSize,method:'vm_stat-free-plus-half-inactive',estimated:true};
 }
+// macOS keeps almost all RAM as inactive/compressed/cached on purpose, so counting only free + half of
+// inactive pages badly under-reports usable memory (a 24 GB Mac with 43 % free was read as 2.6 GB).
+// kern.memorystatus_level is the kernel's own "percentage of memory available" figure, the same one
+// `memory_pressure` prints. The 3 GB minimum is unchanged; only the measurement is more faithful.
+export function parseMemoryLevel(text,totalBytes){
+ const raw=String(text).trim();
+ const level=Number(raw);
+ if(!/^\d{1,3}$/.test(raw)||!Number.isInteger(level)||level<0||level>100||!Number.isFinite(totalBytes)||totalBytes<=0)throw Error('No se pudo medir el nivel de memoria.');
+ return Math.floor(totalBytes*level/100);
+}
 export async function availableMemory(){
  if(os.platform()!=='darwin'){const freeBytes=os.freemem();return {freeBytes,availableBytes:freeBytes,method:'os-free',estimated:false};}
  const {stdout}=await exec('/usr/bin/vm_stat',[],{timeout:2000,maxBuffer:65536,env:{PATH:'/usr/bin:/bin',LC_ALL:'C'}});
- return parseVmMemory(stdout,os.totalmem());
+ const vm=parseVmMemory(stdout,os.totalmem());
+ try{
+  const {stdout:level}=await exec('/usr/sbin/sysctl',['-n','kern.memorystatus_level'],{timeout:2000,maxBuffer:4096,env:{PATH:'/usr/bin:/bin',LC_ALL:'C'}});
+  const availableBytes=parseMemoryLevel(level,os.totalmem());
+  return {...vm,availableBytes,reclaimableCreditBytes:Math.max(0,availableBytes-vm.freeBytes),method:'kern.memorystatus_level',estimated:true};
+ }catch{return vm;}
 }
 export function parseProcessTreeRss(text,rootPid){
  if(!Number.isInteger(rootPid)||rootPid<=0)throw Error('PID del motor inválido.');
