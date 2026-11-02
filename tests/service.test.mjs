@@ -56,6 +56,29 @@ test('matter counterparties are normalized, scoped, audited and migrate from exi
   const migrated=new DatabaseSync(join(dir,'firm','lex.sqlite'));assert.equal(migrated.prepare('PRAGMA user_version').get().user_version,3);assert.equal(migrated.prepare("SELECT count(*) AS count FROM audit WHERE action='matter.counterparties.set'").get().count,1);migrated.close();
 });
 
+test('checklists are closed-schema, local to one firm and matter, and audit only their record id',async t=>{
+  const {service,dir,a,b}=await fixture(t);
+  const templates=await service.dispatch('checklist.templates',{});
+  assert.match(templates.notice,/sugerencias organizativas/i);
+  assert.equal(templates.templates.length,3);
+  assert.ok(templates.templates.every(template=>template.items.length>0));
+  await assert.rejects(service.dispatch('checklist.templates',{unknown:true}),/Campos de checklist/);
+  assert.deepEqual(await service.dispatch('checklist.get',{matterId:a.id}),{matterId:a.id,items:[],updatedAt:null});
+  const items=[{id:'item-uno',label:'Confirmar el objetivo de trabajo',completed:false},{id:'item-dos',label:'Registrar siguiente revisión',completed:true}];
+  const saved=await service.dispatch('checklist.set',{matterId:a.id,items});
+  assert.deepEqual(saved.items,items);
+  assert.equal((await service.dispatch('checklist.get',{matterId:b.id})).items.length,0);
+  await assert.rejects(service.dispatch('checklist.set',{matterId:a.id,items,unknown:true}),/Campos de checklist/);
+  await assert.rejects(service.dispatch('checklist.set',{matterId:a.id,items:[{id:'item-uno',label:'A',completed:false}]}),/Elemento de checklist/);
+  await assert.rejects(service.dispatch('checklist.set',{matterId:a.id,items:Array.from({length:41},(_,index)=>({id:`item-${index}`,label:`Elemento ${index}`,completed:false}))}),/40 elementos/);
+  const other=await fixture(t);
+  await assert.rejects(other.service.dispatch('checklist.get',{matterId:a.id}),/Asunto no encontrado/);
+  const db=new DatabaseSync(join(dir,'firm','lex.sqlite'));
+  const audits=db.prepare("SELECT action,entity_id AS entityId FROM audit WHERE action='checklist.set'").all();
+  assert.equal(audits.length,1);assert.ok(audits[0].entityId);assert.ok(!JSON.stringify(audits).includes('Confirmar el objetivo'));
+  db.close();
+});
+
 test('local reminders enforce firm and matter scope, require human approval, and validate manual dates',async t=>{
   let inferenceCalled=false;
   const clock=()=>new Date('2026-01-15T05:30:00Z');

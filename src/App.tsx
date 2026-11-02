@@ -8,7 +8,7 @@ import {version as appVersion} from '../package.json';
 import AppCover from './components/AppCover';
 import PublicLibrary from './PublicLibrary';
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
-import { BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, CircleHelp, Download, FileText, FolderOpen, Home, LayoutDashboard, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy } from 'lucide-react';
+import { BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, CircleHelp, ClipboardList, Download, FileText, FolderOpen, Home, LayoutDashboard, Library, LoaderCircle, LockKeyhole, MessageSquare, Plus, Search, Settings, ShieldCheck, Sparkles, Upload, X, PanelLeftClose, PanelLeftOpen, PanelRight, Copy } from 'lucide-react';
 import CommandPalette, { type CommandItem } from './CommandPalette';
 import DocumentText from './DocumentText';
 import DocumentLibrary from './DocumentLibrary';
@@ -16,15 +16,16 @@ import MatterOverview from './MatterOverview';
 import PendingView from './PendingView';
 import AgentActionsView from './AgentActionsView';
 import ConflictCheckView from './ConflictCheckView';
+import ChecklistView from './ChecklistView';
 import TrainingView from './TrainingView';
 import SourcesView from './SourcesView';
 import { analyze, api, downloadFile, emptyState, fileBase64, type DocumentRecord, type Answer, type AppState, type EngineStatus, type Feedback, type Matter, type Proposal, type Source } from './api';
 
 const Dashboard = lazy(()=>import('./components/ui/app-1'));
 
-type Page = 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library' | 'pending' | 'agent-actions' | 'conflicts';
+type Page = 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library' | 'pending' | 'agent-actions' | 'conflicts' | 'checklist';
 const pages: {id: Page; label: string; icon: typeof Home}[] = [
-  {id:'drafts',label:'Escritos',icon:FileText},{id:'dashboard',label:'Dashboard',icon:LayoutDashboard},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'training',label:'Evaluación de LEX AI',icon:Sparkles},{id:'home',label:'Inicio',icon:Home},{id:'workspace',label:'Asistente',icon:MessageSquare},{id:'matters',label:'Asuntos',icon:FolderOpen},{id:'documents',label:'Documentos',icon:FileText},{id:'research',label:'Investigación',icon:Search},{id:'skills',label:'Habilidades',icon:Sparkles},{id:'sources',label:'Fuentes públicas',icon:BookOpen},{id:'knowledge',label:'Conocimiento',icon:Library},{id:'settings',label:'Configuración',icon:Settings},{id:'pending',label:'Pendientes',icon:CalendarDays},{id:'agent-actions',label:'Acciones propuestas',icon:ShieldCheck},{id:'conflicts',label:'Conflictos',icon:ShieldCheck}
+  {id:'drafts',label:'Escritos',icon:FileText},{id:'dashboard',label:'Dashboard',icon:LayoutDashboard},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'training',label:'Evaluación de LEX AI',icon:Sparkles},{id:'home',label:'Inicio',icon:Home},{id:'workspace',label:'Asistente',icon:MessageSquare},{id:'matters',label:'Asuntos',icon:FolderOpen},{id:'documents',label:'Documentos',icon:FileText},{id:'research',label:'Investigación',icon:Search},{id:'skills',label:'Habilidades',icon:Sparkles},{id:'sources',label:'Fuentes públicas',icon:BookOpen},{id:'knowledge',label:'Conocimiento',icon:Library},{id:'settings',label:'Configuración',icon:Settings},{id:'pending',label:'Pendientes',icon:CalendarDays},{id:'agent-actions',label:'Acciones propuestas',icon:ShieldCheck},{id:'conflicts',label:'Conflictos',icon:ShieldCheck},{id:'checklist',label:'Checklist',icon:ClipboardList}
 ];
 const practiceOptions = ['Civil','Mercantil','Corporativo','Laboral','Fiscal','Administrativo','Constitucional','Litigio','Comercio internacional','Propiedad intelectual','Cumplimiento'];
 const jurisdictionLabel = (value?: string) => value === 'MX-CMX' ? 'Ciudad de México' : value === 'MX-FED' ? 'Federal' : value || 'Sin jurisdicción';
@@ -171,6 +172,7 @@ export default function App() {
           {page==='pending' && (matter?<PendingView key={matter.id} matter={matter}/>:<section className="page"><h1>Pendientes</h1><Empty icon={CalendarDays} title="Selecciona o crea un asunto" action={newMatterButton}>Los pendientes se organizan dentro de un asunto.</Empty></section>)}
           {page==='agent-actions' && <AgentActionsView matter={matter} onRefresh={refresh}/>}
           {page==='conflicts' && <ConflictCheckView matter={matter} onRefresh={refresh}/>}
+          {page==='checklist' && <ChecklistView matter={matter}/>}
           {page==='dossier'&&matter&&<MatterOverview tasks={data.tasks.filter(task=>task.matterId===matterId)} onTaskAction={async(action,payload)=>{await api(action,{...payload,matterId});await refresh();}} matter={matter} documents={documents} answers={answers} feedback={data.feedback.filter(item=>item.matterId===matterId)} onDocument={doc=>void openDocument(doc)} onAnswer={answer=>{setSelectedAnswer(answer.id);setPage('workspace');}} onAssistant={()=>setPage('workspace')}/>}
           {page==='training'&&<TrainingView/>}
 

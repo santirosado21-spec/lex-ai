@@ -9,6 +9,7 @@ import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
 import { buildComparisonDocx } from './docx-export.mjs';
 import { compareTexts } from './doc-compare.mjs';
 import { checkConflict, normalizePartyName } from './conflicts.mjs';
+import { checklistTemplates, validateChecklistGet, validateChecklistSet, validateChecklistTemplates } from './checklists.mjs';
 import { pendingToday, proposeFollowUps } from './planner.mjs';
 import { agentArgsHash, proposalView, validateAgentRequest } from './agent-actions.mjs';
 
@@ -120,6 +121,17 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
     matterFields(p,['matterId','counterparties']);
     const current=matter(p.matterId),updated={...current,counterparties:matterCounterparties(p.counterparties)};
     return store.transaction(()=>{store.put('matter',updated);store.audit('matter.counterparties.set',updated.id);return updated;});
+  }
+  function checklistGet(p){
+    const {matterId}=validateChecklistGet(p),m=matter(matterId);
+    const entry=store.list('checklist',m.id).find(item=>item.workspaceId===m.workspaceId);
+    return {matterId:m.id,items:entry?.items??[],updatedAt:entry?.updatedAt??null};
+  }
+  function checklistSet(p){
+    const {matterId,items}=validateChecklistSet(p),m=matter(matterId);
+    const existing=store.list('checklist',m.id).find(item=>item.workspaceId===m.workspaceId);
+    const entry={id:existing?.id??randomUUID(),workspaceId:m.workspaceId,matterId:m.id,items,updatedAt:now()};
+    return store.transaction(()=>{store.put('checklist',entry);store.audit('checklist.set',entry.id);return {matterId:entry.matterId,items:entry.items,updatedAt:entry.updatedAt};});
   }
   function saveImportedDocument(p,extracted,inTransaction=false){
     const m=matter(p.matterId);
@@ -279,6 +291,16 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       }
       case 'matter.counterparties.set': {
         return setMatterCounterparties(p);
+      }
+      case 'checklist.get': {
+        return checklistGet(p);
+      }
+      case 'checklist.set': {
+        return checklistSet(p);
+      }
+      case 'checklist.templates': {
+        validateChecklistTemplates(p);requireWorkspace();
+        return {notice:'Plantillas con sugerencias organizativas; la persona abogada debe confirmar su pertinencia. No declaran requisitos legales.',templates:checklistTemplates()};
       }
       case 'conflict.check': {
         const w=requireWorkspace();

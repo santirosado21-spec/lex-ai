@@ -119,3 +119,8 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Claude: pulido de texto de Conflictos (español, sin aviso duplicado) — commit `514cc95`; build PASS, 178/178, smoke PASS.
 - Lanzado Codex para H#3 «Checklist documental» (editable por asunto, plantillas genéricas sin afirmar requisitos legales, `checklist.get/set/templates`, UI «Checklist» en Más herramientas). Resultado pendiente.
 - Frente C: no se reintenta (~5 GiB libres por estimación propia, sin cambio de condiciones).
+
+## Iteración 13 (2026-11-02) — Claude orquestador
+- Push de `main` a GitHub (`ff99fe1..998af92`).
+- H#3 Checklist documental entregado por Codex (la entrega anunciada en la iteración 12 no existía; se relanzó) y verificado por Claude en shell normal: `npm run build` PASS, `npm test` 179/179, `ui-checklist-smoke` PASS (1440/1024/768/390; captura 1440 revisada). Esquema cerrado, máx. 40 elementos, aislamiento por despacho/asunto, auditoría sin texto, plantillas organizativas que no declaran requisitos legales. Sin migración (usa el almacén de registros por asunto).
+- Límite honesto: no hay validación con abogados; las plantillas son genéricas. Frente C sigue bloqueado por memoria (~4,7 GiB libres con otras apps abiertas); sin cambios.
