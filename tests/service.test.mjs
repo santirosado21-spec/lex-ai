@@ -112,20 +112,22 @@ test('retrieval and model context exclude other matters and jurisdiction sources
   await assert.rejects(service.dispatch('answer.export',{answerId:answer.id,matterId:b.id}),/este asunto/);
 });
 
-test('no evidence means abstention before inference',async t=>{
+test('no relevant evidence means an abstention before inference',async t=>{
   let called=false;const {service,b}=await fixture(t,{async *generate(){called=true;yield '';}});
-  await assert.rejects(service.analyze(payload(b)),/Importa un documento/);assert.equal(called,false);
+  const answer=await service.analyze({...payload(b),question:'zzqvx inexistente'});
+  assert.equal(answer.citations.length,0);assert.match(answer.text,/No encontré fuentes oficiales relevantes/);assert.equal(called,false);
 });
 
 test('legal research retrieves context without requiring document import or manual library browsing',async t=>{
   let observed;const {service,b}=await fixture(t,validModel(messages=>{observed=messages;}));
+  const absent=await service.analyze({matterId:b.id,question:'zzqvx inexistente',skillId:'legal-researcher'});
+  assert.equal(absent.citations.length,0);assert.match(absent.text,/No encontré fuentes oficiales relevantes/);
   const answer=await service.analyze({matterId:b.id,question:'¿Qué obligaciones establece el contrato?',skillId:'legal-researcher'});
   const evidence=JSON.parse(observed[1].content).sources;
   assert.ok(answer.validation.citationIntegrity);assert.ok(evidence.length>0);
   assert.ok(evidence.every(s=>s.jurisdiction==='MX-CMX'&&s.category==='legislation'));
   assert.ok(observed.reduce((n,m)=>n+m.content.length,0)<7000);
   assert.ok(evidence.every(s=>s.text.length<=600));
-  await assert.rejects(service.analyze({matterId:b.id,question:'zzqvx inexistente',skillId:'legal-researcher'}),/evidencia jurídica suficiente/);
 });
 
 test('current runtime uses source-bound paragraphs and server renders only the explicit source associations',async t=>{

@@ -72,7 +72,17 @@ try {
   assert.doesNotMatch(await page.locator('body').innerText(), /Gemma|Ollama/i);
   assert.equal(await page.evaluate(() => document.fonts.check('18px Newsreader')), true);
   assert.equal(await page.evaluate(() => document.fonts.check('18px "Schibsted Grotesk"')), true);
+  const themeToggle=page.locator('#theme-toggle');
+  await themeToggle.click();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.theme)).toBe('light');
+  await expect(page.locator('.wordmark .theme-mark-light').first()).toBeVisible();
+  await themeToggle.click();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.theme)).toBe('dark');
+  await expect(page.locator('.wordmark .theme-mark-dark').first()).toBeVisible();
+  await themeToggle.click();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.hasAttribute('data-theme'))).toBe(false);
 
+  await page.reload({waitUntil:'networkidle'});
   await page.keyboard.press('Tab');
   await expect(page.getByText('Saltar al contenido', {exact:true})).toBeFocused();
   assert.equal(await page.getByText('Saltar al contenido', {exact:true}).evaluate(element => getComputedStyle(element).outlineStyle), 'solid');
@@ -117,7 +127,7 @@ try {
   assert.deepEqual(failed, []);
   const origin = new URL(base).origin;
   assert.deepEqual(requests.filter(url => new URL(url).origin !== origin), []);
-  report.checks.push('local Newsreader and Schibsted Grotesk load', 'all ten product tools are visible', 'catalogue null state disables the download and copy controls', 'route-intercepted catalogue enables the button and renders URL, size, and SHA-256', 'keyboard focus is visible', 'no horizontal overflow at 1440/768/390', 'no failed resources, browser exceptions, or third-party requests');
+  report.checks.push('local Newsreader and Schibsted Grotesk load', 'landing theme toggle cycles Automatic, Light, and Dark with the matching mark', 'all ten product tools are visible', 'catalogue null state disables the download and copy controls', 'route-intercepted catalogue enables the button and renders URL, size, and SHA-256', 'keyboard focus is visible', 'no horizontal overflow at 1440/768/390', 'no failed resources, browser exceptions, or third-party requests');
   report.status = 'PASS';
 } catch (error) {
   report.status = 'FAIL';

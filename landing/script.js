@@ -7,6 +7,23 @@ const downloadSha = document.getElementById('download-sha');
 const copyButton = document.getElementById('copy-sha');
 const copyStatus = document.getElementById('copy-status');
 const versionNodes = document.querySelectorAll('[data-release-version]');
+const themeToggle = document.getElementById('theme-toggle');
+const themeLabels = {auto:'Automático', light:'Claro', dark:'Oscuro'};
+
+function currentTheme() {
+  try { const saved=localStorage.getItem('lex-ai.appearance'); return saved==='light'||saved==='dark'||saved==='auto'?saved:'auto'; }
+  catch { return 'auto'; }
+}
+function setTheme(theme) {
+  if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.dataset.theme = theme;
+  if (themeToggle) {
+    themeToggle.textContent = themeLabels[theme];
+    themeToggle.setAttribute('aria-label', `Cambiar apariencia: ${themeLabels[theme]}`);
+    themeToggle.title = `Apariencia: ${themeLabels[theme]}`;
+  }
+  try { localStorage.setItem('lex-ai.appearance', theme); } catch {}
+}
 
 function formatBytes(bytes) {
   if (!Number.isFinite(bytes) || bytes <= 0) return 'Tamaño pendiente de publicación';
@@ -72,4 +89,9 @@ copyButton.addEventListener('click', async () => {
   }
 });
 
+setTheme(currentTheme());
+themeToggle?.addEventListener('click', () => {
+  const theme=currentTheme();
+  setTheme(theme==='auto'?'light':theme==='light'?'dark':'auto');
+});
 loadCatalogue();

@@ -12,18 +12,19 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/newsreader-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script>try{const theme=localStorage.getItem('lex-ai.appearance');if(theme==='light'||theme==='dark')document.documentElement.dataset.theme=theme}catch{}</script>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="site-header shell">
-    <a class="wordmark" href="#inicio" aria-label="LEX AI, inicio"><img src="assets/lex-mark.svg" alt="" aria-hidden="true"><span>LEX AI</span></a>
+    <a class="wordmark" href="#inicio" aria-label="LEX AI, inicio"><span class="theme-mark" aria-hidden="true"><img class="theme-mark-light" src="assets/lex-mark.svg" alt=""><img class="theme-mark-dark" src="assets/lex-mark-dark.svg" alt=""></span><span>LEX AI</span></a>
     <nav aria-label="Navegación principal">
       <a href="#herramientas">Herramientas</a>
       <a href="#descargar">Descargar</a>
       <a href="#limites">Límites</a>
-    </nav>
+    </nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar apariencia: Automático" title="Apariencia: Automático">Automático</button>
   </header>
   <main id="contenido">
     <section class="hero shell" id="inicio" aria-labelledby="hero-title">
@@ -130,7 +131,7 @@
     </section>
   </main>
   <footer class="site-footer shell">
-    <a class="wordmark" href="#inicio" aria-label="LEX AI, volver al inicio"><img src="assets/lex-mark.svg" alt="" aria-hidden="true"><span>LEX AI</span></a>
+    <a class="wordmark" href="#inicio" aria-label="LEX AI, volver al inicio"><span class="theme-mark" aria-hidden="true"><img class="theme-mark-light" src="assets/lex-mark.svg" alt=""><img class="theme-mark-dark" src="assets/lex-mark-dark.svg" alt=""></span><span>LEX AI</span></a>
     <p>Información pública del producto. No constituye asesoría jurídica.</p>
     <a href="catalogue.json">Ficha pública de la versión</a>
   </footer>
