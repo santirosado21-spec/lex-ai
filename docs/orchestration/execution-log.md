@@ -25,3 +25,38 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Auditoría npm de producción ejecutada: 0 vulnerabilidades conocidas reportadas. Artefacto: artifacts/dependency-audit.json. No cubre por sí sola código vendorizado, Rust, binarios o seguridad de la aplicación.
 - Prueba de copia fuera del build detectó bundle sin sello de recursos; firmado ad hoc tras retirar solo FinderInfo/ResourceFork de la copia generada. Verificación codesign --deep --strict PASS y arranque de copia independiente PASS. No se eliminó cuarentena ni se desactivó Gatekeeper. Empaquetado usa staging temporal limpio.
 - DMG definitivo montado en solo lectura, app extraída a directorio temporal independiente, firma ad hoc deep/strict válida, arranque nativo y lectura del análisis guardado PASS. Informe artifacts/package-check.json. No se sobrescribió /Applications.
+
+# Loop nocturno — Claude orquesta (2026-11-01)
+
+## Iteración 1 (22:26 CST)
+- Claude (orquestador) programó el loop cada hora (cron de sesión). Estado al inicio: dos workers Codex en curso desde 22:20-22:21: (1) Frente A+B (modelo ligero ≤8 GB, LoRA por materia, held-out, tabla base vs adaptador, ≥10 ejemplos), (2) Frente E (tokens de diseño, alineación, logo único, landing). Sin locks de GPU activos.
+- No se lanza trabajo adicional para evitar solapamiento de archivos. Pendiente: revisar entregas, correr `npm run build` y `npm test`, y commitear de forma atómica por ítem.
+- Sin evidencia nueva todavía; nada marcado PASS.
+
+## Coordinación interfaz Apple HIG — Codex `/root/ui` (2026-11-01)
+- El encargo actual del dueño prioriza Apple HIG: sidebar Asistente/Asuntos/Escritos, fuente del sistema en controles y encabezados, bajo consumo y logo original vectorial Figma. Revisión Claude Code real en `artifacts/ui-hig/claude-review.json`.
+- Se detectó edición concurrente de tokens/style/cover por otra sesión. No se revirtieron colores, layout ni archivos ajenos. Ajuste acotado al final de `src/macos.css`: contrato tipográfico `.app-shell.macos-workspace` de mayor especificidad; el contenido editorial puede conservar su tipografía propia.
+- Ownership activo de este arreglo: `src/macos.css`, `scripts/ui-hig-smoke.mjs` y documentación HIG. Evitar reintroducir Source Serif en encabezados y controles de la aplicación. Los tokens de landing no requieren modificación.
+- No afirmar rendimiento validado en8GB ni aptitud del modelo: root reporta evaluación actual base0/10; esa evaluación es independiente del PASS de interfaz.
+
+## Coordinación de identidad Figma — Codex `/root/ui` (2026-11-01)
+- El dueño pidió un logo nuevo creado mediante Figma. Otra sesión sustituyó `src/assets/lex-mark.svg` por una marca LE previa; se conserva ese archivo ajeno sin revertirlo.
+- Se recuperó la respuesta exportAsync SVG original guardada durante la creación Figma, componente `2:5` del archivo `4O4XgcaSNSMEvAQjUQbc0C`: dos documentos enlazados por curva. Archivo exclusivo `src/assets/lex-figma-mark.svg`. La nueva llamada MCP alcanzó límite; se reutilizan bytes originales de la exportación verificada, no una recreación.
+- App, BrandAvatar y AppCover apuntan al nuevo nombre para evitar colisión. No se alteraron estilos, icono PNG ni iconos nativos. Preservar esta referencia por prioridad del encargo actual.
+
+## 2026-11-01 — Claude orquestador (Frente D)
+- Codex entregó server/docx-export.mjs (tests 19/19). Claude renderizó con LibreOffice→PNG y detectó dos defectos (lista numerada reiniciaba en 1; notas al pie repetidas vacías); Claude los corrigió él mismo porque el job de Codex ya había terminado y otros dos seguían activos.
+- Verificación: npm test 127/127 en shell normal (3 fallos reportados por Codex eran EPERM del sandbox); árbol commiteado probado aislado 18/18.
+- Commit atómico solo con hunks del export; el resto de server/service.mjs (document.open, legal-researcher) pertenece a otros workers y queda sin commit.
+
+## Integración mínima de diseño revisado — Codex `/root/ui`
+- Se inspeccionaron las referencias actuales: App y AppCover apuntaban a `brand/lex-folio-mark.svg`; BrandAvatar ya usaba el export Figma comprobado. Se cambiaron exclusivamente esos dos imports a `assets/lex-figma-mark.svg`.
+- Se añadió al final de `src/macos.css` un selector `.app-shell.macos-workspace` para encabezados y controles con stack literal del sistema, independiente de variables editoriales externas. Se preservaron todas las reglas existentes, layouts, demás archivos e iconos empaquetados. Root ejecuta el smoke; no GPU ni navegador desde este worker.
+
+## Iteración 2 (23:25 CST) — Claude orquestador
+- Verificación en shell normal (sin sandbox de Codex): `npm run build` PASS; `npm test` 144/144 PASS.
+- Smokes UI: `ui-hig-smoke` PASS, `landing-smoke` PASS. FAIL (selectores obsoletos frente a la nueva barra lateral HIG, sin Inicio/Dashboard/bento): `ui-smoke` (primero `.app-cover img` ambiguo por el logo en figcaption — corregido a `img[src*="lex-cover"]` —, luego falta botón «Inicio»), `ui-product-identity-smoke`, `ui-dashboard-smoke`, `ui-bento-smoke`. Es deriva de pruebas, no regresión confirmada del producto; pendiente actualizarlas al shell HIG (dueño: worker UI).
+- Frente A: el LoRA de Gemma 3 1B (28 672 params, 100 pasos) bajó la pérdida (1,83→1,27 val) pero 0/8 y 0/10 en gates técnicos: `REJECTED_TECHNICAL_FAILURE`, no promovido. Comparación de runtime con 30 pares: Qwen3.5 2B 30/30 sin habilidad y 28/30 con ella, Qwen3 1.7B 23/22, Gemma 3 1B 20/15; el catálogo usa Qwen3.5 2B solo como evaluación experimental. Las habilidades no mostraron mejora. No hay validación en un Mac físico de 8 GB.
+- `docs/qa/model-comparison.md` quedó desactualizado: sigue diciendo «pendiente» aunque ya hubo entrenamiento y evaluación. Pendiente corregirlo.
+- Sin commit: el árbol sigue en edición activa por otros workers (entrenamiento y exportación ligeros, UI), así que un commit ahora mezclaría cambios a medias.
+- Siguiente iteración: commit atómico por área cuando los archivos dejen de cambiar; actualizar los smokes al shell HIG; luego Frente C (`docs/qa/public-cases.md`).

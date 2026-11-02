@@ -24,3 +24,5 @@ resources/public-library.sqlite
 resources/public-library.sqlite-*
 supabase/.temp/
 supabase/.branches/
+
+.venv-convert-lightweight/

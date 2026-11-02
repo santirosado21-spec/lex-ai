@@ -1,6 +1,6 @@
 # LEX AI
 
-Espacio jurídico privado para despachos mexicanos de distintas especialidades. Prototipo local para macOS Apple Silicon (24 GB RAM), Tauri + React/TypeScript, Node/SQLite y Gemma 4 26B-A4B.
+Espacio jurídico privado para despachos mexicanos de distintas especialidades. Prototipo local para macOS Apple Silicon con Tauri + React/TypeScript y Node/SQLite. El objetivo actual es 8 GB de RAM; las mediciones se realizan en una Mac de 24 GB y no certifican todavía un equipo físico de 8 GB.
 
 Permite crear despacho/asuntos, importar TXT/MD/PDF/DOCX, recuperar documentos y fuentes oficiales, analizar con IA local, exportar DOCX y conservar feedback con propuestas de notas revisables. No es un producto validado para documentación confidencial ni sustituye revisión profesional.
 
@@ -22,7 +22,7 @@ npm run test:ui
 npm run test:e2e
 ```
 
-`test:ui` usa inferencia simulada, explícitamente identificada. `test:e2e` usa Gemma REAL, tarda varios minutos y requiere el modelo local; escribe únicamente artefactos sintéticos en `artifacts/`.
+`test:ui` usa inferencia simulada, explícitamente identificada. `test:e2e` usa inferencia local REAL, tarda varios minutos y requiere el modelo configurado; escribe únicamente artefactos sintéticos en `artifacts/`. La comparación de habilidades y recursos está documentada en [evaluación ligera](docs/lightweight-evaluation.md).
 
 ## Escritorio
 
@@ -35,7 +35,9 @@ Requiere Rust/Cargo y Command Line Tools solo en la máquina de compilación. `s
 
 En esta sesión Rust está aislado en `/private/tmp/lex-toolchain`; para recompilar con ese toolchain exportar `CARGO_HOME=/private/tmp/lex-toolchain/cargo`, `RUSTUP_HOME=/private/tmp/lex-toolchain/rustup` y añadir `$CARGO_HOME/bin` a PATH. No es una dependencia del instalador.
 
-Al iniciar Gemma, la aplicación reutiliza una instalación local compatible si existe o descarga la versión aprobada (~16 GB), verifica manifiesto y SHA256 de todos los archivos y usa un proceso privado. Se requieren al menos 20 GB libres para descargar. No se admite silenciosamente otra versión del tag. El arranque y el uso del modelo pueden tardar según hardware.
+Abrir la aplicación no descarga ni carga un modelo. Al inicializar explícitamente, se verifica el manifiesto y SHA256 de la versión fijada en `resources/model-catalog.json`, con un límite total de descarga de 2 GB. El motor privado admite una consulta simultánea, limita el contexto y libera el modelo después de responder. Los pesos grandes anteriores se conservan sin reutilizarse automáticamente. Los límites y la incertidumbre de las mediciones están en [ADR 0002](docs/architecture/adr/0002-lightweight-local-runtime.md).
+
+La interfaz actual usa tres destinos principales —Asistente, Asuntos y Escritos— y el [logo editable de Figma](https://www.figma.com/design/4O4XgcaSNSMEvAQjUQbc0C?node-id=2-22). Claude Code revisó la dirección conforme a Apple HIG; [alcance y pruebas](docs/architecture/apple-hig-identity.md). La investigación recupera leyes locales sin exigir importar documentos; los escritos y originales se abren desde su asunto.
 
 ## Documentación
 
@@ -58,7 +60,15 @@ El repositorio de desarrollo es privado: https://github.com/santirosado21-spec/l
 
 ## Entrega actual
 
-Aplicación: `src-tauri/target/release/bundle/macos/LEX AI.app`. Instalador con cover, dock, inicio bento, avatar, indicador de proceso, barra de chat y dashboard: `artifacts/LEX-AI-0.3.8-arm64.dmg` y SHA256 adyacente. Las versiones 0.3.0 a 0.3.7 anteriores se conservan. El backend empaquetado comprueba la biblioteca real, búsqueda, integridad de módulos y estado de entrenamiento. La UI se verifica en Chromium con fixtures sintéticos y en una prueba separada contra la biblioteca real. El instalador tiene firma ad hoc de desarrollo; no está notarizado y no ha sido probado en un segundo Mac limpio.
+[Evidencia de entrega y límites](docs/qa/8gb-delivery-2026-11-01.md).
+
+Versión local de evaluación **0.4.1**, instalada en `/Applications/LEX AI.app`; la instalación anterior se conserva en `artifacts/desktop-update/`. Instalador: `artifacts/LEX-AI-0.4.1-arm64.dmg`, 396.837.707, con SHA256 adyacente. Se conserva el historial de paquetes anteriores. El paquete tiene firma ad hoc de desarrollo y no está notarizado.
+
+El catálogo actual descarga Qwen3.5 2B Q4_K_M (1.945.781.358 bytes) solo al preparar explícitamente el asistente. Se eligió para evaluación local por su resultado relativo en la [comparación controlada](docs/qa/lightweight-runtime-comparison-2026-11-01.md): 28/30 casos técnicamente aceptados con instrucciones de habilidad; **no demostró mejora por habilidades ni calidad jurídica suficiente para distribución profesional**. El [candidato entrenado grounded-v2](docs/qa/grounded-training-v2-2026-11-01.md) ya tiene pesos exportados de 1.02 GB; permanece separado e inactivo porque no ha superado la evaluación.
+
+La verificación del paquete y de la instalación comprueba biblioteca, búsqueda, versiones, firma, icono y hashes de los módulos. El runtime incluido pasó una consulta real sin importar documentos y exportación DOCX usando pesos previamente verificados en un caché de evaluación. La UI pasó navegación, teclado y varios tamaños de ventana en Chromium con datos sintéticos. macOS aceptó abrir un TXT y un DOCX mediante el servicio real; la herramienta de inspección nativa no pudo iniciar, por lo que no se afirma revisión visual del editor o de la ventana Tauri.
+
+### Historial del entrenamiento grande, fuera del objetivo de 8 GB
 
 El candidato local `artifacts/training/lex-gemma4-lora-v2` completó 400 pasos QLoRA sobre datos públicos depurados. Los pesos completos están en [LEX-Gemma4-Experimental-v2.tar](artifacts/LEX-Gemma4-Experimental-v2.tar) (14,37 GB), con licencia, configuración, informes y SHA256 adyacente. Pasó 32 casos técnicos emparejados y un flujo sintético de contrato → recuperación → citas → DOCX. Este último usa generación sin esquema y normalización acotada de caracteres de control dentro de strings JSON antes de comprobar todas las citas; importar el modelo en otro cliente no incorpora esas validaciones.
 
