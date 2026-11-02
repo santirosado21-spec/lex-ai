@@ -65,3 +65,9 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Árbol quieto >30 min; build PASS, npm test 147/147 PASS; escaneo de secretos limpio (384 KB nuevos).
 - Commits atómicos por área: `9ddee13` runtime ligero + entrenamiento experimental + docs QA; `e23398a` UI HIG, marca Figma y tokens; `9d7fd49` AGENTS/README/package/ignore/log.
 - Lanzados dos workers Codex con archivos disjuntos: (1) actualizar smokes UI al shell HIG (`scripts/ui-*-smoke.mjs`, `docs/qa/ui-smoke-status.md`); (2) Frente C casos públicos (`fixtures/public-cases/**`, `scripts/run-public-cases.mjs`, `docs/qa/public-cases.md`). Resultados pendientes; nada marcado PASS hasta verlos.
+
+## Iteración 4 (01:22 CST) — Claude orquestador
+- Los dos workers Codex terminaron código pero el sandbox les impidió ejecutar smokes (EPERM loopback) y commitear (`.git/index.lock`); Claude ejecutó y commiteó en shell normal.
+- Smokes UI: 10/10 PASS tras correcciones. Hallazgo real: la rediseño HIG había quitado `role="status"` de `.generation-state` (regresión de accesibilidad) — restaurado en `src/App.tsx`. Los demás fallos eran pruebas obsoletas (habilidad por defecto ahora Investigación jurídica; canvas animado retirado a propósito). Commit `74db27a`. `npm test` 149/149.
+- Frente C: 16 casos públicos (8 materias, 5 habilidades). Corrida 1 con inferencia real Qwen3.5 2B: 10/16 PASS, pico RSS 2,18 GiB; fallos: 2 de abstención en `matter-assistant`, 1 control numérico, 3 casos bloqueados por la compuerta de memoria (laboral ×2, inyección mercantil) sin evaluar. Corrida 2: 0/16 por memoria libre insuficiente (otras apps), no refleja al modelo. No se bajó el umbral de 3 GB. Commit `621110e`.
+- Pendiente: repetir los 3 casos bloqueados con la RAM libre; mejorar abstención de `matter-assistant`; ~7 GB de cachés aislados en `artifacts/public-cases/` (ignorados por git) pueden borrarse con aprobación.
