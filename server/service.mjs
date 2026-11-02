@@ -7,6 +7,7 @@ import { extractDocument, chunkText } from './extraction.mjs';
 import { skills, validateSkillInput, validateModelOutput } from './skills.mjs';
 import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
 import { pendingToday, proposeFollowUps } from './planner.mjs';
+import { agentArgsHash, proposalView, validateAgentRequest } from './agent-actions.mjs';
 
 const now=()=>new Date().toISOString();
 const identifier=v=>typeof v==='string'&&/^[a-zA-Z0-9-]{1,100}$/.test(v);
@@ -33,7 +34,7 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
   function plannerNow(){const value=clock();const date=value instanceof Date?new Date(value.getTime()):new Date(value);if(Number.isNaN(date.getTime()))throw new Error('Reloj del planificador inválido.');return date;}
   function workspace() {return store.list('workspace')[0]??null;}
   function requireWorkspace(){const w=workspace();if(!w)throw new Error('Primero crea el espacio del despacho.');return w;}
-  function matter(id){requireWorkspace();if(!identifier(id))throw new Error('Asunto inválido.');const m=store.get('matter',id);if(!m)throw new Error('Asunto no encontrado en este despacho.');return m;}
+  function matter(id){const w=requireWorkspace();if(!identifier(id))throw new Error('Asunto inválido.');const m=store.get('matter',id);if(!m||m.workspaceId!==w.id)throw new Error('Asunto no encontrado en este despacho.');return m;}
   function scoped(kind,id,matterId){matter(matterId);if(!identifier(id))throw new Error('Identificador inválido.');const result=store.get(kind,id,matterId);if(!result)throw new Error('Registro no encontrado en este asunto.');return result;}
   function record(kind,payload,action=kind+'.create') {const entity={id:randomUUID(),...payload,createdAt:now()};store.put(kind,entity);store.audit(action,entity.id);return entity;}
   function reminderFields(payload,allowed){for(const key of Object.keys(payload))if(!allowed.includes(key))throw new Error(`Campo de recordatorio no admitido: ${key}.`);}
@@ -89,22 +90,131 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       .filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5).map(x=>({...x.source,relevance:x.score}));
   }
   function state(){const w=workspace(),matters=store.list('matter');return {workspace:w,matters,documents:store.list('document').map(({text:_,...d})=>d),answers:store.list('answer'),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),reminders:w?matters.flatMap(m=>store.listReminders(w.id,m.id)):[],skills,sources:corpus};}
+  function listMatters(){const w=requireWorkspace();return store.list('matter').filter(item=>item.workspaceId===w.id);}
+  function createMatter(p){
+    const w=requireWorkspace();
+    if(!['MX-FED','MX-CMX'].includes(p.jurisdiction))throw new Error('Jurisdicción no disponible en el corpus piloto.');
+    return record('matter',{workspaceId:w.id,title:text(p.title,'Título',200),client:text(p.client,'Cliente',200),jurisdiction:p.jurisdiction});
+  }
+  function saveImportedDocument(p,extracted,inTransaction=false){
+    const m=matter(p.matterId);
+    const entity={id:randomUUID(),workspaceId:m.workspaceId,matterId:m.id,name:p.name,text:extracted.text,characters:extracted.text.length,sha256:sha(extracted.bytes),createdAt:now()};
+    store.insertDocument(entity,extracted.bytes,chunkText(extracted.text,entity.id),{inTransaction});const {text:_,...result}=entity;return result;
+  }
+  function importDocument(p){return extractDocument(p.name,p.base64).then(extracted=>saveImportedDocument(p,extracted));}
+  function listReminders(p){
+    reminderFields(p,['matterId','status']);const m=matter(p.matterId);
+    if(p.status!==undefined&&!['proposed','approved','done','dismissed'].includes(p.status))throw new Error('Estado de recordatorio inválido.');
+    return store.listReminders(m.workspaceId,m.id).filter(item=>p.status===undefined||item.status===p.status);
+  }
+  function createUserReminder(p){reminderFields(p,['matterId','kind','title','dueAt','note']);return createReminder(matter(p.matterId),p,{source:'user',status:'approved'});}
+  function plannerToday(p){
+    reminderFields(p,['matterId','timeZone']);const m=matter(p.matterId);const timeZone=p.timeZone===undefined?plannerTimeZone:p.timeZone;
+    try{return pendingToday(store.listReminders(m.workspaceId,m.id),plannerNow(),timeZone);}catch(e){throw new Error(`Planificador: ${e.message}`);}
+  }
+  function plannerPropose(p,inTransaction=false){
+    reminderFields(p,['matterId']);const m=matter(p.matterId);const items=store.listReminders(m.workspaceId,m.id);
+    const suggestions=proposeFollowUps({matter:m,documents:store.list('document',m.id),answers:store.list('answer',m.id),items,now:plannerNow(),timeZone:plannerTimeZone});
+    const create=()=>suggestions.map(suggestion=>createReminder(m,suggestion,{source:'planner',status:'proposed',plannerRule:suggestion.plannerRule}));
+    return inTransaction?create():store.transaction(create);
+  }
+  function researchSearch(p){
+    requireWorkspace();if(!['MX-FED','MX-CMX'].includes(p.jurisdiction))throw new Error('Jurisdicción no admitida.');
+    if(p.matterId){const m=matter(p.matterId);if(m.jurisdiction!==p.jurisdiction)throw new Error('La jurisdicción no corresponde al asunto.');}
+    return research(text(p.query,'Consulta',4000),p.jurisdiction);
+  }
+  function finishExportAnswer(p,buffer){
+    const answer=scoped('answer',p.answerId,p.matterId);const m=matter(p.matterId);
+    void m;store.audit('answer.export',answer.id);
+    return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
+  }
+  function exportAnswer(p){const answer=scoped('answer',p.answerId,p.matterId);const m=matter(p.matterId);return buildAnswerDocx({firm:workspace(),matter:m,answer}).then(buffer=>finishExportAnswer(p,buffer));}
+  const agentTtlMs=15*60*1000;
+  const agentNow=()=>plannerNow().toISOString();
+  function agentScope(matterId){const w=requireWorkspace();if(matterId)matter(matterId);return w;}
+  function agentLog({proposalId=null,workspaceId,matterId=null,origin,action,argsHash,decision}){store.logAgentAction({proposalId,workspaceId,matterId,origin,action,argsHash,decision,createdAt:agentNow()});}
+  function executeAgentAction(action,args,matterId,prepared=null){
+    // Static dispatch only: approval never feeds an arbitrary action name back into dispatch().
+    switch(action) {
+      case 'matter.list':return listMatters();
+      case 'research.search':return researchSearch({...args,matterId:matterId??undefined});
+      case 'reminder.list':return listReminders({...args,matterId});
+      case 'planner.today':return plannerToday({...args,matterId});
+      case 'matter.create':return createMatter(args);
+      case 'reminder.create':return createUserReminder({...args,matterId});
+      case 'document.import':return saveImportedDocument({...args,matterId},prepared,true);
+      case 'answer.export':return finishExportAnswer({...args,matterId},prepared);
+      case 'planner.propose':return plannerPropose({matterId},true);
+      default:throw new Error('Acción de agente no registrada.');
+    }
+  }
+  async function agentDispatch(action,p){
+    if(action==='agent.propose') {
+      const request=validateAgentRequest(p);const w=agentScope(request.matterId);const createdAt=agentNow();const expiresAt=new Date(plannerNow().getTime()+agentTtlMs).toISOString();
+      if(request.definition.mode==='read') {
+        const result=executeAgentAction(request.action,request.args,request.matterId);
+        agentLog({workspaceId:w.id,matterId:request.matterId,origin:request.origin,action:request.action,argsHash:agentArgsHash(request.args),decision:'auto-allowed'});
+        return {status:'completed',action:request.action,result};
+      }
+      const proposal={id:randomUUID(),workspaceId:w.id,matterId:request.matterId,action:request.action,args:request.args,argsHash:agentArgsHash(request.args),origin:request.origin,status:'pending',createdAt,expiresAt,decidedAt:null,result:null};
+      store.transaction(()=>{store.createAgentProposal(proposal);agentLog({...proposal,decision:'pending'});});return proposalView(proposal);
+    }
+    if(action==='agent.pending') {
+      if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>key!=='matterId'))throw new Error('Parámetros de agente inválidos.');
+      const w=agentScope(p.matterId);return store.listAgentProposals(w.id,p.matterId).filter(item=>item.status==='pending').map(proposalView);
+    }
+    if(action==='agent.log') {
+      if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>key!=='matterId'&&key!=='limit'))throw new Error('Parámetros de agente inválidos.');
+      const w=agentScope(p.matterId);const limit=p.limit===undefined?100:p.limit;
+      if(!Number.isInteger(limit)||limit<1||limit>200)throw new Error('Límite de bitácora inválido.');return store.listAgentActionLog(w.id,p.matterId,limit);
+    }
+    if(action==='agent.reject') {
+      if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>key!=='proposalId'&&key!=='reason')||!identifier(p.proposalId)||(p.reason!==undefined&&(typeof p.reason!=='string'||p.reason.length>500)))throw new Error('Rechazo de propuesta inválido.');
+      const w=requireWorkspace();return store.transaction(()=>{const proposal=store.getAgentProposal(p.proposalId);if(!proposal||proposal.workspaceId!==w.id)throw new Error('Propuesta de agente no encontrada.');if(proposal.status!=='pending')return proposalView(proposal);proposal.status='rejected';proposal.decidedAt=agentNow();proposal.result={reason:p.reason?.trim()||null};store.updateAgentProposal(proposal);agentLog({...proposal,decision:'rejected'});return proposalView(proposal);});
+    }
+    if(action==='agent.approve') {
+      if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).length!==1||!identifier(p.proposalId))throw new Error('Aprobación de propuesta inválida.');
+      const w=requireWorkspace();let proposal=store.getAgentProposal(p.proposalId);if(!proposal||proposal.workspaceId!==w.id)throw new Error('Propuesta de agente no encontrada.');
+      if(proposal.status!=='pending')return proposalView(proposal);
+      if(plannerNow().getTime()>new Date(proposal.expiresAt).getTime())return store.transaction(()=>{proposal=store.getAgentProposal(p.proposalId);if(proposal.status==='pending'){proposal.status='expired';proposal.decidedAt=agentNow();proposal.result={reason:'expired'};store.updateAgentProposal(proposal);agentLog({...proposal,decision:'expired'});}return proposalView(proposal);});
+      // Expensive parsing/generation happens before the final transaction. The transaction below re-reads,
+      // re-validates, re-scopes and performs the durable action/decision together.
+      let prepared=null;
+      validateAgentRequest({matterId:proposal.matterId,action:proposal.action,args:proposal.args,origin:proposal.origin});
+      if(proposal.action==='document.import')prepared=await extractDocument(proposal.args.name,proposal.args.base64);
+      if(proposal.action==='answer.export'){const answer=scoped('answer',proposal.args.answerId,proposal.matterId);prepared=await buildAnswerDocx({firm:workspace(),matter:matter(proposal.matterId),answer});}
+      return store.transaction(()=>{
+        proposal=store.getAgentProposal(p.proposalId);
+        if(!proposal||proposal.workspaceId!==w.id)throw new Error('Propuesta de agente no encontrada.');
+        if(proposal.status!=='pending')return proposalView(proposal);
+        validateAgentRequest({matterId:proposal.matterId,action:proposal.action,args:proposal.args,origin:proposal.origin});
+        if(plannerNow().getTime()>new Date(proposal.expiresAt).getTime()){
+          proposal.status='expired';proposal.decidedAt=agentNow();proposal.result={reason:'expired'};store.updateAgentProposal(proposal);agentLog({...proposal,decision:'expired'});return proposalView(proposal);
+        }
+        agentScope(proposal.matterId);
+        const result=executeAgentAction(proposal.action,proposal.args,proposal.matterId,prepared);
+        proposal.status='approved';proposal.decidedAt=agentNow();proposal.result={completed:true};
+        if(store.updateAgentProposal(proposal)!==1)throw new Error('La propuesta de agente ya no está pendiente.');
+        agentLog({...proposal,decision:'approved'});
+        return {...proposalView(proposal),result};
+      });
+    }
+    throw new Error('Acción no admitida.');
+  }
 
   async function dispatch(action,p={}) {
     if(!p||typeof p!=='object'||Array.isArray(p))throw new Error('Parámetros inválidos.');
+    if(typeof action==='string'&&action.startsWith('agent.'))return agentDispatch(action,p);
     switch(action) {
       case 'state':return state();
       case 'task.create':return tasks.create(p);
       case 'task.list':return tasks.list(p);
       case 'task.update':return tasks.update(p);
       case 'reminder.create': {
-        reminderFields(p,['matterId','kind','title','dueAt','note']);const m=matter(p.matterId);
-        return createReminder(m,p,{source:'user',status:'approved'});
+        return createUserReminder(p);
       }
       case 'reminder.list': {
-        reminderFields(p,['matterId','status']);const m=matter(p.matterId);
-        if(p.status!==undefined&&!['proposed','approved','done','dismissed'].includes(p.status))throw new Error('Estado de recordatorio inválido.');
-        return store.listReminders(m.workspaceId,m.id).filter(item=>p.status===undefined||item.status===p.status);
+        return listReminders(p);
       }
       case 'reminder.update': {
         reminderFields(p,['matterId','reminderId','status']);
@@ -114,13 +224,10 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
         return store.transaction(()=>{store.updateReminder(updated);store.audit('reminder.update',updated.id);return updated;});
       }
       case 'planner.today': {
-        reminderFields(p,['matterId','timeZone']);const m=matter(p.matterId);const timeZone=p.timeZone===undefined?plannerTimeZone:p.timeZone;
-        try{return pendingToday(store.listReminders(m.workspaceId,m.id),plannerNow(),timeZone);}catch(e){throw new Error(`Planificador: ${e.message}`);}
+        return plannerToday(p);
       }
       case 'planner.propose': {
-        reminderFields(p,['matterId']);const m=matter(p.matterId);const items=store.listReminders(m.workspaceId,m.id);
-        const suggestions=proposeFollowUps({matter:m,documents:store.list('document',m.id),answers:store.list('answer',m.id),items,now:plannerNow(),timeZone:plannerTimeZone});
-        return store.transaction(()=>suggestions.map(suggestion=>createReminder(m,suggestion,{source:'planner',status:'proposed',plannerRule:suggestion.plannerRule})));
+        return plannerPropose(p);
       }
       case 'workspace.create': {
         if(workspace())throw new Error('Este almacenamiento ya pertenece a un despacho. No se puede reemplazar.');
@@ -129,16 +236,10 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
         return record('workspace',{name,practiceAreas:[...new Set(p.practiceAreas)]});
       }
       case 'matter.create': {
-        const w=requireWorkspace();
-        if(!['MX-FED','MX-CMX'].includes(p.jurisdiction))throw new Error('Jurisdicción no disponible en el corpus piloto.');
-        return record('matter',{workspaceId:w.id,title:text(p.title,'Título',200),client:text(p.client,'Cliente',200),jurisdiction:p.jurisdiction});
+        return createMatter(p);
       }
       case 'document.import': {
-        const m=matter(p.matterId);
-        const extracted=await extractDocument(p.name,p.base64);
-        const entity={id:randomUUID(),workspaceId:m.workspaceId,matterId:m.id,name:p.name,text:extracted.text,characters:extracted.text.length,sha256:sha(extracted.bytes),createdAt:now()};
-        store.insertDocument(entity,extracted.bytes,chunkText(extracted.text,entity.id));
-        const {text:_,...result}=entity;return result;
+        return importDocument(p);
       }
       case 'document.text':return {text:scoped('document',p.documentId,p.matterId).text};
       case 'document.open': {
@@ -155,15 +256,10 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
         const result=await openFile({name:exported.name,bytes:Buffer.from(exported.base64,'base64')});store.audit('answer.open',p.answerId);return result;
       }
       case 'research.search': {
-        requireWorkspace();
-        if(!['MX-FED','MX-CMX'].includes(p.jurisdiction))throw new Error('Jurisdicción no admitida.');
-        return research(text(p.query,'Consulta',4000),p.jurisdiction);
+        return researchSearch(p);
       }
       case 'answer.export': {
-        const answer=scoped('answer',p.answerId,p.matterId);
-        const m=matter(p.matterId);
-        const buffer=await buildAnswerDocx({firm:workspace(),matter:m,answer});store.audit('answer.export',answer.id);
-        return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
+        return exportAnswer(p);
       }
       case 'feedback.create': {
         const answer=scoped('answer',p.answerId,p.matterId);
@@ -264,5 +360,14 @@ ${grounded ? 'Devuelve SOLO JSON: {"paragraphs":[{"sourceId":"ID recibido","quot
     } catch(e){store.audit('analysis.failed',m.id);throw e;}
     finally{busy=false;}
   }
-  return {dispatch,analyze,close:()=>store.close()};
+  /** The only surface a model-driven agent may receive: it can propose and observe, never approve or reject, and its origin is forced. */
+  async function agentChannel(action,p={}) {
+    if(!['agent.propose','agent.pending','agent.log'].includes(action))throw new Error('El canal del agente solo puede proponer y consultar.');
+    if(action==='agent.propose') {
+      if(!p||typeof p!=='object'||Array.isArray(p)||Object.hasOwn(p,'origin'))throw new Error('El agente no puede declarar su origen.');
+      return dispatch(action,{...p,origin:'agent'});
+    }
+    return dispatch(action,p);
+  }
+  return {dispatch,agentChannel,analyze,close:()=>store.close()};
 }

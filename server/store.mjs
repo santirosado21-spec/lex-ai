@@ -31,7 +31,19 @@ export function createStore(dataDir) {
       planner_rule TEXT
     );
     CREATE INDEX IF NOT EXISTS reminders_scope ON reminders(workspace_id,matter_id,status,due_at);
-    PRAGMA user_version=2;`);
+    CREATE TABLE IF NOT EXISTS agent_action_proposals (
+      id TEXT PRIMARY KEY, workspace_id TEXT NOT NULL, matter_id TEXT, action TEXT NOT NULL,
+      args_json TEXT NOT NULL, args_hash TEXT NOT NULL, origin TEXT NOT NULL CHECK(origin IN ('user','agent')),
+      status TEXT NOT NULL CHECK(status IN ('pending','approved','rejected','expired','failed')),
+      created_at TEXT NOT NULL, expires_at TEXT NOT NULL, decided_at TEXT, result_json TEXT
+    );
+    CREATE INDEX IF NOT EXISTS agent_action_proposals_scope ON agent_action_proposals(workspace_id,matter_id,status,created_at);
+    CREATE TABLE IF NOT EXISTS agent_action_log (
+      id TEXT PRIMARY KEY, proposal_id TEXT, workspace_id TEXT NOT NULL, matter_id TEXT, origin TEXT NOT NULL,
+      action TEXT NOT NULL, args_hash TEXT NOT NULL, decision TEXT NOT NULL, created_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS agent_action_log_scope ON agent_action_log(workspace_id,matter_id,created_at);
+    PRAGMA user_version=3;`);
   const parse = r => r ? JSON.parse(r.payload) : null;
   return {
     db,
@@ -88,8 +100,37 @@ export function createStore(dataDir) {
       if(result.changes!==1)throw new Error('Recordatorio no encontrado en este asunto.');
       return reminder;
     },
-    insertDocument(document, bytes, chunks) {
-      this.transaction(() => {
+    createAgentProposal(proposal) {
+      db.prepare(`INSERT INTO agent_action_proposals
+        (id,workspace_id,matter_id,action,args_json,args_hash,origin,status,created_at,expires_at,decided_at,result_json)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`).run(proposal.id,proposal.workspaceId,proposal.matterId,proposal.action,JSON.stringify(proposal.args),proposal.argsHash,proposal.origin,proposal.status,proposal.createdAt,proposal.expiresAt,null,null);
+      return proposal;
+    },
+    getAgentProposal(id) {
+      const row=db.prepare('SELECT * FROM agent_action_proposals WHERE id=?').get(id);
+      return row?{id:row.id,workspaceId:row.workspace_id,matterId:row.matter_id,action:row.action,args:JSON.parse(row.args_json),argsHash:row.args_hash,origin:row.origin,status:row.status,createdAt:row.created_at,expiresAt:row.expires_at,decidedAt:row.decided_at,result:row.result_json?JSON.parse(row.result_json):null}:null;
+    },
+    listAgentProposals(workspaceId,matterId) {
+      const rows=matterId===undefined||matterId===null
+        ?db.prepare('SELECT * FROM agent_action_proposals WHERE workspace_id=? ORDER BY created_at').all(workspaceId)
+        :db.prepare('SELECT * FROM agent_action_proposals WHERE workspace_id=? AND matter_id=? ORDER BY created_at').all(workspaceId,matterId);
+      return rows.map(row=>({id:row.id,workspaceId:row.workspace_id,matterId:row.matter_id,action:row.action,args:JSON.parse(row.args_json),argsHash:row.args_hash,origin:row.origin,status:row.status,createdAt:row.created_at,expiresAt:row.expires_at,decidedAt:row.decided_at,result:row.result_json?JSON.parse(row.result_json):null}));
+    },
+    updateAgentProposal(proposal) {
+      const result=db.prepare(`UPDATE agent_action_proposals SET status=?,decided_at=?,result_json=? WHERE id=? AND workspace_id=? AND status='pending'`).run(proposal.status,proposal.decidedAt,proposal.result===null?null:JSON.stringify(proposal.result),proposal.id,proposal.workspaceId);
+      return result.changes;
+    },
+    logAgentAction(entry) {
+      db.prepare('INSERT INTO agent_action_log VALUES(?,?,?,?,?,?,?,?,?)').run(randomUUID(),entry.proposalId??null,entry.workspaceId,entry.matterId??null,entry.origin,entry.action,entry.argsHash,entry.decision,entry.createdAt);
+    },
+    listAgentActionLog(workspaceId,matterId,limit) {
+      const query=matterId===undefined||matterId===null
+        ?'SELECT proposal_id AS proposalId,workspace_id AS workspaceId,matter_id AS matterId,origin,action,args_hash AS argsHash,decision,created_at AS createdAt FROM agent_action_log WHERE workspace_id=? ORDER BY rowid DESC LIMIT ?'
+        :'SELECT proposal_id AS proposalId,workspace_id AS workspaceId,matter_id AS matterId,origin,action,args_hash AS argsHash,decision,created_at AS createdAt FROM agent_action_log WHERE workspace_id=? AND matter_id=? ORDER BY rowid DESC LIMIT ?';
+      return (matterId===undefined||matterId===null?db.prepare(query).all(workspaceId,limit):db.prepare(query).all(workspaceId,matterId,limit)).reverse();
+    },
+    insertDocument(document, bytes, chunks, {inTransaction=false}={}) {
+      const write=() => {
         this.put('document', document);
         db.prepare('INSERT INTO originals VALUES(?,?)').run(document.id, bytes);
         for (const chunk of chunks) {
@@ -97,7 +138,8 @@ export function createStore(dataDir) {
           db.prepare('INSERT INTO chunks_fts VALUES(?,?,?)').run(chunk.id, document.matterId, chunk.text);
         }
         this.audit('document.import', document.id);
-      });
+      };
+      if(inTransaction)write();else this.transaction(write);
     },
     original(documentId, matterId) {
       const row=db.prepare("SELECT o.bytes FROM originals o JOIN records r ON r.id=o.document_id WHERE r.kind='document' AND r.id=? AND r.matter_id=?").get(documentId,matterId);
