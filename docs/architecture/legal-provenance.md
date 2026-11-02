@@ -9,4 +9,8 @@ Se extrajeron artículos 1796, 1797 y 1832 de cada fuente. `scripts/build-corpus
 
 Para la revisión inicial de reutilización se consultó el PDF oficial de la Ley Federal del Derecho de Autor (https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf, reforma declarada 2026-05-14), art.14 VIII: distingue textos legislativos de comentarios/estudios originales y exige apego al texto oficial al publicarlos. Se incluye texto legislativo, no análisis editoriales protegidos. Esto no constituye una validación jurídica de la distribución comercial; revisar avisos/condiciones de cada fuente antes de ampliar la colección.
 
-Gemma 4: licencia Apache-2.0 según https://ai.google.dev/gemma/apache_2 y el blob de licencia del modelo instalado. Copia en resources/licenses/GEMMA.txt. Node y Ollama tienen avisos propios conservados; también se incluyen los avisos de bibliotecas del runtime. No generalizar esta licencia a otras variantes Gemma.
+La versión local de evaluación 0.4.0 usa Qwen3.5 2B Q4_K_M, con licencia Apache-2.0 según su ficha oficial y la capa de licencia del manifiesto verificado. Copia exacta en `resources/licenses/Qwen3.5-Apache-2.0.txt`; procedencia y SHA del modelo en `resources/model-catalog.json`.
+
+El entrenamiento ligero separado usa Gemma 3 1B bajo **Gemma Terms of Use**, no Apache-2.0. Sus términos se conservaron desde la capa verificada en `resources/licenses/Gemma-3-Terms.txt`. El adaptador experimental no está activado en el catálogo de la app.
+
+Histórico: Gemma 4 de versiones anteriores usa Apache-2.0 según https://ai.google.dev/gemma/apache_2 y su blob de licencia. Copia en `resources/licenses/GEMMA.txt`. Node y Ollama tienen avisos propios conservados; también se incluyen los avisos de bibliotecas del runtime. No generalizar esta licencia a otras variantes Gemma.

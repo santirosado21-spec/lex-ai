@@ -51,6 +51,34 @@ test('no evidence means abstention before inference',async t=>{
   await assert.rejects(service.analyze(payload(b)),/Importa un documento/);assert.equal(called,false);
 });
 
+test('legal research retrieves context without requiring document import or manual library browsing',async t=>{
+  let observed;const {service,b}=await fixture(t,validModel(messages=>{observed=messages;}));
+  const answer=await service.analyze({matterId:b.id,question:'¿Qué obligaciones establece el contrato?',skillId:'legal-researcher'});
+  const evidence=JSON.parse(observed[1].content).sources;
+  assert.ok(answer.validation.citationIntegrity);assert.ok(evidence.length>0);
+  assert.ok(evidence.every(s=>s.jurisdiction==='MX-CMX'&&s.category==='legislation'));
+  assert.ok(observed.reduce((n,m)=>n+m.content.length,0)<7000);
+  assert.ok(evidence.every(s=>s.text.length<=600));
+  await assert.rejects(service.analyze({matterId:b.id,question:'zzqvx inexistente',skillId:'legal-researcher'}),/evidencia jurídica suficiente/);
+});
+
+test('current runtime uses source-bound paragraphs and server renders only the explicit source associations',async t=>{
+  let observedSchema;
+  const model={outputContract:'paragraph-citations-v1',async *generate(messages,{outputSchema}){
+    observedSchema=outputSchema;const {sources}=JSON.parse(messages[1].content);
+    yield JSON.stringify({paragraphs:sources.slice(0,2).map(s=>({sourceId:s.id,quote:s.allowedQuotes[0],text:s.allowedQuotes[0],kind:'observacion'}))});
+  }};
+  const {service,a}=await fixture(t,model);const answer=await service.analyze(payload(a));
+  assert.ok(observedSchema.properties.paragraphs);assert.equal(answer.validation.groundedContract,'paragraph-citations-v1');assert.equal(answer.validation.legalAccuracy,'not-evaluated');
+  assert.ok(answer.text.includes('[D1]'));assert.ok(answer.text.includes('[MX-TEST-FED]'));assert.equal(answer.citations.length,2);
+});
+
+test('current runtime rejects legacy or guessed references rather than repairing generated prose',async t=>{
+  const model={...validModel(),outputContract:'paragraph-citations-v1'};const {service,a}=await fixture(t,model);
+  await assert.rejects(service.analyze(payload(a)),/paragraphs|contrato anterior/);
+  assert.equal((await service.dispatch('state')).answers.length,0);
+});
+
 test('invented citations fail closed without streaming or saving output',async t=>{
   const bad={async *generate(){yield JSON.stringify({analysis:'El contrato tiene una obligación inventada [MX-INVENTED-900].',citations:[{sourceId:'MX-INVENTED-900',quote:'Este texto no existe en ninguna fuente.'}]});}};
   const {service,a}=await fixture(t,bad);let called=false;

@@ -9,13 +9,15 @@ import { createInference } from './inference.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
 import { openPublicLibrary } from './public-library.mjs';
+import { createLocalFileOpener } from './local-files.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
 export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/LEX AI'),inference,service,monitorDir,libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
- inference ||= createInference({dataDir});try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary});}catch(e){publicLibrary?.close();throw e;}
+ const openFile=process.platform==='darwin'&&process.env.LEX_DESKTOP==='1'?createLocalFileOpener({dataDir}):null;
+ inference ||= createInference({dataDir});try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile});}catch(e){publicLibrary?.close();throw e;}
  const token=randomBytes(32).toString('hex');let closing=false;
  const allowed=new Set(['tauri://localhost','http://tauri.localhost','https://tauri.localhost','http://localhost:1420','http://127.0.0.1:1420']);
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));};

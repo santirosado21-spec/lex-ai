@@ -4,7 +4,7 @@ import {createInference} from '../server/inference.mjs';import {createService} f
 const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-real-e2e-'));
 const inference=createInference({dataDir,runtimePath:process.env.LEX_OLLAMA_BIN||'/Applications/Ollama.app/Contents/Resources/ollama',modelsDir:process.env.LEX_MODELS_DIR||path.join(os.homedir(),'.ollama/models')});
 let syntheticRaw='';
-const traced={async *generate(messages,options){for await(const chunk of inference.generate(messages,options)){syntheticRaw+=chunk;yield chunk;}}};
+const traced={outputContract:inference.outputContract,async *generate(messages,options){for await(const chunk of inference.generate(messages,options)){syntheticRaw+=chunk;yield chunk;}}};
 const service=await createService({dataDir,corpusPath:path.resolve('resources/legal-corpus.json'),inference:traced});
 const report={startedAt:new Date().toISOString(),mode:'real-local-inference',data:'synthetic-only',checks:[]};
 try{

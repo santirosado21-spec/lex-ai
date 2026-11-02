@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import signal
 import threading
 import time
@@ -64,16 +65,19 @@ def masked_loss(model,batch,lengths):
     return (nn.losses.cross_entropy(logits,targets)*mask).astype(mx.float32).sum()/ntokens,ntokens
 
 def verify_base(base):
-    manifest_path=base.parent/'base-model-manifest.json'
+    # New lightweight bases carry an adjacent manifest.  Retain the old global
+    # manifest only for the already-recorded 26B experiment.
+    manifest_path=base/'base-manifest.json'
+    if not manifest_path.exists():manifest_path=base.parent/'base-model-manifest.json'
     manifest=json.loads(manifest_path.read_text())
-    if manifest['repo']!='mlx-community/gemma-4-26b-a4b-it-4bit' or manifest['revision']!='0d77464eeb233a2da68ebf9d7dc4edaac7db956d':raise ValueError('Unexpected base provenance')
+    if not (manifest.get('repo','').startswith('mlx-community/gemma-4-') and re.fullmatch(r'[0-9a-f]{7,40}',manifest.get('revision',''))):raise ValueError('Unexpected base provenance')
     for entry in manifest['files']:
         path=base/entry['file']
         if path.parent!=base or path.stat().st_size!=entry['bytes'] or filehash(path)!=entry['sha256']:raise ValueError('Base file hash mismatch')
-    return {'revision':manifest['revision'],'manifestSha256':filehash(manifest_path)}
+    return {'repo':manifest['repo'],'revision':manifest['revision'],'license':manifest.get('license'),'manifestSha256':filehash(manifest_path)}
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--base',default='artifacts/training/base-gemma4-26b');parser.add_argument('--data',default='artifacts/training/dataset-v1');parser.add_argument('--output',default='artifacts/training/lex-gemma4-lora-v1');parser.add_argument('--iters',type=int,default=200);parser.add_argument('--seq-length',type=int,default=512);parser.add_argument('--rank',type=int,default=4);parser.add_argument('--layers',type=int,default=4);parser.add_argument('--learning-rate',type=float,default=2e-5);parser.add_argument('--eval-batches',type=int,default=8);parser.add_argument('--skip-baseline',action='store_true');parser.add_argument('--resume-adapter',type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--base',default='artifacts/training/base-gemma4-26b');parser.add_argument('--data',default='artifacts/training/dataset-v1');parser.add_argument('--output',default='artifacts/training/lex-gemma4-lora-v1');parser.add_argument('--iters',type=int,default=200);parser.add_argument('--seq-length',type=int,default=512);parser.add_argument('--rank',type=int,default=4);parser.add_argument('--layers',type=int,default=4);parser.add_argument('--learning-rate',type=float,default=2e-5);parser.add_argument('--eval-batches',type=int,default=8);parser.add_argument('--skip-baseline',action='store_true');parser.add_argument('--resume-adapter',type=Path);parser.add_argument('--model-label',default='local MLX instruction base');args=parser.parse_args()
     if not 1<=args.iters<=2000 or not 128<=args.seq_length<=1024 or not 1<=args.eval_batches<=64 or not 1<=args.rank<=16 or not 1<=args.layers<=4 or not 0<args.learning_rate<=1e-3:raise ValueError('Training bounds invalid')
     base=Path(args.base).resolve();data=Path(args.data).resolve();out=Path(args.output).resolve();out.mkdir(parents=True,exist_ok=True)
     if(out/'adapters.safetensors').exists():raise ValueError('Preserve existing adapter: choose a new output directory')
@@ -93,7 +97,7 @@ def main():
     try:handle=lock.open('x')
     except FileExistsError:raise RuntimeError('Training GPU lock exists. Verify its owner before recovery.')
     handle.write(json.dumps({'pid':os.getpid(),'startedAt':now(),'output':str(out)}));handle.close()
-    status={'state':'loading','id':out.name,'baseModel':'Gemma 4 26B-A4B IT, MLX 4 bit','candidateModel':out.name,'startedAt':now(),'phase':'loading','progress':{'step':0,'totalSteps':args.iters},'metrics':{},'releaseStatus':'not-trained','artifacts':{'adapterReady':False,'downloadPackageReady':False}}
+    status={'state':'loading','id':out.name,'baseModel':args.model_label,'candidateModel':out.name,'startedAt':now(),'phase':'loading','progress':{'step':0,'totalSteps':args.iters},'metrics':{},'releaseStatus':'not-trained','artifacts':{'adapterReady':False,'downloadPackageReady':False}}
     events=[];done=threading.Event();publish(status)
     def heartbeat():
         while not done.wait(15):publish(status)
@@ -161,7 +165,7 @@ def main():
         weights=mx.load(str(out/'adapters.safetensors'))
         nonzero=sum(int(mx.sum(mx.abs(value)>0).item())for key,value in weights.items()if key.endswith('lora_b'))
         if nonzero==0:raise ValueError('Adapter produced no trained nonzero B weights')
-        report={'status':'TRAINED_EXPERIMENTAL','baseRevision':'0d77464eeb233a2da68ebf9d7dc4edaac7db956d','steps':args.iters,'adapterSha256':filehash(out/'adapters.safetensors'),'trainedNonzeroBWeights':nonzero,'candidate':candidate,'baseline':status.get('evaluation',{}).get('baseline'),'durationSeconds':time.monotonic()-started,'config':cfg,'dataset':dataset_audit,'behavioralEvaluation':'pending','legalValidity':'not-reviewed'}
+        report={'status':'TRAINED_EXPERIMENTAL','steps':args.iters,'adapterSha256':filehash(out/'adapters.safetensors'),'trainedNonzeroBWeights':nonzero,'candidate':candidate,'baseline':status.get('evaluation',{}).get('baseline'),'durationSeconds':time.monotonic()-started,'config':cfg,'dataset':dataset_audit,'behavioralEvaluation':'pending','legalValidity':'not-reviewed'}
         report['baseRevision']=provenance['revision'];report['baseProvenance']=provenance
         report['trainingScriptSha256']=filehash(Path(__file__))
         if parent:

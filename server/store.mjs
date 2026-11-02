@@ -56,6 +56,10 @@ export function createStore(dataDir) {
         this.audit('document.import', document.id);
       });
     },
+    original(documentId, matterId) {
+      const row=db.prepare("SELECT o.bytes FROM originals o JOIN records r ON r.id=o.document_id WHERE r.kind='document' AND r.id=? AND r.matter_id=?").get(documentId,matterId);
+      return row ? Buffer.from(row.bytes) : null;
+    },
     search(matterId, query, limit=6) {
       const terms=searchTerms(query);
       if (!terms.length) return [];

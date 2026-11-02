@@ -8,6 +8,12 @@ Mac Apple M5, 24 GB de memoria unificada. Python 3.12.13; versiones fijadas en `
 
 La licencia Apache 2.0 completa está en `resources/licenses/Gemma-Apache-2.0.txt`. La exportación conserva atribución y descripción de modificaciones.
 
+## Candidato ligero para equipos de 8 GB (E2B)
+
+La siguiente corrida se prepara para `mlx-community/gemma-4-e2b-it-4bit`, una base instruida MLX distinta del experimento 26B. Google informa un presupuesto aproximado de 2.9 GB para E2B Q4_0 y 5.7 GB para SFP8; Q4 es la única variante propuesta para el objetivo de 8 GB. Antes de entrenar se deben medir Q4 y Q8 localmente con el mismo prompt corto. Estas mediciones no certifican por sí solas una instalación de 8 GB, pues este Mac tiene 24 GB de memoria unificada.
+
+No reutilizar `base-model-manifest.json` ni escribir en `base-gemma4-26b`: cada base nueva usa su propio `base-manifest.json`, con commit y hashes de todos los archivos. La selección, licencia y bloqueo actual de red constan en `docs/training-lightweight-model-research.md`.
+
 ## Datos separados
 
 El snapshot `artifacts/legal-library/exports-v2` contiene 35.452 artículos de 303 instrumentos federales. SHA-256 de `corpus.jsonl`: `e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11`. Auditoría técnica por muestreo: 910/910 comparaciones con un extractor independiente. Esto no confirma vigencia, aplicabilidad ni exactitud jurídica exhaustiva.
@@ -30,6 +36,46 @@ uv pip install --python .venv-training/bin/python -r scripts/training-requiremen
   --output artifacts/training/lex-gemma4-lora-v2 \
   --iters 400 --eval-batches 16
 ```
+
+### Corrida E2B por materia (cuando la red local permita descargar pesos)
+
+Usar el commit inmutable publicado por MLX Community para cada variante; no usar `main` ni una etiqueta de Ollama. Sustituir `COMMIT_Q4` y `COMMIT_Q8` por esos commits verificados y conservar los manifiestos resultantes.
+
+```bash
+.venv-training/bin/python scripts/download-training-model.py \
+  --repo mlx-community/gemma-4-e2b-it-4bit --revision COMMIT_Q4 \
+  --output artifacts/training/base-gemma4-e2b-it-4bit --license Apache-2.0
+.venv-training/bin/python scripts/download-training-model.py \
+  --repo mlx-community/gemma-4-e2b-it-8bit --revision COMMIT_Q8 \
+  --output artifacts/training/base-gemma4-e2b-it-8bit --license Apache-2.0
+.venv-training/bin/python scripts/measure-training-model-memory.py \
+  --base artifacts/training/base-gemma4-e2b-it-4bit \
+  --output artifacts/training/e2b-4bit-memory.json
+.venv-training/bin/python scripts/measure-training-model-memory.py \
+  --base artifacts/training/base-gemma4-e2b-it-8bit \
+  --output artifacts/training/e2b-8bit-memory.json
+.venv-training/bin/python scripts/build-training-data.py \
+  --input artifacts/training/dataset-v2/source-corpus.jsonl \
+  --output artifacts/training/dataset-v4-matter-heldout --max-per-law 40 --matter-heldout
+.venv-training/bin/python scripts/train-legal-adapter.py \
+  --base artifacts/training/base-gemma4-e2b-it-4bit \
+  --data artifacts/training/dataset-v4-matter-heldout \
+  --output artifacts/training/lex-gemma4-e2b-lora-v1 \
+  --iters 400 --eval-batches 16 --model-label 'Gemma 4 E2B IT, MLX 4 bit'
+.venv-training/bin/python scripts/evaluate-legal-adapter.py \
+  --base artifacts/training/base-gemma4-e2b-it-4bit \
+  --adapter artifacts/training/lex-gemma4-e2b-lora-v1 --mode base --per-task 1 --per-matter-task 1
+.venv-training/bin/python scripts/evaluate-legal-adapter.py \
+  --base artifacts/training/base-gemma4-e2b-it-4bit \
+  --adapter artifacts/training/lex-gemma4-e2b-lora-v1 --mode candidate --per-task 1 --per-matter-task 1
+.venv-training/bin/python scripts/training-comparison-report.py \
+  --base-report artifacts/training/lex-gemma4-e2b-lora-v1/behavior-base.json \
+  --candidate-report artifacts/training/lex-gemma4-e2b-lora-v1/behavior-candidate.json \
+  --heldout artifacts/training/lex-gemma4-e2b-lora-v1/effective-test.jsonl \
+  --output docs/qa/model-comparison.md
+```
+
+`--matter-heldout` reserves distinct public source articles in civil, mercantil, laboral, fiscal, amparo, penal, administrativo y comercio exterior. It is source-record-disjoint rather than law-disjoint so that the federal Civil Code can have both train and held-out examples; the manifest labels that limitation explicitly.
 
 Un adaptador existente nunca se sobrescribe: elegir otro directorio para repetir. La base permanece congelada; se ajustan 185.344 parámetros de siete módulos q/v en los cuatro últimos bloques, rango 4, batch 1, contexto máximo 512, Adam y learning rate 2e-5. Hay checkpoint cada diez pasos y copia del mejor checkpoint según validación; el candidato evaluado por defecto es el final y su hash queda registrado.
 

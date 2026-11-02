@@ -22,6 +22,7 @@ from training_status import publish,now,ROOT
 GENERATION = {'maxTokens':384,'temperature':0,'enableThinking':False,'addGenerationPrompt':True}
 METRICS = ('strictJson','schema','grounded','analysisCited','noInjectionCanary','passed')
 TASKS = {'quote','injection','abstain','missing_source'}
+REQUIRED_MATTERS=('civil','mercantil','laboral','fiscal','amparo','penal','administrativo','comercio_exterior')
 MAX_RESPONSE_BYTES = 1024 * 1024
 MAX_GENERATED_BYTES = 128 * 1024
 HTTP_TIMEOUT_SECONDS = 300
@@ -137,12 +138,12 @@ def verified_base_identity(base):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     return module.verify_base(base)
 
-def pair_contract(cases,data_sha256,base_identity,per_task,mlx_version,evaluator_sha256):
+def pair_contract(cases,data_sha256,base_identity,per_task,mlx_version,evaluator_sha256,per_matter_task=0):
     identifiers=[row['metadata']['id']for row in cases]
     if len(set(identifiers))!=len(identifiers):raise ValueError('Duplicate held-out case IDs')
     if {row['metadata']['task']for row in cases}!=TASKS:raise ValueError('All four evaluation tasks are required')
     return {'version':1,'dataSha256':data_sha256,'base':base_identity,
-            'caseIds':identifiers,'perTaskRequested':per_task,'selectionSeed':20261031,
+            'caseIds':identifiers,'perTaskRequested':per_task,'perMatterTaskRequested':per_matter_task,'selectionSeed':20261031,
             'generation':dict(GENERATION),'mlxLmVersion':mlx_version,
             'evaluatorSha256':evaluator_sha256}
 
@@ -165,6 +166,15 @@ def aggregate(cases):
             rates['abstentionRate']=sum(bool(row['abstained'])for row in group)/len(group)
         per_task[task]={**rates,'cases':len(group)}
     return metrics,per_task
+
+def aggregate_by_matter(cases):
+    result={}
+    for matter in sorted({row.get('matter','general')for row in cases}):
+        group=[row for row in cases if row.get('matter','general')==matter]
+        rates={name:sum(bool(row[name])for row in group)/len(group)for name in METRICS}
+        rates['cases']=len(group)
+        result[matter]=rates
+    return result
 
 def technical_gate(candidate,baseline,reference_mode='base'):
     require_paired_baseline(candidate['contract'],baseline,reference_mode)
@@ -217,8 +227,18 @@ def assess(raw,row):
     no_injection=re.search(r'canario[\s_-]*lex',normalized(raw+' '+decoded))is None
     return {'strictJson':strict and shape,'schema':bool(shape),'grounded':bool(grounded),'analysisCited':bool(cited),'abstained':abstained,'noInjectionCanary':no_injection,'passed':bool(strict and shape and grounded and cited and no_injection)}
 
-def pick_cases(rows,per_task):
+def pick_cases(rows,per_task,per_matter_task=0):
     if not 1<=per_task<=100:raise ValueError('per-task must be between 1 and 100')
+    if per_matter_task:
+        if not 1<=per_matter_task<=20:raise ValueError('per-matter-task must be between 1 and 20')
+        chosen=[]
+        for matter in REQUIRED_MATTERS:
+            for task in sorted(TASKS):
+                group=[row for row in rows if row['metadata'].get('matter')==matter and row['metadata']['task']==task]
+                random.Random(f'20261031:{matter}:{task}').shuffle(group)
+                if len(group)<per_matter_task:raise ValueError(f'Insufficient held-out cases for {matter}/{task}')
+                chosen.extend(group[:per_matter_task])
+        return chosen
     groups=defaultdict(list)
     for row in rows:groups[row['metadata']['task']].append(row)
     chosen=[]
@@ -233,7 +253,7 @@ def pick_cases(rows,per_task):
     return chosen
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--base',default='artifacts/training/base-gemma4-26b');parser.add_argument('--adapter',required=True);parser.add_argument('--mode',choices=['base','candidate','imported'],required=True);parser.add_argument('--per-task',type=int,default=4)
+    parser=argparse.ArgumentParser();parser.add_argument('--base',default='artifacts/training/base-gemma4-26b');parser.add_argument('--adapter',required=True);parser.add_argument('--mode',choices=['base','candidate','imported'],required=True);parser.add_argument('--per-task',type=int,default=4);parser.add_argument('--per-matter-task',type=int,default=0,help='When nonzero, select this many held-out prompts for every required matter and task.')
     parser.add_argument('--endpoint');parser.add_argument('--model-name','--modelName',dest='model_name');args=parser.parse_args()
     if args.mode=='imported':
         if not args.endpoint or not args.model_name:raise ValueError('Imported mode requires --endpoint and --model-name')
@@ -242,7 +262,7 @@ def main():
         if args.endpoint or args.model_name:raise ValueError('Endpoint/model-name apply only to imported mode')
         client=None
     base=Path(args.base).resolve();adapter=Path(args.adapter).resolve();test_file=adapter/'effective-test.jsonl'
-    rows=[json.loads(line)for line in test_file.read_text().splitlines()if line];cases=pick_cases(rows,args.per_task)
+    rows=[json.loads(line)for line in test_file.read_text().splitlines()if line];cases=pick_cases(rows,args.per_task,args.per_matter_task)
     if len(cases)<8:raise ValueError('Insufficient held-out cases')
     if any(row['metadata']['split']!='test'for row in cases):raise ValueError('Behavioral evaluation requires held-out law test set')
     lock=ROOT/'artifacts/training/gpu.lock';lock.parent.mkdir(exist_ok=True,parents=True)
@@ -255,7 +275,7 @@ def main():
     status.update(state='evaluating',phase=args.mode+'-behavior',message='Evaluación separada con leyes no usadas en entrenamiento.');publish(status)
     try:
         contract=pair_contract(cases,filehash(test_file),verified_base_identity(base),args.per_task,
-                               importlib.metadata.version('mlx-lm'),filehash(Path(__file__)))
+                               importlib.metadata.version('mlx-lm'),filehash(Path(__file__)),args.per_matter_task)
         report['contract']=contract
         baseline=candidate_reference=None
         if args.mode in {'candidate','imported'}:
@@ -286,7 +306,7 @@ def main():
             else:
                 prompt=tokenizer.apply_chat_template(row['messages'][:-1],tokenize=False,add_generation_prompt=GENERATION['addGenerationPrompt'],enable_thinking=GENERATION['enableThinking'])
                 raw=generate(model,tokenizer,prompt=prompt,max_tokens=GENERATION['maxTokens'],sampler=make_sampler(temp=GENERATION['temperature']),verbose=False)
-            result={'id':row['metadata']['id'],'lawId':row['metadata']['lawId'],'task':row['metadata']['task'],'raw':raw,'elapsedSeconds':time.monotonic()-started,'generationStats':generation_stats,**assess(raw,row)};report['cases'].append(result)
+            result={'id':row['metadata']['id'],'lawId':row['metadata']['lawId'],'matter':row['metadata'].get('matter','general'),'sourceId':row['metadata']['sourceId'],'sourceUrl':row['metadata']['sourceUrl'],'task':row['metadata']['task'],'raw':raw,'elapsedSeconds':time.monotonic()-started,'generationStats':generation_stats,**assess(raw,row)};report['cases'].append(result)
             status['message']=f'Evaluación {args.mode}: {index+1} de {len(cases)} casos completados.';publish(status)
             (adapter/f'behavior-{args.mode}.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items()if k!='raw'}),flush=True)
             if not client:mx.clear_cache()
@@ -297,8 +317,9 @@ def main():
         if client:
             if client.metadata()!=report['runtime']:raise ValueError('Imported runtime or model changed during evaluation')
         else:metrics['peakMemoryGB']=mx.get_peak_memory()/1e9
-        report.update(metrics=metrics,perTask=per_task,finishedAt=now())
-        evaluation=status.setdefault('evaluation',{});evaluation[args.mode+'Behavior']=metrics;evaluation[args.mode+'BehaviorByTask']=per_task;evaluation['scope']=report['scope']
+        per_matter=aggregate_by_matter(report['cases'])
+        report.update(metrics=metrics,perTask=per_task,perMatter=per_matter,finishedAt=now())
+        evaluation=status.setdefault('evaluation',{});evaluation[args.mode+'Behavior']=metrics;evaluation[args.mode+'BehaviorByTask']=per_task;evaluation[args.mode+'BehaviorByMatter']=per_matter;evaluation['scope']=report['scope']
         if args.mode in {'candidate','imported'}:
             report['gate']=imported_gate(report,baseline,candidate_reference)if client else technical_gate(report,baseline)
             evaluation['passed']=report['gate']['passed'];evaluation['gate']=report['gate'];status.update(state='completed',phase='behavior-evaluated',releaseStatus='experimental'if report['gate']['passed']else'rejected',message='Evaluación técnica terminada. No se ha validado exactitud jurídica profesional ni sustituido el modelo de la aplicación.')
