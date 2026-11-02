@@ -17,4 +17,8 @@ insert into public.product_app_releases (id, version, artifact_sha256, artifact_
 values ('lex-ai-0.3.1-macos-arm64', '0.3.1', '7e9f7b0779721a20086e4562140fe8db9530b533742df127a2dca6eaba894e6d', 375055123, null, 'experimental', 'not-validated', false, '2026-10-30T15:16:12.593901+00:00', 'macos', 'arm64', false)
 on conflict (id) do nothing;
 
+insert into public.product_app_releases (id, version, artifact_sha256, artifact_bytes, download_url, release_status, legal_status, published, released_at, platform, architecture, default_model_replaced)
+values ('lex-ai-0.3.8-macos-arm64', '0.3.8', 'd1a6b6e02775d7812203128fb74d08cb8986eff1b639c76d8cf8b310d90c1013', 397272638, null, 'experimental', 'not-validated', false, '2026-10-30T16:40:34.750168+00:00', 'macos', 'arm64', false)
+on conflict (id) do nothing;
+
 commit;

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "product": "LEX AI",
-  "version": "0.3.5",
+  "version": "0.3.8",
   "releaseStatus": "experimental",
   "platform": "macOS Apple Silicon",
   "unifiedMemoryGB": 24,
@@ -10,7 +10,7 @@
   "signing": "ad-hoc",
   "publicDownloadUrl": null,
   "trainedCandidate": {
-    "name": "LEX AI \u2014 mejora experimental v2",
+    "name": "LEX AI — mejora experimental v2",
     "trainingSteps": 400,
     "technicalCasesPassed": 32,
     "technicalCasesEvaluated": 32,

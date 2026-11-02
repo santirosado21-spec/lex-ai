@@ -17,7 +17,7 @@ try{
  const errors=[],requests=[],failed=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));page.on('response',r=>{if(r.status()>=400)failed.push({url:r.url(),status:r.status()});});
  const response=await page.goto(base,{waitUntil:'networkidle'});assert.equal(response.status(),200);
  await expect(page.getByRole('heading',{level:1})).toContainText('Cada respuesta');
- assert.doesNotMatch(await page.locator('body').innerText(),/Gemma|Ollama/i);const catalogue=await page.request.get(base+'/catalogue.json');assert.equal(catalogue.status(),200);const catalogueText=await catalogue.text();assert.doesNotMatch(catalogueText,/Gemma|Ollama/i);assert.equal(JSON.parse(catalogueText).assistantName,'LEX AI');
+ assert.doesNotMatch(await page.locator('body').innerText(),/Gemma|Ollama/i);const catalogue=await page.request.get(base+'/catalogue.json');assert.equal(catalogue.status(),200);const catalogueText=await catalogue.text();assert.doesNotMatch(catalogueText,/Gemma|Ollama/i);assert.equal(JSON.parse(catalogueText).assistantName,'LEX AI');const verifiedRelease=JSON.parse(await readFile('docs/releases/0.3.8.json','utf8'));assert.equal(JSON.parse(catalogueText).version,verifiedRelease.version);await expect(page.locator('.release-tag')).toContainText(verifiedRelease.version);
  await expect.poll(()=>page.locator('.hero-photo img').evaluate(img=>img.complete&&img.naturalWidth===1536)).toBe(true);
  assert.equal(await page.evaluate(()=>document.fonts.check('18px "IBM Plex Sans"')),true);
  await page.screenshot({path:'artifacts/landing/desktop.png'});await page.screenshot({path:'artifacts/landing/full-page.png',fullPage:true});

@@ -29,6 +29,20 @@
       "platform": "macos",
       "architecture": "arm64",
       "default_model_replaced": false
+    },
+    {
+      "id": "lex-ai-0.3.8-macos-arm64",
+      "version": "0.3.8",
+      "artifact_sha256": "d1a6b6e02775d7812203128fb74d08cb8986eff1b639c76d8cf8b310d90c1013",
+      "artifact_bytes": 397272638,
+      "download_url": null,
+      "release_status": "experimental",
+      "legal_status": "not-validated",
+      "published": false,
+      "released_at": "2026-10-30T16:40:34.750168+00:00",
+      "platform": "macos",
+      "architecture": "arm64",
+      "default_model_replaced": false
     }
   ],
   "model_releases": [
