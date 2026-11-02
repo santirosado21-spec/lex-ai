@@ -2,6 +2,8 @@
 
 `scripts/ui-agent-actions-smoke.mjs` usa registros sintéticos con la API local real. No invoca inferencia ni hace solicitudes remotas.
 
+Desde el rediseño del 2026-11-02, “Acciones propuestas” está visible en el grupo “Herramientas jurídicas”; el smoke comprueba esa ruta, sin depender de una vía secundaria.
+
 Ejecutar después de compilar la interfaz:
 
 ```sh

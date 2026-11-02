@@ -2,6 +2,8 @@
 
 Recurso del dueño: cuadrícula interactiva de stack técnico, recibida el 30 de octubre de 2026. Adaptación para trabajo jurídico con dirección visual de Claude Opus 5.5 y ejecución/verificación de Codex.
 
+Nota de rediseño 2026-11-02: Inicio se muestra en Sistema; a ≤768 px se abre desde el cajón. La paleta ⌘K conserva el acceso de teclado.
+
 - Build TypeScript/Vite y app Tauri Apple Silicon: PASS.
 - 94 pruebas Node: PASS.
 - Smoke bento: PASS; asunto vacío, alcance de documentos/consultas, cambios de asunto, lector real y consulta guardada, estados del motor al cargar, foco luminoso con puntero, teclado y movimiento reducido.

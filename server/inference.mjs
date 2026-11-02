@@ -69,7 +69,16 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
   }
   if(child===owned)child=undefined;
  }
- async function checkMemory(){const memory=await deps.memory();set({freeMemoryGB:memory.freeBytes/GiB,availableMemoryGB:memory.availableBytes/GiB,memoryAvailabilityMethod:memory.method,memoryAvailabilityEstimated:memory.estimated});if(!Number.isFinite(memory.availableBytes)||memory.availableBytes<catalog.minFreeMemoryGB*GiB)throw Error(`Libera al menos ${catalog.minFreeMemoryGB} GB de RAM disponible antes de usar LEX AI. Estimación conservadora, no garantía de rendimiento.`);}
+ const memoryRequirementMessage=`Libera al menos ${catalog.minFreeMemoryGB} GB de RAM disponible antes de usar LEX AI. Estimación conservadora, no garantía de rendimiento.`;
+ async function readMemory(){const memory=await deps.memory();set({freeMemoryGB:memory.freeBytes/GiB,availableMemoryGB:memory.availableBytes/GiB,memoryAvailabilityMethod:memory.method,memoryAvailabilityEstimated:memory.estimated});return memory;}
+ async function refreshMemoryWarning(){
+  try{
+   const memory=await readMemory();
+   if(!Number.isFinite(memory.availableBytes)||memory.availableBytes<catalog.minFreeMemoryGB*GiB)set({memoryWarning:`Cierra otras aplicaciones antes de preguntar. ${memoryRequirementMessage}`});
+   else set({memoryWarning:undefined});
+  }catch{set({memoryWarning:'No se pudo comprobar la memoria disponible. Cierra otras aplicaciones antes de preguntar.'});}
+ }
+ async function checkMemory(){const memory=await readMemory();if(!Number.isFinite(memory.availableBytes)||memory.availableBytes<catalog.minFreeMemoryGB*GiB){set({memoryWarning:`Cierra otras aplicaciones antes de preguntar. ${memoryRequirementMessage}`});throw Error(memoryRequirementMessage);}set({memoryWarning:undefined});}
 
  async function verify(){
   set({state:'verifying',message:'Comprobando integridad de los archivos del modelo…',progress:0});
@@ -100,7 +109,7 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
   }
  }
  async function start(){
-  if(!supported)throw Error(`Requiere macOS Apple Silicon y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`);await checkMemory();cancelled();
+  if(!supported)throw Error(`Requiere macOS Apple Silicon y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`);cancelled();
   const bin=runtimePath||path.join(root,'resources/runtime/ollama');await access(bin);
   await mkdir(modelRoot,{recursive:true,mode:0o700});const disk=await deps.statfs(modelRoot);set({freeDiskGB:Number(disk.bavail)*Number(disk.bsize)/GiB});
   if(state.freeDiskGB<catalog.minFreeDiskGB)throw Error(`Se requieren ${catalog.minFreeDiskGB} GB libres en disco.`);
@@ -133,7 +142,7 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
     }
     if(!success)throw Error('La descarga se interrumpió.');
    }
-   cancelled();await verify();cancelled();set({state:'ready',manifestDigest:catalog.manifestDigest,progress:100,message:'LEX AI está disponible. Los documentos se procesan en este equipo.'});
+   cancelled();await verify();cancelled();await refreshMemoryWarning();set({state:'ready',manifestDigest:catalog.manifestDigest,progress:100,message:'LEX AI está disponible. Los documentos se procesan en este equipo.'});
   }catch(e){await killOwned();set({state:shutdown?'stopped':'error',message:shutdown?'Motor detenido.':e.message});}finally{initializing=false;}
  }
  return {

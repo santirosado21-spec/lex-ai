@@ -3,7 +3,7 @@
 Fecha: 2026-10-30. Datos sintéticos sobre la API local real; no se ejecuta inferencia ni se evalúa calidad jurídica.
 
 - `npm test`: 101/101 PASS. Incluye siete pruebas nuevas de agregación: aislamiento por ámbito y despacho, ámbito desconocido vacío, cambio de año, semanas locales con DST, tareas reabiertas y vueltas a completar, fallback de historial sin doble conteo, fechas inválidas/futuras y entradas inmutables.
-- `node scripts/ui-dashboard-smoke.mjs`: PASS. Espacio vacío, tres asuntos y tres documentos reales por API; tareas con estados/historial reales; contadores y tabla de ocho semanas consistentes; ámbito independiente del asunto activo; borrador del chat conservado; apertura del expediente correcto; navegación móvil por Más.
+- `node scripts/ui-dashboard-smoke.mjs`: PASS histórico. Espacio vacío, tres asuntos y tres documentos reales por API; tareas con estados/historial reales; contadores y tabla de ocho semanas consistentes; ámbito independiente del asunto activo; borrador del chat conservado; apertura del expediente correcto. En el rediseño, Dashboard se etiqueta **Panel** y es visible en **Sistema**; ≤768 px se abre desde el cajón.
 - Chromium a 1440/1000/780/390/320 px: sin desbordamiento horizontal. Selector de 44 px; última acción de actividad accesible sobre el dock. Gráfica y tabla equivalentes, sin animación. Sin solicitudes remotas, errores de página ni identidad del motor en pantalla.
 - `npm run test:ui`: PASS. Flujo general con inferencia sintética controlada y movimiento reducido.
 - `npm run desktop:build`, `scripts/package-dmg.sh` y `scripts/verify-package.mjs`: PASS. DMG verificado, firma ad hoc y biblioteca real de 35 452 artículos en 303 instrumentos; licencias nuevas incluidas.

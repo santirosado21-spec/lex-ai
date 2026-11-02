@@ -2,6 +2,8 @@
 
 `scripts/ui-pending-smoke.mjs` usa registros sintéticos y la API local real. No ejecuta inferencia ni realiza solicitudes remotas.
 
+Desde el rediseño del 2026-11-02, “Pendientes” está visible en “Herramientas jurídicas”. El contador de su entrada sólo puede reflejar tareas pendientes reales del asunto activo.
+
 Ejecutar después de compilar la interfaz:
 
 ```sh

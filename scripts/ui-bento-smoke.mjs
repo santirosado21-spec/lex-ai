@@ -16,7 +16,7 @@ try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1100}});const errors=[];const remote=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(app.connection.url)&&!r.url().startsWith('data:'))remote.push(r.url());});
  const openHome=async()=>{await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();const search=page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'});await search.fill('Inicio');await search.press('Enter');await expect(page.locator('.lex-bento')).toBeVisible();};
- // Inicio is no longer a primary destination; it remains available through Más herramientas.
+ // Inicio is visible in Sistema; retain this palette path as a keyboard regression.
  const home=async()=>{await page.goto(`${app.connection.url}/#token=${app.connection.token}`);await page.reload();await openHome();};
  await home();const bento=page.locator('.lex-bento');const card=id=>bento.locator(`[data-card="${id}"]`);
  await expect(bento.locator('.lex-bento-card')).toHaveCount(5);await expect(card('matter')).toContainText('Sin asunto');await page.screenshot({path:'artifacts/ui-bento/empty.png',fullPage:true});
@@ -32,7 +32,7 @@ try{
  await card('documents').getByRole('button',{name:new RegExp('documento-sintetico-')}).click();await expect(page.getByRole('dialog')).toBeVisible();await expect(page.locator('.document-reading')).toContainText('CONTENIDO SINTÉTICO A');await page.keyboard.press('Escape');
  await card('answers').getByRole('button',{name:/Consulta sintética exclusiva A/}).click();await expect(page.locator('.reading-text')).toContainText('Respuesta de fixture');
  await home();await card('matters').getByRole('button',{name:/Asunto sintético B/}).click();await expect(page.getByLabel('Asunto activo')).toHaveValue(other.id);
- // The secondary Inicio view reached through the command palette keeps the newly activated scope.
+ // The Sistema Inicio view reached through the command palette keeps the newly activated scope.
  await openHome();await expect(card('documents')).toContainText('solo-asunto-B.txt');await expect(card('documents')).not.toContainText(longName);await expect(card('answers')).toContainText('Consulta sintética exclusiva B');
  await page.getByLabel('Asunto activo').selectOption(matter.id);
  await card('matter').hover();await expect(card('matter')).toHaveAttribute('data-pointer','active');
@@ -48,5 +48,5 @@ try{
  await card('engine').scrollIntoViewIfNeeded();const engineBox=await card('engine').boundingBox();assert.ok(engineBox.y+engineBox.height<=1100,'last card reachable in the viewport');
  await page.screenshot({path:'artifacts/ui-bento/mobile-bottom.png'});
  assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
- report.checks.push('Inicio is reached through Más herramientas; five cards and no-matter empty state','document and answer content restricted to selected matter; switching refreshes scope','document opens real viewer; answer opens saved response','1440/1000/780/390/320px no horizontal overflow and 44px targets','engine error/ready reflects backend state on load; pointer spotlight, keyboard focus and reduced motion; last card reachable in the viewport','no page errors or remote requests');report.status='PASS';
+ report.checks.push('Inicio is visible in Sistema; five cards and no-matter empty state','document and answer content restricted to selected matter; switching refreshes scope','document opens real viewer; answer opens saved response','1440/1000/768/390/320px no horizontal overflow and 44px targets','engine error/ready reflects backend state on load; pointer spotlight, keyboard focus and reduced motion; last card reachable in the viewport','no page errors or remote requests');report.status='PASS';
 }catch(error){report.status='FAIL';report.error=error.message;process.exitCode=1;}finally{await browser?.close();await app.close();report.finishedAt=new Date().toISOString();await writeFile('artifacts/ui-bento/smoke.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));}

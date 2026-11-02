@@ -2,6 +2,8 @@
 
 Date: 2026-11-01
 
+> Superseded for shell tokens and navigation by `ui-redesign-2026-11-02.md`: the warm-paper/navy/brass direction is no longer current. Historical verification evidence remains below.
+
 ## Scope and direction
 
 Applied the requested shared system: ink navy `#1f4a73` for product actions, warm paper surfaces, muted brass `#a26f28` only for landing highlights and active navigation indicators, neutral gray-blue text, and semantic green/red only for status. The eight-pixel spacing rhythm, ten-pixel card radius and a shared centered `1240px` content column are defined in `src/tailwind.css` and mirrored in `landing/styles.css`.

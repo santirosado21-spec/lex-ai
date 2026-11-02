@@ -37,9 +37,8 @@ current=new Date();
   const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   const errors=[],remote=[];page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(!request.url().startsWith(app.connection.url)&&!request.url().startsWith('data:'))remote.push(request.url());});
   await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
-  await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();
-  const search=page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'});
-  await search.fill('Acciones propuestas');await search.press('Enter');
+  const nav=page.getByRole('navigation',{name:'Navegación principal'});
+  await nav.getByRole('button',{name:'Acciones propuestas',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Acciones propuestas',exact:true})).toBeVisible();
   await expect(page.getByRole('heading',{name:'Crear recordatorio',exact:true}).first()).toBeVisible();
   await expect(page.getByRole('heading',{name:'Crear asunto',exact:true}).first()).toBeVisible();
@@ -82,7 +81,7 @@ current=new Date();
     await page.screenshot({path:`artifacts/ui-agent-actions/agent-actions-${width}.png`,fullPage:true});
   }
   assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
-  report.checks.push('Route is reached through Más herramientas without a fourth primary navigation item','Pending actions show friendly labels, origin, sanitized document metadata, and a live expiry state','Approval requires an explicit confirmation and refreshes state','Rejection executes no action and both decisions appear in the scoped log','Matter isolation hides another matter and document text never enters the DOM','1440/1024/768/390px have no horizontal overflow and approval targets are at least 44px','No inference, remote requests, or browser exceptions');report.status='PASS';
+  report.checks.push('Acciones propuestas is visible in Herramientas jurídicas','Pending actions show friendly labels, origin, sanitized document metadata, and a live expiry state','Approval requires an explicit confirmation and refreshes state','Rejection executes no action and both decisions appear in the scoped log','Matter isolation hides another matter and document text never enters the DOM','1440/1024/768/390px have no horizontal overflow and approval targets are at least 44px','No inference, remote requests, or browser exceptions');report.status='PASS';
 } catch(error) {
   report.status='FAIL';report.error=error.stack;process.exitCode=1;
 } finally {

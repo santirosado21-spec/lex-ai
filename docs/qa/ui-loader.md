@@ -2,6 +2,8 @@
 
 Dirección visual de Claude Opus 5.5 con frontend-design global compartida; Codex adaptó el recurso, integró y verificó. No hay dependencia nueva ni cambios de backend, inferencia, pesos o fuentes.
 
+Nota de rediseño 2026-11-02: esta evidencia de ciclo anterior se conserva para el loader; la navegación actual usa grupos plegables y cajón ≤768 px, documentados en `ui-redesign-2026-11-02.md`.
+
 - TypeScript/Vite y Tauri Apple Silicon: PASS.
 - Smoke conjunto avatar/loader: PASS, usando rutas locales reales con inferencia sintética controlada por la prueba. Reposo, proceso, respuesta, fallo y cancelación.
 - Anillo animado y avatar estático; al activar movimiento reducido, anillo y letras sin animación. Loader decorativo dentro de la región de estado existente.

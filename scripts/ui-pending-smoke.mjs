@@ -30,9 +30,8 @@ try {
   const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   const errors=[],remote=[];page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(!request.url().startsWith(app.connection.url)&&!request.url().startsWith('data:'))remote.push(request.url());});
   await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
-  await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();
-  const search=page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'});
-  await search.fill('Pendientes');await search.press('Enter');
+  const nav=page.getByRole('navigation',{name:'Navegación principal'});
+  await nav.getByRole('button',{name:'Pendientes',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Pendientes',exact:true})).toBeVisible();
   await expect(page.getByText('Atrasado sintético',{exact:true})).toBeVisible();
   await expect(page.getByText('Próximo sintético',{exact:true})).toBeVisible();
@@ -75,7 +74,7 @@ try {
     await page.screenshot({path:`artifacts/ui-pending/pending-${width}.png`,fullPage:true});
   }
   assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
-  report.checks.push('Pending route is reached through Más herramientas without a fourth primary item','Create writes an approved active-matter reminder','Planner proposal is local and requires explicit approval','Complete and dismiss persist their statuses','Other-matter reminders stay hidden until that matter is selected','1440/1024/768/390px have no horizontal overflow and pending controls are at least44px','No inference, remote requests, or browser exceptions');report.status='PASS';
+  report.checks.push('Pendientes is visible in Herramientas jurídicas; its counter is reserved for real active-matter tasks','Create writes an approved active-matter reminder','Planner proposal is local and requires explicit approval','Complete and dismiss persist their statuses','Other-matter reminders stay hidden until that matter is selected','1440/1024/768/390px have no horizontal overflow and pending controls are at least44px','No inference, remote requests, or browser exceptions');report.status='PASS';
 } catch(error) {
   report.status='FAIL';report.error=error.stack;process.exitCode=1;
 } finally {

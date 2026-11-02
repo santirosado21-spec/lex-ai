@@ -2,6 +2,8 @@
 
 Fecha: 2026-10-30. Datos sintéticos; las pruebas de interfaz usan inferencia controlada y no miden calidad jurídica.
 
+Nota de rediseño 2026-11-02: el smoke de chat comprueba el cajón de navegación en 768/390/320 px junto al compositor; no asume la antigua barra de tres destinos.
+
 - `npm run build`: TypeScript y Vite PASS.
 - `npm test`: 94/94 PASS.
 - `npm run desktop:build`, `scripts/package-dmg.sh` y `scripts/verify-package.mjs`: PASS. Paquete 0.3.7 con firma ad hoc y biblioteca real de 35 452 artículos en 303 instrumentos; licencias MetalFx y Paper Shaders incluidas.

@@ -2,6 +2,8 @@
 
 Recurso del dueño recibido el 30 de octubre de 2026. Claude Opus 5.5 dirigió ubicación, color y estados; Codex adaptó el componente y verificó la integración. La consulta usó las instrucciones de la skill frontend-design del repositorio global de Claude, suministradas por Codex. Se siguió dsystem compartido y se revisó react-best-practices del catálogo global de Codex.
 
+Nota de rediseño 2026-11-02: el smoke ahora comprueba el activo intercambiable `src/assets/lex-mark.svg` y el cajón de navegación ≤768 px. Esta nota reemplaza cualquier afirmación anterior sobre una marca Figma concreta.
+
 - TypeScript/Vite y build nativo Tauri: PASS.
 - 94 pruebas Node: PASS.
 - Smoke del avatar: PASS. Reposo, generación, respuesta, error y cancelación sobre rutas locales reales con inferencia simulada controlada por una promesa. No se ejecutó Gemma.

@@ -2,12 +2,14 @@
 
 Updated: 2026-11-02
 
-The Apple-HIG shell intentionally exposes only **Asistente**, **Asuntos**, and
-**Escritos** in primary navigation. The retained secondary views (including
-Inicio, Dashboard, Biblioteca federal, Configuración, Investigación, Fuentes
-públicas, Conocimiento, and Evaluación de LEX AI) are covered through **Más
-herramientas** / the command palette. The retired dock and animated orb-avatar
-assertions were replaced with checks of the responsive three-item navigation,
+The “Sello y pizarra” shell exposes all brief destinations in collapsible groups:
+**Trabajo** (Asistente, Asuntos, Escritos), **Herramientas jurídicas**
+(Biblioteca federal, Conflictos, Checklist, Pendientes, Acciones propuestas),
+and **Sistema** (Panel, Inicio, Calidad del asistente, Configuración). The
+command palette remains a keyboard shortcut for these and the retained supporting
+views (Documentos, Investigación, Habilidades, Fuentes públicas and Conocimiento).
+At 768 px or below the sidebar is a deliberate drawer. The retired dock and
+animated orb-avatar assertions were replaced with checks of grouped navigation,
 the current static LEX mark, and the existing loading lifecycle.
 
 ## Execution status

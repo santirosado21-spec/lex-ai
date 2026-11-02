@@ -64,7 +64,7 @@ try {
  await page.getByRole('button',{name:'Preparar LEX AI',exact:true}).click();
  await page.getByText('LEX AI listo',{exact:true}).last().waitFor();
  report.checks.push('onboarding firm and explicit local model initialization');
- await page.getByRole('button',{name:'Asuntos',exact:true}).click();
+ const nav=page.getByRole('navigation',{name:'Navegación principal'});for(const label of ['Trabajo','Herramientas jurídicas','Sistema','Asistente','Asuntos','Escritos','Biblioteca federal','Conflictos','Checklist','Pendientes','Acciones propuestas','Panel','Inicio','Calidad del asistente','Configuración'])await expect(nav.getByRole('button',{name:label,exact:true})).toBeVisible();await page.getByRole('button',{name:'Asuntos',exact:true}).click();
  await page.getByRole('button',{name:'Nuevo asunto',exact:true}).click();
  await page.getByLabel('Nombre del asunto').fill('Contrato sintético UI');
  await page.getByLabel('Cliente',{exact:true}).fill('Cliente sintético');
@@ -109,7 +109,7 @@ try {
  await page.getByRole('button',{name:'Ocultar panel de contexto',exact:true}).click();
  await expect(page.locator('#context-panel')).toHaveCount(0);
  await page.getByRole('button',{name:/Ver fuente 1:/}).click();
- await page.clock.runFor(30);
+ await page.clock.runFor(30);await page.evaluate(()=>window.dispatchEvent(new Event('resize')));await page.clock.runFor(100);
  assert.match(await page.evaluate(()=>document.activeElement.id),/^source-/);
  await page.screenshot({path:'artifacts/ui-workspace.png',fullPage:true});
  await page.getByRole('tab',{name:'Resultados',exact:true}).click();
@@ -159,19 +159,19 @@ try {
  await page.getByRole('button',{name:'Completar tarea: Revisar anexos sintéticos',exact:true}).click();
  await page.getByRole('button',{name:/^Completadas/}).click();
  await page.getByRole('button',{name:'Reabrir tarea: Revisar anexos sintéticos',exact:true}).click();
- await page.getByRole('button',{name:/^Pendientes/}).click();
+ await page.locator('.matter-tasks').getByRole('button',{name:/^Pendientes/}).click();
  await page.getByRole('button',{name:'Completar tarea: Revisar anexos sintéticos',exact:true}).waitFor();
  await page.getByText('15/11/2026',{exact:true}).waitFor();
  report.checks.push('manual matter task creates with chosen date/note, survives browser reload, completes/reopens and filters status');
 
  await page.screenshot({path:'artifacts/ui-dossier.png',fullPage:true});
  await page.keyboard.press('Control+k');
- await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).fill('Evaluación de LEX AI');
+ await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).fill('Calidad del asistente');
  await page.screenshot({path:'artifacts/ui-command-palette.png',fullPage:true});
  await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).press('Escape');
  await expect(page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'})).toHaveValue('');
  await page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'}).press('Escape');
- report.checks.push('dossier activity derives actual import, saved analysis and feedback; Cmd/Ctrl+K search and Escape');
+ report.checks.push('grouped sidebar exposes all brief destinations; dossier activity derives actual import, saved analysis and feedback; Cmd/Ctrl+K search and Escape');
 
  await openTool('Biblioteca federal');
  await page.getByText('12 artículos',{exact:true}).waitFor();
@@ -237,7 +237,7 @@ try {
  await page.screenshot({path:'artifacts/ui-sources.png',fullPage:true});
  report.checks.push('real sources.status API with explicit synthetic monitor fixture: unconfigured, partial, quarantined, failure, filters and 15s visible polling');
  await writeFile(path.join(monitorDir,'training.json'),JSON.stringify({state:'training',id:'synthetic-ui-training',baseModel:'Synthetic base model — UI fixture',candidateModel:'Synthetic adapter',updatedAt:new Date().toISOString(),progress:{step:3,totalSteps:10},metrics:{trainLoss:1.25},dataset:{train:20,validation:4,test:4,laws:2},releaseStatus:'experimental'}));
- await openTool('Evaluación de LEX AI');
+ await openTool('Calidad del asistente');
  await page.getByRole('heading',{name:'Preparando una mejora',exact:true}).waitFor();
  await page.getByText('Experimental',{exact:true}).waitFor();
  await expect(page.locator('#training-progress')).toHaveAttribute('value','3');
@@ -252,8 +252,9 @@ try {
  report.checks.push('official corpus search and local engine stop');
  await page.setViewportSize({width:700,height:900});
  // This test controls animation time; flush resize before targeting the new nav.
- await page.clock.runFor(30);
+ await page.clock.runFor(30);await page.evaluate(()=>window.dispatchEvent(new Event('resize')));await page.clock.runFor(100);
  await expect(page.getByRole('navigation',{name:'Navegación principal'})).toBeVisible();
+ if(await page.getByRole('button',{name:'Abrir menú',exact:true}).isVisible())await page.getByRole('button',{name:'Abrir menú',exact:true}).click();
  await page.getByRole('button',{name:'Asistente',exact:true}).click();
  if(await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).isVisible())await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).click();
  await page.getByRole('button',{name:/Ver fuente 1:/}).click();

@@ -56,7 +56,16 @@ test('verified generic manifest and bounded context, one runner and explicit unl
  assert.deepEqual(chat.options,generationOptions());assert.equal(chat.options.presence_penalty,0);assert.equal(chat.options.frequency_penalty,0);assert.equal(chat.options.repeat_penalty,1);
  await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'x'.repeat(7001)}])){}},/presupuesto/);
 });
-test('RAM and disk preflight reject before spawning or networking',async t=>{for(const options of [{freeMemory:1},{disk:1},{hardware:{platform:'darwin',arch:'arm64',memoryGB:4}}]){const f=await fixture(t,options);await f.engine.initialize();assert.equal((await settled(f.engine)).state,'error');assert.equal(f.children.length,0);assert.equal(f.calls.length,0);}});
+test('disk and hardware preflight reject before spawning or networking',async t=>{for(const options of [{disk:1},{hardware:{platform:'darwin',arch:'arm64',memoryGB:4}}]){const f=await fixture(t,options);await f.engine.initialize();assert.equal((await settled(f.engine)).state,'error');assert.equal(f.children.length,0);assert.equal(f.calls.length,0);}});
+test('low available memory does not block download and verification',async t=>{
+ const f=await fixture(t,{installed:false,freeMemory:1});await f.engine.initialize();const status=await settled(f.engine);
+ assert.equal(status.state,'ready');assert.match(status.memoryWarning,/Cierra otras aplicaciones antes de preguntar/);assert(f.calls.some(c=>c.url.endsWith('/api/pull')));assert.equal(status.progress,100);
+});
+test('low available memory still rejects generation before chat',async t=>{
+ const f=await fixture(t,{freeMemory:1});await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');
+ await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/Libera al menos 3 GB de RAM disponible/);
+ assert(!f.calls.some(c=>c.url.endsWith('/api/chat')));
+});
 test('download checks official manifest pin before pull and verifies synthetic files',async t=>{const f=await fixture(t,{installed:false});await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert(f.calls.find(c=>c.url.includes('registry.ollama.ai/v2/library/synthetic/manifests/tiny')));assert(f.calls.find(c=>c.url.endsWith('/api/pull')));});
 test('changed registry manifest prevents pull',async t=>{const f=await fixture(t,{installed:false,fetch:({url})=>url.includes('registry.ollama.ai/v2/')?json({bad:true}):null});await f.engine.initialize();assert.match((await settled(f.engine)).message,/manifiesto/);assert(!f.calls.some(c=>c.url.endsWith('/api/pull')));assert.deepEqual(f.children[0].child.kills,['SIGTERM']);});
 test('tampered local weights fail closed without pulling or generating',async t=>{const f=await fixture(t);await writeFile(path.join(f.modelRoot,'blobs',f.layer.digest.replace(':','-')),'broken');await f.engine.initialize();assert.match((await settled(f.engine)).message,/dañado/);assert(!f.calls.some(c=>/api\/(pull|chat)$/.test(c.url)));});

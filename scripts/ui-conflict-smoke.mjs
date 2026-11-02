@@ -27,11 +27,10 @@ try {
   const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   const errors=[],remote=[];page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(!request.url().startsWith(app.connection.url)&&!request.url().startsWith('data:'))remote.push(request.url());});
   await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
-  await page.getByRole('button',{name:'Buscar y ejecutar acciones'}).click();
-  const search=page.getByRole('combobox',{name:'Buscar acciones, documentos y consultas'});
-  await search.fill('Conflictos');await search.press('Enter');
+  const nav=page.getByRole('navigation',{name:'Navegación principal'});
+  await nav.getByRole('button',{name:'Conflictos',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Conflictos',exact:true})).toBeVisible();
-  await expect(page.getByRole('navigation',{name:'Navegación principal'}).getByText('Conflictos',{exact:true})).toHaveCount(0);
+  await expect(nav.getByRole('button',{name:'Conflictos',exact:true})).toHaveAttribute('aria-current','page');
 
   await page.getByLabel('Agregar contraparte',{exact:true}).fill(' Contraparte actual ');
   await page.getByRole('button',{name:'Agregar',exact:true}).click();
@@ -57,7 +56,7 @@ try {
     await page.screenshot({path:`artifacts/ui-conflicts/conflicts-${width}.png`,fullPage:true});
   }
   assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
-  report.checks.push('Route is reached through Más herramientas without a fourth primary navigation item','Counterparties add and persist in the active matter','Counterparty results show Spanish field, exact badge and prominent no-clearance notice','Empty results retain the not-clearance note','No document text enters the view','1440/1024/768/390px have no horizontal overflow and controls are at least 44px','No inference, remote requests, or browser exceptions');report.status='PASS';
+  report.checks.push('Conflictos is visible in Herramientas jurídicas and receives an active state','Counterparties add and persist in the active matter','Counterparty results show Spanish field, exact badge and prominent no-clearance notice','Empty results retain the not-clearance note','No document text enters the view','1440/1024/768/390px have no horizontal overflow and controls are at least 44px','No inference, remote requests, or browser exceptions');report.status='PASS';
 } catch(error) {
   report.status='FAIL';report.error=error.stack;process.exitCode=1;
 } finally {
