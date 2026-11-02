@@ -6,6 +6,8 @@ import { createStore, searchTerms } from './store.mjs';
 import { extractDocument, chunkText } from './extraction.mjs';
 import { skills, validateSkillInput, validateModelOutput } from './skills.mjs';
 import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
+import { buildComparisonDocx } from './docx-export.mjs';
+import { compareTexts } from './doc-compare.mjs';
 import { pendingToday, proposeFollowUps } from './planner.mjs';
 import { agentArgsHash, proposalView, validateAgentRequest } from './agent-actions.mjs';
 
@@ -129,10 +131,24 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
     return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
   }
   function exportAnswer(p){const answer=scoped('answer',p.answerId,p.matterId);const m=matter(p.matterId);return buildAnswerDocx({firm:workspace(),matter:m,answer}).then(buffer=>finishExportAnswer(p,buffer));}
+  function comparedDocuments(p,auditAction='document.compare'){
+    if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>!['matterId','documentIdA','documentIdB'].includes(key)))throw new Error('Parámetros de comparación inválidos.');
+    const m=matter(p.matterId),a=scoped('document',p.documentIdA,m.id),b=scoped('document',p.documentIdB,m.id);
+    if(a.id===b.id)throw new Error('Selecciona dos versiones distintas para comparar.');
+    const result=compareTexts(a.text,b.text);
+    store.audit(auditAction,a.id);
+    return {result,documents:{a:{id:a.id,name:a.name,sha256:a.sha256,characters:a.characters},b:{id:b.id,name:b.name,sha256:b.sha256,characters:b.characters}}};
+  }
+  async function exportComparison(p){
+    const compared=comparedDocuments(p,'document.compare');const m=matter(p.matterId);
+    const buffer=await buildComparisonDocx({firm:workspace(),matter:m,comparison:compared.result,documents:compared.documents});
+    store.audit('document.compare.export',compared.documents.a.id);
+    return {name:`LEX-comparacion-${compared.documents.a.id.slice(0,8)}-${compared.documents.b.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
+  }
   const agentTtlMs=15*60*1000;
   const agentNow=()=>plannerNow().toISOString();
   function agentScope(matterId){const w=requireWorkspace();if(matterId)matter(matterId);return w;}
-  function agentLog({proposalId=null,workspaceId,matterId=null,origin,action,argsHash,decision}){store.logAgentAction({proposalId,workspaceId,matterId,origin,action,argsHash,decision,createdAt:agentNow()});}
+  function agentLog({id=null,proposalId=id,workspaceId,matterId=null,origin,action,argsHash,decision}){store.logAgentAction({proposalId,workspaceId,matterId,origin,action,argsHash,decision,createdAt:agentNow()});}
   function executeAgentAction(action,args,matterId,prepared=null){
     // Static dispatch only: approval never feeds an arbitrary action name back into dispatch().
     switch(action) {
@@ -242,6 +258,8 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
         return importDocument(p);
       }
       case 'document.text':return {text:scoped('document',p.documentId,p.matterId).text};
+      case 'document.compare':return comparedDocuments(p);
+      case 'document.compare.export':return exportComparison(p);
       case 'document.open': {
         const document=scoped('document',p.documentId,p.matterId);
         if(!openFile)throw Error('Abrir escritos está disponible en la app de escritorio. Puedes leer el documento aquí.');

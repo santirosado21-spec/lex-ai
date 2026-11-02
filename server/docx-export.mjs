@@ -165,4 +165,49 @@ export async function buildAnswerDocx({firm,matter,answer}) {
   return Packer.toBuffer(document);
 }
 
+/** A local lexical redline.  It intentionally renders no legal conclusion. */
+export async function buildComparisonDocx({firm,matter,comparison,documents}) {
+  const {AlignmentType,BorderStyle,Document,Footer,Header,Packer,Paragraph,Table,TableCell,TableRow,TextRun,VerticalAlign,WidthType}=await import('docx');
+  const paragraphStyle={alignment:AlignmentType.JUSTIFIED,spacing:{after:130,line:264}};
+  const removed={font:BODY_FONT,size:21,color:'C00000',strike:true};
+  const added={font:BODY_FONT,size:21,color:'008000',underline:{type:'single'}};
+  const equal={font:BODY_FONT,size:21,color:INK};
+  const run=(text,type='equal')=>new TextRun({text,...(type==='removed'?removed:type==='added'?added:equal)});
+  const diffParagraph=paragraph=>{
+    if(paragraph.type==='equal')return new Paragraph({...paragraphStyle,children:[run(paragraph.a)]});
+    if(paragraph.type==='removed')return new Paragraph({...paragraphStyle,children:[run(paragraph.a,'removed')]});
+    if(paragraph.type==='added')return new Paragraph({...paragraphStyle,children:[run(paragraph.b,'added')]});
+    return new Paragraph({...paragraphStyle,children:paragraph.words.map(word=>run(word.text,word.type))});
+  };
+  const borders={top:{style:BorderStyle.SINGLE,size:4,color:RULE},bottom:{style:BorderStyle.SINGLE,size:4,color:RULE},left:{style:BorderStyle.SINGLE,size:4,color:RULE},right:{style:BorderStyle.SINGLE,size:4,color:RULE},insideHorizontal:{style:BorderStyle.SINGLE,size:4,color:RULE},insideVertical:{style:BorderStyle.SINGLE,size:4,color:RULE}};
+  const cell=(text,{header=false}={})=>new TableCell({verticalAlign:VerticalAlign.CENTER,margins:{top:80,bottom:80,left:100,right:100},shading:header?{fill:NAVY,color:'auto'}:undefined,children:[new Paragraph({spacing:{after:0},children:[new TextRun({text,font:BODY_FONT,size:18,bold:header,color:header?'FFFFFF':INK})]})]});
+  const details=new Table({width:{size:9200,type:WidthType.DXA},borders,rows:[
+    new TableRow({tableHeader:true,children:[cell('Versión',{header:true}),cell('Documento',{header:true}),cell('SHA-256',{header:true}),cell('Caracteres',{header:true})]}),
+    new TableRow({children:[cell('A (base)'),cell(documents.a.name),cell(documents.a.sha256),cell(String(documents.a.characters))]}),
+    new TableRow({children:[cell('B (comparada)'),cell(documents.b.name),cell(documents.b.sha256),cell(String(documents.b.characters))]}),
+  ]});
+  const notices=[
+    new Paragraph({text:safeText(firm.name,'Despacho'),style:'ComparisonFirm'}),
+    new Paragraph({text:'Comparación de versiones',style:'ComparisonTitle'}),
+    new Paragraph({text:safeText(matter.title,'Asunto sin título'),style:'ComparisonMatter'}),
+    new Paragraph({text:'Comparación automática léxica; no es análisis jurídico',style:'ComparisonNotice'}),
+  ];
+  if(comparison.truncated)notices.push(new Paragraph({text:'Resultado limitado: se alcanzó un límite técnico; esta comparación puede ser parcial.',style:'ComparisonNotice'}));
+  const critical=comparison.criticalChanges?.length
+    ?[new Paragraph({text:'Cambios léxicos que conviene revisar',style:'ComparisonHeading'}),new Paragraph({...paragraphStyle,children:comparison.criticalChanges.flatMap((change,index)=>[run(`${index?', ':''}${change.text}`,change.type)])})]
+    :[];
+  const document=new Document({
+    creator:'LEX AI',title:'Comparación de versiones',description:'Comparación automática léxica; no es análisis jurídico',
+    styles:{default:{document:{run:{font:BODY_FONT,size:21,color:INK},paragraph:paragraphStyle}},paragraphStyles:[
+      {id:'ComparisonFirm',name:'Despacho comparación',basedOn:'Normal',run:{font:BODY_FONT,size:24,bold:true},paragraph:{spacing:{after:70}}},
+      {id:'ComparisonTitle',name:'Título comparación',basedOn:'Normal',run:{font:BODY_FONT,size:32,bold:true},paragraph:{spacing:{after:100}}},
+      {id:'ComparisonMatter',name:'Asunto comparación',basedOn:'Normal',run:{font:BODY_FONT,size:23,bold:true},paragraph:{spacing:{after:80}}},
+      {id:'ComparisonNotice',name:'Aviso comparación',basedOn:'Normal',run:{font:BODY_FONT,size:19,italics:true,color:MUTED},paragraph:{spacing:{after:90}}},
+      {id:'ComparisonHeading',name:'Encabezado comparación',basedOn:'Normal',run:{font:BODY_FONT,size:24,bold:true},paragraph:{spacing:{before:220,after:100},keepNext:true}},
+    ]},
+    sections:[{properties:{page:{size:{width:12240,height:15840},margin:{top:1224,right:1224,bottom:1224,left:1224,header:600,footer:600}}},headers:{default:new Header({children:[new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:4,color:RULE,space:6}},children:[new TextRun({text:safeText(firm.name,'Despacho'),font:BODY_FONT,size:18,bold:true}),new TextRun({text:' · Comparación de versiones',font:BODY_FONT,size:18,color:MUTED})]})]})},footers:{default:new Footer({children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:'Comparación automática léxica; no es análisis jurídico',font:BODY_FONT,size:18,color:MUTED})]})]})},children:[...notices,new Paragraph({text:'Versiones comparadas',style:'ComparisonHeading'}),details,...critical,new Paragraph({text:'Redline',style:'ComparisonHeading'}),...comparison.paragraphs.map(diffParagraph)]}],
+  });
+  return Packer.toBuffer(document);
+}
+
 export {DOCX_MIME};

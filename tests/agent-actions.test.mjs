@@ -81,3 +81,11 @@ test('agentChannel can only propose and observe: it cannot approve, reject, decl
   assert.equal((await service.agentChannel('agent.pending',{matterId:a.id})).length,1);
   assert.equal((await service.dispatch('agent.approve',{proposalId:proposed.id})).status,'approved');
 });
+
+test('every logged decision carries the id of its proposal',async t=>{
+  const {service,a}=await fixture(t);
+  const proposed=await service.dispatch('agent.propose',{matterId:a.id,action:'reminder.create',args:{kind:'followup',title:'Enlace de bitácora'},origin:'agent'});
+  await service.dispatch('agent.approve',{proposalId:proposed.id});
+  const entries=(await service.dispatch('agent.log',{matterId:a.id})).filter(entry=>entry.proposalId===proposed.id);
+  assert.deepEqual(entries.map(entry=>entry.decision).sort(),['approved','pending']);
+});

@@ -8,6 +8,8 @@ Actions (payload keys):
 - `matter.create` {title,client,jurisdiction:'MX-FED'|'MX-CMX'} -> matter {id,title,client,jurisdiction}
 - `document.import` {matterId,name,base64} -> document {id,matterId,name,characters,createdAt}; TXT/MD/PDF/DOCX max 10 MiB. No arbitrary path import.
 - `document.text` {documentId,matterId} -> {text}
+- `document.compare` {matterId,documentIdA,documentIdB} -> `{result:{paragraphs:[{type:'equal'|'added'|'removed'|'changed',a?,b?,words?}],stats:{added,removed,changed,equal,similarity},criticalChanges:[{type:'added'|'removed',text}],truncated},documents:{a:{id,name,sha256,characters},b:{id,name,sha256,characters}}}`. Both IDs must be different documents in the specified matter of the active firm. This is deterministic local lexical alignment; it makes no model or network call and creates a metadata-only audit entry.
+- `document.compare.export` {matterId,documentIdA,documentIdB} -> {name,base64,mime} DOCX. The same scope rules apply. The export renders a lexical redline and version hashes; it is headed “Comparación automática léxica; no es análisis jurídico”.
 - `research.search` {query,jurisdiction} -> sources/passages
 - analyze {matterId,question,skillId:'contract-reviewer'|'legal-researcher'|'document-analyzer'|'legal-drafter'|'matter-assistant'} -> answer {id,matterId,text,citations:[],createdAt,validation:{...}}. Retrieve only this matter + curated legal corpus; no inference when insufficient evidence; bracket source IDs validated. Grounding failures must not be presented as validated analysis.
 - `answer.export` {answerId,matterId} -> {name,base64,mime} DOCX
