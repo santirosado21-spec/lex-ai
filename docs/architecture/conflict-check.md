@@ -4,7 +4,7 @@
 
 ## Alcance y datos
 
-El servicio obtiene los asuntos del espacio de trabajo activo y compara el nombre solicitado únicamente contra metadatos de asuntos: hoy, `client` y `title`. Si futuras versiones almacenan campos explícitos de partes (`counterparty`, `otherParty`, `counterparties`, `otherParties` o `parties`), el mismo comprobador los considera cuando sean texto. No consulta ni devuelve texto de documentos, respuestas ni notas.
+El servicio obtiene los asuntos del espacio de trabajo activo y compara el nombre solicitado únicamente contra metadatos de asuntos: `client`, `title` y la lista explícita `counterparties`. Cada asunto conserva hasta 10 contrapartes, de 2 a 200 caracteres, recortadas y sin duplicados después de normalizar el nombre. `counterparties` aparece como ese campo en las coincidencias. No consulta ni devuelve texto de documentos, respuestas ni notas.
 
 Si se proporciona `matterId`, debe pertenecer al espacio actual y representa el asunto desde el que se inicia la revisión; ese mismo asunto se excluye de los resultados para buscar coincidencias en otros asuntos. Ningún asunto de otro espacio de trabajo llega al comprobador.
 

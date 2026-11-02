@@ -42,8 +42,23 @@ export function createStore(dataDir) {
       id TEXT PRIMARY KEY, proposal_id TEXT, workspace_id TEXT NOT NULL, matter_id TEXT, origin TEXT NOT NULL,
       action TEXT NOT NULL, args_hash TEXT NOT NULL, decision TEXT NOT NULL, created_at TEXT NOT NULL
     );
-    CREATE INDEX IF NOT EXISTS agent_action_log_scope ON agent_action_log(workspace_id,matter_id,created_at);
-    PRAGMA user_version=3;`);
+    CREATE INDEX IF NOT EXISTS agent_action_log_scope ON agent_action_log(workspace_id,matter_id,created_at);`);
+  const schemaVersion=db.prepare('PRAGMA user_version').get().user_version;
+  const legacyMatters=db.prepare("SELECT id,payload FROM records WHERE kind='matter'").all()
+    .filter(row=>{try{return !Object.hasOwn(JSON.parse(row.payload),'counterparties');}catch{return false;}});
+  // Version 3 adds explicit counterparties to the JSON matter record. Some development
+  // databases were already marked v3 by the agent-action tables, so detect their absent
+  // field as well; this remains a no-op after the field has been persisted once.
+  if(schemaVersion<3||legacyMatters.length){
+    db.exec('BEGIN IMMEDIATE');
+    try {
+      for(const row of legacyMatters){
+        const matter=JSON.parse(row.payload);
+        db.prepare('UPDATE records SET payload=? WHERE id=? AND kind=?').run(JSON.stringify({...matter,counterparties:[]}),row.id,'matter');
+      }
+      db.exec(`PRAGMA user_version=${Math.max(schemaVersion,3)}; COMMIT`);
+    } catch(error) {db.exec('ROLLBACK');throw error;}
+  }
   const parse = r => r ? JSON.parse(r.payload) : null;
   return {
     db,

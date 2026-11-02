@@ -4,6 +4,7 @@ import { mkdtempSync,writeFileSync,rmSync,statSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
+import { DatabaseSync } from 'node:sqlite';
 import { createService } from '../server/service.mjs';
 import { validateModelOutput,skills } from '../server/skills.mjs';
 import { extractDocument } from '../server/extraction.mjs';
@@ -31,6 +32,28 @@ test('workspace ownership and scoped document retrieval persist in a private SQL
   assert.match((await service.dispatch('document.text',{documentId:doc.id,matterId:a.id})).text,/100 pesos/);
   const state=await service.dispatch('state');assert.equal(state.documents[0].text,undefined);
   assert.equal(statSync(join(dir,'firm','lex.sqlite')).mode&0o777,0o600);
+});
+
+test('matter counterparties are normalized, scoped, audited and migrate from existing matter records',async t=>{
+  const dir=mkdtempSync(join(tmpdir(),'lex-counterparties-test-'));const corpusPath=join(dir,'corpus.json');writeFileSync(corpusPath,JSON.stringify([source()]));
+  const options={dataDir:join(dir,'firm'),corpusPath,inference:validModel()};let service=await createService(options);
+  t.after(()=>{service.close();rmSync(dir,{recursive:true,force:true});});
+  await service.dispatch('workspace.create',{name:'Despacho sintético',practiceAreas:['civil']});
+  const matter=await service.dispatch('matter.create',{title:'Contrato de partes',client:'Cliente sintético',jurisdiction:'MX-FED',counterparties:[' Parte Dos ','Parte Dos S.A. de C.V.','Parte Tres']});
+  assert.deepEqual(matter.counterparties,['Parte Dos','Parte Tres']);
+  await assert.rejects(service.dispatch('matter.create',{title:'Inválido',client:'Cliente',jurisdiction:'MX-FED',counterparties:['A']}),/Contraparte/);
+  await assert.rejects(service.dispatch('matter.create',{title:'Inválido',client:'Cliente',jurisdiction:'MX-FED',unknown:true}),/Campo de asunto/);
+  await assert.rejects(service.dispatch('matter.counterparties.set',{matterId:matter.id,counterparties:['Parte Cuatro'],unknown:true}),/Campo de asunto/);
+  const updated=await service.dispatch('matter.counterparties.set',{matterId:matter.id,counterparties:[' Parte Cuatro ']});
+  assert.deepEqual(updated.counterparties,['Parte Cuatro']);
+  assert.deepEqual((await service.dispatch('state')).matters.find(item=>item.id===matter.id)?.counterparties,['Parte Cuatro']);
+  service.close();
+  const db=new DatabaseSync(join(dir,'firm','lex.sqlite'));
+  const row=db.prepare('SELECT payload FROM records WHERE id=?').get(matter.id);const legacy=JSON.parse(row.payload);delete legacy.counterparties;
+  db.prepare('UPDATE records SET payload=? WHERE id=?').run(JSON.stringify(legacy),matter.id);db.exec('PRAGMA user_version=2;');db.close();
+  service=await createService(options);
+  assert.deepEqual((await service.dispatch('state')).matters.find(item=>item.id===matter.id)?.counterparties,[]);
+  const migrated=new DatabaseSync(join(dir,'firm','lex.sqlite'));assert.equal(migrated.prepare('PRAGMA user_version').get().user_version,3);assert.equal(migrated.prepare("SELECT count(*) AS count FROM audit WHERE action='matter.counterparties.set'").get().count,1);migrated.close();
 });
 
 test('local reminders enforce firm and matter scope, require human approval, and validate manual dates',async t=>{

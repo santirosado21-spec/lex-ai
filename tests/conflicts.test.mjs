@@ -34,6 +34,14 @@ test('matches exact client metadata and returns no document text',async t=>{
   assert.equal(audit.entity_id.includes('Grupo Águila'),false);
 });
 
+test('matches persisted counterparties and returns their explicit field',async t=>{
+  const {service}=await fixture(t);
+  const matter=await service.dispatch('matter.create',{title:'Litigio de contraparte',client:'Cliente sintético',jurisdiction:'MX-FED',counterparties:[' Comercial Águila, S.A. de C.V. ','Comercial Aguila SA de CV']});
+  assert.deepEqual(matter.counterparties,['Comercial Águila, S.A. de C.V.']);
+  const result=await service.dispatch('conflict.check',{name:'comercial aguila'});
+  assert.deepEqual(result.matches,[{matterId:matter.id,matterTitle:'Litigio de contraparte',field:'counterparties',matchedText:'Comercial Águila, S.A. de C.V.',kind:'exact',score:1}]);
+});
+
 test('normalization is accent, case, punctuation and corporate-suffix insensitive',()=>{
   const result=checkConflict({name:'  CAFÉ DEL SUR, s. de r.l.  '},[{id:'m-1',title:'Asunto',client:'Café del Sur S. de R.L. de C.V.'}]);
   assert.equal(result.matches[0].kind,'exact');assert.equal(result.matches[0].score,1);

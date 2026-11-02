@@ -10,7 +10,7 @@ export function normalizePartyName(value){
   const plain=value.normalize('NFC').toLowerCase().normalize('NFD').replace(/\p{M}/gu,'')
     .replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/gu,' ').trim();
   // Remove only trailing Mexican corporate designations after punctuation has been made whitespace.
-  return plain.replace(/(?:\s|^)(?:s\s+a(?:\s+de\s+c\s+v)?|s\s+de\s+r\s+l(?:\s+de\s+c\s+v)?|a\s+c|s\s+c)\s*$/u,'').trim();
+  return plain.replace(/(?:\s|^)(?:s\s*a(?:\s+de\s+c\s*v)?|s\s*de\s+r\s*l(?:\s+de\s+c\s*v)?|a\s*c|s\s*c)\s*$/u,'').trim();
 }
 
 function validateRequest(request){

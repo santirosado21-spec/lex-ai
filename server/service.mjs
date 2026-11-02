@@ -94,10 +94,32 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
   }
   function state(){const w=workspace(),matters=store.list('matter');return {workspace:w,matters,documents:store.list('document').map(({text:_,...d})=>d),answers:store.list('answer'),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),reminders:w?matters.flatMap(m=>store.listReminders(w.id,m.id)):[],skills,sources:corpus};}
   function listMatters(){const w=requireWorkspace();return store.list('matter').filter(item=>item.workspaceId===w.id);}
+  function matterCounterparties(value){
+    if(!Array.isArray(value)||value.length>10)throw new Error('Contrapartes: proporciona entre 0 y 10 nombres.');
+    const seen=new Set(),counterparties=[];
+    for(const item of value){
+      if(typeof item!=='string')throw new Error('Contraparte: longitud inválida.');
+      const party=item.trim();
+      if(party.length<2||party.length>200)throw new Error('Contraparte: longitud inválida.');
+      const normalized=normalizePartyName(party);
+      if(normalized.length<2)throw new Error('Contraparte: longitud inválida.');
+      if(!seen.has(normalized)){seen.add(normalized);counterparties.push(party);}
+    }
+    return counterparties;
+  }
+  function matterFields(p,allowed){
+    if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>!allowed.includes(key)))throw new Error('Campo de asunto no admitido.');
+  }
   function createMatter(p){
+    matterFields(p,['title','client','jurisdiction','counterparties']);
     const w=requireWorkspace();
     if(!['MX-FED','MX-CMX'].includes(p.jurisdiction))throw new Error('Jurisdicción no disponible en el corpus piloto.');
-    return record('matter',{workspaceId:w.id,title:text(p.title,'Título',200),client:text(p.client,'Cliente',200),jurisdiction:p.jurisdiction});
+    return record('matter',{workspaceId:w.id,title:text(p.title,'Título',200),client:text(p.client,'Cliente',200),jurisdiction:p.jurisdiction,counterparties:p.counterparties===undefined?[]:matterCounterparties(p.counterparties)});
+  }
+  function setMatterCounterparties(p){
+    matterFields(p,['matterId','counterparties']);
+    const current=matter(p.matterId),updated={...current,counterparties:matterCounterparties(p.counterparties)};
+    return store.transaction(()=>{store.put('matter',updated);store.audit('matter.counterparties.set',updated.id);return updated;});
   }
   function saveImportedDocument(p,extracted,inTransaction=false){
     const m=matter(p.matterId);
@@ -254,6 +276,9 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       }
       case 'matter.create': {
         return createMatter(p);
+      }
+      case 'matter.counterparties.set': {
+        return setMatterCounterparties(p);
       }
       case 'conflict.check': {
         const w=requireWorkspace();

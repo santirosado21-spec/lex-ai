@@ -107,3 +107,9 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 ## Iteración 10 (07:22 CST) — Claude orquestador
 - Árbol limpio en `5042b6e`, sin bloqueos de GPU, ~6,3 GiB libres (estimación propia; la compuerta del runtime fue más estricta en la corrida anterior, no repetí Frente C sin cambio de condiciones).
 - Lanzado Codex: contrapartes por asunto (migración `user_version=3`, `matter.create` + `matter.counterparties.set`) y UI «Conflictos» en Más herramientas (`src/ConflictCheckView.tsx`, `scripts/ui-conflict-smoke.mjs`, `docs/qa/ui-conflicts.md`). Resultado pendiente; verifico y commiteo al terminar.
+
+## Iteración 11 (08:22 CST) — Claude orquestador
+- Entregado por Codex y verificado por Claude: contrapartes por asunto (hasta 10, deduplicadas por nombre normalizado; `matter.create` ahora rechaza campos desconocidos; `matter.counterparties.set` con auditoría; migración idempotente que añade `counterparties:[]` a asuntos existentes, incluso en bases ya marcadas v3) y UI «Conflictos» (`src/ConflictCheckView.tsx`, en Más herramientas, sin cuarto destino principal). Normalización de sufijos societarios ampliada (`SA de CV` sin puntos).
+- Evidencia: `npm run build` PASS; `npm test` 178/178; `ui-conflict-smoke` PASS (1440/1024/768/390 sin desbordes, controles ≥44 px, sin texto de documentos) y 12/12 smokes previos PASS; captura 1440 revisada por Claude.
+- Pulido pendiente (menor): el aviso «no es autorización» aparece dos veces y usa el anglicismo «clearance»; conviene unificar el texto del servidor en español.
+- Límite honesto: chequeo léxico sobre `client`, `counterparties` y `title`; no es dictamen de conflicto ni cubre otros despachos.
