@@ -113,3 +113,9 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - Evidencia: `npm run build` PASS; `npm test` 178/178; `ui-conflict-smoke` PASS (1440/1024/768/390 sin desbordes, controles ≥44 px, sin texto de documentos) y 12/12 smokes previos PASS; captura 1440 revisada por Claude.
 - Pulido pendiente (menor): el aviso «no es autorización» aparece dos veces y usa el anglicismo «clearance»; conviene unificar el texto del servidor en español.
 - Límite honesto: chequeo léxico sobre `client`, `counterparties` y `title`; no es dictamen de conflicto ni cubre otros despachos.
+
+## Iteración 12 (09:22 CST) — Claude orquestador
+- Por indicación del dueño: push de `main` a GitHub (`04d7e15..ff99fe1`, 23 commits; revisados sin secretos ni archivos grandes) y borrado de las copias de modelo en `artifacts/public-cases/*/models` (15 GB → 3,9 MB; se conservan `report.json`, `raw`, `work`; el modelo fuente queda en `artifacts/lightweight/qwen35-models`). No se tocó `artifacts/training` (85 GB), instaladores ni el `.tar`: pendiente que el dueño indique qué descartar. Sin deploy a Vercel.
+- Claude: pulido de texto de Conflictos (español, sin aviso duplicado) — commit `514cc95`; build PASS, 178/178, smoke PASS.
+- Lanzado Codex para H#3 «Checklist documental» (editable por asunto, plantillas genéricas sin afirmar requisitos legales, `checklist.get/set/templates`, UI «Checklist» en Más herramientas). Resultado pendiente.
+- Frente C: no se reintenta (~5 GiB libres por estimación propia, sin cambio de condiciones).
