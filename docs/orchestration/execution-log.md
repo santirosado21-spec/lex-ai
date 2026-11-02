@@ -84,3 +84,4 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 ## Iteración 7 (04:22 CST) — Claude orquestador
 - Frente G UI entregado por Codex: `src/PendingView.tsx` («Pendientes» en Más herramientas/paleta, sin añadir un cuarto destino principal), estilos al final de `src/macos.css`, `scripts/ui-pending-smoke.mjs`. Verificado por Claude en shell normal: build PASS, `npm test` 154/154, 11/11 smokes UI PASS, capturas revisadas. Pulido menor anotado en `docs/qa/ui-pending.md`.
 - Frente G completo salvo preguntas de seguimiento con el modelo ligero (sin evidencia).
+- Lanzado Codex para Frente F (servidor): registro cerrado de acciones tipadas para el agente interno, propuestas pendientes con aprobación humana, TTL con reloj inyectado, bitácora append-only sin texto de documentos, sin shell/rutas/red. Resultado pendiente. RAM disponible 3,08 GiB: no se repite la corrida de casos públicos.
