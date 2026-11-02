@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect x="24" y="24" width="464" height="464" rx="104" fill="#183E44"/><path d="M150 130h48v216h164v46H150z" fill="#F8FAFB"/><path d="M244 130h118v42H244zm0 74h88v42h-88z" fill="#76ADA3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>LEX AI</title>
+  <rect x="100" y="100" width="824" height="824" rx="184" fill="#1f4a73"/>
+  <path d="M300 262h118v382h282v118H300z" fill="#f5f5f4"/>
+  <path d="M482 262h218v118H482zm0 200h158v118H482z" fill="#9fd3c4"/>
+</svg>
