@@ -8,6 +8,8 @@ Se conserva el monograma geométrico L/E. El fondo cambia a azul tinta `#1f4a73`
 
 `src-tauri/icons/source.svg` es la fuente vectorial. `node_modules/.bin/tauri icon src-tauri/icons/source.svg` produce las representaciones PNG, ICNS e ICO. Este cambio conserva las derivadas existentes de plataformas móviles y Windows Store; el alcance es escritorio.
 
+El mismo monograma L/E se usa en la aplicación (`src/assets/lex-mark.svg`) y en el favicon de la landing (`landing/assets/favicon.svg`): fondo azul tinta `#1f4a73`, L de papel y barras menta. Las variantes web son SVG escalados, no logos alternos.
+
 Se declara `bundle.icon` explícitamente en `src-tauri/tauri.conf.json`: antes, los paquetes compilados carecían de `CFBundleIconFile` y del recurso ICNS. `scripts/verify-package.mjs` comprueba ahora la declaración y el hash del icono incluido.
 
 ## Verificación del paquete

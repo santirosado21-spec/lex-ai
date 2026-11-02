@@ -5,3 +5,5 @@
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.lex-dock .lex-dock-action:hover{background:#e8e8e4;color:#141414;transform:translateY(-2px)}.lex-dock .lex-dock-action:active{transform:scale(.97)}}
 @media(max-width:360px){.lex-dock .lex-dock-surface{gap:0;padding:5px}.lex-dock .lex-dock-action span{font-size:9px}.lex-dock .lex-dock-action{padding-inline:0;gap:5px}}
 @media(prefers-reduced-motion:reduce){.lex-dock .lex-dock-action{transition:none;transform:none!important}}
+
+.lex-dock{color:var(--ink)}.lex-dock .lex-dock-surface{border-color:var(--rule);border-radius:var(--lex-radius);background:rgba(255,253,248,.96);box-shadow:var(--lex-shadow)}.lex-dock .lex-dock-action{color:var(--muted);border-radius:8px}.lex-dock .lex-dock-action[aria-current=page]{color:var(--accent);background:#e8eff5}.lex-dock .lex-dock-action[aria-current=page]::after{background:var(--lex-brass)}.lex-dock .lex-dock-secondary-active{color:var(--accent);background:#edf3f7}.lex-dock .lex-dock-action:focus-visible{outline-color:var(--accent)}

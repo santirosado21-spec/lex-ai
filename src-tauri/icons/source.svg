@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <title>LEX AI</title>
-  <rect x="100" y="100" width="824" height="824" rx="184" fill="#1f4a73"/>
-  <path d="M300 262h118v382h282v118H300z" fill="#f5f5f4"/>
-  <path d="M482 262h218v118H482zm0 200h158v118H482z" fill="#9fd3c4"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="512" height="512" rx="112" fill="#20364C"/>
+<path d="M201 146H146C134.954 146 126 154.954 126 166V346C126 357.046 134.954 366 146 366H201C212.046 366 221 357.046 221 346V166C221 154.954 212.046 146 201 146Z" stroke="white" stroke-width="22.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M366 146H311C299.954 146 291 154.954 291 166V346C291 357.046 299.954 366 311 366H366C377.046 366 386 357.046 386 346V166C386 154.954 377.046 146 366 146Z" stroke="white" stroke-width="22.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M221 211C301 211 211 301 291 301" stroke="white" stroke-width="22.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M161 211H221M291 301H351" stroke="white" stroke-width="22.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

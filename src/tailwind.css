@@ -5,12 +5,29 @@
 @source "./components/ui";
 
 @theme inline {
-  --color-background: #fcfcfb;
-  --color-foreground: #141414;
+  --color-background: #f7f3eb;
+  --color-foreground: #182b3d;
   --color-primary: #1f4a73;
   --color-primary-foreground: #ffffff;
-  --color-muted: #f5f5f4;
-  --color-muted-foreground: #62625e;
-  --color-border: #dcdcd8;
+  --color-muted: #eee9df;
+  --color-muted-foreground: #637083;
+  --color-border: #d8d2c7;
   --color-ring: #1f4a73;
+}
+:root{
+  --lex-ink-950:#182b3d;
+  --lex-ink-800:#1f4a73;
+  --lex-ink-700:#285b88;
+  --lex-paper:#f7f3eb;
+  --lex-surface:#fffdf8;
+  --lex-surface-muted:#f0ece3;
+  --lex-rule:#d8d2c7;
+  --lex-rule-strong:#bdb5a8;
+  --lex-muted:#637083;
+  --lex-brass:#a26f28;
+  --lex-brass-dark:#80551c;
+  --lex-success:#2f6b5a;
+  --lex-danger:#9d3f35;
+  --lex-radius:10px;
+  --lex-shadow:0 10px 24px rgba(24,43,61,.07);
 }

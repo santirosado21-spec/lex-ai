@@ -49,8 +49,8 @@ try {
  const exceptions=[];
  page.on('pageerror',error=>exceptions.push(error.message));
  await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
- await expect(page.locator('.app-cover img')).toBeVisible();
- await expect.poll(()=>page.locator('.app-cover img').evaluate(image=>image.complete&&image.naturalWidth>0)).toBe(true);
+ await expect(page.locator('.app-cover img[src*="lex-cover"]')).toBeVisible();
+ await expect.poll(()=>page.locator('.app-cover img[src*="lex-cover"]').evaluate(image=>image.complete&&image.naturalWidth>0)).toBe(true);
  await page.screenshot({path:'artifacts/ui-app-cover.png',fullPage:true});
  await page.setViewportSize({width:390,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
