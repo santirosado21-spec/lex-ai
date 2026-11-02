@@ -60,3 +60,8 @@ PASS de la primera vertical también dentro de la app nativa: creación/persiste
 - `docs/qa/model-comparison.md` quedó desactualizado: sigue diciendo «pendiente» aunque ya hubo entrenamiento y evaluación. Pendiente corregirlo.
 - Sin commit: el árbol sigue en edición activa por otros workers (entrenamiento y exportación ligeros, UI), así que un commit ahora mezclaría cambios a medias.
 - Siguiente iteración: commit atómico por área cuando los archivos dejen de cambiar; actualizar los smokes al shell HIG; luego Frente C (`docs/qa/public-cases.md`).
+
+## Iteración 3 (00:22 CST, 2026-11-02) — Claude orquestador
+- Árbol quieto >30 min; build PASS, npm test 147/147 PASS; escaneo de secretos limpio (384 KB nuevos).
+- Commits atómicos por área: `9ddee13` runtime ligero + entrenamiento experimental + docs QA; `e23398a` UI HIG, marca Figma y tokens; `9d7fd49` AGENTS/README/package/ignore/log.
+- Lanzados dos workers Codex con archivos disjuntos: (1) actualizar smokes UI al shell HIG (`scripts/ui-*-smoke.mjs`, `docs/qa/ui-smoke-status.md`); (2) Frente C casos públicos (`fixtures/public-cases/**`, `scripts/run-public-cases.mjs`, `docs/qa/public-cases.md`). Resultados pendientes; nada marcado PASS hasta verlos.
