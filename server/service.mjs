@@ -4,6 +4,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { createStore, searchTerms } from './store.mjs';
 import { extractDocument, chunkText } from './extraction.mjs';
 import { skills, validateSkillInput, validateModelOutput } from './skills.mjs';
+import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
 
 const now=()=>new Date().toISOString();
 const identifier=v=>typeof v==='string'&&/^[a-zA-Z0-9-]{1,100}$/.test(v);
@@ -101,31 +102,8 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       case 'answer.export': {
         const answer=scoped('answer',p.answerId,p.matterId);
         const m=matter(p.matterId);
-        // Display-only numbering; saved answers and source identities remain unchanged.
-        const citationNumbers=new Map(answer.citations.map((citation,index)=>[citation.id,String(index+1)]));
-        const exportText=answer.text.replace(/\[([^\]\n]+)\]/g,(reference,id)=>citationNumbers.has(id)?`[${citationNumbers.get(id)}]`:reference);
-        const { Document,Packer,Paragraph,TextRun,HeadingLevel,ExternalHyperlink }=await import('docx');
-        const paragraphs=[
-          new Paragraph({text:'Análisis del asunto',heading:HeadingLevel.TITLE}),
-          new Paragraph({text:m.title,heading:HeadingLevel.HEADING_1}),
-          new Paragraph({text:`Despacho: ${workspace().name}`}),
-          new Paragraph({text:`Generado: ${answer.createdAt}`}),
-          new Paragraph({children:[new TextRun({text:'Borrador de IA para revisión profesional. Las citas se verificaron contra una copia de las fuentes; la exactitud jurídica y vigencia requieren revisión del abogado.',italics:true})]}),
-          new Paragraph({text:'Consulta',heading:HeadingLevel.HEADING_2}),
-          new Paragraph({text:answer.question}),
-          new Paragraph({text:'Análisis',heading:HeadingLevel.HEADING_2}),
-          ...exportText.split('\n').map(line=>new Paragraph({text:line,spacing:{after:120}})),
-          new Paragraph({text:'Fuentes y pasajes recuperados',heading:HeadingLevel.HEADING_2}),
-        ];
-        for(const [index,citation] of answer.citations.entries()){
-          paragraphs.push(new Paragraph({text:`[${index+1}] ${citation.title}${citation.article?` — ${citation.article}`:''}`,spacing:{before:180,after:80}}));
-          paragraphs.push(new Paragraph({text:citation.quote}));
-          if(citation.url)paragraphs.push(new Paragraph({children:[new ExternalHyperlink({link:citation.url,children:[new TextRun({text:citation.url,style:'Hyperlink'})]})]}));
-          paragraphs.push(new Paragraph({text:`Tipo: ${citation.category??'documento interno'}; versión: ${citation.version??'importada'}; consulta: ${citation.retrievedAt??answer.createdAt}; vigencia: ${citation.status??'no evaluada'}.`}));
-        }
-        const doc=new Document({creator:'LEX AI',title:'Análisis del asunto',description:'Borrador con fuentes para revisión profesional',styles:{default:{document:{run:{font:'Arial',size:22},paragraph:{spacing:{after:120,line:280}}}}},sections:[{properties:{page:{margin:{top:1440,right:1440,bottom:1440,left:1440}}},children:paragraphs}]});
-        const buffer=await Packer.toBuffer(doc);store.audit('answer.export',answer.id);
-        return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'};
+        const buffer=await buildAnswerDocx({firm:workspace(),matter:m,answer});store.audit('answer.export',answer.id);
+        return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
       }
       case 'feedback.create': {
         const answer=scoped('answer',p.answerId,p.matterId);

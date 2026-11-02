@@ -105,7 +105,7 @@ test('DOCX export preserves generated analysis and source provenance; DOCX impor
   assert.equal(Buffer.from(exported.base64,'base64').subarray(0,2).toString(),'PK');
   const extracted=await extractDocument(exported.name,exported.base64);
   assert.match(extracted.text,/revisión profesional/);assert.match(extracted.text,/unknown-currentness/);
-  assert.match(extracted.text,/https:\/\/www.diputados.gob.mx\/test-only/);
+  assert.match(extracted.text,/Consultar fuente oficial/);
   const imported=await service.dispatch('document.import',{matterId:a.id,name:exported.name,base64:exported.base64});assert.ok(imported.characters>100);
 });
 
