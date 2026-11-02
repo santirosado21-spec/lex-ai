@@ -98,6 +98,9 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
     const candidates=[...corpus.filter(s=>s.jurisdiction===jurisdiction).map(s=>({title:s.title,lawId:null})),...(publicLibrary?.status?.().laws??[]).filter(s=>s.jurisdiction===jurisdiction).map(s=>({title:s.title,lawId:s.id}))];
     const match=candidates.filter(s=>normalized.includes(' '+titleKey(s.title)+' ')).sort((a,b)=>titleKey(b.title).length-titleKey(a.title).length||Number(Boolean(b.lawId))-Number(Boolean(a.lawId)))[0];
     const ccfAlias=jurisdiction==='MX-FED'&&/\bccf\b/i.test(query);
+    // 'Constitución' / 'CPEUM' without the full official title still names the federal Constitution.
+    const cpeumAlias=!match&&jurisdiction==='MX-FED'&&/\b(constitucion|cpeum)\b/.test(normalize(query));
+    if(cpeumAlias){const law=candidates.find(s=>s.lawId==='MX-FED-CPEUM')??candidates.find(s=>/^constitucion politica de los estados unidos mexicanos/.test(titleKey(s.title)));if(law)return {lawId:law.lawId,titleKey:titleKey(law.title),articleId:[article[1],article[2],article[3],article[4]].filter(Boolean).join('-').toUpperCase()};}
     if(!match&&!ccfAlias)return null;
     const title=match?.title??'Código Civil Federal',key=titleKey(title);
     const lawId=match?.lawId??(jurisdiction==='MX-FED'&&key==='codigo civil federal'?'MX-FED-CCF':null);
