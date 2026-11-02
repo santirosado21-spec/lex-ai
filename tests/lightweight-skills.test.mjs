@@ -115,3 +115,15 @@ test('locks prevent overlapping jobs and preserve unrelated owners',async()=>{
   await assert.rejects(claimLocks(directory));await assert.rejects(access(path.join(directory,'pipeline.lock')));
  }finally{await rm(directory,{recursive:true,force:true});}
 });
+test('locks left by a dead process are reclaimed, locks of live or unidentified owners are not',async()=>{
+ const directory=await mkdtemp(path.join(os.tmpdir(),'lex-light-stale-'));
+ try{
+  await writeFile(path.join(directory,'pipeline.lock'),JSON.stringify({id:'dead',pid:2147483646}));
+  await writeFile(path.join(directory,'gpu.lock'),JSON.stringify({id:'dead',pid:2147483646}));
+  const release=await claimLocks(directory);await release();
+  await writeFile(path.join(directory,'gpu.lock'),JSON.stringify({id:'live',pid:process.pid}));
+  await assert.rejects(claimLocks(directory));
+  await writeFile(path.join(directory,'gpu.lock'),JSON.stringify({id:'training-without-pid'}));
+  await assert.rejects(claimLocks(directory));
+ }finally{await rm(directory,{recursive:true,force:true});}
+});

@@ -157,9 +157,19 @@ export async function processTreeRss(pid){
  return rows.filter(([p])=>found.has(p)).reduce((sum,r)=>sum+r[2]*1024,0);
 }
 
+// A lock is stale only when it names a pid that no longer exists; locks without a pid are never reclaimed.
+async function reclaimStaleLock(p){
+ try{
+  const {pid}=JSON.parse(await readFile(p,'utf8'));
+  if(!Number.isInteger(pid)||pid<=0)return;
+  try{process.kill(pid,0);return;}catch(error){if(error.code!=='ESRCH')return;}
+  await unlink(p);
+ }catch{}
+}
+
 export async function claimLocks(directory){
  await mkdir(directory,{recursive:true});const id=randomUUID(),owned=[];
- try{for(const name of ['pipeline.lock','gpu.lock']){const p=path.join(directory,name);await writeFile(p,JSON.stringify({id,pid:process.pid,mode:'lightweight-evaluation'}),{flag:'wx',mode:0o600});owned.push(p);}}
+ try{for(const name of ['pipeline.lock','gpu.lock']){const p=path.join(directory,name);await reclaimStaleLock(p);await writeFile(p,JSON.stringify({id,pid:process.pid,mode:'lightweight-evaluation'}),{flag:'wx',mode:0o600});owned.push(p);}}
  catch(error){for(const p of owned)await unlink(p);throw error;}
  return async()=>{for(const p of owned.reverse()){try{if(JSON.parse(await readFile(p,'utf8')).id===id)await unlink(p);}catch(e){if(e.code!=='ENOENT')throw e;}}};
 }
