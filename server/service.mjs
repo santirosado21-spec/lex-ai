@@ -8,6 +8,7 @@ import { skills, validateSkillInput, validateModelOutput } from './skills.mjs';
 import { buildAnswerDocx, DOCX_MIME } from './docx-export.mjs';
 import { buildComparisonDocx } from './docx-export.mjs';
 import { compareTexts } from './doc-compare.mjs';
+import { checkConflict, normalizePartyName } from './conflicts.mjs';
 import { pendingToday, proposeFollowUps } from './planner.mjs';
 import { agentArgsHash, proposalView, validateAgentRequest } from './agent-actions.mjs';
 
@@ -253,6 +254,13 @@ export async function createService({dataDir,corpusPath,inference,publicLibrary=
       }
       case 'matter.create': {
         return createMatter(p);
+      }
+      case 'conflict.check': {
+        const w=requireWorkspace();
+        if(p.matterId!==undefined)matter(p.matterId);
+        const result=checkConflict(p,listMatters().filter(item=>item.workspaceId===w.id));
+        store.audit('conflict.check',sha(`conflict.check:${normalizePartyName(result.candidate)}`));
+        return {...result,notice:'Este es un chequeo léxico, no una determinación jurídica de conflicto de intereses; la ausencia de coincidencias no es autorización ni clearance.'};
       }
       case 'document.import': {
         return importDocument(p);
