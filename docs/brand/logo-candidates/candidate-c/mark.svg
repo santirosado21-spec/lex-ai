@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">LEX AI candidate C mark</title>
+  <desc id="desc">A minimal circular seal containing a clear L and a seal-red locator.</desc>
+  <path d="M256 62A194 194 0 1 1 256 450A194 194 0 1 1 256 62ZM256 102A154 154 0 1 0 256 410A154 154 0 1 0 256 102Z" fill="#0F1B2D" fill-rule="evenodd"/>
+  <path d="M189 129H231V335H361V377H189Z" fill="#0F1B2D"/>
+  <circle cx="302" cy="188" r="25" fill="#8C1D2C"/>
+</svg>

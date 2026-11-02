@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 512" role="img" aria-labelledby="title desc">
+  <title id="title">LEX AI candidate D lockup</title>
+  <desc id="desc">Pinpoint-citation mark with a Newsreader semibold LEX AI wordmark.</desc>
+  <style>@font-face{font-family:NewsreaderLocal;src:url('../../../../node_modules/@fontsource/newsreader/files/newsreader-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal}.wordmark{font-family:NewsreaderLocal,Newsreader,Georgia,serif;font-size:228px;font-weight:600;letter-spacing:-4px;word-spacing:28px;fill:#0F1B2D}</style>
+  <path d="M104 88H172V376H404V444H104Z" fill="#0F1B2D"/>
+  <rect x="244" y="136" width="160" height="46" fill="#0F1B2D"/>
+  <rect x="244" y="224" width="116" height="46" fill="#0F1B2D"/>
+  <rect x="372" y="224" width="32" height="46" fill="#8C1D2C"/>
+  <text class="wordmark" x="620" y="336" xml:space="preserve">LEX AI</text>
+</svg>

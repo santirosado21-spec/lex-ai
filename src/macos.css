@@ -59,3 +59,7 @@ body,button,input,select,textarea,.app-shell h1,.app-shell h2,.app-shell h3,.app
 
 /* Drawer (<=768px): keep the context-bar toggle above the open drawer so the menu can always be closed. */
 @media(max-width:768px){.macos-workspace:has(>.sidebar.mobile-open)>.app-content .context-bar{position:relative;z-index:60}.macos-workspace>.sidebar{padding-top:72px}}
+
+/* Brand: serif wordmark next to the new L mark; content area fills the window. */
+.macos-workspace .brand{font-family:'Newsreader',Georgia,serif;font-weight:600;letter-spacing:-.01em}.macos-workspace .brand-mark{width:30px;height:30px}
+.macos-workspace>.app-content{background:var(--surface)}

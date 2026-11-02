@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 512" role="img" aria-labelledby="title desc">
+  <title id="title">LEX AI candidate A2 lockup</title>
+  <desc id="desc">Square citation-bracket L mark with a Newsreader semibold LEX AI wordmark.</desc>
+  <style>@font-face{font-family:NewsreaderLocal;src:url('../../../../node_modules/@fontsource/newsreader/files/newsreader-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal}.wordmark{font-family:NewsreaderLocal,Newsreader,Georgia,serif;font-size:228px;font-weight:600;letter-spacing:-4px;word-spacing:28px;fill:#0F1B2D}</style>
+  <path d="M128 72H264V136H192V376H432V440H128Z" fill="#0F1B2D"/>
+  <circle cx="286" cy="324" r="29" fill="#8C1D2C"/>
+  <text class="wordmark" x="620" y="336" xml:space="preserve">LEX AI</text>
+</svg>

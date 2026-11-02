@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 512" role="img" aria-labelledby="title desc">
+  <title id="title">LEX AI candidate C lockup</title>
+  <desc id="desc">Minimal circular seal mark with a Newsreader semibold LEX AI wordmark.</desc>
+  <style>@font-face{font-family:NewsreaderLocal;src:url('../../../../node_modules/@fontsource/newsreader/files/newsreader-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal}.wordmark{font-family:NewsreaderLocal,Newsreader,Georgia,serif;font-size:228px;font-weight:600;letter-spacing:-4px;word-spacing:28px;fill:#0F1B2D}</style>
+  <path d="M256 62A194 194 0 1 1 256 450A194 194 0 1 1 256 62ZM256 102A154 154 0 1 0 256 410A154 154 0 1 0 256 102Z" fill="#0F1B2D" fill-rule="evenodd"/>
+  <path d="M189 129H231V335H361V377H189Z" fill="#0F1B2D"/>
+  <circle cx="302" cy="188" r="25" fill="#8C1D2C"/>
+  <text class="wordmark" x="620" y="336" xml:space="preserve">LEX AI</text>
+</svg>
