@@ -51,10 +51,38 @@ try {
   const response = await page.goto(base, {waitUntil:'networkidle'});
   assert.equal(response.status(), 200);
   await expect(page.getByRole('heading', {level:1})).toContainText('Una respuesta');
-  await expect(page.getByRole('heading', {name:'Todas las herramientas, a la vista.'})).toBeVisible();
-  for (const name of ['Asistente','Asuntos','Escritos','Biblioteca federal','Conflictos','Checklist','Pendientes','Acciones propuestas','Panel','Calidad del asistente']) {
-    await expect(page.getByText(name, {exact:true})).toBeVisible();
+  await expect(page.getByRole('heading', {name:'Un asunto, todas sus herramientas.'})).toBeVisible();
+  for (const name of ['Asistente','Biblioteca federal','Escritos','Correo','Dictado','Asuntos','Pendientes','Checklist','Conflictos','Acciones propuestas','Tiempo y honorarios']) {
+    await expect(page.locator('#herramientas dt', {hasText:name}).first()).toBeVisible();
   }
+  // Integrations are labelled from the catalogue: 0.4.3 predates them.
+  await expect(page.getByRole('heading', {name:'Donde ya trabajas.'})).toBeVisible();
+  for (const name of ['Word','Excel','SharePoint Online','Mail']) await expect(page.locator('#integraciones dt', {hasText:name}).first()).toBeVisible();
+  await expect(page.locator('#integrations-status')).toHaveText('Próxima versión');
+  await expect(page.getByRole('heading', {name:'Primero la fuente, después la frase.'})).toBeVisible();
+  await expect(page.locator('.method-steps li')).toHaveCount(3);
+  await expect(page.getByRole('heading', {name:'Cada asunto, sus conversaciones.'})).toBeVisible();
+  await expect(page.locator('[data-projects-status]')).toHaveText('Próxima versión');
+  const faq = page.locator('#preguntas details').first();
+  await faq.locator('summary').click();
+  await expect(faq).toHaveAttribute('open', '');
+  await expect(page.locator('#preguntas details')).toHaveCount(6);
+  // Hero demo: keyboard tabs and citation link.
+  const appTab = page.getByRole('tab', {name:'En LEX AI'});
+  const wordTab = page.getByRole('tab', {name:'En Word'});
+  await appTab.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(wordTab).toHaveAttribute('aria-selected', 'true');
+  await expect(wordTab).toBeFocused();
+  await expect(page.locator('#panel-word')).toBeVisible();
+  await expect(page.locator('#panel-app')).toBeHidden();
+  await page.keyboard.press('ArrowLeft');
+  await expect(appTab).toHaveAttribute('aria-selected', 'true');
+  await page.locator('#cite-d1').focus();
+  await expect(page.locator('#demo')).toHaveAttribute('data-linked', 'true');
+  assert.match(await page.locator('#link-path').getAttribute('d'), /^M [\d.]+ [\d.]+ C /);
+  assert.doesNotMatch(await page.locator('body').innerText(), /\u2014/, 'no em dash in visible copy');
+  assert.doesNotMatch(await page.title(), /\u2014/);
   // Live catalogue: the published release must be offered with its real hash.
   await expect(page.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.3');
   await expect(page.locator('#download-button')).toHaveAttribute('aria-disabled', 'false');
@@ -122,12 +150,12 @@ try {
   await expect(availablePage.locator('#copy-sha')).toBeEnabled();
   await availablePage.close();
 
-  for (const width of [1440, 768, 390]) await assertNoOverflow(page, width);
+  for (const width of [1440, 1024, 768, 390, 320]) await assertNoOverflow(page, width);
   assert.deepEqual(errors, []);
   assert.deepEqual(failed, []);
   const origin = new URL(base).origin;
   assert.deepEqual(requests.filter(url => new URL(url).origin !== origin), []);
-  report.checks.push('local Newsreader and Schibsted Grotesk load', 'landing theme toggle cycles Automatic, Light, and Dark with the matching mark', 'all ten product tools are visible', 'catalogue null state disables the download and copy controls', 'route-intercepted catalogue enables the button and renders URL, size, and SHA-256', 'keyboard focus is visible', 'no horizontal overflow at 1440/768/390', 'no failed resources, browser exceptions, or third-party requests');
+  report.checks.push('local Newsreader and Schibsted Grotesk load', 'landing theme toggle cycles Automatic, Light, and Dark with the matching mark', 'eleven tools grouped by task are visible', 'integrations show Próxima versión for catalogue 0.4.3', 'demo tabs work with arrow keys and the citation link draws on focus', 'no em dash in visible copy or title', 'answer method, matters-as-projects and FAQ sections render with honest release labels', 'catalogue null state disables the download and copy controls', 'route-intercepted catalogue enables the button and renders URL, size, and SHA-256', 'keyboard focus is visible', 'no horizontal overflow at 1440/1024/768/390/320', 'no failed resources, browser exceptions, or third-party requests');
   report.status = 'PASS';
 } catch (error) {
   report.status = 'FAIL';

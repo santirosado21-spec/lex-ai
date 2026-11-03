@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LEX AI es un espacio jurídico local para Mac que mantiene cada respuesta junto al pasaje que la respalda.">
-  <meta name="theme-color" content="#EEF1F4">
+  <meta name="description" content="LEX AI es un espacio jurídico local para Mac que mantiene cada respuesta junto al pasaje que la respalda, también dentro de Word y Excel.">
+  <meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E141C" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="LEX AI — Respuestas con su fuente a la vista">
-  <meta property="og:description" content="Un espacio jurídico local para Mac, con pasajes y asunto a la vista.">
-  <title>LEX AI — Respuestas con su fuente a la vista</title>
+  <meta property="og:title" content="LEX AI: respuestas con su fuente a la vista">
+  <meta property="og:description" content="Un espacio jurídico local para Mac, con el pasaje y el asunto a la vista.">
+  <title>LEX AI: respuestas con su fuente a la vista</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/newsreader-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <script>try{const theme=localStorage.getItem('lex-ai.appearance');if(theme==='light'||theme==='dark')document.documentElement.dataset.theme=theme}catch{}</script>
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
@@ -21,76 +22,218 @@
   <header class="site-header shell">
     <a class="wordmark" href="#inicio" aria-label="LEX AI, inicio"><span class="theme-mark" aria-hidden="true"><img class="theme-mark-light" src="assets/lex-mark.svg" alt=""><img class="theme-mark-dark" src="assets/lex-mark-dark.svg" alt=""></span><span>LEX AI</span></a>
     <nav aria-label="Navegación principal">
+      <a href="#como-responde">Cómo responde</a>
       <a href="#herramientas">Herramientas</a>
-      <a href="#descargar">Descargar</a>
-      <a href="#limites">Límites</a>
-    </nav><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar apariencia: Automático" title="Apariencia: Automático">Automático</button>
+      <a href="#integraciones">Integraciones</a>
+      <a href="#preguntas">Preguntas</a>
+      <a class="nav-cta" href="#descargar">Descargar</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar apariencia: Automático" title="Apariencia: Automático">Automático</button>
   </header>
+
   <main id="contenido">
     <section class="hero shell" id="inicio" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="intro-line">Trabajo jurídico local para Mac</p>
         <h1 id="hero-title">Una respuesta debe poder volver al pasaje que la sostiene.</h1>
-        <p class="lede">LEX AI organiza el asunto, recupera la fuente pertinente y deja la cita a la vista. Los documentos y el asistente trabajan en tu Mac.</p>
+        <p class="lede">LEX AI organiza el asunto, recupera la fuente pertinente y deja la cita a la vista. Tus documentos y el asistente trabajan en tu Mac.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#descargar">Ver descarga e instalación</a>
+          <a class="button button-primary" href="#descargar">Descargar para Mac</a>
           <a class="quiet-link" href="#herramientas">Conocer las herramientas</a>
         </div>
-        <p class="local-note"><span class="device-mark" aria-hidden="true"></span>Después de la preparación inicial, el trabajo funciona localmente.</p>
+        <p class="local-note"><span class="device-mark" aria-hidden="true"></span>Después de la preparación inicial, el trabajo funciona sin conexión.</p>
       </div>
-      <article class="answer-frame" aria-label="Ejemplo ilustrativo de respuesta vinculada a una fuente">
-        <div class="frame-bar"><span>Asunto de práctica</span><span>Vista ilustrativa</span></div>
-        <div class="answer-body">
-          <p class="frame-label">Consulta</p>
-          <p class="question">¿Qué debe conservarse al recibir el inventario?</p>
-          <p class="frame-label">Respuesta para revisar</p>
-          <p class="answer-text">Conserva una constancia escrita de recepción y vuelve al documento completo antes de decidir su alcance.<a href="#sello-fuente" class="citation" aria-describedby="sello-fuente">[D1]</a></p>
-          <aside class="source-seal" id="sello-fuente" tabindex="-1">
-            <span class="seal-dot" aria-hidden="true"></span>
-            <div>
-              <p class="frame-label">Pasaje D1 · Documento del asunto</p>
-              <blockquote>“La recepción del inventario se documentará mediante una constancia escrita.”</blockquote>
-            </div>
-          </aside>
-          <p class="frame-note">La cita se comprueba contra el pasaje aportado. La conclusión sigue requiriendo revisión profesional.</p>
+
+      <figure class="demo" id="demo" data-linked="false" aria-labelledby="demo-caption">
+        <div class="demo-tabs" role="tablist" aria-label="Dónde ver la respuesta">
+          <button type="button" role="tab" id="tab-app" aria-controls="panel-app" aria-selected="true">En LEX AI</button>
+          <button type="button" role="tab" id="tab-word" aria-controls="panel-word" aria-selected="false" tabindex="-1">En Word</button>
         </div>
-      </article>
+
+        <div class="demo-window">
+          <div class="demo-panel" role="tabpanel" id="panel-app" aria-labelledby="tab-app" tabindex="0">
+            <div class="app-bar"><span class="app-matter">Contrato de servicios</span><span class="app-badge">Federal</span></div>
+            <div class="app-body" id="link-stage">
+              <p class="bubble">¿Qué debe conservarse al recibir el inventario?</p>
+              <p class="answer-text">Conserva una constancia escrita de recepción y vuelve al documento completo antes de decidir su alcance.<button type="button" class="citation" id="cite-d1" aria-describedby="passage-d1" aria-pressed="false">D1</button></p>
+              <aside class="source-seal" id="passage-d1">
+                <p class="seal-label"><span class="seal-mark" aria-hidden="true">§</span>Pasaje D1, cláusula cuarta del contrato</p>
+                <blockquote>“La recepción del inventario se documentará mediante una constancia escrita.”</blockquote>
+              </aside>
+              <svg class="link-line" aria-hidden="true" focusable="false"><path id="link-path" pathLength="1" d=""/></svg>
+            </div>
+          </div>
+
+          <div class="demo-panel" role="tabpanel" id="panel-word" aria-labelledby="tab-word" tabindex="0" hidden>
+            <div class="word-layout">
+              <div class="word-page" aria-hidden="true">
+                <p class="word-title">Contrato de prestación de servicios</p>
+                <p class="word-line"></p><p class="word-line short"></p>
+                <p class="word-clause"><strong>Cuarta.</strong> La recepción del inventario se documentará mediante una constancia escrita.</p>
+                <p class="word-line"></p><p class="word-line"></p><p class="word-line short"></p>
+              </div>
+              <div class="word-pane">
+                <div class="pane-head"><span class="pane-brand"><span class="theme-mark" aria-hidden="true"><img class="theme-mark-light" src="assets/lex-mark.svg" alt=""><img class="theme-mark-dark" src="assets/lex-mark-dark.svg" alt=""></span>LEX AI</span><span class="pane-chip"><span class="dot" aria-hidden="true"></span>Asunto vinculado</span></div>
+                <p class="pane-q">¿Qué debe conservarse al recibir el inventario?</p>
+                <p class="pane-a">Conserva una constancia escrita de recepción.</p>
+                <p class="pane-src">Fuentes: cláusula cuarta</p>
+                <span class="pane-button">Insertar después de la selección</span>
+                <p class="pane-note">Nada se edita sin tu clic.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption id="demo-caption">Vista ilustrativa con datos ficticios. La cita se comprueba contra el pasaje; la conclusión requiere revisión profesional.</figcaption>
+      </figure>
     </section>
-    <section class="source-statement" aria-labelledby="source-title">
-      <div class="shell statement-layout">
-        <h2 id="source-title">La fuente no queda escondida detrás de la respuesta.</h2>
-        <p>LEX AI mantiene cerca el contexto recuperado para que puedas comprobar qué sostiene una afirmación, preparar un escrito y continuar la revisión con tu equipo.</p>
+
+    <section class="stays" aria-labelledby="stays-title">
+      <div class="shell stays-layout">
+        <h2 id="stays-title">Qué se queda en tu Mac.</h2>
+        <div class="stays-lists">
+          <div>
+            <h3>En tu Mac</h3>
+            <ul>
+              <li>Los documentos de cada asunto</li>
+              <li>Tus consultas y las respuestas</li>
+              <li>El asistente que las prepara</li>
+              <li>El dictado de voz a texto</li>
+            </ul>
+          </div>
+          <div>
+            <h3>En este sitio</h3>
+            <ul>
+              <li>La descarga del instalador</li>
+              <li>La ficha pública de la versión</li>
+            </ul>
+            <p class="stays-note">No hay cuenta que crear ni archivos que subir.</p>
+          </div>
+        </div>
       </div>
+    </section>
+
+
+    <section class="method shell section" id="como-responde" aria-labelledby="method-title">
+      <div class="section-heading">
+        <div><p class="intro-line">Cómo llega a una respuesta</p><h2 id="method-title">Primero la fuente, después la frase.</h2></div>
+        <p>Cada respuesta jurídica pasa por los mismos tres pasos. Si falta el tercero, no se muestra como respuesta fundada.</p>
+      </div>
+      <ol class="method-steps">
+        <li><span class="method-number">1</span><div><h3>Busca dentro del límite del asunto</h3><p>Recupera pasajes de los documentos de ese asunto y de la biblioteca federal, con su fecha y procedencia. Nunca mira los documentos de otro asunto.</p></div></li>
+        <li><span class="method-number">2</span><div><h3>Responde citando el pasaje</h3><p>Cada párrafo lleva su cita: [D1] para un documento del asunto, [L1] para una fuente pública.</p></div></li>
+        <li><span class="method-number">3</span><div><h3>Comprueba cada cita antes de mostrarla</h3><p>Si una cita no coincide con el pasaje, o un número o un artículo no aparece en la fuente, la respuesta se descarta. Si no hay fuente, LEX AI te lo dice y te pide la disposición o el documento.</p></div></li>
+      </ol>
     </section>
     <section class="tools shell section" id="herramientas" aria-labelledby="tools-title">
       <div class="section-heading">
-        <div><p class="intro-line">El espacio de trabajo</p><h2 id="tools-title">Todas las herramientas, a la vista.</h2></div>
-        <p>El asunto marca el contexto. Cada herramienta conserva una función concreta dentro del trabajo jurídico.</p>
+        <div><p class="intro-line">El espacio de trabajo</p><h2 id="tools-title">Un asunto, todas sus herramientas.</h2></div>
+        <p>El asunto marca qué documentos puede consultar el asistente. Cada herramienta trabaja dentro de ese límite.</p>
       </div>
-      <ul class="tool-list" aria-label="Herramientas de LEX AI">
-        <li><span class="tool-mark" aria-hidden="true">↗</span><span><strong>Asistente</strong><small>Consulta y revisa con pasajes del asunto.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">□</span><span><strong>Asuntos</strong><small>Ordena documentos, contexto y seguimiento.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">▤</span><span><strong>Escritos</strong><small>Prepara borradores para continuar la revisión.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">§</span><span><strong>Biblioteca federal</strong><small>Consulta fuentes públicas con fecha y procedencia.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">⇄</span><span><strong>Conflictos</strong><small>Señala tensiones que necesitan atención.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">✓</span><span><strong>Checklist</strong><small>Da seguimiento a la revisión del asunto.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">•</span><span><strong>Pendientes</strong><small>Reúne tareas abiertas en su contexto.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">+</span><span><strong>Acciones propuestas</strong><small>Presenta acciones para aprobación humana.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">▥</span><span><strong>Panel</strong><small>Resume el estado del trabajo.</small></span></li>
-        <li><span class="tool-mark" aria-hidden="true">◌</span><span><strong>Calidad del asistente</strong><small>Consulta evidencia de evaluación técnica.</small></span></li>
-      </ul>
+      <div class="tool-groups">
+        <section aria-labelledby="group-ask">
+          <h3 id="group-ask">Preguntar y comprobar</h3>
+          <dl>
+            <div><dt>Asistente</dt><dd>Consulta el asunto y recibe respuestas con el pasaje citado.</dd></div>
+            <div><dt>Biblioteca federal</dt><dd>Fuentes públicas con fecha y procedencia.</dd></div>
+          </dl>
+        </section>
+        <section aria-labelledby="group-send">
+          <h3 id="group-send">Preparar y enviar</h3>
+          <dl>
+            <div><dt>Escritos</dt><dd>Borradores editables con versiones y exportación a DOCX.</dd></div>
+            <div><dt>Correo</dt><dd>Mail envía sólo el mensaje exacto que apruebas.</dd></div>
+            <div><dt>Dictado</dt><dd>Voz a texto en tu Mac, para revisar antes de enviar.</dd></div>
+          </dl>
+        </section>
+        <section aria-labelledby="group-track">
+          <h3 id="group-track">Dar seguimiento</h3>
+          <dl>
+            <div><dt>Asuntos</dt><dd>Documentos, contexto y expediente por cliente.</dd></div>
+            <div><dt>Pendientes</dt><dd>Tareas y recordatorios del asunto.</dd></div>
+            <div><dt>Checklist</dt><dd>Revisión ordenada y editable.</dd></div>
+            <div><dt>Conflictos</dt><dd>Coincidencias con contrapartes registradas.</dd></div>
+            <div><dt>Acciones propuestas</dt><dd>El asistente propone; tú apruebas.</dd></div>
+            <div><dt>Tiempo y honorarios</dt><dd>Minutos y centavos exactos por asunto.</dd></div>
+          </dl>
+        </section>
+      </div>
     </section>
+
+
+    <section class="projects" id="asuntos" aria-labelledby="projects-title">
+      <div class="shell projects-layout">
+        <div class="projects-mock" aria-hidden="true">
+          <div class="mock-column">
+            <p class="mock-label">Asuntos</p>
+            <p class="mock-row">Conversación general</p>
+            <p class="mock-row is-active">Contrato de servicios</p>
+            <p class="mock-row">Arrendamiento local 4</p>
+            <p class="mock-row">Despido de trabajador</p>
+            <p class="mock-label">Conversaciones del asunto</p>
+            <p class="mock-new">+ Nueva conversación</p>
+            <p class="mock-thread is-active">Riesgos de la cláusula de pago<small>Hoy</small></p>
+            <p class="mock-thread">Agenda para la reunión con el cliente<small>Ayer</small></p>
+            <p class="mock-thread">Borrador de respuesta al proveedor<small>Lunes</small></p>
+          </div>
+          <div class="mock-chat">
+            <p class="mock-bubble">¿Qué riesgo ves en la cláusula de pago?</p>
+            <p class="mock-answer">La cláusula fija el pago a 30 días, pero no dice qué pasa si la factura llega incompleta.<span class="mock-cite">D1</span></p>
+            <p class="mock-bubble">Redáctame una pregunta para el proveedor.</p>
+            <p class="mock-answer">Claro. Propongo: «¿Qué plazo aplica si la factura se recibe con datos faltantes?»</p>
+          </div>
+        </div>
+        <div class="projects-copy">
+          <p class="intro-line"><span class="release-pill" data-projects-status>Próxima versión</span></p>
+          <h2 id="projects-title">Cada asunto, sus conversaciones.</h2>
+          <p class="projects-lede">Cambia de asunto como cambias de proyecto. Cada uno guarda sus propias conversaciones y sus documentos; abre una nueva cuando cambies de tema.</p>
+          <ul class="projects-points">
+            <li>Conversa con naturalidad en cualquier momento. No hay modos que cambiar.</li>
+            <li>Cuando la pregunta es jurídica, LEX AI busca la fuente por su cuenta.</li>
+            <li>Ninguna conversación ve los documentos de otro asunto.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="integrations" id="integraciones" aria-labelledby="integrations-title">
+      <div class="shell integrations-layout">
+        <div class="integrations-copy">
+          <p class="intro-line"><span class="release-pill" id="integrations-status">Próxima versión</span></p>
+          <h2 id="integrations-title">Donde ya trabajas.</h2>
+          <p class="integrations-lede">Abre el asunto desde un panel lateral, sin copiar y pegar entre ventanas.</p>
+          <dl class="integration-list">
+            <div><dt>Word</dt><dd>Pregunta sobre el documento y aplica sugerencias con control de cambios.</dd></div>
+            <div><dt>Excel</dt><dd>Extrae campos de las celdas seleccionadas a una hoja nueva para revisar.</dd></div>
+            <div><dt>SharePoint Online</dt><dd>Guarda en el asunto un fragmento de la página. Requiere tu sesión de Microsoft 365.</dd></div>
+            <div><dt>Mail</dt><dd>Prepara el correo del asunto y aprueba el texto exacto antes del envío.</dd></div>
+          </dl>
+        </div>
+        <div class="pairing" aria-labelledby="pairing-title">
+          <h3 id="pairing-title">Así se vincula un documento</h3>
+          <ol>
+            <li><span>En LEX AI, elige el asunto y pide un código.</span></li>
+            <li><span>Escríbelo en el panel del documento antes de que venza.</span></li>
+            <li><span>La sesión vence sola. Puedes revocarla antes.</span></li>
+          </ol>
+          <div class="code-sample" aria-label="Ejemplo de código de un solo uso">
+            <span class="code-value" aria-hidden="true">K7Q2MX</span>
+            <span class="code-expiry">Un solo uso. Vence en un minuto.</span>
+          </div>
+          <p class="pairing-note">Nada se edita en tu documento sin un clic tuyo.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="download-section" id="descargar" aria-labelledby="download-title">
       <div class="shell download-layout">
         <div>
-          <p class="intro-line">Descarga para mostrar y empezar</p>
+          <p class="intro-line">Descarga</p>
           <h2 id="download-title">Instala LEX AI en tu Mac.</h2>
-          <p class="download-copy">La versión pública se publica aquí junto con su tamaño y suma de verificación. No necesitas crear una cuenta ni subir documentos a este sitio.</p>
+          <p class="download-copy">La versión pública se publica aquí con su tamaño y suma de verificación. No necesitas crear una cuenta ni subir documentos a este sitio.</p>
           <a class="button button-primary download-button" id="download-button" role="button" aria-disabled="true" tabindex="-1">Disponible muy pronto</a>
           <p class="download-state" id="download-state" aria-live="polite">La descarga aún no está publicada.</p>
         </div>
         <div class="release-card">
-          <div class="release-topline"><span>Versión <strong data-release-version>0.4.3</strong></span><span>macOS Apple Silicon</span></div>
+          <div class="release-topline"><span>Versión <strong data-release-version>0.4.3</strong></span><span>macOS, Apple Silicon</span></div>
           <dl class="requirements-list">
             <div><dt>Equipo</dt><dd>Mac con Apple Silicon</dd></div>
             <div><dt>Memoria</dt><dd>8 GB de RAM como mínimo</dd></div>
@@ -106,9 +249,10 @@
         </div>
       </div>
     </section>
+
     <section class="install shell section" aria-labelledby="install-title">
       <div class="section-heading">
-        <div><p class="intro-line">Una vez publicada la descarga</p><h2 id="install-title">Instalación en cuatro pasos.</h2></div>
+        <div><p class="intro-line">Después de descargar</p><h2 id="install-title">Instalación en cuatro pasos.</h2></div>
         <p>La primera apertura requiere una acción adicional porque este build todavía no cuenta con notarización de Apple.</p>
       </div>
       <ol class="install-steps">
@@ -118,6 +262,22 @@
         <li><span>4</span><div><h3>Prepara LEX AI</h3><p>En la app, ve a <strong>Configuración &gt; Preparar LEX AI</strong> para descargar los componentes iniciales.</p></div></li>
       </ol>
     </section>
+
+
+    <section class="faq shell section" id="preguntas" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <div><p class="intro-line">Antes de instalar</p><h2 id="faq-title">Preguntas frecuentes.</h2></div>
+        <p>Las respuestas describen esta versión experimental, no un compromiso futuro.</p>
+      </div>
+      <div class="faq-list">
+        <details><summary>¿Mis documentos salen de mi Mac?</summary><p>No. Los documentos, las consultas y el asistente funcionan en tu Mac. Este sitio sólo ofrece la descarga y la ficha pública de la versión.</p></details>
+        <details><summary>¿Necesito conexión a internet?</summary><p>Sólo para descargar la app y, la primera vez, los componentes del asistente (unos 1.95 GB). Después, el trabajo funciona sin conexión.</p></details>
+        <details><summary>¿Qué pasa si LEX AI no encuentra la fuente?</summary><p>Te lo dice. No inventa artículos, fechas ni plazos: te pide la disposición, el documento o la jurisdicción para poder fundamentar la respuesta.</p></details>
+        <details><summary>¿Sirve para estados además de la federación?</summary><p>La biblioteca es federal, con una selección parcial de Jalisco y Nuevo León. Para otros estados, LEX AI te pide el texto oficial aplicable.</p></details>
+        <details><summary>¿Funciona en una Mac con 8 GB de RAM?</summary><p>Está diseñada para ese mínimo, pero esta versión aún no se ha probado en una Mac física con 8 GB. Si la memoria libre no alcanza, LEX AI lo avisa en lugar de bloquear el equipo.</p></details>
+        <details><summary>¿Sustituye la revisión de un abogado?</summary><p>No. Es una herramienta experimental sin validación jurídica. Toda respuesta, cita y escrito requiere revisión profesional antes de usarse.</p></details>
+      </div>
+    </section>
     <section class="limits-section" id="limites" aria-labelledby="limits-title">
       <div class="shell limits-layout">
         <div><p class="intro-line">Límites que importan</p><h2 id="limits-title">Una herramienta experimental no sustituye el criterio profesional.</h2></div>
@@ -126,10 +286,12 @@
           <li>Toda respuesta, cita y escrito requiere revisión profesional antes de usarse.</li>
           <li>La Biblioteca federal corresponde a un snapshot del 30 de octubre de 2026; no es exhaustiva ni acredita vigencia actual.</li>
           <li>Esta versión aún no se ha probado en una Mac física con 8 GB de RAM.</li>
+          <li>Los paneles de Word y Excel se probaron con archivos sintéticos; SharePoint Online aún no se prueba en un entorno real.</li>
         </ul>
       </div>
     </section>
   </main>
+
   <footer class="site-footer shell">
     <a class="wordmark" href="#inicio" aria-label="LEX AI, volver al inicio"><span class="theme-mark" aria-hidden="true"><img class="theme-mark-light" src="assets/lex-mark.svg" alt=""><img class="theme-mark-dark" src="assets/lex-mark-dark.svg" alt=""></span><span>LEX AI</span></a>
     <p>Información pública del producto. No constituye asesoría jurídica.</p>
