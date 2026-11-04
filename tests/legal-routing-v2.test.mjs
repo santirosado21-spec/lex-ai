@@ -51,3 +51,32 @@ test('a thesis asked by its identifier is not answered with legislation', async 
     assert.deepEqual(answer.citations, []); assert.equal(generated, 0);
   } finally { service.close(); }
 });
+
+test('chat legal turns drop distractor articles that do not open with the topic', async t => {
+  const {existsSync} = await import('node:fs'); const path = await import('node:path');
+  const file = path.resolve('resources/public-library.sqlite');
+  if (!existsSync(file)) return t.skip('public library not built');
+  const {openPublicLibrary} = await import('../server/public-library.mjs');
+  const {createService} = await import('../server/service.mjs');
+  const {mkdtemp} = await import('node:fs/promises'); const os = await import('node:os');
+  const library = await openPublicLibrary(file);
+  let seen = null;
+  const inference = {async status() { return {state: 'ready'}; }, async *generate(messages) { const u = JSON.parse(messages.at(-1).content); if (u.sources) seen = u.sources; yield '{"paragraphs":[{"kind":"conversacion","text":"Listo."}]}'; }};
+  const service = await createService({dataDir: await mkdtemp(path.join(os.tmpdir(), 'lex-distractor-')), corpusPath: path.resolve('resources/legal-corpus.json'), inference, publicLibrary: library, schedulerEnabled: false});
+  try {
+    await service.dispatch('workspace.create', {name: 'x', practiceAreas: ['laboral']});
+    await service.analyze({mode: 'auto', question: '¿Qué es el aguinaldo y cuánto es lo mínimo según la LFT?'});
+    assert.ok(seen?.length >= 1);
+    assert.ok(seen.every(s => /aguinaldo/i.test(s.text.slice(0, 200))), JSON.stringify(seen.map(s => s.article)));
+  } finally { service.close(); library.close(); }
+});
+
+test('a number written in words in the law backs the same number in digits', async () => {
+  const {validateGroundedOutput} = await import('../server/grounded-output.mjs');
+  const quote = 'Artículo 87.- Los trabajadores tendrán derecho a un aguinaldo anual que deberá pagarse antes del día veinte de diciembre, equivalente a quince días de salario, por lo menos.';
+  const ev = [{id: 'L1', article: '87', text: quote, allowedQuotes: [quote]}];
+  const ok = {paragraphs: [{sourceId: 'L1', quote, text: 'El aguinaldo es de al menos 15 días de salario y se paga antes del 20 de diciembre.'}]};
+  assert.equal(validateGroundedOutput(JSON.stringify(ok), ev).paragraphs.length, 1);
+  const bad = {paragraphs: [{sourceId: 'L1', quote, text: 'El aguinaldo es de al menos 30 días de salario y se paga antes del 20 de diciembre.'}]};
+  assert.throws(() => validateGroundedOutput(JSON.stringify(bad), ev), /respaldo/);
+});

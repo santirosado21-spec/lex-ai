@@ -16,8 +16,12 @@ export function buildGroundedSchema(evidence){
  return {type:'object',additionalProperties:false,required:['paragraphs'],properties:{paragraphs:{type:'array',minItems:Math.min(2,sources.length),maxItems:3,items:{anyOf:sources.map(({source,quotes})=>({type:'object',additionalProperties:false,required:['sourceId','quote','text'],properties:{sourceId:{type:'string',const:source.id},quote:{type:'string',enum:quotes},text:{type:'string',minLength:40,maxLength:350},kind:{type:'string',enum:[...KINDS]}}}))}}}};
 }
 const numberWords=new Set('cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciséis dieciseis diecisiete dieciocho diecinueve veinte veintiuno veintidós veintidos veintitrés veintitres veinticuatro veinticinco veintiséis veintiseis veintisiete veintiocho veintinueve treinta cuarenta cincuenta sesenta setenta ochenta noventa cien ciento doscientos trescientos cuatrocientos quinientos seiscientos setecientos ochocientos novecientos mil millón millon millones primero segundo tercero cuarto quinto sexto séptimo septimo octavo noveno décimo decimo enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre'.split(' '));
+// "veinte" in the law and "20" in the explanation are the same claim.
+const CARDINALS=Object.entries({cero:0,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,'dieciséis':16,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,'veintidós':22,veintidos:22,'veintitrés':23,veintitres:23,veinticuatro:24,veinticinco:25,'veintiséis':26,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100});
+const CARDINAL_RE=new RegExp(`(?<![\\p{L}])(?:${CARDINALS.map(([w])=>w).sort((a,b)=>b.length-a.length).join('|')})(?![\\p{L}])`,'gu');
+const CARDINAL_MAP=new Map(CARDINALS);
 export function numericClaims(text){
- const value=normalize(text).toLocaleLowerCase('es');
+ const value=normalize(text).toLocaleLowerCase('es').replace(CARDINAL_RE,word=>String(CARDINAL_MAP.get(word)));
  const claims=[...(value.match(/\p{N}+(?:[.,:/-]\p{N}+)*(?:\s*%)?/gu)||[])];
  for(const token of value.match(/[\p{L}]+/gu)||[])if(numberWords.has(token))claims.push(token);
  // Article identifiers are checked as a full phrase too (including Roman numerals/suffixes).

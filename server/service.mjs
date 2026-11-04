@@ -127,12 +127,17 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   function researchWords(query){let size=0;return searchTerms(query).filter(t=>!researchStop.has(t)&&t.length<=40).filter(t=>{size+=t.length+1;return size<=300;}).slice(0,12);}
   // Several short, verbatim sentences per source give a small model enough
   // citable material to explain; each one is still checked as an exact quote.
-  function citableSentences(passage,words,max,fallback){
+  // When the question asks for an amount or a deadline, sentences with figures
+  // go first: a small model tends to use the first quote it sees.
+  const asksQuantity=q=>/\b(?:cuanto|cuantos|cuantas|minimo|maximo|plazo|monto|dias|porcentaje|tiempo)\b/.test(normalize(q||''));
+  const hasFigure=t=>/\d|\b(?:uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|veinte|treinta|sesenta|noventa|cien|ciento)\b/.test(normalize(t));
+  function citableSentences(passage,words,max,fallback,question=''){
+    const quantity=asksQuantity(question);
     const segments=passage.split(/(?<=[.!?;:])\s+|\n/).map(x=>x.trim()).filter(x=>x.length>=40).map(x=>{if(x.length<=220)return x;const cut=x.slice(0,220);const space=cut.lastIndexOf(' ');return space>=120?cut.slice(0,space):cut;});
-    const ranked=segments.map((text,index)=>({text,index,score:words.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
+    const ranked=segments.map((text,index)=>({text,index,score:words.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)+(quantity&&hasFigure(text)?2:0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
     const chosen=[];let size=0;
     for(const item of ranked){if(chosen.length>=max||size+item.text.length>800)break;if(!chosen.some(c=>c.text===item.text)){chosen.push(item);size+=item.text.length;}}
-    const quotes=chosen.sort((a,b)=>a.index-b.index).map(c=>c.text);
+    const quotes=(quantity?chosen:chosen.sort((a,b)=>a.index-b.index)).map(c=>c.text);
     return quotes.length?quotes:[fallback];
   }
   const titleKey=value=>normalize(value).replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim();
@@ -619,6 +624,14 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       throw new Error('El corpus no contiene evidencia jurídica suficiente para esta consulta. Amplía o ajusta la investigación.');
     }
     const selectedPrivate=privateSources.slice(0,legal.length?1:3);
+    // A small model is easily distracted. In chat, when some source names the
+    // topic in its opening sentence, drop the ones whose opening shares none of the
+    // top source's topic words.
+    if(automatic&&legal.length>1){
+      const opening=source=>normalize(String(source.text||'').slice(0,200));
+      const topic=queryWords.filter(t=>t.length>=5&&!/^\d+$/.test(t)&&opening(legal[0]).includes(t));
+      if(topic.length)legal=legal.filter(source=>topic.some(t=>opening(source).includes(t)));
+    }
     const selectedLegal=legal.slice(0,3-selectedPrivate.length).map(source=>source.id.startsWith('PUB-')&&!retrieved?publicLibrary.getSource(source.id):source).filter(Boolean);
     if(!selectedPrivate.length&&!selectedLegal.length)return finishNonGroundedAnswer({m,skill,payload,threadId,text:'No encontré fuentes oficiales relevantes para esto en la biblioteca ni en el asunto. Puedes precisar la ley, el artículo o importar el documento.',status:'abstained-no-relevant-sources',onToken,signal});
     const evidence=[...selectedPrivate,...selectedLegal].map(source=>{
@@ -628,7 +641,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       // answer can explain the article, not just echo its first line.
       const wholeArticle=automatic&&exactArticle&&!exactArticle.unavailable&&selectedLegal.length===1&&source.category!=='internal-firm-document';
       const passage=wholeArticle?original.slice(start,start+1200):original.slice(start,Math.min(start+600,source.preferredPassage?.end??original.length));const quote=passage.split(/(?<=[.!?])\s+|\n/).map(x=>x.trim()).filter(x=>x.length>=40).map((text,index)=>({text,index,score:queryWords.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)})).sort((a,b)=>source.category==='internal-firm-document'?a.index-b.index:b.score-a.score||a.index-b.index)[0]?.text.slice(0,180)||passage.slice(0,180);
-      return {...source,text:passage,fullTextSha256:source.textSha256??source.sha256??sha(original),passageSha256:sha(passage),passageStart:start,passageEnd:start+passage.length,fullTextLength:original.length,truncated:passage.length!==original.length,hashScope:'textSha256/fullTextSha256 identify original; passageSha256 identifies supplied text',allowedQuotes:automatic?citableSentences(passage,queryWords,wholeArticle?5:3,quote):[quote]};
+      return {...source,text:passage,fullTextSha256:source.textSha256??source.sha256??sha(original),passageSha256:sha(passage),passageStart:start,passageEnd:start+passage.length,fullTextLength:original.length,truncated:passage.length!==original.length,hashScope:'textSha256/fullTextSha256 identify original; passageSha256 identifies supplied text',allowedQuotes:automatic?citableSentences(passage,queryWords,wholeArticle?5:3,quote,payload.question):[quote]};
     }).filter(source=>!automatic||source.allowedQuotes.some(quote=>quote.length>=40&&!/[\u0000-\u001f]/.test(quote)));
     if(!evidence.length)return finishNonGroundedAnswer({m,skill,payload,threadId,text:'No encontré fuentes oficiales relevantes para esto en la biblioteca ni en el asunto. Puedes precisar la ley, el artículo o importar el documento.',status:'abstained-no-relevant-sources',onToken,signal});
     const canonicalByModelId=new Map();const reservedIds=new Set(evidence.filter(s=>!s.id.startsWith('PUB-')).map(s=>s.id));let legalAlias=0;
