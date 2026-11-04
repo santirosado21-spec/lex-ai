@@ -125,6 +125,16 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   const tasks=createMatterTasks({store,matter,scoped,record});
   const researchStop=new Set(['articulo','articulos','ley','leyes','puede','pueden','debe','deben','explica','explicar','necesito','saber','quiero','cual','cuando','donde','relacion','establece','establecen','favor','mexico','mexicano','federal','juridico','juridica']);
   function researchWords(query){let size=0;return searchTerms(query).filter(t=>!researchStop.has(t)&&t.length<=40).filter(t=>{size+=t.length+1;return size<=300;}).slice(0,12);}
+  // Several short, verbatim sentences per source give a small model enough
+  // citable material to explain; each one is still checked as an exact quote.
+  function citableSentences(passage,words,max,fallback){
+    const segments=passage.split(/(?<=[.!?;:])\s+|\n/).map(x=>x.trim()).filter(x=>x.length>=40).map(x=>{if(x.length<=220)return x;const cut=x.slice(0,220);const space=cut.lastIndexOf(' ');return space>=120?cut.slice(0,space):cut;});
+    const ranked=segments.map((text,index)=>({text,index,score:words.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)})).sort((a,b)=>b.score-a.score||a.index-b.index);
+    const chosen=[];let size=0;
+    for(const item of ranked){if(chosen.length>=max||size+item.text.length>800)break;if(!chosen.some(c=>c.text===item.text)){chosen.push(item);size+=item.text.length;}}
+    const quotes=chosen.sort((a,b)=>a.index-b.index).map(c=>c.text);
+    return quotes.length?quotes:[fallback];
+  }
   const titleKey=value=>normalize(value).replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim();
   function explicitArticleReference(query,jurisdiction){
     const stateReference=stateLibrary?.reference(query);if(stateReference)return stateReference;
@@ -564,6 +574,9 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
         const message=!m?'Selecciona o crea un asunto y adjunta el documento para que pueda analizarlo. Puedes seguir conversando aquí.':'Adjunta el documento en este asunto para que pueda analizar su contenido. No tengo ese texto todavía.';
         return clarify(message,'needs-document');
       }
+      // The local library holds legislation, not Supreme Court theses. A thesis
+      // asked by its identifier must not be answered with an unrelated article.
+      if(/\b(?:tesis|jurisprudencia|registro digital)\b/i.test(payload.question)&&/\b\d+\/\d{4}\b|registro digital\s*:?\s*\d{5,}|\b(?:1a|2a|p)\.\/j\./i.test(payload.question))return clarify('No tengo tesis ni jurisprudencia de la Suprema Corte en mi biblioteca local, así que no puedo confirmar qué dice esa tesis ni si existe. Si me compartes su texto del Semanario Judicial de la Federación, lo revisamos juntos.','needs-jurisprudence-source');
       if(requestedScope&&!requestedScope.supported)return clarify(`Todavía no tengo fuentes locales de ${requestedScope.name} en la biblioteca. Comparte la disposición y su fuente oficial para poder fundamentar la respuesta.`,'needs-jurisdiction-source');
       if(requestedScope?.exactOnly&&!stateLibrary?.reference(route.query||payload.question))return clarify(`Tengo una selección parcial de artículos de ${requestedScope.name}. Indica el número de artículo y el título oficial completo del código; comparte la fuente oficial si falta la disposición.`,'needs-jurisdiction-source');
       if(m&&!requestedScope&&route.skillId==='legal-researcher'&&!['MX-FED','MX-CMX'].includes(m.jurisdiction))return clarify(`Para fundamentar una respuesta de ${jurisdictions[m.jurisdiction]} necesito la disposición local aplicable. Comparte el texto oficial o indica el ordenamiento federal que deseas consultar.`,'needs-jurisdiction-source');
@@ -611,8 +624,11 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     const evidence=[...selectedPrivate,...selectedLegal].map(source=>{
       const original=source.text;let start=source.preferredPassage?.start??0;
       if(!source.preferredPassage&&original.length>600){let best=-1;const sentences=[...original.matchAll(/[^.!?\n]+[.!?]?/g)];for(const sentence of sentences){const score=queryWords.reduce((n,t)=>n+(normalize(sentence[0]).includes(t)?1:0),0);if(score>best){best=score;start=Math.max(0,sentence.index-150);}}if(start){const boundary=original.slice(start,start+150).search(/[.!?]\s/);if(boundary>=0)start+=boundary+2;}}
-      const passage=original.slice(start,Math.min(start+600,source.preferredPassage?.end??original.length));const quote=passage.split(/(?<=[.!?])\s+|\n/).map(x=>x.trim()).filter(x=>x.length>=40).map((text,index)=>({text,index,score:queryWords.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)})).sort((a,b)=>source.category==='internal-firm-document'?a.index-b.index:b.score-a.score||a.index-b.index)[0]?.text.slice(0,180)||passage.slice(0,180);
-      return {...source,text:passage,fullTextSha256:source.textSha256??source.sha256??sha(original),passageSha256:sha(passage),passageStart:start,passageEnd:start+passage.length,fullTextLength:original.length,truncated:passage.length!==original.length,hashScope:'textSha256/fullTextSha256 identify original; passageSha256 identifies supplied text',allowedQuotes:[quote]};
+      // An exact article asked in chat gets up to 1200 chars from the chosen passage so the
+      // answer can explain the article, not just echo its first line.
+      const wholeArticle=automatic&&exactArticle&&!exactArticle.unavailable&&selectedLegal.length===1&&source.category!=='internal-firm-document';
+      const passage=wholeArticle?original.slice(start,start+1200):original.slice(start,Math.min(start+600,source.preferredPassage?.end??original.length));const quote=passage.split(/(?<=[.!?])\s+|\n/).map(x=>x.trim()).filter(x=>x.length>=40).map((text,index)=>({text,index,score:queryWords.reduce((n,t)=>n+(normalize(text).includes(t)?1:0),0)})).sort((a,b)=>source.category==='internal-firm-document'?a.index-b.index:b.score-a.score||a.index-b.index)[0]?.text.slice(0,180)||passage.slice(0,180);
+      return {...source,text:passage,fullTextSha256:source.textSha256??source.sha256??sha(original),passageSha256:sha(passage),passageStart:start,passageEnd:start+passage.length,fullTextLength:original.length,truncated:passage.length!==original.length,hashScope:'textSha256/fullTextSha256 identify original; passageSha256 identifies supplied text',allowedQuotes:automatic?citableSentences(passage,queryWords,wholeArticle?5:3,quote):[quote]};
     }).filter(source=>!automatic||source.allowedQuotes.some(quote=>quote.length>=40&&!/[\u0000-\u001f]/.test(quote)));
     if(!evidence.length)return finishNonGroundedAnswer({m,skill,payload,threadId,text:'No encontré fuentes oficiales relevantes para esto en la biblioteca ni en el asunto. Puedes precisar la ley, el artículo o importar el documento.',status:'abstained-no-relevant-sources',onToken,signal});
     const canonicalByModelId=new Map();const reservedIds=new Set(evidence.filter(s=>!s.id.startsWith('PUB-')).map(s=>s.id));let legalAlias=0;

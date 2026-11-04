@@ -237,12 +237,20 @@ for(const contract of ['legacy','paragraph-citations-v1']){
  for(const [name,alter,pattern] of [
   ['unknown source',p=>({...p,sourceId:'L999'}),/aprobada/],
   ['altered quote',p=>({...p,quote:p.quote+' texto inventado'}),/aprobada/],
-  ['unsupported number',p=>({...p,text:'El artículo 99 exige la entrega mediante constancia escrita.'}),/respaldo/],
  ])test(`${contract} rejects ${name} before streaming or saving`,async t=>{
   const f=await fixture(t,{response:messages=>encode(alter(legal(JSON.parse(messages[1].content).sources[0])))}),stream=[];
   await assert.rejects(ask(f.service,question,{},s=>stream.push(s)),pattern);
   assert.deepEqual(stream,[]);assert.equal((await f.service.dispatch('state')).answers.length,0);
   const store=createStore(f.dir);try{assert.equal(store.list('thread-memory').length,0);}finally{store.close();}
+ });
+ // A cited paragraph whose number is not in its quote is removed; with nothing
+ // verified left the turn abstains. The claim is never streamed or saved.
+ test(`${contract} abstains on an unsupported number without streaming or saving it`,async t=>{
+  const f=await fixture(t,{response:messages=>encode({...legal(JSON.parse(messages[1].content).sources[0]),text:'El artículo 99 exige la entrega mediante constancia escrita.'})}),stream=[];
+  const answer=await ask(f.service,question,{},s=>stream.push(s));
+  assert.equal(answer.validation.status,'abstained-no-relevant-sources');assert.deepEqual(answer.citations,[]);
+  assert.doesNotMatch(stream.join(''),/99/);
+  const saved=(await f.service.dispatch('state')).answers;assert.ok(saved.every(a=>!a.citations?.length&&!/99/.test(a.text)));
  });
 }
 
@@ -292,8 +300,13 @@ test('legacy and paragraph contracts preserve multiple sources and enforce each 
   assert.equal(checked.validation.citationIntegrity,true);
   if(format==='paragraph-citations-v1')assert.match(checked.text,/Posible inferencia:/);
   assert.throws(()=>validateMixedOutput(encode([paragraphs[0],{...paragraphs[1],quote}]),evidence),/aprobada/);
-  // Article 1 exists in L1, but cannot substantiate a number in D1's paragraph.
-  assert.throws(()=>validateMixedOutput(encode([paragraphs[0],{...paragraphs[1],text:'El artículo 1 exige registrar la recepción mediante un acuse firmado.'}]),evidence),/respaldo/);
+  // Article 1 exists in L1, but cannot substantiate a number in D1's paragraph:
+  // that paragraph is removed and only the verified L1 paragraph remains.
+  const unsupportedD1={...paragraphs[1],text:'El artículo 1 exige registrar la recepción mediante un acuse firmado.'};
+  const partial=validateMixedOutput(encode([paragraphs[0],unsupportedD1]),evidence);
+  assert.deepEqual(partial.citations.map(c=>c.id),['L1']);assert.doesNotMatch(partial.text,/acuse/);
+  assert.ok(partial.validation.checks.includes('dropped-1-unsupported-paragraphs'));
+  assert.throws(()=>validateMixedOutput(encode([unsupportedD1]),evidence),/respaldo/);
  }
 });
 

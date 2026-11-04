@@ -23,10 +23,13 @@ export function numericClaims(text){
  // Article identifiers are checked as a full phrase too (including Roman numerals/suffixes).
  for(const match of value.matchAll(/\bart[ií]culos?\s+(?:[ivxlcdm]+\b|\d+)(?:\s+(?:bis|ter|qu[aá]ter))?/gu))claims.push(match[0]);
  // A complete written date must occur, not just its independently scattered numbers.
- for(const match of value.matchAll(/\b(?:\d{1,2}|primero)\s+de\s+[a-záéíóú]+(?:\s+de(?:l)?\s+\d{2,4})?/gu))claims.push(match[0]);
+ for(const match of value.matchAll(/\b(?:\d{1,2}|primero)\s+de\s+(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)(?:\s+de(?:l)?\s+\d{2,4})?/gu))claims.push(match[0]);
  return claims;
 }
 function isObject(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
+// A paragraph whose wording is not backed by its own quote. Callers may drop
+// that paragraph; an unknown source or quote is a different, fatal error.
+function unsupported(message){const error=Error(message);error.code='UNSUPPORTED_PARAGRAPH';return error;}
 export function validateGroundedOutput(raw,evidence){
  if(typeof raw!=='string'||raw.length>16000)throw Error('Salida vinculada fuera del presupuesto.');
  let output;try{output=JSON.parse(raw);}catch{throw Error('JSON vinculado inválido; no se reparó la respuesta.');}
@@ -40,8 +43,14 @@ export function validateGroundedOutput(raw,evidence){
   const entry=allowed.get(p.sourceId);
   if(!entry||!entry.quotes.includes(p.quote))throw Error('Fuente o cita no aprobada para este párrafo.');
   if(p.text.length<40||p.text.length>350||/[\[\]\u0000-\u001f]/.test(p.text))throw Error('Texto fuera de límites o con corchetes/controles.');
-  const quoteClaims=new Set(numericClaims(p.quote));
-  if(numericClaims(p.text).some(claim=>!quoteClaims.has(claim)))throw Error('Número, artículo o fecha sin respaldo en la cita del párrafo.');
+  // Naming the cited article itself ("el artículo 47") is backed by the
+  // source's own metadata, not an invented reference.
+  // For public law, numbers may come from the cited article passage shown to
+  // the model (stored with the citation), not only from the quoted sentence.
+  // Private documents (D*) stay strict: the number must be in the quote.
+  const privateDocument=/^D\d+$/.test(entry.source.id);
+  const quoteClaims=new Set([...numericClaims(p.quote),...(privateDocument?[]:numericClaims(entry.source.text)),...(entry.source.article&&!privateDocument?numericClaims(`artículo ${String(entry.source.article).replace(/^art[ií]culo\s+/i,'')}`):[])]);
+  if(numericClaims(p.text).some(claim=>!quoteClaims.has(claim)))throw unsupported('Número, artículo o fecha sin respaldo en la cita del párrafo.');
   used.add(p.sourceId);paragraphs.push({...p});
  }
  if(used.size<minSources)throw Error('Faltan fuentes distintas requeridas.');

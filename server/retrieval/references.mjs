@@ -40,6 +40,12 @@ export function extractReference(text) {
   }
   for (const [title, code] of Object.entries(TITLES)) if (q.includes(title)) laws.add(`MX-FED-${code}`);
   const articles = [...q.replace(/\s*[-–]\s*/g, '-').matchAll(/\b(?:articulo|art)[.\s]+(\d{1,6}(?:-[a-z0-9]+){0,4})(?:\s+(bis|ter|quater|quinquies)(?:[-\s]+([a-z]|\d+)\b)?)?\b/g)].map(m => [m[1], m[2], m[3]].filter(Boolean).join('-').toUpperCase());
+  // Lawyers say "la Constitución" or "artículo 14 constitucional" for the federal
+  // Constitution. Only with an article number, and never for a local one
+  // ("Constitución de Jalisco", "de la Ciudad de México", "estatal").
+  if (!laws.size && articles.length && /\bconstitucion(?:al)?\b/.test(q)
+    && !/\bconstitucion\s+(?:politica\s+)?(?:de|del)\s+(?!los estados unidos|mexico\b|la republica)/.test(q)
+    && !/\b(?:cdmx|distrito federal|local|estatal|estado de)\b/.test(q)) laws.add('MX-FED-CPEUM');
   return {lawId: laws.size === 1 ? [...laws][0] : null, article: new Set(articles).size === 1 ? articles[0] : null, ambiguous: laws.size > 1 || new Set(articles).size > 1,
     navigation: /\b(?:siguiente|posterior)\b/.test(q) ? 'next' : /\b(?:anterior|previo)\b/.test(q) ? 'previous' : null};
 }

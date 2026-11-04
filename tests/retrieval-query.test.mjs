@@ -76,3 +76,15 @@ test('optional vector ranking cannot add out-of-scope IDs or mutate inputs', () 
   assert.deepEqual(rankHybrid(lexical, [{id: 'other-firm'}, {id: 'scoped-2'}]).map(r => r.id), ['scoped-2', 'scoped-1']);
   assert.deepEqual(lexical, [{id: 'scoped-1'}, {id: 'scoped-2'}]);
 });
+
+test('"Constitución" and "constitucional" with an article mean the federal Constitution, never a local one', async () => {
+  const {extractReference} = await import('../server/retrieval/references.mjs');
+  for (const q of ['¿Qué dice el artículo 14 de la Constitución?', 'artículo 14 constitucional', 'Explícame el art. 16 de la Constitución de México'])
+    assert.equal(extractReference(q).lawId, 'MX-FED-CPEUM', q);
+  for (const q of ['artículo 14 de la Constitución de Jalisco', 'artículo 4 de la Constitución de la Ciudad de México', 'artículo 10 de la constitución estatal', 'artículo 3 de la Constitución del Estado de Nuevo León'])
+    assert.notEqual(extractReference(q).lawId, 'MX-FED-CPEUM', q);
+  assert.equal(extractReference('¿qué es el derecho constitucional?').lawId, null);
+  const r = rewriteQuery({question: '¿Qué dice el artículo 14 de la Constitución?', matterJurisdiction: 'MX-FED'});
+  assert.equal(r.needsClarification, false);
+  assert.deepEqual([r.reference.lawId, r.reference.article], ['MX-FED-CPEUM', '14']);
+});

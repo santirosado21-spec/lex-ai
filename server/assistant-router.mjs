@@ -31,6 +31,11 @@ export function routeAssistantRequest({question,skillId='auto',documentCount=0,p
  const capabilities=/\b(?:que puedes hacer|como puedes ayudar|como me puedes ayudar|puedes ayudarme|para que sirves|quien eres|como funcionas)\b/.test(q);
  if(capabilities&&!/\b(?:explica|que dice|que establece|interpreta|fundamenta|cita|dame|busca|encuentra|investiga|redacta)\b/.test(q))return {kind:'chat',reason:'capabilities'};
  if(legalQuestion)return {kind:'grounded',skillId:'legal-researcher',reason:'legal-question',needsDocument:false};
+ // Naming a law, or a common labour entitlement asked as a question, is legal
+ // work even without the verbs above ("¿cuánto es el aguinaldo según la LFT?").
+ const namedLaw=/\b(?:segun (?:la|el) (?:ley|lft|lss|cff|constitucion|codigo|reglamento)|de acuerdo con la (?:ley|lft)|conforme a la (?:ley|lft)|lft|lss|cff|ccom|cnpcf|lgtoc|lfpa|ley federal|ley del seguro social|codigo (?:civil|penal|fiscal|de comercio|nacional))\b/.test(q);
+ const entitlement=/\b(?:aguinaldo|vacaciones|prima vacacional|prima de antiguedad|finiquito|liquidacion|indemnizacion|reparto de utilidades|ptu|horas extra|tiempo extra|salario minimo|incapacidad|maternidad|paternidad)\b/.test(q)&&/\b(?:cuanto|cuantos|cuantas|que es|me toca|me corresponde|corresponde|tengo derecho|cuando|como se calcula|minimo|obligad[oa]|debe|deben)\b/.test(q);
+ if(namedLaw&&!/\b(?:cuento|poema|chiste|historia|pelicula)\b/.test(q)||entitlement)return {kind:'grounded',skillId:'legal-researcher',reason:'named-law-or-entitlement',needsDocument:false};
  const legalSituation=/\b(?:despid\p{L}*|desped\p{L}*|demand\p{L}*|detuv\p{L}*|deten\p{L}*|notific\p{L}*|embarg\p{L}*|pension\p{L}*|divorcio|custodia|arrend\p{L}*|apela\p{L}*|sentenc\p{L}*|pagare|prescri\p{L}*|caduc\p{L}*|amparo)\b/u.test(q);
  if(legalSituation&&/\b(?:me|mi|puedo|quiero|necesito|que hago|que pasa|como|cuanto|cuando)\b/.test(q))return {kind:'grounded',skillId:'legal-researcher',reason:'legal-situation',needsDocument:false};
  const personalRecall=/\b(?:como me llamo|cual es mi (?:nombre|palabra|profesion)|recuerdas mi (?:nombre|palabra|presentacion|profesion)|que te (?:dije|conte)|que sabes de mi)\b/.test(q);
