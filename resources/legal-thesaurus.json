@@ -1,0 +1,2430 @@
+{
+  "schemaVersion": 1,
+  "method": "Editorial synthetic colloquial triggers mapped to vocabulary verified in the public corpus; no evaluation inputs. Anchors are retrieval priors, not a claim of applicability or currentness.",
+  "source": {
+    "path": "resources/public-library.sqlite",
+    "sha256": "ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588"
+  },
+  "entries": [
+    {
+      "id": "constitucional:igualdad",
+      "area": "constitucional",
+      "trigger": "discrimin\\w*|trato desigual|por (?:mi|su) (?:origen|religion|color)|derechos humanos",
+      "terms": [
+        "derechos humanos",
+        "discriminación",
+        "protección"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "1",
+          "sourceId": "PUB-ecc743d506d506cffd492b4e8300bcaeafe11003dc1898287bb2ca4d7cda1511",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "bf4065163e7822c8b801a7b9a242d8b39ca915bf2a6ec20d64b031dd5153435b",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            " Mexicanos todas las personas gozarán de los derechos humanos reconocidos en esta Constitución y en los tratados internacionales de los que el Estado M",
+            "rotección de las leyes. Queda prohibida toda discriminación motivada por origen étnico o nacional, el género, la edad, las discapacidades, la condici",
+            "sea parte, así como de las garantías para su protección, cuyo ejercicio no podrá restringirse ni suspenderse, salvo en los casos y bajo las condi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:expresion",
+      "area": "constitucional",
+      "trigger": "expres\\w*|opinar|opinion|censur\\w*|decir lo que|informacion publica",
+      "terms": [
+        "manifestación de las ideas",
+        "información",
+        "expresión"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "6",
+          "sourceId": "PUB-609739c325b3315a37986cbb9d3e4a505dd3d89ed745699163b17a9ae897b8a9",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "06bac9f12e38dbabbcb84b6a3f1f034bf0a59d1732a80c59afca73fc09aaf951",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "Artículo 6o. La manifestación de las ideas no será objeto de ninguna inquisición judicial o administrativa, sino en el caso de que a",
+            "minos dispuestos por la ley. El derecho a la información será garantizado por el Estado. Toda persona tiene derecho al libre acceso a información ",
+            " ideas de toda índole por cualquier medio de expresión. El Estado garantizará el derecho de acceso a las tecnologías de la información y comunic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:peticion",
+      "area": "constitucional",
+      "trigger": "peticion|escrito a la autoridad|autoridad.{0,35}(?:responde|contesta)|solicitud.{0,30}gobierno",
+      "terms": [
+        "petición",
+        "acuerdo escrito",
+        "autoridad"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "8",
+          "sourceId": "PUB-fd950e314d61d478315c8679c781a81b15f6c84b828e894a1a7b0a9e86ac1f06",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "6e0bfd42f6145f7b8171ac5433367a1a23ffadc4f81b3c3b4bba6e1e7c9e708b",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "licos respetarán el ejercicio del derecho de petición, siempre que ésta se formule por escrito, de manera pacífica y respetuosa; pero en materi",
+            " República. A toda petición deberá recaer un acuerdo escrito de la autoridad a quien se haya dirigido, la cual tiene obligación de hacerlo conocer en ",
+            "ición deberá recaer un acuerdo escrito de la autoridad a quien se haya dirigido, la cual tiene obligación de hacerlo conocer en breve término al"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:audiencia",
+      "area": "constitucional",
+      "trigger": "retroactiv\\w*|sin (?:juicio|escucharme|oirme)|antes de (?:la ley|quitarme)|debido proceso",
+      "terms": [
+        "retroactivo",
+        "formalidades esenciales",
+        "juicio"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "14",
+          "sourceId": "PUB-c03fd191ae7fdeae2ee8251e4cdef4c7a3e65ce2cc3715f6ad567827f0c39f69",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "2a40601349fc7791161450c15841523287393c0e42716aec92d9de1ade56392b",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "Artículo 14. A ninguna ley se dará efecto retroactivo en perjuicio de persona alguna. Nadie podrá ser privado de la libertad o de sus propiedad",
+            "mente establecidos, en el que se cumplan las formalidades esenciales del procedimiento y conforme a las Leyes expedidas con anterioridad al hecho. En los juic",
+            "ninguna ley se dará efecto retroactivo en perjuicio de persona alguna. Nadie podrá ser privado de la libertad o de sus propiedades, posesione"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:legalidad",
+      "area": "constitucional",
+      "trigger": "mandamiento|orden escrita|sin orden|revis\\w*.{0,20}(?:casa|domicilio)|fund\\w* y motiv\\w*",
+      "terms": [
+        "mandamiento escrito",
+        "autoridad competente",
+        "domicilio"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "16",
+          "sourceId": "PUB-7a3425b47624b0aca61830b0e5d8e5ecc18ac12b94ba06c4b36f25298480de08",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "b16a9435ddd75846bc3a21fe94dfb575e9c354439bfab856c88e07a4804c02f6",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "lio, papeles o posesiones, sino en virtud de mandamiento escrito de la autoridad competente, que funde y motive la causa legal del procedimiento. En los j",
+            " sino en virtud de mandamiento escrito de la autoridad competente, que funde y motive la causa legal del procedimiento. En los juicios y procedimientos seg",
+            " puede ser molestado en su persona, familia, domicilio, papeles o posesiones, sino en virtud de mandamiento escrito de la autoridad competente, "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:justicia",
+      "area": "constitucional",
+      "trigger": "justicia por.{0,10}mano|acceso a la justicia|justicia gratuita|tribunal.{0,20}cobr\\w*",
+      "terms": [
+        "justicia",
+        "tribunales",
+        "gratuito"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "17",
+          "sourceId": "PUB-9343145d5defae1c72cdf57c231d0be6b83a654f2188d7b2c6971ab30bd3ed94",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "4f87908a218dc1fdede472205f03c265dfc573ecc476109e8fc766bb9aee1f91",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "Artículo 17. Ninguna persona podrá hacerse justicia por sí misma, ni ejercer violencia para reclamar su derecho. Toda persona tiene derecho a",
+            " derecho a que se le administre justicia por tribunales que estarán expeditos para impartirla en los plazos y términos que fijen las leyes, emiti",
+            "onta, completa e imparcial. Su servicio será gratuito, quedando, en consecuencia, prohibidas las costas judiciales. Las leyes preverán las cuan"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitucional:voto",
+      "area": "constitucional",
+      "trigger": "vot\\w*|elecciones|candidatur\\w*",
+      "terms": [
+        "Votar",
+        "elecciones",
+        "ciudadanía"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPEUM",
+          "article": "35",
+          "sourceId": "PUB-cdf4541205240815426b961d726b33ffc0233ea1e5b64ce06c78139b7e80dc19",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "version": "MX-FED-CPEUM@2026-10-07+cefb525ae8dfc97a",
+          "retrievedAt": "2026-10-30T13:04:29.090Z",
+          "textSha256": "f58a0023d5e36ac9a139629f527a48a164e7df5a570fb6b3d091c85b012edddc",
+          "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+          "excerpts": [
+            "tículo 35. Son derechos de la ciudadanía: I. Votar en las elecciones populares; II. Poder ser votada en condiciones de paridad para todos lo",
+            "n derechos de la ciudadanía: I. Votar en las elecciones populares; II. Poder ser votada en condiciones de paridad para todos los cargos de elecci",
+            "Artículo 35. Son derechos de la ciudadanía: I. Votar en las elecciones populares; II. Poder ser votada en condiciones de paridad par"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:acuerdo",
+      "area": "civil",
+      "trigger": "acord\\w*|acuerdo|convenio|pact\\w*",
+      "terms": [
+        "convenio",
+        "obligaciones",
+        "contratos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1792",
+          "sourceId": "PUB-07fa478a99b154dfb9403db8c3f9384546c4f3bfa3569e69682add5a71a3db5b",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "fca8380f16907b93644de58884df17a28a7c4df1ec074abe55be41911194a134",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1792.- Convenio es el acuerdo de dos o más personas para crear, transferir, modificar o extinguir obligac",
+            "ara crear, transferir, modificar o extinguir obligaciones."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1793",
+          "sourceId": "PUB-d3d5e5b30463efd61b5426c6a3728c938501eae5fe15d4227acb391dff768342",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "35822a6f5b79fa53f1ce438ffee33c0222fe5d7d4de9d9fd694b08215fd96720",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1793.- Los convenios que producen o transfieren las obligaciones y derechos, toman el nombre de contratos.",
+            "Los convenios que producen o transfieren las obligaciones y derechos, toman el nombre de contratos.",
+            " obligaciones y derechos, toman el nombre de contratos."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:contrato",
+      "area": "civil",
+      "trigger": "contrato|contrat\\w*|de palabra|promet\\w*|firm\\w*.{0,20}(?:acuerdo|papel)",
+      "terms": [
+        "consentimiento",
+        "contrato",
+        "buena fe"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1794",
+          "sourceId": "PUB-42e9eb0d1e234ed704db1e1e324aa8714aaf4246bafd1bccfcd90fed04aaa515",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "dc8f39a2115f31b58a1b4106c144b50541c123bd9689c1f05e1c31567717f862",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "a la existencia del contrato se requiere: I. Consentimiento; II. Objeto que pueda ser materia del contrato.",
+            "Artículo 1794.- Para la existencia del contrato se requiere: I. Consentimiento; II. Objeto que pueda ser materia del contrato."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1796",
+          "sourceId": "PUB-74b783fef4fc014a8da4eb5677ba6d93adccf52089777c3bc305180c6f29ef94",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            ".- Los contratos se perfeccionan por el mero consentimiento, excepto aquellos que deben revestir una forma establecida por la ley. Desde que se perfe",
+            "Artículo 1796.- Los contratos se perfeccionan por el mero consentimiento, excepto aquellos que deben revestir una form",
+            " que, según su naturaleza, son conforme a la buena fe, al uso o a la ley."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1832",
+          "sourceId": "PUB-66dc69c59f54bc3499e8d79021b00041233121feaaf1ae24801805b59ae20edd",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "bf7bba2477191a86675deb729d826aa6f3165871202bdb704b6b8474470b2b8e",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1832.- En los contratos civiles cada uno se obliga en la manera y términos que aparezca que quiso obligarse, sin"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:danos",
+      "area": "civil",
+      "trigger": "danos?|perjuicios|rompi\\w*|destroz\\w*|estrope\\w*|choc\\w*|repar\\w*.{0,15}(?:pago|pagar)",
+      "terms": [
+        "daño",
+        "reparación",
+        "culpa",
+        "negligencia"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1910",
+          "sourceId": "PUB-c85f84901d1580e297800ae03efe5c9c5965590982dd0a2a9f440e40419acc4a",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "81296243a1eb347d9bc2cfa5118ce07005897885d1a753193e4710be47bd18da",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "tamente o contra las buenas costumbres cause daño a otro, está obligado a repararlo, a menos que demuestre que el daño se produjo como cons",
+            " que el daño se produjo como consecuencia de culpa o negligencia inexcusable de la víctima.",
+            "daño se produjo como consecuencia de culpa o negligencia inexcusable de la víctima."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1915",
+          "sourceId": "PUB-b18c1bf02827cd09aa843aeeea8c8e26c614b695586e762ba583b2b6a054beb7",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "df9b6e2ae140309ea1876a9afc07b664b7a7952b74d14907a438f95a2dba8a70",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1915.- La reparación del daño debe consistir a elección del ofendido en el restablecimiento de la situación anterior, c",
+            "Artículo 1915.- La reparación del daño debe consistir a elección del ofendido en el restablecimiento de la situación an"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1934",
+          "sourceId": "PUB-e54af68daca3a7e04e000f6a5e65b35c0f9ad77ddf99249392a259f46567c643",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "c4be62e4ab2417fc37dd57667be4e592fb4d43ee35375c46da01361147fb1979",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "- La acción para exigir la reparación de los daños causados en los términos del presente capítulo, prescribe en dos años contados a partir ",
+            "Artículo 1934.- La acción para exigir la reparación de los daños causados en los términos del presente capítulo, prescribe en dos años contad"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:renta",
+      "area": "civil",
+      "trigger": "rent\\w*|alquil\\w*|caser[oa]|inquilin\\w*|arrend\\w*|desaloj\\w*|(?:sacar|quitar).{0,20}(?:casa|vivienda)",
+      "terms": [
+        "arrendamiento",
+        "renta",
+        "arrendador",
+        "arrendatario"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "2398",
+          "sourceId": "PUB-0d6a02d9f24601fdd9ea6c52290180397a42175445956bf21fc820fef15824c6",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "b33af3bf63271a91a727157e99109e1a5723199d426c56553bd9df1d4e5926ce",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 2398.- Hay arrendamiento cuando las dos partes contratantes se obligan recíprocamente, una, a conceder el uso o go"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "2448",
+          "sourceId": "PUB-9f5ba237d4b56eb64eb2967cd78e76a91e74721c6740eca4a250b78c34fc6389",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "56089bde52296b54dcaa6510ace31298b4998b3b75e3aa5b11ce8323f8342b20",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "puesta. Artículo 2448 A.- No deberá darse en arrendamiento una localidad que no reúna las condiciones de higiene y salubridad exigidas por la Ley de",
+            "448 D.- Para los efectos de este Capítulo la renta deberá estipularse en moneda nacional. Artículo 2448 E.- La renta debe pagarse en los pla",
+            "r la Ley de la materia. Artículo 2448 B.- El arrendador que no haga las obras que ordene la autoridad correspondiente como necesarias para que un",
+            "ión será de un año forzoso para arrendador y arrendatario, salvo convenio en contrario. Artículo 2448 D.- Para los efectos de este Capítulo la rent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:embargo",
+      "area": "civil",
+      "trigger": "embarg\\w*|quitar.{0,20}(?:casa|bienes)|cobrar.{0,20}deuda",
+      "terms": [
+        "embargo",
+        "bienes"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFPC",
+          "article": "432",
+          "sourceId": "PUB-904ab72c76981f29d071179df61fcc7f0eeac6227458861b9c637e0e35fb070c",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFPC.pdf",
+          "version": "MX-FED-CFPC@2021-06-07+db545f3918f1c190",
+          "retrievedAt": "2026-10-30T13:06:40.781Z",
+          "textSha256": "ad592a498c52ee1b039dda431845d09ceddadcb7ad5b8fab7315f5b671cd371e",
+          "pdfSha256": "db545f3918f1c1907dac23d6431d5076c8de91af1fbf97dcf5b5b2a68b165299",
+          "excerpts": [
+            "ARTICULO 432.- Decretado el embargo, si el deudor no fuere encontrado en su domicilio, para hacerle el requerimiento de pago,",
+            "rraduras, para poder practicar el embargo de bienes que se hallen dentro de la casa."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CFPC",
+          "article": "434",
+          "sourceId": "PUB-ec410b2dde0318084ac60f365819b4c7f50f96721055c324b4fc05387e96476e",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFPC.pdf",
+          "version": "MX-FED-CFPC@2021-06-07+db545f3918f1c190",
+          "retrievedAt": "2026-10-30T13:06:40.781Z",
+          "textSha256": "2434e5e09d8d89ac365ac2da70e19a65c2728834a0ffc7ffaba2b8dfa59b02ee",
+          "pdfSha256": "db545f3918f1c1907dac23d6431d5076c8de91af1fbf97dcf5b5b2a68b165299",
+          "excerpts": [
+            "ARTICULO 434.- No son susceptibles de embargo: I.- Los bienes que constituyan el patrimonio de familia, desde su inscripción en el Regi",
+            "34.- No son susceptibles de embargo: I.- Los bienes que constituyan el patrimonio de familia, desde su inscripción en el Registro Público de "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil:herencia",
+      "area": "civil",
+      "trigger": "heren\\w*|testament\\w*|falleci\\w*.{0,20}(?:bienes|casa)|sucesion",
+      "terms": [
+        "herencia",
+        "sucesión"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1281",
+          "sourceId": "PUB-6d754b2754bea5ee0572664a0783a7c88ae171d670b36c6e578dff23b9db50f3",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "649cd56c0e3857ccca973ec2ccc7610a49d1b3694465018aff7fc2d356c9dca7",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1281.- Herencia es la sucesión en todos los bienes del difunto y en todos sus derechos y obligaciones que",
+            "Artículo 1281.- Herencia es la sucesión en todos los bienes del difunto y en todos sus derechos y obligaciones que no se extingue"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1282",
+          "sourceId": "PUB-08c90f4a7b5c7c56d80d1cccda706cba8a2d6ee9ed270af1ccc21b9ad85d027b",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "8c5f1de5ffcde0c2b85621f38b0ba9ce436f77c5a36426c9a89d3cc9316e9048",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1282.- La herencia se defiere por la voluntad del testador o por disposición de la ley. La primera se llama "
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "1602",
+          "sourceId": "PUB-2905daac1df4dd73f1dc3c16cff7166813313f09587b1f5704c84bcc4a6871e3",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "0336d1a07d6f5032374d600989ab12bfa744678c2f454f9e869fe61f9293a85a",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 1602.- Tienen derecho a heredar por sucesión legítima: I. Los descendientes, cónyuges, ascendientes, parientes colaterales dentro del "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "familiar:alimentos",
+      "area": "familiar",
+      "trigger": "alimentos|alimentici\\w*|manutencion|(?:no|dejo de).{0,20}pag\\w*.{0,15}pension|mantener.{0,15}hij\\w*",
+      "terms": [
+        "alimentos",
+        "hijos",
+        "necesidades",
+        "posibilidades"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "301",
+          "sourceId": "PUB-5d9f30bd9efe66bcfd9b99342982f08e88920f7f003136415a6132cc015d2b19",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "b72c59f46512020c9fc5dedb88bb441c1353ac3fa064498913bc3d23c745578e",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 301.- La obligación de dar alimentos es recíproca. El que los da tiene a su vez derecho de pedirlos."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "302",
+          "sourceId": "PUB-30656b3d0d6ef05324757afd52aa0a9e8490f87f8a0f69f2d0ecbe5a63cdfbac",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "d7dab49e018ca2ed1f6a12dcbd6ed212ef4937f6a02f7970a50579930b8961c3",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 302.- Los cónyuges deben darse alimentos; la Ley determinará cuando queda subsistente esta obligación en los casos de divorcio y o"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "303",
+          "sourceId": "PUB-e69f6d5cc9770853a6fc69ece2c1852ab53d04f3efca6c1b257c20b534020c16",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "9e3aeac863e49f0a0a8d7ad97609365e5effac259536cfac6715cb910de3b0fe",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "ículo 303.- Los padres están obligados a dar alimentos a sus hijos. A falta o por imposibilidad de los padres, la obligación recae en los demás ",
+            "padres están obligados a dar alimentos a sus hijos. A falta o por imposibilidad de los padres, la obligación recae en los demás ascendientes"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "308",
+          "sourceId": "PUB-e1b2e403c48ea11943f8188d200b91f34e1948156ee029091f026d0d48c08005",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "b7dd16af3e922c5d45ef402822e25816625feaa8b8c22ff3274322ce3cffe823",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 308.- Los alimentos comprenden la comida, el vestido, la habitación y la asistencia en casos de enfermedad. R"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "311",
+          "sourceId": "PUB-dce0055e1390bd9de0ac7facc71ac1a07641963af74f50743159ba2e543ca0ff",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "858c44fe89a70d59ec4bfebd60dc0c5b23a80e32f3d1884330184aed7ec45219",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 311.- Los alimentos han de ser proporcionados a las posibilidades del que debe darlos y a las necesidades de ",
+            "as posibilidades del que debe darlos y a las necesidades de quien debe recibirlos. Determinados por convenio o sentencia, los alimentos tendrán un",
+            "os alimentos han de ser proporcionados a las posibilidades del que debe darlos y a las necesidades de quien debe recibirlos. Determinados por conven"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "familiar:gastos-hijos",
+      "area": "familiar",
+      "trigger": "(?:comida|escuela|colegiatura|vestido|medicin\\w*|gastos).{0,30}(?:hij\\w*|menor\\w*)|(?:hij\\w*|menor\\w*).{0,30}(?:comida|escuela|colegiatura|medicin\\w*)",
+      "terms": [
+        "alimentos",
+        "educación",
+        "enfermedad"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "303",
+          "sourceId": "PUB-e69f6d5cc9770853a6fc69ece2c1852ab53d04f3efca6c1b257c20b534020c16",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "9e3aeac863e49f0a0a8d7ad97609365e5effac259536cfac6715cb910de3b0fe",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "ículo 303.- Los padres están obligados a dar alimentos a sus hijos. A falta o por imposibilidad de los padres, la obligación recae en los demás "
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "308",
+          "sourceId": "PUB-e1b2e403c48ea11943f8188d200b91f34e1948156ee029091f026d0d48c08005",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "b7dd16af3e922c5d45ef402822e25816625feaa8b8c22ff3274322ce3cffe823",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 308.- Los alimentos comprenden la comida, el vestido, la habitación y la asistencia en casos de enfermedad. R",
+            "enden, además, los gastos necesarios para la educación primaria del alimentista, y para proporcionarle algún oficio, arte o profesión honestos y",
+            "o, la habitación y la asistencia en casos de enfermedad. Respecto de los menores los alimentos comprenden, además, los gastos necesarios para la "
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "311",
+          "sourceId": "PUB-dce0055e1390bd9de0ac7facc71ac1a07641963af74f50743159ba2e543ca0ff",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "858c44fe89a70d59ec4bfebd60dc0c5b23a80e32f3d1884330184aed7ec45219",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 311.- Los alimentos han de ser proporcionados a las posibilidades del que debe darlos y a las necesidades de "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "familiar:pareja",
+      "area": "familiar",
+      "trigger": "conyug\\w*|espos[oa]|casados|matrimonio|concubin\\w*",
+      "terms": [
+        "cónyuges",
+        "hogar",
+        "alimentos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "164",
+          "sourceId": "PUB-23f6474cc9c61e956268bd1b0eec209d79178e8c56193de78529fbd3246e812e",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "a3939b17e75394a59f692519c1e4f01e7995b7233b3c928bbf62995277766604",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 164.- Los cónyuges contribuirán económicamente al sostenimiento del hogar, a su alimentación y a la de sus h",
+            "ribuirán económicamente al sostenimiento del hogar, a su alimentación y a la de sus hijos, así como a la educación de éstos en los términos "
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "302",
+          "sourceId": "PUB-30656b3d0d6ef05324757afd52aa0a9e8490f87f8a0f69f2d0ecbe5a63cdfbac",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "d7dab49e018ca2ed1f6a12dcbd6ed212ef4937f6a02f7970a50579930b8961c3",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 302.- Los cónyuges deben darse alimentos; la Ley determinará cuando queda subsistente esta obligación en los",
+            "Artículo 302.- Los cónyuges deben darse alimentos; la Ley determinará cuando queda subsistente esta obligación en los casos de divorcio y o"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "familiar:separacion",
+      "area": "familiar",
+      "trigger": "divorci\\w*|separ\\w*.{0,20}(?:pareja|espos[oa])",
+      "terms": [
+        "divorcio",
+        "matrimonio"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "266",
+          "sourceId": "PUB-6950992431e1c2cd4d1bbcde007d38c7fb628b14696aec9b48ed14a193b30820",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "77e0ef5af336a18959ffc05a86293a2a83b682745ffb6ed41eae07faaf9dcb47",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 266.- El divorcio disuelve el vínculo del matrimonio y deja a los cónyuges en aptitud de contraer otro.",
+            "lo 266.- El divorcio disuelve el vínculo del matrimonio y deja a los cónyuges en aptitud de contraer otro."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "267",
+          "sourceId": "PUB-1f5426ed0a80783114a2bdfef1587e9bc1b425c0ce4e5c09da33bd25bed17784",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "602fd88b19b44b3fd43551fb7ce815eb465edac7319e585c66dc4e195addd974",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 267.- Son causales de divorcio: I. El adulterio debidamente probado de uno de los cónyuges; II. El hecho de que la mujer",
+            "l hecho de que la mujer dé a luz, durante el matrimonio, un hijo concebido antes de celebrarse este contrato, y que judicialmente sea declarado i"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "familiar:custodia",
+      "area": "familiar",
+      "trigger": "custodia|convivencia|patria potestad|ver a.{0,15}hij\\w*|(?:quedar|llevar).{0,20}(?:ninos|hij\\w*)",
+      "terms": [
+        "patria potestad",
+        "convivencia",
+        "menores"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "416",
+          "sourceId": "PUB-785622656efe760801ac082d3f084ff0c402664818bf3e5b34f89458346da22a",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "92dba77b43486a2a852527801cdbbf01da1d3dca0cd53122bc8fe53706b13f4a",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            " En caso de separación de quienes ejercen la patria potestad, ambos deberán continuar con el cumplimiento de sus deberes y podrán convenir los término",
+            "y conservará los derechos de vigilancia y de convivencia con el menor, conforme a las modalidades previstas en el convenio o resolución judicial.",
+            "en lo relativo a la guarda y custodia de los menores. En caso de desacuerdo, el Juez de lo Familiar resolverá lo conducente oyendo al Minister"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCF",
+          "article": "417",
+          "sourceId": "PUB-0bf0d872c3fb96418ec67bf508fc50bbb4697202f7c401072cbf5261aed76f43",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "version": "MX-FED-CCF@2025-11-14+4d4090f60137ce0d",
+          "retrievedAt": "2026-10-30T13:04:33.449Z",
+          "textSha256": "712ab062bb5d10cd1de3dac10b390bcda3ef6585ac3e042461d53cc675ccfca9",
+          "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+          "excerpts": [
+            "Artículo 417.- Los que ejercen la patria potestad, aun cuando no tengan la custodia, tienen el derecho de convivencia con sus descendientes",
+            " no tengan la custodia, tienen el derecho de convivencia con sus descendientes, salvo que exista peligro para éstos. No podrán impedirse, sin just"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:detencion",
+      "area": "penal",
+      "trigger": "detuv\\w*|deten\\w*|arrest\\w*|flagrancia|agarr\\w*.{0,15}(?:policia|robando)|policia.{0,20}(?:llevo|agarro)",
+      "terms": [
+        "detención",
+        "flagrancia",
+        "derechos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "146",
+          "sourceId": "PUB-82f2e864986f6995e265be15efa7e6305a027e453cfc6d8ecfca39bb88e17872",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "a18f3e28d7a7274a106dfbe372c56e5e0e5eef16cee83f40963429f98824a035",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 146. Supuestos de flagrancia Se podrá detener a una persona sin orden judicial en caso de flagrancia. Se entiende que "
+          ]
+        },
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "147",
+          "sourceId": "PUB-294e4d969daf512e2d2b16757c71f53793f7e57cfa58e9924585dd0b31377bb2",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "e77c8e3d96220a5fee4a959dcd882df806ea94fdc7bde498c8f2108336303f05",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 147. Detención en caso de flagrancia Cualquier persona podrá detener a otra en la comisión de un delito ",
+            "Artículo 147. Detención en caso de flagrancia Cualquier persona podrá detener a otra en la comisión de un delito flagrante, debiendo en"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "152",
+          "sourceId": "PUB-cb4189f896d1d8edb3a15ec70794152d30a75d3697235c83fe076187d6a0b5c8",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "a32512c268e7360f0879948d5bc88977346912e46a66de2cfd93c48ddf7e062b",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "al detenido Las autoridades que ejecuten una detención por flagrancia o caso urgente deberán asegurarse de que la persona tenga pleno y claro co",
+            "s autoridades que ejecuten una detención por flagrancia o caso urgente deberán asegurarse de que la persona tenga pleno y claro conocimiento del ",
+            "Artículo 152. Derechos que asisten al detenido Las autoridades que ejecuten una detención por flagrancia o caso "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:defensa",
+      "area": "penal",
+      "trigger": "imputad\\w*|acusad\\w*|abogado.{0,20}(?:deten\\w*|declar\\w*)|defensor|guardar silencio|no declarar|oblig\\w*.{0,20}declar\\w*",
+      "terms": [
+        "imputado",
+        "Defensor",
+        "declarar",
+        "silencio"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "113",
+          "sourceId": "PUB-52f090c9240a389da48d754307b5e102fb14606c1fcf965b3a667b523ec29a58",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "84ebe1b1a605bd1df5b7fa64ab349b0c50621a9e6d9de21b670fdf9de1abeb7c",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 113. Derechos del Imputado El imputado tendrá los siguientes derechos: I. A ser considerado y tratado como inocente ",
+            "; II. A comunicarse con un familiar y con su Defensor cuando sea detenido, debiendo brindarle el Ministerio Público todas las facilidades para ",
+            " todas las facilidades para lograrlo; III. A declarar o a guardar silencio, en el entendido que su silencio no podrá ser utilizado en su perjui",
+            "s para lograrlo; III. A declarar o a guardar silencio, en el entendido que su silencio no podrá ser utilizado en su perjuicio; IV. A estar asis"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "152",
+          "sourceId": "PUB-cb4189f896d1d8edb3a15ec70794152d30a75d3697235c83fe076187d6a0b5c8",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "a32512c268e7360f0879948d5bc88977346912e46a66de2cfd93c48ddf7e062b",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "II. El derecho a consultar en privado con su Defensor; III. El derecho a recibir una notificación escrita que establezca los derechos estableci"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:cautelares",
+      "area": "penal",
+      "trigger": "medidas cautelares|prision preventiva|carcel.{0,20}(?:juicio|sentencia)|brazalete|no acerc\\w*",
+      "terms": [
+        "medidas cautelares",
+        "prisión preventiva",
+        "presentación periódica"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "153",
+          "sourceId": "PUB-b598b2c0255fce9f6a937e5b4896c50f32014b7bd817924cbef2dbe182913b64",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "c1ebc89b1eb5da7621a49af4ff6481238e54a9b5be22921e44d4ab52af9273bb",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 153. Reglas generales de las medidas cautelares Las medidas cautelares serán impuestas mediante resolución judicial, por el tiempo indisp"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "155",
+          "sourceId": "PUB-7c63f12d9f9710acf0f43e77617f26c1d26680ebec4c994069cb081c3dd69934",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "52053fb2f7130bf3cf26e5ee88e70f538df1daa05c4d268c6c1790ae7bf8674f",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 155. Tipos de medidas cautelares A solicitud del Ministerio Público o de la víctima u ofendido, el juez podrá imponer al i",
+            " modalidades que el juez disponga, o XIV. La prisión preventiva. Las medidas cautelares no podrán ser usadas como medio para obtener un reconocimiento de",
+            " de las siguientes medidas cautelares: I. La presentación periódica ante el juez o ante autoridad distinta que aquél designe; II. La exhibición de una garant"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "167",
+          "sourceId": "PUB-b3dc6c5645070e706330688b9a22e0fed15cda736dd0df9281d590852bc6c8a6",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "e9d2a383a530f7de67b96736df2459edd6c28163b9437dae694729a7bf759c19",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "iva o el resguardo domiciliario cuando otras medidas cautelares no sean suficientes para garantizar la comparecencia del imputado en el juicio, el desarr",
+            "o sólo podrá solicitar al Juez de control la prisión preventiva o el resguardo domiciliario cuando otras medidas cautelares no sean suficientes para gara"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:denuncia",
+      "area": "penal",
+      "trigger": "denunci\\w*|avisar.{0,20}(?:delito|fiscalia)|ministerio publico",
+      "terms": [
+        "denuncia",
+        "Ministerio Público",
+        "delito"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CNPP",
+          "article": "222",
+          "sourceId": "PUB-35901951354154af423711a6d8985229d4be9996c497161b61c758359cbdb768",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+          "version": "MX-FED-CNPP@2025-11-28+7ceb0682c948d7d9",
+          "retrievedAt": "2026-10-30T13:05:14.566Z",
+          "textSha256": "7a8a782be13aaed69f44a0be732a8384ddd6e89c86e8f6c9eff2779214513771",
+          "pdfSha256": "7ceb0682c948d7d945e7e68b8d8699ceb795fc9a491aa62325db91ccf2309904",
+          "excerpts": [
+            "Artículo 222. Deber de denunciar Toda persona a quien le conste que se ha cometido un hecho probablemente constitutivo de",
+            "n delito está obligada a denunciarlo ante el Ministerio Público y en caso de urgencia ante cualquier agente de la Policía. Quien en ejercicio de funcione",
+            "do un hecho probablemente constitutivo de un delito está obligada a denunciarlo ante el Ministerio Público y en caso de urgencia ante cualqui"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:robo",
+      "area": "penal",
+      "trigger": "rob\\w*|hurt\\w*|llevo.{0,15}(?:celular|cartera)",
+      "terms": [
+        "robo",
+        "cosa ajena",
+        "consentimiento"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPF",
+          "article": "367",
+          "sourceId": "PUB-d6f69d99295a9b994426aca6b00015b160b7513c65642131bd0280f1aafa9234",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf",
+          "version": "MX-FED-CPF@2026-03-13+a2d80c4383c5fbc8",
+          "retrievedAt": "2026-10-30T13:04:42.194Z",
+          "textSha256": "a89c4122c7ccb2cf99cbe604a11b24112a11a4e3236fb8c7b360bcf762c617cb",
+          "pdfSha256": "a2d80c4383c5fbc8453cf290c19b7853eb0a5a05d1e366572da384edfafda88c",
+          "excerpts": [
+            "Artículo 367.- Comete el delito de robo: el que se apodera de una cosa ajena mueble, sin derecho y sin consentimiento de la perso",
+            " el delito de robo: el que se apodera de una cosa ajena mueble, sin derecho y sin consentimiento de la persona que puede disponer de ella con arr",
+            " de una cosa ajena mueble, sin derecho y sin consentimiento de la persona que puede disponer de ella con arreglo a la ley."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "penal:fraude",
+      "area": "penal",
+      "trigger": "fraude|estaf\\w*|engan\\w*.{0,20}(?:dinero|pagar)",
+      "terms": [
+        "fraude",
+        "lucro indebido"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CPF",
+          "article": "386",
+          "sourceId": "PUB-dc8ee2bd427eac9b7b595a3e213b1c28be629d05f822f466c738e9064a360aa2",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf",
+          "version": "MX-FED-CPF@2026-03-13+a2d80c4383c5fbc8",
+          "retrievedAt": "2026-10-30T13:04:42.194Z",
+          "textSha256": "d257b79e8485b9e583f61080762c03d4ae1c9481a1b513997ab889e8006026b5",
+          "pdfSha256": "a2d80c4383c5fbc8453cf290c19b7853eb0a5a05d1e366572da384edfafda88c",
+          "excerpts": [
+            "Artículo 386.- Comete el delito de fraude el que engañando a uno o aprovechándose del error en que éste se halla se hace ilícitamen",
+            "ace ilícitamente de alguna cosa o alcanza un lucro indebido. El delito de fraude se castigará con las penas siguientes: I.- Con prisión de 3 días a 6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:despido",
+      "area": "laboral",
+      "trigger": "corrieron|corrio|despid\\w*|desped\\w*|despido|echaron.{0,15}(?:trabajo|empleo)|liquidacion",
+      "terms": [
+        "rescisión",
+        "relación de trabajo",
+        "indemnización",
+        "despido"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "47",
+          "sourceId": "PUB-b8dfca82520486005bb737cdad5d68fa28d97a3686781bde717b1066d0ad6218",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "7e342036cfc71863a47d9238ff2205a96fbddd50ea755924433319186f9efa85",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "Artículo 47.- Son causas de rescisión de la relación de trabajo, sin responsabilidad para el patrón: I. Engañarlo el trabajador",
+            "Artículo 47.- Son causas de rescisión de la relación de trabajo, sin responsabilidad para el patrón: I. Engañarlo el trabajador o en su caso, el sindicat",
+            "lmente al trabajador en el momento mismo del despido o bien, comunicarlo al Tribunal competente, dentro de los cinco días hábiles siguientes, "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "48",
+          "sourceId": "PUB-1dc8ce0e7e5c71cd818e1e45391eebfbb0aee8f01f74bbf09e60d6fc3297c23e",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "8b51bc5c912a167cc52768a16bc7ce8fd716ce68cdb1592b9c5814b9f7971b98",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "diente no comprueba el patrón la causa de la rescisión, el trabajador tendrá derecho, además, cualquiera que hubiese sido la acción intentada, a",
+            " será aplicable para el pago de otro tipo de indemnizaciones o prestaciones. En caso de muerte del trabajador, dejarán de computarse los salarios ve",
+            "arios vencidos computados desde la fecha del despido hasta por un período máximo de doce meses, en términos de lo preceptuado en la última par"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "50",
+          "sourceId": "PUB-d6a5215697bb073757b46f41b38d022c07d9e384a575802e9986bc55852be442",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "5c6b66a03f89e0e15a015ab5f7bacedeb22862dafb52840d9280171dc9ca42f9",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "e el artículo anterior consistirán: I. Si la relación de trabajo fuere por tiempo determinado menor de un año, en una cantidad igual al importe de los sal",
+            "Artículo 50.- Las indemnizaciones a que se refiere el artículo anterior consistirán: I. Si la relación de trabajo fuere p"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:relacion",
+      "area": "laboral",
+      "trigger": "sin contrato.{0,20}trabaj\\w*|relacion laboral|trabaj\\w*.{0,20}sin contrato",
+      "terms": [
+        "trabajo personal subordinado",
+        "salario",
+        "relación de trabajo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "20",
+          "sourceId": "PUB-26df83fc6baab42f7f7e86760a9d47121c36de95547a919f6593abaa4e404985",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "93b06e8b40d78a1bf8f66078bc0fbff437c8286dce409aadf801c7de475c2db2",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "l acto que le dé origen, la prestación de un trabajo personal subordinado a una persona, mediante el pago de un salario. Contrato individual de trabajo, cualquiera",
+            "dinado a una persona, mediante el pago de un salario. Contrato individual de trabajo, cualquiera que sea su forma o denominación, es aquel por",
+            "Artículo 20.- Se entiende por relación de trabajo, cualquiera que sea el acto que le dé origen, la prestación de un trabajo personal subord"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "21",
+          "sourceId": "PUB-61ad96aafd33d98637dc08b544b6809c6281a0c70230c2047dbe9a1888bcd793",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "134441b1053962323b22ef94695856b4626b78b39a6a3f20323cd61ddc7b7628",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            " presumen la existencia del contrato y de la relación de trabajo entre el que presta un trabajo personal y el que lo recibe."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:salario",
+      "area": "laboral",
+      "trigger": "sueldo|salarios?|raya|paga.{0,15}trabaj\\w*",
+      "terms": [
+        "salario",
+        "retribución",
+        "trabajo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "82",
+          "sourceId": "PUB-e876beb18b30289bfa806b87f7e87a1427152ad2252f0f051eef63d5ec5e5427",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "64bd3b4f4c86b6edd6a514be11a2a82f42ff0d1c1c89203b0941e98d5afcc9ab",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "Artículo 82.- Salario es la retribución que debe pagar el patrón al trabajador por su trabajo.",
+            "Artículo 82.- Salario es la retribución que debe pagar el patrón al trabajador por su trabajo.",
+            "ue debe pagar el patrón al trabajador por su trabajo."
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "83",
+          "sourceId": "PUB-de2706e938fbcc4a0b0594e50525c29019d1687ffa4cbfe749c8693e96dd3fa8",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "265018845afbb401a220a4bff165871a111a44540c9df670977e829b08a62fca",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "Artículo 83.- El salario puede fijarse por unidad de tiempo, por unidad de obra, por comisión, a precio alzado o d",
+            "e sufra la herramienta como consecuencia del trabajo."
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "84",
+          "sourceId": "PUB-de61282a1fd09f1419c6b02d566a745c2f203e4f0c0675c32325cec94b3f0261",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "b0aca1e6c55a574033355e007b9305440752826b6a0f5aca48bdad2b3ecfe009",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "Artículo 84.- El salario se integra con los pagos hechos en efectivo por cuota diaria, gratificaciones, percepcion",
+            "stación que se entregue al trabajador por su trabajo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:aguinaldo",
+      "area": "laboral",
+      "trigger": "aguinaldo|bono.{0,20}(?:diciembre|navidad)|pago.{0,15}fin de ano",
+      "terms": [
+        "aguinaldo",
+        "salario"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "87",
+          "sourceId": "PUB-344e3b76beeab28ddfa2ec9e86a22fc5e9e463e671dcb58f0c132c86a3593c53",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "ca0fd25ddc2dcbc1ad9a7536bde2a5d148b42a98736e83ac2c8d502fd1960c67",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "o 87.- Los trabajadores tendrán derecho a un aguinaldo anual que deberá pagarse antes del día veinte de diciembre, equivalente a quince días de ",
+            "e de diciembre, equivalente a quince días de salario, por lo menos. Los que no hayan cumplido el año de servicios, independientemente de que s"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:vacaciones",
+      "area": "laboral",
+      "trigger": "vacacion\\w*|dias.{0,15}descanso|descansar",
+      "terms": [
+        "vacaciones",
+        "prima",
+        "salarios"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "76",
+          "sourceId": "PUB-e45006172db6b20978727dc6826cd6d05d27967e8ca65fdc79ddff3680da9e6a",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "73001e7b2a306bbd1a6bfffd1ce92d4b32377bf88c68f8600f39e2fec5e5ba2b",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "servicios disfrutarán de un periodo anual de vacaciones pagadas, que en ningún caso podrá ser inferior a doce días laborables, y que aumentará en"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "80",
+          "sourceId": "PUB-d153ea2018261d7313503fc36d6bf9c057be7f5cd97955fcc6d3b72127efb447",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "e01386352886e316768d146fc27be1b34245d98048b2fa223c8228e170cfff13",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "s que les correspondan durante el período de vacaciones.",
+            " 80.- Los trabajadores tendrán derecho a una prima no menor de veinticinco por ciento sobre los salarios que les correspondan durante el per",
+            "no menor de veinticinco por ciento sobre los salarios que les correspondan durante el período de vacaciones."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "laboral:renuncia",
+      "area": "laboral",
+      "trigger": "renunci\\w*|separarme.{0,20}trabajo|antiguedad",
+      "terms": [
+        "rescisión",
+        "antigüedad",
+        "trabajadores"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "51",
+          "sourceId": "PUB-5e302f53b4ca9fe4ed0c34c85187c5e9eac05683ba68ca22100c3a74ee840e11",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "334f64af2d3e2abbe252145413385f407d6128eb4b12d70596596f5b9d375930",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "Artículo 51.- Son causas de rescisión de la relación de trabajo, sin responsabilidad para el trabajador: I. Engañarlo el patrón",
+            "s; III. Incurrir el patrón, sus familiares o trabajadores, fuera del servicio, en los actos a que se refiere la fracción anterior, si son de tal ma"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFT",
+          "article": "162",
+          "sourceId": "PUB-5a80aff3fa6ff099084194d6a7369bdd797d937e4632f03966bee19cb3664991",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "version": "MX-FED-LFT@2026-05-14+12f09393a1951a91",
+          "retrievedAt": "2026-10-30T13:05:39.656Z",
+          "textSha256": "28e0843e899b486b5d7e448879dcae8c3673c86cd9466f6c909b5fb61192cb23",
+          "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+          "excerpts": [
+            "ores de planta tienen derecho a una prima de antigüedad, de conformidad con las normas siguientes: I. La prima de antigüedad consistirá en el imp",
+            "Artículo 162.- Los trabajadores de planta tienen derecho a una prima de antigüedad, de conformidad con las normas siguien"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercantil:pagare",
+      "area": "mercantil",
+      "trigger": "pagare|pagares|papel.{0,20}(?:deuda|pagar)|promesa.{0,20}pago",
+      "terms": [
+        "pagaré",
+        "promesa incondicional",
+        "pago",
+        "vencimiento"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "170",
+          "sourceId": "PUB-b19b4af03f56eba2f95dd27bf98804d49d2478f899ecd73d8724e77c1f9b18e1",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "4175a1dc2bf315c7ea0da6cf1525e49c3214013f7f73d5358cabfea85e5927ea",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "Artículo 170.- El pagaré debe contener: I.- La mención de ser pagaré, inserta en el texto del documento; II.- La p",
+            ", inserta en el texto del documento; II.- La promesa incondicional de pagar una suma determinada de dinero; III.- El nombre de la persona a quien ha de hace",
+            "ombre de la persona a quien ha de hacerse el pago; IV.- La época y el lugar del pago; V.- La fecha y el lugar en que se subscriba el docume"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "171",
+          "sourceId": "PUB-16a9c78433287488a03e2c7fe80c1386657bc0e9ec30975a7b357b639c55cc3f",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "26c8b80253d847ceaf88d4ae88f9c118698ce5f82a3a4f1af2be3547668401bd",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "Artículo 171.- Si el pagaré no menciona la fecha de su vencimiento, se considerará pagadero a la vista; si no indica ",
+            "dero a la vista; si no indica el lugar de su pago, se tendrá como tal el del domicilio del que lo suscribe.",
+            "71.- Si el pagaré no menciona la fecha de su vencimiento, se considerará pagadero a la vista; si no indica el lugar de su pago, se tendrá como tal"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "174",
+          "sourceId": "PUB-8b38003c10a23c43725679f109b9ca911fdd5c3414825945bc52983b337e2f57",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "bb2f7ef0b6fc29a48845ab2adfd14192596d0627aaf76e7793edd1c25b032375",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "Artículo 174.- Son aplicables al pagaré, en lo conducente, los artículos 77, párrafo final, 79, 80, 81, 85, 86, 88, 90, 109 al 11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercantil:titulo",
+      "area": "mercantil",
+      "trigger": "titulos? de credito|endos\\w*|documento.{0,20}cobrar",
+      "terms": [
+        "títulos de crédito",
+        "endoso",
+        "derecho literal"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "5",
+          "sourceId": "PUB-74e8e113d569c43bd6441dfbae507d948a571153cc58762a8afbae42a94f3737",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "33637437ad32bf2d269d17a3d17fb62f7838622c747b518ebca153dfd4173d60",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "Artículo 5o.- Son títulos de crédito, los documentos necesarios para ejercitar el derecho literal que en ellos se consigna, co",
+            " los documentos necesarios para ejercitar el derecho literal que en ellos se consigna, con independencia de que se emitan por medios escritos o electr"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "26",
+          "sourceId": "PUB-4efa01dc6b9f0a6e0fd671cba89dcfc2a14123adc239e340bfb5909f38eaa403",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "0acf01d1b883710597ffad4f9daa5fd796e2d3dbfb0efb15dd067e2c3099b9ce",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "or cualquier otro medio legal. Tratándose de títulos de crédito emitidos en medios electrónicos, ópticos o cualquier otra tecnología el endoso se realiza",
+            " títulos nominativos serán transmisibles por endoso y entrega del título mismo, sin perjuicio de que puedan transmitirse por cualquier otro m"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGTOC",
+          "article": "29",
+          "sourceId": "PUB-bfa8ecbf1bb1f4e8c846cce022d7116709a21884ee8403354a5212440419753d",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGTOC.pdf",
+          "version": "MX-FED-LGTOC@2024-03-26+cf8a5d05500ddbe2",
+          "retrievedAt": "2026-10-30T13:05:54.822Z",
+          "textSha256": "5aa0c67e9dec9a75393f082f5be0f72765c033312ac5866ce2ac75b20415f9b6",
+          "pdfSha256": "cf8a5d05500ddbe21885db4a8f1128cf95b3aaab95b7982a47aa33baea652361",
+          "excerpts": [
+            "Artículo 29.- El endoso debe constar en el título relativo o en hoja adherida al mismo, y llenar los siguientes r"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercantil:comercio",
+      "area": "mercantil",
+      "trigger": "comerci\\w*|negocio|mercantil|compra.{0,15}venta",
+      "terms": [
+        "comerciantes",
+        "actos de comercio",
+        "convenciones mercantiles"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCOM",
+          "article": "3",
+          "sourceId": "PUB-02249ba91c8c03eecff6050d6bcb35ec23c2341ffac14b18f49885114ba6bae9",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+          "version": "MX-FED-CCOM@2025-11-14+b99bbf981434011b",
+          "retrievedAt": "2026-10-30T13:04:34.629Z",
+          "textSha256": "f580fccee7e7399fb83d7a242ec840eb9ab147288e1b1428122302702881a9e6",
+          "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+          "excerpts": [
+            "Artículo 3o.- Se reputan en derecho comerciantes: I.- Las personas que teniendo capacidad legal para ejercer el comercio, hacen de él su o",
+            ", que dentro del territorio nacional ejerzan actos de comercio."
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCOM",
+          "article": "75",
+          "sourceId": "PUB-cb010a42d0c66af7b9ffc6913f98c0d6ed1d61acaf3afa6bbba49916a83ae0ad",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+          "version": "MX-FED-CCOM@2025-11-14+b99bbf981434011b",
+          "retrievedAt": "2026-10-30T13:04:34.629Z",
+          "textSha256": "2ef0feb5c0d373f189cf253a9ac102d600577327d4e33b7c00d31fc594045428",
+          "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+          "excerpts": [
+            "den o al portador, y las obligaciones de los comerciantes, a no ser que se pruebe que se derivan de una causa extraña al comercio; XXI.- Las obliga",
+            "Artículo 75.- La ley reputa actos de comercio: I.- Todas las adquisiciones, enajenaciones y alquileres verificados con propósito de esp"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CCOM",
+          "article": "78",
+          "sourceId": "PUB-ee68f6c6b6897171dc0fe562920ac1aa572a67f6a68ecf6aae6437d51694966c",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+          "version": "MX-FED-CCOM@2025-11-14+b99bbf981434011b",
+          "retrievedAt": "2026-10-30T13:04:34.629Z",
+          "textSha256": "00978cffc63815aee893d5e5515e99fa8268bd9601329e9dd88d0618a717c506",
+          "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+          "excerpts": [
+            "Artículo 78.- En las convenciones mercantiles cada uno se obliga en la manera y términos que aparezca que quiso obligarse, sin que la v"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercantil:sociedad",
+      "area": "mercantil",
+      "trigger": "soci[oa]s?|sociedad|empresa|accionistas|constituir|crear.{0,15}negocio",
+      "terms": [
+        "sociedades",
+        "contrato social",
+        "socios",
+        "acciones"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LGSM",
+          "article": "2",
+          "sourceId": "PUB-01a3253690b805b217ec759996e050fe12ccceedaa3359bf0999837e352c69fc",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+          "version": "MX-FED-LGSM@2023-10-20+72b051296792cad8",
+          "retrievedAt": "2026-10-30T13:05:52.719Z",
+          "textSha256": "25da3d55ba02bc9858aa5b16ce647144075a52092f400db49c5647281e3c15a8",
+          "pdfSha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3",
+          "excerpts": [
+            "Artículo 2o.- Las sociedades mercantiles inscritas en el Registro Público de Comercio, tienen personalidad jurídica di",
+            "las sociedades irregulares se regirán por el contrato social respectivo, y, en su defecto, por las disposiciones generales y por las especiales de est",
+            " personalidad jurídica distinta de la de los socios. Salvo el caso previsto en el artículo siguiente, no podrán ser declaradas nulas las soci",
+            " que se trate. Tratándose de la sociedad por acciones simplificada, para que surta efectos ante terceros deberá inscribirse en el registro menc"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGSM",
+          "article": "5",
+          "sourceId": "PUB-8acaf1b6d19776a40deab2fb5576220c56ef8252bf0b3f0c6c09e158c7b431f7",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+          "version": "MX-FED-LGSM@2023-10-20+72b051296792cad8",
+          "retrievedAt": "2026-10-30T13:05:52.719Z",
+          "textSha256": "646de7b4f01be3b9f729c3bd30bd3b1e961dde1af63af40b0c00ab5cf480026e",
+          "pdfSha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3",
+          "excerpts": [
+            "Artículo 5o. Las sociedades se constituirán ante fedatario público y en la misma forma se harán constar con sus modif",
+            "n lo dispuesto por esta Ley. La sociedad por acciones simplificada se constituirá a través del procedimiento establecido en el"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGSM",
+          "article": "6",
+          "sourceId": "PUB-29e7c16c791450efc24c4b5eda55f47172fc3292df3cc81744727e623157763b",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+          "version": "MX-FED-LGSM@2023-10-20+72b051296792cad8",
+          "retrievedAt": "2026-10-30T13:05:52.719Z",
+          "textSha256": "6b4ed1dabfe68fe2d21a26c67a629377b422330aa8a6b191721deec2c5a084f7",
+          "pdfSha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3",
+          "excerpts": [
+            "glas para la celebración de las Asambleas de Socios y de los órganos de administración, siendo que los estatutos podrán contemplar que unas y"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LGSM",
+          "article": "87",
+          "sourceId": "PUB-4cec99be0e74511515bb4dbd56ae7190aca2035c8640be9c1a8d8ed603162b93",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+          "version": "MX-FED-LGSM@2023-10-20+72b051296792cad8",
+          "retrievedAt": "2026-10-30T13:05:52.719Z",
+          "textSha256": "998d13a8debc41fdf7f880ecf2652e9c554dd76c8632a86d108ead5f65ecd4dd",
+          "pdfSha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3",
+          "excerpts": [
+            " denominación y se compone exclusivamente de socios cuya obligación se limita al pago de sus acciones.",
+            "ios cuya obligación se limita al pago de sus acciones."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercantil:ejecutivo",
+      "area": "mercantil",
+      "trigger": "juicio ejecutivo|cobrar.{0,20}(?:pagare|cheque)|trae aparejada ejecucion",
+      "terms": [
+        "ejecutivo",
+        "títulos de crédito",
+        "ejecución"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CCOM",
+          "article": "1391",
+          "sourceId": "PUB-60286ed338fa7984182034ad0e6b9f175bd928af397a0cc2972b6014bf5dc9c8",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+          "version": "MX-FED-CCOM@2025-11-14+b99bbf981434011b",
+          "retrievedAt": "2026-10-30T13:04:34.629Z",
+          "textSha256": "1450a0a0b28e053c7d44038b0f7ad8ea093fe424f461b9410ec562e5135856b3",
+          "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+          "excerpts": [
+            "Artículo 1391. El procedimiento ejecutivo tiene lugar cuando la demanda se funda en documento que traiga aparejada ejecución. Traen",
+            "cial del deudor, según el art. 1288; IV. Los títulos de crédito; V. (Se deroga) VI. La decisión de los peritos designados en los seguros para fijar el im",
+            "a se funda en documento que traiga aparejada ejecución. Traen aparejada ejecución: I. La sentencia ejecutoriada o pasada en autoridad de cosa ju"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:contribuciones",
+      "area": "fiscal",
+      "trigger": "impuestos?|contribuciones|fisco|tribut\\w*",
+      "terms": [
+        "contribuciones",
+        "impuestos",
+        "derechos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "1",
+          "sourceId": "PUB-797931d0d3128f3081434067b366054535e0853d0e2ef9f356759d038238bb1d",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "fb27e913d153b3f6c87e21420faec85081daaf4edbd75c4b3735f8c2ecf2df9d",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "cífico. La Federación queda obligada a pagar contribuciones únicamente cuando las leyes lo señalen expresamente. Los estados extranjeros, en casos de",
+            " de reciprocidad, no están obligados a pagar impuestos. No quedan comprendidas en esta exención las entidades o agencias pertenecientes a dichos"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "2",
+          "sourceId": "PUB-a70db0ad207e14e15bc48672ae4889fbb773729f7f6766fad88bebe996b2ef76",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "92a3a0df38f101a5273beec052150d23ad61a9a35d2a42272c3d909e919fa92b",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "Artículo 2o.- Las contribuciones se clasifican en impuestos, aportaciones de seguridad social, contribuciones de mejoras y",
+            "ulo 2o.- Las contribuciones se clasifican en impuestos, aportaciones de seguridad social, contribuciones de mejoras y derechos, las que se defin",
+            "eguridad social, contribuciones de mejoras y derechos, las que se definen de la siguiente manera: I. Impuestos son las contribuciones estableci"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:devolucion",
+      "area": "fiscal",
+      "trigger": "saldo a favor|devol\\w*.{0,20}(?:sat|impuesto|hacienda)|(?:sat|hacienda).{0,20}devol\\w*|pague de mas",
+      "terms": [
+        "devolverán",
+        "pagadas indebidamente",
+        "contribuciones"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "22",
+          "sourceId": "PUB-1ea129812265204de17e9cb190ae53c7599e0008f3a9ab87c3d4b0b74f05cc3c",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "287a74b6b71cb394fe527d84993dc794f95fa7759ed8c95f84c07954438e811b",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "Artículo 22.- Las autoridades fiscales devolverán las cantidades pagadas indebidamente y las que procedan conforme a las leyes fiscales. En",
+            "toridades fiscales devolverán las cantidades pagadas indebidamente y las que procedan conforme a las leyes fiscales. En el caso de contribuciones que se hub",
+            "conforme a las leyes fiscales. En el caso de contribuciones que se hubieran retenido, la devolución se efectuará a los contribuyentes a quienes se le"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:factura",
+      "area": "fiscal",
+      "trigger": "factur\\w*|cfdi|comprobante fiscal|recibo fiscal",
+      "terms": [
+        "comprobantes fiscales",
+        "certificado",
+        "sello digital"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "29",
+          "sourceId": "PUB-c476f2c18df54669bdc5a590825eb3bf70ce2de11979aee1b3172ab0bb40588b",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "c05542be03b682ed5ef5ca4942bba501c2883a1bdd54d9683181d3b7d43d45b8",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "iscales establezcan la obligación de expedir comprobantes fiscales por los actos o actividades que realicen, por los ingresos que se perciban o por las rete",
+            "as obligaciones siguientes: I. Contar con un certificado de firma electrónica avanzada vigente, tener obligaciones fiscales en el Registro Federal",
+            "s fiscales mediante documentos digitales. El sello digital permitirá acreditar la autoría de los comprobantes fiscales digitales por Internet que ex"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "29-A",
+          "sourceId": "PUB-b55a69436b84b3acb40dab5af0af2b991dbec32ffb0e9f0822c40711b94374d6",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "e8c391a2b61278fb2dccbc2dc7ee2de924d47f3b7344736c041d7c765629901d",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "Artículo 29-A. Los comprobantes fiscales digitales a que se refiere el artículo 29 de este Código, deberán contener los siguientes",
+            " en su caso, los datos de identificación del certificado de participación inmobiliaria no amortizable. d) Los que expidan los contribuyentes sujet",
+            "bantes fiscales. II. El número de folio y el sello digital del Servicio de Administración Tributaria, referidos en la fracción IV, incisos b) y c) d"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:revision",
+      "area": "fiscal",
+      "trigger": "sat|hacienda|auditoria|revision fiscal|visita.{0,15}fiscal",
+      "terms": [
+        "autoridades fiscales",
+        "visitas",
+        "revisión"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "42",
+          "sourceId": "PUB-215577f0ce8a756454c8d85fc29beda82ebc8f3ba1fc76ffb81159034dbc0862",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "aa67019c450af5179cd83b424b503da6bbc419237611639b9e4d68c24401134e",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "Artículo 42. Las autoridades fiscales a fin de comprobar que los contribuyentes, los responsables solidarios, los terceros con ",
+            "e llevar a cabo su revisión. III.- Practicar visitas a los contribuyentes, los responsables solidarios o terceros relacionados con ellos y rev",
+            "e les requieran a efecto de llevar a cabo su revisión. III.- Practicar visitas a los contribuyentes, los responsables solidarios o terceros rel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:revocacion",
+      "area": "fiscal",
+      "trigger": "revocacion|(?:impugnar|combatir|inconform\\w*).{0,25}(?:sat|credito fiscal)|(?:sat|fiscal).{0,25}(?:recurso|plazo)",
+      "terms": [
+        "recurso de revocación",
+        "resoluciones definitivas",
+        "plazo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "117",
+          "sourceId": "PUB-81f063cb871145aafb8cd953cc03dca3c9ea7f6eced107a8e85431c84c07bade",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "b4e4833379ea487bbf3e51d6fd0e4b9b41e1a2bdfb2e93ee2ad0072fb9fc87a2",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "Artículo 117.- El recurso de revocación procederá contra: I.- Las resoluciones definitivas dictadas por autoridades fiscales fede",
+            "urso de revocación procederá contra: I.- Las resoluciones definitivas dictadas por autoridades fiscales federales que: a) Determinen contribuciones, accesorios"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "121",
+          "sourceId": "PUB-4f4d4c55a1e181dabeb4ef00b9d4a7369e664c5c4362681ac9ca10c8542e5f32",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "1718a36915de2b174f34fcae352caf4865bfbf6c4a29a968a06ce0d6ed53e5a6",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "a, se suspenderá el plazo para interponer el recurso de revocación hasta por un año. La suspensión cesará cuando se acredite que se ha aceptado el cargo de ",
+            "to del recurso deberá presentarse dentro del plazo que en el mismo se señala. El escrito de interposición del recurso también podrá enviarse"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiscal:cobro",
+      "area": "fiscal",
+      "trigger": "credito fiscal|adeudo fiscal|embargo.{0,20}(?:sat|fiscal)|(?:sat|fisco).{0,20}cobr\\w*",
+      "terms": [
+        "créditos fiscales",
+        "procedimiento administrativo de ejecución"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "65",
+          "sourceId": "PUB-882ceb535d061b77c1e838cfc5daac79f6742e6e9ba84657bc035ffa6f6887ac",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "84030afa4bbd61482067301c391366d4138d9eafe0351ece8ca32d944c64edc8",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "cultades de comprobación, así como los demás créditos fiscales, deberán pagarse o garantizarse, junto con sus accesorios, dentro de los treinta días sig"
+          ]
+        },
+        {
+          "lawId": "MX-FED-CFF",
+          "article": "145",
+          "sourceId": "PUB-5e2b56a3f4cae3c196d7f26c23ec80e1a85d589ed801ebcf29142f081ada4872",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "version": "MX-FED-CFF@2026-04-09+be7427b20d355277",
+          "retrievedAt": "2026-10-30T13:04:38.474Z",
+          "textSha256": "ea25976aae86cec4d38010e7a02d0dca904204e7ea00e4d2adee21ece7255527",
+          "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+          "excerpts": [
+            "autoridades fiscales exigirán el pago de los créditos fiscales que no hubieren sido cubiertos o garantizados dentro de los plazos señalados por la Ley, ",
+            "de los plazos señalados por la Ley, mediante procedimiento administrativo de ejecución. Se podrá practicar embargo precautorio, sobre los bienes o la negociación del contribuye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:objeto",
+      "area": "amparo",
+      "trigger": "ampar\\w*|acto reclamado|autoridad responsable",
+      "terms": [
+        "juicio de amparo",
+        "derechos humanos",
+        "autoridad responsable"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "1",
+          "sourceId": "PUB-03af5f44437a10105574191ff23550db528866315d49b758bf092618a6bd5a9d",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "2e29a4c3c04a0874b801a9f410fe6a6f245e938d039a459d887bc1f487f5a1e0",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 1o. El juicio de amparo tiene por objeto resolver toda controversia que se suscite: I. Por normas generales, acto",
+            "ctos u omisiones de autoridad que violen los derechos humanos reconocidos y las garantías otorgadas para su protección por la Constitución Política de "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "5",
+          "sourceId": "PUB-e8054a23ea36c1f5a66e0b7a5e314623347328a158feb77878f448224b8aa163",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "84bdc4455bd1fb06614a4f156e3d81d8fca7e615a4603bc471aacda75bed4f97",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 5o. Son partes en el juicio de amparo: LEY DE AMPARO, REGLAMENTARIA DE LOS ARTÍCULOS 103 Y 107 DE LA CONSTITUCIÓN POLÍTICA DE L",
+            " quejosa en los términos de esta Ley. II. La autoridad responsable, teniendo tal carácter, con independencia de su naturaleza formal, la que dicta, ordena, "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:plazo",
+      "area": "amparo",
+      "trigger": "(?:dias|tiempo|plazo).{0,30}(?:amparo|demanda)|(?:amparo|demanda).{0,30}(?:dias|tiempo|plazo)|tardar.{0,15}ampar\\w*",
+      "terms": [
+        "plazo",
+        "demanda de amparo",
+        "quince días"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "17",
+          "sourceId": "PUB-65c49608acf779202130d0402cc9d1971441ec368bf55ae35936014773754f36",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "b41ad476b1da02bafd0adedd711cf478d508bef7db37bef603df0426cbdf2a1e",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 17. El plazo para presentar la demanda de amparo es de quince días, salvo: I. Cuando se reclame una no",
+            "Artículo 17. El plazo para presentar la demanda de amparo es de quince días, salvo: I. Cuando se reclame una norma general autoaplicativa, o el pro",
+            "zo para presentar la demanda de amparo es de quince días, salvo: I. Cuando se reclame una norma general autoaplicativa, o el procedimiento de extr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:suspension",
+      "area": "amparo",
+      "trigger": "suspension|suspend\\w*|fren\\w*.{0,25}(?:acto|autoridad|amparo)|detener.{0,25}(?:acto|ejecucion)|(?:acto|autoridad).{0,25}fren\\w*",
+      "terms": [
+        "suspensión",
+        "acto reclamado",
+        "orden público"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "125",
+          "sourceId": "PUB-1a761b72b1ec3a5b11923f85ee5d59c692348e0d80b6b56acd7f07a72823e8bc",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "55135161f1c6e54382d78db805aaf24723951150d0b04a8064a5c34bd96d1dc3",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 125. La suspensión del acto reclamado se decretará de oficio o a petición de la persona quejosa.",
+            "Artículo 125. La suspensión del acto reclamado se decretará de oficio o a petición de la persona quejosa."
+          ]
+        },
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "126",
+          "sourceId": "PUB-a37f8d1622b3dcbb7d4338990aad9d03675a299e47d8ef33435109d67a15f1b2",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "1543f71a1df7ef214e735a06d46d00636fa9ab286f2edb8f508156aaa634fdcb",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 126. La suspensión se concederá de oficio y de plano cuando se trate de actos que importen peligro de privac"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "128",
+          "sourceId": "PUB-8b409e42ae0e36e9c5dd34960e98455f0f9acfc9e206d0b7797fe270e37497e0",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "1fcea2ce7e26e43d7e3eb5ab1d5508aac31ffac5f7ee51e23297d69cb66a0a9e",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "ón de los casos en que proceda de oficio, la suspensión se tramitará a petición de la persona quejosa en todas las materias, salvo aquellas previ",
+            " los requisitos siguientes: I. Que exista el acto reclamado, se tenga certeza de su inminente realización u opere una presunción razonable sobre su e",
+            "ente al interés social, y a disposiciones de orden público, el órgano jurisdiccional advierta que su concesión no causa un daño significativo a la c"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:indirecto",
+      "area": "amparo",
+      "trigger": "amparo indirecto|fuera de juicio|primera demanda.{0,20}amparo",
+      "terms": [
+        "amparo indirecto",
+        "normas generales",
+        "demanda"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "107",
+          "sourceId": "PUB-ea89427a4ba77571f11a6386d45ec51b458596cc1efee650d06fe40012622b14",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "b41feb37cd7779bed1dd3a91c47ac89e102449297c53321fa90d039dcdf5c0b4",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 107. El amparo indirecto procede: I. Contra normas generales que por su sola entrada en vigor o con motivo del pri",
+            " 107. El amparo indirecto procede: I. Contra normas generales que por su sola entrada en vigor o con motivo del primer acto de su aplicación causen per",
+            " expediente, pudiendo reclamarse en la misma demanda las violaciones cometidas durante ese procedimiento que hubieren dejado sin defensa a la "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "108",
+          "sourceId": "PUB-eaa3098922da95ad4c454b79a3a54187b6abcfb346182dc387321e38b1086183",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "06baa01d3428969bccd406e92434255e0ca6aacf3fdafbf3a7fb4fd9680c3bb9",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 108. La demanda de amparo indirecto deberá formularse por escrito o por medios electrónicos en los casos que la ley lo autori",
+            "des responsables. En caso de que se impugnen normas generales, la persona quejosa deberá señalar a los titulares de los órganos de Estado a los que la ",
+            "Artículo 108. La demanda de amparo indirecto deberá formularse por escrito o por medios electrónicos en los casos "
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:directo",
+      "area": "amparo",
+      "trigger": "amparo directo|sentencia definitiva|laudo|juicio.{0,15}termin\\w*",
+      "terms": [
+        "amparo directo",
+        "sentencias definitivas",
+        "laudos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "170",
+          "sourceId": "PUB-bf63237dc8459a2ec7723c0d8a43f6542635b652dd60fdad42c6dea7bfa33165",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "3fc8deb706b2d387c8bbf930d221155a2085840072639a957319b6cda8c67981",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 170. El juicio de amparo directo procede: I. Contra sentencias definitivas, laudos y resoluciones que pongan fin al juicio",
+            " juicio de amparo directo procede: I. Contra sentencias definitivas, laudos y resoluciones que pongan fin al juicio, dictadas por tribunales judiciales, admi",
+            "o procede: I. Contra sentencias definitivas, laudos y resoluciones que pongan fin al juicio, dictadas por tribunales judiciales, administrati"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amparo:improcedencia",
+      "area": "amparo",
+      "trigger": "improceden\\w*|desech\\w*.{0,20}amparo|amparo.{0,20}(?:desech\\w*|procede)",
+      "terms": [
+        "improcedente",
+        "juicio de amparo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LAMP",
+          "article": "61",
+          "sourceId": "PUB-cea68d379c62577fedca856de9f3d09447c56cee199e4435e1a73c60f5190acd",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "version": "MX-FED-LAMP@2025-10-16+05560493ac2b17b9",
+          "retrievedAt": "2026-10-30T13:05:38.194Z",
+          "textSha256": "d6fc70a135bb3781df6c9bbca8162c83f5c91c71d973c7ee0c2bdef111e18286",
+          "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+          "excerpts": [
+            "Artículo 61. El juicio de amparo es improcedente: I. Contra adiciones o reformas a la Constitución Política de los Estados Unidos Mexicano",
+            "Artículo 61. El juicio de amparo es improcedente: I. Contra adiciones o reformas a la Constitución Política de los Estados"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:acto",
+      "area": "administrativo",
+      "trigger": "acto administrativo|autoridad.{0,30}(?:razon|motivo|explic\\w*)|resolucion administrativa|(?:multa|clausura).{0,30}(?:razon|motivo|escrito)",
+      "terms": [
+        "acto administrativo",
+        "fundado y motivado",
+        "competente"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "3",
+          "sourceId": "PUB-1418a6a814c357b8d62ca322380b5adfa403c63488b6172ec056ae002a3eb1bd",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "13d0ccd2b12a2e5d27ffa9ea0205a4d3a2c673e62d39cb69af18c0e4a047c9ea",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "Artículo 3.- Son elementos y requisitos del acto administrativo: I. Ser expedido por órgano competente, a través de servidor público, y en caso de que di",
+            " autorice otra forma de expedición; V. Estar fundado y motivado; VI.- (Se deroga) VII. Ser expedido sujetándose a las disposiciones relativas al procedim",
+            "o administrativo: I. Ser expedido por órgano competente, a través de servidor público, y en caso de que dicho órgano fuere colegiado, reúna las f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:tramite",
+      "area": "administrativo",
+      "trigger": "tramit\\w*|ventanilla|dependencia|oficina de gobierno|permiso|licencia",
+      "terms": [
+        "Administración Pública Federal",
+        "procedimientos",
+        "plazo",
+        "resuelva"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "16",
+          "sourceId": "PUB-fd57a6c0ad2ead914ee8e7b5f66fe000f4ea1758e7ee1b6c34a23131a672e9c0",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "9318ab88beb2481b52628b18f656d9cc6d70dceb4237169e423ac5bc78e8c00b",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "Artículo 16.- La Administración Pública Federal, en sus relaciones con los particulares, tendrá las siguientes obligaciones: I. Solicitar",
+            "momento, del estado de la tramitación de los procedimientos en los que tengan interés jurídico, y a proporcionar copia de los documentos contenidos e",
+            "cte a terceros, debiendo dictarla dentro del plazo fijado por la ley."
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "17",
+          "sourceId": "PUB-606fc5d86b14b612266a368bfd106f88807a6c6c41455a921c0f89d425c3e9df",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "db3a2cb97657bbebe3c1eeafe20b981f46a2fb2f0f9b1157bf6b5930a95d7658",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "ativa de carácter general se establezca otro plazo, no podrá exceder de tres meses el tiempo para que la dependencia u organismo descentrali",
+            "e la dependencia u organismo descentralizado resuelva lo que corresponda. Transcurrido el plazo aplicable, se entenderán las resoluciones en se"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:silencio",
+      "area": "administrativo",
+      "trigger": "no (?:me )?(?:responde|contesta|resuelven)|silencio administrativo|negativa ficta",
+      "terms": [
+        "plazo",
+        "resoluciones",
+        "sentido negativo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "17",
+          "sourceId": "PUB-606fc5d86b14b612266a368bfd106f88807a6c6c41455a921c0f89d425c3e9df",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "db3a2cb97657bbebe3c1eeafe20b981f46a2fb2f0f9b1157bf6b5930a95d7658",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "ativa de carácter general se establezca otro plazo, no podrá exceder de tres meses el tiempo para que la dependencia u organismo descentrali",
+            "urrido el plazo aplicable, se entenderán las resoluciones en sentido negativo al promovente, a menos que en otra disposición legal o administrativa",
+            "aplicable, se entenderán las resoluciones en sentido negativo al promovente, a menos que en otra disposición legal o administrativa de carácter general"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:notificacion",
+      "area": "administrativo",
+      "trigger": "notific\\w*|citatorio|aviso.{0,20}(?:autoridad|gobierno)|correo certificado",
+      "terms": [
+        "notificaciones",
+        "domicilio",
+        "plazos"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "35",
+          "sourceId": "PUB-3d58c4c47098380bbbd9dd41d45247e7d7e2db9e67fde8ab836c628abeb4f2be",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "557b36e3551775270791367030ff9034ec70131e555fac146f236f022bc41f7c",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "Artículo 35.- Las notificaciones, citatorios, emplazamientos, requerimientos, solicitud de informes o documentos y las res",
+            "n quien deba entenderse la diligencia, en el domicilio del interesado; II. Mediante oficio entregado por mensajero o correo certificado, con acu"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "38",
+          "sourceId": "PUB-0a204ff4e7388f963f489d4cc899d2e2de6f019ec0edfc70ab2528813d59b3bd",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "2309dc5a21066ee7277c1a740c30fd97e18f7f78f9d19e5cba9fe1cc81d0bf34",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "Artículo 38.- Las notificaciones personales surtirán sus efectos el día en que hubieren sido realizadas. Los plazos empeza",
+            " el día en que hubieren sido realizadas. Los plazos empezarán a correr a partir del día siguiente a aquel en que haya surtido efectos la noti"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:recurso",
+      "area": "administrativo",
+      "trigger": "recurso de revision|multa|clausur\\w*|recurr\\w*|impugnar.{0,20}(?:autoridad|resolucion)",
+      "terms": [
+        "recurso de revisión",
+        "resoluciones",
+        "plazo"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "83",
+          "sourceId": "PUB-df2258a43ec75059ab3b718d3a4b95a3dbafdc097e4c70f857dfd74a3c039d11",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "630577b2d6d64fdb1f271fe7f248fcd11b0db1add0a410a3005e8d997d93ee42",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "esuelvan un expediente, podrán interponer el recurso de revisión o, cuando proceda, intentar la vía jurisdiccional que corresponda. En los casos de actos ",
+            ".- Los interesados afectados por los actos y resoluciones de las autoridades administrativas que pongan fin al procedimiento administrativo, a una "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFPA",
+          "article": "85",
+          "sourceId": "PUB-19c22506efb5c9a0998d76e78fd5c04c46386655dc3348422c8bec748b18f444",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPA.pdf",
+          "version": "MX-FED-LFPA@2025-11-14+a8b8019ba04a815f",
+          "retrievedAt": "2026-10-30T13:05:46.704Z",
+          "textSha256": "cff277f8c858d7590dd2a1a201abc4b0d8da2de3be51130f070e98ffce251ce0",
+          "pdfSha256": "a8b8019ba04a815ff0b146856625b2342e4366067e763ae5140dee7245212861",
+          "excerpts": [
+            "Artículo 85.- El plazo para interponer el recurso de revisión será de quince días contado a partir del día siguiente a aquél en que hubiere surtido efe",
+            "Artículo 85.- El plazo para interponer el recurso de revisión será de quince días contado a partir del día sigui"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "administrativo:nulidad",
+      "area": "administrativo",
+      "trigger": "juicio de nulidad|resolucion ilegal|tribunal administrativo",
+      "terms": [
+        "demanda",
+        "resolución administrativa",
+        "ilegal"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LFPCA",
+          "article": "13",
+          "sourceId": "PUB-2b00da9a3bb415a269e3fb437692dfa0d88e4b4ced515d5a7d5bb6c9f93c9f66",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPCA.pdf",
+          "version": "MX-FED-LFPCA@2026-06-09+d2a25adcb45f622b",
+          "retrievedAt": "2026-10-30T13:05:48.351Z",
+          "textSha256": "275cb8bf77dad8f1032696c615bd8d0297567c3a423969f35ecedfa8906246f7",
+          "pdfSha256": "d2a25adcb45f622bbbf2a4e58f1139fb5236961fe86de3dd9ad9de2dfa21d54e",
+          "excerpts": [
+            "ARTÍCULO 13.- La persona demandante podrá presentar su demanda, mediante juicio en la vía tradicional, por escrito ante la",
+            "iado su vigencia el decreto, acuerdo, acto o resolución administrativa de carácter general impugnada cuando sea auto aplicativa. II. De treinta días siguientes "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFPCA",
+          "article": "14",
+          "sourceId": "PUB-8100656761da753b89fd756eab6e8ecdb0ff0e41cc621fcfee50f2e33a2d9c73",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPCA.pdf",
+          "version": "MX-FED-LFPCA@2026-06-09+d2a25adcb45f622b",
+          "retrievedAt": "2026-10-30T13:05:48.351Z",
+          "textSha256": "fbc0e394227fe00385c4aa86e088303bcf0ecaaaa32d4132ebf7bb99d084f5a8",
+          "pdfSha256": "d2a25adcb45f622bbbf2a4e58f1139fb5236961fe86de3dd9ad9de2dfa21d54e",
+          "excerpts": [
+            "ARTÍCULO 14.- La demanda deberá indicar: I. El nombre de la persona demandante, domicilio fiscal, así como domicil"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LFPCA",
+          "article": "51",
+          "sourceId": "PUB-b7ed7831c2462333ad52fdac63b3eb1955df52e5e2ea65b647a9e7f18d7b3e49",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPCA.pdf",
+          "version": "MX-FED-LFPCA@2026-06-09+d2a25adcb45f622b",
+          "retrievedAt": "2026-10-30T13:05:48.351Z",
+          "textSha256": "698630de7a18c57578e6ac2f0788e67b526a3f574dcd6320c853788bd89ff53e",
+          "pdfSha256": "d2a25adcb45f622bbbf2a4e58f1139fb5236961fe86de3dd9ad9de2dfa21d54e",
+          "excerpts": [
+            "ARTÍCULO 51.- Se declarará que una resolución administrativa es ilegal cuando se demuestre alguna de las siguientes causales: I. Incompetencia de la p",
+            "clarará que una resolución administrativa es ilegal cuando se demuestre alguna de las siguientes causales: I. Incompetencia de la persona fun"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seguridad-social:alta",
+      "area": "seguridad-social",
+      "trigger": "imss|seguro social|alta.{0,15}seguro|asegur\\w*|cuotas|cotiz\\w*",
+      "terms": [
+        "régimen obligatorio",
+        "inscribir",
+        "trabajadores",
+        "cuotas"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "12",
+          "sourceId": "PUB-2d46525ccef85671c780f07104436b7b97e67f4aaced3c6981c14c46ea40cdff",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "8f8d724766eecfbe48f3963d0699028db8bc0f4676c96fe90820e7bd00367286",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "rtículo 12. Son sujetos de aseguramiento del régimen obligatorio: I. Las personas que de conformidad con los artículos 20 y 21 de la Ley Federal del Traba"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "15",
+          "sourceId": "PUB-4e74897b5d32b07a45df5bac6834f3e65753234418b56bdc189c176b2a4538a1",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "83638d3b03d274c6a77d3739dc14a288687132de1dec1889e08a372dfc5b16aa",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "leadoras están obligadas a: I. Registrarse e inscribir a sus trabajadores en el Instituto, comunicar sus altas y bajas, las modificaciones de su",
+            "bligadas a: I. Registrarse e inscribir a sus trabajadores en el Instituto, comunicar sus altas y bajas, las modificaciones de su salario y los demá",
+            "guientes al de su fecha; III. Determinar las cuotas obrero patronales a su cargo y enterar su importe al Instituto; IV. Proporcionar al Insti"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seguridad-social:accidente",
+      "area": "seguridad-social",
+      "trigger": "accidente|riesgo de trabajo|lastim\\w*.{0,25}(?:trabajo|camino)|(?:camino|trayecto).{0,25}trabajo",
+      "terms": [
+        "accidente de trabajo",
+        "riesgos de trabajo",
+        "lesión",
+        "prestaciones"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "41",
+          "sourceId": "PUB-e51022e7f63c94e30795eafe0b887fc3da8e7c9c8a135086bd70c052093644e0",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "955cabf249cf0ec469e029803c490a6f39d5f655951ab9e6cb0ef97c4fd472bf",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "Artículo 41. Riesgos de trabajo son los accidentes y enfermedades a que están expuestos los trabajadores en ejercicio o c"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "42",
+          "sourceId": "PUB-4b2a8c2b42ecccd3e6f74fa3e72ec6d78745a890f11444726298e2190c132a64",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "33c10992c83cc3ad067719408b7d145b88a02383cee8f6e6dbc70e1edabdf788",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "Artículo 42. Se considera accidente de trabajo toda lesión orgánica o perturbación funcional, inmediata o posterior; o la muerte, produc",
+            "o 42. Se considera accidente de trabajo toda lesión orgánica o perturbación funcional, inmediata o posterior; o la muerte, producida repentin"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "58",
+          "sourceId": "PUB-b35b37e8e2c8c7c5ce35e772c4c0e2184846a27e5fa0e1e8d40e4ea21be374d2",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "c9b89703a7c6ea5cd4a561238636fe01d708614b416e4dc2988925a2f7658d27",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "fallecimiento de éste por causas distintas a riesgos de trabajo o enfermedades profesionales. Cuando el trabajador tenga una cantidad acumulada en su cue",
+            "go de trabajo tiene derecho a las siguientes prestaciones en dinero: I. Si lo incapacita para trabajar recibirá mientras dure la inhabilitación, el"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seguridad-social:salud",
+      "area": "seguridad-social",
+      "trigger": "incapacidad|enferm\\w*|subsidio|atencion medica",
+      "terms": [
+        "enfermedad",
+        "subsidio",
+        "incapacidad"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "84",
+          "sourceId": "PUB-02e238139dd8d4b22053c3bc9b84c8d4224721ffb87ff7922a3879d7aabe2dd2",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "5c7457085edcebf08c07e72f6b385389e3be97f157271a6578fe098b75c7e14b",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "rital durante los cinco años anteriores a la enfermedad, con quien ha procreado o registrado hijos, siempre que ambos permanezcan libres de matri",
+            "rada; II. El pensionado o pensionada por: a) Incapacidad permanente total o parcial; b) Invalidez; c) Cesantía en edad avanzada y vejez, y d) Viud"
+          ]
+        },
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "96",
+          "sourceId": "PUB-09415c30d0e7287232a59f1a77fafd43848840c4af2eafb789267ee6d7da2501",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "86ae5dae65183924adba4a169afd7db45ec501adf8fba055f380698cc058f6d5",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "Artículo 96. En caso de enfermedad no profesional, el asegurado tendrá derecho a un subsidio en dinero que se otorgará cuand",
+            "rofesional, el asegurado tendrá derecho a un subsidio en dinero que se otorgará cuando la enfermedad lo incapacite para el trabajo. El subsidio",
+            "ará a partir del cuarto día del inicio de la incapacidad, mientras dure ésta y hasta por el término de cincuenta y dos semanas. Si al concluir dic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seguridad-social:retiro",
+      "area": "seguridad-social",
+      "trigger": "jubil\\w*|pension.{0,15}(?:vejez|retiro)|retirarme|cesantia|sesenta|sesenta y cinco|semanas cotizadas",
+      "terms": [
+        "cesantía en edad avanzada",
+        "vejez",
+        "cotizaciones semanales"
+      ],
+      "provenance": [
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "154",
+          "sourceId": "PUB-9feab74efc825115b541eb21b71f704a755ffabd2f4d8a5e3b57c8216829863e",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "49373c17caf2e19697d1f45179751c57937ebf9269517f43182b71d3e2ccd2a3",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "ulo 154. Para los efectos de esta Ley existe cesantía en edad avanzada cuando el asegurado quede privado de trabajos remunerados a partir de los sesenta años de",
+            "conocidas ante el Instituto un mínimo de mil cotizaciones semanales. El trabajador cesante que tenga sesenta años o más y no reúna las semanas de cotización "
+          ]
+        },
+        {
+          "lawId": "MX-FED-LSS",
+          "article": "162",
+          "sourceId": "PUB-4dec569feca7b40959f5064022f1f741112c2a85eff5de21dd71b61036d0a071",
+          "jurisdiction": "MX-FED",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LSS.pdf",
+          "version": "MX-FED-LSS@2026-01-15+8a28a16e1dce1f8e",
+          "retrievedAt": "2026-10-30T13:06:03.540Z",
+          "textSha256": "701ee71c7da68e8291687cf30ae62674b393c395e48ae6bdecd6a21d74f4f3df",
+          "pdfSha256": "8a28a16e1dce1f8e666f4cce5ed19745bc912b2ab1ca49787d5d4bef229398ed",
+          "excerpts": [
+            "ho al goce de las prestaciones del seguro de vejez, se requiere que el asegurado haya cumplido sesenta y cinco años de edad y tenga reconoci",
+            "econocidas por el Instituto un mínimo de mil cotizaciones semanales. En caso que el asegurado tenga sesenta y cinco años o más y no reúna las semanas de coti"
+          ]
+        }
+      ]
+    }
+  ]
+}

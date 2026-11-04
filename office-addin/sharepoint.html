@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LEX AI para SharePoint</title><link rel="stylesheet" href="taskpane.css"></head>
+<body>
+<header class="pane-header"><span class="pane-brand"><img class="mark-light" src="lex-mark.svg" alt=""><img class="mark-dark" src="lex-mark-dark.svg" alt=""><span>LEX AI</span></span><span class="pane-link-state"><span class="dot" aria-hidden="true"></span><span class="when-paired">Asunto vinculado</span><span class="when-unpaired">Sin vincular</span></span></header>
+<main>
+<section class="pairing" aria-labelledby="pair-title"><h1 id="pair-title">Vincula este panel con un asunto</h1><p class="hint">Consulta el asunto y guarda en él fragmentos seleccionados de esta página. Para trabajar con un archivo, ábrelo en Word o Excel.</p>
+<ol class="steps"><li><span>Abre LEX AI en este Mac.</span></li><li><span>En <strong>Configuración</strong>, elige <strong>Vincular complemento</strong>.</span></li><li><span>Escribe aquí el código de 6 caracteres antes de que venza.</span></li></ol>
+<label for="pair-code">Código de vinculación</label><input id="pair-code" class="code-input" inputmode="text" maxlength="6" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"><button id="pair" type="button">Vincular</button><p id="pair-status" class="status" role="status"></p></section>
+<section id="workspace" class="hidden"></section>
+</main>
+<footer class="pane-footer"><span>Se procesa en este Mac</span><button id="unlink" class="link" type="button">Cerrar sesión del panel</button></footer>
+<script type="module" src="sharepoint.js"></script>
+</body></html>

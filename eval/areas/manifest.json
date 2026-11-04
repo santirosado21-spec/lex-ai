@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "dataset": "lex-areas-v1",
+  "syntheticOnly": true,
+  "cases": 200,
+  "casesSha256": "c6a148baa60c200e64dad4a43c143473d3ef959eacd70d4947e540b461cee42f",
+  "libraryIndexSha256": "ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588",
+  "libraryCorpusSha256": "e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11",
+  "heldOutLaws": [
+    {
+      "law_id": "MX-FED-CPEUM",
+      "area": "constitucional",
+      "title": "CONSTITUCIÓN Política de los Estados Unidos Mexicanos",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-CCF",
+      "area": "civil",
+      "title": "CÓDIGO Civil Federal",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-CNPCF",
+      "area": "familiar",
+      "title": "CÓDIGO Nacional de Procedimientos Civiles y Familiares",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-CNPP",
+      "area": "penal",
+      "title": "CÓDIGO Nacional de Procedimientos Penales",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-LFT",
+      "area": "laboral",
+      "title": "LEY Federal del Trabajo",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-CCOM",
+      "area": "mercantil",
+      "title": "CÓDIGO de Comercio",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-CFF",
+      "area": "fiscal",
+      "title": "CÓDIGO Fiscal de la Federación",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-LAMP",
+      "area": "amparo",
+      "title": "LEY de Amparo, Reglamentaria de los artículos 103 y 107 de la Constitución Política de los Estados Unidos Mexicanos",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-LFPA",
+      "area": "administrativo",
+      "title": "LEY Federal de Procedimiento Administrativo",
+      "previousSplit": "train"
+    },
+    {
+      "law_id": "MX-FED-LSS",
+      "area": "seguridad-social",
+      "title": "LEY del Seguro Social",
+      "previousSplit": "train"
+    }
+  ],
+  "retentionScope": "Prospective whole-law exclusion for future training; previous exposure unknown. Overrides previousSplit only in downstream training, not in the source database.",
+  "currentness": "unverified",
+  "legalReview": "not-performed"
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "lex-ai-sharepoint-client-side-solution",
+    "id": "cf087981-549e-4bf2-b888-414986e5af75",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.24.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "lex-ai-sharepoint description"
+      },
+      "longDescription": {
+        "default": "lex-ai-sharepoint description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "lex-ai-sharepoint Feature",
+        "description": "The feature that activates elements of the lex-ai-sharepoint solution.",
+        "id": "fce5f567-ebe8-456d-bc4c-1ec15bb8ae83",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/lex-ai-sharepoint.sppkg"
+  }
+}

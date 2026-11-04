@@ -10,14 +10,38 @@ import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
 import { openPublicLibrary } from './public-library.mjs';
 import { createLocalFileOpener } from './local-files.mjs';
+import { createOfficeBridge } from './office-bridge.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
-export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/LEX AI'),inference,service,monitorDir,libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/LEX AI'),inference,service,monitorDir,autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
  const openFile=process.platform==='darwin'&&process.env.LEX_DESKTOP==='1'?createLocalFileOpener({dataDir}):null;
  inference ||= createInference({dataDir});try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile});}catch(e){publicLibrary?.close();throw e;}
+ let officeBridge=null, officeStarting=null;
+ async function enableOffice() {
+  if (officeBridge) return officeBridge;
+  if (officeStarting) return officeStarting;
+  const port=Number(process.env.LEX_OFFICE_PORT||48765);
+  if (!Number.isInteger(port)||port<1||port>65535) throw Error('Puerto de Office inválido.');
+  officeStarting=(async()=>{
+   const bridge=createOfficeBridge({service,dataDir,port,assistant:{
+    history:matterId=>service.dispatch('office.history',{matterId}),
+    draft:(matterId,replyId)=>service.dispatch('draft.get',{matterId,replyId}),
+    saveDraft:(matterId,payload)=>service.dispatch('draft.save',{...payload,matterId}),
+    ask:(matterId,question)=>service.analyze({mode:'auto',matterId,question}),
+    saveSelection:(matterId,host,text)=>service.dispatch('document.import',{matterId,name:host+' - selección.txt',base64:Buffer.from(text).toString('base64')})
+   }});
+   try {await bridge.start();} catch(error) {
+    if(error.code==='ENOENT') throw Error('Prepara primero el certificado local de Office con el asistente de instalación.');
+    throw error;
+   }
+   officeBridge=bridge;return bridge;
+  })();
+  try{return await officeStarting;}finally{officeStarting=null;}
+ }
+ if(process.env.LEX_OFFICE_BRIDGE==='1')try{await enableOffice();}catch(error){service.close?.();publicLibrary?.close();throw error;}
  const token=randomBytes(32).toString('hex');let closing=false;
  const allowed=new Set(['tauri://localhost','http://tauri.localhost','https://tauri.localhost','http://localhost:1420','http://127.0.0.1:1420']);
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));};
@@ -46,6 +70,12 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     if(body.action==='engine.status')result=await inference.status();
     else if(body.action==='engine.initialize')result=await inference.initialize();
     else if(body.action==='engine.stop')result=await inference.stop();
+    else if(body.action==='office.pair' || body.action==='office.revoke'){
+     const {matterId,tenant}=body.payload||{};
+     // This check uses the same workspace/matter boundary as the desktop.
+     await service.dispatch('checklist.get',{matterId});
+     result=body.action==='office.pair'?(await enableOffice()).createPairing({matterId,tenant}):officeBridge?.revokeMatter(matterId)||{revoked:true};
+    }
     else if(body.action==='sources.status')result=await publicMonitorStatus({monitorDir});
     else if(body.action==='training.status')result=await trainingStatus({monitorDir});
     else if(typeof body.action==='string'&&body.action.startsWith('library.')){
@@ -65,13 +95,16 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
    if(!file.startsWith(dist+path.sep)){json(res,404,{error:'No encontrado.'});return;}
    let content;try{content=await readFile(file);}catch{json(res,404,{error:'Interfaz no compilada. Ejecuta npm run build.'});return;}
    const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2','.svg':'image/svg+xml'}[path.extname(file)]||'application/octet-stream';
-   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");res.writeHead(200,{'Content-Type':mime});res.end(content);
+   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");res.writeHead(200,{'Content-Type':mime});res.end(content);
   }catch(e){if(!res.headersSent)json(res,400,{error:e.message||'No se pudo completar la operación.'});else res.end();}
  });
  server.requestTimeout=30_000;server.headersTimeout=10_000;
- try{await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,'127.0.0.1',resolve);});}catch(e){try{service.close?.();}finally{publicLibrary?.close();}throw e;}
+ try{await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,'127.0.0.1',resolve);});}catch(e){try{await officeBridge?.close();service.close?.();}finally{publicLibrary?.close();}throw e;}
  const connection={url:`http://127.0.0.1:${server.address().port}`,token};
- return {connection,service,inference,async close(){if(closing)return;closing=true;try{await inference.stop();server.closeAllConnections();await new Promise(r=>server.close(r));service.close?.();}finally{publicLibrary?.close();}}};
+ // Desktop initialization installs only the small verified model from the
+ // bundle, starts its private daemon, and never loads weights until a query.
+ if(autoInitialize)void inference.initialize().catch(()=>{});
+ return {connection,service,inference,officeBridge,async close(){if(closing)return;closing=true;try{await officeBridge?.close();await inference.stop();server.closeAllConnections();await new Promise(r=>server.close(r));service.close?.();}finally{publicLibrary?.close();}}};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  try{const app=await startServer({port:Number(process.env.LEX_PORT||0)});console.log(JSON.stringify(app.connection));for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{await app.close();process.exit(0);});process.stdin.resume();process.stdin.on('end',async()=>{if(process.env.LEX_DESKTOP==='1'){await app.close();process.exit(0);}});}

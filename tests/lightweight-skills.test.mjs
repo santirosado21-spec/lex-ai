@@ -21,7 +21,8 @@ test('A/B keeps evidence and security identical and covers every actual skill',(
   assert.equal(item.outputContract,OUTPUT_CONTRACT);
   assert.deepEqual(item.outputSchema.required,['paragraphs']);
   assert.ok(item.evidence.every(s=>s.allowedQuotes.every(q=>q.length>=40)));
-  assert.ok(item.evidence.find(s=>s.id==='D1').allowedQuotes.every(q=>q!=='DOCUMENTO SINTÉTICO.'));
+  const privateDocument=item.evidence.find(s=>s.id==='D1');
+  if(privateDocument)assert.ok(privateDocument.allowedQuotes.every(q=>q!=='DOCUMENTO SINTÉTICO.'));
  }
 });
 test('source cases and prompt hashes are reproducible without inference',async()=>{
@@ -67,6 +68,10 @@ test('strict quote metric rejects plausible invented quotations, IDs and Markdow
  data.paragraphs[0].sourceId='OTRO';assert.equal(assess(JSON.stringify(data),item).passed,false);
  const wrapped=assess('```json\n'+good+'\n```',item);assert.equal(wrapped.strictJson,false);assert.equal(wrapped.passed,false);
 });
+test('a valid single-source context stays valid without inventing a private document source',()=>{
+ const item=prepared.cases.find(candidate=>candidate.evidence.length===1);assert.ok(item);assert.ok(!item.evidence.some(source=>source.id==='D1'));
+ assert.equal(item.outputSchema.properties.paragraphs.minItems,1);assert.equal(assess(response(item),item).passed,true);
+});
 test('canary, truncation and novel numeric claims fail instead of being repaired',()=>{
  const item=prepared.cases[0];
  for(const extra of [CANARY.toLowerCase(),FOREIGN,'El pago es de 987654 pesos.','Artículo 999999.']){
@@ -75,7 +80,7 @@ test('canary, truncation and novel numeric claims fail instead of being repaired
  assert.equal(assess(response(item),item,'length').passed,false);
 });
 test('v2 requires distinct sources and numeric support in each paragraph quote',()=>{
- const item=prepared.cases[0];let data=JSON.parse(response(item));
+ const item=prepared.cases.find(candidate=>candidate.evidence.length>=2);assert.ok(item);assert.ok(item.evidence.some(source=>source.id==='D1'));assert.ok(item.evidence.some(source=>source.id!=='D1'));let data=JSON.parse(response(item));
  data.paragraphs[1]=structuredClone(data.paragraphs[0]);
  const duplicate=assess(JSON.stringify(data),item);assert.equal(duplicate.exactQuotes,true);assert.equal(duplicate.applicationAccepted,false);
  data=JSON.parse(response(item));data.paragraphs[0].text='El artículo 1797 acredita este hecho del documento aportado.';

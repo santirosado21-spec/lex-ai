@@ -34,6 +34,14 @@ test('catalog pins small official model and rejects heavy budgets/path injection
  assert.throws(()=>modelPolicy({...catalog,downloadBytes:16e9}),/2 GB/);assert.throws(()=>modelPolicy({...catalog,id:'../../bad:tag'}),/inválido/);assert.throws(()=>modelPolicy({...catalog,contextLength:8192}),/Presupuesto/);
 });
 test('no automatic startup; supported target is explicitly unmeasured',async t=>{const f=await fixture(t);assert.equal(f.children.length,0);const s=await f.engine.status();assert.equal(s.supported,true);assert.equal(s.memoryMeasured,false);await assert.rejects(async()=>{for await(const _ of f.engine.generate([])){}},/Prepara LEX AI/);});
+test('Intel is supported by the catalog while incompatible targets remain blocked',async t=>{
+ for(const hardware of [{platform:'darwin',arch:'x64',memoryGB:8},{platform:'darwin',arch:'x64',memoryGB:4},{platform:'linux',arch:'x64',memoryGB:8},{platform:'darwin',arch:'ia32',memoryGB:8}]){
+  const f=await fixture(t,{hardware});const supported=hardware.platform==='darwin'&&hardware.arch==='x64'&&hardware.memoryGB>=8;
+  assert.equal((await f.engine.status()).supported,supported);
+  await f.engine.initialize();assert.equal((await settled(f.engine)).state,supported?'ready':'error');
+  if(!supported){assert.equal(f.children.length,0);assert.equal(f.calls.length,0);}
+ }
+});
 test('local imported v2 index is pinned and never fetched from a registry',async t=>{
  const f=await fixture(t,{manifestLayout:'v2'});assert.match(f.manifestPath,/manifests-v2\/ollama\.com/);await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert(!f.calls.some(c=>c.url.includes('registry.ollama.ai')));
  const missing=await fixture(t,{manifestLayout:'v2',installed:false});await missing.engine.initialize();assert.equal((await settled(missing.engine)).state,'error');assert(!missing.calls.some(c=>c.url.includes('registry.ollama.ai')||c.url.endsWith('/api/pull')));
@@ -90,6 +98,16 @@ test('concurrent generation is rejected while first stream holds the runner',asy
 test('truncated model response is rejected and still unloaded',async t=>{
  const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?stream([{done:true,done_reason:'length'}]):null});await f.engine.initialize();await settled(f.engine);
  await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/excedió el límite/);assert(f.calls.some(c=>c.url.endsWith('/api/generate')));
+});
+test('plain conversation omits JSON format while grounded requests preserve their output schema',async t=>{
+ const f=await fixture(t);await f.engine.initialize();await settled(f.engine);
+ for await(const _ of f.engine.generate([{role:'user',content:'Conversación sintética'}],{responseFormat:'text'})){}
+ const chat=f.calls.find(c=>c.url.endsWith('/api/chat')).body;assert.equal(Object.hasOwn(chat,'format'),false);
+ assert.equal(chat.keep_alive,0);assert.equal(chat.think,false);
+ const schema={type:'object',properties:{answer:{type:'string'}}};
+ for await(const _ of f.engine.generate([{role:'user',content:'Evidencia sintética'}],{outputSchema:schema})){}
+ assert.deepEqual(f.calls.filter(c=>c.url.endsWith('/api/chat')).at(-1).body.format,schema);
+ await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'Hola'}],{responseFormat:'xml'})){}},/Formato/);
 });
 test('RSS over 3 GiB or unmeasurable fails closed before chat',async t=>{for(const rss of [async()=>3*1024**3+1,async()=>{throw Error('ps denied');}]){const f=await fixture(t,{rss});await f.engine.initialize();await settled(f.engine);await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/memoria/);assert(!f.calls.some(c=>c.url.endsWith('/api/chat')));assert.equal((await f.engine.status()).state,'error');assert(f.children[0].child.kills.includes('SIGTERM'));}});
 test('RSS is sampled during active generation and aborts on excessive growth',async t=>{let samples=0;const f=await fixture(t,{rss:async()=>++samples===1?100:4*1024**3,fetch:({url,opts})=>url.endsWith('/api/chat')?new Promise((resolve,reject)=>opts.signal.addEventListener('abort',()=>reject(new DOMException('aborted','AbortError')),{once:true})):null});await f.engine.initialize();await settled(f.engine);await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/3 GiB/);assert(samples>=2);assert.equal((await f.engine.status()).state,'error');});

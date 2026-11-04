@@ -16,7 +16,7 @@ export function buildGroundedSchema(evidence){
  return {type:'object',additionalProperties:false,required:['paragraphs'],properties:{paragraphs:{type:'array',minItems:Math.min(2,sources.length),maxItems:3,items:{anyOf:sources.map(({source,quotes})=>({type:'object',additionalProperties:false,required:['sourceId','quote','text'],properties:{sourceId:{type:'string',const:source.id},quote:{type:'string',enum:quotes},text:{type:'string',minLength:40,maxLength:350},kind:{type:'string',enum:[...KINDS]}}}))}}}};
 }
 const numberWords=new Set('cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciséis dieciseis diecisiete dieciocho diecinueve veinte veintiuno veintidós veintidos veintitrés veintitres veinticuatro veinticinco veintiséis veintiseis veintisiete veintiocho veintinueve treinta cuarenta cincuenta sesenta setenta ochenta noventa cien ciento doscientos trescientos cuatrocientos quinientos seiscientos setecientos ochocientos novecientos mil millón millon millones primero segundo tercero cuarto quinto sexto séptimo septimo octavo noveno décimo decimo enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre'.split(' '));
-function numericClaims(text){
+export function numericClaims(text){
  const value=normalize(text).toLocaleLowerCase('es');
  const claims=[...(value.match(/\p{N}+(?:[.,:/-]\p{N}+)*(?:\s*%)?/gu)||[])];
  for(const token of value.match(/[\p{L}]+/gu)||[])if(numberWords.has(token))claims.push(token);

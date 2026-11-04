@@ -1,0 +1,6 @@
+ObjC.import('Foundation');
+function run() {
+ var mail=Application('Mail');
+ var accounts=mail.accounts().filter(function(account){return account.enabled()===true;});
+ return JSON.stringify({accounts:accounts.map(function(account){return {id:String(account.id()),name:String(account.name()),addresses:account.emailAddresses().map(String)};})});
+}

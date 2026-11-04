@@ -1,5 +1,13 @@
 # LEX AI
 
+Diálogo por defecto **0.4.13**: chat con contexto propio; las fuentes se usan para consultas jurídicas/documentales y sus seguimientos. La naturalidad sigue en evaluación, con fallos conservados. [Comparación e instalación](docs/qa/dialogue-routing-context-0.4.13.md).
+
+Conversación base **0.4.12**: corrige peticiones de fuentes al responder listas, cálculos y correos, y evita convertir operaciones aritméticas en consultas de leyes. [Pruebas reales e instalación](docs/qa/general-chat-base-0.4.12.md).
+
+Agente conversacional **0.4.11**: Nuevo chat, búsqueda e historial local por asunto; menú lateral en ventanas pequeñas. Instalador universal Intel / Apple Silicon y pruebas: [informe de entrega](docs/qa/conversational-native-fix-0.4.11.md).
+
+El código local declara **0.4.8** y tiene cambios sin commit. El instalador conservado es **0.4.6**, disponible en `artifacts/LEX-AI-0.4.6-arm64.dmg`; su informe cubre edición de respuestas, correo aprobado, seguimientos locales y complementos de Microsoft 365. [Memoria, entrenamiento e interfaz actuales](docs/qa/memory-training-ui-2026-11-03.md) · [Corte de integración](docs/qa/continuity-budget-2026-11-03.md) · [Verificación del paquete 0.4.6](docs/qa/desktop-0.4.6.md).
+
 Espacio jurídico privado para despachos mexicanos de distintas especialidades. Prototipo local para macOS Apple Silicon con Tauri + React/TypeScript y Node/SQLite. El objetivo actual es 8 GB de RAM; las mediciones se realizan en una Mac de 24 GB y no certifican todavía un equipo físico de 8 GB.
 
 Permite crear despacho/asuntos, importar TXT/MD/PDF/DOCX, recuperar documentos y fuentes oficiales, analizar con IA local, exportar DOCX y conservar feedback con propuestas de notas revisables. No es un producto validado para documentación confidencial ni sustituye revisión profesional.
@@ -26,6 +34,8 @@ npm run test:e2e
 
 ## Escritorio
 
+La versión 0.4.5 ofrece un solo asistente: conversación, consulta jurídica con fuentes automáticas y análisis documental en un mismo hilo. Habilidad inicial Automática, sin selector de modos. [Pruebas y límites](docs/qa/desktop-0.4.5.md); [distribución autónoma](docs/architecture/offline-desktop.md).
+
 ```bash
 npm run desktop:build
 bash scripts/package-dmg.sh
@@ -35,7 +45,7 @@ Requiere Rust/Cargo y Command Line Tools solo en la máquina de compilación. `s
 
 En esta sesión Rust está aislado en `/private/tmp/lex-toolchain`; para recompilar con ese toolchain exportar `CARGO_HOME=/private/tmp/lex-toolchain/cargo`, `RUSTUP_HOME=/private/tmp/lex-toolchain/rustup` y añadir `$CARGO_HOME/bin` a PATH. No es una dependencia del instalador.
 
-Abrir la aplicación no descarga ni carga un modelo. Al inicializar explícitamente, se verifica el manifiesto y SHA256 de la versión fijada en `resources/model-catalog.json`, con un límite total de descarga de 2 GB. El motor privado admite una consulta simultánea, limita el contexto y libera el modelo después de responder. Los pesos grandes anteriores se conservan sin reutilizarse automáticamente. Los límites y la incertidumbre de las mediciones están en [ADR 0002](docs/architecture/adr/0002-lightweight-local-runtime.md).
+La distribución 0.4.4 incluye el modelo ligero junto con el motor privado: el usuario no instala programas extra ni descarga pesos después de obtener la app. Al abrirla, se preparan y verifican localmente el manifiesto y SHA256 fijados en `resources/model-catalog.json`; los pesos se cargan para inferencia solo al preguntar. El flujo de desarrollo conserva la descarga explícita, limitada a 2 GB. El motor privado admite una consulta simultánea, limita el contexto y libera el modelo después de responder. Los pesos grandes anteriores se conservan sin reutilizarse automáticamente. Los límites y la incertidumbre de las mediciones están en [ADR 0002](docs/architecture/adr/0002-lightweight-local-runtime.md).
 
 La interfaz actual usa tres destinos principales —Asistente, Asuntos y Escritos— y el [logo editable de Figma](https://www.figma.com/design/4O4XgcaSNSMEvAQjUQbc0C?node-id=2-22). Claude Code revisó la dirección conforme a Apple HIG; [alcance y pruebas](docs/architecture/apple-hig-identity.md). La investigación recupera leyes locales sin exigir importar documentos; los escritos y originales se abren desde su asunto.
 
@@ -44,6 +54,8 @@ La interfaz actual usa tres destinos principales —Asistente, Asuntos y Escrito
 - [PRD y criterios](docs/product/PRD.md)
 - [Arquitectura](docs/architecture/overview.md) y [ADRs](docs/architecture/adr/)
 - [Auditoría](docs/orchestration/capability-audit.md), [tareas](docs/orchestration/task-board.md), [ejecución](docs/orchestration/execution-log.md)
+- [Workflow de desarrollo con Kimi y Cursor](docs/orchestration/desktop-collaborators.md)
+- [dsystem: Groq, OpenRouter, Hugging Face y Mistral](docs/orchestration/remote-collaborators.md)
 - [Amenazas](docs/security/threat-model.md), [pruebas](docs/qa/test-plan.md), [límites](docs/qa/known-limitations.md)
 - [Fuentes y licencias](docs/architecture/legal-provenance.md)
 - [Entrenamiento local reproducible](docs/training-runbook.md) y [distribución del candidato](docs/model-distribution.md)
@@ -62,9 +74,9 @@ El repositorio de desarrollo es privado: https://github.com/santirosado21-spec/l
 
 [Evidencia de entrega y límites](docs/qa/8gb-delivery-2026-11-01.md).
 
-Versión local de evaluación **0.4.1**, instalada en `/Applications/LEX AI.app`; la instalación anterior se conserva en `artifacts/desktop-update/`. Instalador: `artifacts/LEX-AI-0.4.1-arm64.dmg`, 396.837.707, con SHA256 adyacente. Se conserva el historial de paquetes anteriores. El paquete tiene firma ad hoc de desarrollo y no está notarizado.
+Al corte del 3 de noviembre de 2026, `package.json` y el plist de `/Applications/LEX AI.app` declaran **0.4.8**, pero el router instalado difiere del árbol de trabajo. No se ha instalado la corrección de continuidad de este corte ni se ha repetido el smoke nativo. El instalador conservado es `artifacts/LEX-AI-0.4.6-arm64.dmg`, **2.189.000.727 bytes**; su evidencia histórica está en [el informe 0.4.6](docs/qa/desktop-0.4.6.md). Las versiones y hashes se registran por separado en [el corte actual](docs/qa/continuity-budget-2026-11-03.md). El piloto conductual ya completó dos pasos y guardó un checkpoint verificado; el candidato permanece inactivo. La continuación supervisada espera recursos según [el estado de entrenamiento](docs/qa/memory-training-ui-2026-11-03.md). La firma ad hoc histórica no equivale a notarización. No se verificó la publicación web en este corte.
 
-El catálogo actual descarga Qwen3.5 2B Q4_K_M (1.945.781.358 bytes) solo al preparar explícitamente el asistente. Se eligió para evaluación local por su resultado relativo en la [comparación controlada](docs/qa/lightweight-runtime-comparison-2026-11-01.md): 28/30 casos técnicamente aceptados con instrucciones de habilidad; **no demostró mejora por habilidades ni calidad jurídica suficiente para distribución profesional**. El [candidato entrenado grounded-v2](docs/qa/grounded-training-v2-2026-11-01.md) ya tiene pesos exportados de 1.02 GB; permanece separado e inactivo porque no ha superado la evaluación.
+El catálogo actual fija Qwen3.5 2B Q4_K_M (1.945.781.358 bytes), incluido en el instalador 0.4.4; el entorno de desarrollo también puede obtenerlo mediante preparación explícita. Se eligió para evaluación local por su resultado relativo en la [comparación controlada](docs/qa/lightweight-runtime-comparison-2026-11-01.md): 28/30 casos técnicamente aceptados con instrucciones de habilidad; **no demostró mejora por habilidades ni calidad jurídica suficiente para distribución profesional**. El [candidato entrenado grounded-v2](docs/qa/grounded-training-v2-2026-11-01.md) ya tiene pesos exportados de 1.02 GB; permanece separado e inactivo porque no ha superado la evaluación.
 
 La verificación del paquete y de la instalación comprueba biblioteca, búsqueda, versiones, firma, icono y hashes de los módulos. El runtime incluido pasó una consulta real sin importar documentos y exportación DOCX usando pesos previamente verificados en un caché de evaluación. La UI pasó navegación, teclado y varios tamaños de ventana en Chromium con datos sintéticos. macOS aceptó abrir un TXT y un DOCX mediante el servicio real; la herramienta de inspección nativa no pudo iniciar, por lo que no se afirma revisión visual del editor o de la ventana Tauri.
 

@@ -1,5 +1,11 @@
 # LEX AI — MVP local
 
+> **Biblioteca jurídica nacional (2026-11-04):** el dueño exige una base comparable funcionalmente a la referencia de Luthor para despachos. La [especificación y auditoría de biblioteca local](../architecture/national-local-legal-library-2026-11-04.md) fija las brechas de legislación estatal, criterios judiciales, reformas y versiones, con distribución pública separada de los expedientes privados. No afirma cobertura nacional ya implementada.
+
+> **Aclaración comercial (2026-11-04):** privacidad local y uso sin cuotas de proveedor en computadoras comunes con poca RAM son requisitos centrales. Modelos grandes en la Mac de desarrollo no sustituyen el objetivo de 8 GB. La [evaluación de Claude Legal y viabilidad local](../architecture/claude-legal-local-viability-2026-11-04.md) distingue los nueve procesos adaptables, las fallas exploratorias del 2B, compatibilidad pendiente y las garantías que aún no podemos anunciar.
+
+> **Dirección vigente (2026-11-03):** un solo asistente jurídico conversacional, local y ligero orientado a 8 GB, con fuentes automáticas y contexto del asunto. Las referencias inferiores al modelo grande y al hardware inicial describen el corte histórico del MVP. Para el producto final y la aceptación del entrenamiento rige el [contrato actualizado](../architecture/conversational-product-contract-2026-11-03.md). La fase nocturna de conversación no equivale a completar el ajuste jurídico conductual.
+
 ## Objetivo
 Un espacio jurídico privado para despachos mexicanos de distintas especialidades. Comercio exterior es una especialidad posible, no el límite del producto. México es la primera jurisdicción; la arquitectura separa jurisdicción, corpus, skills y almacenamiento.
 

@@ -10,4 +10,5 @@ import '@fontsource/newsreader/600.css';
 import './styles.css';
 import './tailwind.css';
 import './macos.css';
+import './design-system.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);

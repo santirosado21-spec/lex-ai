@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>LEX AI usa el micrófono para convertir tu dictado en texto dentro de este equipo.</string>
+  <key>NSAppleEventsUsageDescription</key>
+  <string>LEX AI usa Mail para consultar tus cuentas y enviar los correos que apruebes.</string>
+</dict>
+</plist>

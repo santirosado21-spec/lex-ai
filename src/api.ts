@@ -2,13 +2,14 @@ export interface MatterTask { id:string; matterId:string; workspaceId:string; ti
 export interface Matter { id: string; title: string; client: string; jurisdiction: string }
 export interface DocumentRecord { id: string; matterId: string; name: string; characters: number; createdAt: string }
 export interface Source { id?: string; sourceId?: string; title?: string; authority?: string; jurisdiction?: string; category?: string; article?: string; url?: string; text?: string; quote?: string; version?: string; amendedAt?: string; retrievedAt?: string; status?: string; name?: string; documentId?: string }
-export interface Answer { id: string; matterId: string; question?: string; text: string; citations: Source[]; createdAt: string; validation?: Record<string, unknown> }
+export interface Answer { id: string; matterId: string; threadId?: string; kind?: 'chat' | 'grounded'; workspaceId?: string; editedDraft?:{id:string;version:number;title:string;originalHash:string}; question?: string; text: string; citations: Source[]; createdAt: string; validation?: Record<string, unknown> }
 export interface Feedback { id: string; answerId: string; matterId: string; rating: string; comment: string; createdAt?: string }
 export interface Proposal { history?: {event:string;at:string}[]; matterId?: string; id: string; feedbackId: string; status: string; text?: string; content?: string; candidate?: string; version?: number; evaluation?: Record<string, unknown>; createdAt?: string }
 export interface Skill { id: string; name: string; description: string; version?: string; supportedJurisdictions?: string[]; jurisdictions?: string[] }
-export interface AppState { workspace: null | { id: string; name: string; practiceAreas: string[] }; matters: Matter[]; documents: DocumentRecord[]; answers: Answer[]; feedback: Feedback[]; proposals: Proposal[]; tasks: MatterTask[]; skills: Skill[]; sources: Source[] }
+export interface ReplyDraftSummary {id:string;replyId:string;matterId:string;version:number;current:{title:string;text:string}}
+export interface AppState { workspace: null | { id: string; name: string; practiceAreas: string[] }; matters: Matter[]; documents: DocumentRecord[]; answers: Answer[]; chatTurns: Answer[]; drafts?: ReplyDraftSummary[]; feedback: Feedback[]; proposals: Proposal[]; tasks: MatterTask[]; skills: Skill[]; sources: Source[] }
 export interface EngineStatus { state?: string; status?: string; model?: string; message?: string; error?: string; progress?: number | string; supported?: boolean; ready?: boolean; hardware?: { platform?: string; arch?: string; memoryGB?: number; totalMemoryGB?: number }; [key: string]: unknown }
-export const emptyState: AppState = { workspace: null, matters: [], documents: [], answers: [], feedback: [], proposals: [], tasks: [], skills: [], sources: [] };
+export const emptyState: AppState = { workspace: null, matters: [], documents: [], answers: [], chatTurns: [], feedback: [], proposals: [], tasks: [], skills: [], sources: [] };
 let connection: Promise<{ url: string; token: string }> | null = null;
 async function getConnection() {
   if (!connection) connection = (async () => {

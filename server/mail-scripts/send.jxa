@@ -1,0 +1,24 @@
+ObjC.import('Foundation');
+function run() {
+ var raw=$.NSString.stringWithContentsOfFileEncodingError('/dev/stdin',$.NSUTF8StringEncoding,null);
+ var payload=JSON.parse(ObjC.unwrap(raw));
+ var mail=Application('Mail');
+ var account=mail.accounts().filter(function(item){return String(item.id())===payload.accountId;})[0];
+ if(!account||account.enabled()!==true||account.emailAddresses().map(function(value){return String(value).toLowerCase();}).indexOf(payload.from.toLowerCase())<0)throw Error('Cuenta no disponible.');
+ var message=mail.OutgoingMessage({subject:payload.subject,sender:payload.from,visible:false});
+ mail.outgoingMessages.push(message);
+ message.messageSignature=null;
+ payload.to.forEach(function(address){message.toRecipients.push(mail.ToRecipient({address:address}));});
+ payload.cc.forEach(function(address){message.ccRecipients.push(mail.CcRecipient({address:address}));});
+ payload.bcc.forEach(function(address){message.bccRecipients.push(mail.BccRecipient({address:address}));});
+ message.content=payload.body;
+ var normalized=function(value){return String(value).replace(/\r\n?/g,'\n').replace(/\n$/,'');};
+ var addresses=function(items){return items.map(function(item){return String(item.address()).toLowerCase();}).sort().join('\n');};
+ var expected=function(items){return items.map(function(item){return item.toLowerCase();}).sort().join('\n');};
+ if(String(message.subject())!==payload.subject||normalized(message.content())!==normalized(payload.body)||addresses(message.toRecipients())!==expected(payload.to)||addresses(message.ccRecipients())!==expected(payload.cc)||addresses(message.bccRecipients())!==expected(payload.bcc))throw Error('El mensaje cambió antes del envío.');
+ var sender=String(message.sender()).toLowerCase();
+ if(sender!==payload.from.toLowerCase()&&sender.indexOf('<'+payload.from.toLowerCase()+'>')<0)throw Error('El remitente cambió.');
+ var accepted=mail.send(message);
+ if(accepted!==true)throw Error('Mail no aceptó el envío.');
+ return JSON.stringify({accepted:true});
+}

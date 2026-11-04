@@ -1,0 +1,948 @@
+{
+  "MX-FED-10": [
+    "constitucional"
+  ],
+  "MX-FED-105": [
+    "mercantil"
+  ],
+  "MX-FED-109": [
+    "administrativo"
+  ],
+  "MX-FED-124": [
+    "administrativo"
+  ],
+  "MX-FED-136": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-157": [
+    "administrativo"
+  ],
+  "MX-FED-158": [
+    "administrativo"
+  ],
+  "MX-FED-159": [
+    "administrativo"
+  ],
+  "MX-FED-162": [
+    "mercantil"
+  ],
+  "MX-FED-164": [
+    "mercantil"
+  ],
+  "MX-FED-167": [
+    "mercantil"
+  ],
+  "MX-FED-170": [
+    "administrativo"
+  ],
+  "MX-FED-171": [
+    "administrativo"
+  ],
+  "MX-FED-177": [
+    "otros"
+  ],
+  "MX-FED-187": [
+    "administrativo"
+  ],
+  "MX-FED-19": [
+    "penal"
+  ],
+  "MX-FED-192": [
+    "administrativo"
+  ],
+  "MX-FED-193": [
+    "administrativo"
+  ],
+  "MX-FED-195": [
+    "administrativo"
+  ],
+  "MX-FED-196": [
+    "administrativo"
+  ],
+  "MX-FED-197": [
+    "administrativo"
+  ],
+  "MX-FED-200": [
+    "administrativo"
+  ],
+  "MX-FED-202": [
+    "constitucional"
+  ],
+  "MX-FED-207": [
+    "constitucional"
+  ],
+  "MX-FED-208": [
+    "constitucional"
+  ],
+  "MX-FED-211": [
+    "mercantil"
+  ],
+  "MX-FED-218": [
+    "administrativo"
+  ],
+  "MX-FED-219": [
+    "constitucional"
+  ],
+  "MX-FED-23": [
+    "administrativo"
+  ],
+  "MX-FED-238": [
+    "administrativo"
+  ],
+  "MX-FED-246": [
+    "administrativo"
+  ],
+  "MX-FED-252": [
+    "administrativo"
+  ],
+  "MX-FED-256": [
+    "mercantil"
+  ],
+  "MX-FED-260": [
+    "administrativo"
+  ],
+  "MX-FED-268": [
+    "administrativo"
+  ],
+  "MX-FED-269": [
+    "administrativo"
+  ],
+  "MX-FED-271": [
+    "administrativo"
+  ],
+  "MX-FED-30": [
+    "fiscal"
+  ],
+  "MX-FED-35": [
+    "administrativo"
+  ],
+  "MX-FED-36": [
+    "penal"
+  ],
+  "MX-FED-53": [
+    "administrativo"
+  ],
+  "MX-FED-57": [
+    "administrativo"
+  ],
+  "MX-FED-63": [
+    "mercantil"
+  ],
+  "MX-FED-65": [
+    "administrativo"
+  ],
+  "MX-FED-70": [
+    "mercantil"
+  ],
+  "MX-FED-71": [
+    "mercantil"
+  ],
+  "MX-FED-74": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-75": [
+    "administrativo"
+  ],
+  "MX-FED-93": [
+    "fiscal"
+  ],
+  "MX-FED-96": [
+    "administrativo"
+  ],
+  "MX-FED-CCF": [
+    "civil",
+    "familiar"
+  ],
+  "MX-FED-CCOM": [
+    "mercantil"
+  ],
+  "MX-FED-CFF": [
+    "fiscal"
+  ],
+  "MX-FED-CFPC": [
+    "civil",
+    "familiar"
+  ],
+  "MX-FED-CJM": [
+    "penal"
+  ],
+  "MX-FED-CMPP": [
+    "penal"
+  ],
+  "MX-FED-CNPCF": [
+    "civil",
+    "familiar"
+  ],
+  "MX-FED-CNPP": [
+    "penal"
+  ],
+  "MX-FED-CPEUM": [
+    "constitucional"
+  ],
+  "MX-FED-CPF": [
+    "penal"
+  ],
+  "MX-FED-LAAM": [
+    "administrativo"
+  ],
+  "MX-FED-LAASSP": [
+    "administrativo"
+  ],
+  "MX-FED-LAAT": [
+    "laboral"
+  ],
+  "MX-FED-LAC": [
+    "administrativo"
+  ],
+  "MX-FED-LACP": [
+    "mercantil"
+  ],
+  "MX-FED-LAEM": [
+    "administrativo"
+  ],
+  "MX-FED-LAERO": [
+    "administrativo"
+  ],
+  "MX-FED-LAGRA": [
+    "administrativo"
+  ],
+  "MX-FED-LAMN": [
+    "penal"
+  ],
+  "MX-FED-LAMP": [
+    "amparo"
+  ],
+  "MX-FED-LAN": [
+    "administrativo"
+  ],
+  "MX-FED-LANSI": [
+    "administrativo"
+  ],
+  "MX-FED-LAPP": [
+    "administrativo"
+  ],
+  "MX-FED-LARCP": [
+    "administrativo"
+  ],
+  "MX-FED-LAREFAGN": [
+    "administrativo"
+  ],
+  "MX-FED-LASOC": [
+    "administrativo"
+  ],
+  "MX-FED-LBIO": [
+    "administrativo"
+  ],
+  "MX-FED-LBOGM": [
+    "administrativo"
+  ],
+  "MX-FED-LCACSEFAM": [
+    "administrativo"
+  ],
+  "MX-FED-LCCAIF": [
+    "administrativo"
+  ],
+  "MX-FED-LCE": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-LCEC": [
+    "mercantil"
+  ],
+  "MX-FED-LCF": [
+    "fiscal"
+  ],
+  "MX-FED-LCID": [
+    "administrativo"
+  ],
+  "MX-FED-LCJPJF": [
+    "administrativo"
+  ],
+  "MX-FED-LCM": [
+    "mercantil"
+  ],
+  "MX-FED-LCMM": [
+    "administrativo"
+  ],
+  "MX-FED-LCNBV": [
+    "mercantil"
+  ],
+  "MX-FED-LCNDH": [
+    "constitucional"
+  ],
+  "MX-FED-LCNE": [
+    "administrativo"
+  ],
+  "MX-FED-LCPAF": [
+    "administrativo"
+  ],
+  "MX-FED-LDCMPME": [
+    "administrativo"
+  ],
+  "MX-FED-LDEFAGN": [
+    "administrativo"
+  ],
+  "MX-FED-LDFEFM": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LDPAM": [
+    "administrativo"
+  ],
+  "MX-FED-LDRS": [
+    "administrativo"
+  ],
+  "MX-FED-LDSC": [
+    "administrativo"
+  ],
+  "MX-FED-LDSCA": [
+    "administrativo"
+  ],
+  "MX-FED-LDVUMA": [
+    "administrativo"
+  ],
+  "MX-FED-LEBHN": [
+    "administrativo"
+  ],
+  "MX-FED-LEMEFAGN": [
+    "administrativo"
+  ],
+  "MX-FED-LEN": [
+    "administrativo"
+  ],
+  "MX-FED-LEPECFE": [
+    "administrativo"
+  ],
+  "MX-FED-LEPEPM": [
+    "administrativo"
+  ],
+  "MX-FED-LESS": [
+    "mercantil"
+  ],
+  "MX-FED-LFAAR": [
+    "mercantil"
+  ],
+  "MX-FED-LFAEBSP": [
+    "administrativo"
+  ],
+  "MX-FED-LFAFE": [
+    "penal"
+  ],
+  "MX-FED-LFAR": [
+    "administrativo"
+  ],
+  "MX-FED-LFC": [
+    "administrativo"
+  ],
+  "MX-FED-LFCA": [
+    "administrativo"
+  ],
+  "MX-FED-LFCC": [
+    "administrativo"
+  ],
+  "MX-FED-LFCDO": [
+    "penal"
+  ],
+  "MX-FED-LFCE": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-LFCPO": [
+    "constitucional"
+  ],
+  "MX-FED-LFCPQ": [
+    "administrativo"
+  ],
+  "MX-FED-LFCSQ": [
+    "administrativo"
+  ],
+  "MX-FED-LFDA": [
+    "civil",
+    "mercantil"
+  ],
+  "MX-FED-LFDC": [
+    "fiscal"
+  ],
+  "MX-FED-LFDEAPD": [
+    "civil",
+    "familiar"
+  ],
+  "MX-FED-LFDEFP": [
+    "administrativo"
+  ],
+  "MX-FED-LFEA": [
+    "administrativo"
+  ],
+  "MX-FED-LFEP": [
+    "administrativo"
+  ],
+  "MX-FED-LFFAOSC": [
+    "administrativo"
+  ],
+  "MX-FED-LFFMAA": [
+    "administrativo"
+  ],
+  "MX-FED-LFFPMN": [
+    "administrativo"
+  ],
+  "MX-FED-LFGR": [
+    "penal"
+  ],
+  "MX-FED-LFI": [
+    "mercantil"
+  ],
+  "MX-FED-LFIIEDB": [
+    "mercantil"
+  ],
+  "MX-FED-LFISAN": [
+    "fiscal"
+  ],
+  "MX-FED-LFIV": [
+    "administrativo"
+  ],
+  "MX-FED-LFLL": [
+    "administrativo"
+  ],
+  "MX-FED-LFMPED": [
+    "administrativo"
+  ],
+  "MX-FED-LFMZAAH": [
+    "administrativo"
+  ],
+  "MX-FED-LFPA": [
+    "administrativo"
+  ],
+  "MX-FED-LFPC": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-LFPCA": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LFPCCS": [
+    "mercantil"
+  ],
+  "MX-FED-LFPDPPP": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LFPED": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LFPIORPI": [
+    "administrativo"
+  ],
+  "MX-FED-LFPPCPCIA": [
+    "administrativo"
+  ],
+  "MX-FED-LFPPI": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-LFPPIPP": [
+    "penal"
+  ],
+  "MX-FED-LFPRH": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LFPSDMH": [
+    "penal"
+  ],
+  "MX-FED-LFRA": [
+    "civil",
+    "administrativo"
+  ],
+  "MX-FED-LFRCF": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LFREMSP": [
+    "laboral"
+  ],
+  "MX-FED-LFRM": [
+    "constitucional"
+  ],
+  "MX-FED-LFRPE": [
+    "civil",
+    "administrativo"
+  ],
+  "MX-FED-LFRSP": [
+    "administrativo"
+  ],
+  "MX-FED-LFSA": [
+    "administrativo"
+  ],
+  "MX-FED-LFSP": [
+    "administrativo"
+  ],
+  "MX-FED-LFSV": [
+    "administrativo"
+  ],
+  "MX-FED-LFT": [
+    "laboral"
+  ],
+  "MX-FED-LFTSE": [
+    "laboral"
+  ],
+  "MX-FED-LFVV": [
+    "administrativo"
+  ],
+  "MX-FED-LFZEE": [
+    "administrativo"
+  ],
+  "MX-FED-LGA": [
+    "administrativo"
+  ],
+  "MX-FED-LGAAS": [
+    "administrativo"
+  ],
+  "MX-FED-LGAG": [
+    "administrativo"
+  ],
+  "MX-FED-LGAHOTDU": [
+    "administrativo"
+  ],
+  "MX-FED-LGAMVLV": [
+    "familiar",
+    "penal"
+  ],
+  "MX-FED-LGAPPCEA": [
+    "administrativo"
+  ],
+  "MX-FED-LGB": [
+    "administrativo"
+  ],
+  "MX-FED-LGBN": [
+    "administrativo"
+  ],
+  "MX-FED-LGCC": [
+    "administrativo"
+  ],
+  "MX-FED-LGCDC": [
+    "administrativo"
+  ],
+  "MX-FED-LGCFD": [
+    "administrativo"
+  ],
+  "MX-FED-LGCG": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LGCS": [
+    "administrativo"
+  ],
+  "MX-FED-LGCT": [
+    "administrativo"
+  ],
+  "MX-FED-LGDFS": [
+    "administrativo"
+  ],
+  "MX-FED-LGDLPI": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LGDNNA": [
+    "familiar",
+    "administrativo"
+  ],
+  "MX-FED-LGDOCIA": [
+    "administrativo"
+  ],
+  "MX-FED-LGDS": [
+    "administrativo"
+  ],
+  "MX-FED-LGE": [
+    "administrativo"
+  ],
+  "MX-FED-LGEC": [
+    "administrativo"
+  ],
+  "MX-FED-LGEEPA": [
+    "administrativo"
+  ],
+  "MX-FED-LGEO": [
+    "administrativo"
+  ],
+  "MX-FED-LGES": [
+    "administrativo"
+  ],
+  "MX-FED-LGIPD": [
+    "administrativo"
+  ],
+  "MX-FED-LGIPE": [
+    "constitucional"
+  ],
+  "MX-FED-LGISMH": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LGMASC": [
+    "civil",
+    "mercantil",
+    "familiar"
+  ],
+  "MX-FED-LGMDE": [
+    "penal",
+    "constitucional"
+  ],
+  "MX-FED-LGMDFP": [
+    "penal"
+  ],
+  "MX-FED-LGMHCTI": [
+    "administrativo"
+  ],
+  "MX-FED-LGMIME": [
+    "constitucional"
+  ],
+  "MX-FED-LGMSV": [
+    "administrativo"
+  ],
+  "MX-FED-LGN": [
+    "administrativo"
+  ],
+  "MX-FED-LGP": [
+    "administrativo"
+  ],
+  "MX-FED-LGPAS": [
+    "administrativo"
+  ],
+  "MX-FED-LGPC": [
+    "administrativo"
+  ],
+  "MX-FED-LGPDPPSO": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LGPGIR": [
+    "administrativo"
+  ],
+  "MX-FED-LGPISDME": [
+    "penal",
+    "constitucional"
+  ],
+  "MX-FED-LGPIST": [
+    "penal"
+  ],
+  "MX-FED-LGPP": [
+    "constitucional"
+  ],
+  "MX-FED-LGPSACDII": [
+    "familiar",
+    "administrativo"
+  ],
+  "MX-FED-LGPSDMS": [
+    "penal",
+    "constitucional"
+  ],
+  "MX-FED-LGPSEDMTP": [
+    "penal"
+  ],
+  "MX-FED-LGPSVD": [
+    "penal"
+  ],
+  "MX-FED-LGRA": [
+    "administrativo"
+  ],
+  "MX-FED-LGS": [
+    "administrativo"
+  ],
+  "MX-FED-LGSC": [
+    "mercantil"
+  ],
+  "MX-FED-LGSCMM": [
+    "laboral"
+  ],
+  "MX-FED-LGSM": [
+    "mercantil"
+  ],
+  "MX-FED-LGSNA": [
+    "administrativo"
+  ],
+  "MX-FED-LGSNSP": [
+    "administrativo"
+  ],
+  "MX-FED-LGT": [
+    "administrativo"
+  ],
+  "MX-FED-LGTAIP": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LGTOC": [
+    "mercantil"
+  ],
+  "MX-FED-LGV": [
+    "penal"
+  ],
+  "MX-FED-LGVS": [
+    "administrativo"
+  ],
+  "MX-FED-LHHEUM": [
+    "administrativo"
+  ],
+  "MX-FED-LIC": [
+    "mercantil"
+  ],
+  "MX-FED-LICAL": [
+    "administrativo"
+  ],
+  "MX-FED-LIE": [
+    "mercantil"
+  ],
+  "MX-FED-LIFNCT": [
+    "seguridad-social"
+  ],
+  "MX-FED-LIFNVT": [
+    "seguridad-social"
+  ],
+  "MX-FED-LIF_2026": [
+    "fiscal"
+  ],
+  "MX-FED-LIGIE_2022": [
+    "fiscal"
+  ],
+  "MX-FED-LIH": [
+    "fiscal"
+  ],
+  "MX-FED-LIISPCEN": [
+    "administrativo"
+  ],
+  "MX-FED-LIMJ": [
+    "administrativo"
+  ],
+  "MX-FED-LINPI": [
+    "administrativo"
+  ],
+  "MX-FED-LINS": [
+    "administrativo"
+  ],
+  "MX-FED-LISF": [
+    "mercantil"
+  ],
+  "MX-FED-LISR": [
+    "fiscal"
+  ],
+  "MX-FED-LISSFAM": [
+    "seguridad-social"
+  ],
+  "MX-FED-LISSSTE": [
+    "seguridad-social"
+  ],
+  "MX-FED-LMIGRA": [
+    "administrativo"
+  ],
+  "MX-FED-LMIN": [
+    "administrativo"
+  ],
+  "MX-FED-LMTR": [
+    "administrativo"
+  ],
+  "MX-FED-LMV": [
+    "mercantil"
+  ],
+  "MX-FED-LNCM": [
+    "mercantil",
+    "administrativo"
+  ],
+  "MX-FED-LNED": [
+    "penal"
+  ],
+  "MX-FED-LNEP": [
+    "penal"
+  ],
+  "MX-FED-LNETB": [
+    "administrativo"
+  ],
+  "MX-FED-LNMASCMP": [
+    "penal"
+  ],
+  "MX-FED-LNRD": [
+    "penal"
+  ],
+  "MX-FED-LNSIJPA": [
+    "penal"
+  ],
+  "MX-FED-LNUF": [
+    "administrativo"
+  ],
+  "MX-FED-LOAM": [
+    "administrativo"
+  ],
+  "MX-FED-LOAPF": [
+    "administrativo"
+  ],
+  "MX-FED-LOBNCE": [
+    "mercantil"
+  ],
+  "MX-FED-LOBNOSP": [
+    "mercantil"
+  ],
+  "MX-FED-LOCFCRL": [
+    "laboral"
+  ],
+  "MX-FED-LOCGEUM": [
+    "constitucional"
+  ],
+  "MX-FED-LOPDC": [
+    "fiscal"
+  ],
+  "MX-FED-LOPGJDF": [
+    "penal"
+  ],
+  "MX-FED-LOPJF": [
+    "administrativo"
+  ],
+  "MX-FED-LOPSRM": [
+    "administrativo"
+  ],
+  "MX-FED-LOSCM": [
+    "administrativo"
+  ],
+  "MX-FED-LOSHF": [
+    "mercantil"
+  ],
+  "MX-FED-LOTFJA": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-LOUAAAN": [
+    "administrativo"
+  ],
+  "MX-FED-LPAB": [
+    "mercantil"
+  ],
+  "MX-FED-LPDUSF": [
+    "mercantil"
+  ],
+  "MX-FED-LPEAM": [
+    "administrativo"
+  ],
+  "MX-FED-LPERC": [
+    "administrativo"
+  ],
+  "MX-FED-LPF": [
+    "administrativo"
+  ],
+  "MX-FED-LPLAN": [
+    "administrativo"
+  ],
+  "MX-FED-LPO": [
+    "administrativo"
+  ],
+  "MX-FED-LPPDDHP": [
+    "constitucional"
+  ],
+  "MX-FED-LPTE": [
+    "administrativo"
+  ],
+  "MX-FED-LRAF": [
+    "mercantil"
+  ],
+  "MX-FED-LRAM": [
+    "administrativo"
+  ],
+  "MX-FED-LRART3_MMCE": [
+    "constitucional"
+  ],
+  "MX-FED-LRART6_MDR": [
+    "constitucional",
+    "administrativo"
+  ],
+  "MX-FED-LRART76_FRACVI": [
+    "constitucional"
+  ],
+  "MX-FED-LRCDN": [
+    "civil",
+    "administrativo"
+  ],
+  "MX-FED-LRFIYII_ART105": [
+    "constitucional"
+  ],
+  "MX-FED-LRFXIIIB_ART123": [
+    "laboral"
+  ],
+  "MX-FED-LRITF": [
+    "mercantil"
+  ],
+  "MX-FED-LRPCAP": [
+    "administrativo"
+  ],
+  "MX-FED-LRSF": [
+    "administrativo"
+  ],
+  "MX-FED-LRSIC": [
+    "mercantil"
+  ],
+  "MX-FED-LSAR": [
+    "seguridad-social"
+  ],
+  "MX-FED-LSCT": [
+    "administrativo"
+  ],
+  "MX-FED-LSE": [
+    "administrativo"
+  ],
+  "MX-FED-LSH": [
+    "administrativo"
+  ],
+  "MX-FED-LSM": [
+    "administrativo"
+  ],
+  "MX-FED-LSN": [
+    "administrativo"
+  ],
+  "MX-FED-LSNIEG": [
+    "administrativo"
+  ],
+  "MX-FED-LSNIIMSP": [
+    "administrativo"
+  ],
+  "MX-FED-LSP": [
+    "mercantil"
+  ],
+  "MX-FED-LSPM": [
+    "administrativo"
+  ],
+  "MX-FED-LSPREM": [
+    "administrativo"
+  ],
+  "MX-FED-LSS": [
+    "seguridad-social"
+  ],
+  "MX-FED-LTF": [
+    "fiscal"
+  ],
+  "MX-FED-LTOSF": [
+    "mercantil"
+  ],
+  "MX-FED-LTPCPIMCP": [
+    "administrativo"
+  ],
+  "MX-FED-LUC": [
+    "mercantil"
+  ],
+  "MX-FED-LUPDECR": [
+    "administrativo"
+  ],
+  "MX-FED-LVGC": [
+    "administrativo"
+  ],
+  "MX-FED-LVIV": [
+    "administrativo"
+  ],
+  "MX-FED-LVZMM": [
+    "administrativo"
+  ],
+  "MX-FED-PEF_2026": [
+    "administrativo",
+    "fiscal"
+  ],
+  "MX-FED-REG_DIPUTADOS": [
+    "constitucional"
+  ]
+}

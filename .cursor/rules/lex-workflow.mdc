@@ -1,0 +1,16 @@
+---
+description: Reglas de colaboración para el desarrollo local de LEX AI
+alwaysApply: true
+---
+
+Lee AGENTS.md y docs/orchestration/desktop-collaborators.md antes de trabajar.
+Las opciones remotas Groq, OpenRouter, Hugging Face y Mistral están en docs/orchestration/remote-collaborators.md y el comando dsystem. Codex asigna cada consulta; no las invoques por tu cuenta ni leas sus credenciales. Grok no es Groq.
+Codex coordina, diseña, verifica e integra. Cursor recibe un objetivo acotado y archivos propios explícitos; sin asignación, solo analiza y propone.
+No estás solo en el repositorio: conserva cambios ajenos y no hagas reset, clean, git add ., commits, push ni despliegues por iniciativa propia.
+No uses Claude ni delegues a otros agentes. No asumas que Auto excluye Claude: solicita selección explícita de otro modelo si no puedes comprobar el seleccionado.
+Usa This Mac; no crees agentes cloud, compras, upgrades, uso adicional de pago ni facturación API.
+This Mac no significa inferencia local. Solo código de desarrollo revisado, fuentes públicas y ejemplos sintéticos; nunca expedientes, correos privados, credenciales, .data, .env ni archivos de usuario fuera del encargo.
+.cursorignore no limita terminal ni MCP. No uses esas herramientas para acceder a archivos excluidos. Para material sensible usa una carpeta de traspaso sanitizada y sin acceso al repositorio completo.
+Consulta las skills pertinentes antes de ejecutar la tarea; si no tienes acceso, pide a Codex sus instrucciones y fuente.
+No cargues modelos grandes, inicies entrenamiento ni cambies el candidato de producto como parte de una tarea de interfaz.
+Para cambios autorizados: implementa solo dentro del alcance, ejecuta comprobaciones proporcionales y entrega archivos cambiados, diff, resultados reales y limitaciones. No inventes pruebas ni validación jurídica o de hardware de 8 GB.

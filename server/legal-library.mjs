@@ -6,6 +6,7 @@ import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './le
 
 export const EXTRACTOR_VERSION=6;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
+export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
 const digest=value=>createHash('sha256').update(value).digest('hex');
 const normalize=value=>value.normalize('NFC').replace(/\s+/g,' ').trim();
@@ -35,6 +36,34 @@ export function parseOfficialIndex(html,{retrievedAt=new Date().toISOString(),in
   }
   if(!sources.length)throw new Error('El índice no contiene filas PDF reconocibles; no se crea un catálogo vacío.');
   return {schemaVersion:1,source:INDEX_URL,retrievedAt,indexSha256,count:sources.length,sources,anomalies,coverage:'Recognized main PDF links from this dated index snapshot; not all Mexican law.'};
+}
+
+// The regulations index has a different, older table layout than index.htm. Keep
+// this parser separate so a markup change cannot silently broaden the law parser.
+export function parseRegulationsIndex(html,{retrievedAt=new Date().toISOString(),indexSha256=digest(html)}={}){
+  const sources=[],seen=new Set(),anomalies=[];let rows=0;
+  for(const row of html.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)){
+    const contents=row[1];const cells=[...contents.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>htmlText(x[1]));
+    const titleCandidates=[...(cells[1]??'').matchAll(/(?:^|\s)(REGLAMENTO\b[\s\S]*?)(?=\s+(?:Original|Reformas?|Cantidades)\b|$)/gi)].map(x=>normalize(x[1]));
+    const title=titleCandidates[0]??normalize(cells[1]?.split(/\s+(?:Original|Reformas?|Cantidades)\b/i)[0]??'');
+    if(/\.pdf(?:["']|\s|$)/i.test(contents))rows++;
+    for(const link of contents.matchAll(/href\s*=\s*["']([^"']+)["']/gi)){
+      let url;try{url=new URL(link[1].replaceAll('&amp;','&'),REGLAMENTOS_INDEX_URL);}catch{anomalies.push({row:cells.slice(0,4),target:link[1],reason:'invalid-link-target'});continue;}
+      const isPdf=/\.pdf$/i.test(url.pathname);
+      if(!isPdf)continue;
+      if(url.origin!=='https://www.diputados.gob.mx'||!/^\/LeyesBiblio\/regley\/[A-Za-z0-9_-]+\.pdf$/i.test(url.pathname)){
+        anomalies.push({row:cells.slice(0,4),url:url.href,reason:'excluded-noncanonical-or-foreign-pdf-target'});continue;
+      }
+      if(seen.has(url.href)){anomalies.push({row:cells.slice(0,4),url:url.href,reason:'excluded-duplicate-pdf-target'});continue;}
+      if(!title||title.length<5||title.length>1000){anomalies.push({row:cells.slice(0,4),url:url.href,reason:'missing-or-ambiguous-title'});continue;}
+      const code=path.posix.basename(url.pathname,'.pdf');const stableCode=code.replace(/_\d{6,8}$/,'').replace(/^Reg_/i,'');const baseId='reg-'+stableCode.toLowerCase().replace(/_/g,'-');
+      if(!/^[a-z][a-z0-9-]{0,39}$/.test(baseId)){anomalies.push({row:cells.slice(0,4),url:url.href,reason:'unsupported-source-id'});continue;}
+      sources.push({id:baseId,lawId:`MX-FED-REG-${stableCode.toUpperCase()}`,title,url:url.href,authority:'Cámara de Diputados del H. Congreso de la Unión',jurisdiction:'MX-FED',language:'es',publisherIndex:REGLAMENTOS_INDEX_URL,indexRow:cells.slice(0,4),indexSha256,discoveredAt:retrievedAt,listedStatus:'publisher-index-listing-not-independent-currentness-verification',reuseBasis:{kind:'official-legislative-text',reference:'https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf',article:'14 VIII',scope:'Statutory text only; commentary excluded; source fidelity required; not an individualized legal license opinion.'}});seen.add(url.href);
+    }
+  }
+  if(!sources.length)throw new Error('El índice de reglamentos no contiene filas PDF reconocibles; no se crea un catálogo vacío.');
+  const excluded=anomalies.filter(anomaly=>anomaly.reason.startsWith('excluded-')).length;
+  return {schemaVersion:1,source:REGLAMENTOS_INDEX_URL,retrievedAt,indexSha256,count:sources.length,rows,kept:sources.length,excluded,sources,anomalies,coverage:'Recognized main PDF links from this dated federal regulations index snapshot; not all Mexican law or regulations.'};
 }
 
 async function boundedGet(url,{fetchImpl=fetch,maxBytes=5*1024*1024,timeoutMs=45000,github=false}={}){
@@ -70,6 +99,20 @@ export async function discoverLibrary({outputDir,catalogPath,indexFile,compareRe
   }catch(e){catalog.repositoryComparisons.push({repository,status:'unavailable',error:e.message,codeExecuted:false,textIngested:false});}await sleep(2000);}}
   else catalog.repositoryComparisons=CANDIDATE_REPOSITORIES.map(repository=>({repository,status:'documented-candidate-not-fetched-this-run',reference:'docs/architecture/legal-repositories.md',codeExecuted:false,textIngested:false}));
   await atomic(catalogPath,catalog);return catalog;
+}
+
+export async function discoverRegulationsLibrary({outputDir,catalogPath,indexFile,fetchImpl=fetch,sleep=pause}={}){
+  await mkdir(path.join(outputDir,'discovery'),{recursive:true});let bytes,network=null;
+  if(indexFile)bytes=await readFile(indexFile);
+  else{
+    const robots=await boundedGet(new URL('/robots.txt',REGLAMENTOS_INDEX_URL).href,{fetchImpl,maxBytes:512000});
+    if(![200,404,410].includes(robots.status))throw new Error('robots.txt no verificable; descubrimiento aplazado.');
+    const policy=robotsPolicy(robots.status===200?robots.bytes.toString('utf8'):'',REGLAMENTOS_INDEX_URL);if(!policy.allowed||policy.crawlDelayMs>60_000)throw new Error('Índice bloqueado o aplazado por robots.txt.');
+    await sleep(Math.max(2000,policy.crawlDelayMs));network=await boundedGet(REGLAMENTOS_INDEX_URL,{fetchImpl});if(network.status!==200)throw new Error(`Índice HTTP ${network.status}`);bytes=network.bytes;
+    await atomic(path.join(outputDir,'discovery/reglamentos-network.json'),{retrievedAt:new Date().toISOString(),headers:network.headers,robotsStatus:robots.status,robotsSha256:digest(robots.bytes)});
+  }
+  const decoded=decodeIndex(bytes);const catalog=parseRegulationsIndex(decoded.text,{indexSha256:digest(bytes)});catalog.encoding=decoded.encoding;catalog.importedSnapshot=Boolean(indexFile);catalog.repositoryComparisons=[];
+  await writeFile(path.join(outputDir,'discovery/reglamentos-index.html'),bytes);await atomic(catalogPath,catalog);return catalog;
 }
 
 export function splitForLaw(lawId){const bucket=parseInt(digest('lex-law-split-v1:'+lawId).slice(0,8),16)%100;return bucket<80?'train':bucket<90?'validation':'test';}

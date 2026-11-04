@@ -1,0 +1,13 @@
+{
+  "task": "Propón casos de prueba adicionales para el aislamiento entre chats de un asistente local.",
+  "context": "Ejemplo completamente ficticio: en el chat A se indica que el nombre es Ana y el proyecto es Alfa. El chat B está vacío. Al abrir B no debe aparecer ni recordarse Ana ni Alfa. Cambiar de chat debe conservar solo la información de su propio hilo. No se incluyen documentos ni nombres de clientes reales.",
+  "acceptance": "Entrega tres casos con pasos y resultado esperado, y señala un supuesto que debamos comprobar. No afirmes que ejecutaste pruebas. Máximo 250 palabras.",
+  "dataClass": "synthetic",
+  "reviewedForExternal": true,
+  "skills": [
+    {
+      "source": "dsystem — /Users/santiagorosado/.agents/skills/dsystem/SKILL.md; AGENTS.md de LEX AI",
+      "guidance": "Codex conserva decisiones e integración. Este encargo es solo una opinión sobre datos sintéticos. No tienes acceso a archivos ni herramientas y no debes atribuirte comprobaciones. No uses Claude ni otros agentes. Propón resultados verificables por Codex."
+    }
+  ]
+}

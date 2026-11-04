@@ -27,7 +27,7 @@ export default function ChecklistView({matter}:{matter?:Matter}) {
     if(!matter)return;
     setBusy('load');
     void Promise.all([api<Checklist>('checklist.get',{matterId:matter.id}),api<TemplatesResponse>('checklist.templates')])
-      .then(([checklist,response])=>{if(cancelled)return;setItems(checklist.items);setTemplates(response.templates);setNotice(response.notice);})
+      .then(([checklist,response])=>{if(cancelled)return;setItems(checklist.items);setTemplates(response.templates);})
       .catch(reason=>{if(!cancelled)setError(reason instanceof Error?reason.message:'No se pudo abrir la checklist.');})
       .finally(()=>{if(!cancelled)setBusy('');});
     return ()=>{cancelled=true;};

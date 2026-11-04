@@ -42,7 +42,72 @@ export function createStore(dataDir) {
       id TEXT PRIMARY KEY, proposal_id TEXT, workspace_id TEXT NOT NULL, matter_id TEXT, origin TEXT NOT NULL,
       action TEXT NOT NULL, args_hash TEXT NOT NULL, decision TEXT NOT NULL, created_at TEXT NOT NULL
     );
-    CREATE INDEX IF NOT EXISTS agent_action_log_scope ON agent_action_log(workspace_id,matter_id,created_at);`);
+    CREATE INDEX IF NOT EXISTS agent_action_log_scope ON agent_action_log(workspace_id,matter_id,created_at);
+    CREATE TABLE IF NOT EXISTS time_entries (
+      id TEXT PRIMARY KEY,
+      workspace_id TEXT NOT NULL,
+      matter_id TEXT NOT NULL,
+      user_id TEXT NOT NULL,
+      started_at TEXT,
+      ended_at TEXT,
+      manual_minutes INTEGER,
+      duration_minutes INTEGER NOT NULL CHECK(duration_minutes >= 0),
+      billed_minutes INTEGER NOT NULL CHECK(billed_minutes >= 0),
+      description TEXT NOT NULL,
+      billable INTEGER NOT NULL CHECK(billable IN (0,1)),
+      rate_centavos INTEGER NOT NULL CHECK(rate_centavos >= 0),
+      amount_centavos INTEGER NOT NULL CHECK(amount_centavos >= 0),
+      currency TEXT NOT NULL CHECK(currency='MXN'),
+      source TEXT NOT NULL CHECK(source IN ('timer','manual')),
+      billing_status TEXT NOT NULL CHECK(billing_status IN ('unbilled','billed')),
+      created_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS time_entries_scope ON time_entries(workspace_id,matter_id,created_at);
+    CREATE INDEX IF NOT EXISTS time_entries_client_status ON time_entries(workspace_id,billing_status,created_at);
+    CREATE TABLE IF NOT EXISTS active_timers (
+      workspace_id TEXT NOT NULL,
+      user_id TEXT NOT NULL,
+      matter_id TEXT NOT NULL,
+      started_at TEXT NOT NULL,
+      accumulated_minutes INTEGER NOT NULL CHECK(accumulated_minutes >= 0),
+      paused_at TEXT,
+      state TEXT NOT NULL CHECK(state IN ('running','paused')),
+      rate_centavos INTEGER NOT NULL CHECK(rate_centavos >= 0),
+      billable INTEGER NOT NULL CHECK(billable IN (0,1)),
+      description TEXT NOT NULL,
+      currency TEXT NOT NULL CHECK(currency='MXN'),
+      PRIMARY KEY(workspace_id,user_id)
+    );
+    CREATE TABLE IF NOT EXISTS fee_arrangements (
+      workspace_id TEXT NOT NULL,
+      matter_id TEXT NOT NULL,
+      arrangement TEXT NOT NULL CHECK(arrangement IN ('hourly','fixed','retainer','contingency','pro-bono')),
+      hourly_rate_centavos INTEGER CHECK(hourly_rate_centavos IS NULL OR hourly_rate_centavos >= 0),
+      contingency_basis_points INTEGER CHECK(contingency_basis_points IS NULL OR (contingency_basis_points >= 0 AND contingency_basis_points <= 10000)),
+      billing_increment_minutes INTEGER NOT NULL CHECK(billing_increment_minutes IN (1,6,15)),
+      currency TEXT NOT NULL CHECK(currency='MXN'),
+      updated_at TEXT NOT NULL,
+      PRIMARY KEY(workspace_id,matter_id)
+    );
+    CREATE TABLE IF NOT EXISTS client_hourly_rates (
+      workspace_id TEXT NOT NULL,
+      client_name TEXT NOT NULL,
+      hourly_rate_centavos INTEGER NOT NULL CHECK(hourly_rate_centavos >= 0),
+      currency TEXT NOT NULL CHECK(currency='MXN'),
+      updated_at TEXT NOT NULL,
+      PRIMARY KEY(workspace_id,client_name)
+    );
+    CREATE TABLE IF NOT EXISTS matter_resolutions (
+      workspace_id TEXT NOT NULL,
+      matter_id TEXT NOT NULL,
+      status TEXT NOT NULL CHECK(status IN ('abierto','en-espera','resuelto','archivado')),
+      outcome TEXT CHECK(outcome IS NULL OR outcome IN ('favorable','desfavorable','acuerdo','desistimiento','otro')),
+      resolution_date TEXT,
+      notes TEXT,
+      resolved_at TEXT,
+      updated_at TEXT NOT NULL,
+      PRIMARY KEY(workspace_id,matter_id)
+    );`);
   const schemaVersion=db.prepare('PRAGMA user_version').get().user_version;
   const legacyMatters=db.prepare("SELECT id,payload FROM records WHERE kind='matter'").all()
     .filter(row=>{try{return !Object.hasOwn(JSON.parse(row.payload),'counterparties');}catch{return false;}});
@@ -143,6 +208,58 @@ export function createStore(dataDir) {
         ?'SELECT proposal_id AS proposalId,workspace_id AS workspaceId,matter_id AS matterId,origin,action,args_hash AS argsHash,decision,created_at AS createdAt FROM agent_action_log WHERE workspace_id=? ORDER BY rowid DESC LIMIT ?'
         :'SELECT proposal_id AS proposalId,workspace_id AS workspaceId,matter_id AS matterId,origin,action,args_hash AS argsHash,decision,created_at AS createdAt FROM agent_action_log WHERE workspace_id=? AND matter_id=? ORDER BY rowid DESC LIMIT ?';
       return (matterId===undefined||matterId===null?db.prepare(query).all(workspaceId,limit):db.prepare(query).all(workspaceId,matterId,limit)).reverse();
+    },
+    createTimeEntry(entry) {
+      db.prepare(`INSERT INTO time_entries (id,workspace_id,matter_id,user_id,started_at,ended_at,manual_minutes,duration_minutes,billed_minutes,description,billable,rate_centavos,amount_centavos,currency,source,billing_status,created_at)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(entry.id,entry.workspaceId,entry.matterId,entry.userId,entry.startedAt,entry.endedAt,entry.manualMinutes,entry.durationMinutes,entry.billedMinutes,entry.description,entry.billable?1:0,entry.rateCentavos,entry.amountCentavos,entry.currency,entry.source,entry.billingStatus,entry.createdAt);
+      return entry;
+    },
+    listTimeEntries(workspaceId,{matterId=null,billingStatus=null}={}) {
+      const conditions=['workspace_id=?'],params=[workspaceId];
+      if(matterId!==null){conditions.push('matter_id=?');params.push(matterId);}
+      if(billingStatus!==null){conditions.push('billing_status=?');params.push(billingStatus);}
+      return db.prepare(`SELECT id,workspace_id AS workspaceId,matter_id AS matterId,user_id AS userId,started_at AS startedAt,ended_at AS endedAt,manual_minutes AS manualMinutes,duration_minutes AS durationMinutes,billed_minutes AS billedMinutes,description,billable,rate_centavos AS rateCentavos,amount_centavos AS amountCentavos,currency,source,billing_status AS billingStatus,created_at AS createdAt FROM time_entries WHERE ${conditions.join(' AND ')} ORDER BY created_at DESC,id DESC`).all(...params).map(row=>({...row,billable:Boolean(row.billable)}));
+    },
+    setTimeEntriesBillingStatus(workspaceId,matterId,entryIds,billingStatus) {
+      if(!entryIds.length)return 0;
+      const placeholders=entryIds.map(()=>'?').join(',');
+      const result=db.prepare(`UPDATE time_entries SET billing_status=? WHERE workspace_id=? AND matter_id=? AND id IN (${placeholders})`).run(billingStatus,workspaceId,matterId,...entryIds);
+      return result.changes;
+    },
+    getActiveTimer(workspaceId,userId) {
+      return db.prepare('SELECT workspace_id AS workspaceId,user_id AS userId,matter_id AS matterId,started_at AS startedAt,accumulated_minutes AS accumulatedMinutes,paused_at AS pausedAt,state,rate_centavos AS rateCentavos,billable,description,currency FROM active_timers WHERE workspace_id=? AND user_id=?').get(workspaceId,userId) ?? null;
+    },
+    putActiveTimer(timer) {
+      db.prepare(`INSERT INTO active_timers (workspace_id,user_id,matter_id,started_at,accumulated_minutes,paused_at,state,rate_centavos,billable,description,currency)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(workspace_id,user_id) DO UPDATE SET matter_id=excluded.matter_id,started_at=excluded.started_at,accumulated_minutes=excluded.accumulated_minutes,paused_at=excluded.paused_at,state=excluded.state,rate_centavos=excluded.rate_centavos,billable=excluded.billable,description=excluded.description,currency=excluded.currency`).run(timer.workspaceId,timer.userId,timer.matterId,timer.startedAt,timer.accumulatedMinutes,timer.pausedAt,timer.state,timer.rateCentavos,timer.billable?1:0,timer.description,timer.currency);
+      return timer;
+    },
+    deleteActiveTimer(workspaceId,userId) {
+      return db.prepare('DELETE FROM active_timers WHERE workspace_id=? AND user_id=?').run(workspaceId,userId).changes;
+    },
+    getFeeArrangement(workspaceId,matterId) {
+      return db.prepare('SELECT workspace_id AS workspaceId,matter_id AS matterId,arrangement,hourly_rate_centavos AS hourlyRateCentavos,contingency_basis_points AS contingencyBasisPoints,billing_increment_minutes AS billingIncrementMinutes,currency,updated_at AS updatedAt FROM fee_arrangements WHERE workspace_id=? AND matter_id=?').get(workspaceId,matterId) ?? null;
+    },
+    putFeeArrangement(item) {
+      db.prepare(`INSERT INTO fee_arrangements (workspace_id,matter_id,arrangement,hourly_rate_centavos,contingency_basis_points,billing_increment_minutes,currency,updated_at)
+        VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(workspace_id,matter_id) DO UPDATE SET arrangement=excluded.arrangement,hourly_rate_centavos=excluded.hourly_rate_centavos,contingency_basis_points=excluded.contingency_basis_points,billing_increment_minutes=excluded.billing_increment_minutes,currency=excluded.currency,updated_at=excluded.updated_at`).run(item.workspaceId,item.matterId,item.arrangement,item.hourlyRateCentavos,item.contingencyBasisPoints,item.billingIncrementMinutes,item.currency,item.updatedAt);
+      return item;
+    },
+    getClientHourlyRate(workspaceId,clientName) {
+      return db.prepare('SELECT workspace_id AS workspaceId,client_name AS clientName,hourly_rate_centavos AS hourlyRateCentavos,currency,updated_at AS updatedAt FROM client_hourly_rates WHERE workspace_id=? AND client_name=?').get(workspaceId,clientName) ?? null;
+    },
+    putClientHourlyRate(item) {
+      db.prepare(`INSERT INTO client_hourly_rates (workspace_id,client_name,hourly_rate_centavos,currency,updated_at) VALUES (?,?,?,?,?)
+        ON CONFLICT(workspace_id,client_name) DO UPDATE SET hourly_rate_centavos=excluded.hourly_rate_centavos,currency=excluded.currency,updated_at=excluded.updated_at`).run(item.workspaceId,item.clientName,item.hourlyRateCentavos,item.currency,item.updatedAt);
+      return item;
+    },
+    getMatterResolution(workspaceId,matterId) {
+      return db.prepare('SELECT workspace_id AS workspaceId,matter_id AS matterId,status,outcome,resolution_date AS resolutionDate,notes,resolved_at AS resolvedAt,updated_at AS updatedAt FROM matter_resolutions WHERE workspace_id=? AND matter_id=?').get(workspaceId,matterId) ?? null;
+    },
+    putMatterResolution(item) {
+      db.prepare(`INSERT INTO matter_resolutions (workspace_id,matter_id,status,outcome,resolution_date,notes,resolved_at,updated_at) VALUES (?,?,?,?,?,?,?,?)
+        ON CONFLICT(workspace_id,matter_id) DO UPDATE SET status=excluded.status,outcome=excluded.outcome,resolution_date=excluded.resolution_date,notes=excluded.notes,resolved_at=excluded.resolved_at,updated_at=excluded.updated_at`).run(item.workspaceId,item.matterId,item.status,item.outcome,item.resolutionDate,item.notes,item.resolvedAt,item.updatedAt);
+      return item;
     },
     insertDocument(document, bytes, chunks, {inTransaction=false}={}) {
       const write=() => {

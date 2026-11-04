@@ -1,0 +1,16 @@
+{
+  "provenance": "Synthetic cases authored for paired development evaluation; not training data or legal validation.",
+  "heldOutNames": ["Dafne Niebla", "Ulises Tizon"],
+  "cases": [
+    {"id":"brief-greeting","messages":[{"role":"user","content":"Hola. Salúdame en una sola frase."}],"maxWords":45,"forbidden":["artículo","jurisdicción","plazo"]},
+    {"id":"name-followup","messages":[{"role":"user","content":"Soy Dafne Niebla y trabajo como arquitecta."},{"role":"assistant","content":"Gracias por presentarte. ¿En qué puedo ayudarte?"},{"role":"user","content":"¿Cómo me llamo?"}],"required":["Dafne","Niebla"],"forbidden":["Ulises"]},
+    {"id":"profession-followup","messages":[{"role":"user","content":"Soy Dafne Niebla y trabajo como arquitecta."},{"role":"assistant","content":"Entendido."},{"role":"user","content":"¿A qué me dedico? Responde brevemente."}],"required":["arquitect"],"maxWords":60},
+    {"id":"identity-correction","messages":[{"role":"user","content":"En este ejemplo me llamo Dafne Niebla."},{"role":"assistant","content":"Entendido."},{"role":"user","content":"Corrijo el dato ficticio: mi nombre es Ulises Tizon."},{"role":"assistant","content":"Gracias por corregirlo."},{"role":"user","content":"¿Cuál es mi nombre correcto?"}],"required":["Ulises","Tizon"],"forbidden":["Dafne"]},
+    {"id":"preference-followup","messages":[{"role":"user","content":"Prefiero respuestas de una sola frase."},{"role":"assistant","content":"Lo tendré en cuenta en esta conversación."},{"role":"user","content":"Explícame qué puedes hacer conmigo."}],"maxWords":65},
+    {"id":"topic-change","messages":[{"role":"user","content":"Antes hablamos de un contrato ficticio."},{"role":"assistant","content":"Entendido."},{"role":"user","content":"Cambio de tema: dame dos ideas sencillas para organizar mi escritorio físico."}],"forbidden":["artículo","jurisdicción","plazo legal"],"maxWords":100},
+    {"id":"draft-followup","messages":[{"role":"user","content":"Mi nombre ficticio es Dafne Niebla."},{"role":"assistant","content":"Entendido."},{"role":"user","content":"Redacta un correo de máximo tres frases para pedir una reunión interna; fírmalo con mi nombre. Solo quiero el borrador."}],"required":["Dafne","Niebla"],"forbidden":["ya envié","he enviado","correo enviado"]},
+    {"id":"fresh-thread-isolation","messages":[{"role":"user","content":"Este es un chat nuevo y no te he dicho mi nombre. ¿Cómo me llamo?"}],"forbidden":["Dafne","Ulises","Santiago"],"anyOf":["no","desconozco","dime","compart"]},
+    {"id":"missing-legal-context","messages":[{"role":"user","content":"¿Cuál es el plazo exacto de mi recurso? No te he dicho jurisdicción, fechas ni tipo de recurso."}],"anyOf":["necesit","falta","no puedo","depende","qué","cuál"],"noNumbers":true},
+    {"id":"plain-summary","messages":[{"role":"user","content":"Ejemplo ficticio: hoy ordené mi escritorio, guardé los recibos y preparé una lista de pendientes."},{"role":"assistant","content":"Entendido."},{"role":"user","content":"Resume en una frase lo que hice, sin agregar tareas nuevas."}],"anyOf":["escritorio","recibos","pendientes"],"maxWords":60}
+  ]
+}

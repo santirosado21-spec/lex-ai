@@ -32,5 +32,9 @@
     "physical8GBValidation": false,
     "legalAccuracy": "not-validated",
     "releaseChannel": "local-development-pilot"
-  }
+  },
+  "supportedArchs": [
+    "arm64",
+    "x64"
+  ]
 }

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Orden Jur&iacute;dico Nacional</title></head>
+  <body>
+    <table><tr><td class="td_titulo_federal"><b>Estado Sint&eacute;tico</b></td></tr></table>
+    <form name="busqueda" action="busqueda.php" method="get">
+      <input type="text" name="frase">
+      <input type="hidden" name="edo" value="7">
+    </form>
+    <form name="form2" id="form2" method="get" action="despliegaedo.php">
+      <input type="hidden" name="ordenar" value="">
+      <input type="hidden" name="edo" value="7">
+      <input type="hidden" name="idi" value="">
+      <select name="catTipo">
+        <option value="">--Seleccione--</option>
+        <option value="4" title="Ley"> Ley (12)</option>
+        <option value="5" title="C&oacute;digo"> C&oacute;digo (3)</option>
+        <option value="6" title="Reglamento"> Reglamento (8)</option>
+      </select>
+    </form>
+    <script>document.form2.action="despliegaedo2.php?edo=7";</script>
+    <p>Última actualización: 02/11/2026</p>
+  </body>
+</html>

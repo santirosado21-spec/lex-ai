@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LEX AI para Excel</title><link rel="stylesheet" href="taskpane.css"><script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script></head>
+<body>
+<header class="pane-header"><span class="pane-brand"><img class="mark-light" src="lex-mark.svg" alt=""><img class="mark-dark" src="lex-mark-dark.svg" alt=""><span>LEX AI</span></span><span class="pane-link-state"><span class="dot" aria-hidden="true"></span><span class="when-paired">Asunto vinculado</span><span class="when-unpaired">Sin vincular</span></span></header>
+<main>
+<section class="pairing" aria-labelledby="pair-title"><h1 id="pair-title">Vincula este panel con un asunto</h1><p class="hint">Consulta el asunto y extrae campos de las celdas seleccionadas a una hoja nueva para revisión. El libro no cambia sin tu clic.</p>
+<ol class="steps"><li><span>Abre LEX AI en este Mac.</span></li><li><span>En <strong>Configuración</strong>, elige <strong>Vincular complemento</strong>.</span></li><li><span>Escribe aquí el código de 6 caracteres antes de que venza.</span></li></ol>
+<label for="pair-code">Código de vinculación</label><input id="pair-code" class="code-input" inputmode="text" maxlength="6" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"><button id="pair" type="button">Vincular</button><p id="pair-status" class="status"></p></section>
+<section id="workspace" class="hidden">
+<section class="block" aria-labelledby="review-title"><h2 id="review-title">Extraer campos</h2><p class="hint">La revisión no cambia el libro.</p><label for="document-type">Tipo de documento</label><select id="document-type"><option value="contrato">Contrato</option><option value="escrito">Escrito</option><option value="general">General</option></select><button id="review" type="button">Revisar texto seleccionado</button><p id="review-status" class="status"></p>
+<h2 class="sub">Campos extraídos</h2><ul id="suggestions"></ul><button id="draft" type="button" class="primary" disabled>Volcar tabla borrador</button><p id="draft-status" class="status"></p></section>
+<section class="block" aria-labelledby="today-title"><h2 id="today-title">Hoy</h2><button id="today" type="button">Ver recordatorios de hoy</button><p id="today-status" class="status"></p></section>
+</section>
+</main>
+<footer class="pane-footer"><span>Se procesa en este Mac</span><button id="unlink" class="link" type="button">Cerrar sesión del panel</button></footer>
+<script type="module" src="excel.js"></script>
+</body></html>

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "corpusSha256": "448e7f1e180e4fd56cedab1608bb7fc82dc3c6fc340a6f8e81a41f19f1fbd001",
+  "articles": 5304,
+  "status": "partial-snapshot-currentness-unverified",
+  "sourceRelease": "state-expansion-2026-11-02/frozen-v1",
+  "laws": [
+    {
+      "lawId": "MX-JAL-CC",
+      "sourceUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Civil%20del%20Estado%20de%20Jalisco-240626.pdf",
+      "jurisdiction": "MX-JAL",
+      "practiceAreas": [
+        "civil",
+        "family"
+      ],
+      "split": "train",
+      "pdfSha256": "c0d66178910ac334c25e4870471712ce21e6c562a820d2f9cc29d4dbae26c7d2",
+      "bytes": 2275503,
+      "pages": 339,
+      "candidates": 3211,
+      "documentAnomalies": [],
+      "acceptedBeforeDedup": 3105,
+      "declaredAmendedAt": null,
+      "acceptedArticles": 2682,
+      "title": "Código Civil del Estado de Jalisco"
+    },
+    {
+      "lawId": "MX-JAL-CF",
+      "sourceUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Fiscal%20del%20Estado%20de%20Jalisco-220726.pdf",
+      "jurisdiction": "MX-JAL",
+      "practiceAreas": [
+        "tax"
+      ],
+      "split": "train",
+      "pdfSha256": "b96fe138a6a955758ad950a9c7e74513eb194312d56e6b7ccf239be8a6b183a2",
+      "bytes": 530974,
+      "pages": 80,
+      "candidates": 227,
+      "documentAnomalies": [],
+      "acceptedBeforeDedup": 200,
+      "declaredAmendedAt": null,
+      "acceptedArticles": 200,
+      "title": "Código Fiscal del Estado de Jalisco"
+    },
+    {
+      "lawId": "MX-NLE-CC",
+      "sourceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.pdf?2026-06-26",
+      "jurisdiction": "MX-NLE",
+      "practiceAreas": [
+        "civil",
+        "family"
+      ],
+      "split": "train",
+      "pdfSha256": "a517709dd10664bbf7fc4ee77e32e4a0da7fdfbce45b662166dc706ead3c8af7",
+      "bytes": 1779177,
+      "pages": 396,
+      "candidates": 3087,
+      "documentAnomalies": [],
+      "acceptedBeforeDedup": 3007,
+      "declaredAmendedAt": "2026-06-26",
+      "acceptedArticles": 1798,
+      "title": "Código Civil para el Estado de Nuevo León"
+    },
+    {
+      "lawId": "MX-NLE-CP",
+      "sourceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.pdf?2026-06-15",
+      "jurisdiction": "MX-NLE",
+      "practiceAreas": [
+        "criminal"
+      ],
+      "split": "validation",
+      "pdfSha256": "440f28ca7515f63c35e5e9034086e843e126bed75f6d07dfe1067537607c3d76",
+      "bytes": 1222017,
+      "pages": 223,
+      "candidates": 589,
+      "documentAnomalies": [],
+      "acceptedBeforeDedup": 426,
+      "declaredAmendedAt": "2026-06-15",
+      "acceptedArticles": 426,
+      "title": "Código Penal para el Estado de Nuevo León"
+    },
+    {
+      "lawId": "MX-NLE-CF",
+      "sourceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20FISCAL%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf?2023-01-13",
+      "jurisdiction": "MX-NLE",
+      "practiceAreas": [
+        "tax"
+      ],
+      "split": "test",
+      "pdfSha256": "c343837dead2cb4ded98a9c5ad391694fac759ae7b5eec4e774ee82d65850c3b",
+      "bytes": 545314,
+      "pages": 109,
+      "candidates": 265,
+      "documentAnomalies": [],
+      "acceptedBeforeDedup": 202,
+      "declaredAmendedAt": "2023-01-13",
+      "acceptedArticles": 198,
+      "title": "Código Fiscal del Estado de Nuevo León"
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+TAP version 13
+# (node:24459) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a selected skill no longer blocks conversation
+ok 1 - a selected skill no longer blocks conversation
+  ---
+  duration_ms: 2.80175
+  type: 'test'
+  ...
+# Subtest: threads inside one matter keep separate history and default thread stays unchanged
+ok 2 - threads inside one matter keep separate history and default thread stays unchanged
+  ---
+  duration_ms: 41.862458
+  type: 'test'
+  ...
+# Subtest: a skill that needs a document answers conversationally instead of blocking
+ok 3 - a skill that needs a document answers conversationally instead of blocking
+  ---
+  duration_ms: 16.542584
+  type: 'test'
+  ...
+# (node:24460) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 200 synthetic cases are pinned to real articles, fragments and whole-law exclusions
+ok 4 - 200 synthetic cases are pinned to real articles, fragments and whole-law exclusions
+  ---
+  duration_ms: 167.837666
+  type: 'test'
+  ...
+# Subtest: hit@3 requires the correct law/article pair, and fragment coverage is separate
+ok 5 - hit@3 requires the correct law/article pair, and fragment coverage is separate
+  ---
+  duration_ms: 0.554834
+  type: 'test'
+  ...
+# Subtest: citation fidelity rejects fabricated quotes, unprovided sources and unmapped references
+ok 6 - citation fidelity rejects fabricated quotes, unprovided sources and unmapped references
+  ---
+  duration_ms: 0.581709
+  type: 'test'
+  ...
+# Subtest: a literal citation to an unrelated law is not a correct expected answer
+ok 7 - a literal citation to an unrelated law is not a correct expected answer
+  ---
+  duration_ms: 0.111291
+  type: 'test'
+  ...
+# Subtest: live aliases must map to the captured canonical source, not just a declared canonicalId
+ok 8 - live aliases must map to the captured canonical source, not just a declared canonicalId
+  ---
+  duration_ms: 0.132209
+  type: 'test'
+  ...
+# Subtest: retrieval simulator cites only source/quote pairs allowed by the actual output schema
+ok 9 - retrieval simulator cites only source/quote pairs allowed by the actual output schema
+  ---
+  duration_ms: 0.19625
+  type: 'test'
+  ...
+# Subtest: abstention and state clarification require the requested behavior, not an exception or generic question
+ok 10 - abstention and state clarification require the requested behavior, not an exception or generic question
+  ---
+  duration_ms: 0.367917
+  type: 'test'
+  ...
+# Subtest: chat-only rejects inline citations and statutory references even with empty citation metadata
+ok 11 - chat-only rejects inline citations and statutory references even with empty citation metadata
+  ---
+  duration_ms: 0.196042
+  type: 'test'
+  ...
+# Subtest: inference instrumentation forwards live messages/options unchanged and captures actual supplied passages
+ok 12 - inference instrumentation forwards live messages/options unchanged and captures actual supplied passages
+  ---
+  duration_ms: 0.246459
+  type: 'test'
+  ...
+# Subtest: conversation runner isolates threads, preserves turn order, and does not count errors as abstention
+ok 13 - conversation runner isolates threads, preserves turn order, and does not count errors as abstention
+  ---
+  duration_ms: 0.497333
+  type: 'test'
+  ...
+# Subtest: failed follow-up cannot reuse the first-turn hit or disappear from the denominator
+ok 14 - failed follow-up cannot reuse the first-turn hit or disappear from the denominator
+  ---
+  duration_ms: 0.110792
+  type: 'test'
+  ...
+# Subtest: real createService retrieval observes exact article and follow-up evidence without loopback or a model
+ok 15 - real createService retrieval observes exact article and follow-up evidence without loopback or a model
+  ---
+  duration_ms: 95.00925
+  type: 'test'
+  ...
+# Subtest: markdown distinguishes simulation and missing denominators from perfect scores
+ok 16 - markdown distinguishes simulation and missing denominators from perfect scores
+  ---
+  duration_ms: 0.089834
+  type: 'test'
+  ...
+# Subtest: live without an explicit model store fails with reviewable JSON/Markdown and no fabricated metrics
+ok 17 - live without an explicit model store fails with reviewable JSON/Markdown and no fabricated metrics
+  ---
+  duration_ms: 104.172875
+  type: 'test'
+  ...
+# (node:24461) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: explicit federal code and Constitution requests use the named authority from a CDMX matter
+ok 18 - explicit federal code and Constitution requests use the named authority from a CDMX matter
+  ---
+  duration_ms: 58.054042
+  type: 'test'
+  ...
+# (node:24462) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: synthetic colloquial probes expand across ten areas, with strict anchor jurisdiction
+ok 19 - synthetic colloquial probes expand across ten areas, with strict anchor jurisdiction
+  ---
+  duration_ms: 28.367875
+  type: 'test'
+  ...
+# Subtest: every vocabulary term and provenance excerpt is grounded in the pinned public source
+ok 20 - every vocabulary term and provenance excerpt is grounded in the pinned public source
+  ---
+  duration_ms: 7.972083
+  type: 'test'
+  ...
+# Subtest: follow-ups retain the substantive user turn, bounded to caller-provided thread
+ok 21 - follow-ups retain the substantive user turn, bounded to caller-provided thread
+  ---
+  duration_ms: 3.730875
+  type: 'test'
+  ...
+# Subtest: authority boost competes with incidental matches, preserves exact references and state scope
+ok 22 - authority boost competes with incidental matches, preserves exact references and state scope
+  ---
+  duration_ms: 28.378459
+  type: 'test'
+  ...
+# Subtest: passage selection targets substantive fractions; bare direct reference retains the lead
+ok 23 - passage selection targets substantive fractions; bare direct reference retains the lead
+  ---
+  duration_ms: 0.968
+  type: 'test'
+  ...
+# Subtest: optional retrieval preserves injected and state library behavior
+ok 24 - optional retrieval preserves injected and state library behavior
+  ---
+  duration_ms: 0.084209
+  type: 'test'
+  ...
+# Subtest: rewriter retains context for the router existing follow-up vocabulary
+ok 25 - rewriter retains context for the router existing follow-up vocabulary
+  ---
+  duration_ms: 7.764084
+  type: 'test'
+  ...
+# Subtest: official titles resolve their own area and do not treat embedded titles as another authority
+ok 26 - official titles resolve their own area and do not treat embedded titles as another authority
+  ---
+  duration_ms: 1.854375
+  type: 'test'
+  ...
+# Subtest: hypothetical refinements keep a soft anchor without pinning a changed area or jurisdiction
+ok 27 - hypothetical refinements keep a soft anchor without pinning a changed area or jurisdiction
+  ---
+  duration_ms: 8.234333
+  type: 'test'
+  ...
+# Subtest: fractions and subparagraphs retain exact offsets, parent markers and complete article hash
+ok 28 - fractions and subparagraphs retain exact offsets, parent markers and complete article hash
+  ---
+  duration_ms: 2.278916
+  type: 'test'
+  ...
+# Subtest: single-line extraction splits I., II.- and a) without calling approximate cuts official paragraphs
+ok 29 - single-line extraction splits I., II.- and a) without calling approximate cuts official paragraphs
+  ---
+  duration_ms: 1.928084
+  type: 'test'
+  ...
+# Subtest: citation verification rejects changed text, offsets, identity, jurisdiction and hash
+ok 30 - citation verification rejects changed text, offsets, identity, jurisdiction and hash
+  ---
+  duration_ms: 1.162542
+  type: 'test'
+  ...
+# (node:24464) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: FTS retrieves the relevant fraction with verifiable provenance and no cross-jurisdiction fallback
+ok 31 - FTS retrieves the relevant fraction with verifiable provenance and no cross-jurisdiction fallback
+  ---
+  duration_ms: 56.926834
+  type: 'test'
+  ...
+# Subtest: exact references rank a matching fraction; navigation uses actual Bis ordering
+ok 32 - exact references rank a matching fraction; navigation uses actual Bis ordering
+  ---
+  duration_ms: 23.633125
+  type: 'test'
+  ...
+# Subtest: query operators are treated as text, and hostile article payloads never publish
+ok 33 - query operators are treated as text, and hostile article payloads never publish
+  ---
+  duration_ms: 53.671875
+  type: 'test'
+  ...
+# Subtest: build is reproducible and failed replacement preserves the existing index
+ok 34 - build is reproducible and failed replacement preserves the existing index
+  ---
+  duration_ms: 24.407875
+  type: 'test'
+  ...
+# Subtest: changed fragment text is refused at read time
+ok 35 - changed fragment text is refused at read time
+  ---
+  duration_ms: 10.992125
+  type: 'test'
+  ...
+# Subtest: accented article suffixes and latest stored versions remain distinguishable
+ok 36 - accented article suffixes and latest stored versions remain distinguishable
+  ---
+  duration_ms: 8.99775
+  type: 'test'
+  ...
+# (node:24465) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: colloquial questions map to areas without guessing a law from article numbers
+ok 37 - colloquial questions map to areas without guessing a law from article numbers
+  ---
+  duration_ms: 23.469042
+  type: 'test'
+  ...
+# Subtest: all 303 laws have nonempty, reproducible area mappings
+ok 38 - all 303 laws have nonempty, reproducible area mappings
+  ---
+  duration_ms: 9.136042
+  type: 'test'
+  ...
+# Subtest: next-article follow-up resolves its law and anchor without inventing a successor
+ok 39 - next-article follow-up resolves its law and anchor without inventing a successor
+  ---
+  duration_ms: 1.655625
+  type: 'test'
+  ...
+# Subtest: follow-up citations, role messages and a changed hypothetical preserve usable context
+ok 40 - follow-up citations, role messages and a changed hypothetical preserve usable context
+  ---
+  duration_ms: 13.291833
+  type: 'test'
+  ...
+# Subtest: ambiguous or absent context requests clarification; explicit scope is retained
+ok 41 - ambiguous or absent context requests clarification; explicit scope is retained
+  ---
+  duration_ms: 5.128083
+  type: 'test'
+  ...
+# Subtest: optional vector ranking cannot add out-of-scope IDs or mutate inputs
+ok 42 - optional vector ranking cannot add out-of-scope IDs or mutate inputs
+  ---
+  duration_ms: 0.238208
+  type: 'test'
+  ...
+# (node:24466) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: auto attempts retrieval on greetings, then responds without citations
+ok 43 - auto attempts retrieval on greetings, then responds without citations
+  ---
+  duration_ms: 33.825625
+  type: 'test'
+  ...
+# Subtest: auto returns conversational and legal paragraphs with validated L aliases and provenance
+ok 44 - auto returns conversational and legal paragraphs with validated L aliases and provenance
+  ---
+  duration_ms: 18.89475
+  type: 'test'
+  ...
+# Subtest: retrieved evidence can ground a turn that the old router classified as conversation
+ok 45 - retrieved evidence can ground a turn that the old router classified as conversation
+  ---
+  duration_ms: 13.709375
+  type: 'test'
+  ...
+# Subtest: invented citation fails closed without streaming or persisting output
+ok 46 - invented citation fails closed without streaming or persisting output
+  ---
+  duration_ms: 22.895
+  type: 'test'
+  ...
+# Subtest: no relevant evidence produces conversational abstention without inference
+ok 47 - no relevant evidence produces conversational abstention without inference
+  ---
+  duration_ms: 16.492292
+  type: 'test'
+  ...
+# Subtest: auto does not stream unsupported legal/numeric claims from text generation
+ok 48 - auto does not stream unsupported legal/numeric claims from text generation
+  ---
+  duration_ms: 15.498
+  type: 'test'
+  ...
+# Subtest: unknown citation in a text response also rejects
+ok 49 - unknown citation in a text response also rejects
+  ---
+  duration_ms: 10.483458
+  type: 'test'
+  ...
+# Subtest: mixed validator cannot hide legal claims in conversational paragraphs or borrow numbers
+ok 50 - mixed validator cannot hide legal claims in conversational paragraphs or borrow numbers
+  ---
+  duration_ms: 1.263042
+  type: 'test'
+  ...
+# Subtest: unsupported conversational paragraph in grounded generation becomes abstention
+ok 51 - unsupported conversational paragraph in grounded generation becomes abstention
+  ---
+  duration_ms: 13.404375
+  type: 'test'
+  ...
+# Subtest: long-lived thread memory persists across restart and never crosses matters or threads
+ok 52 - long-lived thread memory persists across restart and never crosses matters or threads
+  ---
+  duration_ms: 31.486167
+  type: 'test'
+  ...
+# Subtest: persisted memory key also isolates workspaces and rejects forged history scopes
+ok 53 - persisted memory key also isolates workspaces and rejects forged history scopes
+  ---
+  duration_ms: 9.497958
+  type: 'test'
+  ...
+# Subtest: context budget bounds memory, long history, passages, framing and response reserve
+ok 54 - context budget bounds memory, long history, passages, framing and response reserve
+  ---
+  duration_ms: 1.622084
+  type: 'test'
+  ...
+# Subtest: private document retrieval and D citations stay inside the selected matter
+ok 55 - private document retrieval and D citations stay inside the selected matter
+  ---
+  duration_ms: 14.113916
+  type: 'test'
+  ...
+# Subtest: optional fragment modules retain exact source offsets and hashes in an automatic answer
+ok 56 - optional fragment modules retain exact source offsets and hashes in an automatic answer
+  ---
+  duration_ms: 8.503833
+  type: 'test'
+  ...
+# Subtest: cancellation while emitting validated mixed output persists neither answer nor memory
+ok 57 - cancellation while emitting validated mixed output persists neither answer nor memory
+  ---
+  duration_ms: 10.421292
+  type: 'test'
+  ...
+# (node:24467) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: single automatic conversation switches to public legal evidence without a matter or manual mode
+ok 58 - single automatic conversation switches to public legal evidence without a matter or manual mode
+  ---
+  duration_ms: 62.818583
+  type: 'test'
+  ...
+# Subtest: document intent requests missing context and does not read another matter or run the model
+ok 59 - document intent requests missing context and does not read another matter or run the model
+  ---
+  duration_ms: 25.71075
+  type: 'test'
+  ...
+# Subtest: aborted automatic clarification never persists a turn
+ok 60 - aborted automatic clarification never persists a turn
+  ---
+  duration_ms: 15.360542
+  type: 'test'
+  ...
+# Subtest: automatic legal conversation asks for missing local scope instead of substituting federal law
+ok 61 - automatic legal conversation asks for missing local scope instead of substituting federal law
+  ---
+  duration_ms: 27.414167
+  type: 'test'
+  ...
+1..61
+# tests 61
+# suites 0
+# pass 61
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 431.023917

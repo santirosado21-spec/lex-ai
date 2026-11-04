@@ -1,0 +1,26 @@
+# Defensa adicional para herramientas de contexto; no es una sandbox de terminal/MCP.
+**/.env
+**/.env.*
+**/*.key
+**/*.pem
+**/credentials.json
+**/secrets.json
+**/*.sqlite
+**/*.sqlite-*
+**/*.db
+.data/
+.desktop/
+artifacts/
+.vercel/
+**/.vercel/
+supabase/.temp/
+supabase/.branches/
+resources/models/
+resources/runtime/
+src-tauri/target/
+src-tauri/binaries/
+.venv-training/
+.venv-convert-lightweight/
+node_modules/
+dist/
+**/*.log

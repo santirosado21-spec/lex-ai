@@ -60,9 +60,9 @@ try {
  report.checks.push('generated app cover loads with accessible text; 390px onboarding has no horizontal overflow');
  await page.getByLabel('Nombre del despacho').fill('Despacho sintético UI');
  await page.getByRole('button',{name:'Crear espacio privado',exact:true}).click();
- await page.getByRole('heading',{name:'Configuración',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Asistente',exact:true}).waitFor();
  await page.getByRole('button',{name:'Preparar LEX AI',exact:true}).click();
- await page.getByText('LEX AI listo',{exact:true}).last().waitFor();
+ await expect(page.getByRole('button',{name:'Estado de LEX AI',exact:true})).toHaveAttribute('title','LEX AI listo');
  report.checks.push('onboarding firm and explicit local model initialization');
  const nav=page.getByRole('navigation',{name:'Navegación principal'});for(const label of ['Trabajo','Herramientas jurídicas','Sistema','Asistente','Asuntos','Escritos','Biblioteca federal','Conflictos','Checklist','Pendientes','Acciones propuestas','Panel','Inicio','Calidad del asistente','Configuración'])await expect(nav.getByRole('button',{name:label,exact:true})).toBeVisible();await page.getByRole('button',{name:'Asuntos',exact:true}).click();
  await page.getByRole('button',{name:'Nuevo asunto',exact:true}).click();
@@ -101,6 +101,7 @@ try {
  await page.getByRole('button',{name:'Asistente',exact:true}).click();
  await page.getByRole('heading',{name:'Asistente',exact:true}).waitFor();
  await page.screenshot({path:'artifacts/ui-assistant.png',fullPage:true});
+ await page.getByLabel('Habilidad',{exact:true}).selectOption('contract-reviewer');
  await page.getByLabel('Pregunta sobre el asunto').fill('¿Qué obligaciones y condiciones establece el contrato por consentimiento?');
  await page.getByRole('button',{name:'Preguntar',exact:true}).click();
  await page.getByRole('button',{name:'Exportar DOCX',exact:true}).waitFor();
@@ -145,7 +146,7 @@ try {
  await page.getByRole('button',{name:'Confirmar reversión',exact:true}).click();
  await page.getByText('Revertida',{exact:true}).waitFor();
  report.checks.push('feedback, inactive proposal, evaluation gate, explicit review confirmation, approval and rollback');
- await page.getByRole('button',{name:'Expediente',exact:true}).click();
+ await page.getByRole('button',{name:'Abrir expediente',exact:true}).click();
  await page.getByRole('heading',{name:'Actividad del asunto',exact:true}).waitFor();
  await expect(page.locator('.dossier-event')).toHaveCount(3);
  await page.getByRole('button',{name:'Nueva tarea',exact:true}).click();
@@ -155,7 +156,8 @@ try {
  await page.getByRole('button',{name:'Guardar tarea',exact:true}).click();
  await page.getByRole('button',{name:'Completar tarea: Revisar anexos sintéticos',exact:true}).waitFor();
  await page.reload();
- await page.getByRole('button',{name:'Expediente',exact:true}).click();
+ await page.getByLabel('Habilidad',{exact:true}).selectOption('contract-reviewer');
+ await page.getByRole('button',{name:'Abrir expediente',exact:true}).click();
  await page.getByRole('button',{name:'Completar tarea: Revisar anexos sintéticos',exact:true}).click();
  await page.getByRole('button',{name:/^Completadas/}).click();
  await page.getByRole('button',{name:'Reabrir tarea: Revisar anexos sintéticos',exact:true}).click();
@@ -253,8 +255,9 @@ try {
  await page.setViewportSize({width:700,height:900});
  // This test controls animation time; flush resize before targeting the new nav.
  await page.clock.runFor(30);await page.evaluate(()=>window.dispatchEvent(new Event('resize')));await page.clock.runFor(100);
- await expect(page.getByRole('navigation',{name:'Navegación principal'})).toBeVisible();
+ // A closed drawer is hidden from keyboard and assistive tech; open it first.
  if(await page.getByRole('button',{name:'Abrir menú',exact:true}).isVisible())await page.getByRole('button',{name:'Abrir menú',exact:true}).click();
+ await expect(page.getByRole('navigation',{name:'Navegación principal'})).toBeVisible();
  await page.getByRole('button',{name:'Asistente',exact:true}).click();
  if(await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).isVisible())await page.getByRole('button',{name:'Cerrar panel de contexto',exact:true}).click();
  await page.getByRole('button',{name:/Ver fuente 1:/}).click();

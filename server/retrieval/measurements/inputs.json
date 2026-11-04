@@ -1,0 +1,7 @@
+{
+  "resources/legal-thesaurus.json": "68c1afe0d759227280f8017292bdbba0753b62d5a919d9ddc5c93e4753843cb6",
+  "resources/law-areas.json": "c92f9c2699ed25df2d3d17ae88be6a8035933568d7ff362dcbc00c3e3b847315",
+  "resources/legal-library-catalog.json": "92994d39a6e273b7da6fb67823e6f0126f920a9b937499e69b775dbd7ce80915",
+  "resources/public-library.sqlite": "ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588",
+  "artifacts/retrieval/fragments.sqlite": "04486e9167b938e18a400e5381b68ef7fcf060937efd172a93e0c6aa6ed4ebf4"
+}
