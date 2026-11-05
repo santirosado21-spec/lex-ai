@@ -133,7 +133,7 @@ export async function models(name, settings, fetchImpl = fetch) {
     ...(name === 'huggingface' ? { routes: (Array.isArray(m.providers) ? m.providers : []).filter(p => p.status === 'live' && typeof p.provider === 'string').map(p => `${m.id}:${p.provider}`) } : {}),
   }));
 }
-export async function ask(name, model, request, settings, { dryRun = false, fetchImpl = fetch, maxTokens = 800 } = {}) {
+export async function ask(name, model, request, settings, { dryRun = false, fetchImpl = fetch, maxTokens = 800, timeoutMs = 45000, temperature } = {}) {
   const info = providerInfo(name);
   assertModel(model);
   const prepared = handoff(name, request);
@@ -148,9 +148,10 @@ export async function ask(name, model, request, settings, { dryRun = false, fetc
   const found = name === 'huggingface' ? catalog.some(m => m.routes.includes(model)) : catalog.some(m => m.id === model);
   if (!found) fail('MODEL_UNAVAILABLE', 'El modelo o ruta no aparece en el catálogo permitido actual. No se sustituye.');
   const body = { model, messages: [{ role: 'user', content: prepared.prompt }], max_tokens: Math.min(Math.max(Math.trunc(Number(maxTokens)) || 800, 64), 4000), stream: false };
+  if (Number.isFinite(temperature)) body.temperature = Math.min(Math.max(temperature, 0), 1);
   if (name === 'openrouter') body.provider = { allow_fallbacks: false, max_price: { prompt: 0, completion: 0 } };
   const start = Date.now();
-  const result = await fetchJson(`${info.base}/chat/completions`, { token, body, fetchImpl });
+  const result = await fetchJson(`${info.base}/chat/completions`, { token, body, fetchImpl, timeoutMs: Math.min(Math.max(Number(timeoutMs) || 45000, 5000), 180000) });
   const choice = result.choices?.[0];
   if (typeof result.model !== 'string' || /claude|anthropic/i.test(result.model)) fail('UNVERIFIED_RESPONSE_MODEL', 'El proveedor no identificó un modelo permitido en la respuesta.');
   assertModel(result.model);

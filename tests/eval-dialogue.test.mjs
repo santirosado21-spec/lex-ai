@@ -80,3 +80,21 @@ test('check summary aggregates by category', () => {
   assert.deepEqual(s.total, { checks: 2, passed: 1 });
   assert.equal(s.medianTurnMs, 5);
 });
+
+test('both-orders judging counts a win only when both orders agree', async () => {
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'lex-judge-both-'));
+  const { cases } = await loadCases();
+  const ids = cases.slice(0, 4).map(c => c.id);
+  const mk = label => ({ label, results: ids.map(id => ({ id, category: 'c', turns: [turn(label)] })) });
+  await writeFile(path.join(dir, 'a.json'), JSON.stringify(mk('uno')));
+  await writeFile(path.join(dir, 'b.json'), JSON.stringify(mk('dos')));
+  // Position-biased fake judge: always prefers whatever is shown as A.
+  let calls = 0; const temps = [];
+  const ask = async (_p, _m, _req, _s, opts) => { calls++; temps.push(opts.temperature); const s = n => ({ naturalidad: n, instrucciones: n, fidelidad: n }); return { answer: JSON.stringify({ A: s(5), B: s(1), preferida: 'A', motivo: 'm' }), observedModel: 'fake', usage: {} }; };
+  process.env.DSYSTEM_CONFIG_DIR = dir;
+  const { report } = await judge({ a: path.join(dir, 'a.json'), b: path.join(dir, 'b.json'), delayMs: 0, ask, outDir: dir, bothOrders: true });
+  assert.equal(calls, ids.length * 2);
+  assert.ok(temps.every(t => t === 0));
+  assert.equal(report.summary.wins.empate, ids.length);
+  assert.equal(report.summary.orderAgreement, `0/${ids.length}`);
+});

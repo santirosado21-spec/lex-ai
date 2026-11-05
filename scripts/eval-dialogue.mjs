@@ -168,7 +168,7 @@ export function parseJudge(answer) {
 // Deterministic blind assignment: which run appears as "A" depends on a hash of the case id.
 export const swapFor = (id, seed) => parseInt(sha(`${seed}:${id}`).slice(0, 8), 16) % 2 === 1;
 
-export async function judge({ a, b, single, resume, seed = 'lex-dialogue-v1', delayMs = 15000, ask, outDir = OUT } = {}) {
+export async function judge({ a, b, single, resume, seed = 'lex-dialogue-v1', delayMs = 15000, ask, outDir = OUT, bothOrders = false } = {}) {
   ask ??= (await import(pathToFileURL(path.join(ROOT, 'scripts/dsystem/remote.mjs')))).ask;
   const { loadSettings } = await import(pathToFileURL(path.join(ROOT, 'scripts/dsystem/remote.mjs')));
   const settings = await loadSettings();
@@ -183,17 +183,26 @@ export async function judge({ a, b, single, resume, seed = 'lex-dialogue-v1', de
   await mkdir(outDir, { recursive: true });
   for (const r of runA.results) {
     if (done.has(r.id) || !byId.has(r.id) || (resB && !resB.has(r.id))) continue;
-    const swap = runB ? swapFor(r.id, seed) : false;
-    const transcripts = runB ? (swap ? { A: resB.get(r.id).turns, B: r.turns } : { A: r.turns, B: resB.get(r.id).turns }) : { A: r.turns };
+    const first = runB ? swapFor(r.id, seed) : false;
+    const orders = runB && bothOrders ? [first, !first] : [first];
     try {
-      const res = await ask('groq', JUDGE_MODEL, judgeRequest(byId.get(r.id), transcripts), settings, { maxTokens: 3000 });
-      const j = parseJudge(res.answer);
-      // Map blind labels back to run labels.
-      const mapBack = l => !runB ? runA.label : (l === 'A') !== swap ? runA.label : runB.label;
-      const scores = { [mapBack('A')]: j.A, ...(j.B ? { [mapBack('B')]: j.B } : {}) };
-      const preferred = j.preferida === undefined ? null : j.preferida === 'empate' ? 'empate' : mapBack(j.preferida);
-      report.judgements.push({ id: r.id, category: r.category, swapped: swap, scores, preferred, reason: j.motivo, observedModel: res.observedModel, usage: res.usage });
-      process.stderr.write(`${r.id}: ${preferred ?? JSON.stringify(j.A)}\n`);
+      const passes = [];
+      for (const swap of orders) {
+        const transcripts = runB ? (swap ? { A: resB.get(r.id).turns, B: r.turns } : { A: r.turns, B: resB.get(r.id).turns }) : { A: r.turns };
+        // Temperature 0: the same pair must get the same verdict.
+        const res = await ask('groq', JUDGE_MODEL, judgeRequest(byId.get(r.id), transcripts), settings, { maxTokens: 3000, timeoutMs: 120000, temperature: 0 });
+        const j = parseJudge(res.answer);
+        // Map blind labels back to run labels.
+        const mapBack = l => !runB ? runA.label : (l === 'A') !== swap ? runA.label : runB.label;
+        passes.push({ swap, scores: { [mapBack('A')]: j.A, ...(j.B ? { [mapBack('B')]: j.B } : {}) }, preferred: j.preferida === undefined ? null : j.preferida === 'empate' ? 'empate' : mapBack(j.preferida), reason: j.motivo, observedModel: res.observedModel, usage: res.usage });
+        if (orders.length > 1 && swap === orders[0]) await new Promise(res2 => setTimeout(res2, delayMs));
+      }
+      // With both orders, a win counts only when both orders agree.
+      const preferred = passes.length === 1 ? passes[0].preferred : passes[0].preferred === passes[1].preferred ? passes[0].preferred : 'empate';
+      const avg = (label, k) => passes.reduce((n, p) => n + (p.scores[label]?.[k] ?? 0), 0) / passes.length;
+      const scores = Object.fromEntries(Object.keys(passes[0].scores).map(l => [l, Object.fromEntries(['naturalidad', 'instrucciones', 'fidelidad'].map(k => [k, avg(l, k)]))]));
+      report.judgements.push({ id: r.id, category: r.category, swapped: first, scores, preferred, ...(passes.length > 1 ? { orderAgreement: passes[0].preferred === passes[1].preferred, passes: passes.map(p => p.preferred) } : {}), reason: passes.map(p => p.reason).join(' / '), observedModel: passes[0].observedModel, usage: passes.map(p => p.usage) });
+      process.stderr.write(`${r.id}: ${preferred ?? JSON.stringify(passes[0].scores)}${passes.length > 1 ? ` (${passes.map(p => p.preferred).join(' | ')})` : ''}\n`);
     } catch (e) {
       report.judgements.push({ id: r.id, category: r.category, error: e.code || 'ERROR', message: e.message });
       if (['QUOTA_OR_RATE_LIMIT', 'FREE_ACCESS_EXHAUSTED', 'AUTH_OR_ACCESS_REQUIRED', 'NETWORK_UNAVAILABLE'].includes(e.code)) {
@@ -220,18 +229,19 @@ export function summarizeJudge(report) {
   const wins = report.mode === 'paired' ? Object.fromEntries([...report.labels, 'empate'].map(l => [l, ok.filter(j => j.preferred === l).length])) : null;
   const byCategory = {};
   for (const j of ok) { const g = (byCategory[j.category] ??= {}); if (j.preferred) g[j.preferred] = (g[j.preferred] ?? 0) + 1; }
-  return { judged: ok.length, errors: report.judgements.length - ok.length, scores, wins, byCategory };
+  const agreement = ok.filter(j => 'orderAgreement' in j);
+  return { judged: ok.length, errors: report.judgements.length - ok.length, scores, wins, byCategory, ...(agreement.length ? { orderAgreement: `${agreement.filter(j => j.orderAgreement).length}/${agreement.length}` } : {}) };
 }
 
 async function main() {
   const [cmd] = process.argv.slice(2);
-  const { values } = parseArgs({ args: process.argv.slice(3), options: { label: { type: 'string' }, service: { type: 'string' }, only: { type: 'string' }, a: { type: 'string' }, b: { type: 'string' }, single: { type: 'string' }, resume: { type: 'string' }, 'delay-ms': { type: 'string' } } });
+  const { values } = parseArgs({ args: process.argv.slice(3), options: { label: { type: 'string' }, service: { type: 'string' }, only: { type: 'string' }, a: { type: 'string' }, b: { type: 'string' }, single: { type: 'string' }, resume: { type: 'string' }, 'delay-ms': { type: 'string' }, 'both-orders': { type: 'boolean' } } });
   if (cmd === 'run') {
     const { report, outFile } = await run({ label: values.label, servicePath: values.service && path.resolve(values.service), only: values.only });
     console.log(JSON.stringify({ status: report.status, failure: report.failure, summary: report.summary, outFile }, null, 2));
   } else if (cmd === 'judge') {
     if (!values.single && !(values.a && values.b)) throw Error('Usa --a y --b, o --single');
-    const { report, outFile } = await judge({ a: values.a, b: values.b, single: values.single, resume: values.resume, delayMs: values['delay-ms'] ? Number(values['delay-ms']) : undefined });
+    const { report, outFile } = await judge({ a: values.a, b: values.b, single: values.single, resume: values.resume, delayMs: values['delay-ms'] ? Number(values['delay-ms']) : undefined, bothOrders: Boolean(values['both-orders']) });
     console.log(JSON.stringify({ status: report.status, summary: report.summary, outFile }, null, 2));
   } else throw Error('Comando: run | judge');
 }
