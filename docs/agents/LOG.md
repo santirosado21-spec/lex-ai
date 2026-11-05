@@ -14,3 +14,10 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - La API de OpenRouter reporta total_credits=45 USD y total_usage=38,68 USD (unos 6,32 USD de saldo) e is_free_tier=false. El dueño había dicho que tenía 3 centavos; la activación se hizo con esa premisa.
 - Se desactivó (dsystem disable openrouter). El código seguía impidiendo cobros (solo :free con precio cero y max_price 0), pero la atestación de cuenta gratuita no era cierta.
 - Groq medido en vivo: 1.000 solicitudes por día y 8.000 tokens por minuto (openai/gpt-oss-120b).
+
+## 2026-11-04 23:05 — claude — Gemma local era Qwen; ahora es Gemma 4 E4B
+
+- Hallazgo: localllm usaba el primer modelo de Ollama, que era qwen3.5:2b, no Gemma. El gemma4:26b-a4b (16 GB) llevaba 6 días descargado sin usarse.
+- Prueba medida: el 26B responde bien (24,8 s) pero bajó la memoria disponible de 30 % a 11 % y dejó el swap en 14,2 de 15 GB. Se descargó de memoria con 'ollama stop'.
+- Descargado gemma4:e4b-it-q4_K_M (6,6 GB, orden del dueño): 3,5 s por respuesta, memoria 54 % libre tras la prueba. localllm ahora lo prefiere y acepta --model (copia de respaldo ~/.local/bin/localllm.bak-20261104).
+- OpenRouter sigue desactivada hasta que el dueño la reactive sabiendo que tiene unos 6,32 USD de saldo real.
