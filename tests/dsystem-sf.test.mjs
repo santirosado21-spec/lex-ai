@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runPanel, renderReport, seatPrompt, SEATS, DEFAULT_SEATS, usable } from '../scripts/dsystem/sf.mjs';
+import { runPanel, renderReport, seatPrompt, SEATS, DEFAULT_SEATS, DECISION_SEATS, WORKER_SEATS, defaultSeats, usable } from '../scripts/dsystem/sf.mjs';
 
 const settings = { dir: '/nonexistent', config: { providers: {} }, keys: {}, env: {} };
 const request = {
@@ -43,8 +43,7 @@ test('every seat gets its own lens and the same reviewed packet; reports mark di
   assert.notEqual(seatPrompt('gemini', clean), seatPrompt('groq', clean));
   const out = await runPanel(request, { seats: ['gemma', 'claude'], settings, send: { gemma: async () => 'faltan términos' } });
   const md = renderReport(request, out);
-  assert.match(md, /Respondieron 1 de 2/); assert.match(md, /handoffs\/claude\.md/); assert.match(md, /hipótesis/);
-  assert.ok(DEFAULT_SEATS.every(s => SEATS[s].kind === 'auto'), 'defaults never wait on a person');
+  assert.match(md, /Decisores: respondieron 0 de 1/); assert.match(md, /handoffs\/claude\.md/); assert.match(md, /hipótesis/); assert.match(md, /## Obreros[\s\S]*Gemma local[\s\S]*faltan términos/);
 });
 
 test('seat status reports honestly what is usable', async () => {
@@ -60,4 +59,22 @@ test('API seats receive a packet that still passes the same review gate', async 
   let seen;
   const out = await runPanel(request, { seats: ['groq'], settings: confirmed, send: { groq: async (_p, { request: r }) => { seen = r; validateRequest(r); return 'ok'; } } });
   assert.equal(out[0].status, 'answered'); assert.equal(seen.dataClass, 'synthetic'); assert.equal(seen.reviewedForExternal, true);
+});
+
+test('decision makers vote, free models are workers; the initiator never reviews itself', () => {
+  assert.deepEqual([...DECISION_SEATS].sort(), ['claude', 'codex', 'cursor', 'gemini', 'kimi']);
+  assert.deepEqual([...WORKER_SEATS].sort(), ['gemma', 'groq', 'openrouter']);
+  assert.deepEqual(DEFAULT_SEATS, DECISION_SEATS, 'default panel has decision makers only, never free workers');
+  assert.ok(!defaultSeats('claude').includes('claude') && defaultSeats('claude').includes('codex'));
+  assert.ok(!defaultSeats('codex').includes('codex') && defaultSeats('codex').includes('claude'));
+  assert.match(SEATS.cursor.label, /Grok/);
+});
+
+test('report separates decision makers from workers and tells workers they do not decide', async () => {
+  const out = await runPanel(request, { seats: ['gemini', 'gemma', 'groq'], settings, send: { gemini: async () => 'objeción', gemma: async () => 'lista' } });
+  const md = renderReport(request, out);
+  assert.match(md, /## Decisores[\s\S]*Gemini[\s\S]*## Obreros[\s\S]*Gemma/);
+  assert.match(md, /Decisores: respondieron 1 de 1/);
+  assert.match(seatPrompt('groq', { ...request, skills: request.skills }), /obrero de apoyo[\s\S]*NO decide/);
+  assert.doesNotMatch(seatPrompt('gemini', { ...request, skills: request.skills }), /obrero de apoyo/);
 });

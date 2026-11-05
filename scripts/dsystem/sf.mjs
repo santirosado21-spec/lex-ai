@@ -2,7 +2,7 @@
 /**
  * dsystem SF (Software Factory): independent-viewpoint panel.
  *
- *   dsf panel --request sf-request.json [--seats gemini,kimi,groq,gemma] [--out DIR]
+ *   dsf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--out DIR]
  *   dsf seats                    # which seats exist and whether they are usable now
  *
  * The initiating agent (Claude or Codex) is the "elephant": it keeps the project
@@ -26,21 +26,26 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
 /** Strengths are a working policy, not a benchmark. Change them in one place. */
 export const SEATS = {
-  gemini: { label: 'Gemini', kind: 'auto', lens: 'Contradice los supuestos del plan: qué está mal planteado, qué riesgo de producto, negocio o seguridad falta, qué alternativa más simple existe.' },
-  kimi: { label: 'Kimi', kind: 'auto', lens: 'Lectura larga y alternativas de arquitectura: casos límite, fallos de integración, orden de implementación y una opción distinta a la propuesta.' },
-  groq: { label: 'Groq (gpt-oss-120b)', kind: 'auto', lens: 'Casos de prueba y huecos verificables: lista concreta de pruebas que romperían el plan y criterios de aceptación medibles.' },
-  openrouter: { label: 'OpenRouter (:free)', kind: 'auto', lens: 'Segunda opinión independiente sobre los puntos más inciertos del plan.' },
+  gemini: { label: 'Gemini', kind: 'auto', tier: 'decision', lens: 'Contradice los supuestos del plan: qué está mal planteado, qué riesgo de producto, negocio o seguridad falta, qué alternativa más simple existe.' },
+  kimi: { label: 'Kimi', kind: 'auto', tier: 'decision', lens: 'Lectura larga y alternativas de arquitectura: casos límite, fallos de integración, orden de implementación y una opción distinta a la propuesta.' },
+  groq: { label: 'Groq (gpt-oss-120b, gratis)', kind: 'auto', tier: 'worker', lens: 'Tarea acotada: lista concreta de casos de prueba y criterios de aceptación medibles para el plan.' },
+  openrouter: { label: 'OpenRouter (:free)', kind: 'auto', tier: 'worker', lens: 'Tarea acotada: resume y ordena los puntos más inciertos del plan.' },
   gemma: { label: 'Gemma local', kind: 'auto', tier: 'worker', lens: 'Tarea simple: lista las ambigüedades, términos sin definir y datos que faltan en el encargo. Sin opinar sobre el diseño.' },
-  codex: { label: 'Codex', kind: 'manual', lens: 'Viabilidad de implementación, archivos afectados, plan de pruebas y riesgos al integrar. Es quien implementa y verifica.' },
-  claude: { label: 'Claude', kind: 'manual', lens: 'Diseño de interacción y de interfaz, arquitectura ambigua y revisión difícil con otra perspectiva.' },
-  cursor: { label: 'Cursor (modelo explícito no Claude)', kind: 'manual', lens: 'Revisión de código de los archivos nombrados en el encargo y una implementación alternativa acotada.' },
+  codex: { label: 'Codex', kind: 'manual', tier: 'decision', lens: 'Viabilidad de implementación, archivos afectados, plan de pruebas y riesgos al integrar. Es quien implementa y verifica.' },
+  claude: { label: 'Claude', kind: 'manual', tier: 'decision', lens: 'Diseño de interacción y de interfaz, arquitectura ambigua y revisión difícil con otra perspectiva.' },
+  cursor: { label: 'Cursor (Grok, misma cuenta que Grok Bot)', kind: 'manual', tier: 'decision', lens: 'Revisión de código de los archivos nombrados en el encargo y una implementación alternativa acotada.' },
 };
-export const DEFAULT_SEATS = ['gemini', 'kimi', 'groq', 'gemma'];
+export const DECISION_SEATS = Object.keys(SEATS).filter(id => SEATS[id].tier === 'decision');
+export const WORKER_SEATS = Object.keys(SEATS).filter(id => SEATS[id].tier === 'worker');
+/** Decision makers vote; workers (free models) only support. The initiator never reviews itself. */
+export const defaultSeats = (from) => DECISION_SEATS.filter(id => id !== from);
+export const DEFAULT_SEATS = defaultSeats();
 
 export function seatPrompt(seat, clean) {
   const s = SEATS[seat];
   const skills = clean.skills.map(k => `- ${k.source}: ${k.guidance}`).join('\n');
-  return `Eres un revisor independiente ("pez dorado") del plan que sigue: no conoces el proyecto más allá de este texto y no tienes archivos, herramientas ni red. No afirmes haber ejecutado nada. Responde en español, directo, máximo 350 palabras.
+  const role = s.tier === 'worker' ? 'Eres un obrero de apoyo (modelo gratuito): tu respuesta se contrasta con la fuente y NO decide nada. Haz solo la tarea que se te pide, sin opinar sobre el diseño. ' : '';
+  return `${role}Eres un revisor independiente ("pez dorado") del plan que sigue: no conoces el proyecto más allá de este texto y no tienes archivos, herramientas ni red. No afirmes haber ejecutado nada. Responde en español, directo, máximo 350 palabras.
 
 TU LENTE: ${s.lens}
 
@@ -87,7 +92,7 @@ export async function usable(settings) {
     openrouter: { ok: false, note: 'sin clave (dsystem key openrouter) y sin modelo :free elegido' },
     codex: { ok: false, note: 'manual: se prepara el encargo para pegarlo' },
     claude: { ok: false, note: 'manual: se prepara el encargo para pegarlo' },
-    cursor: { ok: false, note: 'manual: sin CLI; elegir un modelo explícito que no sea Claude' },
+    cursor: { ok: false, note: 'manual: sin CLI; usa la cuenta de Cursor con Grok (misma facturación que Grok Bot)' },
   };
 }
 
@@ -118,30 +123,33 @@ export async function runPanel(request, { seats = DEFAULT_SEATS, settings, send 
 
 export function renderReport(request, entries) {
   const head = `# Panel SF — ${request.task.slice(0, 120)}\n\nGenerado ${new Date().toISOString()}. Los asientos son opiniones sobre un texto revisado: el elefante (quien inicia) decide y verifica.\n`;
-  const body = entries.map(e => {
+  const section = e => {
     const m = SEATS[e.seat];
-    if (e.status === 'answered') return `## ${m.label} — ${m.lens.split(':')[0]}\n\n${e.answer}\n\n_(${Math.round(e.ms / 1000)} s)_`;
-    if (e.status === 'handoff') return `## ${m.label} — encargo manual\n\nPegar \`handoffs/${e.seat}.md\` en ${m.label}. Pendiente.`;
-    return `## ${m.label} — ${e.status}\n\n${e.reason || ''}`;
-  }).join('\n\n');
-  const answered = entries.filter(e => e.status === 'answered').length;
-  return `${head}\n**Respondieron ${answered} de ${entries.length}.** Contrasta los puntos donde coincidan dos o más asientos; trata una objeción de un solo asiento como hipótesis.\n\n${body}\n`;
+    if (e.status === 'answered') return `### ${m.label} — ${m.lens.split(':')[0]}\n\n${e.answer}\n\n_(${Math.round(e.ms / 1000)} s)_`;
+    if (e.status === 'handoff') return `### ${m.label} — encargo manual\n\nPegar \`handoffs/${e.seat}.md\` en ${m.label}. Pendiente.`;
+    return `### ${m.label} — ${e.status}\n\n${e.reason || ''}`;
+  };
+  const dec = entries.filter(e => SEATS[e.seat].tier === 'decision'), wrk = entries.filter(e => SEATS[e.seat].tier === 'worker');
+  const answered = list => list.filter(e => e.status === 'answered').length;
+  return `${head}\n**Decisores: respondieron ${answered(dec)} de ${dec.length}.** Contrasta los puntos donde coincidan dos o más; una objeción de un solo decisor es una hipótesis.\n\n## Decisores\n\n${dec.map(section).join('\n\n') || '_Ninguno._'}\n${wrk.length ? `\n## Obreros (modelos gratuitos: apoyo, no votan; contrastar con la fuente)\n\n${wrk.map(section).join('\n\n')}\n` : ''}`;
 }
 
 const slug = s => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'panel';
 
 async function main() {
   const [cmd, ...rest] = process.argv.slice(2);
-  const { values } = parseArgs({ args: rest, options: { request: { type: 'string' }, seats: { type: 'string' }, out: { type: 'string' } } });
+  const { values } = parseArgs({ args: rest, options: { request: { type: 'string' }, seats: { type: 'string' }, workers: { type: 'string' }, from: { type: 'string' }, out: { type: 'string' } } });
   const settings = await loadSettings();
   if (cmd === 'seats') {
     const can = await usable(settings);
-    for (const [id, m] of Object.entries(SEATS)) console.log(`${id.padEnd(11)} ${m.kind.padEnd(7)} ${can[id].ok ? 'listo ' : 'no hay'} ${can[id].note}\n${' '.repeat(12)}${m.lens}`);
+    for (const tier of ['decision', 'worker']) { console.log(`\n== ${tier === 'decision' ? 'DECISORES (votan)' : 'OBREROS (modelos gratuitos, apoyo)'}`); for (const [id, m] of Object.entries(SEATS).filter(([, x]) => x.tier === tier)) console.log(`${id.padEnd(11)} ${m.kind.padEnd(7)} ${can[id].ok ? 'listo ' : 'no hay'} ${can[id].note}\n${' '.repeat(12)}${m.lens}`); }
     return;
   }
-  if (cmd !== 'panel' || !values.request) { console.log('Uso: dsf panel --request sf-request.json [--seats gemini,kimi,groq,gemma] [--out DIR]\n     dsf seats'); process.exitCode = cmd ? 1 : 0; return; }
+  if (cmd !== 'panel' || !values.request) { console.log('Uso: dsf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--seats lista] [--out DIR]\n     dsf seats'); process.exitCode = cmd ? 1 : 0; return; }
   const request = JSON.parse(await readFile(path.resolve(values.request), 'utf8'));
-  const seats = values.seats ? values.seats.split(',').map(s => s.trim()).filter(Boolean) : DEFAULT_SEATS;
+  const list = v => v.split(',').map(x => x.trim()).filter(Boolean);
+  if (values.from && !['claude', 'codex'].includes(values.from)) throw Object.assign(Error('--from debe ser claude o codex'), { code: 'INVALID_OPTION' });
+  const seats = values.seats ? list(values.seats) : [...defaultSeats(values.from), ...(values.workers ? list(values.workers) : [])];
   const entries = await runPanel(request, { seats, settings });
   const dir = path.resolve(values.out || path.join(ROOT, 'artifacts/sf', `${new Date().toISOString().replace(/[:.]/g, '-')}-${slug(request.task)}`));
   await mkdir(path.join(dir, 'handoffs'), { recursive: true });
