@@ -22,7 +22,7 @@ const distinctive = s => new Set((fold(s).match(/\p{L}{5,}/gu) || []).filter(w =
 export function sharedDistinctive(a, b) { const A = distinctive(a), B = distinctive(b); return [...A].filter(x => B.has(x)).length; }
 export const leaksHeldOut = (text, held) => held.some(h => sharedDistinctive(text, h) >= 3);
 
-const CATEGORIES = [
+export const CATEGORIES = [
   { id: 'articulo', n: 440, brief: 'Preguntas directas sobre un artículo concreto de una de estas leyes, citando la ley por su nombre y un número de artículo plausible (1 a 120). Variar el registro: «¿qué dice…?», «explícame…», «¿qué establece…?», «como si no fuera abogado».', laws: true },
   { id: 'situacion', n: 480, brief: 'Situaciones reales contadas en lenguaje cotidiano por personas sin formación jurídica, cada una dentro del ámbito de UNA de estas leyes y nombrándola o dejando claro el tema (consumidor, seguros, sociedades, impuesto sobre la renta, derechos de autor, propiedad industrial, migración, delitos federales, asuntos agrarios, servicios financieros).', laws: true },
   { id: 'faltan-hechos', n: 220, brief: 'Preguntas jurídicas a las que les falta un dato que cambia la respuesta (estado, fechas, montos, tipo de contrato, si hubo aviso). Deben ser del ámbito de estas leyes.', laws: true },
@@ -31,7 +31,7 @@ const CATEGORIES = [
   { id: 'charla', n: 160, brief: 'Charla normal con un abogado o abogada que usa el asistente: desahogos («solo quiero platicar»), saludos, dato curioso pedido explícitamente, ideas creativas, instrucciones exactas («responde solo con…», «en inglés», «tres ideas sin explicación»), recordar algo que dijo antes, cambios de tema. Sin preguntas jurídicas.', laws: false, multi: true },
 ];
 
-function seedPrompt(cat, lawTitles, n) {
+export function seedPrompt(cat, lawTitles, n) {
   return `Genera ${n} conversaciones de prueba SINTÉTICAS en español de México para entrenar a un asistente jurídico conversacional llamado LEX AI.
 Tipo: ${cat.brief}
 ${cat.laws ? `Leyes permitidas (usa solo estas; no menciones la Constitución, la Ley Federal del Trabajo, el Código Civil Federal, el Código de Comercio, el Código Fiscal, la Ley de Amparo, la Ley del Seguro Social, el CNPP, el CNPCF ni la Ley Federal de Procedimiento Administrativo):\n${lawTitles.join('\n')}\n` : ''}${cat.multi ? 'Cada conversación tiene 2 o 3 turnos del usuario.' : 'Cada conversación tiene 1 turno del usuario.'}

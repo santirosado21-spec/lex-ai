@@ -40,3 +40,19 @@ export async function askKimi(prompt, { model = 'kimi-code/k3', timeoutMs = 3600
 export function unfence(text) {
   return String(text).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
 }
+
+const OLLAMA = process.env.OLLAMA_URL || 'http://localhost:11434';
+/** Local Gemma 4 for simple, free drafting (seed conversations). Never for final answers. */
+export async function askGemma(prompt, { model = 'gemma4:e4b-it-q4_K_M', temperature = 0.9, json = true, fetchImpl = fetch, timeoutMs = 300000 } = {}) {
+  if (typeof prompt !== 'string' || !prompt.trim() || prompt.length > 60000) throw new TeacherError('INVALID_PROMPT', 'Encargo vacío o demasiado largo.');
+  if (SECRET.test(prompt)) throw new TeacherError('SUSPECTED_SECRET', 'El encargo parece contener una credencial; no se envió.');
+  let response;
+  try {
+    response = await fetchImpl(`${OLLAMA}/api/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(timeoutMs),
+      body: JSON.stringify({ model, stream: false, think: false, keep_alive: '2m', ...(json ? { format: 'json' } : {}), messages: [{ role: 'user', content: prompt }], options: { num_ctx: 8192, temperature } }) });
+  } catch (e) { throw new TeacherError(e.name === 'TimeoutError' ? 'TIMEOUT' : 'UNAVAILABLE', `Ollama no respondió: ${e.message}`); }
+  if (!response.ok) throw new TeacherError('UNAVAILABLE', `Ollama respondió HTTP ${response.status}.`);
+  const answer = (await response.json())?.message?.content;
+  if (typeof answer !== 'string' || !answer.trim()) throw new TeacherError('EMPTY_RESPONSE', 'Gemma no devolvió texto.');
+  return { answer: answer.trim(), model };
+}

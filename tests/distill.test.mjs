@@ -72,3 +72,15 @@ test('dataset builder drops sealed laws, held-out look-alikes and duplicates; ke
   assert.equal(ds.train.length + ds.valid.length, 2);
   for (const r of [...ds.train, ...ds.valid]) assert.equal(r.messages.at(-1).role, 'assistant');
 });
+
+test('pipeline planning: what is missing, memory gate, Gemma helper refuses secrets', async () => {
+  const { missing, memoryOk, TARGET } = await import('../scripts/distill/pipeline.mjs');
+  const { askGemma } = await import('../scripts/distill/teacher.mjs');
+  assert.deepEqual(missing({ articulo: 440, situacion: 244 }, { articulo: 440, situacion: 480, charla: 160 }), { situacion: 236, charla: 160 });
+  assert.equal(Object.keys(TARGET).length, 6);
+  assert.equal(memoryOk(30), true); assert.equal(memoryOk(12), false); assert.equal(memoryOk(NaN), false);
+  await assert.rejects(askGemma('clave gsk_ABCDEFGHIJKLMNOPQRSTUV'), { code: 'SUSPECTED_SECRET' });
+  const fakeFetch = async (_u, init) => { const b = JSON.parse(init.body); assert.equal(b.format, 'json'); assert.equal(b.think, false); return { ok: true, json: async () => ({ message: { content: ' {"items":[]} ' } }) }; };
+  assert.equal((await askGemma('hola', { fetchImpl: fakeFetch })).answer, '{"items":[]}');
+  await assert.rejects(askGemma('hola', { fetchImpl: async () => ({ ok: false, status: 500 }) }), { code: 'UNAVAILABLE' });
+});
