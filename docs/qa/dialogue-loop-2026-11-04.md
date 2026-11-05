@@ -35,7 +35,10 @@ Base de referencia: `artifacts/eval-dialogue/2026-11-04T21-03-06-810Z-run-base-0
 | v7 | 37/39 | — | instrucción «solo lo que dice la cita»; «más corto» como seguimiento. Aguinaldo ya correcto (15 días, antes del 20 de diciembre). Nuevo fallo: «más corto» buscaba en la ley forestal |
 | v8 | 37/40 | 21 de 36 antes de un corte; **no fiable** (ver abajo) | detector de seguimiento también en el módulo de búsqueda |
 | v9-chat | 19/20 (solo charla) | vs base con juez nuevo: 1 / 0 / 18, acuerdo de orden 18/19 | prueba de cordura: instrucción de chat original = respuestas idénticas a la base en 17/19 |
-| v10 | pendiente | pendiente (juez nuevo, doble orden) | párrafos mal formados se quitan; historial sin marcas [L1]; instrucción de chat de v8 |
+| v10 | 37/39 | sin juicio (Groq caído) | párrafos mal formados se quitan; historial sin marcas [L1]; instrucción de chat de v8 |
+| v11 | 37/39 | **11 / 8 / 4** (23 de 36, doble orden, juez ve las citas; se detuvo por límite de cuota de Groq). Base re-ejecutada con su código (`base-q`, 28/41) | citas por relevancia en situaciones; recuerda «no soy X, soy Y»; «contar algo» directo |
+
+**Juez con citas (v11):** el juez ahora ve el texto citado. Antes juzgaba la fidelidad sin ver la fuente. La base se volvió a correr con el código de `c8b29f8` en una copia aparte (`scratchpad/base-worktree`) para guardar sus citas. Faltan por juzgar 13 casos (sobre todo jurídicos): reanudar con `--resume` cuando Groq renueve la cuota.
 
 **Corrección del método (v9):** el juez original (temperatura 1 de Groq, un solo orden A/B) cambiaba de veredicto ante textos idénticos. Desde `0dae09a` el juez usa temperatura 0 y `--both-orders` (una victoria solo cuenta si coincide en ambos órdenes). Los resultados de juez de v2, v5 y v8 son orientativos, no comparables con los nuevos.
 
@@ -46,6 +49,8 @@ Base de referencia: `artifacts/eval-dialogue/2026-11-04T21-03-06-810Z-run-base-0
 
 1. Chat: v2 perdió frente a la base en varios casos de charla (tímido al pedir un dato curioso, duplicados en listas). Se quitó «si no estás seguro, dilo» (v4).
 2. Explicaciones jurídicas con errores de razonamiento (v5: filtro de distractores — si la primera frase de la fuente principal nombra el tema, se descartan fuentes cuya primera frase no lo comparte; aguinaldo pasa de 3 fuentes a solo el art. 87): vacaciones («el primer año no garantiza vacaciones»), aguinaldo sin los 15 días, art. 16 con contenido de otro párrafo. Idea: elegir citas por relevancia a la pregunta y no solo por coincidencia de palabras; pasos pequeños (primero elegir la cita, luego explicar).
-3. Abstenciones restantes: art. 1794 («dos elementos»), «Más corto, en dos líneas» tras una respuesta jurídica, «¿qué área soy?».
+3. Abstenciones restantes: art. 1794 («dos elementos»: el modelo cuenta fracciones I y II; contar fracciones como cifra se descartó porque un pasaje recortado haría decir «cuatro causas» cuando hay quince). «Más corto» a veces abstiene; «¿qué área soy?» resuelto en v11.
+6. Donde la base todavía gana (juez v11): correo y listas (repite un nombre), «cuéntame algo curioso» (el modelo invierte la petición), y párrafos jurídicos que usan información de otra frase del artículo distinta de la citada.
+7. Límite de esta vía: los ajustes de instrucciones y validación ya dan rendimientos decrecientes. El siguiente salto de calidad requiere la capa 4 (ejemplos escritos por un modelo grande y un ajuste corto medido), fuera del alcance de este ciclo sin autorización expresa.
 4. Timeouts: causados por el reposo de la Mac con batería (pmset log 16:08–16:28). Las corridas se envuelven ahora con `caffeinate -i -w <pid>`; cerrar la tapa sigue suspendiendo.
 5. Alucinaciones en charla general (pulpos «sin branquias»). Difícil sin más contexto; no prometer.

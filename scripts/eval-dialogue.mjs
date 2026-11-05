@@ -101,7 +101,7 @@ export async function run({ label, servicePath = path.join(ROOT, 'server/service
         const t0 = Date.now();
         try {
           const a = await service.analyze({ mode: 'auto', question, threadId: `eval-${c.id}` });
-          turns.push({ question, text: a.text, kind: a.kind, citations: (a.citations || []).map(x => ({ id: x.id, title: x.title, article: x.article })), validation: a.validation?.status, elapsedMs: Date.now() - t0 });
+          turns.push({ question, text: a.text, kind: a.kind, citations: (a.citations || []).map(x => ({ id: x.id, title: x.title, article: x.article, quote: typeof x.quote === 'string' ? x.quote.slice(0, 400) : undefined })), validation: a.validation?.status, elapsedMs: Date.now() - t0 });
         } catch (e) { turns.push({ question, error: e.message, elapsedMs: Date.now() - t0 }); }
       }
       const checks = mechanicalChecks(c, turns);
@@ -136,9 +136,9 @@ export function summarizeChecks(results) {
 const RUBRIC = `Califica cada respuesta del asistente de 1 a 5 en:
 - naturalidad: suena como una persona atenta en español; responde a lo que se dijo, sin menús de tareas, ofertas no pedidas ni rigidez de "bot de documentos".
 - instrucciones: cumple formato, longitud, idioma, correcciones y cambios de tema pedidos.
-- fidelidad: no inventa artículos, tesis, cifras ni plazos; en preguntas jurídicas explica bien lo que dice la fuente citada y pide datos cuando faltan; en temas no jurídicos es correcto y no mete derecho.
+- fidelidad: no inventa artículos, tesis, cifras ni plazos; en preguntas jurídicas explica bien lo que dice la fuente citada (se muestra su cita; el artículo completo puede decir más) y pide datos cuando faltan; en temas no jurídicos es correcto y no mete derecho.
 Usa toda la escala. Juzga el contenido, no la longitud.`;
-const fmtTranscript = (turns) => turns.map((t, i) => `Usuario ${i + 1}: ${t.question}\nAsistente ${i + 1}: ${t.error ? `[ERROR: ${t.error}]` : t.text}${t.citations?.length ? `\n(Fuentes citadas: ${t.citations.map(c => `${c.title ?? ''} art. ${c.article ?? '?'}`).join('; ')})` : ''}`).join('\n\n');
+const fmtTranscript = (turns) => turns.map((t, i) => `Usuario ${i + 1}: ${t.question}\nAsistente ${i + 1}: ${t.error ? `[ERROR: ${t.error}]` : t.text}${t.citations?.length ? `\n(Fuentes citadas: ${t.citations.map(c => `${c.title ?? ''} art. ${c.article ?? '?'}${c.quote ? ` — cita: «${c.quote.slice(0, 300)}»` : ''}`).join('; ')})` : ''}`).join('\n\n');
 const clip = (s, n) => s.length > n ? s.slice(0, n) + '\n[...recortado]' : s;
 
 function judgeRequest(c, transcripts) {
