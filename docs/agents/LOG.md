@@ -34,3 +34,9 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - Skill única: ~/.agents/skills/psf/SKILL.md (con references/remote-collaborators.md). dsystem queda como aviso que remite a psf. Respaldo de la skill vieja en scratchpad/dsystem-skill-backup.
 - Comando unificado: psf seats|panel (fábrica) y psf status|key|enable|models|ask (colaboradores remotos). dsystem y dsf siguen como alias.
 - Actualizados: instrucciones globales de Claude y Codex, AGENTS.md del proyecto (nota al final), memoria de Claude y ayuda de remote.mjs.
+
+## 2026-11-04 23:11 — claude — Oxylabs: clave guardada pero rechazada (401)
+
+- La clave está en ~/.config/lexai/oxylabs.env (permisos 600, 44 caracteres, formato normal). Una sola llamada de prueba a webapi.oxylabs.io/v1/scrape (Bearer) sobre un índice público de diputados.gob.mx devolvió HTTP 401: Oxylabs la rechaza. Sin reintentos.
+- Posibles causas: clave de otro producto de Oxylabs, o de una instancia de Web API sin activar. La documentación pide crear una instancia de Web API y copiar SU clave.
+- Reglas de uso acordadas: solo fuentes que ya se descargan sin evadir bloqueos (OJN, diputados.gob.mx); no usarla para saltar el 403 de la SCJN ni el bloqueo del DOF sin orden explícita del dueño; los créditos se ven solo en el panel de Oxylabs, así que fijar un tope de consultas por corrida.
