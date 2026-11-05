@@ -46,12 +46,17 @@ export function teacherPrompt(messages, { outputSchema } = {}) {
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { seeds: { type: 'string' }, out: { type: 'string' }, model: { type: 'string' }, limit: { type: 'string' } } });
+  const { values } = parseArgs({ options: { seeds: { type: 'string' }, out: { type: 'string' }, model: { type: 'string' }, limit: { type: 'string' }, resume: { type: 'boolean' }, shard: { type: 'string' } } });
   const seeds = (await readFile(path.resolve(values.seeds), 'utf8')).trim().split('\n').map(l => JSON.parse(l)).slice(0, values.limit ? Number(values.limit) : undefined);
   const out = path.resolve(values.out);
   const rejectedFile = out.replace(/\.jsonl$/, '.rejected.jsonl');
+  const doneFile = out.replace(/\.jsonl$/, '.done.txt');
   await mkdir(path.dirname(out), { recursive: true });
-  await writeFile(out, ''); await writeFile(rejectedFile, '');
+  // --shard i/n: this worker takes every n-th seed starting at i.
+  if (values.shard) { const [i, n] = values.shard.split('/').map(Number); seeds.splice(0, seeds.length, ...seeds.filter((_, k) => k % n === i)); }
+  // --resume: keep previous output and skip seeds already finished.
+  const done = new Set(values.resume ? (await readFile(doneFile, 'utf8').catch(() => '')).split('\n').filter(Boolean) : []);
+  if (!values.resume) { await writeFile(out, ''); await writeFile(rejectedFile, ''); await writeFile(doneFile, ''); }
   const { createService } = await import(pathToFileURL(path.join(ROOT, 'server/service.mjs')));
   const { openPublicLibrary } = await import(pathToFileURL(path.join(ROOT, 'server/public-library.mjs')));
   const library = await openPublicLibrary(APP_LIBRARY);
@@ -76,6 +81,7 @@ async function main() {
   const reject = async (reason, extra) => { stats.rejected[reason] = (stats.rejected[reason] || 0) + 1; await appendFile(rejectedFile, JSON.stringify({ reason, ...extra }) + '\n'); };
   try {
     for (const seed of seeds) {
+      if (done.has(seed.id)) continue;
       stats.seeds++;
       for (const [t, question] of seed.turns.entries()) {
         stats.turns++; calls = [];
@@ -100,12 +106,13 @@ async function main() {
         stats.kept++;
         await appendFile(out, JSON.stringify({ id: `${seed.id}-t${t + 1}`, seed: seed.id, category: seed.category, kind: call.json ? 'json' : 'text', lawIds, messages: call.messages, output: call.raw, teacher: values.model || 'kimi-code/k3', synthetic: true }) + '\n');
       }
+      await appendFile(doneFile, seed.id + '\n');
       process.stderr.write(`${seed.id}: kept ${stats.kept}/${stats.turns}\n`);
     }
   } finally {
     service.close(); library.close(); await rm(dir, { recursive: true, force: true });
     stats.finishedAt = new Date().toISOString();
-    await writeFile(out.replace(/\.jsonl$/, '.stats.json'), JSON.stringify(stats, null, 2) + '\n');
+    await writeFile(out.replace(/\.jsonl$/, `.stats-${Date.now()}.json`), JSON.stringify(stats, null, 2) + '\n');
     console.log(JSON.stringify(stats, null, 2));
   }
 }

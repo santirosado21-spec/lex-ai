@@ -23,12 +23,12 @@ export function sharedDistinctive(a, b) { const A = distinctive(a), B = distinct
 export const leaksHeldOut = (text, held) => held.some(h => sharedDistinctive(text, h) >= 3);
 
 const CATEGORIES = [
-  { id: 'articulo', n: 20, brief: 'Preguntas directas sobre un artículo concreto de una de estas leyes, citando la ley por su nombre y un número de artículo plausible (1 a 120). Variar el registro: «¿qué dice…?», «explícame…», «¿qué establece…?», «como si no fuera abogado».', laws: true },
-  { id: 'situacion', n: 20, brief: 'Situaciones reales contadas en lenguaje cotidiano por personas sin formación jurídica, cada una dentro del ámbito de UNA de estas leyes y nombrándola o dejando claro el tema (consumidor, seguros, sociedades, impuesto sobre la renta, derechos de autor, propiedad industrial, migración, delitos federales, asuntos agrarios, servicios financieros).', laws: true },
-  { id: 'faltan-hechos', n: 10, brief: 'Preguntas jurídicas a las que les falta un dato que cambia la respuesta (estado, fechas, montos, tipo de contrato, si hubo aviso). Deben ser del ámbito de estas leyes.', laws: true },
-  { id: 'abstencion', n: 8, brief: 'Peticiones que el asistente NO puede fundamentar: artículos con números que no existen (por ejemplo 4.000 o más) de estas leyes, leyes de un estado concreto, una tesis de la Suprema Corte por número de registro, o leyes futuras. Variado.', laws: true },
-  { id: 'seguimiento', n: 12, brief: 'Conversaciones de 2 o 3 turnos: primero una pregunta sobre un artículo o situación de estas leyes; después seguimientos como «¿y el siguiente?», «más corto», «dame un ejemplo», «¿y si fuera una empresa?», o un cambio de tema a charla.', laws: true, multi: true },
-  { id: 'charla', n: 20, brief: 'Charla normal con un abogado o abogada que usa el asistente: desahogos («solo quiero platicar»), saludos, dato curioso pedido explícitamente, ideas creativas, instrucciones exactas («responde solo con…», «en inglés», «tres ideas sin explicación»), recordar algo que dijo antes, cambios de tema. Sin preguntas jurídicas.', laws: false, multi: true },
+  { id: 'articulo', n: 440, brief: 'Preguntas directas sobre un artículo concreto de una de estas leyes, citando la ley por su nombre y un número de artículo plausible (1 a 120). Variar el registro: «¿qué dice…?», «explícame…», «¿qué establece…?», «como si no fuera abogado».', laws: true },
+  { id: 'situacion', n: 480, brief: 'Situaciones reales contadas en lenguaje cotidiano por personas sin formación jurídica, cada una dentro del ámbito de UNA de estas leyes y nombrándola o dejando claro el tema (consumidor, seguros, sociedades, impuesto sobre la renta, derechos de autor, propiedad industrial, migración, delitos federales, asuntos agrarios, servicios financieros).', laws: true },
+  { id: 'faltan-hechos', n: 220, brief: 'Preguntas jurídicas a las que les falta un dato que cambia la respuesta (estado, fechas, montos, tipo de contrato, si hubo aviso). Deben ser del ámbito de estas leyes.', laws: true },
+  { id: 'abstencion', n: 140, brief: 'Peticiones que el asistente NO puede fundamentar: artículos con números que no existen (por ejemplo 4.000 o más) de estas leyes, leyes de un estado concreto, una tesis de la Suprema Corte por número de registro, o leyes futuras. Variado.', laws: true },
+  { id: 'seguimiento', n: 260, brief: 'Conversaciones de 2 o 3 turnos: primero una pregunta sobre un artículo o situación de estas leyes; después seguimientos como «¿y el siguiente?», «más corto», «dame un ejemplo», «¿y si fuera una empresa?», o un cambio de tema a charla.', laws: true, multi: true },
+  { id: 'charla', n: 160, brief: 'Charla normal con un abogado o abogada que usa el asistente: desahogos («solo quiero platicar»), saludos, dato curioso pedido explícitamente, ideas creativas, instrucciones exactas («responde solo con…», «en inglés», «tres ideas sin explicación»), recordar algo que dijo antes, cambios de tema. Sin preguntas jurídicas.', laws: false, multi: true },
 ];
 
 function seedPrompt(cat, lawTitles, n) {
@@ -59,21 +59,28 @@ async function main() {
   const seeds = [], log = [];
   for (const cat of CATEGORIES.filter(c => !values.only || values.only.split(',').includes(c.id))) {
     const n = Math.max(1, Math.round(cat.n * scale));
-    // Rotate a different slice of law titles per batch for variety.
-    const sample = [...titles].sort(() => Math.random() - 0.5).slice(0, 25);
-    try {
-      const { answer, model } = await askKimi(seedPrompt(cat, sample, n), { model: values.model });
-      const items = parseSeeds(answer, cat.id);
-      const kept = items.filter(it => !leaksHeldOut(it.turns.join(' '), held));
-      log.push({ category: cat.id, asked: n, received: items.length, kept: kept.length, model });
-      seeds.push(...kept);
-      process.stderr.write(`${cat.id}: ${kept.length}/${items.length}\n`);
-    } catch (e) { log.push({ category: cat.id, error: e.code || 'ERROR', message: e.message }); process.stderr.write(`${cat.id}: ERROR ${e.message}\n`); if (e.code === 'QUOTA_OR_RATE_LIMIT') break; }
+    let stop = false;
+    // Batches of at most 20 per call, each with a different slice of law titles.
+    for (let done = 0; done < n && !stop; done += 20) {
+      const size = Math.min(20, n - done);
+      const sample = [...titles].sort(() => Math.random() - 0.5).slice(0, 25);
+      try {
+        const { answer, model } = await askKimi(seedPrompt(cat, sample, size), { model: values.model });
+        const items = parseSeeds(answer, cat.id);
+        const kept = items.filter(it => !leaksHeldOut(it.turns.join(' '), held));
+        log.push({ category: cat.id, asked: size, received: items.length, kept: kept.length, model });
+        seeds.push(...kept);
+        process.stderr.write(`${cat.id}: ${kept.length}/${items.length} (${done + size}/${n})\n`);
+      } catch (e) { log.push({ category: cat.id, error: e.code || 'ERROR', message: e.message }); process.stderr.write(`${cat.id}: ERROR ${e.message}\n`); if (e.code === 'QUOTA_OR_RATE_LIMIT') { stop = true; break; } }
+    }
+    if (stop) break;
   }
   await mkdir(path.dirname(out), { recursive: true });
   const previous = values.append ? (await readFile(out, 'utf8').catch(() => '')).trim().split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
-  const all = [...previous, ...seeds.map(s => ({ ...s }))];
-  await writeFile(out, all.map((s, i) => JSON.stringify({ ...s, id: s.id || `${s.category}-${String(i + 1).padStart(4, '0')}` })).join('\n') + '\n');
+  const seen = new Set();
+  const all = [...previous, ...seeds.map(s => ({ ...s }))].filter(s => { const k = fold(s.turns.join(' ')).replace(/[^\p{L}\p{N}]+/gu, ' ').trim(); if (seen.has(k)) return false; seen.add(k); return true; });
+  const run = Date.now().toString(36);
+  await writeFile(out, all.map((s, i) => JSON.stringify({ ...s, id: s.id || `${s.category}-${run}-${String(i + 1).padStart(4, '0')}` })).join('\n') + '\n');
   await writeFile(out.replace(/\.jsonl$/, values.append ? `.log-${Date.now()}.json` : '.log.json'), JSON.stringify({ createdAt: new Date().toISOString(), synthetic: true, teacher: 'kimi', log }, null, 2) + '\n');
   console.log(JSON.stringify({ out, seeds: seeds.length, log }, null, 2));
 }

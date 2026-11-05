@@ -56,3 +56,19 @@ test('law policy excludes the ten sealed laws and every non-train split', async 
     assert.ok(p.allowed.every(l => l.split === 'train'));
   } finally { library.close(); }
 });
+
+test('dataset builder drops sealed laws, held-out look-alikes and duplicates; keeps seeds in one split', async () => {
+  const { buildDataset } = await import('../scripts/distill/build-dataset.mjs');
+  const msg = q => [{ role: 'system', content: 'S' }, { role: 'user', content: q }];
+  const ex = [
+    { seed: 'a', category: 'articulo', kind: 'json', lawIds: ['MX-FED-CPF'], messages: msg('¿Qué dice el artículo 83 del Código Penal Federal?'), output: '{"paragraphs":[]}' },
+    { seed: 'a', category: 'articulo', kind: 'json', lawIds: ['MX-FED-CPF'], messages: msg('¿Qué dice el artículo 83 del Código Penal Federal?'), output: '{"paragraphs":[]}' },
+    { seed: 'b', category: 'articulo', kind: 'json', lawIds: ['MX-FED-LFT'], messages: msg('¿Qué dice el artículo 47 de la LFT?'), output: 'x' },
+    { seed: 'c', category: 'charla', kind: 'text', lawIds: [], messages: msg('Cuéntame un dato curioso sobre los pulpos, en serio'), output: 'x' },
+    { seed: 'd', category: 'charla', kind: 'text', lawIds: [], messages: msg('Hola, ¿cómo va tu tarde?'), output: 'Bien, gracias.' },
+  ];
+  const ds = buildDataset(ex, { heldOut: held });
+  assert.deepEqual(ds.dropped, { duplicate: 1, 'sealed-law': 1, 'held-out-similar': 1 });
+  assert.equal(ds.train.length + ds.valid.length, 2);
+  for (const r of [...ds.train, ...ds.valid]) assert.equal(r.messages.at(-1).role, 'assistant');
+});
