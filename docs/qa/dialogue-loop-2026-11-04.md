@@ -5,7 +5,8 @@ Objetivo: que el modelo pequeño (8 GB) converse con naturalidad y conteste preg
 ## Reglas del ciclo
 
 - Trabajar solo en la rama `rescate-0.4.13`. Commits locales y push a esa rama. Nunca a `main` (despliega la landing).
-- Sin instalar en /Applications, sin descargar o cargar modelos nuevos, sin iniciar entrenamientos, sin pagos ni datos de clientes.
+- Sin instalar en /Applications, sin descargar o cargar modelos nuevos, sin pagos ni datos de clientes.
+- **Actualización del dueño (2026-11-04, noche):** con su cuenta de pago de Kimi pidió «empieza con el plan». Queda autorizada la capa 4: destilación con Kimi como maestro y un LoRA local acotado. Condiciones: base preservada, candidato inactivo, medición ciega contra la base y aprobación humana antes de activar. Proceso en `docs/qa/distillation-2026-11-04.md`. Instalar llama.cpp para la conversión a GGUF requiere aviso previo.
 - Cada cambio: `npm test` completo en verde antes del commit. Si una prueba antigua protege una regla de seguridad, no se debilita: se ajusta el cambio o se documenta.
 - Groq (juez) solo con datos sintéticos; si falla la red o la cuota, se para y se continúa en la siguiente vuelta. Sin reintentos en bucle.
 - Máximo tres intentos fallidos por problema; después, diagnosticar y anotarlo aquí.
