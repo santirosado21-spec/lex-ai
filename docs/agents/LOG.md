@@ -40,3 +40,9 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - La clave está en ~/.config/lexai/oxylabs.env (permisos 600, 44 caracteres, formato normal). Una sola llamada de prueba a webapi.oxylabs.io/v1/scrape (Bearer) sobre un índice público de diputados.gob.mx devolvió HTTP 401: Oxylabs la rechaza. Sin reintentos.
 - Posibles causas: clave de otro producto de Oxylabs, o de una instancia de Web API sin activar. La documentación pide crear una instancia de Web API y copiar SU clave.
 - Reglas de uso acordadas: solo fuentes que ya se descargan sin evadir bloqueos (OJN, diputados.gob.mx); no usarla para saltar el 403 de la SCJN ni el bloqueo del DOF sin orden explícita del dueño; los créditos se ven solo en el panel de Oxylabs, así que fijar un tope de consultas por corrida.
+
+## 2026-11-05 06:53 — claude — Pipeline de destilación corriendo solo; verificación con Kimi y Cursor preparada
+
+- Pipeline (scripts/distill/pipeline.mjs) corriendo desde las 23:14 con caffeinate: semillas completas (1.703, escritas por Gemma 4 E4B); ejemplos 213 aceptados de 277 semillas procesadas; Kimi hace ventanas de ~28 min y luego espera. Estimación: ~1 día. Estado: artifacts/distill/pipeline-status.md. Se detiene solo a las 10 h.
+- Verificación independiente: muestra de 7 ejemplos (todos de tipo artículo, sintéticos) en artifacts/sf/review-examples-request.json. Cursor (Grok): el dueño pega docs/orchestration/cursor-review-examples-2026-11-05.md y docs/orchestration/cursor-task-2026-11-04.md. Kimi: vigilante que ejecuta la revisión una vez cuando su ventana abra (artifacts/sf/review-examples-kimi/report.md).
+- Oxylabs: la clave sigue dando 401 (probablemente de otro producto). Cliente no escrito, según la regla de detenerse ante un 401.
