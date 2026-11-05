@@ -21,3 +21,9 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - Prueba medida: el 26B responde bien (24,8 s) pero bajó la memoria disponible de 30 % a 11 % y dejó el swap en 14,2 de 15 GB. Se descargó de memoria con 'ollama stop'.
 - Descargado gemma4:e4b-it-q4_K_M (6,6 GB, orden del dueño): 3,5 s por respuesta, memoria 54 % libre tras la prueba. localllm ahora lo prefiere y acepta --model (copia de respaldo ~/.local/bin/localllm.bak-20261104).
 - OpenRouter sigue desactivada hasta que el dueño la reactive sabiendo que tiene unos 6,32 USD de saldo real.
+
+## 2026-11-04 23:08 — claude — La skill de la fábrica se llama PSF
+
+- Por orden del dueño, el modo SF pasa a ser la skill PSF (~/.agents/skills/psf/SKILL.md, enlazada también en ~/.claude/skills/psf). Comando: psf seats | psf panel; dsf queda como alias.
+- La skill dsystem sigue siendo el reparto general de modelos y apunta a PSF para funciones nuevas y cambios en varios archivos.
+- No se expandió la sigla PSF: el dueño no la definió.

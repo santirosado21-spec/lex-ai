@@ -2,8 +2,8 @@
 /**
  * dsystem SF (Software Factory): independent-viewpoint panel.
  *
- *   dsf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--out DIR]
- *   dsf seats                    # which seats exist and whether they are usable now
+ *   psf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--out DIR]
+ *   psf seats                    # which seats exist and whether they are usable now
  *
  * The initiating agent (Claude or Codex) is the "elephant": it keeps the project
  * context and decides. The seats are "goldfish": fresh reviewers that see only
@@ -148,7 +148,7 @@ async function main() {
     for (const tier of ['decision', 'worker']) { console.log(`\n== ${tier === 'decision' ? 'DECISORES (votan)' : 'OBREROS (modelos gratuitos, apoyo)'}`); for (const [id, m] of Object.entries(SEATS).filter(([, x]) => x.tier === tier)) console.log(`${id.padEnd(11)} ${m.kind.padEnd(7)} ${can[id].ok ? 'listo ' : 'no hay'} ${can[id].note}\n${' '.repeat(12)}${m.lens}`); }
     return;
   }
-  if (cmd !== 'panel' || !values.request) { console.log('Uso: dsf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--seats lista] [--out DIR]\n     dsf seats'); process.exitCode = cmd ? 1 : 0; return; }
+  if (cmd !== 'panel' || !values.request) { console.log('Uso: psf panel --request sf-request.json [--from claude|codex] [--workers groq,gemma] [--seats lista] [--out DIR]\n     psf seats'); process.exitCode = cmd ? 1 : 0; return; }
   const request = JSON.parse(await readFile(path.resolve(values.request), 'utf8'));
   const list = v => v.split(',').map(x => x.trim()).filter(Boolean);
   if (values.from && !['claude', 'codex'].includes(values.from)) throw Object.assign(Error('--from debe ser claude o codex'), { code: 'INVALID_OPTION' });

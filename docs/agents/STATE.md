@@ -2,7 +2,7 @@
 
 > Memoria compartida entre agentes (Claude, Codex, Gemini, Kimi, Cursor…). Lee esto al empezar; al terminar, actualiza "Ahora" y "Siguiente" y deja una entrada en LOG.md con `dmem log`. Reglas del proyecto: AGENTS.md (mandan sobre este archivo). Sin claves, sin datos de clientes.
 
-**Última actualización:** 2026-11-04 23:05 por claude: Gemma local era Qwen; ahora es Gemma 4 E4B
+**Última actualización:** 2026-11-04 23:08 por claude: La skill de la fábrica se llama PSF
 
 ## Objetivo
 Asistente jurídico conversacional, privado y ligero para despachos mexicanos que corre en local en equipos de 8 GB: conversa con naturalidad y, para afirmaciones jurídicas, usa pasajes oficiales recuperados con cita verificada. Contrato completo: `docs/architecture/conversational-product-contract-2026-11-03.md`.
@@ -12,7 +12,7 @@ Asistente jurídico conversacional, privado y ligero para despachos mexicanos qu
 - **Examen ciego** `eval/dialogue/cases.jsonl` (36 casos, retenidos; nunca usarlos para entrenar) con `scripts/eval-dialogue.mjs run|judge`. El juez fiable es `judge --both-orders` (temperatura 0). Los veredictos de juez antes de `0dae09a` son orientativos. Última medición completa: v11 vs base **11 / 8 / 4** en 23 de 36 casos. La fidelidad jurídica aún no mejora de forma demostrada.
 - Mejoras ya en el código: artículo exacto de la Constitución, calculadora local, validador que descarta párrafos sin respaldo en vez de rendirse, filtro de distractores (**frágil según el panel SF**, ver LOG), reutilización de fuentes en "más corto".
 - **Destilación** (capa 4, autorizada por el dueño): `scripts/distill/` y `docs/qa/distillation-2026-11-04.md`. Hay **764 semillas** en `artifacts/distill/seeds-v1.jsonl` (artículo 440, situación 244, faltan hechos 80). Faltan unas 900 (resto de situación y faltan-hechos, abstención, seguimiento, charla). Kimi llegó a su **límite de uso de 5 horas** (plan de pago, sin compras de uso extra); los generadores se detuvieron limpio y se reanudan con `--resume`.
-- **Modo SF** de dsystem: `dsf` (panel de decisores) y `dmem` (esta memoria). Guía: `~/.agents/skills/dsystem/references/software-factory.md`.
+- **PSF** (fábrica de software de dsystem): comando `psf` (panel de decisores; `dsf` sigue como alias) y `dmem` (esta memoria). Guía: skill `~/.agents/skills/psf/SKILL.md`.
 
 ## Siguiente
 1. Reanudar la generación de ejemplos cuando Kimi se libere: `node scripts/distill/generate.mjs --seeds artifacts/distill/seeds-v1.jsonl --out artifacts/distill/examples-v1-sN.jsonl --shard N/2 --model kimi-code/k3.1-pro --resume` (N = 0 y 1). Luego generar las semillas restantes con `seeds.mjs --only … --append`.
