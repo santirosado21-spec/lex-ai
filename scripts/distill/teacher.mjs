@@ -14,7 +14,7 @@ const SECRET = /-----BEGIN [A-Z ]*PRIVATE KEY-----|\b(?:xai-|hf_|gsk_|sk-or-v1-|
 export class TeacherError extends Error { constructor(code, message) { super(message); this.code = code; } }
 
 let sandbox;
-export async function askKimi(prompt, { model = 'kimi-code/k3', timeoutMs = 240000, spawnImpl = spawn } = {}) {
+export async function askKimi(prompt, { model = 'kimi-code/k3', timeoutMs = 360000, spawnImpl = spawn } = {}) {
   if (typeof prompt !== 'string' || !prompt.trim() || prompt.length > 60000) throw new TeacherError('INVALID_PROMPT', 'Encargo vacío o demasiado largo.');
   if (SECRET.test(prompt)) throw new TeacherError('SUSPECTED_SECRET', 'El encargo parece contener una credencial; no se envió.');
   sandbox ??= await mkdtemp(path.join(os.tmpdir(), 'lex-kimi-'));

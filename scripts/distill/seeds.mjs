@@ -57,6 +57,14 @@ async function main() {
   const titles = allowed.filter(l => l.articles >= 40).sort((a, b) => b.articles - a.articles).slice(0, 60).map(l => l.title.replace(/\s+/g, ' ').trim());
   const held = (await readFile(path.join(ROOT, 'eval/dialogue/cases.jsonl'), 'utf8')).trim().split('\n').map(l => JSON.parse(l).turns.join(' '));
   const seeds = [], log = [];
+  const previous = values.append ? (await readFile(out, 'utf8').catch(() => '')).trim().split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
+  const run = Date.now().toString(36);
+  await mkdir(path.dirname(out), { recursive: true });
+  const flush = async () => {
+    const seen = new Set();
+    const all = [...previous, ...seeds].filter(s => { const k = fold(s.turns.join(' ')).replace(/[^\p{L}\p{N}]+/gu, ' ').trim(); if (seen.has(k)) return false; seen.add(k); return true; });
+    await writeFile(out, all.map((s, i) => JSON.stringify({ ...s, id: s.id || `${s.category}-${run}-${String(i + 1).padStart(4, '0')}` })).join('\n') + '\n');
+  };
   for (const cat of CATEGORIES.filter(c => !values.only || values.only.split(',').includes(c.id))) {
     const n = Math.max(1, Math.round(cat.n * scale));
     let stop = false;
@@ -70,17 +78,13 @@ async function main() {
         const kept = items.filter(it => !leaksHeldOut(it.turns.join(' '), held));
         log.push({ category: cat.id, asked: size, received: items.length, kept: kept.length, model });
         seeds.push(...kept);
+        await flush();
         process.stderr.write(`${cat.id}: ${kept.length}/${items.length} (${done + size}/${n})\n`);
       } catch (e) { log.push({ category: cat.id, error: e.code || 'ERROR', message: e.message }); process.stderr.write(`${cat.id}: ERROR ${e.message}\n`); if (e.code === 'QUOTA_OR_RATE_LIMIT') { stop = true; break; } }
     }
     if (stop) break;
   }
-  await mkdir(path.dirname(out), { recursive: true });
-  const previous = values.append ? (await readFile(out, 'utf8').catch(() => '')).trim().split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
-  const seen = new Set();
-  const all = [...previous, ...seeds.map(s => ({ ...s }))].filter(s => { const k = fold(s.turns.join(' ')).replace(/[^\p{L}\p{N}]+/gu, ' ').trim(); if (seen.has(k)) return false; seen.add(k); return true; });
-  const run = Date.now().toString(36);
-  await writeFile(out, all.map((s, i) => JSON.stringify({ ...s, id: s.id || `${s.category}-${run}-${String(i + 1).padStart(4, '0')}` })).join('\n') + '\n');
+  await flush();
   await writeFile(out.replace(/\.jsonl$/, values.append ? `.log-${Date.now()}.json` : '.log.json'), JSON.stringify({ createdAt: new Date().toISOString(), synthetic: true, teacher: 'kimi', log }, null, 2) + '\n');
   console.log(JSON.stringify({ out, seeds: seeds.length, log }, null, 2));
 }
