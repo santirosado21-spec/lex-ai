@@ -138,3 +138,21 @@ test('"más corto" reuses the previous answer sources instead of searching again
     assert.deepEqual(seen[1].map(s => s.article), ['88']);
   } finally { service.close(); library.close(); }
 });
+
+test('review findings: the article number backs only "artículo N", and "uno" never backs a digit', async () => {
+  const {validateGroundedOutput} = await import('../server/grounded-output.mjs');
+  const quote = 'El patrón deberá entregar un aviso por escrito al trabajador.';
+  const ev = [{id: 'L1', article: '47', text: quote, allowedQuotes: [quote]}];
+  const run = (evidence, q, text) => validateGroundedOutput(JSON.stringify({paragraphs: [{sourceId: 'L1', quote: q, text}]}), evidence);
+  assert.throws(() => run(ev, quote, 'El aviso escrito debe entregarse dentro de 47 días al trabajador.'), /respaldo/);
+  assert.equal(run(ev, quote, 'Según el artículo 47, el patrón debe entregar un aviso por escrito al trabajador.').paragraphs.length, 1);
+  assert.throws(() => run(ev, quote, 'Según el artículo 47, el aviso por escrito debe darse dentro de 47 días al trabajador.'), /respaldo/);
+  const ev291 = [{id: 'L1', article: '291-F', text: quote, allowedQuotes: [quote]}];
+  assert.equal(run(ev291, quote, 'El artículo 291-F obliga al patrón a entregar un aviso por escrito al trabajador.').paragraphs.length, 1);
+  const q2 = 'Uno de los trabajadores podrá presentar el aviso ante el tribunal competente.';
+  const ev2 = [{id: 'L1', article: '9', text: q2, allowedQuotes: [q2]}];
+  assert.throws(() => run(ev2, q2, 'Se permite 1 trabajador a presentar el aviso ante el tribunal competente del caso.'), /respaldo/);
+  const q3 = 'El patrón pagará veinte días de salario al trabajador por cada año de servicios.';
+  const ev3 = [{id: 'L1', article: '50', text: q3, allowedQuotes: [q3]}];
+  assert.equal(run(ev3, q3, 'El patrón debe pagar 20 días de salario al trabajador por cada año de servicios.').paragraphs.length, 1);
+});

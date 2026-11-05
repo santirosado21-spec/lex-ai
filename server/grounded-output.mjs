@@ -17,7 +17,7 @@ export function buildGroundedSchema(evidence){
 }
 const numberWords=new Set('cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciséis dieciseis diecisiete dieciocho diecinueve veinte veintiuno veintidós veintidos veintitrés veintitres veinticuatro veinticinco veintiséis veintiseis veintisiete veintiocho veintinueve treinta cuarenta cincuenta sesenta setenta ochenta noventa cien ciento doscientos trescientos cuatrocientos quinientos seiscientos setecientos ochocientos novecientos mil millón millon millones primero segundo tercero cuarto quinto sexto séptimo septimo octavo noveno décimo decimo enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre'.split(' '));
 // "veinte" in the law and "20" in the explanation are the same claim.
-const CARDINALS=Object.entries({cero:0,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,'dieciséis':16,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,'veintidós':22,veintidos:22,'veintitrés':23,veintitres:23,veinticuatro:24,veinticinco:25,'veintiséis':26,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100});
+const CARDINALS=Object.entries({cero:0,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,'dieciséis':16,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,'veintidós':22,veintidos:22,'veintitrés':23,veintitres:23,veinticuatro:24,veinticinco:25,'veintiséis':26,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100});
 const CARDINAL_RE=new RegExp(`(?<![\\p{L}])(?:${CARDINALS.map(([w])=>w).sort((a,b)=>b.length-a.length).join('|')})(?![\\p{L}])`,'gu');
 const CARDINAL_MAP=new Map(CARDINALS);
 export function numericClaims(text){
@@ -56,8 +56,13 @@ export function validateGroundedOutput(raw,evidence){
   // the model (stored with the citation), not only from the quoted sentence.
   // Private documents (D*) stay strict: the number must be in the quote.
   const privateDocument=/^D\d+$/.test(entry.source.id);
-  const quoteClaims=new Set([...numericClaims(p.quote),...(privateDocument?[]:numericClaims(entry.source.text)),...(entry.source.article&&!privateDocument?numericClaims(`artículo ${String(entry.source.article).replace(/^art[ií]culo\s+/i,'')}`):[])]);
-  if(numericClaims(p.text).some(claim=>!quoteClaims.has(claim)))throw unsupported('Número, artículo o fecha sin respaldo en la cita del párrafo.');
+  const quoteClaims=new Set([...numericClaims(p.quote),...(privateDocument?[]:numericClaims(entry.source.text))]);
+  // Naming the cited article itself ("el artículo 47") is backed by the source's own
+  // metadata, but only that exact phrase: its bare digit must not back an invented
+  // quantity ("dentro de 47 días"). Remove the phrase, then check what is left.
+  const own=!privateDocument&&entry.source.article?String(entry.source.article).replace(/^art[ií]culo\s+/i,'').trim():'';
+  const checked=own?p.text.replace(new RegExp(`\\bart[ií]culos?\\s+${own.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}(?![\\p{L}\\p{N}])`,'giu'),' '):p.text;
+  if(numericClaims(checked).some(claim=>!quoteClaims.has(claim)))throw unsupported('Número, artículo o fecha sin respaldo en la cita del párrafo.');
   used.add(p.sourceId);paragraphs.push({...p});
  }
  if(used.size<minSources)throw Error('Faltan fuentes distintas requeridas.');

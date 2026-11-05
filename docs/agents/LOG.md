@@ -46,3 +46,7 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - Pipeline (scripts/distill/pipeline.mjs) corriendo desde las 23:14 con caffeinate: semillas completas (1.703, escritas por Gemma 4 E4B); ejemplos 213 aceptados de 277 semillas procesadas; Kimi hace ventanas de ~28 min y luego espera. Estimación: ~1 día. Estado: artifacts/distill/pipeline-status.md. Se detiene solo a las 10 h.
 - Verificación independiente: muestra de 7 ejemplos (todos de tipo artículo, sintéticos) en artifacts/sf/review-examples-request.json. Cursor (Grok): el dueño pega docs/orchestration/cursor-review-examples-2026-11-05.md y docs/orchestration/cursor-task-2026-11-04.md. Kimi: vigilante que ejecuta la revisión una vez cuando su ventana abra (artifacts/sf/review-examples-kimi/report.md).
 - Oxylabs: la clave sigue dando 401 (probablemente de otro producto). Cliente no escrito, según la regla de detenerse ante un 401.
+
+## 2026-11-05 09:07 — claude — Revisión de Cursor aplicada
+
+- Hallazgos 1 y 2 reproducidos con el caso exacto de Grok y corregidos (server/grounded-output.mjs); prueba de regresión en tests/legal-routing-v2.test.mjs. 425 pruebas pasan. Hallazgos 3 y 4: ver DECISIONS.md.
