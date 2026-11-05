@@ -33,7 +33,7 @@ export function rewriteQuery({question, recentTurns = [], matterJurisdiction = n
   let query = question.trim();
   const q = fold(query).replace(/^[¿¡\s]+/, '');
   const current = extractReference(query);
-  const isFollowUp = text => /^(?:y\b|tambien\b|entonces\b|eso\b|ese\b|esa\b|esto\b|aquello\b|el siguiente\b|el anterior\b|sobre lo anterior\b|respecto de lo anterior\b|amplia\b|explica(?:me)? mas\b|continua\b|en ese caso\b|hazlo\b|haz\b|resumelo\b|mas breve\b|mas cort[oa]\b|mas simple\b|mas sencillo\b|en pocas palabras\b|en (?:una|dos|tres) (?:lineas?|oraciones?|frases?)\b|explicalo\b|dimelo\b|simplifica\b|por que\b|cuanto tiempo\b|que plazo\b|como (?:lo|la)\b)/.test(fold(text).replace(/^[¿¡\s]+/, ''));
+  const isFollowUp = text => /^(?:y\b|tambien\b|entonces\b|eso\b|ese\b|esa\b|esto\b|aquello\b|el siguiente\b|el anterior\b|sobre lo anterior\b|respecto de lo anterior\b|amplia\b|explica(?:me)? mas\b|continua\b|en ese caso\b|hazlo\b|haz\b|resumelo\b|mas breve\b|mas cort[oa]\b|mas simple\b|mas sencillo\b|en pocas palabras\b|en (?:una|dos|tres) (?:lineas?|oraciones?|frases?)\b|explicalo\b|dimelo\b|(?:dame|ponme|con) un ejemplo\b|simplifica\b|por que\b|cuanto tiempo\b|que plazo\b|como (?:lo|la)\b)/.test(fold(text).replace(/^[¿¡\s]+/, ''));
   const followUp = isFollowUp(q) && !(current.lawId && current.article)
     && (!/^(?:cuanto tiempo|que plazo|como (?:lo|la))\b/.test(q) || detectArea(question)[0] === 'otros');
   const navigation = current.navigation && (/\barticulo\b/.test(q) || /^(?:y\s+)?(?:el\s+)?(?:siguiente|anterior|posterior|previo)[?\s.]*$/.test(q));

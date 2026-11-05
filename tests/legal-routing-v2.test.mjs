@@ -113,3 +113,28 @@ test('a correction states the real profession; hypotheticals still do not', asyn
   assert.match(recallUserStatement('¿Cuál es mi profesión?', [{question: 'Si fuera juez, no soy abogado.'}]), /No encuentro/);
   assert.equal(routeAssistantRequest({question: 'Entonces, ¿qué área soy?'}).kind, 'chat');
 });
+
+test('"más corto" reuses the previous answer sources instead of searching again', async t => {
+  const {existsSync} = await import('node:fs'); const path = await import('node:path');
+  const file = path.resolve('resources/public-library.sqlite');
+  if (!existsSync(file)) return t.skip('public library not built');
+  const {openPublicLibrary} = await import('../server/public-library.mjs');
+  const {createService} = await import('../server/service.mjs');
+  const {mkdtemp} = await import('node:fs/promises'); const os = await import('node:os');
+  const library = await openPublicLibrary(file);
+  const seen = [];
+  const inference = {async status() { return {state: 'ready'}; }, async *generate(messages) {
+    const u = JSON.parse(messages.at(-1).content); seen.push(u.sources || []);
+    const s = u.sources[0];
+    yield JSON.stringify({paragraphs: [{sourceId: s.id, quote: s.allowedQuotes[0], text: 'Esta disposición regula el nombre de la sociedad anónima y sus reglas básicas de uso.'}]});
+  }};
+  const service = await createService({dataDir: await mkdtemp(path.join(os.tmpdir(), 'lex-reuse-')), corpusPath: path.resolve('resources/legal-corpus.json'), inference, publicLibrary: library, schedulerEnabled: false});
+  try {
+    await service.dispatch('workspace.create', {name: 'x', practiceAreas: ['mercantil']});
+    const first = await service.analyze({mode: 'auto', question: '¿Qué dice el artículo 88 de la Ley General de Sociedades Mercantiles?', threadId: 'r1'});
+    assert.equal(first.validation.status, 'source-checked');
+    await service.analyze({mode: 'auto', question: 'Más corto, por favor.', threadId: 'r1'});
+    assert.equal(seen.length, 2);
+    assert.deepEqual(seen[1].map(s => s.article), ['88']);
+  } finally { service.close(); library.close(); }
+});

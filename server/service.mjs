@@ -570,7 +570,12 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       const requestedScope=requestedLegalJurisdiction(payload.question)||(route.query?requestedLegalJurisdiction(route.query):null);
       const retrievalQuery=route.query||payload.question;
       const retrievalJurisdiction=requestedScope?.id||m?.jurisdiction||'MX-FED';
-      const retrieved=await retrieveAutomatic(scope,retrievalQuery,retrievalJurisdiction,unifiedHistory(scope,6,threadId),payload.question);
+      // "Más corto", "dame un ejemplo"… reformulate the previous sourced answer:
+      // reuse its sources instead of searching the request's own words.
+      const previous=unifiedHistory(scope,1,threadId).at(-1);
+      const reformulation=route.reason==='grounded-follow-up'&&/^(?:y\s+)?(?:mas (?:corto|corta|breve|simple|sencillo)|en pocas palabras|en (?:una|dos|tres) (?:lineas?|oraciones?|frases?)|resumelo|resumemelo|simplifica|simplificalo|explicalo (?:mas )?(?:facil|sencillo|simple|corto)|(?:dame|ponme|con) un ejemplo|explicalo con un ejemplo)\b/.test(normalize(payload.question).replace(/^[¿¡\s]+/,''));
+      const reused=reformulation?[...new Map((previous?.citations||[]).map(c=>c.canonicalId||c.id).filter(id=>typeof id==='string').map(id=>[id,id.startsWith('PUB-')?publicLibrary?.getSource(id):corpus.find(s=>s.id===id)])).values()].filter(s=>s&&s.jurisdiction===retrievalJurisdiction):[];
+      const retrieved=reused.length?{chunks:[],legal:reused}:await retrieveAutomatic(scope,retrievalQuery,retrievalJurisdiction,unifiedHistory(scope,6,threadId),payload.question);
       signal?.throwIfAborted();
 
       async function clarify(message,status='needs-context'){
