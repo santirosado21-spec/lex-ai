@@ -33,7 +33,11 @@ Base de referencia: `artifacts/eval-dialogue/2026-11-04T21-03-06-810Z-run-base-0
 | v5 | 37/39 | **18 / 12 / 6** (36/36). Naturalidad 3,47→3,94; instrucciones 3,47→3,83; fidelidad 3,86→3,78 | filtro de distractores. Gana en jurídico 4-2, faltan-hechos 2-0; pierde en seguimiento 1-3 y cambio de tema 2-3 |
 | v6 | 37/39 | — | números con letra = cifras; frases con cantidades primero |
 | v7 | 37/39 | — | instrucción «solo lo que dice la cita»; «más corto» como seguimiento. Aguinaldo ya correcto (15 días, antes del 20 de diciembre). Nuevo fallo: «más corto» buscaba en la ley forestal |
-| v8 | pendiente | pendiente | detector de seguimiento también en el módulo de búsqueda |
+| v8 | 37/40 | 21 de 36 antes de un corte; **no fiable** (ver abajo) | detector de seguimiento también en el módulo de búsqueda |
+| v9-chat | 19/20 (solo charla) | vs base con juez nuevo: 1 / 0 / 18, acuerdo de orden 18/19 | prueba de cordura: instrucción de chat original = respuestas idénticas a la base en 17/19 |
+| v10 | pendiente | pendiente (juez nuevo, doble orden) | párrafos mal formados se quitan; historial sin marcas [L1]; instrucción de chat de v8 |
+
+**Corrección del método (v9):** el juez original (temperatura 1 de Groq, un solo orden A/B) cambiaba de veredicto ante textos idénticos. Desde `0dae09a` el juez usa temperatura 0 y `--both-orders` (una victoria solo cuenta si coincide en ambos órdenes). Los resultados de juez de v2, v5 y v8 son orientativos, no comparables con los nuevos.
 
 ## Problemas abiertos (priorizados)
 
