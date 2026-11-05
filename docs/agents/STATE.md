@@ -2,7 +2,7 @@
 
 > Memoria compartida entre agentes (Claude, Codex, Gemini, Kimi, Cursor…). Lee esto al empezar; al terminar, actualiza "Ahora" y "Siguiente" y deja una entrada en LOG.md con `dmem log`. Reglas del proyecto: AGENTS.md (mandan sobre este archivo). Sin claves, sin datos de clientes.
 
-**Última actualización:** 2026-11-04 23:08 por claude: La skill de la fábrica se llama PSF
+**Última actualización:** 2026-11-04 23:10 por claude: dsystem pasa a llamarse PSF en todo el método
 
 ## Objetivo
 Asistente jurídico conversacional, privado y ligero para despachos mexicanos que corre en local en equipos de 8 GB: conversa con naturalidad y, para afirmaciones jurídicas, usa pasajes oficiales recuperados con cita verificada. Contrato completo: `docs/architecture/conversational-product-contract-2026-11-03.md`.

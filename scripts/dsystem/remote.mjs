@@ -184,16 +184,16 @@ async function requestFile(path) {
     return JSON.parse(await readFile(path, 'utf8'));
   } catch (error) { if (error instanceof DsystemError) throw error; fail('INVALID_REQUEST_FILE', 'No se pudo leer el encargo JSON.'); }
 }
-const HELP = `dsystem — colaboradores remotos de desarrollo (Node 22+, sin dependencias)
-  dsystem status                         Estado local; no contacta proveedores
-  dsystem init                           Crea configuración privada, sin activar cuentas
-  dsystem key PROVEEDOR                   Guarda clave con entrada oculta (fuera del repo)
-  dsystem enable PROVEEDOR --free-account-confirmed
+const HELP = `PSF (antes dsystem) — colaboradores remotos de desarrollo (Node 22+, sin dependencias)
+  psf status                         Estado local; no contacta proveedores
+  psf init                           Crea configuración privada, sin activar cuentas
+  psf key PROVEEDOR                   Guarda clave con entrada oculta (fuera del repo)
+  psf enable PROVEEDOR --free-account-confirmed
                                          Solo tras comprobar Free/no recargas ni saldo comprado
-  dsystem disable PROVEEDOR               Bloquea inferencia para ese proveedor
-  dsystem models PROVEEDOR                Consulta catálogo remoto, sin inferencia
-  dsystem ask PROVEEDOR --model ID --request encargo.json [--dry-run]
-  dsystem handoff PROVEEDOR --request encargo.json
+  psf disable PROVEEDOR               Bloquea inferencia para ese proveedor
+  psf models PROVEEDOR                Consulta catálogo remoto, sin inferencia
+  psf ask PROVEEDOR --model ID --request encargo.json [--dry-run]
+  psf handoff PROVEEDOR --request encargo.json
                                          Prepara prompt y URL web; no lo envía
 Proveedores: grok, groq, openrouter, huggingface, mistral.
 Grok/xAI: solo clave, catálogo, handoff y dry-run; inferencia desactivada.

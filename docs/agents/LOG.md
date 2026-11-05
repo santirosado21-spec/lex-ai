@@ -27,3 +27,10 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - Por orden del dueño, el modo SF pasa a ser la skill PSF (~/.agents/skills/psf/SKILL.md, enlazada también en ~/.claude/skills/psf). Comando: psf seats | psf panel; dsf queda como alias.
 - La skill dsystem sigue siendo el reparto general de modelos y apunta a PSF para funciones nuevas y cambios en varios archivos.
 - No se expandió la sigla PSF: el dueño no la definió.
+
+## 2026-11-04 23:10 — claude — dsystem pasa a llamarse PSF en todo el método
+
+- Orden del dueño: ya no se llama dsystem; todo el método (reparto de modelos, fábrica de software, memoria) es PSF.
+- Skill única: ~/.agents/skills/psf/SKILL.md (con references/remote-collaborators.md). dsystem queda como aviso que remite a psf. Respaldo de la skill vieja en scratchpad/dsystem-skill-backup.
+- Comando unificado: psf seats|panel (fábrica) y psf status|key|enable|models|ask (colaboradores remotos). dsystem y dsf siguen como alias.
+- Actualizados: instrucciones globales de Claude y Codex, AGENTS.md del proyecto (nota al final), memoria de Claude y ayuda de remote.mjs.
