@@ -88,3 +88,9 @@ test('"Constitución" and "constitucional" with an article mean the federal Cons
   assert.equal(r.needsClarification, false);
   assert.deepEqual([r.reference.lawId, r.reference.article], ['MX-FED-CPEUM', '14']);
 });
+
+test('"más corto, en dos líneas" inherits the previous article instead of searching its own words', () => {
+  const r = rewriteQuery({question: 'Más corto, en dos líneas.', recentTurns: [{question: 'Explícame el artículo 1 de la Constitución.', text: 'El artículo 1...', citations: [{id: 'x'}]}], matterJurisdiction: 'MX-FED'});
+  assert.notEqual(r.reason, 'standalone');
+  assert.match(r.query, /artículo 1 de la Constitución/);
+});

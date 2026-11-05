@@ -29,9 +29,16 @@ Base de referencia: `artifacts/eval-dialogue/2026-11-04T21-03-06-810Z-run-base-0
 | v1 | 29/39 | — | más citas por fuente, instrucciones, calculadora |
 | v2 | 32/39 | 7 / 11 / 5 (23 de 36; se cortó la red) | router de leyes/prestaciones, números del pasaje, chat por frase |
 | v3 | 35/40 | pendiente | fecha falsa "14 de la", tesis honesta; 1 timeout en tema-02 |
-| v4 | 36/41 | pendiente | quitada la instrucción «si no estás seguro, dilo»; 2 timeouts por reposo de la Mac (no del modelo) |
+| v4 | 36/41 | — | quitada la instrucción «si no estás seguro, dilo»; 2 timeouts por reposo de la Mac (no del modelo) |
+| v5 | 37/39 | **18 / 12 / 6** (36/36). Naturalidad 3,47→3,94; instrucciones 3,47→3,83; fidelidad 3,86→3,78 | filtro de distractores. Gana en jurídico 4-2, faltan-hechos 2-0; pierde en seguimiento 1-3 y cambio de tema 2-3 |
+| v6 | 37/39 | — | números con letra = cifras; frases con cantidades primero |
+| v7 | 37/39 | — | instrucción «solo lo que dice la cita»; «más corto» como seguimiento. Aguinaldo ya correcto (15 días, antes del 20 de diciembre). Nuevo fallo: «más corto» buscaba en la ley forestal |
+| v8 | pendiente | pendiente | detector de seguimiento también en el módulo de búsqueda |
 
 ## Problemas abiertos (priorizados)
+
+0. **Fidelidad jurídica no mejora** (juez v5: 3,78 vs 3,86). Contestar más trae errores: vacaciones (fidelidad 2), despido sin aviso (1), art. 16 (2). En v7: aguinaldo y art. 16 corregidos; siguen mal «despido sin aviso» (elige la cita de «causas análogas») y «me despidieron» (lee el art. 47 al revés). Prioridad máxima: que lo dicho sea correcto, no solo citado.
+0b. **Seguimientos** («más corto», «¿y el siguiente?», «¿qué área soy?») pierden 1-3 frente a la base.
 
 1. Chat: v2 perdió frente a la base en varios casos de charla (tímido al pedir un dato curioso, duplicados en listas). Se quitó «si no estás seguro, dilo» (v4).
 2. Explicaciones jurídicas con errores de razonamiento (v5: filtro de distractores — si la primera frase de la fuente principal nombra el tema, se descartan fuentes cuya primera frase no lo comparte; aguinaldo pasa de 3 fuentes a solo el art. 87): vacaciones («el primer año no garantiza vacaciones»), aguinaldo sin los 15 días, art. 16 con contenido de otro párrafo. Idea: elegir citas por relevancia a la pregunta y no solo por coincidencia de palabras; pasos pequeños (primero elegir la cita, luego explicar).

@@ -80,3 +80,10 @@ test('a number written in words in the law backs the same number in digits', asy
   const bad = {paragraphs: [{sourceId: 'L1', quote, text: 'El aguinaldo es de al menos 30 días de salario y se paga antes del 20 de diciembre.'}]};
   assert.throws(() => validateGroundedOutput(JSON.stringify(bad), ev), /respaldo/);
 });
+
+test('"más corto" and similar after a grounded answer stay on the grounded thread', () => {
+  const previousTurn = {kind: 'grounded', citations: [{id: 'L1'}], question: 'Explícame el artículo 1 de la Constitución.'};
+  for (const question of ['Más corto, en dos líneas.', 'En pocas palabras, por favor', 'Más sencillo'])
+    assert.equal(routeAssistantRequest({question, previousTurn}).kind, 'grounded', question);
+  assert.equal(routeAssistantRequest({question: 'Más corto, en dos líneas.', previousTurn: {kind: 'chat', citations: []}}).kind, 'chat');
+});

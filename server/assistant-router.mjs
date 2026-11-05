@@ -53,7 +53,7 @@ export function routeAssistantRequest({question,skillId='auto',documentCount=0,p
  const conversationalTask=/\b(?:correo|email|reunion|agenda|ideas|organizar|organizacion|ortografia|traduce|traducir|saludo|presentacion|platicar|charlar|cuento|poema|chiste|misterio)\b/.test(q)||/\b(?:cambiemos de tema|hablemos de otra cosa)\b/.test(q);
  if(conversationalTask)return {kind:'chat',reason:'general-task'};
  const articleNavigation=/^(?:el\s+)?(?:articulo\s+)?(?:siguiente|anterior|posterior|previo)(?:\s+articulo)?$/.test(q);
- const followUp=articleNavigation||/^(?:y\b|tambien\b|entonces\b|sobre lo anterior|respecto de lo anterior|el articulo anterior|eso\b|esa\b|ese\b|esto\b|hazlo\b|haz\b|resumelo\b|amplia\b|explica mas\b|mas breve\b|continua\b|simplifica\b|por que\b)/.test(q);
+ const followUp=articleNavigation||/^(?:y\b|tambien\b|entonces\b|sobre lo anterior|respecto de lo anterior|el articulo anterior|eso\b|esa\b|ese\b|esto\b|hazlo\b|haz\b|resumelo\b|amplia\b|explica mas\b|mas breve\b|mas cort[oa]\b|mas simple\b|mas sencillo\b|en pocas palabras\b|en (?:una|dos|tres) (?:lineas?|oraciones?|frases?)\b|explicalo\b|dimelo\b|continua\b|simplifica\b|por que\b)/.test(q);
  if(followUp&&previousTurn?.kind==='grounded'&&previousTurn.citations?.length)return {kind:'grounded',skillId:previousTurn.skillId||'legal-researcher',reason:'grounded-follow-up',needsDocument:false,query:`${question}\n${previousTurn.question}`};
  if(documentCount&&/\b(?:resumen|resumir|resume|analiza|revisa|comparar|compara|riesgos|clausulas|obligaciones)\b/.test(q))return {kind:'grounded',skillId:'document-analyzer',reason:'matter-document-request',needsDocument:true};
  return {kind:'chat',reason:'conversation'};
