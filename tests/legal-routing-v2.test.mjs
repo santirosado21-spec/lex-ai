@@ -87,3 +87,22 @@ test('"más corto" and similar after a grounded answer stay on the grounded thre
     assert.equal(routeAssistantRequest({question, previousTurn}).kind, 'grounded', question);
   assert.equal(routeAssistantRequest({question: 'Más corto, en dos líneas.', previousTurn: {kind: 'chat', citations: []}}).kind, 'chat');
 });
+
+test('a too-short or bracketed paragraph is dropped; control characters still reject', async () => {
+  const {validateMixedOutput} = await import('../server/grounded-output-mixed.mjs');
+  const quote = 'En los Estados Unidos Mexicanos todas las personas gozarán de los derechos humanos reconocidos en esta Constitución.';
+  const ev = [{id: 'L1', article: '1', text: quote, allowedQuotes: [quote]}];
+  const good = {sourceId: 'L1', quote, text: 'Todas las personas en México gozan de los derechos humanos que reconoce la Constitución.'};
+  const out = validateMixedOutput(JSON.stringify({paragraphs: [good, {sourceId: 'L1', quote, text: 'Corto [L1]'}]}), ev);
+  assert.equal(out.citations.length, 1); assert.doesNotMatch(out.text, /Corto/);
+  assert.throws(() => validateMixedOutput(JSON.stringify({paragraphs: [{...good, text: good.text + '\u0001'}]}), ev), /controles/);
+});
+
+test('a trailing marker of the same source is tolerated; a foreign marker is not', async () => {
+  const {validateMixedOutput} = await import('../server/grounded-output-mixed.mjs');
+  const quote = 'En los Estados Unidos Mexicanos todas las personas gozarán de los derechos humanos reconocidos en esta Constitución.';
+  const ev = [{id: 'L1', article: '1', text: quote, allowedQuotes: [quote]}];
+  const text = 'Todas las personas en México gozan de los derechos humanos que reconoce la Constitución.';
+  assert.equal(validateMixedOutput(JSON.stringify({paragraphs: [{sourceId: 'L1', quote, text: text + ' [L1]'}]}), ev).citations.length, 1);
+  assert.throws(() => validateMixedOutput(JSON.stringify({paragraphs: [{sourceId: 'L1', quote, text: text + ' [L2]'}]}), ev), {code: 'UNGROUNDED_CLAIM'});
+});

@@ -46,7 +46,10 @@ export function validateGroundedOutput(raw,evidence){
   if(!isObject(p)||Object.keys(p).some(k=>!['sourceId','quote','text','kind'].includes(k))||!['sourceId','quote','text'].every(k=>typeof p[k]==='string')||p.kind!==undefined&&!KINDS.includes(p.kind))throw Error('Párrafo fuera del esquema.');
   const entry=allowed.get(p.sourceId);
   if(!entry||!entry.quotes.includes(p.quote))throw Error('Fuente o cita no aprobada para este párrafo.');
-  if(p.text.length<40||p.text.length>350||/[\[\]\u0000-\u001f]/.test(p.text))throw Error('Texto fuera de límites o con corchetes/controles.');
+  // Control characters are a format integrity failure; a paragraph that is too
+  // short/long or carries an inline [ID] is only unusable, so callers may drop it.
+  if(/[\u0000-\u001f]/.test(p.text))throw Error('Texto con caracteres de controles no admitidos.');
+  if(p.text.length<40||p.text.length>350||/[\[\]]/.test(p.text))throw unsupported('Texto fuera de límites o con corchetes.');
   // Naming the cited article itself ("el artículo 47") is backed by the
   // source's own metadata, not an invented reference.
   // For public law, numbers may come from the cited article passage shown to

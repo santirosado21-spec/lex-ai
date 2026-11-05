@@ -96,6 +96,9 @@ export function validateMixedOutput(raw,evidence){
    // The grounded validator checks each candidate against that text (including
    // length/control limits) before accepting it, then checks paragraph numbers
    // against this quote alone. Keep the paragraph contract's enum unchanged.
+   // The system appends the citation itself; a trailing marker of this same
+   // source is redundant, not a new reference.
+   if(!legacy&&typeof p.text==='string'&&typeof p.sourceId==='string')p.text=p.text.replace(new RegExp(`\\s*\\[${p.sourceId.replace(/[^A-Za-z0-9-]/g,'')}\\]\\s*$`),'');
    const paragraphSource=legacy?{...source,allowedQuotes:[...(source.allowedQuotes||[]),p.quote]}:source;
    let checked;
    try{checked=validateGroundedOutput(JSON.stringify({paragraphs:[p]}),[paragraphSource]).validated;}

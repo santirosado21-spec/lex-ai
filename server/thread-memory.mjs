@@ -41,7 +41,9 @@ export function buildUnifiedContext({instructions,question,memory='',history=[],
  if(estimateTokens(question)>CONTEXT_BUDGET.turns-40)throw Error('La consulta excede el presupuesto de este turno. Acótala para conservar las fuentes.');
  const conversation=[];
  for(const turn of history.slice(-4).reverse()){
-  const pair={user:clipTokens(turn.question,130),assistant:clipTokens(turn.text,180)};
+  // Citation markers in past answers are added by the system; showing them makes
+  // the model copy "[L1]" into its own text.
+  const pair={user:clipTokens(turn.question,130),assistant:clipTokens(String(turn.text).replace(/\s*\[[^\]\n]{1,120}\]/g,''),180)};
   if(estimateTokens(JSON.stringify({question,conversation:[pair,...conversation]}))>CONTEXT_BUDGET.turns)break;
   conversation.unshift(pair);
  }
