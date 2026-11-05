@@ -110,3 +110,9 @@ El comando global quedó instalado como enlace a este helper. Se comprobó la en
 - [Mistral: activar Studio Free y clave API](https://docs.mistral.ai/getting-started/quickstarts/studio/activate-and-generate-api-key), [chat API](https://docs.mistral.ai/api/endpoint/chat), [Vibe](https://docs.mistral.ai/vibe).
 
 Skill dsystem consultada por Codex; actualizada junto con su referencia de colaboradores remotos. Para el cambio de skill se aplicó `/Users/santiagorosado/.codex/skills/.system/skill-creator/SKILL.md`. No participaron modelos externos en la implementación; los catálogos son evidencia de conectividad, no entregas de modelos.
+
+## OpenRouter: activación, 2026-11-04
+
+El dueño guardó su clave con `dsystem key openrouter`. Al preguntarle si la cuenta era gratuita respondió que tiene **3 centavos de saldo** y pidió usar solo modelos gratuitos. Se activó con `--free-account-confirmed` por decisión del dueño, **sin que la cuenta tenga saldo cero**. Lo que impide un cobro es el código: `dsystem ask` solo acepta modelos `:free` con precios cero verificados en el catálogo, envía `max_price` en cero y `allow_fallbacks: false`. No se recarga saldo ni se autoriza ningún modelo de pago.
+
+Primera prueba real con texto sintético: `google/gemma-4-31b-it:free` y, una vez cada uno, `google/gemma-4-26b-a4b-it:free` respondieron **HTTP 429** (límite de uso). Sin reintentos. Puede ser congestión del proveedor o el límite diario de las cuentas con poco saldo. No acredita que OpenRouter funcione: el asiento queda configurado en `dsf` como obrero (`OPENROUTER_MODEL` en `scripts/dsystem/sf.mjs`) pero sin respuesta exitosa verificada. Repetir la prueba más tarde, no en bucle.

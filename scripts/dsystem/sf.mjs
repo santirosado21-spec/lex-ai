@@ -35,6 +35,7 @@ export const SEATS = {
   claude: { label: 'Claude', kind: 'manual', tier: 'decision', lens: 'Diseño de interacción y de interfaz, arquitectura ambigua y revisión difícil con otra perspectiva.' },
   cursor: { label: 'Cursor (Grok, misma cuenta que Grok Bot)', kind: 'manual', tier: 'decision', lens: 'Revisión de código de los archivos nombrados en el encargo y una implementación alternativa acotada.' },
 };
+export const OPENROUTER_MODEL = 'google/gemma-4-31b-it:free';
 export const DECISION_SEATS = Object.keys(SEATS).filter(id => SEATS[id].tier === 'decision');
 export const WORKER_SEATS = Object.keys(SEATS).filter(id => SEATS[id].tier === 'worker');
 /** Decision makers vote; workers (free models) only support. The initiator never reviews itself. */
@@ -79,6 +80,8 @@ export const transports = {
   gemini: prompt => run('opinion', [prompt]),
   gemma: prompt => run('localllm', [prompt], { timeoutMs: 240000 }),
   kimi: async prompt => (await askKimi(prompt, { model: 'kimi-code/k3.1-pro' })).answer,
+  // Free models only: dsystem ask refuses anything not ':free' with zero prices and sends max_price 0, no fallbacks.
+  openrouter: async (prompt, { settings, request }) => (await remoteAsk('openrouter', OPENROUTER_MODEL, { ...request, task: prompt, context: '(ver encargo)', acceptance: 'Sigue el formato pedido.' }, settings, { maxTokens: 1500 })).answer,
   groq: async (prompt, { settings, request }) => (await remoteAsk('groq', 'openai/gpt-oss-120b', { ...request, task: prompt, context: '(ver encargo)', acceptance: 'Sigue el formato pedido.' }, settings, { maxTokens: 1500 })).answer,
 };
 
@@ -89,7 +92,7 @@ export async function usable(settings) {
     gemma: { ok: true, note: 'local (Ollama)' },
     kimi: { ok: true, note: 'plan de pago; máximo 1 llamada a la vez' },
     groq: { ok: Boolean(st.groq?.freeAccountConfirmed), note: st.groq?.freeAccountConfirmed ? 'cuenta gratuita confirmada' : 'sin clave o sin confirmar cuenta gratuita' },
-    openrouter: { ok: false, note: 'sin clave (dsystem key openrouter) y sin modelo :free elegido' },
+    openrouter: { ok: Boolean(st.openrouter?.freeAccountConfirmed), note: st.openrouter?.freeAccountConfirmed ? `solo modelos :free de precio cero (${OPENROUTER_MODEL})` : 'sin clave o sin activar (dsystem key openrouter; dsystem enable openrouter --free-account-confirmed)' },
     codex: { ok: false, note: 'manual: se prepara el encargo para pegarlo' },
     claude: { ok: false, note: 'manual: se prepara el encargo para pegarlo' },
     cursor: { ok: false, note: 'manual: sin CLI; usa la cuenta de Cursor con Grok (misma facturación que Grok Bot)' },
