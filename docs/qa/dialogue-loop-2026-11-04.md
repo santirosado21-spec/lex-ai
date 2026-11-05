@@ -10,6 +10,7 @@ Objetivo: que el modelo pequeño (8 GB) converse con naturalidad y conteste preg
 - Groq (juez) solo con datos sintéticos; si falla la red o la cuota, se para y se continúa en la siguiente vuelta. Sin reintentos en bucle.
 - Máximo tres intentos fallidos por problema; después, diagnosticar y anotarlo aquí.
 - No presentar un PASS técnico como calidad conversacional lograda.
+- Prueba intermitente conocida: `stt.test.mjs` «rejects oversize audio and a concurrent job…» (carrera ya documentada en 0.4.13). Puerta de commit: `scratchpad/green.sh` exige `# fail 0` y solo admite una repetición si falla esa prueba concreta. El commit `bc9a657` se hizo con esa prueba fallando por un encadenado sin puerta; el contenido pasa 402/402 al repetir.
 
 ## Cómo medir
 
