@@ -106,3 +106,10 @@ test('a trailing marker of the same source is tolerated; a foreign marker is not
   assert.equal(validateMixedOutput(JSON.stringify({paragraphs: [{sourceId: 'L1', quote, text: text + ' [L1]'}]}), ev).citations.length, 1);
   assert.throws(() => validateMixedOutput(JSON.stringify({paragraphs: [{sourceId: 'L1', quote, text: text + ' [L2]'}]}), ev), {code: 'UNGROUNDED_CLAIM'});
 });
+
+test('a correction states the real profession; hypotheticals still do not', async () => {
+  const {recallUserStatement} = await import('../server/conversation-recall.mjs');
+  assert.match(recallUserStatement('Entonces, ¿qué área soy?', [{question: 'Te equivocaste antes: no soy penalista, soy fiscalista.'}]), /fiscalista/);
+  assert.match(recallUserStatement('¿Cuál es mi profesión?', [{question: 'Si fuera juez, no soy abogado.'}]), /No encuentro/);
+  assert.equal(routeAssistantRequest({question: 'Entonces, ¿qué área soy?'}).kind, 'chat');
+});

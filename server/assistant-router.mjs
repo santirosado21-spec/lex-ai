@@ -38,7 +38,7 @@ export function routeAssistantRequest({question,skillId='auto',documentCount=0,p
  if(namedLaw&&!/\b(?:cuento|poema|chiste|historia|pelicula)\b/.test(q)||entitlement)return {kind:'grounded',skillId:'legal-researcher',reason:'named-law-or-entitlement',needsDocument:false};
  const legalSituation=/\b(?:despid\p{L}*|desped\p{L}*|demand\p{L}*|detuv\p{L}*|deten\p{L}*|notific\p{L}*|embarg\p{L}*|pension\p{L}*|divorcio|custodia|arrend\p{L}*|apela\p{L}*|sentenc\p{L}*|pagare|prescri\p{L}*|caduc\p{L}*|amparo)\b/u.test(q);
  if(legalSituation&&/\b(?:me|mi|puedo|quiero|necesito|que hago|que pasa|como|cuanto|cuando)\b/.test(q))return {kind:'grounded',skillId:'legal-researcher',reason:'legal-situation',needsDocument:false};
- const personalRecall=/\b(?:como me llamo|cual es mi (?:nombre|palabra|profesion)|recuerdas mi (?:nombre|palabra|presentacion|profesion)|que te (?:dije|conte)|que sabes de mi)\b/.test(q);
+ const personalRecall=/\b(?:como me llamo|cual es mi (?:nombre|palabra|profesion|area|especialidad)|que area soy|a que me dedico|recuerdas mi (?:nombre|palabra|presentacion|profesion)|que te (?:dije|conte)|que sabes de mi)\b/.test(q);
  if(personalRecall)return {kind:'chat',reason:'personal-context'};
  const introduction=/^(?:hola\s+)?(?:me llamo|mi nombre(?: de prueba)? es)\s+/.test(q)||/^(?:hola\s+)?soy abogad[oa](?:\s+(?:penal|penalista|civil|civilista|laboral|fiscal|mercantil|litigante))?$/.test(q);
  if(introduction)return {kind:'chat',reason:'introduction'};
