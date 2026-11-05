@@ -50,3 +50,14 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 ## 2026-11-05 09:07 — claude — Revisión de Cursor aplicada
 
 - Hallazgos 1 y 2 reproducidos con el caso exacto de Grok y corregidos (server/grounded-output.mjs); prueba de regresión en tests/legal-routing-v2.test.mjs. 425 pruebas pasan. Hallazgos 3 y 4: ver DECISIONS.md.
+
+## 2026-11-05 09:25 — claude — Construcción 0.4.14 (universal) en curso para probar y enviar a Lorenzo
+
+- Versión subida a 0.4.14 (package.json, tauri.conf.json, Cargo.toml, package-lock). Instalador arm64 construido (artifacts/LEX-AI-0.4.14-arm64.dmg, 2,2 GB) pero verify-package exige universal; el dueño pidió Mac Intel y Apple Silicon (y Windows, que no existe).
+- Universal en curso con scratchpad/build-universal.sh (Node universal en /private/tmp/lex-node-universal/node). Pasos: build, prepare, tauri universal, firma local, verify arm64 y x64 con charla real, dmg. Log: artifacts/build-0.4.14-universal.log. Sin notarizar.
+
+## 2026-11-05 09:34 — claude — LEX AI 0.4.14 universal construida y verificada
+
+- Instalador: artifacts/LEX-AI-0.4.14-universal.dmg (2,24 GB, sha256 8e93ee63…2ddd, hdiutil verify VALID). Contiene LEX AI.app, acceso a Aplicaciones y LEEME.txt para quien lo pruebe.
+- verify-package con modelo real: arm64 PASS (14 comprobaciones) y x64 bajo Rosetta PASS (15). NO es Intel físico, ni Mac de 8 GB, ni notarizada. El verificador comprueba charla, recuerdo, aislamiento y listas/cuentas/correo; no prueba específicamente 'artículo 14 de la Constitución' ni el resto de mejoras de la noche (esas se midieron con el examen ciego sobre el código, no sobre el paquete).
+- Pipeline de ejemplos relanzado a las 09:34 (10 h máx.). Windows: no existe versión.
