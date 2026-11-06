@@ -2,10 +2,15 @@
 
 > Memoria compartida entre agentes (Claude, Codex, Gemini, Kimi, Cursor…). Lee esto al empezar; al terminar, actualiza "Ahora" y "Siguiente" y deja una entrada en LOG.md con `dmem log`. Reglas del proyecto: AGENTS.md (mandan sobre este archivo). Sin claves, sin datos de clientes.
 
-**Última actualización:** 2026-11-05 09:34 por claude: LEX AI 0.4.14 universal construida y verificada
+**Última actualización:** 2026-11-06 09:17 por claude: Repo preparado para compartir con Pedro y Lorenzo
 
 ## Objetivo
-Asistente jurídico conversacional, privado y ligero para despachos mexicanos que corre en local en equipos de 8 GB: conversa con naturalidad y, para afirmaciones jurídicas, usa pasajes oficiales recuperados con cita verificada. Contrato completo: `docs/architecture/conversational-product-contract-2026-11-03.md`.
+Asistente jurídico conversacional, privado y ligero para despachos mexicanos en equipos de 8 GB. Dirección del dueño 2026-11-05: aceptar inferencia híbrida con prioridad en integración oficial ChatGPT, conservar biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas. Almacenamiento y recuperación locales por defecto; solo contexto autorizado al proveedor. Propuesta vigente: `docs/architecture/hybrid-private-workspace-2026-11-05.md`; los requisitos jurídicos y conversacionales del contrato anterior continúan.
+
+## Ahora (2026-11-05, dirección híbrida)
+- Propuesta y fuentes oficiales registradas; elegibilidad comercial de integración de suscripciones aún no comprobada. API por despacho es alternativa separada; no se activó facturación ni se verificaron créditos de la cuenta.
+- Se confirmó en código almacenamiento SQLite con permisos restringidos; falta cifrado propio de base/índices/temporales. Ya existen funciones locales de horas/tarifas/reportes.
+- Sin cambios de runtime, cargas de clientes ni inferencia externa en esta tarea. La arquitectura híbrida y el cifrado siguen como trabajo de implementación, no validación comercial.
 
 ## Ahora (2026-11-04 noche)
 - App instalada 0.4.13. Todo el trabajo desde 0.4.4 está en la rama **`rescate-0.4.13`** (no en `main`; `main` despliega la landing). 417 pruebas pasan.
@@ -15,6 +20,8 @@ Asistente jurídico conversacional, privado y ligero para despachos mexicanos qu
 - **PSF** (fábrica de software de dsystem): comando `psf` (panel de decisores; `dsf` sigue como alias) y `dmem` (esta memoria). Guía: skill `~/.agents/skills/psf/SKILL.md`.
 
 ## Siguiente
+Prioridad nueva: confirmar acceso oficial ChatGPT para el producto comercial; preparar adaptador y prueba pública/sintética con política de salida por asunto, medición y cifrado recuperable. El entrenamiento local deja de ser requisito previo; los pasos históricos siguientes se conservan para referencia y no implican una reanudación automática.
+
 1. Reanudar la generación de ejemplos cuando Kimi se libere: `node scripts/distill/generate.mjs --seeds artifacts/distill/seeds-v1.jsonl --out artifacts/distill/examples-v1-sN.jsonl --shard N/2 --model kimi-code/k3.1-pro --resume` (N = 0 y 1). Luego generar las semillas restantes con `seeds.mjs --only … --append`.
 2. Construir el conjunto: `scripts/distill/build-dataset.mjs`; LoRA corto con `mlx_lm.lora` sobre `artifacts/training/qwen-base-2b-4bit` (base preservada, candidato inactivo).
 3. Medir el candidato contra la base con el examen ciego en el formato de la app. Falta convertir a GGUF: **llama.cpp no está instalado** (pedir aprobación al dueño).

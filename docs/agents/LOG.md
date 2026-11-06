@@ -61,3 +61,17 @@ Solo se añade al final. Formato: `## fecha — agente — título` y viñetas c
 - Instalador: artifacts/LEX-AI-0.4.14-universal.dmg (2,24 GB, sha256 8e93ee63…2ddd, hdiutil verify VALID). Contiene LEX AI.app, acceso a Aplicaciones y LEEME.txt para quien lo pruebe.
 - verify-package con modelo real: arm64 PASS (14 comprobaciones) y x64 bajo Rosetta PASS (15). NO es Intel físico, ni Mac de 8 GB, ni notarizada. El verificador comprueba charla, recuerdo, aislamiento y listas/cuentas/correo; no prueba específicamente 'artículo 14 de la Constitución' ni el resto de mejoras de la noche (esas se midieron con el examen ciego sobre el código, no sobre el paquete).
 - Pipeline de ejemplos relanzado a las 09:34 (10 h máx.). Windows: no existe versión.
+
+## 2026-11-05 14:21 — codex — Terminal Gemma 4 abierta
+
+Se verificó Ollama y se abrió una Terminal interactiva con gemma4:e4b-it-q4_K_M (6.6 GB). Se eligió la variante e4b-it para conversación directa y menor presión de RAM; también está instalada gemma4:26b-a4b (16 GB), no recomendada para equipos de 8 GB.
+
+## 2026-11-05 14:30 — codex — Análisis de arquitectura híbrida privada
+
+Revisadas fuentes oficiales OpenAI: Sign in with ChatGPT permite uso del plan en apps elegibles, con cuotas compartidas; el acceso comercial requiere verificación. Algunos planes Pro/Business contemplan créditos API elegibles, no activados ni verificados en la cuenta. Revisión de código: SQLite con permisos restringidos sin cifrado propio; existen horas/tarifas/reportes locales. Se creó propuesta híbrida y se actualizaron prioridades AGENTS/PRD y frontera histórica. No inferencia externa, documentos de clientes, cambios de runtime, compras ni pruebas de integración. Pendientes: acceso oficial, prototipo sintético, política de salida y cifrado recuperable.
+
+## 2026-11-06 09:17 — claude — Repo preparado para compartir con Pedro y Lorenzo
+
+- Repo privado santirosado21-spec/lex-ai: solo el dueño tiene acceso; sin claves ni artefactos pesados rastreados (escaneo limpio). Rama con el trabajo: rescate-0.4.13; main despliega la landing.
+- Se agregó docs/ONBOARDING-FUNDADORES.md. Se subieron los cambios de documentación de Codex (giro a inferencia híbrida). NO se subió scripts/loop/run.mjs (ejecutor de agentes de otra sesión, sin revisar) ni 'provenance 2.json'.
+- Pendiente: usernames de GitHub de Pedro y Lorenzo y nivel de acceso; invitación la envía el dueño o yo con su orden.

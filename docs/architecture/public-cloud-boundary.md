@@ -1,5 +1,7 @@
 # Public cloud boundary for LEX AI
 
+> Historical scope, updated 2026-11-05: the owner now accepts hybrid inference as described in [the private hybrid workspace proposal](hybrid-private-workspace-2026-11-05.md). That proposal supersedes this document's absolute local-inference restriction. The catalog declarations below remain public-only; this change does not add private storage tables, upload client documents or activate a cloud provider.
+
 The owner explicitly expanded the desktop slice to a public landing, repository/deployment and product catalog. This does not move law-firm documents, client information, retrieval, model inference or feedback to the cloud. Desktop operation remains local. This change prepares only offline database declarations and curated product metadata; no project database or deployment service was contacted or changed; only public documentation was read.
 
 ## Allowed catalog

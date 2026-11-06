@@ -1,5 +1,7 @@
 # LEX AI — MVP local
 
+> **Dirección vigente, 2026-11-05:** el dueño acepta inferencia híbrida con prioridad en ChatGPT mediante integración oficial. Se conservan biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas; equipos comunes de 8 GB siguen siendo el objetivo. La [propuesta de espacio híbrido privado](../architecture/hybrid-private-workspace-2026-11-05.md) prevalece sobre la exigencia histórica de inferencia exclusivamente local y uso remoto sin cuotas. Acceso comercial por suscripción, cifrado y adaptador remoto siguen pendientes; no se han autorizado cargas generales de expedientes ni gasto automático.
+
 > **Biblioteca jurídica nacional (2026-11-04):** el dueño exige una base comparable funcionalmente a la referencia de Luthor para despachos. La [especificación y auditoría de biblioteca local](../architecture/national-local-legal-library-2026-11-04.md) fija las brechas de legislación estatal, criterios judiciales, reformas y versiones, con distribución pública separada de los expedientes privados. No afirma cobertura nacional ya implementada.
 
 > **Aclaración comercial (2026-11-04):** privacidad local y uso sin cuotas de proveedor en computadoras comunes con poca RAM son requisitos centrales. Modelos grandes en la Mac de desarrollo no sustituyen el objetivo de 8 GB. La [evaluación de Claude Legal y viabilidad local](../architecture/claude-legal-local-viability-2026-11-04.md) distingue los nueve procesos adaptables, las fallas exploratorias del 2B, compatibilidad pendiente y las garantías que aún no podemos anunciar.
