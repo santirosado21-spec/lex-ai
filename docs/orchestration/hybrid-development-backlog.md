@@ -1,6 +1,6 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. H1 terminada y revisada; resto pendiente. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1 y H2 terminadas y revisadas; H3 en curso. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
 Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; nadie está asignado todavía.
 
@@ -9,8 +9,8 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | ID | Tarea | Depende de | Estado | Responsable / rama |
 | --- | --- | --- | --- | --- |
 | H1 | Contrato y transporte simulado | — | done | Codex / `docs/hybrid-psf-development-loop` (PR #1, `a99bb1f`) |
-| H2 | Política de salida y auditoría sin texto | H1 | review-pending | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
-| H3 | Sustituciones y restitución por ámbito | H2 | todo | Sin asignar |
+| H2 | Política de salida y auditoría sin texto | H1 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
+| H3 | Sustituciones y restitución por ámbito | H2 | in-progress | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3V | Primera rebanada vertical sin red | H3 | todo | Sin asignar |
 | H4 | Detector local y examen independiente | H3V | todo | Sin asignar |
 | H5 | Almacenamiento cifrado y restauración | H3V | todo | Sin asignar |
@@ -34,11 +34,11 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Aceptación: denegar por defecto; exigir despacho, asunto, hilo y destino autorizados. Política fuera del prompt. Revalidar revocación por operación y rechazar herramientas/destinos no permitidos. Contexto sin clasificación fiable no sale.
 - Pruebas: solicitud completa capturada con dos despachos y dos asuntos sintéticos, historial y metadatos; errores y cancelación no producen envíos alternos. Auditoría solo con categorías, ámbito, destino, fecha, resultado y versión de política, sin texto ni secretos.
 - Este paso no presume que una lista de canarios detecte todo dato sensible.
-- Revisión independiente `review_h2` (`gpt-6.1-sol`): `APPROVE`, confirmada tras dos regresiones finales; 50/50 dirigidas. Coordinador: 453/453 suite y build OK. [Evidencia H2](../qa/hybrid-H2-2026-11-09.md). Aceptación verificada; cierre `done` al registrar el commit probado.
+- Revisión independiente `review_h2` (`gpt-6.1-sol`): `APPROVE`, confirmada tras dos regresiones finales; 50/50 dirigidas. Coordinador: 453/453 suite y build OK. [Evidencia H2](../qa/hybrid-H2-2026-11-09.md). Aceptación verificada y commit probado `47d0478`; el coordinador concede `done`. H3 desbloqueada.
 
 ## H3 — Sustituciones y restitución
 
-- Archivos propuestos: `server/privacy/pseudonyms.mjs`, `tests/privacy-pseudonyms.test.mjs`.
+- Archivos asignados al worker `implement_h2` (segunda rebanada H3): `server/privacy/pseudonyms.mjs`, `tests/privacy-pseudonyms.test.mjs`. Coordinador: contrato, QA, backlog y memoria; misma rama PR #1. Astra continúa exclusivamente con código crítico de aislamiento/restitución. Revisión independiente separada con Sol. Objetivo: sustituciones sintéticas por asunto, snapshots solo en memoria y restitución estricta, sin cifrado ni integración de producto.
 - Aceptación: entidades declaradas de fixtures se sustituyen con marcadores estables dentro del asunto y aislados entre ámbitos. Restituir solo marcadores conocidos; no reemplazar texto libre ni aceptar marcadores de otro asunto. Pruebas de colisión, reinicio de sesión simulado, Unicode y marcador dividido entre chunks.
 - Mapa inicialmente en memoria sintética; no persistir correspondencias privadas en claro. Las respuestas restituidas se vuelven a proteger en los seguimientos. Mantener cita/procedencia de la fuente original por separado de su representación enviada.
 - Revisión/commit/evidencia: pendientes.

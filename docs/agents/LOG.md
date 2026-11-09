@@ -95,3 +95,7 @@ Push confirmado del commit a99bb1f a docs/hybrid-psf-development-loop, PR https:
 ## 2026-11-09 11:43 — codex — Preferencia de uso de Astra registrada
 
 Actualizados AGENTS.md y STATE con la instrucción del dueño de reservar Astra para código de impacto material. Solo documentación y memoria; no se cambió el modelo activo, no se lanzaron agentes ni llamadas de inferencia. H1 sigue completada y H2 pendiente. No se repitieron pruebas de código por este ajuste documental.
+
+## 2026-11-09 13:56 — codex — H2 completada con revisión independiente
+
+Commit 47d0478: puerta de salida offline, clasificación ligada al sobre completo, revocación y auditoría sin texto. Worker implement_h2 configurado gpt-6-astra para privacidad crítica; reviewer review_h2 configurado gpt-6.1-sol APPROVE. Medido: 50/50 dirigidas, 453/453 suite, build OK. No validado: detector real, cifrado, HTTP, producto ni 8 GB. H3 desbloqueada y reclamada como segunda tarea; sin producción ni datos de clientes.
