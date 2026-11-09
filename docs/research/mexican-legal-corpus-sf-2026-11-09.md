@@ -73,3 +73,12 @@ Siguiente encargo concreto: C0/C1, adaptador de fuente oficial y lote público m
 
 
 Revisión independiente documental: Sol `review_corpus_research` verificó conteos/hashes/estados de participación y dio revisión favorable tras explicitar presupuesto/rutas, cachés locales opcionales y alcance documental. Las tres precisiones se incorporaron; no constituye una prueba de colectores o validación jurídica.
+
+
+### Referencia ampliada: portada enviada por el dueño
+
+Revisada también [la portada](https://luthor.mx/). Presenta citas que abren el texto, versiones por fecha, comparación de reformas y enlaces permanentes. Sus cifras tienen un corte declarado al 23-09-2026, distinto de otras secciones: mantener fuente/fecha y no sumar conteos heterogéneos. Son declaraciones del proveedor, no auditoría nuestra.
+
+Su [MCP](https://luthor.mx/mcp/) anuncia acceso organizacional con autenticación. Es una alternativa comercial a investigar por separado, no un repositorio abierto o permiso de copiar el corpus. No se conectó, registró cuenta, envió consulta ni solicitó acceso. La página de [datos](https://luthor.mx/data/) devolvió principalmente navegación, sin dataset descargable confirmado.
+
+Prioridad funcional para nuestra demo: respuesta con pasaje original accesible, jurisdicción/versión/fecha, diferencias de reforma y cobertura explícita. Revisión adicional de Codex; no nuevas consultas SF o cambios del colector.
