@@ -14,7 +14,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H1 | Contrato y transporte simulado | — | done | Codex / `docs/hybrid-psf-development-loop` (PR #1, `a99bb1f`) |
 | H2 | Política de salida y auditoría sin texto | H1 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3 | Sustituciones y restitución por ámbito | H2 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
-| H3V | Primera rebanada vertical sin red | H3 | todo | Sin asignar |
+| H3V | Primera rebanada vertical sin red | H3 | review-pending | Codex/Sol; worker `build_h3v` / `docs/hybrid-psf-development-loop` |
 | H4 | Detector local y examen independiente | H3V | todo | Sin asignar |
 | H5 | Almacenamiento cifrado y restauración | H3V | todo | Sin asignar |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
@@ -48,10 +48,10 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H3V — Primera rebanada vertical sin red
 
-- Archivos propuestos: `tests/hybrid-offline-flow.test.mjs` y fixtures sintéticos de esa prueba; asignar cambios de interfaces solo si H1–H3 los requieren y registrar el motivo.
+- Archivos asignados al worker Sol `build_h3v`: `tests/hybrid-offline-flow.test.mjs`, `tests/fixtures/hybrid/synthetic.mjs`. Coordinador: `docs/qa/hybrid-H3V-2026-11-09.md`, backlog y memoria; misma rama PR #1 por pedido del dueño. Cambios de interfaces solo si H1–H3 muestran un defecto y tras registrar el motivo. Aceptación ampliada por el plan vigente: bloqueo de chats legacy sin ámbito, versiones/concurrencia e interrupciones por fase.
 - Aceptación: componer recuperación sintética por ámbito, sustitución de entidades declaradas, puerta de salida, proveedor simulado, validación y restitución. Capturar los bytes completos, comprobar aislamiento y que una respuesta restituida se vuelva a proteger en el siguiente turno. No usar la red ni persistencia real.
 - Reejecutar esta prueba contractual al introducir H4, H5 y H6, sustituyendo sus dobles de prueba. H7 cubre después la matriz completa de llamadas del producto; no será el primer contacto entre componentes.
-- Revisión/commit/evidencia: pendientes.
+- Revisión independiente `review_h3v` (Sol): `APPROVE` tras corregir categoría/procedencia de historial y componer el validador real después de restitución; 14/14 verticales, 87/87 dirigidas. Coordinador: 481/481 suite y build OK. [Evidencia H3V](../qa/hybrid-H3V-2026-11-09.md). Cierre al registrar el commit probado.
 
 ## H4 — Detector local medido
 
