@@ -29,3 +29,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 14:03 — codex — H3 usa identificadores opacos para evitar reutilización tras snapshots antiguos
 
 **Por qué:** La revisión independiente reprodujo que contadores restaurados desde una instantánea antigua podían asignar el marcador de Beta a Gamma. Nuevos UUID por entrada y versión mantienen los marcadores importados conocidos pero impiden reutilización accidental al añadir correspondencias. 14 pruebas H3 y reproducción independiente pasan. No autentica snapshots manipulados ni implementa cifrado.
+
+## 2026-11-09 15:54 — codex — SF sin Claude y selección explícita de modelos durante esta etapa
+
+**Por qué:** Orden del dueño 2026-11-09: plan con el resto de SF, sin Claude por el momento. AGENTS actualizado; no invocar Auto ni wrappers sin identidad como evidencia. opinion no fija --model, su primera respuesta queda sin atribución; la consulta Gemini explícita se ejecutó con gemini-3.8-flash-high. Cursor mostró Claude y no recibió texto. Astra reservado a código crítico, no planificación.
