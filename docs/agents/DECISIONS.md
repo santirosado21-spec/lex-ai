@@ -21,3 +21,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 11:42 — codex — H1 captura un sobre simulado sin modificar el motor activo
 
 **Por qué:** El dueño pidió iniciar H1 y subir al PR existente. Se mantiene createInference de producción intacto y se añade un mock optativo con capture JSON/UTF-8 determinista. Una prueba pareada fija límites reales del contrato y la documentación distingue estos bytes del futuro HTTP. Los puertos de privacidad/almacenamiento solo se proponen: no se adelantan H2 ni H6. Commit de implementación a99bb1f, revisado independientemente y con 437 pruebas/build aprobados.
+
+## 2026-11-09 11:43 — codex — Reservar Astra para código con impacto material
+
+**Por qué:** El dueño pide usar Astra únicamente para código que haga la diferencia. Reservarlo para lógica crítica, integraciones difíciles o defectos persistentes; evitarlo en documentación, resúmenes, boilerplate y revisiones rutinarias. Usar rutas adecuadas de menor costo cuando estén disponibles, sin delegar código entregable o decisiones críticas a pequeños modelos locales. No afirmar cambios de modelo de la sesión sin verificación.

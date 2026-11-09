@@ -91,3 +91,7 @@ Push confirmado de docs/hybrid-psf-development-loop y PR abierto https://github.
 ## 2026-11-09 11:42 — codex — H1 implementada, revisada y subida al PR 1
 
 Push confirmado del commit a99bb1f a docs/hybrid-psf-development-loop, PR https://github.com/santirosado21-spec/lex-ai/pull/1. Entrega: mock optativo sin red, captura profunda/UTF-8 canónico, contrato y puertos futuros; pruebas nuevas y prueba pareada contra runtime con dependencias simuladas. PSF: Codex implementó; subagente review_h1, contexto separado/solo lectura, detectó P2 de fixtures dispersos; corrección y regresiones verificadas, veredicto final APPROVE. Verificado tras corrección: dirigidas 34/34, suite 437/437, build OK y diff check. No validado: detector, privacidad de producción, cifrado, HTTP remoto ni hardware 8 GB. Sin cambios de motor activo, compras, clientes, main o despliegues. H1 done y H2 desbloqueada, no iniciada; archivos ajenos preservados.
+
+## 2026-11-09 11:43 — codex — Preferencia de uso de Astra registrada
+
+Actualizados AGENTS.md y STATE con la instrucción del dueño de reservar Astra para código de impacto material. Solo documentación y memoria; no se cambió el modelo activo, no se lanzaron agentes ni llamadas de inferencia. H1 sigue completada y H2 pendiente. No se repitieron pruebas de código por este ajuste documental.

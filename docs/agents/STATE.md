@@ -2,12 +2,13 @@
 
 > Memoria compartida entre agentes (Claude, Codex, Gemini, Kimi, Cursor…). Lee esto al empezar; al terminar, actualiza "Ahora" y "Siguiente" y deja una entrada en LOG.md con `dmem log`. Reglas del proyecto: AGENTS.md (mandan sobre este archivo). Sin claves, sin datos de clientes.
 
-**Última actualización:** 2026-11-09 11:42 por codex: H1 implementada, revisada y subida al PR 1
+**Última actualización:** 2026-11-09 11:43 por codex: Preferencia de uso de Astra registrada
 
 ## Objetivo
 Asistente jurídico conversacional, privado y ligero para despachos mexicanos en equipos de 8 GB. Dirección del dueño 2026-11-09: detector pequeño local de datos sensibles y modelos remotos por tarea, explorando OpenRouter primero. Almacenamiento privado y correspondencias reversibles en la computadora por defecto; solo contexto reducido autorizado puede salir. Conservar biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas. Propuesta vigente: `docs/architecture/hybrid-local-privacy-router-2026-11-09.md`; los requisitos jurídicos y conversacionales continúan.
 
 ## Ahora (2026-11-09, transición multimodelo)
+- Preferencia vigente de routing: Astra solo para código donde aporte una diferencia material; no documentación, resúmenes ni cambios rutinarios. No cambia la elección de proveedores de producción. H2 sigue como siguiente tarea pendiente.
 - H1 terminada en `a99bb1f`: proveedor simulado optativo, contrato de captura y puertos futuros, 12 pruebas nuevas (11 del mock y una pareada con el runtime). Revisión independiente PSF `review_h1`: P2 corregido y veredicto final APPROVE. Dirigidas 34/34, suite completa 437/437 y build OK. Ver `docs/qa/hybrid-H1-2026-11-09.md`. H2 desbloqueada, aún sin iniciar.
 - Loop PSF preparado para Lorenzo y Cordero: `docs/orchestration/hybrid-development-loop.md`, backlog, prompt y revisión. Kimi aportó una revisión sintética del orden; Codex añadió flujo vertical H3V temprano y criterios de cierre/reanudación. No hay loop desatendido iniciado.
 - Verificación de esta entrega documental: 425/425 pruebas existentes pasan y build OK. No valida detector ni producto híbrido. GitHub informa repo público; publicación en rama `docs/hybrid-psf-development-loop`, destino de PR `rescate-0.4.13`; no tocar `main`. Runner antiguo y archivo de fuente ajeno fuera del alcance.
