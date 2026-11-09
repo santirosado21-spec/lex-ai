@@ -1,0 +1,74 @@
+{
+  "id": "privacy-eval-v1",
+  "version": 1,
+  "frozenAt": "2026-11-09",
+  "purpose": "Experimental detector assessment only; never authorization or legal/product validation",
+  "offsetUnit": "UTF-16 code units, half-open [start,end), original text without Unicode normalization",
+  "categories": ["person", "organization", "rfc", "curp", "clabe", "account", "email", "phone", "address", "case_id", "context", "sensitive_relation"],
+  "mandatoryCategories": ["rfc", "curp", "clabe", "account", "email", "phone", "case_id"],
+  "blockReasons": ["scope_mismatch", "unknown_provenance", "unsupported_format", "partial_extraction", "ambiguous_context", "detector_failure"],
+  "corpusRules": {
+    "heldoutMinEntitiesPerCategory": 20,
+    "heldoutMinCleanCases": 30,
+    "heldoutMinBlockedPerReason": 4,
+    "disjointIds": true,
+    "disjointTemplateGroups": true,
+    "disjointSegmentTexts": true,
+    "syntheticOnly": true,
+    "heldoutAuthorCannotReadDev": true
+  },
+  "caseContract": {
+    "fields": ["id", "split", "templateGroup", "synthetic", "scope", "segments", "entities", "expectedStatus", "blockReason", "preserve"],
+    "scope": "exact {workspaceId,matterId,threadId}, opaque identifiers",
+    "segment": "{id,path,text,originScope,classification}; path is a nonempty string naming content/history/metadata/schema/tool representation",
+    "classification": ["synthetic", "public", "unknown"],
+    "entity": "{segmentId,start,end,category}; nonempty valid UTF16 range, no duplicate gold entity, ranges may overlap when separately annotated",
+    "expectedStatus": ["complete", "blocked"],
+    "blockReason": "null for complete; exactly one listed block reason for blocked",
+    "preserve": "[{segmentId,start,end,kind}] with kind date|amount|citation; annotations only, restoration fidelity is a separate integration measurement"
+  },
+  "predictionContract": {
+    "artifact": "{candidateId,protocolSha256,corpusSha256,predictions:[{id,status,detections:[{segmentId,start,end,category}]}]}",
+    "status": ["complete", "blocked"],
+    "onePredictionPerCase": true,
+    "unknownCaseIdsRejected": true,
+    "invalidRangesRejected": true,
+    "duplicateDetectionsRejected": true,
+    "surrogateSplitsRejected": true,
+    "noInferenceOrOracleBuiltIn": true
+  },
+  "metrics": {
+    "exact": "Maximum-cardinality one-to-one match by segment/category/start/end",
+    "overlap": "Separate maximum-cardinality one-to-one match by same segment/category and positive interval intersection; diagnostic only",
+    "emptyDenominator": "null and insufficient, never 1 or 100 percent",
+    "micro": "sum TP/FP/FN before ratios; exact and overlap separately",
+    "macro": "unweighted mean over categories with defined values, report category count; missing categories prevent gate pass",
+    "interval": "95 percent Wilson interval for recall/precision and complete clean-case rate",
+    "zeroMisses": "Also report one-sided 95 percent binomial upper miss-probability bound 1-0.05^(1/n), without risk-zero claims",
+    "routingSafety": "not-evaluated by this prediction scorer; requires separate H3V/H4b observed transport integration",
+    "preservation": "not-evaluated by this prediction scorer; requires actual prepared/restored output comparison"
+  },
+  "experimentalGates": {
+    "mandatoryExactRecall": 1,
+    "otherCategoryExactRecallMinimum": 0.95,
+    "exactPrecisionMinimumPerCategory": 0.9,
+    "cleanCompleteRateMinimum": 0.9,
+    "requiredBlockedStatusRate": 1,
+    "minimumDenominatorsMustPass": true,
+    "blockedEntityCasesStillCountAsMisses": true,
+    "resultMeaning": "eligible-for-integration-evaluation only; never safe-egress or pilot-ready"
+  },
+  "resourceProtocol": {
+    "experimentalApplicationTreeRssCeilingBytes": 4294967296,
+    "experimentalDetectorIncrementalRssCeilingBytes": 1073741824,
+    "experimentalDetectorP95Ms": 5000,
+    "inputEnvelopeMaximumUtf16": 7000,
+    "warmSamplesMinimum": 30,
+    "coldStartsMinimum": 3,
+    "timeoutMaximumMs": 15000,
+    "concurrency": 1,
+    "memoryDefinition": "Observed process-tree peak RSS, may double-count shared pages; compare baseline and candidate in matched runs",
+    "status": "Preregistered experimental ceilings, not measured guarantees; native Tauri and physical 8 GB validation pending"
+  },
+  "contaminationPolicy": "Heldout is created after this freeze by a separate author without dev templates/predictions. Validate structure/hashes only in H4a; no candidate scored. If used for tuning or inspected to fix detector, retire the entire version and create a new independent heldout. Public storage is not access control."
+}
