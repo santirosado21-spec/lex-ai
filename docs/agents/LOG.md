@@ -99,3 +99,7 @@ Actualizados AGENTS.md y STATE con la instrucción del dueño de reservar Astra 
 ## 2026-11-09 13:56 — codex — H2 completada con revisión independiente
 
 Commit 47d0478: puerta de salida offline, clasificación ligada al sobre completo, revocación y auditoría sin texto. Worker implement_h2 configurado gpt-6-astra para privacidad crítica; reviewer review_h2 configurado gpt-6.1-sol APPROVE. Medido: 50/50 dirigidas, 453/453 suite, build OK. No validado: detector real, cifrado, HTTP, producto ni 8 GB. H3 desbloqueada y reclamada como segunda tarea; sin producción ni datos de clientes.
+
+## 2026-11-09 14:03 — codex — H3 completada y loop de dos tareas cerrado
+
+Commit 08d7429: seudonimización reversible sintética por asunto, protección de historial/metadatos/seguimientos, procedencia local separada, snapshots en memoria y restitución acotada sin salida parcial. Worker Astra para código crítico; Sol independiente halló reutilización desde snapshot antiguo, se corrigió con IDs opacos y confirmó APPROVE. Medido: 14/14 H3, 64/64 combinadas, revisor 41/41, suite467/467, build OK. No medido/implementado: detector, cifrado, HTTP, integración ni 8 GB físicos. H2/H3 done; siguiente H3V no iniciada por límite de dos tareas. PR1 a rescate-0.4.13; sin main, merge, compras, clientes ni despliegues.

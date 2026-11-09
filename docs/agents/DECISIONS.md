@@ -25,3 +25,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 11:43 — codex — Reservar Astra para código con impacto material
 
 **Por qué:** El dueño pide usar Astra únicamente para código que haga la diferencia. Reservarlo para lógica crítica, integraciones difíciles o defectos persistentes; evitarlo en documentación, resúmenes, boilerplate y revisiones rutinarias. Usar rutas adecuadas de menor costo cuando estén disponibles, sin delegar código entregable o decisiones críticas a pequeños modelos locales. No afirmar cambios de modelo de la sesión sin verificación.
+
+## 2026-11-09 14:03 — codex — H3 usa identificadores opacos para evitar reutilización tras snapshots antiguos
+
+**Por qué:** La revisión independiente reprodujo que contadores restaurados desde una instantánea antigua podían asignar el marcador de Beta a Gamma. Nuevos UUID por entrada y versión mantienen los marcadores importados conocidos pero impiden reutilización accidental al añadir correspondencias. 14 pruebas H3 y reproducción independiente pasan. No autentica snapshots manipulados ni implementa cifrado.

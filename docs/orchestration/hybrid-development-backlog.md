@@ -1,8 +1,8 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. H1 y H2 terminadas y revisadas; H3 en curso. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1, H2 y H3 terminadas y revisadas; H3V desbloqueada, sin iniciar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
-Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; nadie está asignado todavía.
+Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; las asignaciones y cierres efectivos figuran en la tabla.
 
 El coordinador concede `done` únicamente con aceptación demostrada, revisión independiente registrada y referencia al commit probado. Para reabrir `blocked`: registrar diagnóstico, corrección propuesta y decisión explícita de reanudación del coordinador; nunca reinicio automático. Si cambia alcance o se requiere una autorización nueva, esa parte espera su autorización. H4 y H5 pueden avanzar en paralelo tras H3V con responsables/archivos separados; H6 conserva una puerta prudente de preparación del producto, no una afirmación de dependencia técnica inevitable.
 
@@ -10,7 +10,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | --- | --- | --- | --- | --- |
 | H1 | Contrato y transporte simulado | — | done | Codex / `docs/hybrid-psf-development-loop` (PR #1, `a99bb1f`) |
 | H2 | Política de salida y auditoría sin texto | H1 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
-| H3 | Sustituciones y restitución por ámbito | H2 | review-pending | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
+| H3 | Sustituciones y restitución por ámbito | H2 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3V | Primera rebanada vertical sin red | H3 | todo | Sin asignar |
 | H4 | Detector local y examen independiente | H3V | todo | Sin asignar |
 | H5 | Almacenamiento cifrado y restauración | H3V | todo | Sin asignar |
@@ -41,7 +41,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Archivos asignados al worker `implement_h2` (segunda rebanada H3): `server/privacy/pseudonyms.mjs`, `tests/privacy-pseudonyms.test.mjs`. Coordinador: contrato, QA, backlog y memoria; misma rama PR #1. Astra continúa exclusivamente con código crítico de aislamiento/restitución. Revisión independiente separada con Sol. Objetivo: sustituciones sintéticas por asunto, snapshots solo en memoria y restitución estricta, sin cifrado ni integración de producto.
 - Aceptación: entidades declaradas de fixtures se sustituyen con marcadores estables dentro del asunto y aislados entre ámbitos. Restituir solo marcadores conocidos; no reemplazar texto libre ni aceptar marcadores de otro asunto. Pruebas de colisión, reinicio de sesión simulado, Unicode y marcador dividido entre chunks.
 - Mapa inicialmente en memoria sintética; no persistir correspondencias privadas en claro. Las respuestas restituidas se vuelven a proteger en los seguimientos. Mantener cita/procedencia de la fuente original por separado de su representación enviada.
-- Revisión independiente `review_h2` (`gpt-6.1-sol`): `APPROVE` tras reproducir/corregir reutilización de identidad desde snapshot antiguo; comprobó 41/41 (H3/H2/mock). Worker: 14/14 H3 y 64/64 combinadas; coordinador: 467/467 suite y build OK. [Evidencia H3](../qa/hybrid-H3-2026-11-09.md). Aceptación verificada; cierre `done` al registrar el commit probado.
+- Revisión independiente `review_h2` (`gpt-6.1-sol`): `APPROVE` tras reproducir/corregir reutilización de identidad desde snapshot antiguo; comprobó 41/41 (H3/H2/mock). Worker: 14/14 H3 y 64/64 combinadas; coordinador: 467/467 suite y build OK. [Evidencia H3](../qa/hybrid-H3-2026-11-09.md). Aceptación verificada y commit probado `08d7429`; el coordinador concede `done`. H3V desbloqueada, sin iniciar: se alcanzó el máximo de dos tareas de la sesión.
 
 ## H3V — Primera rebanada vertical sin red
 
