@@ -83,3 +83,7 @@ Leídos STATE, arquitectura previa, onboarding y puntos locales de inferencia/pe
 ## 2026-11-09 11:00 — codex — Preparación y verificación del loop PSF híbrido
 
 Creados guía del ciclo, prompt de arranque, backlog H1-H9 más H3V, paquete sintético y síntesis de revisión. Kimi respondió mediante panel PSF (38 s; modelo solicitado kimi-code/k3.1-pro, versión efectiva no atestada); Codex incorporó contratos tempranos, composición simulada y criterios de done/reapertura. Verificado: npm test 425/425 en una ejecución, npm run build OK, enlaces/JSON y diff comprobados. GitHub reporta repo público; publicación autorizada por el dueño en rama docs/hybrid-psf-development-loop con PR a rescate-0.4.13. Sin cambios de runtime, H1 iniciado, loop desatendido, compras ni datos de clientes. El runner scripts/loop/run.mjs y provenance 2.json quedan fuera del alcance.
+
+## 2026-11-09 11:01 — codex — Loop PSF publicado en GitHub: PR 1
+
+Push confirmado de docs/hybrid-psf-development-loop y PR abierto https://github.com/santirosado21-spec/lex-ai/pull/1 hacia rescate-0.4.13. GitHub muestra los 13 archivos esperados; main no fue modificado. Commit inicial 058ea6b. H1 está pendiente y no hay proceso desatendido iniciado. El PR contiene documentación y revisión de secuencia, no funciones híbridas implementadas. Permanecen locales los archivos ajenos scripts/loop/ y provenance 2.json.

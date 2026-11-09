@@ -2,7 +2,7 @@
 
 > Memoria compartida entre agentes (Claude, Codex, Gemini, Kimi, Cursor…). Lee esto al empezar; al terminar, actualiza "Ahora" y "Siguiente" y deja una entrada en LOG.md con `dmem log`. Reglas del proyecto: AGENTS.md (mandan sobre este archivo). Sin claves, sin datos de clientes.
 
-**Última actualización:** 2026-11-09 11:00 por codex: Preparación y verificación del loop PSF híbrido
+**Última actualización:** 2026-11-09 11:01 por codex: Loop PSF publicado en GitHub: PR 1
 
 ## Objetivo
 Asistente jurídico conversacional, privado y ligero para despachos mexicanos en equipos de 8 GB. Dirección del dueño 2026-11-09: detector pequeño local de datos sensibles y modelos remotos por tarea, explorando OpenRouter primero. Almacenamiento privado y correspondencias reversibles en la computadora por defecto; solo contexto reducido autorizado puede salir. Conservar biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas. Propuesta vigente: `docs/architecture/hybrid-local-privacy-router-2026-11-09.md`; los requisitos jurídicos y conversacionales continúan.
@@ -10,6 +10,7 @@ Asistente jurídico conversacional, privado y ligero para despachos mexicanos en
 ## Ahora (2026-11-09, transición multimodelo)
 - Loop PSF preparado para Lorenzo y Cordero: `docs/orchestration/hybrid-development-loop.md`, backlog, prompt y revisión. Kimi aportó una revisión sintética del orden; Codex añadió flujo vertical H3V temprano y criterios de cierre/reanudación. H1 sigue pendiente; no hay loop desatendido iniciado.
 - Verificación de esta entrega documental: 425/425 pruebas existentes pasan y build OK. No valida detector ni producto híbrido. GitHub informa repo público; publicación en rama `docs/hybrid-psf-development-loop`, destino de PR `rescate-0.4.13`; no tocar `main`. Runner antiguo y archivo de fuente ajeno fuera del alcance.
+- Publicación confirmada: [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) abierto, rama remota verificada y 13 archivos esperados en el PR. Commit inicial `058ea6b`; H1 sigue pendiente. Para empezar antes de integrar el PR, usar su rama como base temporal.
 - El dueño confirma que Pedro y Lorenzo ya tienen el repo. Onboarding y prioridades AGENTS/PRD actualizados; no se enviaron mensajes ni se modificaron accesos GitHub.
 - Diseño registrado: computadora como almacén principal; disco externo/Drive como respaldo cifrado posterior, no base SQLite activa compartida. Seudonimización reversible local, puerta de salida de solicitudes completas y restitución por ámbito.
 - OpenRouter es primera ruta a explorar; la prioridad ChatGPT del 05/11 queda como antecedente. Fuentes oficiales de tarifas, enrutamiento y retención consultadas; no se midió ahorro ni se eligieron modelos ganadores.
