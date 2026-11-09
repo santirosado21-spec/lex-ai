@@ -9,3 +9,11 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-05 14:30 — codex — Dirección híbrida con prioridad ChatGPT
 
 **Por qué:** El dueño acepta trasladar parte del procesamiento a la nube y conservar biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas. Diseñar integración oficial de ChatGPT con contexto mínimo autorizado y almacenamiento/recuperación locales. Elegibilidad comercial de suscripciones y acceso efectivo pendientes; API es alternativa separada. No habilitar gasto ni cargar expedientes reales a partir de esta decisión. Ver docs/architecture/hybrid-private-workspace-2026-11-05.md.
+
+## 2026-11-09 08:31 — codex — Privacidad local y modelos remotos por tarea
+
+**Por qué:** Dirección del dueño del 2026-11-09: pequeño detector local, almacenamiento privado en la computadora y explorar OpenRouter como primera ruta multimodelo. Sustituye la prioridad ChatGPT del 05/11. Respaldos externos cifrados y colaboración compartida son etapas posteriores; protección reversible es seudonimización. No autoriza gasto ni cargas de clientes. Plan y criterios en docs/architecture/hybrid-local-privacy-router-2026-11-09.md.
+
+## 2026-11-09 11:00 — codex — Loop híbrido PSF con revisión y primera integración simulada
+
+**Por qué:** Pedido del dueño: preparar loop de desarrollo y publicarlo en GitHub para Lorenzo y Cordero. Una tarea solo desbloquea dependencias con aceptación, pruebas y revisión registradas; review-pending permite borrador, no integración. Revisión sintética de Kimi incorporada: contratos H1, flujo vertical H3V y reanudación explícita tras diagnóstico. No usar el runner antiguo sin revisión; trabajar en ramas/PR a rescate-0.4.13, sin tocar main.

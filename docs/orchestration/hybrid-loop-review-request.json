@@ -1,0 +1,13 @@
+{
+  "task": "Revisa el orden y la coordinación de este ciclo de desarrollo; no tomes decisiones de seguridad, contratación ni presupuesto.",
+  "context": "Diseño sintético de un asistente de escritorio: H1 contrato y transporte simulado sin red; H2 puerta de salida por ámbito; H3 sustitución reversible por ámbito; H4 detector local con evaluación independiente; H5 almacenamiento cifrado y restauración; H6 adaptador remoto apagado y selección por tarea; H7 integración de todas las rutas; H8 comparación ciega pública/sintética con autorización separada para llamadas reales. H2 depende H1; H3 depende H2; H4/H5 dependen H3; H6 depende H4/H5; H7 depende H6; H8 depende H7. Una tarea tiene responsable, rama, archivos y aceptación explícitos. Solo done desbloquea dependencias. Sin revisión independiente se conserva review-pending y PR borrador. Máximo dos rebanadas por sesión y tres intentos por tarea; después diagnóstico. El coordinador implementa, prueba y decide. Revisión externa con paquete sintético, sin archivos ni herramientas. Commits por rebanada y PR a rama de desarrollo, sin merge automático. No es un servicio desatendido iniciado.",
+  "acceptance": "Máximo 250 palabras. Identifica hasta tres fallos de secuencia o coordinación, propón una corrección verificable y señala qué no puedes comprobar. No afirmes acceso al repo, pruebas ejecutadas o aprobación de privacidad. No cambies las restricciones del encargo.",
+  "dataClass": "synthetic",
+  "reviewedForExternal": true,
+  "skills": [
+    {
+      "source": "PSF, skill psf y AGENTS.md; guía proporcionada por el coordinador",
+      "guidance": "Opina solo sobre este texto sintético y autocontenido. No tienes archivos, herramientas ni acceso a la conversación. El coordinador conserva decisiones y verifica. No llames otros agentes, no redactes código ni decidas seguridad o dinero. Una opinión no equivale a una revisión de implementación."
+    }
+  ]
+}

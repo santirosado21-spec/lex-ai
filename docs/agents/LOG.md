@@ -75,3 +75,11 @@ Revisadas fuentes oficiales OpenAI: Sign in with ChatGPT permite uso del plan en
 - Repo privado santirosado21-spec/lex-ai: solo el dueño tiene acceso; sin claves ni artefactos pesados rastreados (escaneo limpio). Rama con el trabajo: rescate-0.4.13; main despliega la landing.
 - Se agregó docs/ONBOARDING-FUNDADORES.md. Se subieron los cambios de documentación de Codex (giro a inferencia híbrida). NO se subió scripts/loop/run.mjs (ejecutor de agentes de otra sesión, sin revisar) ni 'provenance 2.json'.
 - Pendiente: usernames de GitHub de Pedro y Lorenzo y nivel de acceso; invitación la envía el dueño o yo con su orden.
+
+## 2026-11-09 08:31 — codex — Transición híbrida documentada para fundadores
+
+Leídos STATE, arquitectura previa, onboarding y puntos locales de inferencia/persistencia. Consultadas fuentes oficiales OpenRouter de tarifas, selección de proveedores y retención. Creado docs/architecture/hybrid-local-privacy-router-2026-11-09.md; actualizados AGENTS, PRD, onboarding y STATE. Verificado por lectura: SQLite con permisos; inicio local y varias rutas de generación. No medido: detector, ahorro, calidad remota, cifrado/restore ni 8 GB físicos. Solo documentación; no llamadas de inferencia, credenciales, pagos, publicación ni mensajes a Pedro/Lorenzo.
+
+## 2026-11-09 11:00 — codex — Preparación y verificación del loop PSF híbrido
+
+Creados guía del ciclo, prompt de arranque, backlog H1-H9 más H3V, paquete sintético y síntesis de revisión. Kimi respondió mediante panel PSF (38 s; modelo solicitado kimi-code/k3.1-pro, versión efectiva no atestada); Codex incorporó contratos tempranos, composición simulada y criterios de done/reapertura. Verificado: npm test 425/425 en una ejecución, npm run build OK, enlaces/JSON y diff comprobados. GitHub reporta repo público; publicación autorizada por el dueño en rama docs/hybrid-psf-development-loop con PR a rescate-0.4.13. Sin cambios de runtime, H1 iniciado, loop desatendido, compras ni datos de clientes. El runner scripts/loop/run.mjs y provenance 2.json quedan fuera del alcance.

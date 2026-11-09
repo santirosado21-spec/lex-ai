@@ -2,6 +2,10 @@
 
 Escrita el 2026-11-06 para Pedro y Lorenzo. Es un mapa, no una promesa: dice qué existe, qué se midió y qué no.
 
+Actualización 2026-11-09: el dueño confirma que Pedro y Lorenzo ya tienen el repositorio. La dirección actual es almacenamiento privado en la computadora, un detector pequeño local y modelos remotos por tarea, explorando OpenRouter primero. Leer la [transición y sus frentes de trabajo](architecture/hybrid-local-privacy-router-2026-11-09.md). Es diseño pendiente de implementación y evaluación; reemplaza la prioridad anterior de integrar primero suscripciones ChatGPT.
+
+Para comenzar el desarrollo y revisarlo con Lorenzo y Cordero: [ciclo PSF](orchestration/hybrid-development-loop.md), [backlog H1–H9](orchestration/hybrid-development-backlog.md) y [prompt de arranque](orchestration/hybrid-loop-prompt.md). El nuevo ciclo exige revisión antes de desbloquear dependencias. No se ha iniciado un ejecutor desatendido.
+
 ## Qué es
 Asistente jurídico de escritorio para despachos mexicanos: conversa con naturalidad y, cuando afirma algo jurídico, cita un artículo oficial recuperado de una biblioteca local (35.452 artículos, 303 leyes federales y una selección estatal). Gestiona asuntos, documentos y horas. Dirección vigente del dueño (2026-11-05): inferencia híbrida; el almacenamiento y la recuperación privados siguen locales. Léela completa en `docs/architecture/hybrid-private-workspace-2026-11-05.md`.
 
