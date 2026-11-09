@@ -7,6 +7,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {createInference,modelPolicy} from '../server/inference.mjs';
 import {generationOptions} from '../server/generation-options.mjs';
+import {createMockInference} from '../server/inference-mock.mjs';
 const catalog=JSON.parse(await readFile(new URL('../resources/model-catalog.json',import.meta.url)));
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const json=x=>new Response(JSON.stringify(x));
@@ -27,6 +28,33 @@ async function fixture(t,{installed=true,fetch:override,hardware,freeMemory,disk
  fetch:async(url,opts={})=>{const body=opts.body?JSON.parse(opts.body):null;calls.push({url,opts,body});const custom=await override?.({url,opts,body,install,layer,manifest});if(custom)return custom;if(url.includes('registry.ollama.ai/v2/'))return new Response(manifest);if(url.endsWith('/api/version'))return json({version:'test'});if(url.endsWith('/api/tags'))return json({models:installed?[{name:modelCatalog.id}]:[]});if(url.endsWith('/api/pull')){await install();return stream([{digest:layer.digest,total:layer.size,completed:layer.size},{status:'success'}]);}if(url.endsWith('/api/chat'))return stream([{message:{content:'{"analysis":"synthetic"}'}},{done:true}]);if(url.endsWith('/api/generate'))return json({done:true});throw Error('Unexpected route');}};
  const engine=createInference({dataDir,runtimePath:process.execPath,modelCatalog,dependencies});t.after(()=>engine.stop());return {engine,calls,children,modelCatalog,manifestPath,modelRoot,layer};
 }
+test('local runtime and H1 mock share message, character, format and schema boundaries',async t=>{
+ const f=await fixture(t);await f.engine.initialize();await settled(f.engine);
+ const mock=createMockInference({responses:Array.from({length:5},()=> 'Synthetic')});await mock.initialize();
+ const collect=async(engine,messages,options)=>{for await(const _ of engine.generate(messages,options)){};};
+ const message=content=>[{role:'user',content}];
+ const schemaAt=size=>({description:'x'.repeat(size-JSON.stringify({description:''}).length)});
+ const valid=[
+  [message('x'.repeat(7000)),{}],
+  [Array.from({length:16},()=>({role:'user',content:'x'})),{}],
+  [message('synthetic'),{outputSchema:schemaAt(16000)}],
+  [message('synthetic'),{responseFormat:'text'}],
+  [message('synthetic'),{responseFormat:'text',outputSchema:null}]
+ ];
+ const invalid=[
+  [message('x'.repeat(7001)),{}],
+  [Array.from({length:17},()=>({role:'user',content:'x'})),{}],
+  [message('synthetic'),{outputSchema:schemaAt(16001)}],
+  [message('synthetic'),{responseFormat:'xml'}],
+  [message('synthetic'),{responseFormat:'text',outputSchema:{type:'object'}}],
+  [[],{}],[[{role:'tool',content:'x'}],{}],[[{role:'user',content:1}],{}]
+ ];
+ for(const engine of [f.engine,mock]){
+  for(const [messages,options] of invalid)await assert.rejects(collect(engine,messages,options));
+  for(const [messages,options] of valid)await collect(engine,messages,options);
+ }
+ assert.equal(mock.sent.length,valid.length);assert.equal(f.calls.filter(c=>c.url.endsWith('/api/chat')).length,valid.length);
+});
 test('catalog pins small official model and rejects heavy budgets/path injection',()=>{
  assert.equal(modelPolicy({...catalog,id:'qwen3.5:2b-q4_K_M'}).manifestPath,'manifests/registry.ollama.ai/library/qwen3.5/2b-q4_K_M');
  for(const id of ['qwen3.5:../tag','qwen3.5:tag/path','qwen3.5:tag?x=y','qwen3.5:tag\n'])assert.throws(()=>modelPolicy({...catalog,id}),/inválido/);
