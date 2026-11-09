@@ -31,7 +31,10 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H9 | Respaldo externo y colaboración | Piloto y decisión de almacenamiento compartido | todo | Sin asignar |
 | B0 | Prueba interna de cofounders: evidencia pública temprana y beta híbrida posterior | Acceso/presupuesto y paquete acordes a cada alcance | todo | Guion preparado; RAM mínima 8 GB declarada, sistemas pendientes; sin ejecución |
 | C-R0 | Investigación SF de adquisición jurídica nacional para demo web | Dirección del dueño, fuentes públicas | done | `67e3d3b`; investigador/revisor Sol, tres respuestas SF; límites/precisiones integrados |
-| C0/C1 | Registro por fuente y piloto acotado de adquisición pública | C-R0 revisada, permisos/rutas por fuente | todo | Sin colector nuevo instalado; ver síntesis SF y mapa de 32 entidades |
+| C0 | Registro y planes cerrados de adquisición pública | C-R0 revisada | done | `9ac5bd8`; 15 tests, revisión independiente; 10 URLs aprobadas y 20 plazas pendientes |
+| C1 | Piloto público de 30 plazas | C0 y política/rutas por fuente | in-progress | C1a federal completada; faltan 16 documentos estatales y 4 judiciales concretos |
+| C1a | Fábrica, evidencia y primer lote federal | Plan C0 válido | done | `e6dab95`; 10/10 PDFs, 8.086 segmentos en cuarentena, offline 10 cachés/0 solicitudes; ver QA C0-C1a |
+| C1b | Completar selección y adquisición estatal/judicial | Revisar fuentes/rutas/robots y permisos | todo | 20 plazas explícitas sin URL; sin sustituir bloqueos ni afirmar cobertura |
 
 ## H1 — Contrato y transporte simulado
 
@@ -154,7 +157,25 @@ El dueño solicita involucrar a Lorenzo y Pedro; confirma mínimo 8 GB y cómput
 
 El dueño confirma referencia Luthor y solicita Claude/Gemini/Kimi/Cursor, Perplexity por OpenRouter si disponible. Excepción Claude limitada a esta investigación, sin compras. [Síntesis y plan C0–C5](../research/mexican-legal-corpus-sf-2026-11-09.md), [nueve herramientas y tres repos mexicanos](../research/legal-corpus-tools-2026-11-09.md), [mapa descubierto de 32 entidades](../research/mexican-legal-source-map-2026-11-09.json) y [participación real](../research/legal-corpus-sf-participation-2026-11-09.json).
 
-La investigación descubre canales oficiales (incluido SIDOF documentado) y propone Crawlee + descargador existente + Playwright selectivo, extracción nativa/OCRmyPDF/Docling en fábrica pública separada. No corpus masivo, 32 portales probados o vigencia validada; no activar infraestructura/proveedor ni tocar datos privados. Primer entregable de código futuro: C0/C1 limitado y medido, con citas/versiones/cobertura explícitas. Biblioteca pública central para web no autoriza enviar consultas privadas sin preparación/política. B0 se prioriza como demo web; no bloquear ese canal por notarización de escritorio. H4/H5/H6 conservan puertas para privado.
+La investigación descubre canales oficiales (incluido SIDOF documentado) y propone Crawlee + descargador existente + Playwright selectivo, extracción nativa/OCRmyPDF/Docling en fábrica pública separada. No corpus masivo, 32 portales probados o vigencia validada; no activar infraestructura/proveedor ni tocar datos privados. Ese fue el encargo de investigación; la construcción posterior C0/C1a se registra abajo con versiones/cobertura explícitas. Biblioteca pública central para web no autoriza enviar consultas privadas sin preparación/política. B0 se prioriza como demo web; no bloquear ese canal por notarización de escritorio. H4/H5/H6 conservan puertas para privado.
 
 
 Cierre C-R0: commit `67e3d3b`, revisión documental independiente favorable y precisiones de presupuesto/H6/cachés opcionales incorporadas. JSON/enlaces y snapshot SHA verificados; 32 entidades únicas, 33 enlaces legislativos, 32 gacetas, cero textos legales adquiridos y cero portales estatales probados. Gemini/Kimi/Cursor aportaron una respuesta cada uno; Claude un timeout sin respuesta y Perplexity cero generaciones por falta de ruta elegible. No suite de producto repetida por documentos. C0/C1 conserva permisos/rutas pendientes; C-R0 done no significa corpus nacional o vigencia validada.
+
+
+## Encargo de construcción C0/C1
+
+Dirección del dueño: empezar pruebas/fábrica de adquisición; reafirma local para sustitución/mapa/restitución y nube para trabajo pesado. La fábrica pública es un worker/CLI fuera del runtime del cliente, ejecutable en infraestructura de procesamiento; el piloto se mide en desarrollo sin desplegar/comprar nube nueva. No cambiar motor local activo por inferencia remota sin sus gates/acceso/presupuesto.
+
+- Worker Sol `build_corpus_registry`: `server/corpus/source-registry.mjs`, `tests/corpus-source-registry.test.mjs`. Registro confiable de fuentes/documentos y plan serializable cerrado, rechazo de privados/fuentes pendientes/URLs no aprobadas y presupuestos/versiones vinculados por hash.
+- Worker Sol `build_public_factory`: `server/corpus/acquisition.mjs`, `scripts/legal-acquisition.mjs`, `tests/corpus-acquisition.test.mjs`. Reutiliza descargador/parser existentes, sin ampliar allowlist de producción; límites globales de solicitudes/bytes/tiempo, recibo de procedencia, snapshots/versiones/extracción en cuarentena y repetición idempotente offline. Sin entrenamiento/export de datasets, OCR/modelos descargados o publicación automática.
+- Coordinador: `resources/legal-acquisition-pilot.json`, `docs/architecture/public-corpus-factory-v1.md`, QA/script de medición si hace falta, instrucciones/backlog/memoria. Revisor Sol independiente solo lectura; sin tocar archivos de los workers. No cambios a `server/legal-sync.mjs` o `legal-library.mjs` sin hallazgo y ownership explícito. Máximo dos entregas en este loop, C0/C1; fuentes bloqueadas permanecen pendientes, sin evasión ni sustitución silenciosa.
+
+
+## Cierre de construcción C0/C1a
+
+C0 `9ac5bd8` entrega registro confiable/planes cerrados; C1a `e6dab95` entrega worker/CLI público sin dependencia nueva y primer lote federal real. [QA y comandos](../qa/public-acquisition-C0-C1a-2026-11-09.md), [métricas/hashes](../qa/public-acquisition-C0-C1a-2026-11-09.json). Fuente Diputados, 10 PDFs de 2.652 páginas, 8.086 segmentos candidatos; 1.400 con anomalías y 4.175 con notas editoriales. Todos quedan en cuarentena, sin publicación/indexación o validación de vigencia. El parser todavía no conserva transitorios/historia completa como unidades consultables; originales íntegros preservados.
+
+Revisión final live: 20 solicitudes, 23.803.914 bytes decodificados, 38.391 ms; RSS máximo observado 304.349.184 bytes en Mac de desarrollo de 24 GiB, sin validación cliente/8 GB. Offline: 10 cachés, 0 solicitudes/bytes, 79 ms y 31 archivos de integridad idénticos. Primer ensayo preservado por separado y repetición final tras añadir recibos MIME; dos ensayos no cuentan como 20 leyes únicas. Suite inicial 586/587 por nueva aserción de reloj demasiado estricta; test corregido con reloj simulado determinista, suite final 587/587 y build OK. Revisión Sol independiente y QA enlazada. SF: dos builders Sol y un revisor Sol, sin Astra ni generaciones externas nuevas; tokens/cuotas no expuestos.
+
+Se alcanzan dos cortes: C0 y C1a. **C1 global sigue parcial**, con 20 plazas estatales/judiciales pendientes sin URL y C2/C3 de fidelidad/transitorios/OCR abiertos. Siguiente: C1b y aceptación textual C2; C4 demo/citas/revisión de Lorenzo/Pedro después. No nueva infraestructura, coste, envío de clientes o motor remoto activado; H4b/H5/H6 privados siguen abiertos. Local prepara privacidad y restituye resultados, nube hace trabajo pesado cuando el flujo esté integrado y medido. Sin loop desatendido, merge o despliegue.
