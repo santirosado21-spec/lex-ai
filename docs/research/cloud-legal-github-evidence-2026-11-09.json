@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-09T23:45:26.648Z",
+  "scope": "Read-only GitHub repository/README/license/selected file inspection; no installation, execution or capability evaluation",
+  "sources": [
+    {
+      "repository": "anthropics/claude-for-legal",
+      "url": "https://github.com/anthropics/claude-for-legal",
+      "head": "4a6c651889c97cc9140580363c73e0eb17379c2b",
+      "headCommittedAt": "2026-07-23T00:46:01Z",
+      "repositoryPushedAt": "2026-11-08T14:42:37Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "Apache-2.0",
+      "rootLicenseObserved": "Apache-2.0",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "5bdc249bbc315e21325b4bc937e12139c2831f8d",
+        "url": "https://github.com/anthropics/claude-for-legal/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+        "url": "https://github.com/anthropics/claude-for-legal/blob/main/LICENSE"
+      },
+      "inspectedFiles": [
+        {
+          "path": "corporate-legal/skills/tabular-review/SKILL.md",
+          "blobSha": "4f5c6fc452aa803cb7adc5b1eef9a1f04fdb208a",
+          "url": "https://github.com/anthropics/claude-for-legal/blob/main/corporate-legal/skills/tabular-review/SKILL.md"
+        },
+        {
+          "path": "litigation-legal/skills/chronology/SKILL.md",
+          "blobSha": "15ba24ba1ad7a332a64b579d016c8fd7081f3432",
+          "url": "https://github.com/anthropics/claude-for-legal/blob/main/litigation-legal/skills/chronology/SKILL.md"
+        },
+        {
+          "path": "managed-agent-cookbooks/README.md",
+          "blobSha": "8e27c1583ee22022edf3faf306df03f2a3d608fc",
+          "url": "https://github.com/anthropics/claude-for-legal/blob/main/managed-agent-cookbooks/README.md"
+        }
+      ],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "open-legal-products/mike-workflows",
+      "url": "https://github.com/open-legal-products/mike-workflows",
+      "head": "20bed204ce9ef07e1bc2df0b16b35ee8ad997fb1",
+      "headCommittedAt": "2026-10-20T13:37:48Z",
+      "repositoryPushedAt": "2026-11-05T13:01:55Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "MIT",
+      "rootLicenseObserved": "MIT",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "1ebf43e8e297ecad91d0d39c530019284c56d8ec",
+        "url": "https://github.com/open-legal-products/mike-workflows/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "509e928667c51e89afae308be83a8f5aca340fa0",
+        "url": "https://github.com/open-legal-products/mike-workflows/blob/main/LICENSE"
+      },
+      "inspectedFiles": [
+        {
+          "path": "assistant-workflows/nda-review/SKILL.md",
+          "blobSha": "f64b937fe8e5b0d88bd03cfde7294506126d1e5e",
+          "url": "https://github.com/open-legal-products/mike-workflows/blob/main/assistant-workflows/nda-review/SKILL.md"
+        },
+        {
+          "path": "tabular-review-workflows/commercial-agreement-tabular-review/table-columns.yaml",
+          "blobSha": "7c0e26cb102ed7ba52884adf2407c689c46cbad9",
+          "url": "https://github.com/open-legal-products/mike-workflows/blob/main/tabular-review-workflows/commercial-agreement-tabular-review/table-columns.yaml"
+        },
+        {
+          "path": "workflow-schema/tabular-review-instructions.md",
+          "blobSha": "b21d4ff680ef4162f1ccca7ce5a993ced0773272",
+          "url": "https://github.com/open-legal-products/mike-workflows/blob/main/workflow-schema/tabular-review-instructions.md"
+        }
+      ],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "ThomasMoreAI/legal-skills-open",
+      "url": "https://github.com/ThomasMoreAI/legal-skills-open",
+      "head": "2896ce4c0ca1632b43efb29647c2811eadc89247",
+      "headCommittedAt": "2026-10-12T20:51:43Z",
+      "repositoryPushedAt": "2026-10-12T20:51:45Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "Apache-2.0",
+      "rootLicenseObserved": "Apache-2.0",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "5117d40550275f93b38b81eb4757b6fcd24c767f",
+        "url": "https://github.com/ThomasMoreAI/legal-skills-open/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "93b0e4d661af5445fc6cb674a77d2f4eb5b77631",
+        "url": "https://github.com/ThomasMoreAI/legal-skills-open/blob/main/LICENSE"
+      },
+      "inspectedFiles": [],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "lawve-ai/awesome-legal-skills",
+      "url": "https://github.com/lawve-ai/awesome-legal-skills",
+      "head": "f9f28cdccbeb98bbdde010042ea9f525ca427c72",
+      "headCommittedAt": "2026-10-19T16:51:54Z",
+      "repositoryPushedAt": "2026-10-19T16:51:56Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "NOASSERTION",
+      "rootLicenseObserved": "CC-BY-NC-ND-4.0",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "8a7be20ef087330d1e4ad8ed7be54f7aeb208b89",
+        "url": "https://github.com/lawve-ai/awesome-legal-skills/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "c741d9203a142f267b0ada2b03a74a64a38a4293",
+        "url": "https://github.com/lawve-ai/awesome-legal-skills/blob/main/LICENSE"
+      },
+      "inspectedFiles": [],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "evolsb/claude-legal-skill",
+      "url": "https://github.com/evolsb/claude-legal-skill",
+      "head": "bca0d2e9d5ec81298ddfbfde78fa4f38fb4589b0",
+      "headCommittedAt": "2026-07-23T20:07:40Z",
+      "repositoryPushedAt": "2026-07-23T20:07:40Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "MIT",
+      "rootLicenseObserved": "MIT",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "09a209820e5c62fa883610ddd0118dffc29686b5",
+        "url": "https://github.com/evolsb/claude-legal-skill/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "a08a62a97c33e8a4e0c0a2317026f88cd42c7d00",
+        "url": "https://github.com/evolsb/claude-legal-skill/blob/main/LICENSE"
+      },
+      "inspectedFiles": [
+        {
+          "path": "skill.md",
+          "blobSha": "644297a5a6eea6f14ea5d3f79a8917bd66d033f8",
+          "url": "https://github.com/evolsb/claude-legal-skill/blob/main/skill.md"
+        }
+      ],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "Azure-Samples/ally-legal-assistant",
+      "url": "https://github.com/Azure-Samples/ally-legal-assistant",
+      "head": "166c4a4b881be49bc9f8b3a92bbb3689a1ace9a7",
+      "headCommittedAt": "2025-01-27T10:04:44Z",
+      "repositoryPushedAt": "2025-04-29T02:10:29Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": null,
+      "rootLicenseObserved": null,
+      "readme": {
+        "path": "README.md",
+        "blobSha": "7b03a0dffde3c30b31b8ff841be422f3a0139c38",
+        "url": "https://github.com/Azure-Samples/ally-legal-assistant/blob/main/README.md"
+      },
+      "license": null,
+      "inspectedFiles": [],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "harveyai/harvey-labs",
+      "url": "https://github.com/harveyai/harvey-labs",
+      "head": "e029429096ea20962143215642f81a14e0105455",
+      "headCommittedAt": "2026-11-09T17:49:36Z",
+      "repositoryPushedAt": "2026-11-09T18:41:37Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "MIT",
+      "rootLicenseObserved": "MIT",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "46d2e8c5e146412abceaf0c7cea9c037cfe25e25",
+        "url": "https://github.com/harveyai/harvey-labs/blob/main/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "e04042669602230e08975f78d470c4f72ce2d027",
+        "url": "https://github.com/harveyai/harvey-labs/blob/main/LICENSE"
+      },
+      "inspectedFiles": [
+        {
+          "path": "docs/eval-strategies.md",
+          "blobSha": "1735456d45c757e3624d95caf30cf865ba1262f4",
+          "url": "https://github.com/harveyai/harvey-labs/blob/main/docs/eval-strategies.md"
+        }
+      ],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    },
+    {
+      "repository": "zeroentropy-ai/legalbenchrag",
+      "url": "https://github.com/zeroentropy-ai/legalbenchrag",
+      "head": "431bc8f2488a81569ab7259fa633dcc50ab77f9a",
+      "headCommittedAt": "2025-05-30T22:34:54Z",
+      "repositoryPushedAt": "2025-05-30T22:34:54Z",
+      "archived": false,
+      "rootLicenseDeclaredByGitHub": "MIT",
+      "rootLicenseObserved": "MIT",
+      "readme": {
+        "path": "README.md",
+        "blobSha": "903cdabefefcaa534dfe1ebe2d71cffa146f00ec",
+        "url": "https://github.com/zeroentropy-ai/legalbenchrag/blob/master/README.md"
+      },
+      "license": {
+        "path": "LICENSE",
+        "blobSha": "f5d5eec21e30352e3a08e9824608142ee44c857a",
+        "url": "https://github.com/zeroentropy-ai/legalbenchrag/blob/master/LICENSE"
+      },
+      "inspectedFiles": [],
+      "installed": false,
+      "executed": false,
+      "validatedForMexicanLaw": false
+    }
+  ]
+}
