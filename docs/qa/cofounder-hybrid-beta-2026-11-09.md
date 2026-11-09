@@ -1,6 +1,8 @@
 # Prueba interna híbrida de Lorenzo y Pedro
 
-Fecha: 2026-11-09. Estado: **guion preparado, no ejecutado ni instalador entregado**. El dueño confirma mínimo 8 GB de RAM y aclara que busca el mínimo cómputo local: detector pequeño entrenado para proteger datos, razonamiento por tarea en nube. No se enviaron mensajes/archivos a los participantes ni se autorizó gasto por este documento.
+Fecha: 2026-11-09. Prioridad confirmada por el dueño: **primera versión web de demostración**, con biblioteca jurídica pública y cómputo local mínimo. Para la demo web se necesita build/URL/commit y prueba en navegador, no un instalador o notarización macOS; las comprobaciones de escritorio inferiores aplican solo si se entrega además ese canal. Investigación de corpus: [síntesis SF](../research/mexican-legal-corpus-sf-2026-11-09.md).
+
+Estado: **guion preparado, no ejecutado ni instalador entregado**. El dueño confirma mínimo 8 GB de RAM y aclara que busca el mínimo cómputo local: detector pequeño entrenado para proteger datos, razonamiento por tarea en nube. No se enviaron mensajes/archivos a los participantes ni se autorizó gasto por este documento.
 
 ## Producto que debe representar la prueba
 
