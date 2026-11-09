@@ -1,6 +1,6 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. Estado inicial: todas las tareas de implementación pendientes. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1 terminada y revisada; resto pendiente. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
 Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; nadie está asignado todavía.
 
@@ -8,7 +8,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 | ID | Tarea | Depende de | Estado | Responsable / rama |
 | --- | --- | --- | --- | --- |
-| H1 | Contrato y transporte simulado | — | todo | Sin asignar |
+| H1 | Contrato y transporte simulado | — | done | Codex / `docs/hybrid-psf-development-loop` (PR #1, `a99bb1f`) |
 | H2 | Política de salida y auditoría sin texto | H1 | todo | Sin asignar |
 | H3 | Sustituciones y restitución por ámbito | H2 | todo | Sin asignar |
 | H3V | Primera rebanada vertical sin red | H3 | todo | Sin asignar |
@@ -21,12 +21,12 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H1 — Contrato y transporte simulado
 
-- Archivos propuestos: `server/inference-mock.mjs`, `tests/inference-mock.test.mjs`; registro de tarea/memoria por el coordinador.
+- Archivos asignados a Codex: `server/inference-mock.mjs`, `tests/inference-mock.test.mjs`, `tests/inference.test.mjs`, `docs/architecture/inference-contract-v1.md`, `docs/qa/hybrid-H1-2026-11-09.md`; backlog/memoria por el coordinador. Se añade la prueba del motor existente para comprobar compatibilidad contra ambos proveedores con el mismo conjunto de entradas; no se modifica producción. Se reutiliza la rama del PR #1 por pedido explícito de subir allí el avance.
 - Leer contrato real de `server/inference.mjs` y consumidores antes de fijar la API. Preservar `outputContract`, estado, inicialización, generación asíncrona y parada según los usos actuales; no inventar compatibilidad.
 - Definir además interfaces sustituibles de detector, correspondencias/almacenamiento y selección de ruta; ejemplos contractuales sintéticos de restauración, reversión y ámbito. Documentarlas junto a las pruebas antes de acoplar implementaciones concretas.
 - Aceptación: respuesta por chunks, cancelación antes/durante generación, validación de entradas y copia profunda de solicitudes. Cambiar el objeto original después del envío no cambia la captura. Capturar tanto la estructura como los bytes serializados que habría recibido un transporte remoto, con un formato determinista documentado.
 - Sin red, llaves ni cambios del proveedor activo. Pruebas con entradas inválidas y abortos; no registrar prompts de usuarios reales.
-- Revisión/commit/evidencia: pendientes.
+- Revisión: subagente independiente `review_h1`, contexto separado y solo lectura. Hallazgo P2 de fixtures dispersos corregido con regresiones y vuelto a comprobar; veredicto final `APPROVE`. Commit probado: `a99bb1f`. Evidencia: [reporte H1](../qa/hybrid-H1-2026-11-09.md), dirigidas 34/34, suite 437/437 y build OK. El coordinador marca `done`; H2 queda desbloqueada, todavía sin iniciar.
 
 ## H2 — Política de salida y auditoría
 
