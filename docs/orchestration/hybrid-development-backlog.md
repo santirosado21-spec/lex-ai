@@ -29,6 +29,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
 | H9 | Respaldo externo y colaboración | Piloto y decisión de almacenamiento compartido | todo | Sin asignar |
+| B0 | Prueba interna de cofounders: evidencia pública temprana y beta híbrida posterior | Acceso/presupuesto y paquete acordes a cada alcance | todo | Guion preparado; RAM mínima 8 GB declarada, sistemas pendientes; sin ejecución |
 
 ## H1 — Contrato y transporte simulado
 
@@ -140,3 +141,8 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Worker Sol `build_detector_h4b`: `server/privacy/detector.mjs`, `server/privacy/provenance.mjs`, `tests/privacy-detector.test.mjs`, `tests/privacy-provenance.test.mjs`, nuevo `tests/privacy-detector-integration.test.mjs`. Reglas reales + procedencia/rangos comprobados, bloqueo de incertidumbre, composición H2/H3. No leer heldout ni modificar protocolo/guía/umbrales. Coordinador: harness de evaluación/medición, QA y memoria. Congelar candidato antes de una evaluación retenida independiente; fallar métricas no se convierte en pase técnico.
 - Worker Astra `build_vault_h5b1`: crate aislado `crates/lex-vault/` (Cargo.toml/lock, src, tests, README), `server/privacy/vault-dao-contract.mjs` y `tests/vault-dao-contract.test.mjs`. Código nativo crítico SQLCipher con API de dominio acotada, fixtures sintéticos, pruebas de claves/cierre/FTS/transacciones/scope; inventario explícito de paridad, sin fingir cubrir funciones aún no portadas. Artefactos de compilación solo en `artifacts/`, no cambios a Tauri/almacén real ni Keychain. El toolchain existe en `~/.cargo/bin`, no estaba en PATH. Bibliotecas oficiales/versiones del ADR verificadas al compilar.
 - Coordinador conserva backlog, docs/agents y reportes QA; revisor independiente Sol separado inspecciona ambos cambios antes de cierre. No compartir archivos entre workers ni revertir trabajo ajeno.
+
+
+## B0 — Feedback temprano de cofounders abogados
+
+El dueño solicita involucrar a Lorenzo y Pedro; confirma mínimo 8 GB y cómputo local mínimo dedicado a detector entrenado/protección, con razonamiento remoto. [Guion](../qa/cofounder-hybrid-beta-2026-11-09.md) preparado, no ejecutado ni enviado. Evaluación pública/sintética en banco separado puede preparar calidad antes de bóveda completa, pero requiere acceso/budget autorizados y no representa producto privado integrado. H6 conserva sus dependencias. La beta integrada necesita H4/H5/H6/H7 y paquete verificable; datos reales requieren H8b. Sistemas de ambos pendientes; corregir versiones/onboarding y comprobar instalación limpia antes de entrega. No se afirma participación o aprobación de los cofounders.
