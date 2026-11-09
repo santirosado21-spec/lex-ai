@@ -30,6 +30,8 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
 | H9 | Respaldo externo y colaboración | Piloto y decisión de almacenamiento compartido | todo | Sin asignar |
 | B0 | Prueba interna de cofounders: evidencia pública temprana y beta híbrida posterior | Acceso/presupuesto y paquete acordes a cada alcance | todo | Guion preparado; RAM mínima 8 GB declarada, sistemas pendientes; sin ejecución |
+| C-R0 | Investigación SF de adquisición jurídica nacional para demo web | Dirección del dueño, fuentes públicas | done | `67e3d3b`; investigador/revisor Sol, tres respuestas SF; límites/precisiones integrados |
+| C0/C1 | Registro por fuente y piloto acotado de adquisición pública | C-R0 revisada, permisos/rutas por fuente | todo | Sin colector nuevo instalado; ver síntesis SF y mapa de 32 entidades |
 
 ## H1 — Contrato y transporte simulado
 
@@ -146,3 +148,13 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 ## B0 — Feedback temprano de cofounders abogados
 
 El dueño solicita involucrar a Lorenzo y Pedro; confirma mínimo 8 GB y cómputo local mínimo dedicado a detector entrenado/protección, con razonamiento remoto. [Guion](../qa/cofounder-hybrid-beta-2026-11-09.md) preparado, no ejecutado ni enviado. Evaluación pública/sintética en banco separado puede preparar calidad antes de bóveda completa, pero requiere acceso/budget autorizados y no representa producto privado integrado. H6 conserva sus dependencias. La beta integrada necesita H4/H5/H6/H7 y paquete verificable; datos reales requieren H8b. Sistemas de ambos pendientes; corregir versiones/onboarding y comprobar instalación limpia antes de entrega. No se afirma participación o aprobación de los cofounders.
+
+
+## C-R0 / C0–C5 — Corpus público antes de la demo web
+
+El dueño confirma referencia Luthor y solicita Claude/Gemini/Kimi/Cursor, Perplexity por OpenRouter si disponible. Excepción Claude limitada a esta investigación, sin compras. [Síntesis y plan C0–C5](../research/mexican-legal-corpus-sf-2026-11-09.md), [nueve herramientas y tres repos mexicanos](../research/legal-corpus-tools-2026-11-09.md), [mapa descubierto de 32 entidades](../research/mexican-legal-source-map-2026-11-09.json) y [participación real](../research/legal-corpus-sf-participation-2026-11-09.json).
+
+La investigación descubre canales oficiales (incluido SIDOF documentado) y propone Crawlee + descargador existente + Playwright selectivo, extracción nativa/OCRmyPDF/Docling en fábrica pública separada. No corpus masivo, 32 portales probados o vigencia validada; no activar infraestructura/proveedor ni tocar datos privados. Primer entregable de código futuro: C0/C1 limitado y medido, con citas/versiones/cobertura explícitas. Biblioteca pública central para web no autoriza enviar consultas privadas sin preparación/política. B0 se prioriza como demo web; no bloquear ese canal por notarización de escritorio. H4/H5/H6 conservan puertas para privado.
+
+
+Cierre C-R0: commit `67e3d3b`, revisión documental independiente favorable y precisiones de presupuesto/H6/cachés opcionales incorporadas. JSON/enlaces y snapshot SHA verificados; 32 entidades únicas, 33 enlaces legislativos, 32 gacetas, cero textos legales adquiridos y cero portales estatales probados. Gemini/Kimi/Cursor aportaron una respuesta cada uno; Claude un timeout sin respuesta y Perplexity cero generaciones por falta de ruta elegible. No suite de producto repetida por documentos. C0/C1 conserva permisos/rutas pendientes; C-R0 done no significa corpus nacional o vigencia validada.
