@@ -1,6 +1,6 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. H1, H2, H3, H3V y la subentrega H4a terminadas y revisadas. H4b y H5a pendientes; H4/H5 completos siguen sin cerrar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1, H2, H3, H3V, H4a, H5a y M1 terminadas y revisadas. H4b y H5b pendientes; H4/H5 completos siguen sin cerrar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
 
 Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-plan-2026-11-09.md), con [aportaciones, cantidades y límites reales](hybrid-completion-review-2026-11-09.md). Es planificación: no modifica los estados pendientes ni inicia ejecución. H3V fija también el contrato legacy y de versiones; H4b cerrará tras congelar inventario/contratos H5a.
@@ -18,7 +18,10 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H4 | Detector local y examen independiente | H3V | in-progress | Parcial: H4a done; H4b no iniciada |
 | H4a | Protocolo, corpus independiente y evaluador | H3V | done | Codex/Sol y worker Sol; autor retenido independiente / misma rama PR #1 |
 | H4b | Detector real y medición | H4a, contratos H5a | todo | Sin asignar |
-| H5 | Almacenamiento cifrado y restauración | H3V | todo | Sin asignar |
+| H5 | Almacenamiento cifrado y restauración | H3V | in-progress | Solo subentrega H5a; H5b pendiente |
+| H5a | Inventario, ADR de bóveda y protocolo de recuperación | H3V | done | Codex/Sol; worker Sol `inventory_h5a` / PR #1, `ea6a6df` |
+| H5b | Bóveda cifrada, migración y recuperación real | H5a | todo | Sin asignar |
+| M1 | Candidatos LLM para tareas estrictamente públicas y protocolo de selección | H3V, H4a | done | Codex/Sol y worker Sol `public_candidates_tools` / PR #1, `b482f13`; preparación de H6/H8, sin desbloquearlos |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
@@ -75,6 +78,14 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H5 — Cifrado recuperable
 
+### H5a cerrada en esta sesión
+
+- Worker Sol `inventory_h5a`: `docs/architecture/private-data-inventory.md`, `docs/qa/vault-test-protocol.md`, `scripts/qa-vault-inventory.mjs` y reporte sintético `docs/qa/vault-inventory-2026-11-09.json`. Coordinador: `docs/architecture/adr/0003-private-vault.md`, QA, backlog/memoria. Se usa ADR 0003 para no colisionar con los ADR 0002 existentes. Sin cambios al almacén real, instalación global ni criptografía nueva. El ADR decide el contrato para H5b; no presenta cifrado ya implementado.
+- Base de memoria H4a reutilizable porque no cambió producción; Tauri nativo y máquina física de 8 GB siguen sin validación.
+- Evidencia: [QA H5a](../qa/hybrid-H5a-2026-11-09.md). Control V00: 12/12 comprobaciones, 7/7 exposiciones esperadas de texto claro y 37/37 hashes fuente. Revisor independiente Sol `review_h5a_m1`: **APPROVE**. Commit probado `ea6a6df`; coordinador concede `done` a H5a, no H5. V01–V24, cifrado, migración y recuperación siguen sin implementar. Suite conjunta H5a/M1: paralela 511/512 por STT intermitente preexistente, aislado STT 5/5 y serie completa 512/512; build OK. H4b queda habilitada por contratos, H5b por ADR; ninguna se inicia al cerrar estas dos subentregas.
+
+### H5b pendiente
+
 - Archivos iniciales a inspeccionar: `server/store.mjs`, `server/main.mjs`, `src-tauri/src/`. Crear contrato de migración y lista definitiva de archivos antes de implementar; elegir una solución mantenida y registrar la decisión, no criptografía propia.
 - Aceptación: proteger originales, fragmentos, índices, correspondencias y temporales. Migración reversible desde copia sintética, bloqueo, custodia de claves y recuperación fuera del equipo perdido. Restauración real de una copia con evidencia.
 - Prueba negativa: revisar artefactos en disco tras bloqueo/fallo; permisos de archivos no cuentan como cifrado. No migrar ni borrar la base de usuarios de esta Mac.
@@ -107,3 +118,10 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Definir después del piloto. Copia consistente cifrada a disco externo o Drive y restauración; no abrir una SQLite activa desde varias computadoras mediante sincronización de carpetas.
 - El servicio compartido con permisos y concurrencia es otro frente. Su arquitectura y archivos requieren una decisión posterior; no está implícito en la selección de una carpeta del director.
 - Revisión/commit/evidencia: pendientes.
+
+## M1 — Selección preliminar de LLM públicos (dirección del dueño)
+
+- Encargo añadido por el dueño al continuar: determinar modelos para agentes sin información confidencial. Primera entrega: inventario real de permisos por habilidad, definición de entrada pública verificada, catálogo oficial vigente de modelos/endpoints/precios y lista corta por tarea, configuración candidata inactiva y protocolo comparativo público/sintético. Ningún rol se considera público por su nombre; instrucciones, consulta, historial, herramientas y metadatos también cuentan.
+- Archivos del coordinador: `docs/architecture/public-agent-model-selection-2026-11-09.md`, `resources/public-agent-candidates.json`, `eval/public-agents/catalog-snapshot-2026-11-09.json`, `eval/public-agents/README.md`, `eval/public-agents/cases.jsonl`, `scripts/check-public-agent-candidates.mjs`, `tests/public-agent-candidates.test.mjs`, QA y memoria. Sin llamadas pagadas, activación de rutas ni reutilización de claves PSF en producto. H6/H8 conservan dependencias y autorizaciones.
+- Sin Claude/Astra en esta entrega. Dos workers Sol con propiedad separada y revisor Sol independiente; Kimi aportó una consulta pública/sintética (29.495 ms, modelo efectivo/tokens no atestados).
+- Evidencia: [QA M1](../qa/public-agent-model-selection-2026-11-09.md). Checker offline coherente e inactivo, 15/15 tests, 28 casos de preparación (14/perfil); no generaciones, calidad/coste real/pin/retención no evaluados. Revisor independiente `review_h5a_m1`: **APPROVE**. Commit probado `b482f13`; coordinador concede `done` a preparación M1. Suite/build conjuntos registrados en H5a y QA; H6/H8 no se desbloquean. Se alcanzó el máximo de dos entregas (H5a/M1); no hay proceso desatendido.

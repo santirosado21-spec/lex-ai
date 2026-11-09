@@ -37,3 +37,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 16:15 — codex — H4a separa puntuación del detector de egreso y retira el corpus previo a la guía
 
 **Por qué:** Kimi y revisor Sol identificaron que predicciones de spans/blocked no prueban bytes de transporte y que faltaban límites de anotación. Se fijó guía general sin mostrar golds al implementador, cambió identidad/hash de protocolo y se reemplazó entero el primer corpus sin candidato puntuado. El definitivo BERYL de autor separado se liga por hashes a protocolo, guía y declaración exacta de corpus. Scorer deja routingSafety/preservation no evaluadas; H4b requiere H3V con detector real. Límites de recursos son experimentales, sin afirmar Tauri ni8GB físicos.
+
+## 2026-11-09 16:32 — codex — H5a: contrato de bóveda y modelos públicos separados
+
+**Por qué:** ADR 0003 elige SQLCipher Community/rusqlite, Keychain y recuperación age como objetivo condicionado a viabilidad, paridad DAO, temporales y restauración real; aún sin cifrado implementado. H4b puede medir detector contra contratos H5a sin esperar H5b. Las cinco habilidades existentes leen el asunto: los perfiles públicos propuestos son instancias separadas, con procedencia del sobre completo y sin fallback desde datos privados. Cuatro candidatos OpenRouter inactivos; selección final exige evidencia ciega, retención, pin, acceso y presupuesto propios, sin reutilizar claves PSF.
