@@ -33,3 +33,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 15:54 — codex — SF sin Claude y selección explícita de modelos durante esta etapa
 
 **Por qué:** Orden del dueño 2026-11-09: plan con el resto de SF, sin Claude por el momento. AGENTS actualizado; no invocar Auto ni wrappers sin identidad como evidencia. opinion no fija --model, su primera respuesta queda sin atribución; la consulta Gemini explícita se ejecutó con gemini-3.8-flash-high. Cursor mostró Claude y no recibió texto. Astra reservado a código crítico, no planificación.
+
+## 2026-11-09 16:15 — codex — H4a separa puntuación del detector de egreso y retira el corpus previo a la guía
+
+**Por qué:** Kimi y revisor Sol identificaron que predicciones de spans/blocked no prueban bytes de transporte y que faltaban límites de anotación. Se fijó guía general sin mostrar golds al implementador, cambió identidad/hash de protocolo y se reemplazó entero el primer corpus sin candidato puntuado. El definitivo BERYL de autor separado se liga por hashes a protocolo, guía y declaración exacta de corpus. Scorer deja routingSafety/preservation no evaluadas; H4b requiere H3V con detector real. Límites de recursos son experimentales, sin afirmar Tauri ni8GB físicos.

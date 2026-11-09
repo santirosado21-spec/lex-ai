@@ -1,6 +1,6 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. H1, H2, H3 y H3V terminadas y revisadas; H4a en curso. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1, H2, H3, H3V y la subentrega H4a terminadas y revisadas. H4b y H5a pendientes; H4/H5 completos siguen sin cerrar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
 
 Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-plan-2026-11-09.md), con [aportaciones, cantidades y límites reales](hybrid-completion-review-2026-11-09.md). Es planificación: no modifica los estados pendientes ni inicia ejecución. H3V fija también el contrato legacy y de versiones; H4b cerrará tras congelar inventario/contratos H5a.
@@ -15,8 +15,8 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H2 | Política de salida y auditoría sin texto | H1 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3 | Sustituciones y restitución por ámbito | H2 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3V | Primera rebanada vertical sin red | H3 | done | Codex/Sol; worker `build_h3v` / `docs/hybrid-psf-development-loop` |
-| H4 | Detector local y examen independiente | H3V | in-progress | Codex/Sol; solo subentrega H4a en curso |
-| H4a | Protocolo, corpus independiente y evaluador | H3V | review-pending | Codex/Sol y worker Sol; autor retenido independiente / misma rama PR #1 |
+| H4 | Detector local y examen independiente | H3V | in-progress | Parcial: H4a done; H4b no iniciada |
+| H4a | Protocolo, corpus independiente y evaluador | H3V | done | Codex/Sol y worker Sol; autor retenido independiente / misma rama PR #1 |
 | H4b | Detector real y medición | H4a, contratos H5a | todo | Sin asignar |
 | H5 | Almacenamiento cifrado y restauración | H3V | todo | Sin asignar |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
@@ -57,13 +57,13 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H4 — Detector local medido
 
-### H4a reclamada en esta sesión
+### H4a cerrada en esta sesión
 
 - Coordinador: `docs/architecture/privacy-classification-v1.md`, `eval/privacy/protocol.json`, `eval/privacy/README.md`, `eval/privacy/manifest.json`, `scripts/measure-privacy-baseline.mjs`, QA/backlog/memoria. Worker Sol: `scripts/eval-privacy.mjs`, `tests/privacy-evaluation.test.mjs`, `eval/privacy/dev.jsonl`. Autor Sol independiente: `eval/privacy/heldout.jsonl` y notas de procedencia, sin leer desarrollo ni recibir resultados de candidato. Revisor independiente sin autoría en esos archivos. No se implementa detector ni clasificación de producción.
 - Se usa `privacy-evaluation.test.mjs` en H4a para probar validación y puntuación del evaluador; `privacy-detector.test.mjs` y `privacy-provenance.test.mjs` se reservan a H4b, evitando tests vacíos de módulos inexistentes. Se añade script de medición base porque el plan exige una referencia reproducible temprana.
 - La medición base distingue Node empaquetado + SQLite + UI web Chromium de Tauri nativo y equipo físico 8 GB; esos requisitos siguen abiertos y no se promociona candidato por esa referencia.
 
-- Evidencia H4a: [QA](../qa/hybrid-H4a-2026-11-09.md), [contrato](../architecture/privacy-classification-v1.md), manifiesto/protocolo/guía versionados. 36 casos dev y 300 retenidos de autor separado; ningún candidato puntuado. Coordinador: 16/16 evaluador, 60/60 dirigidas, 497/497 suite y build OK. Revisor Sol: 103/103 dirigidas y `APPROVE`. Cierre al registrar commit probado; H4 parent y H4b siguen pendientes de implementación/evaluación real.
+- Evidencia H4a: [QA](../qa/hybrid-H4a-2026-11-09.md), [contrato](../architecture/privacy-classification-v1.md), manifiesto/protocolo/guía versionados. 36 casos dev y 300 retenidos de autor separado; ningún candidato puntuado. Coordinador: 16/16 evaluador, 60/60 dirigidas, 497/497 suite y build OK. Revisor Sol: 103/103 dirigidas y `APPROVE`. Commit probado `46b740a`; coordinador concede `done` a H4a. H4 completo y H4b siguen pendientes de implementación/evaluación real; H6 no se desbloquea. Se alcanzó el máximo de dos subentregas (H3V/H4a); no hay loop desatendido.
 
 ### H4b pendiente
 
