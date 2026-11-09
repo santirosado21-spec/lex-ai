@@ -9,7 +9,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | ID | Tarea | Depende de | Estado | Responsable / rama |
 | --- | --- | --- | --- | --- |
 | H1 | Contrato y transporte simulado | — | done | Codex / `docs/hybrid-psf-development-loop` (PR #1, `a99bb1f`) |
-| H2 | Política de salida y auditoría sin texto | H1 | todo | Sin asignar |
+| H2 | Política de salida y auditoría sin texto | H1 | review-pending | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3 | Sustituciones y restitución por ámbito | H2 | todo | Sin asignar |
 | H3V | Primera rebanada vertical sin red | H3 | todo | Sin asignar |
 | H4 | Detector local y examen independiente | H3V | todo | Sin asignar |
@@ -30,11 +30,11 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H2 — Política de salida y auditoría
 
-- Archivos propuestos: `server/egress-policy.mjs`, `tests/egress-policy.test.mjs`, `tests/egress-canary.test.mjs`.
+- Archivos asignados a `implement_h2`: `server/egress-policy.mjs`, `tests/egress-policy.test.mjs`, `tests/egress-canary.test.mjs`; si hace falta compartir serialización exacta, `server/inference-mock.mjs` y un módulo JSON de apoyo. Coordinador: contrato, QA, backlog y memoria. Rama del PR #1 reutilizada por pedido del dueño. Astra se reserva aquí al código crítico del límite de privacidad; la revisión independiente usará una ruta de menor costo. Objetivo: control local que falle cerrado antes de invocar el simulador, sin integración de producción.
 - Aceptación: denegar por defecto; exigir despacho, asunto, hilo y destino autorizados. Política fuera del prompt. Revalidar revocación por operación y rechazar herramientas/destinos no permitidos. Contexto sin clasificación fiable no sale.
 - Pruebas: solicitud completa capturada con dos despachos y dos asuntos sintéticos, historial y metadatos; errores y cancelación no producen envíos alternos. Auditoría solo con categorías, ámbito, destino, fecha, resultado y versión de política, sin texto ni secretos.
 - Este paso no presume que una lista de canarios detecte todo dato sensible.
-- Revisión/commit/evidencia: pendientes.
+- Revisión independiente `review_h2` (`gpt-6.1-sol`): `APPROVE`, confirmada tras dos regresiones finales; 50/50 dirigidas. Coordinador: 453/453 suite y build OK. [Evidencia H2](../qa/hybrid-H2-2026-11-09.md). Aceptación verificada; cierre `done` al registrar el commit probado.
 
 ## H3 — Sustituciones y restitución
 
