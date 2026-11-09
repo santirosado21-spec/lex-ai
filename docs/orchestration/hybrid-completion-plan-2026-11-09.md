@@ -160,3 +160,10 @@ La siguiente sesión puede tomar H3V y después H4a **o** H5a según disponibili
 Por rebanada: declarar propietario/rama/archivos, implementar, pruebas dirigidas y negativas, `npm test`, `npm run build`, revisión independiente, corregir, guardar QA/estado y commit probado. Tres fallos de implementación sobre el mismo problema fuerzan diagnóstico antes de continuar. Publicar en la rama/PR de desarrollo acordados; no tocar `main`, fusionar ni desplegar por este plan. Actualizar `docs/agents/STATE.md`, `LOG.md` y decisiones reversibles.
 
 Definición de terminado: comportamiento demostrado, evidencias reproducibles, revisión independiente y commit. Separar componentes offline completos, evaluación real pendiente, piloto autorizado y lanzamiento comercial. Un plan, catálogo o panel no valida privacidad ni producto.
+
+
+### Estado de continuación: H4b.1 y H5b.1a
+
+H4b ya tiene reglas/procedencia reales y una evaluación retenida fallida: precisión exacta 31,52 %, recobrado 56,38 %. [QA](../qa/hybrid-H4b-2026-11-09.md). No se cumple aceptación de H4/H4b; la siguiente etapa necesita candidato semántico pequeño y un protocolo/examen nuevos con señales operativas independientes. V1 queda retirado de afinación/selección, conservando corpus/umbrales/resultados originales.
+
+H5b.1a probó compilación y núcleo SQLCipher nativo con nueve tests y revisión independiente. [QA](../qa/hybrid-H5b1-2026-11-09.md). H5b.1 sigue parcial: matriz de 32 APIs con 24 pendientes y gate de paridad false. No custodia/recuperación/migración o integración activa por este spike. Ambos cortes son artefactos evaluados; H6 conserva sus dependencias de padres y producción sigue local. Estado y commits vigentes están en el backlog.

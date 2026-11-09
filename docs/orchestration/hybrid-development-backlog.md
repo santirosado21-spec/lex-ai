@@ -1,6 +1,6 @@
 # Backlog del loop híbrido
 
-Fecha: 2026-11-09. H1, H2, H3, H3V, H4a, H5a y M1 terminadas y revisadas. H4b y H5b pendientes; H4/H5 completos siguen sin cerrar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
+Fecha: 2026-11-09. H1, H2, H3, H3V, H4a, H5a, M1 y los cortes H4b.1/H5b.1a revisados. H4b y H5b parciales; H4/H5 completos siguen sin cerrar. Orden y archivos propuestos; leer vecinos antes de modificar. Este tablero es el vigente para la transición. `docs/loop/BACKLOG.md` es histórico y no alimenta este ciclo.
 
 
 Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-plan-2026-11-09.md), con [aportaciones, cantidades y límites reales](hybrid-completion-review-2026-11-09.md). Es planificación: no modifica los estados pendientes ni inicia ejecución. H3V fija también el contrato legacy y de versiones; H4b cerrará tras congelar inventario/contratos H5a.
@@ -15,12 +15,15 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H2 | Política de salida y auditoría sin texto | H1 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3 | Sustituciones y restitución por ámbito | H2 | done | Codex coordina; worker `implement_h2` / `docs/hybrid-psf-development-loop` |
 | H3V | Primera rebanada vertical sin red | H3 | done | Codex/Sol; worker `build_h3v` / `docs/hybrid-psf-development-loop` |
-| H4 | Detector local y examen independiente | H3V | in-progress | Parcial: H4a done; H4b no iniciada |
+| H4 | Detector local y examen independiente | H3V | in-progress | H4a done; H4b parcial, baseline medido no elegible |
 | H4a | Protocolo, corpus independiente y evaluador | H3V | done | Codex/Sol y worker Sol; autor retenido independiente / misma rama PR #1 |
-| H4b | Detector real y medición | H4a, contratos H5a | todo | Sin asignar |
-| H5 | Almacenamiento cifrado y restauración | H3V | in-progress | Solo subentrega H5a; H5b pendiente |
+| H4b | Detector real y medición | H4a, contratos H5a | in-progress | Baseline H4b.1 evaluado y fallido; modelo semántico/nuevo examen pendientes |
+| H4b.1 | Reglas/procedencia reales, integración y primer examen | H4a, H5a | done | Worker Sol `build_detector_h4b`, coordinador/revisor Sol / PR #1, `ba763a2`; resultado no elegible |
+| H5 | Almacenamiento cifrado y restauración | H3V | in-progress | H5a done; H5b parcial con spike nativo, recuperación pendiente |
 | H5a | Inventario, ADR de bóveda y protocolo de recuperación | H3V | done | Codex/Sol; worker Sol `inventory_h5a` / PR #1, `ea6a6df` |
-| H5b | Bóveda cifrada, migración y recuperación real | H5a | todo | Sin asignar |
+| H5b | Bóveda cifrada, migración y recuperación real | H5a | in-progress | Se inicia solo H5b.1; ciclo privado/migración posteriores pendientes |
+| H5b.1 | Spike SQLCipher nativo y contrato/paridad DAO | H5a | in-progress | Viabilidad H5b.1a revisada; paridad completa pendiente (gate false) |
+| H5b.1a | Viabilidad nativa y contrato de dominio parcial | H5a | done | Worker Astra `build_vault_h5b1`, revisor Sol / PR #1, `c0f3733`; paridad false |
 | M1 | Candidatos LLM para tareas estrictamente públicas y protocolo de selección | H3V, H4a | done | Codex/Sol y worker Sol `public_candidates_tools` / PR #1, `b482f13`; preparación de H6/H8, sin desbloquearlos |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
@@ -68,13 +71,15 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 - Evidencia H4a: [QA](../qa/hybrid-H4a-2026-11-09.md), [contrato](../architecture/privacy-classification-v1.md), manifiesto/protocolo/guía versionados. 36 casos dev y 300 retenidos de autor separado; ningún candidato puntuado. Coordinador: 16/16 evaluador, 60/60 dirigidas, 497/497 suite y build OK. Revisor Sol: 103/103 dirigidas y `APPROVE`. Commit probado `46b740a`; coordinador concede `done` a H4a. H4 completo y H4b siguen pendientes de implementación/evaluación real; H6 no se desbloquea. Se alcanzó el máximo de dos subentregas (H3V/H4a); no hay loop desatendido.
 
-### H4b pendiente
+### H4b parcial: baseline no elegible
 
 - Archivos propuestos: `server/privacy/detector.mjs`, `tests/privacy-detector.test.mjs`, `eval/privacy/README.md`, `eval/privacy/cases.jsonl`, `scripts/eval-privacy.mjs`.
 - Aceptación: pipeline local de reglas/detector con fallos que bloqueen salida; RFC/CURP/CLABE, nombres, relaciones, correos/domicilios e identificadores judiciales, incluyendo datos en historial/metadatos. Formatos no soportados se rechazan para envío.
 - Separar desarrollo y examen retenido. Reportar por categoría omisiones, falsos positivos y hechos reidentificables; no solo promedio. Fijar con el coordinador los criterios del piloto antes de observar el examen y reservar revisión humana para ambigüedad. No equiparar ausencia de canarios con anonimización garantizada.
 - Medir tiempo/memoria del detector real, sin descargar o cargar automáticamente modelos grandes. 24 GB no validan el objetivo físico de 8 GB. Un modelo conversacional instalado no se considera detector evaluado.
-- Revisión/commit/evidencia: pendientes.
+- Primer corte H4b.1 implementado: reglas locales, registro de procedencia inmutable, superficies JSON completas y tests reales H1/H2/H3. [QA H4b.1](../qa/hybrid-H4b-2026-11-09.md), [freeze](../qa/privacy-detector-freeze-2026-11-09.json), [métricas/predicciones](../qa/privacy-detector-heldout-2026-11-09.json) y [recursos](../qa/privacy-detector-resources-2026-11-09.json). Revisor Sol: 40/40 dirigidas y APPROVE para código baseline/una evaluación; no aprueba calidad.
+- Examen una sola vez: 300 casos, precisión exacta micro 31,52 %, recobrado 56,38 %, 130 omisiones y 365 FP; gate FAILED. 8/24 bloqueos; cuatro motivos solo existen en gold, sin estímulo operativo en v1 y sin inyección de etiquetas. Corpus/protocolo v1 se conservan, retirados de futuras afinaciones/selecciones. Corregir entrada operativa en v2 y crear examen independiente antes de otro candidato; no bajar umbrales ni ajustar al examen fallido.
+- Recursos pareados: mismo código/assets, 30 muestras/mode y 3 procesos fríos candidato; p95 1,34 ms para reglas, app+SQLite+Chromium+reglas pico 605.306.880 bytes sobre 24 GiB, no semántico/nativo/8 GB. Coordinador 552/552 suite y build OK. H4b.1 es cierre de implementación/evidencia fallida, no de requisito H4b; H6 no se desbloquea.
 
 ## H5 — Cifrado recuperable
 
@@ -84,12 +89,14 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Base de memoria H4a reutilizable porque no cambió producción; Tauri nativo y máquina física de 8 GB siguen sin validación.
 - Evidencia: [QA H5a](../qa/hybrid-H5a-2026-11-09.md). Control V00: 12/12 comprobaciones, 7/7 exposiciones esperadas de texto claro y 37/37 hashes fuente. Revisor independiente Sol `review_h5a_m1`: **APPROVE**. Commit probado `ea6a6df`; coordinador concede `done` a H5a, no H5. V01–V24, cifrado, migración y recuperación siguen sin implementar. Suite conjunta H5a/M1: paralela 511/512 por STT intermitente preexistente, aislado STT 5/5 y serie completa 512/512; build OK. H4b queda habilitada por contratos, H5b por ADR; ninguna se inicia al cerrar estas dos subentregas.
 
-### H5b pendiente
+### H5b parcial: viabilidad nativa
 
 - Archivos iniciales a inspeccionar: `server/store.mjs`, `server/main.mjs`, `src-tauri/src/`. Crear contrato de migración y lista definitiva de archivos antes de implementar; elegir una solución mantenida y registrar la decisión, no criptografía propia.
 - Aceptación: proteger originales, fragmentos, índices, correspondencias y temporales. Migración reversible desde copia sintética, bloqueo, custodia de claves y recuperación fuera del equipo perdido. Restauración real de una copia con evidencia.
 - Prueba negativa: revisar artefactos en disco tras bloqueo/fallo; permisos de archivos no cuentan como cifrado. No migrar ni borrar la base de usuarios de esta Mac.
-- Revisión especializada/commit/evidencia: pendientes.
+- Corte H5b.1a: crate aislado `crates/lex-vault/`, rusqlite 0.41.1/SQLCipher real 4.19.0, SQLite 3.53.4/CommonCrypto/FTS5/TEMP_STORE=2/arm64. Worker Astra: build/fmt y 9/9 nativas, 6/6 Node. Revisor Sol independiente repitió 9/9 nativas offline +6/6 Node: APPROVE solo viabilidad. [QA H5b.1a](../qa/hybrid-H5b1-2026-11-09.md) y README del crate.
+- Contrato Node en memoria, sin puente/persistencia cifrada. Matriz 32 APIs: 3 core, 5 parciales, 24 pendientes, `VAULT_PARITY_COMPLETE=false`. H5b.1 permanece parcial hasta paridad y frontera IPC; custodia/recuperación/temporales/migración pertenecen a H5b.2/.3. El almacén real sigue sin cifrado.
+- Las dos subentregas de este loop son H4b.1 y H5b.1a: se acota por evidencia y paridad explícita, sin rebajar aceptación de padres. Commits probados `ba763a2` (H4b.1) y `c0f3733` (H5b.1a), coordinador concede done a estos cortes con revisión independiente y 552/552 suite/build; los padres siguen sin cerrar. No tercera tarea ni proceso desatendido.
 
 ## H6 — Adaptador y selección por tarea
 
@@ -125,3 +132,11 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 - Archivos del coordinador: `docs/architecture/public-agent-model-selection-2026-11-09.md`, `resources/public-agent-candidates.json`, `eval/public-agents/catalog-snapshot-2026-11-09.json`, `eval/public-agents/README.md`, `eval/public-agents/cases.jsonl`, `scripts/check-public-agent-candidates.mjs`, `tests/public-agent-candidates.test.mjs`, QA y memoria. Sin llamadas pagadas, activación de rutas ni reutilización de claves PSF en producto. H6/H8 conservan dependencias y autorizaciones.
 - Sin Claude/Astra en esta entrega. Dos workers Sol con propiedad separada y revisor Sol independiente; Kimi aportó una consulta pública/sintética (29.495 ms, modelo efectivo/tokens no atestados).
 - Evidencia: [QA M1](../qa/public-agent-model-selection-2026-11-09.md). Checker offline coherente e inactivo, 15/15 tests, 28 casos de preparación (14/perfil); no generaciones, calidad/coste real/pin/retención no evaluados. Revisor independiente `review_h5a_m1`: **APPROVE**. Commit probado `b482f13`; coordinador concede `done` a preparación M1. Suite/build conjuntos registrados en H5a y QA; H6/H8 no se desbloquean. Se alcanzó el máximo de dos entregas (H5a/M1); no hay proceso desatendido.
+
+
+## Encargos de continuación H4b / H5b.1
+
+- Se reutiliza rama `docs/hybrid-psf-development-loop` del PR #1. Máximo dos entregas en este loop; no iniciar H6 por inferencia. No se modifica el motor activo.
+- Worker Sol `build_detector_h4b`: `server/privacy/detector.mjs`, `server/privacy/provenance.mjs`, `tests/privacy-detector.test.mjs`, `tests/privacy-provenance.test.mjs`, nuevo `tests/privacy-detector-integration.test.mjs`. Reglas reales + procedencia/rangos comprobados, bloqueo de incertidumbre, composición H2/H3. No leer heldout ni modificar protocolo/guía/umbrales. Coordinador: harness de evaluación/medición, QA y memoria. Congelar candidato antes de una evaluación retenida independiente; fallar métricas no se convierte en pase técnico.
+- Worker Astra `build_vault_h5b1`: crate aislado `crates/lex-vault/` (Cargo.toml/lock, src, tests, README), `server/privacy/vault-dao-contract.mjs` y `tests/vault-dao-contract.test.mjs`. Código nativo crítico SQLCipher con API de dominio acotada, fixtures sintéticos, pruebas de claves/cierre/FTS/transacciones/scope; inventario explícito de paridad, sin fingir cubrir funciones aún no portadas. Artefactos de compilación solo en `artifacts/`, no cambios a Tauri/almacén real ni Keychain. El toolchain existe en `~/.cargo/bin`, no estaba en PATH. Bibliotecas oficiales/versiones del ADR verificadas al compilar.
+- Coordinador conserva backlog, docs/agents y reportes QA; revisor independiente Sol separado inspecciona ambos cambios antes de cierre. No compartir archivos entre workers ni revertir trabajo ajeno.
