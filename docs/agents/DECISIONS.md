@@ -57,3 +57,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 17:42 — codex — Fábrica pública separada y corte C1a federal, C1 parcial
 
 **Por qué:** El dueño reafirma local para privacidad/sustitución/mapa/restitución y nube para trabajo pesado. La adquisición pública se ejecuta fuera del runtime cliente; ensayo acotado no activa infraestructura ni egreso privado. Conservamos 30 plazas: diez PDFs federales adquiridos en C1a y veinte pendientes sin URL; C1 completo no se marca terminado. Texto siempre en cuarentena hasta aceptación textual/jurídica; no afirmar vigencia por extracción. Reutilizar descargador/parser sin instalar crawler adicional hasta medir necesidad. Detalles: docs/architecture/public-corpus-factory-v1.md y QA C0-C1a.
+
+## 2026-11-09 17:48 — codex — Adaptar skills mexicanas por tarea, con procedencia y evaluación separadas
+
+**Por qué:** S-R0 encontró módulos mexicanos útiles, pero prompts/formato SKILL.md no demuestran exactitud, ejecución determinista o permiso de transmisión. Elegir investigación/contratos primero y solo módulos con licencia/dependencias claras; conservar atribución y reemplazar supuestos extranjeros. Softlaw México AGPL no hereda Apache raíz; lawve NC-ND no equivale a material comercial adaptable. Método Consulto abierto no incluye conector/bases de pago. Mapa/originales siguen locales; sanitizar en nube llega tarde. Ver docs/research/cloud-legal-skills-selection-2026-11-09.md. No instalar/conectar o activar proveedor por esta decisión.

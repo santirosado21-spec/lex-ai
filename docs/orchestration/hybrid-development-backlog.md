@@ -35,6 +35,9 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | C1 | Piloto público de 30 plazas | C0 y política/rutas por fuente | in-progress | C1a federal completada; faltan 16 documentos estatales y 4 judiciales concretos |
 | C1a | Fábrica, evidencia y primer lote federal | Plan C0 válido | done | `e6dab95`; 10/10 PDFs, 8.086 segmentos en cuarentena, offline 10 cachés/0 solicitudes; ver QA C0-C1a |
 | C1b | Completar selección y adquisición estatal/judicial | Revisar fuentes/rutas/robots y permisos | todo | 20 plazas explícitas sin URL; sin sustituir bloqueos ni afirmar cobertura |
+| S-R0 | Investigación GitHub de skills/repos para trabajo jurídico en nube México | Pedido del dueño, lectura pública | done | `80aef8d`; Codex + investigador Sol, 13 repos; revisor Sol APPROVE documental por muestra |
+| S1 | Especificar/adaptar investigación y revisión contractual MX | S-R0 revisada, licencias/dependencias resueltas por módulo | todo | Público/sintético; contrato de salida y fuentes/versiones; no instalar conectores por defecto |
+| S2 | Comparación pareada de skills y modelos por tarea | S1, aceptación independiente, acceso/presupuesto de evaluación | todo | Citas/fidelidad/cobertura/abstención y calidad humana, tokens/coste/latencia reales |
 
 ## H1 — Contrato y transporte simulado
 
@@ -179,3 +182,14 @@ C0 `9ac5bd8` entrega registro confiable/planes cerrados; C1a `e6dab95` entrega w
 Revisión final live: 20 solicitudes, 23.803.914 bytes decodificados, 38.391 ms; RSS máximo observado 304.349.184 bytes en Mac de desarrollo de 24 GiB, sin validación cliente/8 GB. Offline: 10 cachés, 0 solicitudes/bytes, 79 ms y 31 archivos de integridad idénticos. Primer ensayo preservado por separado y repetición final tras añadir recibos MIME; dos ensayos no cuentan como 20 leyes únicas. Suite inicial 586/587 por nueva aserción de reloj demasiado estricta; test corregido con reloj simulado determinista, suite final 587/587 y build OK. Revisión Sol independiente y QA enlazada. SF: dos builders Sol y un revisor Sol, sin Astra ni generaciones externas nuevas; tokens/cuotas no expuestos.
 
 Se alcanzan dos cortes: C0 y C1a. **C1 global sigue parcial**, con 20 plazas estatales/judiciales pendientes sin URL y C2/C3 de fidelidad/transitorios/OCR abiertos. Siguiente: C1b y aceptación textual C2; C4 demo/citas/revisión de Lorenzo/Pedro después. No nueva infraestructura, coste, envío de clientes o motor remoto activado; H4b/H5/H6 privados siguen abiertos. Local prepara privacidad y restituye resultados, nube hace trabajo pesado cuando el flujo esté integrado y medido. Sin loop desatendido, merge o despliegue.
+
+
+## S-R0 / S1 / S2 — Habilidades jurídicas para nube
+
+El dueño solicita repos/skills similares al paquete Legal, principalmente GitHub, aplicables a ley mexicana y al trabajo pesado en nube. [Selección y primer paquete propuesto](../research/cloud-legal-skills-selection-2026-11-09.md), [seis candidatos México](../research/mexican-cloud-legal-candidates-2026-11-09.md), [evidencia de ocho repos coordinador](../research/cloud-legal-github-evidence-2026-11-09.json). ThomasMoreAI compartido: 13 repos distintos en la matriz. La investigación es documental; no instala, ejecuta, valida o activa proveedores.
+
+Priorizar métodos y módulos seleccionados de Consulto/ThomasMore/MiGaceta, flujos portables Mike y upstream Anthropic, evaluación Harvey LAB/LegalBench-RAG. Softlaw/wariomx es referencia México próxima al objetivo pero sus plugins México tienen AGPL/comercial diferente de raíz Apache. Lawve tiene raíz CC BY-NC-ND: descubrimiento, no asumir adaptación comercial. No confundir prompt de sanitización con detector local medido ni publicidad de la fuente con permiso para transmitir el caso. Revisión por skill y procedencia antes de reutilizar.
+
+S1 propuesto empieza investigación/revisión contractual; cronología, borrador de escrito y matriz después según aceptación. S2 compara con/sin skill bajo iguales modelos/contexto/presupuesto y fuentes oficiales, aceptación independiente y abogado; 30 casos solo propuestos, no creados/ejecutados por el informe. No usar el heldout privado retirado para seleccionar estos agentes. H4/H5/H6/H7 no se desbloquean por leer repos, y ninguna cuenta/MCP/pago se activa por S-R0.
+
+Cierre S-R0: `80aef8d`, revisión independiente Sol APPROVE por muestra de fuentes críticas, licencias/supuestos y consistencia. JSON/enlaces/diff comprobados; sin cambio de producción y sin repetir suite/build de C1a. S1/S2 siguen todo, cinco skills y lote de 30 casos propuestos sin crear/ejecutar. No se instalan repositorios ni se incorporan módulos con licencia/dependencia no aclarada. Dos contextos Sol (investigación y revisión), Codex coordina; sin Astra ni consultas nuevas a Claude/Gemini/Kimi/Cursor/Perplexity.
