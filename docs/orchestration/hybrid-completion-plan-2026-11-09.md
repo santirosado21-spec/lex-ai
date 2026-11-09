@@ -72,7 +72,7 @@ El contrato de clasificación tiene dos comprobaciones distintas: pertenencia ve
 
 **Propietario:** Codex. Kimi revisa fallos de migración y recuperación. Astra se considera únicamente al implementar el límite criptográfico/integración nativa, sin asignarle este documento.
 
-**Archivos:** crear `docs/architecture/adr/0002-private-vault.md`, `docs/architecture/private-data-inventory.md`, `docs/qa/vault-test-protocol.md`. Inspeccionar `server/store.mjs`, `server/extraction.mjs`, `server/extraction-worker.mjs`, `server/docx-export.mjs`, `server/stt.mjs`, `server/office-bridge.mjs`, `server/local-email.mjs`, `server/main.mjs`, `server/service.mjs`, módulos de exportación/dictado/Office/correo y `src-tauri/src/`; resolver nombres reales con `rg` y fijar la lista definitiva antes de asignar código.
+**Archivos:** crear `docs/architecture/adr/0003-private-vault.md`, `docs/architecture/private-data-inventory.md`, `docs/qa/vault-test-protocol.md`. Inspeccionar `server/store.mjs`, `server/extraction.mjs`, `server/extraction-worker.mjs`, `server/docx-export.mjs`, `server/stt.mjs`, `server/office-bridge.mjs`, `server/local-email.mjs`, `server/main.mjs`, `server/service.mjs`, módulos de exportación/dictado/Office/correo y `src-tauri/src/`; resolver nombres reales con `rg` y fijar la lista definitiva antes de asignar código.
 
 **Decisión:** comparar una compilación SQLCipher mantenida compatible con el runtime empaquetado y una alternativa mantenida de almacén/índice cifrado. SQLCipher es candidato, no dependencia elegida. No basta ejecutar `PRAGMA key` sobre `node:sqlite` normal ni cargar SQLCipher como extensión: requiere su propia compilación [diseño oficial](https://www.zetetic.net/sqlcipher/design/). Verificar licencia, mantenimiento, FTS, ABI Node/Rust, Apple Silicon y empaquetado, sin comprar ediciones comerciales.
 
@@ -146,6 +146,10 @@ Backup cifrado a disco externo o Drive, restauración en otro entorno y custodia
 | Claude | Excluido temporalmente por orden actual | También excluido en Cursor/routers |
 
 Un implementador y un revisor distintos por rebanada; cada encargo declara archivos, lectura de skills, datos públicos/sintéticos y aceptación. Los obreros no sustituyen una revisión independiente. Sin cuota/acceso no se compra ni repite en bucle: registrar, continuar lo independiente y dejar `review-pending` si falta revisión.
+
+## M1 — Preparación añadida por dirección del dueño
+
+Al continuar, el dueño pidió comenzar a determinar los LLM de agentes que no reciben información confidencial. Se prepara en paralelo al inventario H5a una matriz de permisos, catálogo/candidatos inactivos y comparación pública/sintética: [selección M1](../architecture/public-agent-model-selection-2026-11-09.md). Las habilidades existentes leen el asunto y no pasan a públicas por su nombre. Esta preparación no ejecuta inferencia pagada ni desbloquea H6/H8.
 
 ## Ejecución y cierre
 
