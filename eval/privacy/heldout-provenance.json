@@ -1,0 +1,136 @@
+{
+  "corpusId": "privacy-heldout-beryl-v2",
+  "version": 2,
+  "split": "heldout",
+  "createdAt": "2026-11-09",
+  "frozenAt": "2026-11-09",
+  "protocolId": "privacy-eval-v1-annotation-1",
+  "protocolSha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935",
+  "annotationGuideSha256": "6665848a47549b53c51465eda132449f3810b016d0c04e638816a0bc77d52a2f",
+  "annotationGuideRead": true,
+  "corpusSha256": "a36158ff7592e716226caf35bf16e4454df569d899b63db8ea388008320633f7",
+  "syntheticOnly": true,
+  "noDevRead": true,
+  "candidateOutputsSeen": false,
+  "configuredModel": "gpt-6.1-sol",
+  "observedModelId": null,
+  "author": {
+    "role": "independent heldout author",
+    "agentTask": "/root/author_privacy_heldout",
+    "configuredModel": "gpt-6.1-sol",
+    "configuredReasoningEffort": "high",
+    "observedModelId": null,
+    "modelAttestation": "Explicit spawn configuration supplied by coordinator; no independent backend attestation.",
+    "inheritance": "fork_turns:none"
+  },
+  "generation": {
+    "seed": "BERYL-CEDAR-INDEPENDENT-20261109-v2",
+    "method": "Entirely new hand-authored template wording and invented values under the frozen annotation guide, followed by deterministic expansion and row permutation. Original-text JS UTF-16 offsets. Authoring script retained outside repository, not delivered.",
+    "primaryPositiveCases": 240,
+    "categoryTemplateGroups": 60,
+    "cleanTemplateGroups": 6,
+    "blockedTemplateGroups": 24,
+    "templateGroups": 90,
+    "repeatedPrimaryCases": 24
+  },
+  "retirement": {
+    "priorCorpusId": "privacy-heldout-argon-v1",
+    "priorCorpusSha256": "96d871fdce082022f190e156ddaba1ad9a690c815618360874b81254762be692",
+    "priorCandidateScored": false,
+    "reason": "Retired unscored because operational annotation boundaries had not been frozen. Entire replacement authored after amended protocol and annotation guide; no candidate evidence or detector tuning."
+  },
+  "independence": {
+    "createdAfterAmendedProtocolAndGuideFreeze": true,
+    "devCorpusRead": false,
+    "devTemplatesRead": false,
+    "evaluatorImplementationRead": false,
+    "evaluatorTestsRead": false,
+    "candidateOutputsRead": false,
+    "candidateInferenceRun": false,
+    "candidateScoringRun": false,
+    "detectorTuningPerformed": false,
+    "otherAuthorsDraftsRead": false,
+    "otherModelCalls": false,
+    "networkCalls": false,
+    "sharedMaterials": "Only assignment requirements and frozen protocol/annotation guide; no development examples or candidate output.",
+    "currentVersionTaskInputsRead": [
+      "eval/privacy/protocol.json",
+      "eval/privacy/annotation-guide.md"
+    ],
+    "sessionInstructionsRead": [
+      "AGENTS.md",
+      "/Users/santiagorosado/.agents/skills/psf/SKILL.md"
+    ]
+  },
+  "dataPolicy": {
+    "syntheticOnly": true,
+    "realPeopleOrCustomerDataUsed": false,
+    "identifiers": "Invented with no record lookup. Named individuals and organizations include intentional Ficticio/Example/Test name prefixes. Email domains are .invalid/.test. Numeric patterns are examples, not claims of registration, ownership or operability.",
+    "legalExamples": "Explicitly fictional references; no claims about law or legal accuracy.",
+    "classification": "All data invented. Public labels simulate public generic controls, unknown labels simulate lost provenance.",
+    "originScopeSchema": "Known origins are exact {workspaceId,matterId,threadId}. Null only in classification unknown / blocked unknown_provenance. Foreign triples only in blocked scope_mismatch."
+  },
+  "counts": {
+    "cases": 300,
+    "segments": 576,
+    "entities": 298,
+    "byCategory": {
+      "person": 44,
+      "organization": 22,
+      "rfc": 22,
+      "curp": 22,
+      "clabe": 22,
+      "account": 22,
+      "email": 34,
+      "phone": 22,
+      "address": 22,
+      "case_id": 22,
+      "context": 22,
+      "sensitive_relation": 22
+    },
+    "completeCases": 276,
+    "completeCleanCases": 36,
+    "blockedByReason": {
+      "scope_mismatch": 4,
+      "unknown_provenance": 4,
+      "unsupported_format": 4,
+      "partial_extraction": 4,
+      "ambiguous_context": 4,
+      "detector_failure": 4
+    },
+    "preserveSpans": 838,
+    "overlappingEntityPairs": 22,
+    "templateGroups": 90,
+    "entitySurfaceCounts": {
+      "content": 48,
+      "files[1].fileName": 47,
+      "toolResult[1].excerpt": 47,
+      "schema.properties.recipient.description": 49,
+      "metadata.title": 48,
+      "history[4].content": 47,
+      "metadata.testCorrespondence": 12
+    },
+    "nullOriginSegments": 4,
+    "mismatchedOriginSegments": 4
+  },
+  "validation": {
+    "structuralSelfCheck": "passed",
+    "annotationGuideSelfAudit": "passed",
+    "guideUnitsChecked": 286,
+    "annotationBoundaryPolicy": "Maximal printed names/organizations/identifiers/addresses, minimal authored reidentifying clauses and sensitive assertions. External labels, wrappers and sentence punctuation excluded; internal punctuation/grouping/extensions retained. Nested relation subjects and all literal repetitions annotated.",
+    "utf16ValidEntityRanges": 298,
+    "utf16ValidPreserveRanges": 838,
+    "surrogateSplitErrors": 0,
+    "duplicateCaseIds": 0,
+    "duplicateSegmentTexts": 0,
+    "minimumDenominators": "met",
+    "devDisjointness": "Author did not read dev; BERYL namespace and all-new material. Coordinator may inspect structural identities/hashes without row texts.",
+    "candidateQuality": "not evaluated",
+    "annotationQuality": "Author guide audit completed; independent review pending",
+    "restorationFidelity": "not evaluated"
+  },
+  "freeze": {
+    "immutableForThisProtocolVersion": true,
+    "contaminationRule": "Any detector tuning based on this heldout retires the entire version. Storage is not access control."
+  }
+}
