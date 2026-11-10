@@ -211,3 +211,7 @@ CI42891631285 @ea94eb2 primer lote sintético inició harness y salió71 con wat
 ## 2026-11-10 14:13 — codex — Ensayo H5 opt2 y siguiente corte de detector
 
 Fix8a04105 perfiltest opt2+56marcas finitas revisado independientemente; guard60s/300s/768MiB,4resets,18casos/R23 y criptografía intactos. Freeze/decisiónroot nuevos para segundoCI42892963286 en curso. Investigaciónlicenciade256b3 4GET/61255B conserva MIT auténtico códigoNym; pesos/pinbase/cadena noverificados, releasebloqueado. Plan622f08e+testigos04d5264 anteriores a outputs; Astra implementa decoder nativo estricto y runner inactivo/mocks, sin carga/tokenización/forward nuevos ni examen300. No nuevos permisos a clientes/proveedores.
+
+## 2026-11-10 14:24 — codex — Diagnóstico concreto H5 y DEV de privacidad independiente
+
+SegundoCI42892963286 concluyó4.51snativas/4746.919mswrapper:9preparacionesDONE4461ms,R01STARTsinDONE,spawn/bin/psEPERM;0casosaceptados, sinrecibo/RSS/KDF. Fallo/freezepreservados5704b31yrevisados. Fix451f294 usa libcproc_pidinfoownedchildbajomutex, review/freezepropios ytercerCI42894691715 en curso sinliberarpermisos/topes. DEV5704b31 deautor/revisordistintos60casos70entidades anotacionespropuestas silver,0scores/examen300intacto. D1j CI42894576266fallóPREFLIGHT_OR_RUNsinmedir;folderparentfaltanteesdefectoestático, excepciónactualdesconocida, fixSolenpreparación.
