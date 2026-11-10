@@ -1,0 +1,45 @@
+# Nym: inspección de contrato v1, sin forwards
+
+Herramienta de investigación fija; no es decoder/detector ni evaluación de calidad. Sólo prepara/inspecciona el contrato de seis archivos del caché int8 v2. **No se ha ejecutado carga de ORT/modelo/tokenizer en esta entrega.** Falta revisión independiente, handoff de hashes y freeze/autorización de root. Sin instalaciones, red de adquisición, entrenamiento, datos privados, corpus/golds/heldout, selección de ganador o activación. El aviso completo MIT sigue ausente; redistribución/release bloqueados y calidad/8GB no validados.
+
+## Modos y autorización
+
+`python3 -I -B scripts/probe-privacy-nym-contract.py` o `--plan`: PLAN puro, sin leer artefactos, escribir, acceder a red o importar/cargar runtime/modelo/tokenizer. `--self-test`: nueve verificaciones pequeñas de estructuras sintéticas/fakes, también sin artefactos/runtime/sockets reales. Esas son las únicas validaciones ejecutadas al construir el código.
+
+Tras revisión, `--handoff` realiza sólo lecturas/hashes del código, protocolo, documento, manifiesto, helper público fijado, runtime existente y seis archivos de caché. No importa las librerías del modelo ni crea sesión/tokenizer o artefactos. Permite preparar los pins antes de aprobar carga real. No se ejecutó handoff durante esta autoría.
+
+La única carga posible desde el modo público es `--probe --freeze docs/qa/privacy-nym-contract-probe-v1-freeze.json`, con freeze real aprobado antes. No hay texto, ruta, URL o selección de variante suministrable por CLI. La rama privada `--worker` sólo acepta el ticket interno acotado del padre, exige parentesco/env de worker y confirma EPERM de sandbox antes de imports/carga; no acepta texto/corpus ni rutas. Esto no es una frontera de autorización contra un dueño malicioso del proceso.
+
+Freeze esquema1, campos exactos: `id=nym-contract-probe-v1`, `status=frozen-reviewed`, `scope=public-synthetic-contract-inspection-only`, `planSha256`, `sourceHashes`, `runtimeIdentity`, `cacheReceiptSha256`, `limits`, `independentReview={identity,reviewedAt,verdict:APPROVE,independentFromBuilder:true}`, `rootAuthorization={by,authorizedAt,scope:contract-inspection-only-zero-forwards,status:authorized,missingLicenseNoticeAcknowledged:true}`. Revisor y root distintos; atestaciones locales, no firmas criptográficas o consentimiento implícito. La herramienta no crea su freeze.
+
+Pins de fuentes: los tres archivos de esta entrega, manifiesto `resources/privacy-nym-int8-candidate-v1.json` SHA `0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297` y helper `scripts/prepare-privacy-nym-research.py` SHA `f7947e09e7b5087d68b9acdf12c281526d80cd99e46a84284d66781f2e69b535`. Se reutilizan sólo helpers públicos de confinamiento/hashes de ese código revisado; ninguna descarga se llama. Runtime identity encadena hashes de los archivos regulares de env/lib —sin __pycache__, sin symlinks—, requirements.lock y binario real Python; nombres relativos y hashes, sin publicar paths privados. El handoff permite congelarla sin cargar runtime.
+
+## Caché y verificaciones
+
+Fuente exclusiva `artifacts/privacy/models/nym-int8-local-v2`, seis archivos regulares0400/151.135.538B y hashes exactos del manifiesto. Recibo `receipt.json` SHA `cb287aa208c76d95d4da9138e7139cdc48c5f19999d8438a7ff22eab65477a78`, estado cache completo/no cargado. No se reanuda ni modifica v1/v2. Parent verifica fuentes, protocolo, runtime, recibo y seis archivos antes de crear salida/cargar worker, y nuevamente después del worker antes de declarar completo; freeze debe conservar bytes/SHA. Lecturas confinadas por FD/O_NOFOLLOW; no traversal/symlinks ni escritura sobre caché. Worker repite hashes/cache antes y después de inspección.
+
+Salida propia y exclusiva `artifacts/privacy/nym-contract-probe-v1`, ledger append-only sincronizado y recibo final exclusivo0400, sin sobrescritura/resume/retry. Se conserva prefijo de eventos válidos y RSS parcial ante fallos finitos. Un fallo de disco/terminación abrupta puede impedir el recibo final; el ledger ya publicado permanece, sin garantía de recuperación general. Ni error crudo, signedURL, header, path privado ni metadatos arbitrarios del modelo se registran.
+
+## Una carga acotada, cero ejecución neuronal
+
+Worker fijo con `artifacts/privacy/onnx-env/bin/python -I -B`, env mínimo/offline y versiones obligatorias Python3.12.13, ORT1.31.1, tokenizers0.23.3 y numpy2.5.4. No instala ni importa Transformers/Torch/HF, plugin remoto o biblioteca de custom ops; no inicia otros hijos. Parent sólo lanza ese worker bajo `/usr/bin/sandbox-exec`. Perfil niega network, escrituras salvo/dev/null y lecturas de eval/docs. Antes de cargar, intento TCP de nonce sintético fijo a127.0.0.1:9 debe dar exactamente EPERM; cualquier otro resultado bloquea. No se lee contenido de expedientes/procesos ajenos. Es una prueba de denegación de red y esas rutas, **no** sandbox general de filesystem/procesos.
+
+Modelo fijado cargado desde bytes previamente verificados, nunca como path. CPUExecutionProvider único, un hilo intra/inter, ORT_SEQUENTIAL, ORT_DISABLE_ALL; logs nativos descartados. No se llama `session.run`, IOBinding ni otro forward. Sólo `get_inputs/get_outputs/get_providers`. No se extrae descripción completa, custom metadata o tensores de pesos/logits.
+
+Un guard protobuf conservador inspecciona únicamente sobres Graph/Tensor/Attribute para rechazar external_data/data_location no embebido. No atraviesa raw_data de pesos ni decodifica tensores. Funciones/training/sparse envelopes no soportados se rechazan antes de ORT; no se intenta completarlos o resolver inicializadores externos. ORT recibe exclusivamente bytes, sin resolvers/overrides ni contexto de carpeta de modelo. El guard no valida semántica completa de ONNX; un rechazo requiere diagnóstico, no parche silencioso o variante alternativa.
+
+Tokenizer `from_file` referencia el descriptor/dev/fd de su JSON exacto verificado; no descarga ni plugin. Se desactiva truncación/padding, se observa tamaño de vocabulario con/sin added tokens, rango/IDs únicos y siete símbolos fijos, sin publicar vocabulario/mapa completo. Se tokenizan exactamente cuatro textos ya fijados en PLAN/protocolo: español plano, emoji, NFD y fixture parecido a RFC. Cualquier shape inconsistente o secuencia de512tokens o más bloquea. Se permiten únicamente IDs y resúmenes/rangos de offsets de esos cuatro textos, jamás predicciones NER.
+
+Offsets se registran como compatibilidad con codepoints/bytes UTF8, cobertura de caracteres no blancos, solapamientos y rangos no monótonos. No se reparan ni se proclama unidad global segura. Un solapamiento/hueco observado no se oculta; una incompatibilidad estructural fuera del texto bloquea. La conversión/decoder de producción sigue sin implementar.
+
+El recibo contrasta sólo hechos declarados y observados: config81labels/vocab256000/BOS2/CLS1/EOS-SEP1, símbolos reales de tokenizer y últimas dimensiones observadas de outputs. Dimensión simbólica permanece desconocida; comparar CLS con símbolo<bos> refleja el descriptor, no prueba del postprocesador. No inferir remapeo de embeddings, validez RFC, calidad española o equivalencia de cuantización.
+
+## Tiempo, RSS e IPC
+
+Un plazo absoluto de60s cubre preflight, carga, inspección y postflight. Parent monitoriza sólo su worker usando libproc/proc_pidinfo, sin procesos auxiliares de sondeo, objetivo20ms entre muestras y rechazo si el hueco observado supera50ms. Umbral1GiB combinado conservador (RSS worker actual+peak padre); los eventos también reportan peak propio. Ante fallo/timeout/RSS se mata únicamente el grupo propio y se espera/recolecta. No se amplían límites. Las muestras son parciales, no prueba de ausencia de picos intermedios, y este Mac24GB no valida hardware8GB.
+
+Stdout worker acumulado máximo32KiB/seis eventos, con esquemas exactos y orden sandbox→versions→graph→tokenizer→complete. Campos tensoriales acotados: nombres ASCII identificadores, tipos de lista finita, rank≤4/dimensiones numéricas o símbolos acotados. Cada fixture sólo puede conservar la identidad/hash/texto fijado en protocolo, IDs/rangos y contadores verificados por padre. Stderr va a/dev/null, sin extracción/reparación de JSON. Un fallo conserva sólo el prefijo validado y códigos finitos, no respuestas arbitrarias.
+
+## Verificación previa y siguiente corte
+
+Se ejecutaron PLAN y nueve self-tests sin carga: pureza PLAN, shape/nombres de tensores, sesión fake sin forward, límites/overflow de offsets, EPERM fake, Tensor externo rechazado, sobre embebido sintético y validación IPC. No es validación de ORT/tokenizer real, recursos ni seguridad general. Root revisará fuente/protocolo, obtendrá handoff, fijará freeze y decidirá una sola inspección real; después otro revisor contrastará recibo con evidencia efectiva. Cero forwards y cuatro tokenizaciones no constituyen evaluación de detección ni cierran H4/H5/H6/H7/licencia/8GB.

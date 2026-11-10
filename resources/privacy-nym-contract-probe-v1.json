@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-contract-probe-v1",
+  "status": "inactive-requires-independent-review-root-freeze",
+  "productionEnabled": false,
+  "planSha256": "2627c83b431d448b462c915daaa4105b367497bfa943997e994d760c6daa7eed",
+  "limits": {
+    "totalSeconds": 60,
+    "maximumRssBytes": 1073741824,
+    "sampleIntervalMs": 20,
+    "maximumSampleGapMs": 50,
+    "maximumWorkerStdoutBytes": 32768,
+    "maximumEvents": 6,
+    "maximumTokensPerFixture": 512,
+    "cpuThreads": 1
+  },
+  "expectedVersions": {
+    "python": "3.12.13",
+    "onnxruntime": "1.31.1",
+    "tokenizers": "0.23.3",
+    "numpy": "2.5.4"
+  },
+  "sourceManifestSha256": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+  "reviewedHelperSha256": "f7947e09e7b5087d68b9acdf12c281526d80cd99e46a84284d66781f2e69b535",
+  "cacheReceiptSha256": "cb287aa208c76d95d4da9138e7139cdc48c5f19999d8438a7ff22eab65477a78",
+  "sourcePaths": [
+    "scripts/probe-privacy-nym-contract.py",
+    "resources/privacy-nym-contract-probe-v1.json",
+    "docs/architecture/privacy-nym-contract-probe-v1.md",
+    "resources/privacy-nym-int8-candidate-v1.json",
+    "scripts/prepare-privacy-nym-research.py"
+  ],
+  "freezePath": "docs/qa/privacy-nym-contract-probe-v1-freeze.json",
+  "outputDirectory": "artifacts/privacy/nym-contract-probe-v1",
+  "runtimeModelTokenLoadAuthorized": false,
+  "nnForwardsAllowed": 0,
+  "externalDataAllowed": false,
+  "customOpLibraryAllowed": false,
+  "userTextAllowed": false,
+  "declaredConfig": {
+    "labelCount": 81,
+    "vocabSize": 256000,
+    "maximumPositions": 8192,
+    "tokenIds": {
+      "bos": 2,
+      "cls": 1,
+      "eos": 1,
+      "sep": 1,
+      "pad": 0,
+      "mask": 4
+    }
+  },
+  "fixtureHashes": {
+    "spanish": "8e98da9afd9fd6ac9bfa2a0eda6c8994d4a1f79cfd90144af81cf3384da2a0d8",
+    "emoji": "e8f5d989a7863dbce018e896382338e24c8fe397d99557eb5c79f5cc9d900cbe",
+    "nfd": "147b3226dd0e505a4d75624b9c399915e4241d6952d1a843e59dfba3e467c4fa",
+    "rfc-like": "b30b039c14262ebd01f0e93ce142cb68bcc2dd0e9dcc2c1c3ed7078e94fe1117"
+  },
+  "fullLicenseNoticeMissing": true,
+  "redistributionAndProductReleaseBlocked": true,
+  "privacyQualityAnd8GBValidated": false
+}
