@@ -1,0 +1,40 @@
+name: Windows owned-process RSS smoke
+on:
+  push:
+    branches: [docs/hybrid-psf-development-loop]
+    paths:
+      - .github/workflows/windows-memory-smoke.yml
+      - scripts/windows-memory-smoke.mjs
+      - server/windows-process-memory.mjs
+      - server/runtime-memory.mjs
+      - tests/windows-memory-smoke.test.mjs
+      - tests/windows-process-memory.test.mjs
+      - tests/runtime-memory.test.mjs
+permissions:
+  contents: read
+jobs:
+  windows-rss:
+    # Evaluated before runner allocation. Never consume a private-repo budget.
+    if: ${{ github.event.repository.private == false }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      # Official actions/checkout v4.3.1, tag SHA verified with git ls-remote.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Targeted contract and lifecycle tests
+        shell: pwsh
+        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs
+      - name: Four serial actual CIM samples
+        shell: pwsh
+        # Public standard runner is a 16 GB VM; this proves neither physical
+        # 8 GB acceptance, an installer, nor product inference portability.
+        run: node scripts/windows-memory-smoke.mjs
