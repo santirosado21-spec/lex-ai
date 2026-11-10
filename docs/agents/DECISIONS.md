@@ -69,3 +69,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 18:46 — codex — Retirar aceptación S2a y separar diagnóstico de formato de calidad jurídica
 
 **Por qué:** Los casos V1 quedaron confundidos por guía común y V2 ya fue observado/puntuado/desvelado. Conservar freezes y evidencia; no afinar ni seleccionar usando estos casos como nuevo examen. Catorce truncamientos y cinco fallos de citas bajo salida2500/promptJSON no prueban incapacidad general del modelo. S2b debe ensayar formato/anclas/presupuesto en desarrollo y usar nueva aceptación independiente antes de ganador. Una respuesta que pasa criterios incluye contenido adicional no respaldado; no equivale a aprobación jurídica. No ampliar límites M1 ni activar proveedor de producto por este piloto SF.
+
+## 2026-11-09 18:49 — codex — La protección ocurre antes de cualquier subida del archivo privado
+
+**Por qué:** El dueño exige introducir primero información confidencial y que el componente local la sustituya antes del trabajo remoto. Una subida web al servidor para anonimizar allí incumpliría ese orden. Fijar extracción/protección en cliente o servicio local y tratar original, mapa, nombres, historial y metadatos antes del egreso; bloqueo si formato o tratamiento inciertos. Requisito de producto probado primero con sintéticos, sin habilitar datos reales o dar por aprobado detector/cifrado.

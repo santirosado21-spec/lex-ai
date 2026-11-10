@@ -18,6 +18,17 @@ La versión local anterior puede aportar feedback de interfaz; sus respuestas no
 
 **B. Beta integrada del producto:** detector/cifrado aprobados, proveedor/configuración autorizados e integración de todas las rutas. Empezar igualmente con datos inventados y públicos. Cualquier uso de datos reales necesita la autorización específica y tratamiento verificado del piloto H8b; este pedido no los concede.
 
+### Recorrido integrado desde el archivo original
+
+1. Seleccionar en el equipo un contrato ficticio con nombres, identificadores, domicilio y hechos sensibles inventados. El usuario no lo modifica previamente. En web, observar que seleccionar/importar no produce subida del original, nombre o metadatos a backend, OCR, almacenamiento o telemetría remotos.
+2. Extraer y detectar localmente; mostrar el tratamiento propuesto cuando requiera revisión. Sustitutos estables y mapa restringido al asunto; conservar el significado jurídico de hechos necesarios. Incertidumbre o formato no soportado bloquea salida.
+3. Construir y revisar el sobre completo: pregunta, fragmentos, historial, fuentes y metadatos. Capturar los bytes con transporte simulado y contrastarlos con el original/mapa, sin publicar esas evidencias si alguna vez contienen datos reales. No filtrar privados en logs.
+4. Solo con gates/acceso aprobados, repetir con contexto ficticio protegido hacia los agentes remotos. Comprobar que procesan únicamente ese contexto y que el mapa nunca sale.
+5. Validar y restituir la respuesta localmente dentro del mismo asunto. Probar otro asunto, marcadores desconocidos, cancelación y fallo del proveedor.
+6. Hacer una pregunta de seguimiento sobre la respuesta restituida: vuelve a pasar por protección local antes de otra llamada remota.
+
+Este recorrido es requisito pendiente de la beta integrada, no una prueba ya realizada. La revisión de las respuestas S2a por Lorenzo/Pedro puede aportar feedback jurídico, pero no acredita el detector ni este límite de privacidad. La carga de datos reales queda fuera del ensayo inicial.
+
 ## Antes de entregar el paquete
 
 1. Confirmar sistema/arquitectura de cada participante (pendientes); RAM mínima declarada 8 GB. Prueba física de 8 GB aún necesaria. Windows no tiene paquete probado en este corte.

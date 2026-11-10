@@ -25,6 +25,16 @@ flowchart LR
 
 Es un flujo a construir. La correspondencia entre identidad y sustituto permanece local y nunca forma parte de la solicitud. El modelo propone detecciones; código local controla permisos, persistencia y envío. Un documento no puede autorizar nuevas herramientas ni destinos.
 
+### Entrada confidencial primero — aclaración del dueño
+
+El usuario introduce el documento y la pregunta originales en su equipo; no tiene que sustituir datos a mano para que el producto funcione. La capa local extrae y detecta información sensible, conserva las correspondencias y prepara contexto mínimo con sustitutos consistentes. Solo después de comprobar el sobre completo y la política se entrega ese contexto a agentes de nube. Al regresar, se valida la respuesta y se restituyen localmente los marcadores autorizados del mismo asunto; cualquier turno posterior vuelve a proteger el texto restituido.
+
+En la **demo web**, seleccionar/arrastrar un archivo debe leerlo en el navegador o servicio local autorizado. El original, texto extraído, mapa, nombre y metadatos privados no se suben primero al backend, almacenamiento, OCR, telemetría o logs remotos para protegerlos después. La extracción/OCR de documentos privados debe ser local; si un formato no puede tratarse de forma fiable, se bloquea su salida. La fábrica del corpus jurídico público es un flujo distinto.
+
+Se sustituye o minimiza información sensible; no se altera indiscriminadamente todo el documento. Fechas, importes y relaciones con relevancia jurídica necesitan un tratamiento que preserve significado o una revisión/bloqueo cuando no pueda lograrse bajo la política. El objetivo de cobertura completa exige medición; no prometer que cambiar nombres elimina toda posibilidad de identificación.
+
+La aceptación vertical empieza con un contrato **ficticio que contiene identificadores y hechos sensibles**, pasa por detección real local, sobre capturado, respuesta y restitución, y termina con un seguimiento que se protege de nuevo. Debe mostrar también bloqueo ante omisión detectable/incertidumbre/formato no soportado, aislamiento de asuntos y ausencia de originales/mapa en tráfico o logs. Primero transporte simulado; una corrida remota sintética posterior exige los gates y acceso correspondientes. S2a evalúa skills con inputs públicos/sintéticos preparados y no prueba este recorrido. Detector elegible, bóveda/recuperación e integración web completa siguen pendientes.
+
 ## Almacenamiento: comenzar en la computadora
 
 | Modalidad | Primera versión | Condiciones |

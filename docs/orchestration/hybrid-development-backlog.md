@@ -7,6 +7,8 @@ Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-pla
 
 Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; las asignaciones y cierres efectivos figuran en la tabla.
 
+Requisito transversal reafirmado: **entrada confidencial local → extracción/detección/sustitución local → política del sobre completo → nube → validación/restitución local**. En demo web no subir el original para anonimizarlo en servidor ni pedir preparación manual al usuario. H4/H5/H6/H7 deben probarlo primero con información sensible inventada, incluidos archivo/metadatos/historial/logs y seguimiento que vuelve a protegerse. [Guion integrado](../qa/cofounder-hybrid-beta-2026-11-09.md#recorrido-integrado-desde-el-archivo-original). S2a/S2b de calidad jurídica no cierran ese requisito; sus estados y gates permanecen.
+
 El coordinador concede `done` únicamente con aceptación demostrada, revisión independiente registrada y referencia al commit probado. Para reabrir `blocked`: registrar diagnóstico, corrección propuesta y decisión explícita de reanudación del coordinador; nunca reinicio automático. Si cambia alcance o se requiere una autorización nueva, esa parte espera su autorización. H4 y H5 pueden avanzar en paralelo tras H3V con responsables/archivos separados; H6 conserva una puerta prudente de preparación del producto, no una afirmación de dependencia técnica inevitable.
 
 | ID | Tarea | Depende de | Estado | Responsable / rama |

@@ -12,6 +12,8 @@ La base actual sigue usando `createInference` en `server/main.mjs`; hay llamadas
 
 ## Secuencia y entregas
 
+Reafirmación del dueño: el recorrido integrado empieza introduciendo información confidencial **localmente**, seguido de extracción/detección/sustitución local, control del sobre saliente, agentes de nube y restitución local. No pedir al usuario que prepare manualmente el documento protegido. En web, no subir el original a un servidor antes de protegerlo; incluir archivo/nombre/metadatos, historial y telemetría en la aceptación. Probar primero con identificadores y hechos inventados; los benchmarks públicos S2 no sustituyen H4/H5/H6/H7 ni autorizan clientes. Contrato detallado en [entrada confidencial primero](../architecture/hybrid-local-privacy-router-2026-11-09.md#entrada-confidencial-primero--aclaración-del-dueño).
+
 ```mermaid
 flowchart TD
   A[H3V: composición completa sin red] --> B[H4a: contrato y examen del detector]
