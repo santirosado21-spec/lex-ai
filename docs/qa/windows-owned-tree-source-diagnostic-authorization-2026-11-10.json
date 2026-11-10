@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "scope": "ONE_SOURCE_EOL_DIAGNOSTIC_ONLY",
+  "approvedBy": "codex/root",
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE,5puretests",
+  "newDiagnosticSourceIdentity": "Exact committed blob hashes for four diagnostic files; working bytes may differ only by witnessed CRLF conversion, in memory; no writes or old smoke-hash bypass",
+  "oldSevenSourceFreezeStrictUnchanged": true,
+  "wmiOrFixtureAuthorized": false,
+  "networkOrRemoteGitAuthorized": false,
+  "automaticRetry": false,
+  "sourceMismatchCauseProven": false,
+  "performanceValidated": false
+}

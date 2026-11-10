@@ -1,0 +1,11 @@
+{
+  "scope": "windows-owned-tree-source-diagnostic-v1",
+  "approvedForSingleDiagnosticRun": true,
+  "sourceHashes": {
+    "scripts/windows-owned-tree-source-diagnostic.mjs": "0ae0dfaaf24c95a99dc8642f117dde594835b6c241bc8c0519ee6863608d6a87",
+    "tests/windows-owned-tree-source-diagnostic.test.mjs": "6dbd5de687d76a2eb9dc438afa3d100ab6e59bd20f796305174e3851caaf7b96",
+    "docs/architecture/windows-owned-tree-source-diagnostic-v1.md": "cc0df85b28461bcc1fe84719d3707db51366b25185a3343a45929dec6294105a",
+    ".github/workflows/windows-owned-tree-source-diagnostic.yml": "1d36e9a08f62818c3c6b33b567edf6f795e800fad383bcbc6e49d7e5d47d66a6"
+  },
+  "smokeFreezeCanonicalSha256": "5408f2b2ebccb290211d0438b2b3ad1363bc80c33a65c055ba4aa48545287bbe"
+}

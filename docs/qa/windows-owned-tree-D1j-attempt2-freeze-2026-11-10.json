@@ -1,0 +1,13 @@
+{
+  "scope": "windows-owned-tree-smoke-v1",
+  "approvedForSingleRun": true,
+  "sourceHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+    "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+    "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+    ".github/workflows/windows-owned-tree-smoke.yml": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  }
+}
