@@ -13,6 +13,9 @@ on:
       - scripts/windows-cim-diagnostic.mjs
       - tests/windows-cim-diagnostic.test.mjs
       - scripts/windows-memory-smoke.mjs
+      - server/windows-memory-monitor-v2.mjs
+      - tests/windows-memory-monitor-v2.test.mjs
+      - resources/windows-memory-monitor-v2.json
       - server/windows-memory-monitor.mjs
       - tests/windows-memory-monitor.test.mjs
       - server/windows-process-memory.mjs
@@ -42,12 +45,12 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Targeted contract and lifecycle tests
         shell: pwsh
-        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs tests/windows-memory-monitor.test.mjs
-      - name: Protocol 2 cold bootstrap and four steady CIM samples
+        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs tests/windows-memory-monitor.test.mjs tests/windows-memory-monitor-v2.test.mjs
+      - name: Protocol 3 cold bootstrap and four steady direct WMI samples
         shell: pwsh
         # Public standard runner is a 16 GB VM; this proves neither physical
         # 8 GB acceptance, an installer, nor product inference portability.
-        run: node scripts/windows-memory-smoke.mjs --persistent
+        run: node scripts/windows-memory-smoke.mjs --wmi
 
   windows-cim-diagnostic:
     # One explicitly marked diagnosis commit after the two retained failures.

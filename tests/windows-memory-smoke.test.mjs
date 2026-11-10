@@ -74,3 +74,18 @@ test('protocol 2 final awaited snapshot exit/error and pre-cleanup nonzero exit 
   assert.doesNotMatch(JSON.stringify(report),/private fixture/);
  }
 });
+
+test('explicit WMI route preserves old routes, rejects unknown flags, uses protocol 3 and same four-sample lifecycle',async()=>{
+ const {windowsMemorySmokeRoute,runWmiWindowsMemorySmoke}=await import('../scripts/windows-memory-smoke.mjs');
+ assert.equal(windowsMemorySmokeRoute([]),runWindowsMemorySmoke);assert.equal(windowsMemorySmokeRoute(['--persistent']),runPersistentWindowsMemorySmoke);assert.equal(windowsMemorySmokeRoute(['--wmi']),runWmiWindowsMemorySmoke);
+ for(const args of [['--unknown'],['--wmi','--persistent'],['--wmi','123'],['--persistent','--wmi']])assert.throws(()=>windowsMemorySmokeRoute(args));
+ const f=fixture();let reads=0,closed=false;
+ const report=await runWmiWindowsMemorySmoke({...windows,spawnNode:(_file,args)=>{assert.equal(args[2],SYNTHETIC_PROCESS.replace('30000','60000'));queueMicrotask(()=>f.child.emit('message','ready'));return f.child;},makeMonitor:({rootPid})=>{assert.equal(rootPid,f.child.pid);return {start:async()=>({rssBytes:4096,elapsedMs:5000}),readRss:async()=>{reads++;return {rssBytes:8192,elapsedMs:10};},close:async()=>{closed=true;return {exitObserved:true};},diagnostics:()=>({category:null})};}});
+ assert.equal(report.status,'PASS');assert.equal(report.protocol,3);assert.equal(reads,4);assert.equal(closed,true);assert.equal(report.startup.includesFirstActualWmiSnapshot,true);assert.equal(Object.hasOwn(report.startup,'includesFirstActualCimSnapshot'),false);assert.equal(report.collectorMeasurementBudgetMs,18000);assert.equal(report.collectorCleanupLimitMs,6000);assert.equal(report.configuredPhaseBudgetMs,35000);assert.equal(report.physical8GBValidation,false);assert.equal(report.cleanup.expectedExitZero,true);
+ const workflow=await readFile(new URL('../.github/workflows/windows-memory-smoke.yml',import.meta.url),'utf8');assert.match(workflow,/run: node scripts\/windows-memory-smoke\.mjs --wmi/);assert.doesNotMatch(workflow,/run: node scripts\/windows-memory-smoke\.mjs --persistent/);
+});
+test('WMI smoke monitor failure stays finite and preserves cleanup without retry',async()=>{
+ const {runWmiWindowsMemorySmoke}=await import('../scripts/windows-memory-smoke.mjs');const f=fixture();let reads=0;
+ const report=await runWmiWindowsMemorySmoke({...windows,spawnNode:()=>{queueMicrotask(()=>f.child.emit('message','ready'));return f.child;},makeMonitor:()=>({start:async()=>({rssBytes:1,elapsedMs:1}),readRss:async()=>{reads++;throw Error('PRIVATE_ROWS');},close:async()=>({exitObserved:true}),diagnostics:()=>({category:'REQUEST_TIMEOUT'})})});
+ assert.equal(report.status,'FAIL');assert.equal(reads,1);assert.equal(report.cleanup.exitObserved,true);assert.equal(report.diagnostic.category,'REQUEST_TIMEOUT');assert.doesNotMatch(JSON.stringify(report),/PRIVATE_ROWS/);
+});

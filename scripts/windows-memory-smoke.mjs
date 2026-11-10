@@ -3,6 +3,7 @@ import {performance} from 'node:perf_hooks';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
 import {createWindowsMemoryMonitor} from '../server/windows-memory-monitor.mjs';
+import {createWindowsMemoryMonitorV2} from '../server/windows-memory-monitor-v2.mjs';
 import {windowsProcessTreeRss} from '../server/windows-process-memory.mjs';
 // A direct child only: no grandchildren, shell, documents, network or model.
 // IPC disconnection and a fixed lifetime bound both terminate the fixture if
@@ -110,6 +111,24 @@ export async function runPersistentWindowsMemorySmoke({platform=process.platform
  }
  return report;
 }
+// Explicit opt-in WMI route; existing default and --persistent remain unchanged.
+export async function runWmiWindowsMemorySmoke(options={}){
+ const report=await runPersistentWindowsMemorySmoke({...options,makeMonitor:options.makeMonitor??createWindowsMemoryMonitorV2});
+ report.protocol=3;report.scope='owned synthetic Node direct WMI collector only';report.collector='direct-wmi-v2';
+ report.collectorMeasurementBudgetMs=10000+4*2000;
+ report.collectorCleanupLimitMs=6000;
+ report.fixtureReadinessLimitMs=5000;
+ report.fixtureCleanupLimitMs=6000;
+ // Configured phase bounds, not an observed scheduler/OS wall-clock guarantee.
+ report.configuredPhaseBudgetMs=35000;
+ if(report.startup){delete report.startup.includesFirstActualCimSnapshot;report.startup.includesFirstActualWmiSnapshot=true;}
+ return report;
+}
+export function windowsMemorySmokeRoute(args){
+ if(!Array.isArray(args)||args.length>1||args.length===1&&!['--persistent','--wmi'].includes(args[0]))throw Error('Invalid smoke arguments.');
+ return args[0]==='--wmi'?runWmiWindowsMemorySmoke:args[0]==='--persistent'?runPersistentWindowsMemorySmoke:runWindowsMemorySmoke;
+}
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
- const report=await (process.argv[2]==='--persistent'?runPersistentWindowsMemorySmoke():runWindowsMemorySmoke());console.log(JSON.stringify(report,null,2));if(report.status!=='PASS')process.exitCode=1;
+ try{const report=await windowsMemorySmokeRoute(process.argv.slice(2))();console.log(JSON.stringify(report,null,2));if(report.status!=='PASS')process.exitCode=1;}
+ catch{console.log(JSON.stringify({status:'FAIL',failure:'Invalid smoke arguments.'}));process.exitCode=1;}
 }
