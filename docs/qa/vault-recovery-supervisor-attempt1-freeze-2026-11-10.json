@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "feature": "synthetic-recovery",
+  "minimumRustVersion": "1.99.0",
+  "sourceHashes": {
+    "crates/lex-vault/Cargo.toml": "8da0750f202c613181a33de44ec985ec4b44e07b11cdc2c40ee20a03d4b76b2b",
+    "crates/lex-vault/Cargo.lock": "f5ad6d515a05cf1b8306b10116862631728fa2d20175f1afe745c072a13d99fa",
+    "crates/lex-vault/README.md": "c109ca020db54bc391e2690edbea615d5b3d2b49ee30f5d62cc888a0feea730f",
+    "crates/lex-vault/src/lib.rs": "5f9ce836e47731906349b606e43d6edd145342da3f0c2b4cb6a5a99450e9edf0",
+    "crates/lex-vault/src/recovery.rs": "e8d85ca29bda9ea53ce81459e64b70fd3ebd9a6b5284089f1218b772c05e733d",
+    "crates/lex-vault/tests/recovery.rs": "78295c6af5a51039f838a52fb4f416d1c3a475e2d4b4c2f82847f4d15c68c129",
+    "crates/lex-vault/tests/recovery_process.rs": "cd7ce44167bb6f28143594358956bbb0e062cccedf72046966e891f0b1469b04",
+    "crates/lex-vault/tests/support/recovery_fixture.rs": "faac4c6c63fb113b0480496ffee8d1738527d5a01849344a42a4d597ff10c4ba"
+  },
+  "baselineSourceHashes": {
+    "crates/lex-vault/src/proposals.rs": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301",
+    "crates/lex-vault/src/reminders.rs": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b",
+    "crates/lex-vault/src/time_billing.rs": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82",
+    "crates/lex-vault/tests/proposals.rs": "21585731d755207f92090b83bac3a0d29cc2fdac0d08ffb60e192f653657cee1",
+    "crates/lex-vault/tests/reminders.rs": "6fc57916503ae276b406dac3060968758c46c364049885fd78049c3c378c8b7a",
+    "crates/lex-vault/tests/time_billing.rs": "f1f81c255c29dc4482278b582b39ac4576dc5109425fed8fbf08b33852969874",
+    "crates/lex-vault/tests/viability.rs": "3c99c0c452593f40389451f5dc1ebf456501e564016da0bcd4f78980696e3fc7"
+  },
+  "scope": "SUPERVISOR_ONLY",
+  "approvedForSingleSupervisorOnlyRun": true,
+  "workflowSha256": "07c203a52cba9bb883f03d04524e08a5a17cf9083e85a0dc2a5317182705e1ff"
+}

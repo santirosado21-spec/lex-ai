@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "attempt": 1,
+  "runId": 42888161749,
+  "commit": "283e32da3837f0c6e496e8ec7bbaaa594c8db00b",
+  "scope": "SUPERVISOR_ONLY",
+  "result": "FAIL",
+  "category": "SUPERVISOR_RESOURCE_TEST",
+  "cause": "OS2NotFound spawning /bin/true at tests/recovery.rs609; /usr/bin/true is the fixed macOS location",
+  "logSha256": "ade5cfd38d4624b971fd3c453b383f11431a36501db6f320a570870c41fc9f18",
+  "freezeSha256": "9e4cdbbc74f2d9d13080337f09bdd03de1de85e066a9f1e7f177ff8bca9471ae",
+  "compilationPassed": true,
+  "testsExecuted": true,
+  "supervisorTestOnly": true,
+  "cryptoTestsExecuted": false,
+  "recoveryHelperInvoked": false,
+  "sourceFreezePre": true,
+  "sourceFreezePost": true,
+  "independentAudit": "review_vault_reminders / gpt-6.1-sol: APPROVE exact two path substitutions after read-only file metadata check; preserved failure, no owner execution"
+}
