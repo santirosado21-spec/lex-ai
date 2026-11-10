@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "scope": "ONE_PUBLIC_BUILD_INVENTORY_PREPARATION",
+  "approvedBy": "codex/root",
+  "independentReview": "review_completion_phases: APPROVE,14Pythonunitmethods+Nodewrapper",
+  "sourceTokenizerSha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+  "freezeSha256": "004dfa83672b8031f8dc2d437878ad166e24b0a0df914c4a5e93e4c8e4eefe8c",
+  "actualModelOrTokenizerExecutionAuthorized": false,
+  "runtimeSamplingLimitsChanged": false,
+  "networkAuthorized": false,
+  "automaticRetry": false,
+  "redistributionApproved": false,
+  "boundedBuildPreparationOnly": true
+}
