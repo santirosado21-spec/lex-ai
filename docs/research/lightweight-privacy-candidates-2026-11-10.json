@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "status": "metadata-only-not-selected",
+  "newWeightsDownloaded": false,
+  "productionEnabled": false,
+  "candidates": [
+    {
+      "repository": "nationaldesignstudio/rampart",
+      "revision": "b1993e4e68b082835b80ffc65acc03325ea2e501",
+      "declaredLicense": "cc-by-4.0",
+      "metadataUrl": "https://huggingface.co/api/models/nationaldesignstudio/rampart?blobs=true",
+      "metadataSha256": "4441876c8b7a38c8b4c9e8100c2aa81fe0ce43677eeea40ed22e35ecc5c5aab0",
+      "files": [
+        {
+          "rfilename": "LICENSE",
+          "blobId": "0d6d2d8547b4f4d493de2f405b845261408696e7",
+          "size": 18897
+        },
+        {
+          "rfilename": "config.json",
+          "blobId": "46d8daade2851ecb0299448461ff6efbfc273b6b",
+          "size": 2328
+        },
+        {
+          "rfilename": "onnx/model_q4.onnx",
+          "blobId": "5fe275be0e9fff0dbb4bf7d67d809ca5f4c1059a",
+          "size": 14693379,
+          "lfs": {
+            "sha256": "9f27d24949b0581701071ea5ef522d77ccd3f50c525cc91eac4d265b0fc2afe5",
+            "size": 14693379,
+            "pointerSize": 133
+          }
+        },
+        {
+          "rfilename": "tokenizer.json",
+          "blobId": "5405e3b36ad5fb298c9522b882d53b6e04d23a13",
+          "size": 441954
+        },
+        {
+          "rfilename": "tokenizer_config.json",
+          "blobId": "c5b10ad0dbf79ed233f5234dc60e808ce419dde2",
+          "size": 1292
+        }
+      ]
+    },
+    {
+      "repository": "Wismut/nym-pii-multilingual-small",
+      "revision": "4348999cd3c2e20c49615e9af7c6bbb45b64cd85",
+      "declaredLicense": "mit",
+      "metadataUrl": "https://huggingface.co/api/models/Wismut/nym-pii-multilingual-small?blobs=true",
+      "metadataSha256": "74092d55c540675b21b2d900df2cdef559829735b6af2347dc02764971e55759",
+      "files": [
+        {
+          "rfilename": "config.json",
+          "blobId": "8a0d83d46217097196bedc48fbae080bff294b21",
+          "size": 5688
+        },
+        {
+          "rfilename": "int8/config.json",
+          "blobId": "8a0d83d46217097196bedc48fbae080bff294b21",
+          "size": 5688
+        },
+        {
+          "rfilename": "int8/model_int8.onnx",
+          "blobId": "f1f642053e135abe389e6a27b81d494a2e9dcd54",
+          "size": 138730982,
+          "lfs": {
+            "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286",
+            "size": 138730982,
+            "pointerSize": 134
+          }
+        },
+        {
+          "rfilename": "int8/tokenizer.json",
+          "blobId": "2c35608a5e3457d718502497913501780b40435f",
+          "size": 12389891,
+          "lfs": {
+            "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+            "size": 12389891,
+            "pointerSize": 133
+          }
+        },
+        {
+          "rfilename": "tokenizer.json",
+          "blobId": "2c35608a5e3457d718502497913501780b40435f",
+          "size": 12389891,
+          "lfs": {
+            "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+            "size": 12389891,
+            "pointerSize": 133
+          }
+        },
+        {
+          "rfilename": "tokenizer_config.json",
+          "blobId": "00cf6eb75583b49acef96b23ea3c8dd9b95c27e6",
+          "size": 573
+        }
+      ]
+    }
+  ]
+}
