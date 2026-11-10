@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:57:03.283565+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_DOCUMENTARY_CONTENT_WITNESS_CONTRACT_ONLY",
+  "reviewedHashes": {
+    "resources/privacy-nym-original-content-witness-v2.json": "66fd8c134643d0f4e8bad6f04b7f9da2a6bb6686c2475bca6e81848490932718",
+    "docs/architecture/privacy-nym-original-content-witness-v2.md": "b4425ae3566d89ef81afbc76f79c815630b9cb611b8d8e6aacd848ea586e0ffb"
+  },
+  "referenceChecks": {
+    "fourPinnedSourceDocumentHashesMatch": true,
+    "twoPreservedAuditsSourceOperations": 12,
+    "all12EmbeddedSourceBodiesBytesAndSha256Verified": true,
+    "upstreamCommit": "301277072263fb3830eb66eec7e47adadf76f1dc",
+    "originalV1Receipt": {
+      "path": "artifacts/privacy/nym-int8-decoder-v1-first/receipt.json",
+      "sha256": "f3253cef5b7d61d78a81bee1eb638e0088334d235818e17642d523be0217750f",
+      "attempted": 8,
+      "blocked": 8,
+      "forwardStarted": 0,
+      "forwardReturned": 0,
+      "decoded": 0,
+      "offsetProofEstablished": false
+    }
+  },
+  "findings": [],
+  "reasoning": [
+    "Exact raw-token content vs immutable original slice is an additional attribution witness; it is not inverse-decoder equality or offset bounds alone.",
+    "Piece start0/reset solely by exact allowed whitespace added token supports the source-derived Metaspace prepend; later ordinary tokens have no prefix exception. Original literal marker remains blocked, so proof-only space replacement cannot conflate original marker with space.",
+    "Each permitted added whitespace token must match pinned ID/content and all five flagsfalse; keep the contributor/logit. Unknown/non-whitespace added IDs cannot reset a piece.",
+    "Single strict ASCII-byte fallback is permitted only after first ordinary piece token and must equal entire positive original slice; no multibyte/grouping/overlap/dedup/recovery.",
+    "Ordered disjoint positive offsets, exact original UTF8/UTF16 endpoint tables and all-nonwhitespace coverage restrict coordinate fallback errors; token inventory/proof cannot be supplied as worker/model authority.",
+    "All attended non-special contributors retained, including whitespace and O, with finite81rows/unique argmax/.4floor/strictBIO. No semantic mapping/composition/egress introduced."
+  ],
+  "requiredImplementationChallenges": [
+    "Parent must derive used-ID raw-token and added-token facts from fixed full tokenizer hash, not an IPC-supplied or synthetic test inventory.",
+    "Validate complete sequence IDs/masks/special boundaries and every contributor; a whitespace gap cannot excuse missing encoded tokens.",
+    "Negative tests for forged content/ID/ranges/piece reset, leading/consecutive added whitespace, same-substring misassignment, literal marker, single vs multi-byte fallback, overlap/zero/UNK/control, and all UTF8/UTF16 endpoints.",
+    "Global six-witness content gate indices0,1,3,4,5,6 before any forward, with overlap2/control7 blocked in eight planned; every later input independently witnessed.",
+    "Retain inverse mismatch diagnostics and v1false/zero-forward evidence; no per-case patching after new outcomes.",
+    "Own new versioned files/output/freeze and retain CPU1/disableall/512/16KiB/1GiB/60s+cleanupreserve/no retries and resource-gap acceptance checks."
+  ],
+  "limits": [
+    "Upstream source/API review is not reproducible deployed-wheel attestation or universal correctness proof; runtime pins remain required.",
+    "This approval changes a proposed structural admission contract only, not v1 history or execution authorization.",
+    "No code/runtime/model/tokenizer execution, inference, new network, evaluation corpus/gold/heldout read or scoring performed.",
+    "No privacy quality, model eligibility, full-request protection, license clearance, real-client or physical8GB acceptance."
+  ],
+  "implementationAuthorized": false,
+  "executionAuthorized": false,
+  "productionEnabled": false,
+  "egressEligible": false
+}
