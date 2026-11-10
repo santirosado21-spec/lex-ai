@@ -3,6 +3,7 @@ on:
   push:
     branches: [docs/hybrid-psf-development-loop]
     paths:
+      - .gitattributes
       - scripts/windows-owned-tree-smoke.mjs
       - tests/windows-owned-tree-smoke.test.mjs
       - resources/windows-owned-tree-smoke-v1.json

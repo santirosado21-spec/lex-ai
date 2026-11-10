@@ -1,0 +1,8 @@
+# Preserve exact frozen smoke bytes in Windows checkouts; limited to audited sources.
+/scripts/windows-owned-tree-smoke.mjs text eol=lf
+/tests/windows-owned-tree-smoke.test.mjs text eol=lf
+/docs/architecture/windows-owned-tree-smoke-v1.md text eol=lf
+/resources/windows-owned-tree-smoke-v1.json text eol=lf
+/.github/workflows/windows-owned-tree-smoke.yml text eol=lf
+/server/windows-memory-monitor-v2.mjs text eol=lf
+/server/windows-process-memory.mjs text eol=lf
