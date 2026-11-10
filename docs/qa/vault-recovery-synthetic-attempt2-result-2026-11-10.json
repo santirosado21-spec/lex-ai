@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "scope": "FIRST_BATCH_ONLY",
+  "attempt": 2,
+  "runId": 42892963286,
+  "commit": "8a04105ea76ad54468e04532409f6604cf7f1e76",
+  "result": "PARTIAL_FAILURE",
+  "log": "artifacts/phased-completion-20261110-batch2/vault-recovery-synthetic-second.log",
+  "logSha256": "2e8d5606613532d81aa86614dd08d87274b4987a6968faaeb0df114fe69fbaec",
+  "logBytes": 160765,
+  "preservedFreeze": "docs/qa/vault-recovery-synthetic-attempt2-freeze-2026-11-10.json",
+  "freezeSha256": "d4cc6077830768d68d21dee286d819ec14797c35b4563e3b3adaa792835e5d2b",
+  "independentReview": {
+    "agent": "review_vault_reminders",
+    "verdict": "APPROVE-failure-record-only",
+    "bindingsChecked": 17,
+    "currentAndCommitHashesMatch": true,
+    "method": "Local source/freeze/log audit only; no codegen, native execution or network"
+  },
+  "observedReceipt": {
+    "actualMaximumSamplingGapMs": null,
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": "SYNTHETIC_FIRST_BATCH",
+    "compilationAttempted": true,
+    "configuredBatchMs": 300000,
+    "configuredCaseMs": 60000,
+    "configuredRssThresholdBytes": 805306368,
+    "configuredSamplingIntervalMs": 50,
+    "cryptoBatchCommandRequested": true,
+    "cryptoBatchWallMs": 4746.919,
+    "cryptoTestsExecuted": true,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "hardPeakRssGuaranteed": false,
+    "kdfInvocationCount": null,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "recoveryHelperDirectlyInvoked": false,
+    "recoveryPrototypeReadonlyValidated": false,
+    "result": "PARTIAL_FAILURE",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "FIRST_BATCH_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 1154.492,
+    "technicalPass": false,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "observedFailure": {
+    "source": "tests/recovery.rs:276",
+    "operation": "owned /bin/ps sampler spawn unwrap",
+    "osCode": 1,
+    "osKind": "PermissionDenied",
+    "message": "Operation not permitted",
+    "nativeLibtestElapsedSeconds": 4.51,
+    "nativeLibtestPassed": 0,
+    "nativeLibtestFailed": 1
+  },
+  "phaseMarkers": [
+    {
+      "phase": "PREP_FIXTURE",
+      "state": "START",
+      "elapsedMs": 0
+    },
+    {
+      "phase": "PREP_FIXTURE",
+      "state": "DONE",
+      "elapsedMs": 187
+    },
+    {
+      "phase": "PREP_SEAL",
+      "state": "START",
+      "elapsedMs": 187
+    },
+    {
+      "phase": "PREP_SEAL",
+      "state": "DONE",
+      "elapsedMs": 308
+    },
+    {
+      "phase": "PREP_PASSPHRASE",
+      "state": "START",
+      "elapsedMs": 308
+    },
+    {
+      "phase": "PREP_PASSPHRASE",
+      "state": "DONE",
+      "elapsedMs": 308
+    },
+    {
+      "phase": "PREP_EXPORT",
+      "state": "START",
+      "elapsedMs": 308
+    },
+    {
+      "phase": "PREP_EXPORT",
+      "state": "DONE",
+      "elapsedMs": 1542
+    },
+    {
+      "phase": "PREP_READ_CIPHERTEXT",
+      "state": "START",
+      "elapsedMs": 1543
+    },
+    {
+      "phase": "PREP_READ_CIPHERTEXT",
+      "state": "DONE",
+      "elapsedMs": 1543
+    },
+    {
+      "phase": "PREP_INTERNAL_ENVELOPE",
+      "state": "START",
+      "elapsedMs": 1543
+    },
+    {
+      "phase": "PREP_INTERNAL_ENVELOPE",
+      "state": "DONE",
+      "elapsedMs": 2706
+    },
+    {
+      "phase": "PREP_OVERSIZE_ENVELOPE",
+      "state": "START",
+      "elapsedMs": 2706
+    },
+    {
+      "phase": "PREP_OVERSIZE_ENVELOPE",
+      "state": "DONE",
+      "elapsedMs": 4222
+    },
+    {
+      "phase": "PREP_SECRET_SCAN",
+      "state": "START",
+      "elapsedMs": 4222
+    },
+    {
+      "phase": "PREP_SECRET_SCAN",
+      "state": "DONE",
+      "elapsedMs": 4314
+    },
+    {
+      "phase": "PREP_VERIFY_RETIRE",
+      "state": "START",
+      "elapsedMs": 4314
+    },
+    {
+      "phase": "PREP_VERIFY_RETIRE",
+      "state": "DONE",
+      "elapsedMs": 4461
+    },
+    {
+      "phase": "R01",
+      "state": "START",
+      "elapsedMs": 4461
+    }
+  ],
+  "completedPreparationOperations": 9,
+  "preparationMarkersBeforeR01": 18,
+  "completedCaseCount": 0,
+  "r01Started": true,
+  "r01Done": false,
+  "lastCompletedPhase": {
+    "phase": "PREP_VERIFY_RETIRE",
+    "state": "DONE",
+    "elapsedMs": 4461
+  },
+  "peakRssBytes": null,
+  "actualKdfInvocationCount": null,
+  "finalNativeBatchReceiptPresent": false,
+  "limitations": [
+    "Compilation optimized profile and exact harmless supervisor passed; source checks true before/after.",
+    "Markers identify completed preparation operations, not independent cryptographic acceptance.",
+    "R01 started but did not produce DONE or final receipt; no recovery/R23/subset validation credited.",
+    "Wrapper 4746.919 ms and native libtest 4.51 s are distinct measurements.",
+    "First-attempt timeout cause remains unknown; this run cannot retroactively prove it.",
+    "No permission relaxation, retry, local execution or next experiment authorized by this record."
+  ],
+  "recoveryValidated": false,
+  "h5Complete": false
+}
