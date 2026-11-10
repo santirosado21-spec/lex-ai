@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "scope": "Nym metadata/preparation packet only",
+  "sourceHashes": {
+    "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+    "docs/research/privacy-nym-int8-preparation-v1.md": "511041f0fbe113246a5c291b55700f21346607bf98d1aa82b54a6b83e793076d"
+  },
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE6raw response hashes,4Gitbindings,2LFSmetadata bindings,81labels40types arithmetic and historical policy hashes",
+  "httpRequests": 6,
+  "bytesReceived": 18249,
+  "prospectivePayloadBytes": 151135538,
+  "weightsDownloaded": false,
+  "tokenizerDownloaded": false,
+  "licenseDeclaration": "MIT",
+  "fullLicenseNoticePresent": false,
+  "redistributionApproved": false,
+  "productionApproved": false,
+  "actualGraphObserved": false,
+  "actualOffsetsObserved": false,
+  "qualityEvaluated": false
+}
