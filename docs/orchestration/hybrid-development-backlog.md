@@ -38,7 +38,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | C0 | Registro y planes cerrados de adquisición pública | C-R0 revisada | done | `9ac5bd8`; 15 tests, revisión independiente; 10 URLs aprobadas y 20 plazas pendientes |
 | C1 | Piloto público de 30 plazas | C0 y política/rutas por fuente | in-progress | C1a federal completada; faltan 16 documentos estatales y 4 judiciales concretos |
 | C1a | Fábrica, evidencia y primer lote federal | Plan C0 válido | done | `e6dab95`; 10/10 PDFs, 8.086 segmentos en cuarentena, offline 10 cachés/0 solicitudes; ver QA C0-C1a |
-| C1b | Completar selección y adquisición estatal/judicial | Revisar fuentes/rutas/robots y permisos | todo | 20 plazas explícitas sin URL; sin sustituir bloqueos ni afirmar cobertura |
+| C1b | Completar selección y adquisición estatal/judicial | Revisar fuentes/rutas/robots y permisos | in-progress | Dos PDF NL de investigación capturados;20 plazas del piloto aún sin aprobación, sin cobertura nacional |
 | S-R0 | Investigación GitHub de skills/repos para trabajo jurídico en nube México | Pedido del dueño, lectura pública | done | `80aef8d`; Codex + investigador Sol, 13 repos; revisor Sol APPROVE documental por muestra |
 | S1 | Especificar/adaptar investigación y revisión contractual MX | S-R0 revisada, licencias/dependencias resueltas por módulo | done | `fcce90d`; dos skills/contratos offline, 12 fixtures, 605/605 y build; revisor Sol APPROVE |
 | S2 | Comparación pareada de skills y modelos por tarea | S1, aceptación independiente, acceso/presupuesto de evaluación | in-progress | S2a piloto SF gratuito autorizado; S2b evaluación ampliada/rutas producto y abogados pendiente |
@@ -51,16 +51,39 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H4b.2c | Nuevo examen independiente y medición única | Protocolo/corpus/candidato congelados y revisión | in-progress | 8152424: corpus300 y anotación revisados, manifiesto válido; falta candidato elegible/freeze y única medición |
 | S2b.1 | Diagnóstico de formato nativo y presupuesto común | S2a, acceso/budget propios antes de live | in-progress | 31f31ad: 3/8POST, HTTP400 detiene sin retry; replay/revisiónAPPROVE, sin pares completos ni ganador |
 | D0 | Landing con tres opciones de descarga | Pedido10nov, catálogo de activos reales | done | d4fc1de; 4Node/browserQA5anchos y reviewAPPROVE, previewREADY; sólo ARM0.4.3real, Intel/Win pendientes |
-| D1 | Portabilidad y empaquetado por target | Canal F0, manifiestos/runtime específicos | in-progress | D1a94e48c8 RSS Windows12/12, sin Windows real. D1b staging/arquitecturas en curso, instaladores Intel/Win pendientes |
+| D1 | Portabilidad y empaquetado por target | Canal F0, manifiestos/runtime específicos | in-progress | D1a/b revisados; colector Windows falla en CI real, sin instaladores Intel/Windows |
 | H5b.1b.2 | Propuestas/logs nativos atómicos | H5b.1b.1 | done | 801b62a; cierre schema4 conjunto36nativas/29Node revisados, sin efectos de aprobación |
 | H5b.1b.3 | Horas/tarifas/resolución nativas | H5b.1b.2 | done | 801b62a;36nativas/29Node+3probes revisorSolAPPROVE, 3core27parciales2ausentes; sin puente/migración |
 | S2b.1b | Compilador de citas con anclas opacas | S1 y diagnóstico S2a | done | 31f31ad; 13nuevas/31conS1 por builder/revisor, root combinado52; literalidad no entailment |
 | D1a | Memoria de árbol de procesos Windows | D1 | done | 94e48c8; 12dirigidas, revisiónSolAPPROVE y controlMac; Windows físico/coste polling sinmedir |
 | D1b | Staging y verificación explícitos por target | D1a/inventario runtimes | done | 6d00b78;11/11/reviewSolAPPROVE, inventariosSHA/stagingatómico/offline; sin buildreal/Windows habilitado |
+| H4b.2b.3 | Ablation5vs3 etiquetas | H4b.2b/DEV3 independiente | done | 7bdc217;120dispatches, ambosinadecuados/todosbloqueados; reviewevidenciaAPPROVE, sinheldout |
+| H4b.2b.4 | TokenNER compacto distinto | H4b.2b diagnóstico | done | ff0619b;13TP/41FP/35FN en60dev, no elegible; código/replay revisados, no producto |
+| H4b.2b.4a | Causas acotadas con invariancia | H4b.2b.4/diagnóstico | done | faec790;60 salidas idénticas,26 fallos backend atribuidos,39 tests/review APPROVE; sin mejora de calidad |
+| S2b.1c | Comparación literal/anclas | S2b.1a/S2b.1b | done | 51587ff;4/4JSON/S1/citas,2paresficción,16447tokens; no aceptación/ganador |
+| C1b.1 | Fuentes estatales/judiciales candidatas | C0/C1a | done | 71ad54f;8 candidatos y12 sin selección, conflicto Jalisco/derechos pendientes; sin autorización general de adquisición |
+| C1b.2 | Inspección HTML NL fija | C1b.1 | done | 4004c1f;17tests+3HTTP1583649B,2HTMLquarantine; PDFqueryrechazadas sinnormalizar |
+| C1b.3 | Captura específica de2PDF NL | C1b.2/literalesexactos | done | 2165eed;17tests+3HTTP3001218B,2PDForiginalesquarantine; sinextract/rights/versionapproval |
+| C1b.4 | Extracción offline NL con parser actual | C1b.3 | done | f032b35;619 páginas/102 registros,100 anómalos, Civil incompleto/Penal truncado; negativa preservada,15 tests y revisión |
+| D1c | Primer smoke Windows real | D1a | done | b3fd346;CI42864129769FAILprimerCIM2020.85ms,0muestras; negativa conservada |
+| D1d | Colector persistente optativo | D1c | in-progress | 7b37d96;tests/reviewAPPROVE, CI42865975268STARTUP_TIMEOUT10s, sinrendimientovalidado |
+| D1e | Diagnóstico etapas Windows | D1d/2fallosreales | done | 9b77171;42868018670diagnosiscomplete, sinREAD_READY/CIM_START, no performancepass |
+| D1f | Hipótesis de protocolo ASCII | D1e | done | 91fd4fa;31 tests/review27, CI42869183776 STARTUP_TIMEOUT10s; hipótesis sin mejora, negativa conservada |
+| D1g | Diagnóstico entorno/autoload A/B | D1f/3 fallos | done | 7fb989e+b0d6830; CI42872682039 ambas TIMEOUT_LOOKUP_UTILITY,0 muestras;20,09s/cleanup correcto, auditoría independiente; causa exacta pendiente |
+| H4b.2b.4b | Composición diagnóstica con prueba de contención | H4b.2b.4a | in-progress | Astra, archivos v2 nuevos; sin modificar baseline/umbrales/heldout ni liberar egreso |
+| H4b.2d | Repetir H3V con detector elegible real | H4b.2b/H4b.2c | todo | Gate del plan F1A; los experimentos TokenNER no cierran esta vertical |
+| S2b.2a | Protocolo ampliado antes de autoría | S2a/S2b.1 | done | 77c4831;30 propuestos, denominadores/gates y revisión independiente; sin generación |
+| S2b.2b | Datos nuevos y rúbricas propuestas | S2b.2a | done | 837cd20;30 casos/32 artículos/3 instrumentos/2 jurisdicciones, revisión Sol; S1 30, anclas29; abogados y sobre completo pendientes |
+| C2a | Páginas estatales completas y candidatos | C1b.3/C1b.4 diagnóstico | done | 4d25180;619 páginas,3564 candidatos,13 repeticiones sin truncar;19 tests/reconstrucción independiente, cuarentena |
+| C2b | Comparación independiente de fidelidad | C2a | in-progress | Sol prepara protocolo estratificado de24 páginas, sin ejecutar o aprobar corpus |
 | D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |
 | N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
 | N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |
 | N2 | Migración de identidad y compatibilidad | Nombre elegido tras N1 | todo | Sin replace global, cambios de datos/IDs o despliegue automático |
+
+**Corrección de IDs (10 noviembre):** el plan reserva `H4b.2d` para repetir H3V. Dos informes históricos de Rampart usaron por error ese ID y `H4b.2d.1`. Se preservan sus bytes/hashes; sus alias canónicos en este tablero son `H4b.2b.4` y `H4b.2b.4a`. Ningún experimento de detector cierra la vertical pendiente. El candidato nuevo usa `H4b.2b.4b`.
+
+**Checkpoint b0d6830:** suite root932/932 y build TypeScript/Vite OK, antes del candidato de composición v2 en construcción. QA dirigido y aceptación profesional/física se registran por separado.
 
 ## H1 — Contrato y transporte simulado
 
@@ -256,3 +279,7 @@ Commit4ba5262: F0/H4b.2a y H5b.1b.1 revisados. QA docs/qa/hybrid-F0-H4b2a-H5b1b1
 Los límites de dos tareas son checkpoints revisables, no una orden de detener el trabajo continuo. Commits95f4f48/31f31ad/94e48c8 preservan guardas del examen, probe parcial/anclas y RSS Windows. Root52/52 combinadas de probe/anclas/semántico y16/16 distribución; estas dirigidas no sustituyen suite global actual. Propuestas/schema4 801b62a, landing d4fc1de y staging6d00b78 cerrados en su alcance con revisión independiente; root812/812 y buildOK. Sigue ablationdev detector y fuentes C1b, no ampliar esa aceptación a producto. Padre H4/H5/H6/H7 sin aceptación; no clientes reales o cloud privado.
 
 H4b.2b.3: ablation de desarrollo en preparación (mismos pesos/umbral,5etiquetas vs3documentadas) y60casosdev nuevos de autor independiente, revisión pendiente. Sin heldout o entrenamiento. C1b.1 busca fuentes oficiales para plazas pendientes, sin aprobarlas o descargar masivamente.
+
+## Evidencia continua adicional 2026-11-10
+
+Privacyff0619b/faec790 sigueinelegible; tiposnativosnoequivalenatemáticaMX. Instrumentación60resultadosidénticos permiteatribuir26bloqueosdelbackend aUNK4/BIO3/confianza3/tiposnomapeados16, sinfalloPATHcausante. S2b1c4/4estructuraenficciónno calidadjurídica. CorpusNL2HTML+2PDForiginalesenR&Dcuarentena; elpiloto30sigue10federales/20pendientes. Windows3implementacionesfallaron; unjobdiagnósticocompletadonovalidarendimiento. SFKimi1opinion/Gemini1intentosinfinalusable/local1drafttruncadodescartado; tokens/cuotasdesconocidos, noClaude/cliente/pago/nuevaaceptación. Pruebasroot867checkpoint, posterioresdirigidas39trace/17PDF/31Windows, noampliarafirmaciónsinlotesactuales.

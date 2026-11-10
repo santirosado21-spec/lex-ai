@@ -81,3 +81,11 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 19:36 — codex — Canal local seleccionado y nuevo examen de privacidad separado del candidato
 
 **Por qué:** ADR0004 reutiliza UI servida por loopback del equipo y futura bóvedaRust; no convertir una web pública que recibe originales en procesamiento local. F0/H4b2a y dominio recordatorios probados4ba5262 no activan H4/H5/H6. Protocolo v2 congelado antes de autor independiente300; corpus validado contra bytes/splits y revisión de anotación separada antes de puntuar. Astra candidato solo dev, OSdeniega corpus/scorer/evaluador al proceso; no afinar con heldout. UUID numéricos pueden ser detectados conservadoramente: corregir fixture sin eximir marcadores de origen no comprobado o debilitar gate. Continuar próximas fases por autorización del dueño, no parar tras dos cortes ni declarar aceptaciones externas completas.
+
+## 2026-11-10 12:00 — codex — Atribuir fallos antes de cambiar modelo o relajar gates
+
+**Por qué:** Tres configuraciones de detector no son elegibles. Replay y telemetria invariantes distinguen pérdidas de composición y cobertura; mantener examen300 intacto. Medir causa no autoriza egreso, reparar contra gold o rebajar incertidumbre. Windows también acumula tres fallos reales: investigar entorno con sondas acotadas, no repetir implementaciones o elevar límites sin evidencia.
+
+## 2026-11-10 12:22 — codex — Conservar la vertical H4b.2d abierta
+
+**Por qué:** El plan reserva H4b.2d para repetir H3V con detector elegible. Informes históricos Rampart usaron por error ese ID; mantener bytes/hash y registrar alias canónicos H4b.2b.4/4a evita declarar completa una integración aún pendiente. Composición nueva H4b.2b.4b sigue diagnóstica.
