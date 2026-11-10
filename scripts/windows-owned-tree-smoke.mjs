@@ -1,6 +1,6 @@
 import {spawn} from 'node:child_process';
 import {performance} from 'node:perf_hooks';
-import {readFile,mkdir,writeFile} from 'node:fs/promises';
+import {readFile,mkdir,writeFile,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
@@ -57,9 +57,30 @@ export async function runOwnedTreeSmoke({platform=process.platform,arch=process.
  return report;
 }
 const SOURCE_PATHS=['scripts/windows-owned-tree-smoke.mjs','tests/windows-owned-tree-smoke.test.mjs','docs/architecture/windows-owned-tree-smoke-v1.md','server/windows-memory-monitor-v2.mjs','server/windows-process-memory.mjs','resources/windows-owned-tree-smoke-v1.json','.github/workflows/windows-owned-tree-smoke.yml'];
-export async function verifyFreeze(freeze){if(!freeze||freeze.scope!==PROTOCOL||freeze.approvedForSingleRun!==true||Object.keys(freeze.sourceHashes??{}).sort().join('|')!==[...SOURCE_PATHS].sort().join('|'))throw Error('FREEZE');for(const p of SOURCE_PATHS){const bytes=await readFile(p);if(createHash('sha256').update(bytes).digest('hex')!==freeze.sourceHashes[p])throw Error('FREEZE');}}
+export async function verifyFreeze(freeze){if(!freeze||freeze.scope!==PROTOCOL||freeze.approvedForSingleRun!==true||Object.keys(freeze.sourceHashes??{}).sort().join('|')!==[...SOURCE_PATHS].sort().join('|'))throw Object.assign(Error(),{code:'INVALID_FREEZE'});for(const p of SOURCE_PATHS){const bytes=await readFile(p);if(createHash('sha256').update(bytes).digest('hex')!==freeze.sourceHashes[p])throw Object.assign(Error(),{code:'SOURCE_HASH_MISMATCH'});}}
+const ERROR_TYPES=new Set(['Error','TypeError','RangeError','SyntaxError']);
+const ERROR_CODES=new Set(['INVALID_FREEZE','SOURCE_HASH_MISMATCH','UNSUPPORTED_PLATFORM','UNSAFE_OUTPUT_PARENT','ENOENT','EEXIST','EACCES','EPERM','ENOTDIR','EISDIR','ENOSPC']);
+export function sanitizedFailure(error,phase){return {protocol:PROTOCOL,status:'FAIL',phase,category:'PREFLIGHT_OR_RUN',errorType:ERROR_TYPES.has(error?.name)?error.name:'UNKNOWN',errorCode:ERROR_CODES.has(error?.code)?error.code:'UNKNOWN'};}
+export async function createFreshOutput(parent='artifacts'){
+ try{await mkdir(parent,{recursive:false});}catch(error){if(error?.code!=='EEXIST')throw error;}
+ const info=await lstat(parent);if(info.isSymbolicLink()||!info.isDirectory())throw Object.assign(Error(),{code:'UNSAFE_OUTPUT_PARENT'});
+ const out=path.join(parent,'windows-owned-tree-smoke-v1');await mkdir(out,{recursive:false});
+ const after=await lstat(parent);if(after.isSymbolicLink()||!after.isDirectory()||after.dev!==info.dev||after.ino!==info.ino)throw Object.assign(Error(),{code:'UNSAFE_OUTPUT_PARENT'});
+ return out;
+}
+export async function runFrozenSmoke({platform=process.platform,readFreeze=()=>readFile('docs/qa/windows-owned-tree-smoke-freeze-2026-11-10.json','utf8'),checkFreeze=verifyFreeze,run=runOwnedTreeSmoke,parent='artifacts',write=writeFile}={}){
+ let phase='preflight',report;
+ try{
+  if(platform!=='win32')throw Object.assign(Error(),{code:'UNSUPPORTED_PLATFORM'});
+  const freeze=JSON.parse(await readFreeze());phase='source-preflight';await checkFreeze(freeze);
+  phase='output';const out=await createFreshOutput(parent);await write(path.join(out,'started.json'),JSON.stringify({protocol:PROTOCOL}),{flag:'wx'});
+  phase='run';report=await run();report.phase=report.status==='PASS'?'complete':'run';phase='postflight';await checkFreeze(freeze);
+  phase='receipt';await write(path.join(out,'receipt.json'),JSON.stringify(report),{flag:'wx'});
+  return report;
+ }catch(error){return {...sanitizedFailure(error,phase),...(report?{measurementReportAvailable:true}: {})};}
+}
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
  const args=process.argv.slice(2);if(!args.length)console.log(JSON.stringify({protocol:PROTOCOL,status:'PLAN',execution:false}));
- else if(args.length===1&&args[0]==='--run'){try{if(process.platform!=='win32')throw Error();const freeze=JSON.parse(await readFile('docs/qa/windows-owned-tree-smoke-freeze-2026-11-10.json','utf8'));await verifyFreeze(freeze);const out='artifacts/windows-owned-tree-smoke-v1';await mkdir(out,{recursive:false});await writeFile(`${out}/started.json`,JSON.stringify({protocol:PROTOCOL}),{flag:'wx'});const report=await runOwnedTreeSmoke();await verifyFreeze(freeze);await writeFile(`${out}/receipt.json`,JSON.stringify(report),{flag:'wx'});console.log(JSON.stringify(report));if(report.status!=='PASS')process.exitCode=1;}catch{console.log(JSON.stringify({protocol:PROTOCOL,status:'FAIL',category:'PREFLIGHT_OR_RUN'}));process.exitCode=1;}}
+ else if(args.length===1&&args[0]==='--run'){const report=await runFrozenSmoke();console.log(JSON.stringify(report));if(report.status!=='PASS')process.exitCode=1;}
  else{console.log(JSON.stringify({status:'FAIL',category:'ARGUMENTS'}));process.exitCode=1;}
 }

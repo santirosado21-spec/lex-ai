@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "scope": "SECOND_EXPLICIT_WINDOWS_OWNED_TREE_SMOKE",
+  "approvedBy": "codex/root",
+  "previousRunId": 42894576266,
+  "previousFreezeSha256": "9cf0081a344ff7db9bc15166465e868b9fc4e5bd8b2d1d9e0e1352bd449b63bb",
+  "preservedPreviousFreeze": "docs/qa/windows-owned-tree-D1j-attempt1-freeze-2026-11-10.json",
+  "reason": "Safe output-parent creation and finite phase diagnostics fix a deterministic fresh-checkout blocker. Original broad-catch exception remains unknown.",
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE,27/27targeted tests",
+  "newFreezeSha256": "9c05df15075ad0c5826953cbdd1eccf4e62eae1741522177402ea34072f6944a",
+  "monitorAndBudgetsAndFiveSnapshotsUnchanged": true,
+  "automaticRetry": false,
+  "actualWindowsMeasurementEstablished": false,
+  "physical8GBValidated": false,
+  "installersValidated": false
+}
