@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {EventEmitter} from 'node:events';
 import {spawn} from 'node:child_process';
 import {readFile} from 'node:fs/promises';
-import {requireNodeVersion,runWindowsMemorySmoke,SYNTHETIC_PROCESS} from '../scripts/windows-memory-smoke.mjs';
+import {requireNodeVersion,runWindowsMemorySmoke,runPersistentWindowsMemorySmoke,SYNTHETIC_PROCESS} from '../scripts/windows-memory-smoke.mjs';
 function fixture(){
  const child=new EventEmitter();Object.assign(child,{pid:123456,connected:true,exitCode:null,signalCode:null,disconnect(){this.connected=false;this.exitCode=0;queueMicrotask(()=>this.emit('exit',0,null));},kill(){throw Error('Graceful cleanup should suffice.');}});
  return {child,spawnNode:(file,args,options)=>{assert.equal(file,process.execPath);assert.deepEqual(args,['--input-type=commonjs','-e',SYNTHETIC_PROCESS]);assert.deepEqual(options,{stdio:['ignore','ignore','ignore','ipc'],windowsHide:true,shell:false});queueMicrotask(()=>child.emit('message','ready'));return child;}};
@@ -47,4 +47,30 @@ test('early child exit and forced cleanup cannot produce a pass',async()=>{
  const g=fixture();let measured=0;
  const early=await runWindowsMemorySmoke({...windows,spawnNode:(...args)=>{const child=g.spawnNode(...args);queueMicrotask(()=>{child.exitCode=3;child.emit('exit',3,null);});return child;},measure:async()=>{measured++;return 1024;}});
  assert.equal(early.status,'FAIL');assert.equal(early.cleanup.exitObserved,true);assert.equal(measured,0);
+});
+test('protocol 2 reports cold first snapshot separately from four fresh steady requests',async()=>{
+ const f=fixture();let readings=0,closed=false;
+ const report=await runPersistentWindowsMemorySmoke({...windows,spawnNode:(_file,args)=>{assert.equal(args[2],SYNTHETIC_PROCESS.replace('30000','60000'));queueMicrotask(()=>f.child.emit('message','ready'));return f.child;},makeMonitor:({rootPid})=>{assert.equal(rootPid,f.child.pid);return {start:async()=>({rssBytes:4096,elapsedMs:4500}),readRss:async()=>{readings++;return {rssBytes:8192,elapsedMs:25};},close:async()=>{closed=true;return {exitObserved:true};},diagnostics:()=>({category:null,killed:false,exitCode:0,signal:null})};}});
+ assert.equal(report.status,'PASS');assert.equal(report.startup.elapsedMs,4500);assert.equal(report.startup.includesFirstActualCimSnapshot,true);assert.equal(readings,4);assert.equal(report.samples.length,4);assert.equal(report.requestTimeoutMs,2000);assert.equal(report.protocol1ColdStartBoundPassed,false);assert.equal(report.collectorMemoryOverheadBytes,null);assert.equal(closed,true);assert.equal(report.cleanup.exitObserved,true);
+});
+test('protocol 2 preserves safe startup failure diagnostics and cleans fixture even when monitor cleanup throws',async()=>{
+ for(const cleanupThrows of [false,true]){const f=fixture();let reads=0;const report=await runPersistentWindowsMemorySmoke({...windows,spawnNode:()=>{queueMicrotask(()=>f.child.emit('message','ready'));return f.child;},makeMonitor:()=>({start:async()=>{throw Error('raw private collector path');},readRss:async()=>{reads++;},close:async()=>{if(cleanupThrows)throw Error('raw cleanup path');return {exitObserved:true};},diagnostics:()=>({category:'STARTUP_TIMEOUT',killed:true,exitCode:1,signal:null,phase:'startup',elapsedMs:10000})})});assert.equal(report.status,'FAIL');assert.equal(reads,0);assert.equal(report.samples.length,0);assert.equal(report.cleanup.exitObserved,true);assert.equal(report.diagnostic.category,cleanupThrows?'CLEANUP_ERROR':'STARTUP_TIMEOUT');assert.doesNotMatch(JSON.stringify(report),/raw|private.*path/);}
+});
+test('protocol 2 final awaited snapshot exit/error and pre-cleanup nonzero exit fail closed',async()=>{
+ for(const mode of ['final-exit','final-error','cleanup-exit','normal']){
+  const f=fixture();let count=0;
+  const report=await runPersistentWindowsMemorySmoke({...windows,spawnNode:()=>{queueMicrotask(()=>f.child.emit('message','ready'));return f.child;},makeMonitor:()=>({
+   start:async()=>({rssBytes:1024,elapsedMs:100}),
+   readRss:async()=>{if(++count===4){if(mode==='final-exit'){f.child.exitCode=3;f.child.emit('exit',3,null);}if(mode==='final-error')f.child.emit('error',Error('private fixture diagnostic'));}return {rssBytes:1024,elapsedMs:1};},
+   close:async()=>{if(mode==='cleanup-exit'){f.child.exitCode=3;f.child.emit('exit',3,null);}return {exitObserved:true};},
+   diagnostics:()=>({category:null,killed:false,exitCode:0,signal:null})
+  })});
+  assert.equal(report.status,mode==='normal'?'PASS':'FAIL');
+  assert.equal(report.cleanup.expectedExitZero,mode==='normal');
+  assert.equal(report.cleanup.intentionalShutdown,mode==='normal');
+  assert.equal(report.samples.length,mode.startsWith('final-')?3:4);
+  if(mode==='cleanup-exit'||mode==='final-exit')assert.equal(report.fixtureDiagnostic.exitCode,3);
+  if(mode==='final-error')assert.equal(report.fixtureDiagnostic.unexpectedError,true);
+  assert.doesNotMatch(JSON.stringify(report),/private fixture/);
+ }
 });

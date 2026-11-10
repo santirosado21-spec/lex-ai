@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1d",
+  "status": "reviewed-before-protocol2-ci",
+  "sources": {
+    "server/windows-memory-monitor.mjs": "4075bf47bf743b89222db9493e997dcbf13d345c22e845f8b6dc67dd28fccff0",
+    "tests/windows-memory-monitor.test.mjs": "6db30267485ece7935cdc2d53d6a3dbc5e3f5f1279d2281a0ded806c4130261c",
+    "scripts/windows-memory-smoke.mjs": "b2ad189bf74eb1deff0a83c47edf036d59bc78fb684c774afa65f153d7f32bb2",
+    "tests/windows-memory-smoke.test.mjs": "93e5f02ed7bd6e38a4d638ae7b87ed27284e8410474a16ec442343921a31a5f1",
+    ".github/workflows/windows-memory-smoke.yml": "cc8fc26acb6ddf2a29779451a150b7b18cebb81f35d090b454810bd239d40af5"
+  },
+  "startupLimitMs": 10000,
+  "freshRequestLimitMs": 2000,
+  "outputLimitBytes": 4194304,
+  "requestsPerRun": {
+    "startupSnapshot": 1,
+    "freshSteadySnapshots": 4
+  },
+  "builderTargetedTests": 29,
+  "independentTargetedTests": 25,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol",
+  "verdict": "APPROVE-after-P2-accuracy-fix",
+  "protocol1RunPreserved": 42864129769,
+  "protocol1ColdStartBoundPassed": false,
+  "collectorMemoryOverheadBytes": null,
+  "actualWindowsRun": null,
+  "productionImported": false,
+  "physical8GBValidation": false,
+  "installerValidation": false,
+  "inferenceValidation": false,
+  "newPaidServices": false
+}

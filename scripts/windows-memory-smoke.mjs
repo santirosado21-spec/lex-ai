@@ -2,6 +2,7 @@ import {spawn} from 'node:child_process';
 import {performance} from 'node:perf_hooks';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
+import {createWindowsMemoryMonitor} from '../server/windows-memory-monitor.mjs';
 import {windowsProcessTreeRss} from '../server/windows-process-memory.mjs';
 // A direct child only: no grandchildren, shell, documents, network or model.
 // IPC disconnection and a fixed lifetime bound both terminate the fixture if
@@ -17,6 +18,7 @@ function nextExit(child,timeoutMs){return new Promise(resolve=>{
  const timer=setTimeout(()=>{child.off('exit',done);resolve(false);},timeoutMs);child.once('exit',done);
 });}
 export async function stopSyntheticProcess(child){
+ if((child.exitCode!==null&&child.exitCode!==undefined)||child.signalCode)return {exitObserved:true,forced:false};
  const exited=nextExit(child,3000);
  if(child.connected)child.disconnect();
  if(await exited)return {exitObserved:true,forced:false};
@@ -59,6 +61,55 @@ export async function runWindowsMemorySmoke({platform=process.platform,arch=proc
  }
  return report;
 }
+// Protocol 2 preserves the failed protocol-1 two-second cold-start result.
+// Its explicit ten-second bootstrap measures the FIRST actual CIM snapshot;
+// steady-state requests retain the original two-second deadline.
+export async function runPersistentWindowsMemorySmoke({platform=process.platform,arch=process.arch,nodeVersion=process.version,spawnNode=spawn,makeMonitor=createWindowsMemoryMonitor}={}){
+ const report={protocol:2,scope:'owned synthetic Node persistent collector diagnostic only',platform,arch,nodeVersion,startupLimitMs:10000,requestTimeoutMs:2000,requestOutputLimitBytes:4*1024*1024,syntheticLifetimeLimitMs:60000,samples:[],physical8GBValidation:false,installerValidation:false,inferenceValidation:false,protocol1ColdStartBoundPassed:false,collectorMemoryOverheadBytes:null};
+ let child,monitor,fixtureError=false,fixtureExited=false,intentionalShutdown=false;
+ const fixtureLive=()=>child&&!fixtureError&&!fixtureExited&&child.exitCode===null&&!child.signalCode&&child.connected;
+ try{
+  requireNodeVersion(nodeVersion);
+  if(platform!=='win32'||arch!=='x64')throw Error('Windows x64 required; no platform fallback.');
+  try{child=spawnNode(process.execPath,['--input-type=commonjs','-e',SYNTHETIC_PROCESS.replace('30000','60000')],{stdio:['ignore','ignore','ignore','ipc'],windowsHide:true,shell:false});}catch{throw Error('Synthetic process could not start.');}
+  child.on('error',()=>{fixtureError=true;});
+  child.on('exit',()=>{if(!intentionalShutdown)fixtureExited=true;});
+  await new Promise((resolve,reject)=>{
+   const finish=error=>{clearTimeout(timer);child.off('message',ready);child.off('error',failed);child.off('exit',early);error?reject(error):resolve();};
+   const ready=message=>finish(message==='ready'?null:Error('Unexpected synthetic fixture handshake.'));
+   const failed=()=>finish(Error('Synthetic process could not start.'));
+   const early=()=>finish(Error('Synthetic process exited before readiness.'));
+   const timer=setTimeout(()=>finish(Error('Synthetic process readiness timeout.')),5000);
+   child.once('message',ready);child.once('error',failed);child.once('exit',early);
+  });
+  if(!Number.isSafeInteger(child.pid)||child.pid<=0||child.pid===process.pid)throw Error('Invalid owned synthetic process PID.');
+  monitor=makeMonitor({rootPid:child.pid});
+  report.stage='startup';report.startup=await monitor.start();
+  if(!fixtureLive())throw Error('Synthetic process failed during startup snapshot.');
+  report.startup.includesFirstActualCimSnapshot=true;
+  for(let i=0;i<4;i++){
+   report.stage='steady-request';
+   if(!fixtureLive())throw Error('Synthetic process exited during measurement.');
+   const sample=await monitor.readRss();
+   if(!fixtureLive())throw Error('Synthetic process failed during measurement.');
+   report.samples.push({sample:i+1,...sample});
+  }
+  if(!fixtureLive())throw Error('Synthetic process failed before completion.');
+  report.stage='complete';report.status='PASS';
+ }catch{report.status='FAIL';report.failure='Persistent collector diagnostic failed; see sanitized category.';
+ }finally{
+  if(monitor){try{report.collectorCleanup=await monitor.close();report.diagnostic=monitor.diagnostics();if(!report.collectorCleanup.exitObserved||report.diagnostic.category)report.status='FAIL';}catch{report.collectorCleanup={exitObserved:false};report.diagnostic={category:'CLEANUP_ERROR'};report.status='FAIL';}}
+  if(child&&Number.isSafeInteger(child.pid)&&child.pid>0){
+   // Collector shutdown is asynchronous too: verify the fixture remained alive
+   // through it before declaring our own IPC disconnect intentional.
+   intentionalShutdown=Boolean(fixtureLive());if(!intentionalShutdown)report.status='FAIL';
+   try{report.cleanup=await stopSyntheticProcess(child);report.cleanup.intentionalShutdown=intentionalShutdown;report.cleanup.expectedExitZero=intentionalShutdown&&!fixtureError&&child.exitCode===0&&!child.signalCode;if(report.cleanup.forced||!report.cleanup.expectedExitZero)report.status='FAIL';}catch{report.cleanup={exitObserved:false,intentionalShutdown,expectedExitZero:false};report.status='FAIL';}
+   const signals=new Set(['SIGTERM','SIGKILL','SIGINT','SIGBREAK','SIGHUP']);
+   report.fixtureDiagnostic={unexpectedError:fixtureError,unexpectedExit:fixtureExited,exitCode:Number.isSafeInteger(child.exitCode)?child.exitCode:null,signal:signals.has(child.signalCode)?child.signalCode:null};
+  }
+ }
+ return report;
+}
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){
- const report=await runWindowsMemorySmoke();console.log(JSON.stringify(report,null,2));if(report.status!=='PASS')process.exitCode=1;
+ const report=await (process.argv[2]==='--persistent'?runPersistentWindowsMemorySmoke():runWindowsMemorySmoke());console.log(JSON.stringify(report,null,2));if(report.status!=='PASS')process.exitCode=1;
 }

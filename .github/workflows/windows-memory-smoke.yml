@@ -5,6 +5,8 @@ on:
     paths:
       - .github/workflows/windows-memory-smoke.yml
       - scripts/windows-memory-smoke.mjs
+      - server/windows-memory-monitor.mjs
+      - tests/windows-memory-monitor.test.mjs
       - server/windows-process-memory.mjs
       - server/runtime-memory.mjs
       - tests/windows-memory-smoke.test.mjs
@@ -32,9 +34,9 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Targeted contract and lifecycle tests
         shell: pwsh
-        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs
-      - name: Four serial actual CIM samples
+        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs tests/windows-memory-monitor.test.mjs
+      - name: Protocol 2 cold bootstrap and four steady CIM samples
         shell: pwsh
         # Public standard runner is a 16 GB VM; this proves neither physical
         # 8 GB acceptance, an installer, nor product inference portability.
-        run: node scripts/windows-memory-smoke.mjs
+        run: node scripts/windows-memory-smoke.mjs --persistent
