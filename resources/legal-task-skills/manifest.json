@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "status": "draft-offline",
+  "productionEnabled": false,
+  "remoteToolsEnabled": false,
+  "authorizationGranted": false,
+  "allowedDataClasses": [
+    "public",
+    "synthetic"
+  ],
+  "skills": [
+    {
+      "id": "investigacion-juridica-mx",
+      "version": "0.1.0",
+      "file": "investigacion-juridica-mx/SKILL.md",
+      "sha256": "1430f49206245983062088fcb57687115aa1011f9b08c4963871fa18d3c65eba",
+      "outputContractVersion": 1
+    },
+    {
+      "id": "revision-contratos-mx",
+      "version": "0.1.0",
+      "file": "revision-contratos-mx/SKILL.md",
+      "sha256": "78a6b4a41f7a2a43abdfc88b43770fe7f864b2177c76d2a1e13395727cb358ed",
+      "outputContractVersion": 1
+    }
+  ]
+}

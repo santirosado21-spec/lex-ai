@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-09T23:59:38.200Z",
+  "scope": "Offline S1 structural preparation only; no model generation/provider/privacy authority",
+  "reviewer": "review_legal_task_skills_s1",
+  "reviewerModel": "gpt-6.1-sol",
+  "codeReview": "APPROVE at matching hashes",
+  "node": "v22.22.3",
+  "sourceHashes": {
+    "server/legal-tasks/contracts.mjs": "340c0edb8262780f18c9f175af6b46738cc887577d9ebc25869080fa2822ce1f",
+    "scripts/check-legal-task-skills.mjs": "ab15bddb6fa5a6e70e46ff84d1813f2b111c9326135ae496a45cf48cddb52856",
+    "tests/legal-task-contracts.test.mjs": "e1134c2c55cbf91335ea461d963fde420fd6dd30836a00425f5d6bbdbb57d4c1",
+    "resources/legal-task-skills/manifest.json": "ec4a065a034a4406d5e93d95bad2141a1b6af28e12a8650e6c5d3551898296d2",
+    "resources/legal-task-skills/investigacion-juridica-mx/SKILL.md": "1430f49206245983062088fcb57687115aa1011f9b08c4963871fa18d3c65eba",
+    "resources/legal-task-skills/revision-contratos-mx/SKILL.md": "78a6b4a41f7a2a43abdfc88b43770fe7f864b2177c76d2a1e13395727cb358ed",
+    "eval/legal-tasks/development.jsonl": "8f5a0df2a0aaca49b6d2becfa773bad334d5a3cc8d8bf3aa9207ceafcd3472d3",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "package-lock.json": "ad587cd4ee6435c211ac3f4f275834736e558000d16b006370bd08d0b5898e9d"
+  }
+}
