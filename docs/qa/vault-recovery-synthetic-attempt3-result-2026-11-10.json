@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:29:44.605760+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_FAILED_ATTEMPT_FACTS_AND_DIAGNOSIS_LIMITS",
+  "runId": 42894691715,
+  "commit": "451f294",
+  "workflowConclusion": "failure",
+  "log": "artifacts/phased-completion-20261110-batch2/vault-recovery-synthetic-third.log",
+  "logSha256": "4f84622cd2c0eecd114d239eb571e1a37600624e0f6c8dbb4d3e8217a3e59d43",
+  "freeze": "docs/qa/vault-recovery-synthetic-attempt3-freeze-2026-11-10.json",
+  "freezeSha256": "34ef1b820524b1b460ee8ace89e7440745a6fa9aab29731dd8cbb91ac09367ab",
+  "frozenSourceChecks": {
+    "nativeFiles": 15,
+    "workflowHashMatchedCurrent": true,
+    "currentNativeHashesMatched": true,
+    "wrapperReportedPreAndPostSourceChecks": true
+  },
+  "observedWrapperReport": {
+    "actualMaximumSamplingGapMs": null,
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": "SYNTHETIC_FIRST_BATCH",
+    "compilationAttempted": true,
+    "configuredBatchMs": 300000,
+    "configuredCaseMs": 60000,
+    "configuredRssThresholdBytes": 805306368,
+    "configuredSamplingIntervalMs": 50,
+    "cryptoBatchCommandRequested": true,
+    "cryptoBatchWallMs": 8398.47,
+    "cryptoTestsExecuted": true,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "hardPeakRssGuaranteed": false,
+    "kdfInvocationCount": null,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "recoveryHelperDirectlyInvoked": false,
+    "recoveryPrototypeReadonlyValidated": false,
+    "result": "PARTIAL_FAILURE",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "FIRST_BATCH_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 683.064,
+    "technicalPass": false,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "nativeExitStatus": 72,
+  "nativeFinalBatchReceiptPresent": false,
+  "wrapperFinalFailureReportPresent": true,
+  "initialPreparationDoneCount": 9,
+  "initialPreparationDoneAtMs": 3151,
+  "additionalWrongPassphrasePreparationDone": true,
+  "plannedCaseInvocations": 18,
+  "caseDoneCount": 9,
+  "caseDoneIds": [
+    "R01",
+    "R03-wrong",
+    "R03-missing",
+    "R04-missing",
+    "R04-wrong",
+    "R05-live",
+    "R05-retained-closed",
+    "R06-final-truncate",
+    "R07-body-flip"
+  ],
+  "caseStartedWithoutDone": [
+    "R09-foreign"
+  ],
+  "notStartedCaseIds": [
+    "R13-staging-collision",
+    "R17-cipher-size",
+    "R17-header",
+    "R17-plain-size",
+    "R17-log19",
+    "R23a-internal-append",
+    "R23b-external-append",
+    "R18-scanner"
+  ],
+  "phaseMarkers": [
+    {
+      "phase": "PREP_FIXTURE",
+      "state": "START",
+      "elapsedMs": 0
+    },
+    {
+      "phase": "PREP_FIXTURE",
+      "state": "DONE",
+      "elapsedMs": 134
+    },
+    {
+      "phase": "PREP_SEAL",
+      "state": "START",
+      "elapsedMs": 134
+    },
+    {
+      "phase": "PREP_SEAL",
+      "state": "DONE",
+      "elapsedMs": 254
+    },
+    {
+      "phase": "PREP_PASSPHRASE",
+      "state": "START",
+      "elapsedMs": 254
+    },
+    {
+      "phase": "PREP_PASSPHRASE",
+      "state": "DONE",
+      "elapsedMs": 254
+    },
+    {
+      "phase": "PREP_EXPORT",
+      "state": "START",
+      "elapsedMs": 254
+    },
+    {
+      "phase": "PREP_EXPORT",
+      "state": "DONE",
+      "elapsedMs": 1410
+    },
+    {
+      "phase": "PREP_READ_CIPHERTEXT",
+      "state": "START",
+      "elapsedMs": 1410
+    },
+    {
+      "phase": "PREP_READ_CIPHERTEXT",
+      "state": "DONE",
+      "elapsedMs": 1410
+    },
+    {
+      "phase": "PREP_INTERNAL_ENVELOPE",
+      "state": "START",
+      "elapsedMs": 1410
+    },
+    {
+      "phase": "PREP_INTERNAL_ENVELOPE",
+      "state": "DONE",
+      "elapsedMs": 2187
+    },
+    {
+      "phase": "PREP_OVERSIZE_ENVELOPE",
+      "state": "START",
+      "elapsedMs": 2187
+    },
+    {
+      "phase": "PREP_OVERSIZE_ENVELOPE",
+      "state": "DONE",
+      "elapsedMs": 2987
+    },
+    {
+      "phase": "PREP_SECRET_SCAN",
+      "state": "START",
+      "elapsedMs": 2987
+    },
+    {
+      "phase": "PREP_SECRET_SCAN",
+      "state": "DONE",
+      "elapsedMs": 3044
+    },
+    {
+      "phase": "PREP_VERIFY_RETIRE",
+      "state": "START",
+      "elapsedMs": 3044
+    },
+    {
+      "phase": "PREP_VERIFY_RETIRE",
+      "state": "DONE",
+      "elapsedMs": 3151
+    },
+    {
+      "phase": "R01",
+      "state": "START",
+      "elapsedMs": 3151
+    },
+    {
+      "phase": "R01",
+      "state": "DONE",
+      "elapsedMs": 4099
+    },
+    {
+      "phase": "PREP_WRONG_PASSPHRASE",
+      "state": "START",
+      "elapsedMs": 4099
+    },
+    {
+      "phase": "PREP_WRONG_PASSPHRASE",
+      "state": "DONE",
+      "elapsedMs": 4099
+    },
+    {
+      "phase": "R03-wrong",
+      "state": "START",
+      "elapsedMs": 4099
+    },
+    {
+      "phase": "R03-wrong",
+      "state": "DONE",
+      "elapsedMs": 4793
+    },
+    {
+      "phase": "R03-missing",
+      "state": "START",
+      "elapsedMs": 4794
+    },
+    {
+      "phase": "R03-missing",
+      "state": "DONE",
+      "elapsedMs": 4896
+    },
+    {
+      "phase": "R04-missing",
+      "state": "START",
+      "elapsedMs": 4896
+    },
+    {
+      "phase": "R04-missing",
+      "state": "DONE",
+      "elapsedMs": 5122
+    },
+    {
+      "phase": "R04-wrong",
+      "state": "START",
+      "elapsedMs": 5122
+    },
+    {
+      "phase": "R04-wrong",
+      "state": "DONE",
+      "elapsedMs": 5484
+    },
+    {
+      "phase": "R05-live",
+      "state": "START",
+      "elapsedMs": 5484
+    },
+    {
+      "phase": "R05-live",
+      "state": "DONE",
+      "elapsedMs": 5808
+    },
+    {
+      "phase": "R05-retained-closed",
+      "state": "START",
+      "elapsedMs": 5808
+    },
+    {
+      "phase": "R05-retained-closed",
+      "state": "DONE",
+      "elapsedMs": 6130
+    },
+    {
+      "phase": "R06-final-truncate",
+      "state": "START",
+      "elapsedMs": 6131
+    },
+    {
+      "phase": "R06-final-truncate",
+      "state": "DONE",
+      "elapsedMs": 6825
+    },
+    {
+      "phase": "R07-body-flip",
+      "state": "START",
+      "elapsedMs": 6825
+    },
+    {
+      "phase": "R07-body-flip",
+      "state": "DONE",
+      "elapsedMs": 7619
+    },
+    {
+      "phase": "R09-foreign",
+      "state": "START",
+      "elapsedMs": 7619
+    }
+  ],
+  "supervisorRegression": {
+    "exactTest": "supervisor_cleanup_without_crypto",
+    "passed": true,
+    "positiveOwnedSleepNativeRssAssertionInFrozenSource": true,
+    "scope": "Harmless owned-process regression, not cryptographic validation."
+  },
+  "interpretation": {
+    "R01Provisional": true,
+    "R23Executed": false,
+    "technicalPass": false,
+    "cryptographyValidated": false,
+    "h5Complete": false,
+    "physical8GBValidated": false,
+    "actualPeakRssAvailable": false,
+    "actualSamplingGapAvailable": false,
+    "kdfInvocationCountAvailable": false,
+    "exactExit72CauseKnown": false,
+    "sourceExit72Branches": [
+      "BatchGuard parent getrusage failure.",
+      "Owned child sample failure followed by another still-live/error poll; cleanup completed before exit72."
+    ],
+    "shortLivedChildQueryRace": "Plausible hypothesis near fast rejecting R09, not proven by markers or exit72. No errno/read-size/postquery-status telemetry retained.",
+    "cleanupMeaning": "Exit72 is consistent with cleanup_for_failure success in known paths; no full independent orphan-free or exact branch proof is inferred."
+  },
+  "nextStepProposal": {
+    "newCryptoAttemptAuthorized": false,
+    "afterThreeFailedAttempts": "Stop further crypto runs pending diagnosis.",
+    "scope": "Separately reviewed/frozen SUPERVISOR_ONLY harmless owned rapid-exit/native TASKINFO diagnostic.",
+    "minimalFiniteTelemetry": [
+      "Parent getrusage success/failure and immediately captured errno on failure.",
+      "Owned child prequery try_wait state, proc_pidinfo returned byte count vs expected count, immediate errno only when the native return indicates failure, positive-RSS/zero-RSS status.",
+      "Postquery try_wait exited/live/error and finite exit/signal category; retain query failure separately.",
+      "Fixed monotonic phase/iteration and cleanup/reap observed flags; no PID argv/env/path/key/DB values."
+    ],
+    "safety": "No DB, recovery helper, age/KDF or crypto cases; bounded repetitions/deadline/RSS and owned process lifecycle, same sandbox/network limits. Never treat missing sample as zero or success merely because later poll is not yet exited. Diagnosis before any separately authorized fourth crypto attempt."
+  },
+  "auditExecution": {
+    "nativeCalls": 0,
+    "nativeCodegenOrTests": 0,
+    "networkRequests": 0,
+    "modelsOrGoldAccess": false,
+    "sourceEdits": false,
+    "newCIRun": false
+  },
+  "productionEnabled": false
+}
