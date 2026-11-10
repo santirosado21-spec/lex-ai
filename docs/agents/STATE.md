@@ -1,6 +1,6 @@
 # Estado compartido — LEX AI
 
-**Última actualización:** 2026-11-10 14:13 por codex: Ensayo H5 opt2 y siguiente corte de detector
+**Última actualización:** 2026-11-10 14:13 por codex: decisión — Ensayos criptográficos representativos sin ampliar límites
 
 ## Objetivo y autoridad vigentes
 

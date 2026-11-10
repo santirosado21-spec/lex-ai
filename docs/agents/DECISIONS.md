@@ -93,3 +93,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 13:40 — codex — Ejecutar nuevas dependencias nativas sólo en VM efímera limpia
 
 **Por qué:** Cuatro probes locales de datos sintéticos probaron file/network deny pero no bloquearon argv/env del helper mediante KERN_PROCARGS2. No se inspeccionaron secretos reales ni se amplían permisos host. Compilar/tests optativos H5/age pasan a macos-15 estándar de GitHub público, entorno vacío, checkout sin credenciales persistidas, código/datos públicos-sintéticos; crypto requiere freeze separado. D0preserva249GETverificados y183archives; presupuesto v2de256HTTP/112nuevos se basó en149deps resueltas, no compras.
+
+## 2026-11-10 14:13 — codex — Ensayos criptográficos representativos sin ampliar límites
+
+**Por qué:** El primer harness age terminó por watchdog71 con perfiltest sin optimizar; la fase exacta se desconoce. Para el segundo experimento explícito se elige optimización2 del perfiltest y marcas finitas, revisadas independientemente, conservando60s/300s/768MiB,guardresets,18casos/R23 yalgoritmo. No rebajar workfactor18 ni aceptar roundtrip sin ambosEOF. Fallo/freeze anteriores inmutables; no ejecución nativa nueva en Mac dueño o retries automáticos.
