@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "recordedAt": "2026-11-10T00:23:30.546Z",
+  "status": "cancelled-confounded-prompt-v1",
+  "reason": "Common mechanical instruction incorrectly required known party role for legal-analysis in research, where partyRole=null is valid. Source of pilot defect, not evidence of model incapability.",
+  "planned": 32,
+  "attempted": 6,
+  "generationPosts": 6,
+  "httpRequests": 12,
+  "totalElapsedMs": 168205,
+  "stopReason": "CANCELLED",
+  "modelGroups": [
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "planned": 8,
+      "attempted": 1,
+      "complete": 1,
+      "failed": 0,
+      "pending": 7,
+      "jsonValid": 1,
+      "contractValid": 1,
+      "citationsValid": 1,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 1,
+          "sum": 3049
+        },
+        "completion_tokens": {
+          "reportedAttempts": 1,
+          "sum": 1195
+        },
+        "total_tokens": {
+          "reportedAttempts": 1,
+          "sum": 4244
+        }
+      },
+      "latencyMs": {
+        "samples": 1,
+        "mean": 2006,
+        "p50": 2006,
+        "p95": 2006
+      },
+      "promptCharacters": {
+        "mean": 11868
+      }
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "planned": 8,
+      "attempted": 2,
+      "complete": 2,
+      "failed": 0,
+      "pending": 6,
+      "jsonValid": 2,
+      "contractValid": 2,
+      "citationsValid": 2,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 2,
+          "sum": 3396
+        },
+        "completion_tokens": {
+          "reportedAttempts": 2,
+          "sum": 2441
+        },
+        "total_tokens": {
+          "reportedAttempts": 2,
+          "sum": 5837
+        }
+      },
+      "latencyMs": {
+        "samples": 2,
+        "mean": 1889.5,
+        "p50": 1379,
+        "p95": 2400
+      },
+      "promptCharacters": {
+        "mean": 5967.5
+      }
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "planned": 8,
+      "attempted": 2,
+      "complete": 2,
+      "failed": 0,
+      "pending": 6,
+      "jsonValid": 2,
+      "contractValid": 2,
+      "citationsValid": 2,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 2,
+          "sum": 5974
+        },
+        "completion_tokens": {
+          "reportedAttempts": 2,
+          "sum": 1192
+        },
+        "total_tokens": {
+          "reportedAttempts": 2,
+          "sum": 7166
+        }
+      },
+      "latencyMs": {
+        "samples": 2,
+        "mean": 1698,
+        "p50": 1680,
+        "p95": 1716
+      },
+      "promptCharacters": {
+        "mean": 11868
+      }
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "planned": 8,
+      "attempted": 1,
+      "complete": 1,
+      "failed": 0,
+      "pending": 7,
+      "jsonValid": 1,
+      "contractValid": 1,
+      "citationsValid": 1,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 1,
+          "sum": 1760
+        },
+        "completion_tokens": {
+          "reportedAttempts": 1,
+          "sum": 1156
+        },
+        "total_tokens": {
+          "reportedAttempts": 1,
+          "sum": 2916
+        }
+      },
+      "latencyMs": {
+        "samples": 1,
+        "mean": 2768,
+        "p50": 2768,
+        "p95": 2768
+      },
+      "promptCharacters": {
+        "mean": 5967.5
+      }
+    }
+  ],
+  "planSha256": "7f287b0b539911d22b8dbfd3ae20291c095d226723e481ea7daaa1680a7fbd29",
+  "reportSha256": "8e98ade1aa54940481d7d04f827c26154fe2f4dd17bd44c26a815bd154d023c5",
+  "replaySha256": "7c2cbbbdc844624dfd3c6321e7502867c4d44d8b5b455ea14c9c69737f8fd65d",
+  "replayConfirmed": true,
+  "blindFirstCaseGradesSha256": "0f2bba80026531f4329a7268ca54eb062f95a466038040c11fb2d5e9e3909c80",
+  "countsScope": "All six attempts retained, neither retries nor valid efficacy comparison",
+  "remainingSessionGenerationCeiling": 26,
+  "correctedPilotProposal": {
+    "cases": 6,
+    "taskSplit": [
+      3,
+      3
+    ],
+    "models": 2,
+    "arms": 2,
+    "plannedAttempts": 24,
+    "totalSessionCeilingAfterwards": 30
+  },
+  "skillsModified": false,
+  "productionEnabled": false,
+  "legalValidation": false
+}
