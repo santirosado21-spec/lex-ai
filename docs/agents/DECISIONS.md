@@ -65,3 +65,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 18:02 — codex — S1 es preparación offline; estructura y cita no validan análisis ni egreso
 
 **Por qué:** Dos instrucciones y contratos pueden prepararse sin activar el proveedor. Mantener originales/mapas/acceso locales y no importar a rutas activas. DataClass/reviewState y digest no clasifican ni autentican permiso. Un probe de inferencia sin respaldo con cita válida pasó estructura y conservó entailment/precisión no evaluados. S2 necesita aceptación independiente, modelos/budget explícitos y comparación con/sin skill más abogado; no promover por605tests. Los fixtures fueron redactados por SolSF, no generados al ejecutar la habilidad contra candidatos. S1 no amplía M1 ni hereda conectores/licencias restringidas. Ver QA S1.
+
+## 2026-11-09 18:46 — codex — Retirar aceptación S2a y separar diagnóstico de formato de calidad jurídica
+
+**Por qué:** Los casos V1 quedaron confundidos por guía común y V2 ya fue observado/puntuado/desvelado. Conservar freezes y evidencia; no afinar ni seleccionar usando estos casos como nuevo examen. Catorce truncamientos y cinco fallos de citas bajo salida2500/promptJSON no prueban incapacidad general del modelo. S2b debe ensayar formato/anclas/presupuesto en desarrollo y usar nueva aceptación independiente antes de ganador. Una respuesta que pasa criterios incluye contenido adicional no respaldado; no equivale a aprobación jurídica. No ampliar límites M1 ni activar proveedor de producto por este piloto SF.

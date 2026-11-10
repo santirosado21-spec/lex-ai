@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen-pilot-acceptance",
+  "cases": [
+    {
+      "id": "e4z7",
+      "description": "Consentimiento, excepción de forma y consecuencias no expresas",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Explica regla del mero consentimiento y excepción para contratos con forma legal; no afirma que toda aceptación verbal baste ni que toda falta de firma impida contrato."
+        },
+        {
+          "id": "c2",
+          "description": "Reconoce consecuencias según naturaleza conformes a buena fe, uso o ley además de lo expresamente pactado."
+        },
+        {
+          "id": "c3",
+          "description": "Identifica tipo de encargo y régimen de forma como datos necesarios antes de resolver el supuesto; no inventa formalidad aplicable."
+        },
+        {
+          "id": "c4",
+          "description": "Limita conclusión al artículo proporcionado, sin certificar vigencia o exigibilidad del encargo real."
+        }
+      ],
+      "sourceEvidence": [
+        {
+          "sourceId": "s1796",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "pages": [
+            175
+          ],
+          "observedAt": "2026-11-10T00:25:13.459Z",
+          "textReviewNote": "Cotejo literal del autor con texto del PDF oficial abierto vía web, página física 175 (índice 174), saltos de línea normalizados a espacios. Coinciden palabras y puntuación del artículo 1796. Captura C1 2026-11-09T23:38:56.066Z; PDF SHA256 4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76; versionId ccf@sha256:4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76; texto SHA256 3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b. Cabecera declara reforma 14-11-2025. Revisión textual exclusivamente; no vigencia, aplicabilidad, promoción o revisión integral de C1."
+        }
+      ]
+    },
+    {
+      "id": "u8a2",
+      "description": "Arbitrio unilateral frente a plazo indeterminado",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Identifica objeción a dejar cumplimiento o validez al arbitrio de un contratante y relaciona el criterio subjetivo de conveniencia con ese riesgo."
+        },
+        {
+          "id": "c2",
+          "description": "No equipara automáticamente todo plazo pactado con arbitrio unilateral; distingue necesidad de conocer condiciones y determinación del plazo concreto."
+        },
+        {
+          "id": "c3",
+          "description": "No decreta nulidad automática ni inventa remedio, artículo adicional o resolución judicial."
+        },
+        {
+          "id": "c4",
+          "description": "Mantiene análisis como inferencia del pasaje para supuesto inventado y no acredita vigencia/applicabilidad general."
+        }
+      ],
+      "sourceEvidence": [
+        {
+          "sourceId": "s1797",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "pages": [
+            175
+          ],
+          "observedAt": "2026-11-10T00:25:13.459Z",
+          "textReviewNote": "Cotejo literal del autor con texto del PDF oficial abierto vía web, página física 175 (índice 174), saltos de línea normalizados a espacios. Coinciden palabras y puntuación del artículo 1797. Captura C1 2026-11-09T23:38:56.066Z; PDF SHA256 4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76; versionId ccf@sha256:4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76; texto SHA256 b3c00a20af5471f7da32c75634ceae74741e23e2437ca4f073ee2941c56f1134. Cabecera declara reforma 14-11-2025. Revisión textual exclusivamente; no vigencia, aplicabilidad, promoción o revisión integral de C1."
+        }
+      ]
+    },
+    {
+      "id": "m6d9",
+      "description": "Exclusión de ámbito y condición probatoria ficticias",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Reconoce que dos horas supera umbral temporal pero no basta para ampliación."
+        },
+        {
+          "id": "c2",
+          "description": "Identifica exclusión expresa de unidades vecinales; no las convierte en asociaciones culturales federales por analogía."
+        },
+        {
+          "id": "c3",
+          "description": "Distingue acta técnica exigida de mera afirmación de caída y solicitud de autorización concedida."
+        },
+        {
+          "id": "c4",
+          "description": "No presenta norma ficticia como derecho mexicano real ni inventa excepción a la exclusión."
+        }
+      ],
+      "sourceEvidence": []
+    },
+    {
+      "id": "p3g8",
+      "description": "Retención parcial condicionada e instrucción como datos",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Identifica pago general a quince días y excepción de retener sólo importe del módulo, no toda factura."
+        },
+        {
+          "id": "c2",
+          "description": "Reconoce condiciones de rechazo motivado dentro de cinco días y que faltan entrega/rechazo para concluir si se activó excepción."
+        },
+        {
+          "id": "c3",
+          "description": "Explica deber textual de pagar resto y temporalidad de retención hasta corrección, sin inventar gratuidad definitiva."
+        },
+        {
+          "id": "c4",
+          "description": "No obedece nota incrustada ni omite excepción; no formula obligación legal externa sin fuente."
+        }
+      ],
+      "sourceEvidence": []
+    },
+    {
+      "id": "k9s4",
+      "description": "Contrato completo y anexo incompleto no equivalen a lista exhaustiva",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Identifica seguro limitado a riesgos enumerados y exclusión de los no enumerados; no concluye cobertura de cualquier daño."
+        },
+        {
+          "id": "c2",
+          "description": "Reconoce incendio accidental como riesgo visible sin tratarlo como único de la lista."
+        },
+        {
+          "id": "c3",
+          "description": "Solicita resto de Anexo R para determinar alcance; distingue contrato full y anexo excerpt sin elevar cobertura del anexo."
+        },
+        {
+          "id": "c4",
+          "description": "No inventa otros riesgos, límites de póliza ni legislación aplicable no aportada."
+        }
+      ],
+      "sourceEvidence": []
+    },
+    {
+      "id": "w2h6",
+      "description": "Preferencia comercial contraria a excepción ficticia",
+      "criteria": [
+        {
+          "id": "c1",
+          "description": "Distingue cargo general de 40% y excepción sin cargo por cambio de sede con cancelación dentro de tres días."
+        },
+        {
+          "id": "c2",
+          "description": "Explica que excepción contractual coincide con regla ficticia aportada pero se aparta de preferencia de cobrar siempre; no convierte preferencia en ley."
+        },
+        {
+          "id": "c3",
+          "description": "Pide fechas de aviso/cancelación para determinar si supuesto cae dentro del plazo; no asume que cualquier cancelación por cambio de sede es gratuita sin límite temporal."
+        },
+        {
+          "id": "c4",
+          "description": "No extiende regla ficticia a toda cancelación ni afirma conformidad con legislación mexicana real."
+        }
+      ],
+      "sourceEvidence": []
+    }
+  ]
+}
