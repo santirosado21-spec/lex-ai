@@ -1,6 +1,6 @@
 # S1: ejemplos de desarrollo de tareas jurídicas
 
-`development.jsonl` contiene **12 ejemplos escritos por un desarrollador independiente del constructor**: seis de investigación y seis de revisión contractual. Son datos de desarrollo visibles, no un examen ciego ni un conjunto de aceptación congelado. El plan de 30 casos sigue propuesto; estos 12 no lo completan.
+`development.jsonl` contiene **12 ejemplos escritos por un agente Sol de SF independiente del constructor**: seis de investigación y seis de revisión contractual. Son datos de desarrollo visibles, no un examen ciego ni un conjunto de aceptación congelado. El plan de 30 casos sigue propuesto; estos 12 no lo completan.
 
 Todos los textos, fuentes, fechas, versiones e importes son expresamente ficticios y sintéticos. Los códigos de jurisdicción son identificadores de esquema, no evidencia de derecho. Las etiquetas negativas `confidential` y `unknown` aparecen juntas en un caso de rechazo de preparación con texto inventado; no contienen información privada real y ese caso no aísla el rechazo individual de cada etiqueta.
 
@@ -16,6 +16,6 @@ node scripts/check-legal-task-skills.mjs
 
 El comando comprueba preparación y contratos; no ejecuta inferencia ni llama proveedores. Las descripciones, expectativas y rúbricas permanecen locales, fuera del paquete de modelo. No enviar el objeto completo del caso como input.
 
-Los candidatos fueron redactados como fixtures, no generados por modelos. Una aceptación significa exclusivamente consistencia estructural con el contrato: no prueba exactitud jurídica, implicación de las citas, vigencia, exhaustividad, resistencia conductual a inyección ni calidad de conversación. `behavioralExpectation` expresa una rúbrica para evaluación posterior, no una conducta ya comprobada por el validador. Tampoco constituye una ablación real, evaluación de detector de privacidad, autorización de egreso ni activación de proveedor.
+Las salidas de ejemplo fueron redactadas por ese agente Sol como fixtures; no se obtuvieron ejecutando estas skills contra los modelos/proveedores candidatos ni en una comparación con/sin skill. Una aceptación significa exclusivamente consistencia estructural con el contrato: no prueba exactitud jurídica, implicación de las citas, vigencia, exhaustividad, resistencia conductual a inyección ni calidad de conversación. `behavioralExpectation` expresa una rúbrica para evaluación posterior, no una conducta ya comprobada por el validador. Tampoco constituye una ablación real, evaluación de detector de privacidad, autorización de egreso ni activación de proveedor.
 
 S2 deberá reservar aceptación independiente y congelada, y comparar con/sin skill bajo igual modelo, contexto y presupuesto. No usar los conjuntos privados retirados ni ajustar estos ejemplos contra un examen de aceptación. Estos fixtures no justifican un ganador de modelo, activación del producto, cobertura nacional ni validación profesional.

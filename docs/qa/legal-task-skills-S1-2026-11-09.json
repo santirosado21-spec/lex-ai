@@ -95,7 +95,8 @@
     "modelGenerations": 0,
     "productionEnabled": false,
     "remoteToolsEnabled": false,
-    "authorizationGranted": false
+    "authorizationGranted": false,
+    "modelGenerationScope": "Task executions against product candidates/paired skill evaluation; excludes the three SF model assignments used to author and review this implementation"
   },
   "packets": [
     {
@@ -221,7 +222,7 @@
     "tokensAndQuota": "not exposed"
   },
   "limitations": [
-    "No generated model answers or paired with/without-skill experiment.",
+    "No model task executions or paired with/without-skill experiment; example outputs were authored as fixtures by a Sol SF agent.",
     "Twelve visible development fixtures are not independent acceptance or the thirty proposed S2 cases.",
     "No confidentiality classification, egress grant, injection-resistance proof or legal applicability/entailment test.",
     "Input reviewState/dataClass and hash provenance are developer declarations and integrity checks, not authentication.",

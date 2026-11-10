@@ -21,10 +21,10 @@ Las instrucciones son redacción nueva de LEX AI y documentan referencias de pat
 | Fixtures escritos de desarrollo | 12 (6 investigación / 6 contratos) |
 | Preparaciones esperadas reproducidas | 11 aceptadas / 1 rechazada |
 | Salidas de ejemplo contrastadas | 5 aceptadas / 6 rechazadas / 1 no ejecutada |
-| Generaciones de modelos/proveedores | 0 |
+| Ejecuciones de las skills contra modelos/proveedores candidatos | 0 |
 | Dependencias añadidas | 0 |
 
-Los doce casos son candidatos redactados como datos de test, no respuestas de inferencia. El caso de procedencia usa etiquetas negativas inventadas, no datos privados reales. Las expectativas y rúbricas se mantienen fuera del paquete del modelo. El coordinador comprobó once paquetes preparados, inmutabilidad/flags y ausencia de campos de evaluación en raíz; los hashes del freeze coinciden. Máximo de esos once paquetes canónicos: 10.007 bytes, **no coste de tokens o latencia de nube**. No demuestra tamaño para todos los contratos ni mejora de modelo.
+Los doce casos y sus salidas fueron redactados por el agente autor Sol como datos de test; no son respuestas obtenidas ejecutando las skills contra modelos/proveedores candidatos. Las tres asignaciones SF sí utilizaron Sol y se registran abajo. El caso de procedencia usa etiquetas negativas inventadas, no datos privados reales. Las expectativas y rúbricas se mantienen fuera del paquete del modelo. El coordinador comprobó once paquetes preparados, inmutabilidad/flags y ausencia de campos de evaluación en raíz; los hashes del freeze coinciden. Máximo de esos once paquetes canónicos: 10.007 bytes, **no coste de tokens o latencia de nube**. No demuestra tamaño para todos los contratos ni mejora de modelo.
 
 Pruebas: hashes modificados, flags/rutas/versiones de recurso, symlinks, datos no JSON/getters/ciclos, fechas imposibles, límites de entrada, campos inesperados, cita falsa/versión/offset UTF-16, referencias entre solicitudes, ámbito de fuente, preferencias sin playbook, excerpt elevado a full y datos faltantes. El revisor repitió suite/CLI y agregó probes de getter anidado no ejecutado, prototipo alterado, mutación de esquema congelado, offset inseguro, identidad de otra solicitud y carácter de control.
 
