@@ -79,5 +79,49 @@
     "Upstream source lookup is not a reproducible wheel-build attestation; exact deployed runtime/binary hashes and versions remain required.",
     "Alignment API fallbacks are not certified absent; any wrong source assignment must additionally satisfy the exact pinned token-content/partition witness. This is a bounded contract, not a universal library correctness proof.",
     "No privacy quality, full-request protection, legal validity, license clearance, model eligibility, real client authorization or 8GB acceptance follows."
-  ]
+  ],
+  "baseSpaceRunBpePath": {
+    "status": "addendum-requires-independent-review",
+    "permittedInventoryIds": [
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168
+    ],
+    "requirements": [
+      "All five added-token flags false",
+      "ID also equals pinned base BPE vocabulary ID for exact raw marker-run string",
+      "Original input contains no literal U+2581",
+      "Original slice is exactly N ASCII spaces and raw token exactly N U+2581 markers, N in2..31",
+      "Source evidence confirms normalized:false entries cannot be extracted from this marker-free original, before normalization, and are excluded from normalized-added matching"
+    ],
+    "classification": "Ordinary base-BPE token; no added-whitespace piece reset; all original offsets/logits/contributors retained",
+    "allOtherNonWhitespaceAddedPathsBlocked": true
+  }
 }

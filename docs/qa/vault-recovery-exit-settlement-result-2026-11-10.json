@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "reviewType": "independent-observed-evidence-audit",
+  "reviewer": "review_vault_reminders / Sol",
+  "date": "2026-11-10",
+  "verdict": "APPROVE_OBSERVED_SUPERVISOR_ONLY_RESULT",
+  "runId": 42900589961,
+  "commit": "614de2a77b2b47753f0b14ef491fac3902826002",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/vault-recovery-exit-settlement-first.log",
+    "bytes": 146384,
+    "sha256": "3297a555a96fd6cd6067e20db653bb3490f8d5b8d9e57b355fc8b05d8e8f528b"
+  },
+  "freeze": {
+    "path": "docs/qa/vault-recovery-supervisor-freeze-2026-11-10.json",
+    "sha256": "9129414e9547956fa6cdfa134dd96725a3225548a6b5d8c13f04ddfe9b111a3f",
+    "bindings": {
+      "crates/lex-vault/Cargo.toml": {
+        "sha256": "eebc597782d1e3d4cbb969898c46be0b810cfd9e2248afc6b4f9fb2a01777886",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/Cargo.lock": {
+        "sha256": "f5ad6d515a05cf1b8306b10116862631728fa2d20175f1afe745c072a13d99fa",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/README.md": {
+        "sha256": "a3df89bd884710f3955004d45f094c4b490e96cd000a8c10b29cebb7ef441ced",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/src/lib.rs": {
+        "sha256": "5f9ce836e47731906349b606e43d6edd145342da3f0c2b4cb6a5a99450e9edf0",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/src/recovery.rs": {
+        "sha256": "e8d85ca29bda9ea53ce81459e64b70fd3ebd9a6b5284089f1218b772c05e733d",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/recovery.rs": {
+        "sha256": "3198bb3327e1076e857d56e875d92355542e7e9fac41b9fff081b70720ce0a18",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/recovery_process.rs": {
+        "sha256": "cd7ce44167bb6f28143594358956bbb0e062cccedf72046966e891f0b1469b04",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/support/recovery_fixture.rs": {
+        "sha256": "faac4c6c63fb113b0480496ffee8d1738527d5a01849344a42a4d597ff10c4ba",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/src/proposals.rs": {
+        "sha256": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/src/reminders.rs": {
+        "sha256": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/src/time_billing.rs": {
+        "sha256": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/proposals.rs": {
+        "sha256": "21585731d755207f92090b83bac3a0d29cc2fdac0d08ffb60e192f653657cee1",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/reminders.rs": {
+        "sha256": "6fc57916503ae276b406dac3060968758c46c364049885fd78049c3c378c8b7a",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/time_billing.rs": {
+        "sha256": "f1f81c255c29dc4482278b582b39ac4576dc5109425fed8fbf08b33852969874",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      "crates/lex-vault/tests/viability.rs": {
+        "sha256": "3c99c0c452593f40389451f5dc1ebf456501e564016da0bcd4f78980696e3fc7",
+        "currentMatches": true,
+        "commitMatches": true
+      },
+      ".github/workflows/vault-recovery-supervisor.yml": {
+        "sha256": "07c203a52cba9bb883f03d04524e08a5a17cf9083e85a0dc2a5317182705e1ff",
+        "currentMatches": true,
+        "commitMatches": true
+      }
+    },
+    "sourceCount": 15,
+    "workflowCount": 1
+  },
+  "observedReceipt": {
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": null,
+    "compilationAttempted": true,
+    "cryptoTestsExecuted": false,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "recoveryHelperInvoked": false,
+    "result": "PASS",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "SUPERVISOR_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestOnly": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 785.2,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "compilation": {
+    "profile": "optimized + debuginfo",
+    "elapsedReported": "3m 39s",
+    "rustc": "1.99.1",
+    "cargo": "1.99.1",
+    "lockedRegistryPackages": 179
+  },
+  "selectedTest": {
+    "name": "supervisor_cleanup_without_crypto",
+    "selector": "--test recovery supervisor_cleanup_without_crypto -- --ignored --exact --nocapture --test-threads=1",
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0,
+    "filteredOut": 1,
+    "libtestElapsedSeconds": 0.2,
+    "wrapperWallMs": 785.2
+  },
+  "diagnostics": {
+    "markerCount": 83,
+    "markerCap": 192,
+    "countsBySource": {
+      "2": 31,
+      "5": 2,
+      "1": 1,
+      "6": 24,
+      "7": 24,
+      "8": 1
+    },
+    "settlementObservations": [
+      {
+        "elapsed_ms": 51,
+        "source": 5,
+        "wait": 1,
+        "errno": 0,
+        "polls": 10,
+        "settlement_us": 50942,
+        "outcome": 2
+      },
+      {
+        "elapsed_ms": 60,
+        "source": 5,
+        "wait": 2,
+        "errno": 0,
+        "polls": 1,
+        "settlement_us": 0,
+        "outcome": 1
+      }
+    ],
+    "rapidSummary": [
+      {
+        "elapsed_ms": 112,
+        "source": 8,
+        "dispatched": 24,
+        "rss_observed": 17,
+        "exit_observed": 7,
+        "sample_errors": 0,
+        "monitoring_failures": 0,
+        "reaped": 24,
+        "parent_checks": 24,
+        "parent_failures": 0,
+        "rapid_elapsed_ms": 52
+      }
+    ],
+    "rapidProbeCount": 24,
+    "allRapidCleanupAndReaped": true,
+    "rapidResultCounts": {
+      "1": 17,
+      "2": 7
+    }
+  },
+  "contractAssertionsExecuted": {
+    "evidence": "Frozen selected test executes unconditional pure fixtures and cleanup assertions; exact test PASS establishes their assertions completed, not an individual per-fixture telemetry record.",
+    "nearOriginalStage60AndBatch300": {
+      "remainingMs": 10,
+      "exit9MsAccepted": true,
+      "exitEqual10AndLate11RejectedTime71": true,
+      "liveExpiresAt10Ms": true,
+      "alreadyExpiredZeroPolls": true
+    },
+    "settlement50MsEqualityLatePollErrorAndOversleepRejected": true,
+    "cleanupFailure74Preserved": true,
+    "terminalCleanup71_72_73AndConcurrentShutdownReaped": true,
+    "syntheticUnwindCaughtAndCleanupAsserted": true
+  },
+  "interpretation": [
+    "New exit-only settlement contract compiled and selected harmless assertions passed. Actual live-child injected sample failure expired at 50942us with outcome2 and cleanup72; this is rejection, not acceptance beyond50ms.",
+    "Actual cached natural exit was preserved with outcome1; no real unavailable-query race was reproduced by rapid probes.",
+    "Pure fake-clock assertions exercise boundary policy; this run does not measure hard scheduling guarantees or crypto resource behavior."
+  ],
+  "limitations": {
+    "originalR09CauseKnown": false,
+    "cryptoTestsExecuted": false,
+    "recoveryHelperInvoked": false,
+    "databaseOrKeyTestsExecuted": false,
+    "R23Executed": false,
+    "fourthCryptoRunAuthorized": false,
+    "cryptographyValidated": false,
+    "H5Complete": false,
+    "physical8GBValidated": false,
+    "previousThreeFailuresPreserved": true,
+    "newLocalNativeCallsCodegenTestsNetwork": false
+  }
+}

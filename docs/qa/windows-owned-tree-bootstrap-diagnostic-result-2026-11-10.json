@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "auditId": "windows-owned-tree-bootstrap-diagnostic-result-audit-v1",
+  "auditedAt": "2026-11-10T21:10:34.714Z",
+  "verdict": "ACCEPT_DIAGNOSTIC_EVIDENCE_ONLY",
+  "blockingAuditFindings": [],
+  "scope": "Independent read-only audit of retained bounded redacted D1k report, exact committed/current source and authorization. No actual WMI/CI replay or network.",
+  "ci": {
+    "runId": "42901408180",
+    "runUrl": "https://github.com/santirosado21-spec/lex-ai/actions/runs/42901408180",
+    "runIdSource": "coordinator work order; no API request in audit",
+    "checkoutCommit": "6f2deac08b8c36dc11b22e771776547aa8b7ce58",
+    "checkoutCommitPresentInSavedLog": true,
+    "workflowConclusionReportedByCoordinator": "success",
+    "savedLogConsistentWithSuccessfulDiagnosticStep": true,
+    "nodeVersionObserved": "v22.23.4",
+    "runnerOsObserved": "Microsoft Windows Server 2025 10.0.26100 Datacenter",
+    "runnerImageObserved": "windows-2025-vs2026 / 20261103.298.1",
+    "testsInWindowsJob": {
+      "passed": 7,
+      "failed": 0,
+      "reportedDurationMs": 987.0169
+    },
+    "diagnosticLogTimestamp": "2026-11-10T21:04:42.7540666Z"
+  },
+  "logEvidence": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-bootstrap-diagnostic-first.log",
+    "bytes": 28079,
+    "sha256": "c967354806ea29e56114ed22a1d683fa1a021c1cf12e7df5b2226f10803e1645",
+    "boundedReportOccurrences": 1,
+    "reportUtf8Bytes": 1136,
+    "reportSha256": "bec294700bdeb09026715b007341cf97daa25d17d4006b2e46848cc7a2d67e61",
+    "rawWmiNumericFrameRetained": false,
+    "extraProcessImageNamesOrIdentifiersRetained": false,
+    "note": "The full workflow log includes standard public runner/checkout/tool commands and masked Actions credential placeholders. The diagnostic process report itself contains no PID/PPID/image names/raw WMI frame or arbitrary command/source/env payload."
+  },
+  "observedDiagnosticReport": {
+    "protocol": "windows-owned-tree-bootstrap-diagnostic-v1",
+    "status": "DIAGNOSTIC_COMPLETE",
+    "diagnosticOnly": true,
+    "performanceValidated": false,
+    "steadyRequests": 0,
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false,
+    "observerStage": "proof-rejected",
+    "errorCategory": "CLOSURE_COUNT",
+    "chunkCount": 1,
+    "byteCount": 2754,
+    "frameCount": 1,
+    "proofCount": 0,
+    "frameAscii": true,
+    "terminalCRLF": true,
+    "fixtureLive": true,
+    "roles": {
+      "root": {
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      },
+      "child": {
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      },
+      "grandchild": {
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      }
+    },
+    "closureCount": 6,
+    "collectorExcluded": true,
+    "outsideExcluded": true,
+    "sumEqualsMonitor": false,
+    "steadyRequestIntercepted": false,
+    "bootstrapMonitorResolved": true,
+    "collectorCleanup": {
+      "exitObserved": true,
+      "category": null,
+      "killed": false,
+      "exitCode": 0,
+      "signal": null,
+      "phase": null,
+      "elapsedMs": null
+    },
+    "fixtureCleanup": {
+      "intentionalShutdown": true,
+      "allThreeReaped": true,
+      "forced": false
+    },
+    "originalSmokeCategory": "PROTOCOL_OR_MEASUREMENT_FAILURE",
+    "bootstrapElapsedMs": 2746.0917,
+    "cleanupComplete": true,
+    "monitorCategory": null
+  },
+  "sourceVerification": {
+    "freeze": {
+      "path": "docs/qa/windows-owned-tree-bootstrap-diagnostic-freeze-2026-11-10.json",
+      "sha256": "d284bf2e0063e6ac50b0417f0000c2225bf6b79f28286b5a3a2a489df7f2c99c",
+      "sourceCount": 12,
+      "approvedForSingleDiagnosticRun": true,
+      "attempt3FreezeCanonicalSha256": "4802d36039f87449d98f588d946e565e3216fc3e64f03a7b76d01941c65cbac3",
+      "canonicalAttempt3FreezeMatches": true,
+      "bytesMatchRunCommit": true
+    },
+    "authorization": {
+      "path": "docs/qa/windows-owned-tree-bootstrap-diagnostic-authorization-2026-11-10.json",
+      "sha256": "09b17cc04ec744206161e0c65c6fcda48710f8f455929c493ac8e90696cf4512",
+      "bytesMatchRunCommit": true,
+      "maximumActualWmiQueries": 1,
+      "steadySamplesAuthorized": 0,
+      "performanceValidationAuthorized": false,
+      "automaticRetry": false
+    },
+    "attributes": {
+      "sha256": "528980e719f2fc2df5ad3ff9c979e19eb0af58e17f3b9d4a487d41933d27bc06",
+      "bytesMatchRunCommit": true,
+      "authorizationDigestMatches": true,
+      "exactTwelvePathRulesTextEolLf": true,
+      "previousSevenPlusOnlyFiveNewRules": true,
+      "wildcardOrGlobalRule": false
+    },
+    "sources": {
+      "scripts/windows-owned-tree-smoke.mjs": {
+        "sha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "currentAndCommittedBytesMatch": true
+      },
+      "tests/windows-owned-tree-smoke.test.mjs": {
+        "sha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "currentAndCommittedBytesMatch": true
+      },
+      "docs/architecture/windows-owned-tree-smoke-v1.md": {
+        "sha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "currentAndCommittedBytesMatch": true
+      },
+      "resources/windows-owned-tree-smoke-v1.json": {
+        "sha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "currentAndCommittedBytesMatch": true
+      },
+      ".github/workflows/windows-owned-tree-smoke.yml": {
+        "sha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+        "currentAndCommittedBytesMatch": true
+      },
+      "server/windows-memory-monitor-v2.mjs": {
+        "sha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "currentAndCommittedBytesMatch": true
+      },
+      "server/windows-process-memory.mjs": {
+        "sha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "currentAndCommittedBytesMatch": true
+      },
+      "scripts/windows-owned-tree-bootstrap-diagnostic.mjs": {
+        "sha256": "627a8957f7805a974a453ee4d4737a8b3bf4773e3b0cf7564ddbf03bdd9a8516",
+        "currentAndCommittedBytesMatch": true
+      },
+      "tests/windows-owned-tree-bootstrap-diagnostic.test.mjs": {
+        "sha256": "f72a68a207a6a3b27dda288deb2e6c2841856f60cb35fd3cacca2660fee6290e",
+        "currentAndCommittedBytesMatch": true
+      },
+      "resources/windows-owned-tree-bootstrap-diagnostic-v1.json": {
+        "sha256": "e2e15492df3e62c0b2386d8f9f34c36cca4c957b9d787b0c318a23e139e6c044",
+        "currentAndCommittedBytesMatch": true
+      },
+      "docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md": {
+        "sha256": "436866c4e35d1d99a3d8c5eb4091af890bd91a8ecc14a55a3b9d98970c7cbd05",
+        "currentAndCommittedBytesMatch": true
+      },
+      ".github/workflows/windows-owned-tree-bootstrap-diagnostic.yml": {
+        "sha256": "670aca724318de18349d0f2d3cd07cfe4c5a42f652459285a5be8247e497e4be",
+        "currentAndCommittedBytesMatch": true
+      }
+    },
+    "allTwelveCurrentAndCommitHashesMatchFreeze": true,
+    "originalSevenFrozenHashesUnchanged": true
+  },
+  "semanticAudit": {
+    "actualBootstrapQueriesSupportedBySourceAndReport": 1,
+    "actualBootstrapQueryCountBasis": "One actual monitor.start request, one valid response frame, no inner.readRss path. Source-reviewed interception prevents a steady WMI request; here original proof rejection occurs before even that interception. No independent WMI-server request trace was retained.",
+    "steadyQueries": 0,
+    "requiredClosureCountIncludingRoot": 3,
+    "observedTransitiveClosureCountIncludingRoot": 6,
+    "additionalClosureMembers": 3,
+    "allThreeDeclaredRolesPresentAndParentMatchedAndPositiveRss": true,
+    "collectorAndOutsideRunnerExcluded": true,
+    "declaredThreeRoleSumDoesNotEqualMonitorClosureSum": true,
+    "acceptanceGuardCorrectlyRejectedThisSample": true,
+    "knownResultForThisRun": "CLOSURE_COUNT/proof-rejected; proofCount0. DIAGNOSTIC_COMPLETE means a completed bounded observation and clean known fixture lifecycle, not an accepted three-process measurement.",
+    "originalSmokeCategory": "PROTOCOL_OR_MEASUREMENT_FAILURE",
+    "startupMillisecondsDescriptiveOnly": 2746.0917,
+    "steadyMeasurementsAccepted": 0
+  },
+  "cleanupAudit": {
+    "collectorGracefulExitObserved0": true,
+    "collectorKilled": false,
+    "collectorFailureCategory": null,
+    "knownRootChildGrandchildIntentionalReapingAcknowledged": true,
+    "forcedKnownFixtureCleanup": false,
+    "extraThreeMembersIndependentlyIdentified": false,
+    "extraThreeMembersReapingIndependentlyVerified": false,
+    "scope": "Receipt validates collector plus three intentionally spawned Node fixture roles. It does not independently prove identities or lifecycle/reaping of all six sampled closure members."
+  },
+  "unknowns": {
+    "extraMemberIdentity": "unknown: no image names, numeric PIDs/PPIDs, commands or raw frame were retained",
+    "conhostClassification": "not proven; must not name/ignore conhost or any process image from this report",
+    "historicalFailureAttribution": "This new run localizes its own proof rejection to closure6 vs required3. It does not establish the cause of every earlier Windows failure, including the hidden original attempt3 observer reason.",
+    "rssOfEachExtraMember": "unknown; only boolean sum disagreement is retained",
+    "repeatability": "one diagnostic observation; no replay",
+    "physical8GBOrInstallerOrInference": "not validated"
+  },
+  "nextStepPolicy": {
+    "followUpExecuted": false,
+    "automaticRetryAuthorized": false,
+    "performanceRetryAuthorized": false,
+    "exactThreeGuardMayBeRelaxed": false,
+    "silentExtraProcessSuppressionAllowed": false,
+    "potentialSeparateWork": "If root chooses, design and independently review a new one-query bounded metadata-only classification of extra images/parent relations, preserving redaction and finite allowlisted categories. That would be new diagnostic evidence, not automatic measurement acceptance or proof of all historical causes."
+  },
+  "auditOperations": {
+    "savedFileAndGitObjectReadsOnly": true,
+    "actualWmiRun": false,
+    "actualCiRun": false,
+    "replay": false,
+    "networkRequests": 0,
+    "sourceFreezeOrAttributeEdits": false,
+    "otherQaEdits": false,
+    "commits": false
+  },
+  "productionEnabled": false,
+  "performanceValidated": false,
+  "physical8GBValidated": false,
+  "installerValidated": false,
+  "inferenceValidated": false
+}
