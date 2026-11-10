@@ -207,3 +207,7 @@ CI42890385232 @ecce707 pasó exactamente supervisor_cleanup_without_crypto (1/1)
 ## 2026-11-10 14:09 — codex — Primer lote H5 detenido; corrección de evidencia H4 revisada
 
 CI42891631285 @ea94eb2 primer lote sintético inició harness y salió71 con watchdog; wrapper60265.317ms, fase/casoscompletados/RSS/KDF desconocidos, sin recibo ni aceptaciónR23/recuperación. Compile/supervisor pasaron y preposthashes17; revisorSol aprobó sólo registro de fallo58f0c77. Astra diagnostica sin nuevas ejecuciones. Fix3d3d588 conserva prefijos/telemetría/errorprimario antes de limpieza;12selftests por autor/revisor/root, sin nueva carga del modelo o red. Plan Nym inferencia/decoder revisado, sin ejecuciónautorizada, shapesobservadas simbólicas separadas de expectativa batch1. Examen300 intacto; H4/H5 abiertos.
+
+## 2026-11-10 14:13 — codex — Ensayo H5 opt2 y siguiente corte de detector
+
+Fix8a04105 perfiltest opt2+56marcas finitas revisado independientemente; guard60s/300s/768MiB,4resets,18casos/R23 y criptografía intactos. Freeze/decisiónroot nuevos para segundoCI42892963286 en curso. Investigaciónlicenciade256b3 4GET/61255B conserva MIT auténtico códigoNym; pesos/pinbase/cadena noverificados, releasebloqueado. Plan622f08e+testigos04d5264 anteriores a outputs; Astra implementa decoder nativo estricto y runner inactivo/mocks, sin carga/tokenización/forward nuevos ni examen300. No nuevos permisos a clientes/proveedores.
