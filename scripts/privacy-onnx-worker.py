@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Opt-in local GLiNER ONNX adapter. No downloads, Torch, pickle or remote code.
-Algorithm references (Apache-2.0): ur chade/GLiNER commit
+Algorithm references (Apache-2.0): urchade/GLiNER commit
 2dc5de256b81668bbd9b3a8a8e5ce62765750551 data_processing/{tokenizer,processor,utils}.py
 and decoding/decoder.py TokenDecoder. Reimplemented with tokenizers/NumPy/ORT:
 regex word splitting, entity prompts, first-subtoken mask, sigmoid BIO boundaries,
 minimum inside/boundary score and greedy flat span selection. Original input is
 never normalized for offsets: tokenizer NFC is internal; spans use regex offsets.
+Public license: https://github.com/urchade/GLiNER/blob/2dc5de256b81668bbd9b3a8a8e5ce62765750551/LICENSE
 The full reference license/source hashes are in artifacts/privacy/onnx-references.
 """
 import hashlib

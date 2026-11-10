@@ -66,5 +66,23 @@
   "heldoutScored": false,
   "productionEnabled": false,
   "clientDataUsed": false,
-  "next": "Preserve failed dev baseline; fix heldout runner safeguards before any acceptance. Develop on separate dev material/configs, never tune on heldout."
+  "next": "Preserve failed baseline; develop on separate dev material/configs. Runner findings closed, but no acceptance freeze or heldout scoring for inadequate dev candidate.",
+  "runnerSafeguardsClosure": {
+    "localDate": "2026-11-10",
+    "builder": "gpt-6-astra",
+    "independentReviewer": "gpt-6.1-sol",
+    "verdict": "APPROVE-runner-only",
+    "independentTargetedTests": 12,
+    "actualHeldoutScored": false,
+    "sources": {
+      "scripts/run-privacy-detector-v2.mjs": "9e525c1d5e1c422760b613972a65adf47bfa57a785dac6ca938c6f49683633c5",
+      "tests/privacy-semantic-v2.test.mjs": "6088e7460f2e1cd0569d9c8b60a1a41c77e233086e5a9552a0054165132a7f7f",
+      "scripts/privacy-onnx-worker.py": "1fc20d079aa46b629a957d71e95636169778f3102977d06b46d3381598a4b80b"
+    },
+    "checks": [
+      "Actual manifest, guide and complete disjoint corpus validated before backend startup",
+      "Canonical single-use execution identity ignores formatting and review metadata",
+      "Exclusive retained reservation; no automatic retry on failure"
+    ]
+  }
 }
