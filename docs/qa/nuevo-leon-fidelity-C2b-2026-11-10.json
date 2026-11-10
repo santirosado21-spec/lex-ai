@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T18:31:01.557188+00:00",
+  "reportSha256": "d2f3d94a1d743fc697b0e673941732e3ad2ffa911a41d23ef58192dd50fa88c3",
+  "artifactDirectory": "artifacts/public-corpus/nl-fidelity-revision-01",
+  "state": "complete-quarantine",
+  "elapsedMs": 2550.3481669999996,
+  "summary": {
+    "completedComparisons": 48,
+    "fidelityApproved": false,
+    "normalizedEqual": 45,
+    "pendingComparisons": 0,
+    "plannedComparisons": 48,
+    "plannedPages": 24,
+    "plannedVisualPages": 6,
+    "rawEqual": 0,
+    "renderedPages": 6,
+    "visualApproved": 0
+  },
+  "commands": 57,
+  "outputFiles": 252,
+  "textBytes": 381459,
+  "imageBytes": 1012639,
+  "networkRequests": 0,
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE4freeze hashes,8inputs,252outputs,3binary hashes/versions; recomputed48metrics and96normalized views; no reparse",
+  "mismatches": [
+    {
+      "documentId": "nl-civil",
+      "mode": "default",
+      "normalizedEqual": false,
+      "orderedTokensEqual": false,
+      "physicalPage": 1,
+      "rawEqual": false
+    },
+    {
+      "documentId": "nl-civil",
+      "mode": "layout",
+      "normalizedEqual": false,
+      "orderedTokensEqual": false,
+      "physicalPage": 1,
+      "rawEqual": false
+    },
+    {
+      "documentId": "nl-penal",
+      "mode": "default",
+      "normalizedEqual": false,
+      "orderedTokensEqual": false,
+      "physicalPage": 64,
+      "rawEqual": false
+    }
+  ],
+  "differenceInterpretation": [
+    "Civil physical page1 in both modes: PDF.js three full stops versus Poppler ellipsis in publisher number; preserved without equivalence rewriting.",
+    "Penal physical page64 default only: phrase A TODA moved in reading order; token-bag overlap1 does not imply ordered equality; layout matches."
+  ],
+  "renderInspections": [
+    {
+      "documentId": "nl-civil",
+      "physicalPage": 1,
+      "path": "nl-civil-p0001.png",
+      "sha256": "c781cea7b8cc2cd5ee99b6d2fba500cc7007a3d121683ba2fae3567f670a48d5",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    },
+    {
+      "documentId": "nl-civil",
+      "physicalPage": 374,
+      "path": "nl-civil-p0374.png",
+      "sha256": "1b62ec43c66a65cf97fa499e6a71416c3b413cf3c1a0bcfd4c2bda87436394bd",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    },
+    {
+      "documentId": "nl-civil",
+      "physicalPage": 396,
+      "path": "nl-civil-p0396.png",
+      "sha256": "5c94141c69b00de574ca8b74f63bd1b044483ae0242b93579a9f21c3fc3094e7",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    },
+    {
+      "documentId": "nl-penal",
+      "physicalPage": 26,
+      "path": "nl-penal-p0026.png",
+      "sha256": "41d094307be7845f47b80caa802b24297aa77fefe92e71b1879d45c8e1ed198b",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    },
+    {
+      "documentId": "nl-penal",
+      "physicalPage": 27,
+      "path": "nl-penal-p0027.png",
+      "sha256": "2b622210fef7adf27a5e0af221fc13e0cf284313142635cc40cf05541d30a31c",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    },
+    {
+      "documentId": "nl-penal",
+      "physicalPage": 223,
+      "path": "nl-penal-p0223.png",
+      "sha256": "d4b8d413255a56b6bf9caff9d223f7470e02d2c7f6db1546b885d59afa14ffe0",
+      "inspection": "Root Codex viewed image; rendering/layout and expected headings/history inspected, not full textual fidelity or professional review"
+    }
+  ],
+  "corpusFidelityApproved": false,
+  "humanVisualApproved": false,
+  "currentLawApproved": false,
+  "productionEnabled": false
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:29:05.601107+00:00",
+  "approvedForSingleBoundedResearchAudit": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: APPROVE13synthetic tests plus streaming-timeout80ms/84ms close and Unicode/order adversarial checks",
+  "sourceHashes": {
+    "scripts/audit-nuevo-leon-fidelity.mjs": "bb78e82be9ab95630c4820cb7a95fff212d4b410c757c1a1473667fb2f593fcc",
+    "tests/nuevo-leon-fidelity.test.mjs": "41e7a9b613e7c857daada100594ccf121cadf45c0ba3f758ad62106ab472e374",
+    "docs/architecture/nuevo-leon-fidelity-audit-v1.md": "20ae84a7b5a88afbd7c8437080aaf3cf7cd6a1638824d1b3e3322801c4da3659",
+    "resources/nuevo-leon-fidelity-audit-v1.json": "ccc5f89132342a769068905925d8f389e88a78a225dbf1a961273f8b9a219a3d"
+  },
+  "plannedPages": 24,
+  "plannedComparisons": 48,
+  "plannedVisualRenders": 6,
+  "renderAuthorized": true,
+  "networkAuthorized": false,
+  "fidelityApproved": false,
+  "legalAccuracyApproved": false,
+  "productionEnabled": false
+}

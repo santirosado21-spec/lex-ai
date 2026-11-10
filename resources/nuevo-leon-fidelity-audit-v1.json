@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "nuevo-leon-fidelity-audit-v1",
+  "state": "proposed-not-executed",
+  "dataClass": "public-development",
+  "productionEnabled": false,
+  "effectiveAt": null,
+  "rightsReview": "pending",
+  "textReview": "pending",
+  "legalReview": "pending",
+  "fidelityApproved": false,
+  "published": false,
+  "indexed": false,
+  "trainingExported": false,
+  "approvedForAcquisition": false,
+  "sampling": {
+    "unit": "physical-PDF-page-1-based",
+    "rule": "8 anchors: 1+floor(k*(N-1)/7+0.5), k=0..7; union four fixed context/risk pages; sort; no replacement after comparison",
+    "plannedDocuments": 2,
+    "plannedPages": 24,
+    "comparisonModes": [
+      "default",
+      "layout"
+    ],
+    "plannedTextCommands": 48,
+    "documents": [
+      {
+        "id": "nl-civil",
+        "pages": 396,
+        "selected": [
+          1,
+          2,
+          57,
+          114,
+          170,
+          227,
+          283,
+          340,
+          373,
+          374,
+          375,
+          396
+        ],
+        "context": [
+          2,
+          373,
+          374,
+          375
+        ],
+        "visual": [
+          1,
+          374,
+          396
+        ]
+      },
+      {
+        "id": "nl-penal",
+        "pages": 223,
+        "selected": [
+          1,
+          2,
+          26,
+          27,
+          28,
+          33,
+          64,
+          96,
+          128,
+          160,
+          191,
+          223
+        ],
+        "context": [
+          2,
+          26,
+          27,
+          28
+        ],
+        "visual": [
+          26,
+          27,
+          223
+        ]
+      }
+    ]
+  },
+  "normalization": {
+    "id": "ascii-whitespace-v1",
+    "steps": [
+      "decode strict UTF-8; retain original bytes and SHA-256",
+      "fold only U+0009..U+000D and U+0020 runs to U+0020 and trim U+0020",
+      "no NFC/NFKC, accent/case/punctuation/number correction, dehyphenation, header stripping or NBSP folding"
+    ],
+    "offsets": {
+      "literal": "Unicode scalar indices plus UTF-8 byte offsets",
+      "source": "C2a item/line UTF-16 offsets remain separately labeled"
+    },
+    "metrics": [
+      "raw byte equality/bytes/SHA-256",
+      "normalized equality/code-point counts/common prefix and suffix/positional equality",
+      "directional token multiset precision and recall, PDF.js observed vs Poppler comparator; no ground truth",
+      "ordered token equality and first mismatch; bounded literal mismatch windows with full raw files retained"
+    ],
+    "acceptanceThreshold": null
+  },
+  "limits": {
+    "maxCommandMs": 15000,
+    "maxBatchMs": 120000,
+    "concurrency": 1,
+    "retries": 0,
+    "maxStdoutBytes": 1048576,
+    "maxStderrBytes": 65536,
+    "maxTotalTextBytes": 4194304,
+    "maxJsonBytes": 33554432,
+    "maxImagesBytes": 33554432,
+    "renderDpi": 96,
+    "maxImageDimension": 2048,
+    "plannedVisualPages": 6,
+    "maxTextCommands": 48,
+    "maxRenderCommands": 6,
+    "maxVersionCommands": 3,
+    "maxBinaryBytes": 67108864,
+    "maxInputFileBytes": 33554432,
+    "maxInputBytes": 41943040,
+    "maxImageBytes": 8388608,
+    "maxProcesses": 57,
+    "rssMeasured": false
+  },
+  "visual": {
+    "default": "pending-not-rendered",
+    "explicitFlag": "--render",
+    "fixedPages": 6,
+    "imageFormat": "PNG",
+    "review": "Human full-page inspection and literal text/reading-order checks; integer pixel boxes use top-left origin and actual PNG dimensions; never infer pixel coordinates directly from PDF.js transforms",
+    "approval": "pending until independent recorded human inspection; rendering alone never approves fidelity"
+  },
+  "scope": "Offline public research quarantine; discrepancies are evidence, never automatic repairs or operative version selection; no new PDF.js parsing, OCR, model or network",
+  "outputRoot": "artifacts/public-corpus",
+  "plannedOutputName": "nl-fidelity-revision-01",
+  "implementation": "scripts/audit-nuevo-leon-fidelity.mjs",
+  "execution": "not-run; synthetic tests only; independent review and coordinator freeze required before --audit",
+  "inputs": {
+    "captureReport": {
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/report.json",
+      "sha256": "888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246"
+    },
+    "pageEvidenceReport": {
+      "path": "artifacts/public-corpus/nl-page-evidence-revision-01/report.json",
+      "sha256": "fcbcef8eb1e090e3ef2953bd694f07eaf7b8ec7cff5bb425445090f5cafff815"
+    },
+    "pageProfileFreeze": {
+      "path": "docs/qa/nuevo-leon-pages-C2a-freeze-2026-11-10.json",
+      "sha256": "a760cbb14eb0096cdddcdd9353de5bb9ec109d876c596eae6c5df6b55f0937eb"
+    },
+    "documents": [
+      {
+        "id": "nl-civil",
+        "pdfBytes": 1779177,
+        "pdfSha256": "a517709dd10664bbf7fc4ee77e32e4a0da7fdfbce45b662166dc706ead3c8af7",
+        "evidenceBytes": 21529846,
+        "evidenceSha256": "5cb4872ebf40dec7edf9447a037b2df500ffd903632429fdf8bc3c275a8ba216",
+        "originalUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.pdf?2026-06-26"
+      },
+      {
+        "id": "nl-penal",
+        "pdfBytes": 1222017,
+        "pdfSha256": "440f28ca7515f63c35e5e9034086e843e126bed75f6d07dfe1067537607c3d76",
+        "evidenceBytes": 10314076,
+        "evidenceSha256": "426311dc88b95d0a5d8dec78d66c0ec2b357ed30ff8659dc3c2ab8411cd5c343",
+        "originalUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.pdf?2026-06-15"
+      }
+    ]
+  },
+  "tools": {
+    "paths": {
+      "pdftotext": "/opt/homebrew/bin/pdftotext",
+      "pdftoppm": "/opt/homebrew/bin/pdftoppm",
+      "pdfinfo": "/opt/homebrew/bin/pdfinfo"
+    },
+    "receipt": [
+      "requested absolute path",
+      "resolved path",
+      "binary bytes and SHA-256 before and after",
+      "version stdout/stderr hashes and saved combined version bytes",
+      "Node version/platform/architecture",
+      "fixed argv, timestamps, duration, exit code and output byte hashes"
+    ],
+    "environment": {
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C",
+      "LC_ALL": "C"
+    },
+    "shell": false,
+    "networkRequests": 0
+  },
+  "failurePolicy": {
+    "stopOnFirstFailure": true,
+    "retries": 0,
+    "states": [
+      "complete-quarantine",
+      "partial-quarantine"
+    ],
+    "plannedDenominator": {
+      "physicalPages": 24,
+      "textComparisons": 48,
+      "visualPages": 6
+    },
+    "preserveCompletedPrefix": true,
+    "missingWork": "explicit pending entries; never replacement pages or dropped denominator",
+    "fidelityPass": "never computed or granted",
+    "errors": "finite categories only; raw process stderr is not interpolated into error instructions",
+    "jsonReceiptReserveBytes": 262144
+  }
+}
