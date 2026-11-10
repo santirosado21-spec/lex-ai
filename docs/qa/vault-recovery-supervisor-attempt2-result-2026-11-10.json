@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "scope": "SUPERVISOR_ONLY",
+  "attempt": 2,
+  "runId": 42890385232,
+  "commit": "ecce7077f91f019ec33875c54f4ae4ee36e435b1",
+  "log": "artifacts/phased-completion-20261110-batch2/vault-recovery-supervisor-second.log",
+  "logSha256": "46d07a28ad2080edecad584484cddbff66de77d0664b2ff36f05e66c06504b67",
+  "logBytes": 121253,
+  "freezePath": "docs/qa/vault-recovery-supervisor-freeze-2026-11-10.json",
+  "freezeSha256": "f94de549146126f28351d479a6f9b82a1625706189907ae2b84f6dfd45eaa8a9",
+  "independentReview": {
+    "agent": "review_vault_reminders",
+    "verdict": "APPROVE-supervisor-evidence",
+    "sourceAndWorkflowBindingsChecked": 16,
+    "currentAndCommitHashesMatch": true,
+    "method": "Read-only local log/source/freeze audit; no new execution or network"
+  },
+  "observedReceipt": {
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": null,
+    "compilationAttempted": true,
+    "cryptoTestsExecuted": false,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "recoveryHelperInvoked": false,
+    "result": "PASS",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "SUPERVISOR_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestOnly": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 761.834,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "exactTestSelector": "supervisor_cleanup_without_crypto --ignored --exact --nocapture --test-threads=1",
+  "libtest": {
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0,
+    "filteredOut": 1,
+    "reportedElapsedSeconds": 0.13
+  },
+  "compilerReportedElapsed": "1m 59s",
+  "supervisorCargoIncrementalElapsedSeconds": 0.54,
+  "injectedPanic": "Deliberate synthetic supervisor unwind caught to assert RAII cleanup; exact test passed.",
+  "limitations": [
+    "Supervisor-only regression, not recovery or cryptography acceptance.",
+    "No baseline DAO/database tests or recovery helper invoked.",
+    "No RSS or physical 8 GB validation established.",
+    "Earlier failed supervisor attempt remains historical evidence."
+  ],
+  "cryptoExecutionAuthorizedByThisReview": false,
+  "h5Complete": false
+}

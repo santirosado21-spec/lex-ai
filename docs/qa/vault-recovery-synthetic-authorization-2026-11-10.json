@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "scope": "FIRST_EXPLICIT_SYNTHETIC_RECOVERY_BATCH",
+  "approvedBy": "codex/root",
+  "preconditions": {
+    "compileRunId": 42887207030,
+    "compileResult": "PASS",
+    "supervisorRunId": 42890385232,
+    "supervisorCommit": "ecce7077f91f019ec33875c54f4ae4ee36e435b1",
+    "supervisorResult": "PASS",
+    "supervisorIndependentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE",
+    "workflowStaticReview": "review_vault_reminders / gpt-6.1-sol: APPROVE"
+  },
+  "newFreezeSha256": "921533b26f884ac2f3a0d4f5d63b547f72bcc0ab36833e6301be847a9c8dc6c3",
+  "authorizedCaseInvocations": 18,
+  "preparationSeparate": true,
+  "kdfInvocationCount": null,
+  "syntheticPublicCleanVmOnly": true,
+  "automaticRetry": false,
+  "ownerMacRustCodegenAuthorized": false,
+  "productionEnabled": false,
+  "h5Complete": false
+}
