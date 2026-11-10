@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:17:43.855204+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_SOURCE_FOR_SEPARATELY_FROZEN_SINGLE_SMOKE",
+  "scope": "D1j source/lifecycle review, synthetic mocks plus actual own standard-library three-process fixture only; no Windows WMI or CI execution.",
+  "reviewedSourceHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "3beb1f1b61dfad85e5513e7d8458675383f40c41d1966774e6bb88c990e5b8b2",
+    "tests/windows-owned-tree-smoke.test.mjs": "f112305fb7bab43ff8d398c89f91e0cbea990a4ed54ea5ff2a91880e5574408b",
+    "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+    "docs/architecture/windows-owned-tree-smoke-v1.md": "2839a84d04d9938027336d20e1c3c3b5f79abb6bbf010b50601b98cda09d6fe9",
+    ".github/workflows/windows-owned-tree-smoke.yml": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  },
+  "baselinePinsUnchanged": true,
+  "tests": {
+    "command": "node --test tests/windows-owned-tree-smoke.test.mjs tests/windows-memory-monitor-v2.test.mjs",
+    "passed": 24,
+    "failed": 0,
+    "reportedDurationMs": 115.953375,
+    "actualLocalFixture": "Three own Node processes with synthetic8MiB buffers, readiness/PPID chain and child-first exit0; no WMI.",
+    "WindowsActualExecution": false
+  },
+  "findings": [],
+  "reviewedGuards": [
+    "Strict unique three-PID/root-parent-role chain and snapshot closure; positive RSS per member, exact total and exclusion of collector/coordinator across startup+four serial samples.",
+    "Fixture remains live through collector close; successful collector cleanup requires observed exit0 with no kill/category/signal and exactly five verified frames.",
+    "Nested roles[2,1] graceful acknowledgement plus root exit0 required; any forced/unobserved/unexpected shutdown fails.",
+    "Fixed command/Node executable/minimal SystemRoot-WINDIR environment; default PLAN has no fixture/files/WMI.",
+    "Seven-source exact approved freeze before/after; fresh exclusive run directory and exclusive started/receipt files.",
+    "Public repository and explicit head prefix before standardWindows2025 job, readonly pinned checkout without persistent credentials,5minute outer timeout; no secret/upload/cache/release/deploy routes."
+  ],
+  "limits": [
+    "No actual Windows multilevel measurement, collector overhead, installers, inference or physical8GB acceptance.",
+    "32.5s is summed configured phase budget before scheduler overhead, not hard global deadline.",
+    "PIDs are instantaneous numeric identities. In incomplete readiness or forced cleanup, descendant reaping can remain unknown;FAIL does not assert orphan-free cleanup.",
+    "No approved freeze, CI trigger, network request or native-source modification performed in this review."
+  ],
+  "productionEnabled": false,
+  "physical8GBValidated": false,
+  "installerValidated": false,
+  "inferenceValidated": false
+}

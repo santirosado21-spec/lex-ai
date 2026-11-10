@@ -1,0 +1,37 @@
+name: Windows owned tree RSS smoke
+on:
+  push:
+    branches: [docs/hybrid-psf-development-loop]
+    paths:
+      - scripts/windows-owned-tree-smoke.mjs
+      - tests/windows-owned-tree-smoke.test.mjs
+      - resources/windows-owned-tree-smoke-v1.json
+      - docs/architecture/windows-owned-tree-smoke-v1.md
+      - docs/qa/windows-owned-tree-smoke-freeze-2026-11-10.json
+      - .github/workflows/windows-owned-tree-smoke.yml
+permissions:
+  contents: read
+concurrency:
+  group: windows-owned-tree-smoke
+  cancel-in-progress: false
+jobs:
+  owned-tree:
+    if: github.event.repository.private == false && startsWith(github.event.head_commit.message, '[windows-owned-tree]')
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Offline contracts
+        shell: pwsh
+        run: |
+          node --version
+          node --test tests/windows-owned-tree-smoke.test.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: One frozen owned-tree run
+        shell: pwsh
+        run: |
+          node scripts/windows-owned-tree-smoke.mjs --run
+          exit $LASTEXITCODE
