@@ -503,9 +503,15 @@
   "retentionBugProvenByFakeCleanupFault": true,
   "retentionBugProvesOriginalCause": false,
   "pointInTimeOfflineAudit": "author_s2b2_acceptance_data: source/freeze/runtime unchanged,6cache byte hashes/modes verified,5event schemas and pure comparisons passed; not a retroactive original postflight",
-  "independentAuditPending": true,
+  "independentAuditPending": false,
   "redistributionApproved": false,
   "privacyValidated": false,
   "physical8GBValidated": false,
-  "productionEnabled": false
+  "productionEnabled": false,
+  "independentAudit": {
+    "path": "docs/qa/privacy-nym-contract-probe-v1-independent-audit-2026-11-10.json",
+    "sha256": "0194b6a4325f0f86477ef8e5786015bde46750faed3fa6f1c1fac6f4886f21ab",
+    "verdict": "APPROVE_PARTIAL_METADATA_FACTS_ONLY",
+    "temporalScope": "Current point-in-time offline identity and saved metadata audit only; original run remains FAILED, original exception UNKNOWN, original postflight not established, combined RSS unavailable."
+  }
 }
