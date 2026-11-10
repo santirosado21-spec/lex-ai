@@ -575,7 +575,7 @@ fn supervisor_cleanup_without_crypto() {
         assert!(owned.poll(id).unwrap().is_none());
         assert_eq!(cleanup_for_failure(&owned, code), code);
         reaped(pid);
-        assert!(owned.spawn(Command::new("/bin/true")).is_err());
+        assert!(owned.spawn(&mut Command::new("/bin/true")).is_err());
         assert!(owned.shutdown()); // idempotence, no second raw-PID kill
     }
     // Inject an unsuccessful ps status while the owned restore is demonstrably live.
