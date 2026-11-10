@@ -18,9 +18,9 @@ from urllib.request import HTTPSHandler, HTTPRedirectHandler, ProxyHandler, Requ
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = 'resources/privacy-nym-int8-candidate-v1.json'
 MANIFEST_SHA = '0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297'
-POLICY = 'resources/privacy-nym-research-preparation-v1.json'
-FREEZE = 'docs/qa/privacy-nym-research-preparation-v1-freeze.json'
-OUTPUT = 'artifacts/privacy/models/nym-int8-local-v1'
+POLICY = 'resources/privacy-nym-research-preparation-v2.json'
+FREEZE = 'docs/qa/privacy-nym-research-preparation-v2-freeze.json'
+OUTPUT = 'artifacts/privacy/models/nym-int8-local-v2'
 REVISION = '4348999cd3c2e20c49615e9af7c6bbb45b64cd85'
 PREFIX = 'https://huggingface.co/Wismut/nym-pii-multilingual-small/resolve/'+REVISION+'/'
 SMALL = {
@@ -33,12 +33,12 @@ LARGE = (
  {'path':'int8/model_int8.onnx','bytes':138730982,'sha256':'139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286'},
  {'path':'int8/tokenizer.json','bytes':12389891,'sha256':'c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de'},
 )
-HOSTS = ('huggingface.co','cas-bridge.xethub.hf.co','cdn-lfs.huggingface.co','cdn-lfs-us-1.hf.co')
+HOSTS = ('huggingface.co','cas-bridge.xethub.hf.co','cdn-lfs.huggingface.co','cdn-lfs-us-1.hf.co','us.aws.cdn.hf.co')
 LIMITS = {'maximumTotalBytes':175*1024*1024,'requestSeconds':60,'batchSeconds':120,
           'gapSeconds':2,'maximumHTTPRequests':6,'maximumRedirectsPerFile':2,
           'concurrency':1,'retries':0}
 REVIEWED = ('scripts/prepare-privacy-nym-research.py','tests/privacy-nym-preparation.test.mjs',
-            POLICY,'docs/architecture/privacy-nym-research-preparation-v1.md',MANIFEST)
+            POLICY,'docs/architecture/privacy-nym-research-preparation-v2.md',MANIFEST)
 DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 
 class Failure(Exception):
@@ -51,7 +51,7 @@ def require(ok, code):
     if not ok: raise Failure(code)
 
 def plan():
-    value = {'schemaVersion':1,'id':'nym-research-preparation-v1','action':'PLAN',
+    value = {'schemaVersion':1,'id':'nym-research-preparation-v2','action':'PLAN',
       'scope':'explicit-public-research-cache-only','productionEnabled':False,
       'authorizationGranted':False,'runtimeLoaded':False,'sourceManifest':MANIFEST,
       'sourceManifestSha256':MANIFEST_SHA,'revision':REVISION,'outputDirectory':OUTPUT,
@@ -96,7 +96,7 @@ def checked_sources(fd, freeze_relative):
     require(freeze_relative==FREEZE,'FREEZE_PATH_REJECTED')
     frozen_raw=read_confined(fd,FREEZE,65536);f=json.loads(frozen_raw)
     require(set(f)=={'schemaVersion','id','status','scope','planSha256','sourceHashes','limits','outputDirectory','independentReview','rootAuthorization'},'FREEZE_REJECTED')
-    require(f['schemaVersion']==1 and f['id']=='nym-research-preparation-v1' and f['status']=='frozen-reviewed' and f['scope']=='public-research-cache-only' and f['planSha256']==plan()['planSha256'] and f['limits']==LIMITS and f['outputDirectory']==OUTPUT,'FREEZE_REJECTED')
+    require(f['schemaVersion']==1 and f['id']=='nym-research-preparation-v2' and f['status']=='frozen-reviewed' and f['scope']=='public-research-cache-only' and f['planSha256']==plan()['planSha256'] and f['limits']==LIMITS and f['outputDirectory']==OUTPUT,'FREEZE_REJECTED')
     review=f['independentReview'];auth=f['rootAuthorization']
     require(set(review)=={'identity','reviewedAt','verdict','independentFromBuilder'} and review['verdict']=='APPROVE' and review['independentFromBuilder'] is True,'REVIEW_REQUIRED')
     require(set(auth)=={'by','authorizedAt','status','scope','missingLicenseNoticeAcknowledged'} and auth['status']=='authorized' and auth['scope']=='bounded-research-only' and auth['missingLicenseNoticeAcknowledged'] is True,'RESEARCH_AUTH_REQUIRED')
@@ -121,7 +121,7 @@ def checked_sources(fd, freeze_relative):
     return {'freezeSha256':sha(frozen_raw),'sourceHashes':f['sourceHashes'],'embedded':embedded}
 
 def policy_document():
-    return {'schemaVersion':1,'id':'nym-research-preparation-v1','status':'inactive-development-tool-requires-reviewed-freeze','productionEnabled':False,'automaticDownload':False,'sourceManifest':MANIFEST,'sourceManifestSha256':MANIFEST_SHA,'revision':REVISION,'fixedOutputDirectory':OUTPUT,'fixedFreezePath':FREEZE,'planSha256':plan()['planSha256'],'limits':dict(LIMITS),'allowedRedirectHosts':list(HOSTS),'fullLicenseNoticeMissing':True,'distributionAndProductReleaseBlocked':True,'boundedResearchOnlyRootDecisionRequired':True,'runtimeLoadAllowed':False,'trainingAllowed':False,'providerEgressAllowed':False,'completionPostflightRequired':{'freezeExactSha256Unchanged':True,'reviewedSourceFiles':5,'publishedPayloadFiles':6,'payloadSizeSha256RegularAndReadonly':True}}
+    return {'schemaVersion':1,'id':'nym-research-preparation-v2','status':'inactive-development-tool-requires-reviewed-freeze','productionEnabled':False,'automaticDownload':False,'sourceManifest':MANIFEST,'sourceManifestSha256':MANIFEST_SHA,'revision':REVISION,'fixedOutputDirectory':OUTPUT,'fixedFreezePath':FREEZE,'planSha256':plan()['planSha256'],'limits':dict(LIMITS),'allowedRedirectHosts':list(HOSTS),'fullLicenseNoticeMissing':True,'distributionAndProductReleaseBlocked':True,'boundedResearchOnlyRootDecisionRequired':True,'runtimeLoadAllowed':False,'trainingAllowed':False,'providerEgressAllowed':False,'completionPostflightRequired':{'freezeExactSha256Unchanged':True,'reviewedSourceFiles':5,'publishedPayloadFiles':6,'payloadSizeSha256RegularAndReadonly':True}}
 
 class Store:
     def __init__(self, fd):
@@ -170,6 +170,26 @@ def safe_url(url):
     value=checked_url(url)
     return {'host':value.hostname,'path':value.path,'querySha256':sha(value.query.encode()) if value.query else None}
 
+def redirect_summary(url, location_sha256):
+    """Untrusted redirect diagnostics, independent of the allowlist; never raw secrets."""
+    result={'scheme':None,'hostname':None,'port':None,'containsUserInfo':None,
+            'containsFragment':None,'locationSha256':location_sha256,
+            'querySha256':None,'parseStatus':'unparseable'}
+    if not isinstance(url,str):return result
+    try:
+        value=urlsplit(url)
+        def display(text,maximum):
+            return text if text and len(text)<=maximum and all(c.isascii() and (c.isalnum() or c in '.:-') for c in text) else None
+        result.update(scheme=display(value.scheme,32),hostname=display(value.hostname,253),
+                      containsUserInfo=value.username is not None or value.password is not None,
+                      containsFragment=bool(value.fragment),
+                      querySha256=sha(value.query.encode('utf-8','surrogatepass')) if value.query else None,
+                      parseStatus='parsed')
+        try:result['port']=value.port
+        except ValueError:result['parseStatus']='invalid-port'
+    except Exception:pass
+    return result
+
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs): return None
 
@@ -177,7 +197,7 @@ class NoRedirect(HTTPRedirectHandler):
 def transport(url,timeout):
     checked_url(url)
     opener=build_opener(ProxyHandler({}),NoRedirect(),HTTPSHandler(context=ssl.create_default_context()))
-    request=Request(url,headers={'User-Agent':'LEX-AI-Nym-Research-Preparation/1.0','Accept':'application/octet-stream','Accept-Encoding':'identity'})
+    request=Request(url,headers={'User-Agent':'LEX-AI-Nym-Research-Preparation/2.0','Accept':'application/octet-stream','Accept-Encoding':'identity'})
     try: response=opener.open(request,timeout=timeout)
     except HTTPError as error: response=error
     try: yield response
@@ -196,7 +216,7 @@ class Batch:
     def __init__(self,store,*,request_transport=transport,clock=time.monotonic,sleep=time.sleep,alarm=request_alarm):
         self.store,self.transport,self.clock,self.sleep,self.alarm=store,request_transport,clock,sleep,alarm
         self.started=clock();self.last_start=None
-        self.receipt={'schemaVersion':1,'id':'nym-research-preparation-v1','scope':'bounded-public-research-cache-only','state':'running','postflight':{'status':'not-reached'},'startedAt':now(),'requests':[],'files':[],'bodyBytesReceived':0,'embeddedBytesCopied':0,'payloadBytesPublished':0,'runtimeLoaded':False,'inferencePerformed':False,'productionEnabled':False,'fullLicenseNoticeMissing':True,'distributionAndProductReleaseBlocked':True,'automaticRetry':False,'httpCountMeaning':'Dispatched anonymous transport attempts, including transport failures; actual wire delivery remains unknown without response. Reserved requests blocked before transport are excluded.'}
+        self.receipt={'schemaVersion':1,'id':'nym-research-preparation-v2','scope':'bounded-public-research-cache-only','state':'running','postflight':{'status':'not-reached'},'startedAt':now(),'requests':[],'files':[],'bodyBytesReceived':0,'embeddedBytesCopied':0,'payloadBytesPublished':0,'runtimeLoaded':False,'inferencePerformed':False,'productionEnabled':False,'fullLicenseNoticeMissing':True,'distributionAndProductReleaseBlocked':True,'automaticRetry':False,'httpCountMeaning':'Dispatched anonymous transport attempts, including transport failures; actual wire delivery remains unknown without response. Reserved requests blocked before transport are excluded.'}
     def remaining(self):
         left=LIMITS['batchSeconds']-(self.clock()-self.started);require(left>0,'BATCH_DEADLINE');return left
     def record(self,event): self.store.event(event)
@@ -223,7 +243,13 @@ class Batch:
                             headers=response.headers
                             if hasattr(headers,'get_all'): require(len(headers.get_all('Location',[]))==1,'REDIRECT_REJECTED')
                             location=headers.get('Location');require(isinstance(location,str) and len(location)<=16384,'REDIRECT_REJECTED')
-                            rec['locationSha256']=sha(location.encode());target=urljoin(url,location);checked_url(target)
+                            rec['locationSha256']=sha(location.encode('utf-8','surrogatepass'))
+                            rec['redirectSummary']=redirect_summary(location,rec['locationSha256'])
+                            require(not any(ord(c)<=32 or ord(c)==127 for c in location) and '\\' not in location,'URL_REJECTED')
+                            try:target=urljoin(url,location)
+                            except Exception:raise Failure('REDIRECT_REJECTED') from None
+                            rec['redirectSummary']=redirect_summary(target,rec['locationSha256'])
+                            checked_url(target)
                             rec['redirectTarget']=safe_url(target);require(redirects<LIMITS['maximumRedirectsPerFile'],'REDIRECT_BUDGET')
                             redirects+=1;url=target;rec['state']='redirect';check();self.record({'event':'response',**rec});continue
                         require(response.status==200,'HTTP_STATUS')

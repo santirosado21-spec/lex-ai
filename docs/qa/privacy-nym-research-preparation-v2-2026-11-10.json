@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 2,
+  "scope": "bounded research cache, not loaded",
+  "cacheDirectory": "artifacts/privacy/models/nym-int8-local-v2",
+  "receiptSha256": "cb287aa208c76d95d4da9138e7139cdc48c5f19999d8438a7ff22eab65477a78",
+  "ledgerSha256": "b48be1f7594a548a441ff5e7900db0662f855a99e50ceb8c30cf2a8df9e32b70",
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE53Python tests+Node source review and actual6file hash-only audit including5source/freeze bindings",
+  "state": "complete-research-cache-not-loaded",
+  "actualHttpRequests": 4,
+  "remoteBodyBytes": 151120873,
+  "publishedBytes": 151135538,
+  "elapsedMs": 20963.535,
+  "postflightStatus": "verified",
+  "files": [
+    {
+      "bytes": 6717,
+      "origin": "reviewed-embedded-source",
+      "path": "README.md",
+      "sha256": "74c55f42afcad1e5c1ea9b059f37d9d48e5641e04628642a12444721c57f3d9e",
+      "status": "hash-verified-readonly"
+    },
+    {
+      "bytes": 5688,
+      "origin": "reviewed-embedded-source",
+      "path": "int8/config.json",
+      "sha256": "3f07065571e22bb73eba28ddb1fae4509c0cf703762e3bfa7a6ab2111cf7cb88",
+      "status": "hash-verified-readonly"
+    },
+    {
+      "bytes": 573,
+      "origin": "reviewed-embedded-source",
+      "path": "tokenizer_config.json",
+      "sha256": "02055b886266b1a475bc324da83e273fe96e4974002f9d970f26e94aa73e5885",
+      "status": "hash-verified-readonly"
+    },
+    {
+      "bytes": 1687,
+      "origin": "reviewed-embedded-source",
+      "path": ".gitattributes",
+      "sha256": "48030a73329817519a47704c56b3e891b4227a19742a138374b9f6ccde002004",
+      "status": "hash-verified-readonly"
+    },
+    {
+      "bytes": 138730982,
+      "origin": "anonymous-fixed-payload",
+      "path": "int8/model_int8.onnx",
+      "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286",
+      "status": "hash-verified-readonly"
+    },
+    {
+      "bytes": 12389891,
+      "origin": "anonymous-fixed-payload",
+      "path": "int8/tokenizer.json",
+      "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+      "status": "hash-verified-readonly"
+    }
+  ],
+  "priorFailedV1Preserved": true,
+  "exactPriorRedirectHostProved": false,
+  "priorFailedV1Http": 1,
+  "priorDiagnosticHttp": 2,
+  "metadataHttp": 6,
+  "totalPreparationHttpV1V2": 5,
+  "runtimeLoaded": false,
+  "inferencePerformed": false,
+  "fullLicenseNoticeMissing": true,
+  "redistributionApproved": false,
+  "privacyQualityMeasured": false,
+  "physical8GBValidated": false,
+  "productionEnabled": false
+}

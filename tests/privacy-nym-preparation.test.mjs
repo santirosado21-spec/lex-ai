@@ -66,6 +66,27 @@ class StoreTests(unittest.TestCase):
   target='https://cas-bridge.xethub.hf.co/xet/model?Signature=PRIVATE-SIGNED-VALUE'
   b,n=self.batch([Response(status=302,headers={'Location':target}),Response()]);b.download(TINY)
   self.assertEqual(len(n.calls),2);self.assertEqual(self.clock.t,2);text=json.dumps(b.receipt)+self.output('ledger.jsonl').read_text();self.assertNotIn('PRIVATE-SIGNED-VALUE',text);self.assertNotIn('?Signature',text);self.assertIn(m.sha('Signature=PRIVATE-SIGNED-VALUE'.encode()),text)
+ def test_new_exact_hf_cdn_host_accepted(self):
+  target='https://us.aws.cdn.hf.co/xet-bridge-us/public/payload?Signature=NEW-PRIVATE-SIGNED'
+  b,n=self.batch([Response(status=302,headers={'Location':target}),Response()]);b.download(TINY)
+  self.assertEqual(len(n.calls),2);self.assertEqual(self.output(TINY['path']).read_bytes(),b'abc')
+  self.assertEqual(b.receipt['requests'][0]['redirectSummary']['hostname'],'us.aws.cdn.hf.co');self.assertNotIn('NEW-PRIVATE-SIGNED',json.dumps(b.receipt))
+ def test_new_host_lookalike_rejected_with_summary(self):
+  b,n=self.batch([Response(status=302,headers={'Location':'https://us.aws.cdn.hf.co.evil.example/p?sig=PRIVATE-LOOKALIKE'})])
+  with self.assertRaisesRegex(m.Failure,'URL_REJECTED'):b.download(TINY)
+  self.assertEqual(len(n.calls),1);self.assertEqual(b.receipt['requests'][0]['redirectSummary']['hostname'],'us.aws.cdn.hf.co.evil.example');self.assertNotIn('PRIVATE-LOOKALIKE',json.dumps(b.receipt))
+ def test_new_host_downgrade_and_wrong_port_rejected(self):
+  for url in ['http://us.aws.cdn.hf.co/file','https://us.aws.cdn.hf.co:444/file']:
+   b,n=self.batch([Response(status=302,headers={'Location':url})])
+   with self.subTest(url=url),self.assertRaisesRegex(m.Failure,'URL_REJECTED'):b.download(TINY)
+   self.assertEqual(len(n.calls),1);self.assertIn('redirectSummary',b.receipt['requests'][0])
+ def test_rejected_target_summary_never_reflects_secrets(self):
+  url='https://USERNAME-PRIVATE:PASSWORD-PRIVATE@us.aws.cdn.hf.co.evil.example:444/x?Signature=SIGNED-PRIVATE#FRAGMENT-PRIVATE'
+  b,n=self.batch([Response(status=302,headers={'Location':url})])
+  with self.assertRaisesRegex(m.Failure,'URL_REJECTED'):b.download(TINY)
+  summary=b.receipt['requests'][0]['redirectSummary'];self.assertEqual(summary['scheme'],'https');self.assertEqual(summary['port'],444);self.assertTrue(summary['containsUserInfo']);self.assertTrue(summary['containsFragment']);self.assertEqual(summary['locationSha256'],m.sha(url.encode()))
+  output=json.dumps(b.receipt)+self.output('ledger.jsonl').read_text()
+  for secret in ['USERNAME-PRIVATE','PASSWORD-PRIVATE','SIGNED-PRIVATE','FRAGMENT-PRIVATE','?Signature=']:self.assertNotIn(secret,output)
  def test_unexpected_redirect_host(self):
   b,n=self.batch([Response(status=302,headers={'Location':'https://evil.example/token?secret=hidden'})])
   with self.assertRaisesRegex(m.Failure,'URL_REJECTED'):b.download(TINY)
@@ -144,7 +165,7 @@ class FreezeTests(unittest.TestCase):
   self.tmp=tempfile.TemporaryDirectory();self.root=pathlib.Path(self.tmp.name)
   for relative in m.REVIEWED:
    dest=self.root/relative;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes((REAL/relative).read_bytes())
-  self.f={'schemaVersion':1,'id':'nym-research-preparation-v1','status':'frozen-reviewed','scope':'public-research-cache-only','planSha256':m.plan()['planSha256'],'sourceHashes':{p:m.sha((self.root/p).read_bytes()) for p in m.REVIEWED},'limits':dict(m.LIMITS),'outputDirectory':m.OUTPUT,'independentReview':{'identity':'offline-test-reviewer','reviewedAt':'2026-11-10T00:00:00Z','verdict':'APPROVE','independentFromBuilder':True},'rootAuthorization':{'by':'offline-test-root','authorizedAt':'2026-11-10T00:00:00Z','status':'authorized','scope':'bounded-research-only','missingLicenseNoticeAcknowledged':True}}
+  self.f={'schemaVersion':1,'id':'nym-research-preparation-v2','status':'frozen-reviewed','scope':'public-research-cache-only','planSha256':m.plan()['planSha256'],'sourceHashes':{p:m.sha((self.root/p).read_bytes()) for p in m.REVIEWED},'limits':dict(m.LIMITS),'outputDirectory':m.OUTPUT,'independentReview':{'identity':'offline-test-reviewer','reviewedAt':'2026-11-10T00:00:00Z','verdict':'APPROVE','independentFromBuilder':True},'rootAuthorization':{'by':'offline-test-root','authorizedAt':'2026-11-10T00:00:00Z','status':'authorized','scope':'bounded-research-only','missingLicenseNoticeAcknowledged':True}}
   self.writefreeze()
  def tearDown(self):self.tmp.cleanup()
  def writefreeze(self):
@@ -214,6 +235,22 @@ class FreezeTests(unittest.TestCase):
   def tamper(root):
    p=root/m.POLICY;p.unlink();p.symlink_to(REAL/m.POLICY)
   r=self.run_fake_complete_with_tamper(tamper);self.assertEqual(r['failureCode'],'POSTFLIGHT_SOURCE_CHANGED')
+ def test_v1_freeze_path_and_v1_id_rejected(self):
+  net=Network([])
+  with self.assertRaisesRegex(m.Failure,'FREEZE_PATH_REJECTED'):m.prepare('docs/qa/privacy-nym-research-preparation-v1-freeze.json',root=self.root,request_transport=net)
+  self.f['id']='nym-research-preparation-v1';self.writefreeze()
+  with self.assertRaisesRegex(m.Failure,'FREEZE_REJECTED'):m.prepare(m.FREEZE,root=self.root,request_transport=net)
+  self.assertFalse(net.calls);self.assertFalse((self.root/m.OUTPUT).exists())
+ def test_v1_output_is_preserved_not_resumed(self):
+  old=self.root/'artifacts/privacy/models/nym-int8-local-v1';old.mkdir(parents=True);(old/'receipt.json').write_bytes(b'v1-failed-kept')
+  fd=m.root_fd(self.root)
+  try:store=m.Store(fd);store.close()
+  finally:os.close(fd)
+  self.assertEqual(m.OUTPUT,'artifacts/privacy/models/nym-int8-local-v2');self.assertEqual((old/'receipt.json').read_bytes(),b'v1-failed-kept');self.assertTrue((self.root/m.OUTPUT).is_dir())
+ def test_v2_needs_its_own_freeze_not_existing_v1(self):
+  v1=self.root/'docs/qa/privacy-nym-research-preparation-v1-freeze.json';v1.write_text(json.dumps({**self.f,'id':'nym-research-preparation-v1'}));(self.root/m.FREEZE).unlink();net=Network([])
+  with self.assertRaises(FileNotFoundError):m.prepare(m.FREEZE,root=self.root,request_transport=net)
+  self.assertFalse(net.calls);self.assertFalse((self.root/m.OUTPUT).exists());self.assertEqual(json.loads(v1.read_text())['id'],'nym-research-preparation-v1')
  def test_arbitrary_freeze_path_rejected(self):
   with self.assertRaisesRegex(m.Failure,'FREEZE_PATH_REJECTED'):m.prepare('../elsewhere.json',root=self.root)
 class PureTests(unittest.TestCase):
@@ -231,6 +268,12 @@ class PureTests(unittest.TestCase):
  def test_absolute_alarm_interrupts_blocking_call(self):
   with self.assertRaisesRegex(m.Failure,'ABSOLUTE_DEADLINE'):
    with m.request_alarm(.01):time.sleep(.05)
+ def test_only_one_exact_new_host_added(self):
+  self.assertEqual(set(m.HOSTS),{'huggingface.co','cas-bridge.xethub.hf.co','cdn-lfs.huggingface.co','cdn-lfs-us-1.hf.co','us.aws.cdn.hf.co'})
+ def test_summary_does_not_depend_on_accepting_url(self):
+  with mock.patch.object(m,'checked_url',side_effect=AssertionError('guard must not be needed')):
+   r=m.redirect_summary('http://unknown.example:444/x?sig=PRIVATE#SECRET','a'*64)
+  self.assertEqual(r['scheme'],'http');self.assertEqual(r['hostname'],'unknown.example');self.assertEqual(r['port'],444);self.assertTrue(r['containsFragment']);self.assertNotIn('PRIVATE',json.dumps(r));self.assertNotIn('SECRET',json.dumps(r))
  def test_no_model_runtime_imports(self):
   import ast
   tree=ast.parse((REAL/'scripts/prepare-privacy-nym-research.py').read_text());names=[]
@@ -248,6 +291,6 @@ test('Nym preparation: offline injected transport, freeze, disk and absolute dea
     env:{PATH:process.env.PATH,LANG:'en_US.UTF-8',PYTHONNOUSERSITE:'1'},
   });
   assert.equal(result.status,0,result.stderr||result.error?.message);
-  assert.match(result.stderr,/Ran 44 tests/);
+  assert.match(result.stderr,/Ran 53 tests/);
   assert.match(result.stderr,/\bOK\b/);
 });
