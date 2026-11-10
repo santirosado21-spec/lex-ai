@@ -31,3 +31,7 @@ required-features = ["synthetic-recovery"]
 [dev-dependencies]
 # Already present in the reviewed resolved graph; native own-process RSS watchdog only.
 libc = "=0.2.191"
+
+# Representative CPU behavior for bounded synthetic crypto tests; safety checks remain enabled.
+[profile.test]
+opt-level = 2

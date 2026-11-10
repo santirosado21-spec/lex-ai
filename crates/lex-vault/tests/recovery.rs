@@ -341,13 +341,60 @@ fn child_case(
     assert_eq!(fs::read_dir(root.path().join("tmp")).unwrap().count(), 0);
     (code as u8, peak)
 }
+// Fixed, non-JSON diagnostic vocabulary only. These observations never reset the guard.
+// START/DONE describes one operation, not acceptance; R01 still requires both R23 checks.
+fn phase_marker(batch: Instant, phase: &str, done: bool) {
+    let fixed = match phase {
+        "PREP_FIXTURE" => "PREP_FIXTURE",
+        "PREP_SEAL" => "PREP_SEAL",
+        "PREP_PASSPHRASE" => "PREP_PASSPHRASE",
+        "PREP_EXPORT" => "PREP_EXPORT",
+        "PREP_READ_CIPHERTEXT" => "PREP_READ_CIPHERTEXT",
+        "PREP_INTERNAL_ENVELOPE" => "PREP_INTERNAL_ENVELOPE",
+        "PREP_OVERSIZE_ENVELOPE" => "PREP_OVERSIZE_ENVELOPE",
+        "PREP_SECRET_SCAN" => "PREP_SECRET_SCAN",
+        "PREP_VERIFY_RETIRE" => "PREP_VERIFY_RETIRE",
+        "PREP_WRONG_PASSPHRASE" => "PREP_WRONG_PASSPHRASE",
+        "R01" => "R01",
+        "R03-wrong" => "R03-wrong",
+        "R03-missing" => "R03-missing",
+        "R04-missing" => "R04-missing",
+        "R04-wrong" => "R04-wrong",
+        "R05-live" => "R05-live",
+        "R05-retained-closed" => "R05-retained-closed",
+        "R06-final-truncate" => "R06-final-truncate",
+        "R07-body-flip" => "R07-body-flip",
+        "R09-foreign" => "R09-foreign",
+        "R13-staging-collision" => "R13-staging-collision",
+        "R17-cipher-size" => "R17-cipher-size",
+        "R17-header" => "R17-header",
+        "R17-plain-size" => "R17-plain-size",
+        "R17-log19" => "R17-log19",
+        "R23a-internal-append" => "R23a-internal-append",
+        "R23b-external-append" => "R23b-external-append",
+        "R18-scanner" => "R18-scanner",
+        _ => panic!("invalid diagnostic phase"),
+    };
+    let state = if done { "DONE" } else { "START" };
+    let mut out = std::io::stdout().lock();
+    writeln!(
+        out,
+        "LEX_RECOVERY_PHASE_V1 phase={fixed} state={state} elapsed_ms={}",
+        batch.elapsed().as_millis()
+    )
+    .unwrap();
+    out.flush().unwrap();
+}
 #[test]
 #[ignore = "18 supervised synthetic invocations require independent code review + root freeze; no automatic crypto tests"]
 fn first_batch_18() {
     assert!(cfg!(target_os = "macos"));
     let guard = BatchGuard::start();
     let batch = Instant::now();
+    phase_marker(batch, "PREP_FIXTURE", false);
     let (source, vault, key, expected) = fixture::fixture().unwrap();
+    phase_marker(batch, "PREP_FIXTURE", true);
+    phase_marker(batch, "PREP_SEAL", false);
     let sealed = match seal_for_recovery(
         source,
         vault,
@@ -358,29 +405,44 @@ fn first_batch_18() {
         Ok(s) => s,
         Err(e) => panic!("seal category {:?}", e.reason()),
     };
+    phase_marker(batch, "PREP_SEAL", true);
+    phase_marker(batch, "PREP_PASSPHRASE", false);
     let passphrase = RecoveryPassphrase::generate_synthetic().unwrap();
+    phase_marker(batch, "PREP_PASSPHRASE", true);
+    phase_marker(batch, "PREP_EXPORT", false);
     let bundle = sealed
         .export_recovery(&passphrase, RecoveryFailpoint::None)
         .unwrap();
+    phase_marker(batch, "PREP_EXPORT", true);
+    phase_marker(batch, "PREP_READ_CIPHERTEXT", false);
     let ciphertext = bundle.ciphertext().unwrap();
+    phase_marker(batch, "PREP_READ_CIPHERTEXT", true);
     // Exactly two deliberately malformed authenticated envelopes prepared, never retried.
+    phase_marker(batch, "PREP_INTERNAL_ENVELOPE", false);
     let internal = synthetic_negative_envelope(
         &sealed,
         &passphrase,
         RecoveryFixtureMutation::InternalAppend,
     )
     .unwrap();
+    phase_marker(batch, "PREP_INTERNAL_ENVELOPE", true);
+    phase_marker(batch, "PREP_OVERSIZE_ENVELOPE", false);
     let oversize_plain = synthetic_negative_envelope(
         &sealed,
         &passphrase,
         RecoveryFixtureMutation::OversizedPlaintext,
     )
     .unwrap();
+    phase_marker(batch, "PREP_OVERSIZE_ENVELOPE", true);
+    phase_marker(batch, "PREP_SECRET_SCAN", false);
     for bytes in [&ciphertext, &internal, &oversize_plain] {
         sealed.ciphertext_secret_scan(&passphrase, bytes).unwrap();
     }
+    phase_marker(batch, "PREP_SECRET_SCAN", true);
+    phase_marker(batch, "PREP_VERIFY_RETIRE", false);
     sealed.verify_preserved().unwrap();
     let retained = sealed.retire_key(); // original DEK no longer exists in source owner
+    phase_marker(batch, "PREP_VERIFY_RETIRE", true);
     let mut cases = Vec::new();
     let mut peak = 0;
     let mut run = |id: &str,
@@ -390,20 +452,26 @@ fn first_batch_18() {
                    collision: bool,
                    expected_code: u8| {
         guard.next();
+        phase_marker(batch, id, false);
         let (code, rss) = child_case(bytes, secret, exp, collision, batch, &guard);
         peak = peak.max(rss);
         assert_eq!(code, expected_code, "exact finite recovery category");
         retained.verify_ciphertext_preserved().unwrap();
         cases.push(serde_json::json!({"id":id,"categoryCode":code,"published":code==0}));
+        phase_marker(batch, id, true);
     };
     run("R01", &ciphertext, Some(&passphrase), &expected, false, 0);
+    phase_marker(batch, "PREP_WRONG_PASSPHRASE", false);
     let wrong = RecoveryPassphrase::generate_synthetic().unwrap();
+    phase_marker(batch, "PREP_WRONG_PASSPHRASE", true);
     run("R03-wrong", &ciphertext, Some(&wrong), &expected, false, 3);
     run("R03-missing", &ciphertext, None, &expected, false, 2);
     // Release closure borrow before explicit source-ownership checks.
     drop(run);
     for missing in [true, false] {
         guard.next();
+        let phase = if missing { "R04-missing" } else { "R04-wrong" };
+        phase_marker(batch, phase, false);
         let (source, vault, key, e) = fixture::fixture().unwrap();
         let before = source.artifacts().unwrap();
         let supplied = if missing {
@@ -435,9 +503,16 @@ fn first_batch_18() {
         assert_eq!(source.artifacts().unwrap(), before);
         verify_source_readonly(&source, &key, &e).unwrap();
         cases.push(serde_json::json!({"id":if missing{"R04-missing"}else{"R04-wrong"},"categoryCode":format!("{reason:?}"),"published":false}));
+        phase_marker(batch, phase, true);
     }
     for closed in [false, true] {
         guard.next();
+        let phase = if closed {
+            "R05-retained-closed"
+        } else {
+            "R05-live"
+        };
+        phase_marker(batch, phase, false);
         let (source, vault, key, e) = fixture::fixture().unwrap();
         let before = source.artifacts().unwrap();
         let mut other = source.reopen(Some(&key)).unwrap();
@@ -457,6 +532,7 @@ fn first_batch_18() {
         assert_eq!(source.artifacts().unwrap(), before);
         verify_source_readonly(&source, key.as_ref().unwrap(), &e).unwrap();
         cases.push(serde_json::json!({"id":if closed{"R05-retained-closed"}else{"R05-live"},"categoryCode":"SourceNotQuiescent","published":false}));
+        phase_marker(batch, phase, true);
     }
     let mut run = |id: &str,
                    bytes: &[u8],
@@ -464,12 +540,14 @@ fn first_batch_18() {
                    collision: bool,
                    expected_code: u8| {
         guard.next();
+        phase_marker(batch, id, false);
         let (code, rss) = child_case(bytes, Some(&passphrase), exp, collision, batch, &guard);
         peak = peak.max(rss);
         assert_ne!(expected_code, 0);
         assert_eq!(code, expected_code, "exact negative recovery category");
         retained.verify_ciphertext_preserved().unwrap();
         cases.push(serde_json::json!({"id":id,"categoryCode":code,"published":false}));
+        phase_marker(batch, id, true);
     };
     run(
         "R06-final-truncate",
@@ -509,6 +587,7 @@ fn first_batch_18() {
     appended.push(0x42);
     run("R23b-external-append", &appended, &expected, false, 3);
     drop(run);
+    phase_marker(batch, "R18-scanner", false);
     assert!(
         fixture::PDF
             .windows(fixture::CANARY.len())
@@ -530,6 +609,7 @@ fn first_batch_18() {
     cases.push(
         serde_json::json!({"id":"R18-scanner","positiveControl":true,"encryptedNegative":true}),
     );
+    phase_marker(batch, "R18-scanner", true);
     assert_eq!(cases.len(), 18);
     assert!(batch.elapsed() < Duration::from_secs(300));
     // Technical receipt only; R01 cannot be accepted until both preceding R23 checks passed.
