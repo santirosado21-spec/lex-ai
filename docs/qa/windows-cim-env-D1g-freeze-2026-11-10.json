@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:11:39.374155+00:00",
+  "cut": "D1g",
+  "approvedForSingleBoundedDiagnosticRun": true,
+  "scope": "same fixed command, exactly two environment variants, no productive changes or performance acceptance",
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE after trailing buffer fix,8newtests;49combinedbuilder",
+  "sourceHashes": {
+    "scripts/windows-cim-env-diagnostic.mjs": "cbd1a8fc8c9eacfe274ec316576c684e874813be98b8dd7f221e07236041ec7e",
+    "tests/windows-cim-env-diagnostic.test.mjs": "c5122a596a8dbb0f17aa40cf0ccfb3e777ea7e177156add8293f803c609ebe81",
+    "resources/windows-cim-env-diagnostic-v1.json": "854dd010e4457e6015ae5086ab97a7015b799b9f6ddf508ca33b505074387218",
+    "docs/qa/windows-cim-env-diagnostic-2026-11-10.md": "ee22ab9c14b2a600e2795db197d73cc6e04f3e7b675f798c6ae5b52ea3089c6d",
+    ".github/workflows/windows-memory-smoke.yml": "2300985ebbf596ea5062ebd6ae532449480d1548f90a6754bb5c6f8884e9f26c"
+  },
+  "maximumPowerShellProcesses": 2,
+  "maximumConfiguredMs": 27000,
+  "retries": 0,
+  "diagnosticOnly": true,
+  "performanceValidated": false,
+  "preciseRootCauseEstablished": false,
+  "actualRun": null,
+  "productionImported": false,
+  "physical8GBValidated": false
+}
