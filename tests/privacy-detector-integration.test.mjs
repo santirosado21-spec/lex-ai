@@ -26,7 +26,7 @@ function entitiesFor(segments,detections) {
  }
  return [...new Set(entities)];
 }
-function harness({scope=a,pseudonyms=createPseudonymStore(),sourceOverrides={},envelopeChange,preparedChange,beforeClassify,afterChunk,controller}={}) {
+function harness({scope=a,pseudonyms=createPseudonymStore(),sourceOverrides={},envelopeChange,preparedChange,beforeClassify,afterChunk,controller,markerNamespace}={}) {
  const provenance=createProvenanceRegistry(),detector=createLocalPrivacyDetector({provenanceRegistry:provenance}),shown=[],saved=[],checks=[];
  const policy={version:'P1',grants:[{scope,destination:'mock',allowedCategories:['synthetic','public']}]};
  let provider,gate,prepared;
@@ -41,7 +41,17 @@ function harness({scope=a,pseudonyms=createPseudonymStore(),sourceOverrides={},e
    if(initial.status!=='complete')fail(initial.reasonCategory);
    // H3 metadata wrapping lets the SAME protected version cover schema text too.
    const wrapper=[...envelope.messages,{role:'system',content:'',metadata:{outputSchema:envelope.outputSchema}}];
-   const protectedData=pseudonyms.protect({scope,messages:wrapper,entities:entitiesFor(source.segments,initial.detections),provenance:{reference:source.reference}});
+   const entities=entitiesFor(source.segments,initial.detections);
+   // Pin ALL synthetic markers, not only the namespace: random hex IDs can
+   // contain digit runs which the real final detector correctly blocks.
+   let snapshot;
+   try {snapshot=pseudonyms.exportSnapshot({scope});}catch(error){if(error.code!=='unknown_scope')throw error;}
+   if(!snapshot) {
+    const namespace=markerNamespace??'abcdef'[scopes.findIndex(candidate=>candidate.workspaceId===scope.workspaceId&&candidate.matterId===scope.matterId)].repeat(32);
+    const entries=entities.map((text,index)=>({text,marker:`[[LEX_${namespace}_${index.toString(6).replace(/[0-5]/g,digit=>'abcdef'[Number(digit)]).padStart(32,'a')}]]`}));
+    pseudonyms.importSnapshot({scope,snapshot:{format:1,scope:{workspaceId:scope.workspaceId,matterId:scope.matterId},namespace,mappingVersion:namespace,entries}});
+   } else assert.deepEqual(entities.filter(text=>!snapshot.entries.some(entry=>entry.text===text)),[],'fixture must pin every expected entity marker');
+   const protectedData=pseudonyms.protect({scope,messages:wrapper,entities,provenance:{reference:source.reference}});
    prepared={version:1,responseFormat:'json',messages:protectedData.messages.slice(0,-1),outputSchema:protectedData.messages.at(-1).metadata.outputSchema};
    const pinned=canonicalJson(prepared),mappingVersion=protectedData.mappingVersion;
    const derived=provenance.deriveSource({objectId:'PREPARED',version:'v1',scope,classification:'public',parents:[source.reference],extraction:{status:'complete',extractorVersion:'protection-v1',originalSha256:privacyTextHash(pinned)},segments:segmentsFromEnvelope(prepared)});
@@ -129,8 +139,12 @@ test('ancestor changes during classification invalidate derivation before sendin
 
 test('cancellation before dispatch or during stream suppresses every local result; sent bytes remain observable',async()=>{
  const before=new AbortController();before.abort();const blocked=harness({controller:before});await assert.rejects(blocked.run());assert.equal(blocked.sent.length,0);assert.deepEqual(blocked.saved,[]);
- const during=new AbortController(),h=harness({controller:during,afterChunk:({controller})=>controller.abort()});
- await assert.rejects(h.run(),{code:'cancelled'});assert.equal(h.sent.length,1);assert.deepEqual(h.shown,[]);assert.deepEqual(h.saved,[]);
+ const during=new AbortController();let chunksSeen=0;
+ const h=harness({controller:during,afterChunk:({controller})=>{
+  assert.equal(h.checks.length,2);assert.equal(h.checks[1].status,'complete');assert.deepEqual(h.checks[1].detections,[]);
+  assert.equal(h.sent.length,1,'classification passed before the provider chunk');chunksSeen++;controller.abort();
+ }});
+ await assert.rejects(h.run(),{code:'cancelled'});assert.equal(chunksSeen,1);assert.equal(h.sent.length,1);assert.deepEqual(h.shown,[]);assert.deepEqual(h.saved,[]);
 });
 
 test('two firms, matters and threads keep registry checks exact and per-matter H3 markers isolated',async()=>{
@@ -158,4 +172,15 @@ test('actual full requests with numeric account values or numeric schema const/e
  }
  const ordinary=harness({envelopeChange:e=>{e.messages[0].metadata.article=12;e.messages[0].metadata.amount=1234.5;}});
  assert.equal(await ordinary.run(),originalText);assert.equal(ordinary.sent[0].messages[0].metadata.amount,1234.5);
+});
+
+// This is a deterministic reproduction of the mechanism, not the unlogged
+// random UUID from the earlier intermittent failure. No marker exemption exists.
+test('digit-rich synthetic markers are rejected by real final classification before dispatch',async()=>{
+ let chunksSeen=0;
+ const h=harness({markerNamespace:'abcdef123456489082345678abcdefab',afterChunk:()=>{chunksSeen++;}});
+ await assert.rejects(h.run(),{code:'classification_denied'});
+ assert.equal(h.checks.length,2);assert.equal(h.checks[1].status,'complete');
+ assert.ok(h.checks[1].detections.length>0);
+ assert.equal(chunksSeen,0);assert.equal(h.sent.length,0);assert.deepEqual(h.shown,[]);assert.deepEqual(h.saved,[]);
 });

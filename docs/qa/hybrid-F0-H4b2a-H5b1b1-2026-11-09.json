@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "status": "batch-components-verified-not-private-product-ready",
+  "scope": [
+    "F0 local channel contract and HTTP guard",
+    "H4b.2a operational v2 protocol/evaluator",
+    "H5b.1b.1 inactive reminders domain"
+  ],
+  "sources": {
+    "server/main.mjs": "224ac5209335ac5bfbe3d973b5e3275ba38ef9535f60c0d8c3609c0e36d29fbf",
+    "server/local-http-boundary.mjs": "54f1edf74fa2589e8a14f7b11eb515c87943c7bb74516a0f89c48b5fa8df19cb",
+    "server/privacy/operational-v2.mjs": "864b71ca4d2488729d398bf4e5090186c17b20adc7866353aa0c0019e856b2c9",
+    "scripts/eval-privacy-v2.mjs": "7869b36f411deaf192b65faa8070696474437bdb9120edcaee81a08baf0436c6",
+    "tests/local-http-boundary.test.mjs": "9d800f27a8c2a1596f83170bfd5e0e7fb6feba0d4d8f79ce19a043a560363102",
+    "tests/privacy-operational-v2.test.mjs": "05a45257e1bc4ac1e50391cb8a8439eebea477a0ea88300c9c19d223b1d0b47b",
+    "tests/privacy-detector-integration.test.mjs": "0ef349c1f4124fce8e7a9923b38c68afaeaae115f7150cbf823af7c702557bfc",
+    "server/privacy/vault-dao-contract.mjs": "dace5d93dbe819c5ee88bce56c1294cab1d33f53ae3905c3172f66b86d828691",
+    "tests/vault-reminders-contract.test.mjs": "dbf1a4e102064de7a5850eef1b7018005688f4eef1e6431ee3a10bfe98e6499d",
+    "crates/lex-vault/src/lib.rs": "307581fc557ee4a48dff62077cc188f827ab15bc597d679f77b05da56e3bcb31",
+    "crates/lex-vault/src/reminders.rs": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b",
+    "crates/lex-vault/tests/reminders.rs": "6fc57916503ae276b406dac3060968758c46c364049885fd78049c3c378c8b7a",
+    "eval/privacy-v2/protocol.json": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "eval/privacy-v2/annotation-guide.md": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "eval/privacy-v2/dev.jsonl": "db6cda2f90935c81e2e1950136fc7dbdbc7150d267288670fba54472fe439325"
+  },
+  "evidenceLogs": {
+    "artifacts/phased-completion-20261109-batch1/npm-test.log": "f00aee945a94dbb6163da5c7389ef2092d4f711cd0978b13161c008f122283b6",
+    "artifacts/phased-completion-20261109-batch1/npm-test-final.log": "7eee3c3dddf0a1d35317b57d3f7c97033d664899e61effc9fbd274366167129e",
+    "artifacts/phased-completion-20261109-batch1/npm-test-reviewed.log": "e59798eea7bd64f41d03c58379d20c6d2278652f7cd9956ee3b8349c3180af69",
+    "artifacts/phased-completion-20261109-batch1/build.log": "51b849c2a9a4f418ab783f1b9eae349b069d7f1e973942c11de69f67a45ea112",
+    "artifacts/phased-completion-20261109-batch1/contract-integration-final.log": "81e1ab39ae273fafc3ea6e28cd152061474f793b858e1876f17266ce55492a44"
+  },
+  "verification": {
+    "initialFullSuite": {
+      "passed": 708,
+      "total": 709,
+      "failure": "privacy cancellation fixture denied classification before dispatch"
+    },
+    "finalFullSuite": {
+      "passed": 721,
+      "total": 721,
+      "durationMs": 5302.714708
+    },
+    "intermediateFullSuite": {
+      "passed": 720,
+      "total": 720
+    },
+    "build": "TypeScript/Vite passed",
+    "rootDirected": {
+      "passed": 37,
+      "total": 37
+    },
+    "httpBuilderAndIndependent": 58,
+    "v2BuilderCombined": 61,
+    "v2IndependentFinal": 26,
+    "nativeBuilderAndIndependent": 17,
+    "vaultNodeBuilderAndIndependent": 13,
+    "markerFixtureAndHttpBuilder": 70
+  },
+  "reviews": [
+    {
+      "agent": "review_completion_phases",
+      "assignedModel": "gpt-6.1-sol",
+      "verdict": "APPROVE HTTP and H4b.2a",
+      "noHeldoutRead": true
+    },
+    {
+      "agent": "review_vault_reminders",
+      "assignedModel": "gpt-6.1-sol",
+      "verdict": "APPROVE inactive native reminder domain"
+    }
+  ],
+  "privacyProtocolFreeze": "privacy-v2-protocol-freeze-2026-11-09.json",
+  "requiredIndependentHeldoutCases": 300,
+  "newDetectorEvaluatedInThisBatch": false,
+  "vaultParity": {
+    "total": 32,
+    "core": 3,
+    "partial": 9,
+    "missing": 20,
+    "complete": false,
+    "schemaVersion": 2,
+    "freshSyntheticOnly": true,
+    "nativeBridgeActive": false,
+    "activeApplicationEncrypted": false
+  },
+  "randomFixtureFailure": {
+    "historicalRandomValueRetained": false,
+    "mechanismIndependentlyReproduced": true,
+    "productionMarkerFormatChanged": false,
+    "gateWeakened": false,
+    "numericMarkerStillDeniedBeforeDispatch": true
+  },
+  "channel": {
+    "ui": "same-origin locally served browser",
+    "service": "127.0.0.1 local Node",
+    "futureVault": "supervised native Rust per ADR0003",
+    "hostedPrivateBridgeEnabled": false,
+    "browserExecutionMeasured": false
+  },
+  "sf": {
+    "implementationContexts": {
+      "gpt-6.1-sol": 2,
+      "gpt-6-astra": 1
+    },
+    "readOnlyExplorersSol": 2,
+    "independentReviewersSol": 2,
+    "oneReviewerReusedFromPriorPlan": true,
+    "coordinator": "Codex",
+    "tokensAndQuota": "not exposed",
+    "claudeCalls": 0,
+    "remoteInferenceCalls": 0
+  },
+  "limits": [
+    "No production detector/cipher/provider integration",
+    "No physical 8 GB validation",
+    "No professional/legal validation",
+    "No private client documents, purchases, migration of real data or deployment",
+    "Small model preparation and new heldout authoring proceed separately, not scored here"
+  ]
+}

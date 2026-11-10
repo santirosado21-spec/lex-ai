@@ -1,4 +1,6 @@
 //! Inactive H5b.1 spike. No production constructor, paths, SQL, shell, or IPC exposed.
+mod reminders;
+pub use reminders::{REMINDER_CONTRACT_VERSION, Reminder, ReminderAudit};
 use rusqlite::{Connection, OptionalExtension, TransactionBehavior, params};
 use serde::Serialize;
 use sha2::{Digest, Sha256};
@@ -21,6 +23,7 @@ pub enum Error {
     BackendUnavailable,
     Storage,
     Conflict,
+    NotFound,
     Closed,
 }
 impl fmt::Display for Error {
@@ -137,6 +140,7 @@ impl SyntheticVault {
         let mut connection = open(&root, Some(key))?;
         let tx = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         tx.execute_batch(SCHEMA)?;
+        tx.execute_batch(reminders::SCHEMA)?;
         tx.commit()?;
         let vault = Vault {
             connection: Some(connection),
@@ -147,7 +151,7 @@ impl SyntheticVault {
     pub fn reopen(&self, key: Option<&KeyMaterial>) -> Result<Vault> {
         let connection = open(&self.root, key)?;
         let version: i64 = connection.query_row("PRAGMA user_version", [], |r| r.get(0))?;
-        if version != 1 {
+        if version != 2 {
             return Err(Error::CannotOpen);
         }
         Ok(Vault {
@@ -239,7 +243,7 @@ CREATE TABLE records(workspace TEXT NOT NULL,matter TEXT NOT NULL,thread TEXT NO
 CREATE TABLE originals(workspace TEXT NOT NULL,matter TEXT NOT NULL,thread TEXT NOT NULL,kind TEXT NOT NULL CHECK(kind='document'),document_id TEXT NOT NULL,bytes BLOB NOT NULL,sha256 TEXT NOT NULL,PRIMARY KEY(workspace,matter,thread,document_id),FOREIGN KEY(workspace,matter,thread,kind,document_id) REFERENCES records(workspace,matter,thread,kind,id));
 CREATE TABLE chunks(workspace TEXT NOT NULL,matter TEXT NOT NULL,thread TEXT NOT NULL,id TEXT NOT NULL,document_id TEXT NOT NULL,text TEXT NOT NULL,PRIMARY KEY(workspace,matter,thread,id),FOREIGN KEY(workspace,matter,thread,document_id) REFERENCES originals(workspace,matter,thread,document_id));
 CREATE VIRTUAL TABLE chunks_fts USING fts5(workspace UNINDEXED,matter UNINDEXED,thread UNINDEXED,id UNINDEXED,text,tokenize='unicode61 remove_diacritics 2');
-PRAGMA user_version=1;";
+PRAGMA user_version=2;";
 pub struct Vault {
     connection: Option<Connection>,
     _root: Arc<TempDir>,

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "purpose": "Protocol/guide and dev freeze before independent author; not candidate or heldout freeze",
+  "approvedForIndependentAuthoring": true,
+  "requiredHeldoutCases": 300,
+  "heldoutCreated": false,
+  "candidateEvaluationPerformed": false,
+  "productionEnabled": false,
+  "reviewer": {
+    "agent": "review_completion_phases",
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-protocol-authoring",
+    "independentTargetedPassed": 37,
+    "limitations": [
+      "No gold read",
+      "Direct scorer count guard requested before candidate acceptance; manifest validator already checks count",
+      "Does not attest product privacy/hardware/legal validity"
+    ]
+  },
+  "hashes": {
+    "eval/privacy-v2/protocol.json": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "eval/privacy-v2/annotation-guide.md": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "eval/privacy-v2/dev.jsonl": "db6cda2f90935c81e2e1950136fc7dbdbc7150d267288670fba54472fe439325"
+  }
+}

@@ -39,7 +39,7 @@ The installed toolchain lacked rustfmt. For this run only, the official `rustfmt
 - `otool -L` test executable: system Security.framework, CoreFoundation.framework, libSystem and libiconv. No Homebrew/OpenSSL dynamic library. The source package also contains libtomcrypt sources, but CommonCrypto was the measured provider, not libtomcrypt.
 - Initial dependency build: 6.73 s (Cargo report). Incremental native build: 0.23 s. Small debug fixture create/import/search/close/reopen: 213 ms in one run (320 ms in an earlier parallel run), **not** a startup percentile benchmark.
 - A serial run of the six integration tests: 0.99 s wall, 10,190,848 bytes maximum RSS via `/usr/bin/time -l`. Debug `rlib`: 3,113,624 bytes at that measurement; integration-test executable: 4,926,552 bytes. These include debug/test overhead and can change with compiler/source; they are not a release package size or product RAM estimate.
-- Nine native tests pass (two internal + seven integration), six Node contract tests pass. The Node test initially compared SQLite null-prototype rows to normal JSON objects; it was corrected to compare wire JSON values. No native failure was hidden by backend replacement.
+- Original H5b.1a measurement: nine native tests passed (two internal + seven integration), six Node contract tests passed. The Node test initially compared SQLite null-prototype rows to normal JSON objects; it was corrected to compare wire JSON values. No native failure was hidden by backend replacement.
 
 Assertions include exact binary/Unicode roundtrip and keyed reopen; missing/wrong key preserving database bytes; an independent plaintext control rejected by keyed open and an unkeyed read rejected on ciphertext; exact workspace/matter/thread filtering; document+original+chunk+FTS+revision rollback after a real duplicate-chunk constraint failure; two independent connections racing with one CAS winner; input limits; close rejecting empty searches; 0700/0600 permissions; encrypted database and live DELETE rollback journal not exposing tested UTF-8/UTF-16 canaries. The independent plaintext fixture confirms the scanner sees its canary. No raw canary, key or private path is printed in successful evidence lines.
 
@@ -56,10 +56,10 @@ The executable matrix is `VAULT_STORE_PARITY` in the Node contract. Its test ext
 | `put` | partial | Scoped note/chat CAS only; document mutations rejected. |
 | `transaction` | not-implemented | Callback RPC prohibited; each compound domain needs its own atomic operation. |
 | `audit` | not-implemented | Scoped audit domain/schema required. |
-| `createReminder` | not-implemented | Reminder constraints, ordering and audit transaction pending. |
-| `getReminder` | not-implemented | Reminder constraints, ordering and audit transaction pending. |
-| `listReminders` | not-implemented | Reminder constraints, ordering and audit transaction pending. |
-| `updateReminder` | not-implemented | Reminder constraints, ordering and audit transaction pending. |
+| `createReminder` | partial | Bounded matter-only reminder domain with atomic internal audit/CAS; service/planner integration and full date spelling parity pending. |
+| `getReminder` | partial | Bounded matter-only reminder domain with atomic internal audit/CAS; service/planner integration and full date spelling parity pending. |
+| `listReminders` | partial | Bounded matter-only reminder domain with atomic internal audit/CAS; service/planner integration and full date spelling parity pending. |
+| `updateReminder` | partial | Bounded matter-only reminder domain with atomic internal audit/CAS; service/planner integration and full date spelling parity pending. |
 | `createAgentProposal` | not-implemented | Proposal/decision/result/log compound atomic domain pending. |
 | `getAgentProposal` | not-implemented | Proposal/decision/result/log compound atomic domain pending. |
 | `listAgentProposals` | not-implemented | Proposal/decision/result/log compound atomic domain pending. |
@@ -141,3 +141,18 @@ The upstream [rusqlite v0.41.1 manifest](https://github.com/rusqlite/rusqlite/bl
 | version_check | 0.9.5 | MIT/Apache-2.0 |
 | zeroize | 1.8.2 | Apache-2.0 OR MIT |
 | zeroize_derive | 1.5.0 | Apache-2.0 OR MIT |
+
+
+## H5b.1b.1 reminder domain (inactive)
+
+`h5b1-reminders-v1` adds native `create_reminders`, `get_reminder`, `list_reminders`, `update_reminder` and read-only `list_reminder_audits`. The JS memory fixture exposes corresponding camelCase operations; its overall contract is now `h5b1-domain-fixture-v2`. This is a domain slice, not a native bridge or an activated product store. F0's same-origin local browser → Node broker → eventual supervised Rust vault remains the integration target; this crate adds no browser, broker or process transport.
+
+Only exact workspace/matter scopes with `threadId:null` are accepted. Payload IDs/scopes are checked, `createdAt` is immutable on update, and missing updates reject. The native API takes a typed `Reminder`; its serde representation and the memory JSON entry point deny unknown fields and require every field explicitly, including nulls. No generic callback transaction or arbitrary audit insertion API exists. IDs and scope fields are bounded ASCII identifiers; titles are 1–800 UTF-8 bytes, notes 0–16,000, optional planner rules 1–256. NUL and malformed Unicode are rejected. Kind/status/source match the existing reminder enum sets. Dates are deliberately narrower than legacy: due dates are null, valid Gregorian `YYYY-MM-DD`, or canonical UTC `YYYY-MM-DDTHH:mm:ss.sssZ`; creation/update timestamps require the latter, years 0001–9999. Offset spellings are rejected; no time-zone normalization or legal deadline calculation occurs.
+
+Create accepts 1–100 reminders and advances the matter revision once. Update replaces mutable reminder fields and advances once. Both execute reminder writes, internally derived audit entries and CAS in one native IMMEDIATE transaction; memory publishes one cloned state only after validation succeeds, without interleaved awaits. Expected revisions are nonnegative safe JS integers below MAX_SAFE_INTEGER. Audit includes only scope, revision, batch ordinal, derived operation and reminder ID; never title/note. Create derives `planner.propose` for planner source and `reminder.create` otherwise; update derives `reminder.update`. This is storage integrity, not authorization of user/planner actions or validation of legal content.
+
+Lists use `dueAt IS NULL, dueAt, title, id` with SQLite BINARY / JS UTF-8 Buffer comparison, page limit 1–100 and offset 0–1,000,000. Offset pages are stable within a revision only; consumers must restart if revision changes. Audit pages sort by revision/ordinal. No workspace-wide, wildcard or thread fallback exists. Fresh synthetic schema is version 2; reopen rejects version 1 without migrating it. Existing user databases are never accepted by this harness.
+
+Measured for this slice: **17 native tests passed** (3 internal, 7 reminder integration, 7 existing viability), serial `--test-threads=1`; **13 targeted Node tests passed** (7 reminder, 6 existing contract). Native tests cover audit-trigger failure rollback for create/update, duplicate-halfway rollback after reopen, exact colliding IDs across scopes, concurrent connections with one CAS winner, invalid/missing/oversize nonmutation, Unicode byte ordering/pages, close including empty reads, keyed persistence and title/note ciphertext canaries against an independent plaintext scanner control. Node exercises corresponding contract cases and compares ordering with real SQLite BINARY; it is not a SQLCipher adapter and does not claim native durability or injectable audit-failure equivalence. Both suites passed on their first run. No SIGKILL/power-loss or 8 GB hardware measurement was added.
+
+The exact 32-entry matrix moves from **3 supported-core / 5 partial / 24 not-implemented** to **3 / 9 / 20**. All four reminder rows are partial; generic `audit` and `transaction` remain not-implemented. `VAULT_PARITY_COMPLETE=false`. Existing service consumers still use the legacy synchronous store; state aggregation, planner deduplication/idempotency, action authorization, IPC, key custody, migration and full product parity remain pending. No main/service/UI integration, real keys/stores, provider calls or downloads were performed for this domain slice.

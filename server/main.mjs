@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { localHttpBoundary } from './local-http-boundary.mjs';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { readFile, mkdir, access } from 'node:fs/promises';
 import path from 'node:path';
@@ -43,20 +44,19 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  }
  if(process.env.LEX_OFFICE_BRIDGE==='1')try{await enableOffice();}catch(error){service.close?.();publicLibrary?.close();throw error;}
  const token=randomBytes(32).toString('hex');let closing=false;
- const allowed=new Set(['tauri://localhost','http://tauri.localhost','https://tauri.localhost','http://localhost:1420','http://127.0.0.1:1420']);
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));};
  const server=http.createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','no-referrer');
-  const origin=req.headers.origin;const own=`http://127.0.0.1:${server.address()?.port}`;
-  if(origin&&!allowed.has(origin)&&origin!==own){json(res,403,{error:'Origen no permitido.'});return;}
+  const boundary=localHttpBoundary(req,server.address()?.port);
+  if(boundary.status){json(res,boundary.status,{error:'Solicitud local no permitida.'});return;}
+  const {origin,pathname}=boundary;
   if(origin){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
   if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Allow-Methods':'POST'});res.end();return;}
   try{
-   const pathname=new URL(req.url,own).pathname;
    if(pathname==='/api'||pathname==='/analyze'){
     const supplied=Buffer.from(req.headers.authorization||'');const expected=Buffer.from(`Bearer ${token}`);
     if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected)){json(res,401,{error:'Sesión no autorizada.'});return;}
-    if(req.method!=='POST'||!req.headers['content-type']?.startsWith('application/json')){json(res,405,{error:'Se requiere POST JSON.'});return;}
+    if(req.method!=='POST'||!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type']||'')){json(res,405,{error:'Se requiere POST JSON.'});return;}
     let count=0;const chunks=[];for await(const b of req){count+=b.length;if(count>MAX_BODY){json(res,413,{error:'El archivo supera el límite.'});return;}chunks.push(b);}
     let body;try{body=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{json(res,400,{error:'JSON inválido.'});return;}
     if(!body||typeof body!=='object'||Array.isArray(body)){json(res,400,{error:'Solicitud inválida.'});return;}
