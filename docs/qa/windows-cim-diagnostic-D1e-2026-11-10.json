@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1e",
+  "status": "reviewed-before-diagnostic-only-ci",
+  "sourceHashes": {
+    "scripts/windows-cim-diagnostic.mjs": "952139c6a6553d1d9175dc8f773d84533c1109d01e69e9668d65bcb720db43b1",
+    "tests/windows-cim-diagnostic.test.mjs": "68b69733ea761428bd7ae361025bb9c5ab3d70b83db6cfede2460de386e77099",
+    ".github/workflows/windows-memory-smoke.yml": "1d4443209a705315f73098654320679cbece416b934f68bc6ee78139db62903d"
+  },
+  "diagnosticOnly": true,
+  "performanceValidated": false,
+  "previousFailedRuns": [
+    42864129769,
+    42865975268
+  ],
+  "maximumPowerShellCommands": 2,
+  "maximumDiagnosticSeconds": 28.5,
+  "publicStandardRunnerOnly": true,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol",
+  "independentTests": 20,
+  "verdict": "APPROVE-after-monotonic-deadline-fix",
+  "actualRun": null,
+  "productionHelpersModified": false,
+  "physical8GBValidated": false
+}

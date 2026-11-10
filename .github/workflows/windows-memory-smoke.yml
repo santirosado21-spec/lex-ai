@@ -4,6 +4,8 @@ on:
     branches: [docs/hybrid-psf-development-loop]
     paths:
       - .github/workflows/windows-memory-smoke.yml
+      - scripts/windows-cim-diagnostic.mjs
+      - tests/windows-cim-diagnostic.test.mjs
       - scripts/windows-memory-smoke.mjs
       - server/windows-memory-monitor.mjs
       - tests/windows-memory-monitor.test.mjs
@@ -17,7 +19,7 @@ permissions:
 jobs:
   windows-rss:
     # Evaluated before runner allocation. Never consume a private-repo budget.
-    if: ${{ github.event.repository.private == false }}
+    if: ${{ github.event.repository.private == false && !contains(github.event.head_commit.message, '[windows-cim-diagnostic]') }}
     runs-on: windows-2025
     timeout-minutes: 5
     steps:
@@ -40,3 +42,27 @@ jobs:
         # Public standard runner is a 16 GB VM; this proves neither physical
         # 8 GB acceptance, an installer, nor product inference portability.
         run: node scripts/windows-memory-smoke.mjs --persistent
+
+  windows-cim-diagnostic:
+    # One explicitly marked diagnosis commit after the two retained failures.
+    # A subsequent unmarked fix restores the normal RSS job above.
+    if: ${{ github.event.repository.private == false && contains(github.event.head_commit.message, '[windows-cim-diagnostic]') }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Offline diagnostic contract tests
+        shell: pwsh
+        run: node --test tests/windows-cim-diagnostic.test.mjs
+      - name: Bounded stage diagnosis only, never a performance pass
+        shell: pwsh
+        run: node scripts/windows-cim-diagnostic.mjs

@@ -1,0 +1,9 @@
+# D1e: tercer envío Windows, sólo diagnóstico
+
+Dos intentos reales fallaron: D1c en primera medición cerca de2s; D1d con STARTUP_TIMEOUT10000,5283ms y colector terminado, fixture limpia. No se adivina que todo sea lentitud CIM. Este envío distingue lanzamiento, inicialización de codificación, lectura stdin y consulta CIM mediante dos comandos PowerShell fijos, marcadores ASCII/categorías finitas y valores agregados numéricos. [Fuentes y estado](windows-cim-diagnostic-D1e-2026-11-10.json).
+
+ProbeA envía la petición numérica sólo después de BOOT/READ_READY. ProbeB no usa stdin ni cambia InputEncoding, y separa BOOT/CIM_START/CIM_END. Máximo dos comandos secuenciales, sin retry; límites por etapa y limpieza propia total acotada28,5s. No persiste snapshots, nombres, líneas de comando, stderr, entorno o datos privados. Un diagnóstico completo no valida deadlines de rendimiento; diagnosticOnly:true/performanceValidated:false permanecen siempre.
+
+El marcador explícito [windows-cim-diagnostic] del commit de esta rama selecciona el job público estándar de diagnóstico y evita repetir el smoke que ya falló. El siguiente commit sin marcador vuelve al job RSS normal. No existe bypass del producto, rama principal, releases o proveedores; jobs sin secretos/permisos mutantes, runners grandes, instalaciones o pagos.
+
+Revisor detectóP2: timer retrasado permitía aceptar BOOT tardío y renovar deadline. Corregido con reloj monotónico antes de marcador/snapshot/cierre y después de parsear; un cierre0 tardío conserva EXIT_TIMEOUT. Veinte pruebas independientes pasan, incluida reproducción BOOT4s frente a límite3s: ahora BOOT_TIMEOUT y terminación observada. Primeros tests tuvieron un mock que no aceptaba cancel(undefined), corregido sin cambiar política. No hay prueba Windows nueva hasta subir este commit; se registrará aparte sin convertir el diagnóstico en pase del colector.
