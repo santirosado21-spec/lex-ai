@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "id": "rampart-q4-token-ner-local-v1",
+  "productionEnabled": false,
+  "status": "adapter-only-unloaded-unvalidated",
+  "model": {
+    "repository": "nationaldesignstudio/rampart",
+    "revision": "b1993e4e68b082835b80ffc65acc03325ea2e501",
+    "license": "CC-BY-4.0",
+    "attribution": "Rampart by National Design Studio; modified local decoding/policy adapter, no endorsement.",
+    "source": "https://huggingface.co/nationaldesignstudio/rampart/tree/b1993e4e68b082835b80ffc65acc03325ea2e501",
+    "baseModel": "nreimers/MiniLM-L6-H384-uncased",
+    "trainingProvenance": "Author declares in-house synthetic/OCR + ai4privacy/pii-masking-openpii-1.5m, CC-BY-4.0; not independently audited."
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 28686,
+      "sha256": "4149222b3e79f28df9cb1497fa77d449a32e37b33f43bdcc14cf543086ed1b35"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 18897,
+      "sha256": "57fec6ca5de5e18ced1a10b36c87c0988fdc170f03f73e8ae2f20f5de42a884e"
+    },
+    {
+      "path": "config.json",
+      "bytes": 2328,
+      "sha256": "003b84bbcd489f5e782fe5cad8f3249c3653ec880089abb1ccc398a0d895e3e6"
+    },
+    {
+      "path": "tokenizer.json",
+      "bytes": 441954,
+      "sha256": "98ade711428b42a1b5343c403a73344535e92de8e19359cdb567ef34da210259"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "bytes": 1292,
+      "sha256": "0088a6f8bcdd4014184fb068b83ebb12896a9db2bb269a71f73de83fef24bceb"
+    },
+    {
+      "path": "onnx/model_q4.onnx",
+      "bytes": 14693379,
+      "sha256": "9f27d24949b0581701071ea5ef522d77ccd3f50c525cc91eac4d265b0fc2afe5"
+    }
+  ],
+  "runtime": {
+    "maxTokens": 512,
+    "confidenceFloor": 0.4,
+    "confidencePolicy": "Argmax softmax; any token below floor blocks, never silently drops. Strict BIO, no orphan-I repair.",
+    "id2label": {
+      "0": "O",
+      "1": "B-GIVEN_NAME",
+      "2": "I-GIVEN_NAME",
+      "3": "B-SURNAME",
+      "4": "I-SURNAME",
+      "5": "B-EMAIL",
+      "6": "I-EMAIL",
+      "7": "B-PHONE",
+      "8": "I-PHONE",
+      "9": "B-URL",
+      "10": "I-URL",
+      "11": "B-TAX_ID",
+      "12": "I-TAX_ID",
+      "13": "B-BANK_ACCOUNT",
+      "14": "I-BANK_ACCOUNT",
+      "15": "B-ROUTING_NUMBER",
+      "16": "I-ROUTING_NUMBER",
+      "17": "B-GOVERNMENT_ID",
+      "18": "I-GOVERNMENT_ID",
+      "19": "B-PASSPORT",
+      "20": "I-PASSPORT",
+      "21": "B-DRIVERS_LICENSE",
+      "22": "I-DRIVERS_LICENSE",
+      "23": "B-BUILDING_NUMBER",
+      "24": "I-BUILDING_NUMBER",
+      "25": "B-STREET_NAME",
+      "26": "I-STREET_NAME",
+      "27": "B-SECONDARY_ADDRESS",
+      "28": "I-SECONDARY_ADDRESS",
+      "29": "B-CITY",
+      "30": "I-CITY",
+      "31": "B-STATE",
+      "32": "I-STATE",
+      "33": "B-ZIP_CODE",
+      "34": "I-ZIP_CODE"
+    },
+    "mapping": {
+      "BANK_ACCOUNT": "account",
+      "BUILDING_NUMBER": "address",
+      "CITY": null,
+      "DRIVERS_LICENSE": null,
+      "EMAIL": "email",
+      "GIVEN_NAME": "person",
+      "GOVERNMENT_ID": null,
+      "PASSPORT": null,
+      "PHONE": "phone",
+      "ROUTING_NUMBER": null,
+      "SECONDARY_ADDRESS": "address",
+      "STATE": null,
+      "STREET_NAME": "address",
+      "SURNAME": "person",
+      "TAX_ID": null,
+      "URL": null,
+      "ZIP_CODE": "address"
+    },
+    "unmappedPolicy": "block ambiguous_context; never relabel as a Mexican identifier",
+    "overflowPolicy": "block; no truncation or window coverage claim",
+    "cpuThreads": 1,
+    "confidenceRationale": "Upstream pinned card documents minScore=0.4. This adapter conservatively blocks any low-confidence token instead of dropping detections; not the upstream confidence policy or a tuned result."
+  },
+  "artifactDirectory": "artifacts/privacy/models/rampart-q4-token-ner-v1",
+  "automaticDownload": false,
+  "maximumPayloadBytes": 183500800,
+  "limits": {
+    "timeoutMs": 15000,
+    "rssBytes": 1073741824,
+    "concurrency": 1
+  },
+  "limitations": [
+    "No loaded ONNX tensor/operator compatibility or quality measurement.",
+    "No organization, case identifiers, indirect context or relationship labels; existing rules remain necessary and incomplete.",
+    "CITY/STATE and unsupported identifier types block, not auto-redact or silently preserve.",
+    "Ordinary dates are not interpreted as identifiers; mistaken model predictions remain possible.",
+    "Unlike upstream, no SSN/card/IP sentinel premasking or span repair is applied. This is a different preprocessing/policy candidate, not upstream benchmark reproduction.",
+    "Original Unicode offsets are preserved; UNK, token loss, malformed BIO, low confidence and inputs above512 tokens block.",
+    "No weights downloaded; metadata-only preparation. No app integration, egress grant or 8GB validation."
+  ],
+  "metadataAcquisition": {
+    "downloadedBytes": 493157,
+    "maximumAggregateBytes": 2097152,
+    "maximumTokenizerBytes": 1048576,
+    "weightsDownloaded": false,
+    "verification": "Pinned metadata checked against HF Git blob SHA1 for config/tokenizer/license; local SHA256 for all selected small files."
+  }
+}
