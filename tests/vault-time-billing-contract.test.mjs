@@ -1,0 +1,63 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {createVaultFixtureDao,VAULT_TIME_BILLING_VERSION,VAULT_STORE_PARITY,VAULT_PARITY_COMPLETE} from '../server/privacy/vault-dao-contract.mjs';
+const scope={workspaceId:'w',matterId:'m',threadId:null},stamp='2026-11-10T00:00:00.000Z';
+const entry=(id='e',s=scope)=>({...s,id,userId:'u',startedAt:null,endedAt:null,manualMinutes:1,durationMinutes:1,billedMinutes:1,description:'Synthetic description 😀',billable:true,rateAmount:'0.01',amount:'0.01',currency:'MXN',source:'manual',billingStatus:'unbilled',createdAt:stamp});
+const timer=(s=scope)=>({...s,userId:'u',startedAt:stamp,accumulatedMinutes:1,pausedAt:null,state:'running',rateAmount:'0.01',billable:true,description:'Synthetic timer',currency:'MXN',createdAt:stamp,updatedAt:stamp});
+const stopped=(id='e')=>({...entry(id),source:'timer',manualMinutes:null,startedAt:stamp,endedAt:stamp});
+const fee=()=>({...scope,arrangement:'hourly',hourlyRateAmount:'0.01',contingencyBasisPoints:null,billingIncrementMinutes:6,currency:'MXN',createdAt:stamp,updatedAt:stamp});
+const rate=(s=scope)=>({...s,clientId:'client',clientName:'Synthetic Client é 🧑',hourlyRateAmount:'90071992547409.91',currency:'MXN',createdAt:stamp,updatedAt:stamp});
+const resolution=()=>({...scope,status:'resuelto',outcome:'otro',resolutionDate:'2026-11-10',notes:'Synthetic resolution',resolvedAt:stamp,createdAt:stamp,updatedAt:stamp});
+const code=c=>e=>e.code===c;
+
+test('twelve partial rows preserve exact matrix and closed parity gate',()=>{assert.equal(VAULT_TIME_BILLING_VERSION,'h5b1-time-billing-decimal-v1');assert.equal(VAULT_PARITY_COMPLETE,false);assert.deepEqual(VAULT_STORE_PARITY.reduce((a,r)=>(a[r.status]=(a[r.status]??0)+1,a),{}),{partial:27,'not-implemented':2,'supported-core':3});assert.deepEqual(VAULT_STORE_PARITY.filter(r=>r.status==='not-implemented').map(r=>r.api),['transaction','audit']);});
+test('decimal strings roundtrip exactly; numbers/exponents/negative/overflow rejected without mutation',async()=>{
+ const d=createVaultFixtureDao();let revision=0;for(const amount of ['0.00','0.01','12345678901234.56','90071992547409.91']){const e={...entry(`e${revision}`),amount,rateAmount:amount};await d.createTimeEntry({scope,entry:e,expectedRevision:revision++});assert.deepEqual(await d.getTimeEntry({scope,id:e.id}),e);}
+ for(const amount of ['90071992547409.92','999999999999999999999.00','-0.01','-0.00','+0.01','01.00','.01','1','1.0','1.001','1e2','NaN','Infinity',' 1.00','1.00\n',0.01,1,NaN,Infinity,null,true])await assert.rejects(d.createTimeEntry({scope,entry:{...entry('invalid'),amount},expectedRevision:revision}),code('invalid_input'));
+ assert.equal(await d.revision({scope}),revision);assert.equal((await d.listTimeBillingAudits({scope})).length,revision);await d.close();
+});
+test('scope collisions isolate firms and matters including timer/user and client; thread rejected',async()=>{
+ const d=createVaultFixtureDao();for(const s of [scope,{...scope,workspaceId:'other'},{...scope,matterId:'other'},{...scope,workspaceId:'other',matterId:'other'}]){await d.commitTimeBilling({scope:s,changes:[{operation:'createEntry',item:entry('same',s)},{operation:'putTimer',item:timer(s)},{operation:'putRate',item:rate(s)}],expectedRevision:0});assert.deepEqual(await d.getTimeEntry({scope:s,id:'same'}),entry('same',s));assert.deepEqual(await d.getActiveTimer({scope:s,userId:'u'}),timer(s));assert.deepEqual(await d.getClientHourlyRate({scope:s,clientId:'client'}),rate(s));assert.equal((await d.listTimeBillingAudits({scope:s})).length,3);}
+ for(const s of [{...scope,threadId:'t'},{...scope,matterId:null},{...scope,matterId:'*'}])for(const run of [()=>d.listTimeEntries({scope:s}),()=>d.getActiveTimer({scope:s,userId:'u'}),()=>d.getFeeArrangement({scope:s}),()=>d.getClientHourlyRate({scope:s,clientId:'client'}),()=>d.getMatterResolution({scope:s}),()=>d.createTimeEntry({scope:s,entry:entry(),expectedRevision:0})])await assert.rejects(run(),code('invalid_scope'));
+ await assert.rejects(d.createTimeEntry({scope,entry:entry('bad',{...scope,workspaceId:'other'}),expectedRevision:1}),code('invalid_input'));assert.deepEqual(await d.listTimeEntries({scope:{...scope,matterId:'empty'}}),[]);await d.close();
+});
+test('integer duration bounds, strict null/unknown fields, enums and dates never silently normalize',async()=>{
+ const d=createVaultFixtureDao();const changes=[{durationMinutes:10081},{durationMinutes:-1},{durationMinutes:.5},{billedMinutes:10081},{billable:false},{currency:'USD'},{source:'unknown'},{billingStatus:'paid'},{description:'x'.repeat(2401)},{createdAt:'2026-02-29T00:00:00.000Z'},{createdAt:'2026-11-10T00:00:00-06:00'},{amountCentavos:1},{threadId:'t'}];
+ for(const change of changes)await assert.rejects(d.createTimeEntry({scope,entry:{...entry(),...change},expectedRevision:0}),code('invalid_input'));
+ for(const field of ['threadId','startedAt','endedAt','manualMinutes']){const e=entry();delete e[field];await assert.rejects(d.createTimeEntry({scope,entry:e,expectedRevision:0}),code('invalid_input'));}
+ for(const cs of [[],Array.from({length:101},()=>({operation:'createEntry',item:entry()})),[{operation:'deleteTimer',item:{userId:'u'},extra:true}]])await assert.rejects(d.commitTimeBilling({scope,changes:cs,expectedRevision:0}),code('invalid_input'));
+ assert.equal(await d.revision({scope}),0);assert.deepEqual(await d.listTimeBillingAudits({scope}),[]);
+ for(const [i,minutes]of[0,10080].entries())await d.createTimeEntry({scope,entry:{...entry(`e${i}`),durationMinutes:minutes,manualMinutes:minutes,billedMinutes:minutes},expectedRevision:i});await d.close();
+});
+test('stop then mid-batch duplicate rolls back deletion/entry/audits/revision; successful stop binds timer',async()=>{
+ const d=createVaultFixtureDao();await d.putActiveTimer({scope,timer:timer(),expectedRevision:0});await d.createTimeEntry({scope,entry:entry('existing'),expectedRevision:1});
+ await assert.rejects(d.commitTimeBilling({scope,changes:[{operation:'stopTimer',item:{userId:'u',entry:stopped('new')}},{operation:'createEntry',item:entry('existing')}],expectedRevision:2}),code('storage'));
+ assert.deepEqual(await d.getActiveTimer({scope,userId:'u'}),timer());assert.equal(await d.getTimeEntry({scope,id:'new'}),null);assert.equal(await d.revision({scope}),2);assert.equal((await d.listTimeBillingAudits({scope})).length,2);
+ for(const change of [{rateAmount:'0.02'},{userId:'other'},{durationMinutes:0},{startedAt:'2026-11-09T23:59:00.000Z'}])await assert.rejects(d.stopTimer({scope,userId:'u',entry:{...stopped('new'),...change},expectedRevision:2}),code('invalid_input'));
+ await d.stopTimer({scope,userId:'u',entry:stopped('new'),expectedRevision:2});assert.equal(await d.getActiveTimer({scope,userId:'u'}),null);assert.deepEqual(await d.getTimeEntry({scope,id:'new'}),stopped('new'));assert.deepEqual((await d.listTimeBillingAudits({scope})).at(-1),{workspaceId:'w',matterId:'m',revision:3,ordinal:0,operation:'timer.stop',recordId:'new'});await d.close();
+});
+test('billing changes preserve immutable entries; missing status update rolls back whole batch',async()=>{
+ const d=createVaultFixtureDao();await d.createTimeEntry({scope,entry:entry(),expectedRevision:0});await d.setTimeEntriesBillingStatus({scope,entryIds:['e'],billingStatus:'billed',expectedRevision:1});assert.deepEqual(await d.getTimeEntry({scope,id:'e'}),{...entry(),billingStatus:'billed'});
+ await assert.rejects(d.setTimeEntriesBillingStatus({scope,entryIds:['e','missing'],billingStatus:'unbilled',expectedRevision:2}),code('not_found'));assert.deepEqual(await d.getTimeEntry({scope,id:'e'}),{...entry(),billingStatus:'billed'});assert.equal(await d.revision({scope}),2);
+ await assert.rejects(d.setTimeEntriesBillingStatus({scope,entryIds:['e','e'],billingStatus:'unbilled',expectedRevision:2}),code('invalid_input'));await assert.rejects(d.createTimeEntry({scope,entry:{...entry(),createdAt:'2026-11-11T00:00:00.000Z'},expectedRevision:2}),code('storage'));await d.close();
+});
+test('fee/rate/resolution scoped upserts enforce CAS, immutable createdAt, coherent nullable enums',async()=>{
+ const d=createVaultFixtureDao();await d.commitTimeBilling({scope,changes:[{operation:'putFee',item:fee()},{operation:'putRate',item:rate()},{operation:'putResolution',item:resolution()}],expectedRevision:0});
+ await assert.rejects(d.putFeeArrangement({scope,fee:fee(),expectedRevision:0}),code('conflict'));
+ for(const [method,arg,item]of[['putFeeArrangement','fee',fee()],['putClientHourlyRate','rate',rate()],['putMatterResolution','resolution',resolution()]])await assert.rejects(d[method]({scope,[arg]:{...item,createdAt:'2026-11-09T00:00:00.000Z'},expectedRevision:1}),code('invalid_input'));
+ const f={...fee(),arrangement:'contingency',hourlyRateAmount:null,contingencyBasisPoints:10000};await d.putFeeArrangement({scope,fee:f,expectedRevision:1});assert.deepEqual(await d.getFeeArrangement({scope}),f);
+ const r={...rate(),hourlyRateAmount:'0.01'};await d.putClientHourlyRate({scope,rate:r,expectedRevision:2});assert.deepEqual(await d.getClientHourlyRate({scope,clientId:'client'}),r);
+ const res={...resolution(),status:'abierto',outcome:null,resolutionDate:null,notes:null,resolvedAt:null};await d.putMatterResolution({scope,resolution:res,expectedRevision:3});assert.deepEqual(await d.getMatterResolution({scope}),res);
+ for(const f of [{...fee(),contingencyBasisPoints:1},{...fee(),billingIncrementMinutes:2},{...fee(),hourlyRateAmount:1},{...fee(),arrangement:'contingency',hourlyRateAmount:null,contingencyBasisPoints:10001}])await assert.rejects(d.putFeeArrangement({scope,fee:f,expectedRevision:4}),code('invalid_input'));
+ for(const r of [{...res,outcome:'otro'},{...resolution(),resolutionDate:'2026-02-29'},{...resolution(),resolvedAt:null}])await assert.rejects(d.putMatterResolution({scope,resolution:r,expectedRevision:4}),code('invalid_input'));assert.equal(await d.revision({scope}),4);await d.close();
+});
+test('competing CAS has one winner and deterministic BINARY pages/filter agree with SQLite',async()=>{
+ const d=createVaultFixtureDao();const results=await Promise.allSettled([d.putFeeArrangement({scope,fee:fee(),expectedRevision:0}),d.putFeeArrangement({scope,fee:fee(),expectedRevision:0})]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal(results.find(r=>r.status==='rejected').reason.code,'conflict');
+ const entries=['Z','a','a-','a_'].map(id=>entry(id));await d.commitTimeBilling({scope,changes:entries.map(item=>({operation:'createEntry',item})),expectedRevision:1});const db=new DatabaseSync(':memory:');try{db.exec('CREATE TABLE entries(id TEXT,created TEXT)');for(const e of entries)db.prepare('INSERT INTO entries VALUES(?,?)').run(e.id,e.createdAt);const expected=db.prepare('SELECT id FROM entries ORDER BY created COLLATE BINARY DESC,id COLLATE BINARY DESC').all().map(r=>r.id);assert.deepEqual((await d.listTimeEntries({scope})).map(r=>r.id),expected);assert.deepEqual((await d.listTimeEntries({scope,limit:2,offset:1})).map(r=>r.id),expected.slice(1,3));assert.deepEqual(await d.listTimeEntries({scope,billingStatus:'billed'}),[]);}finally{db.close();}await d.close();
+});
+test('input/output copies, bounded pages and close reject every domain call including empty batches',async()=>{
+ const d=createVaultFixtureDao(),t=timer();await d.putActiveTimer({scope,timer:t,expectedRevision:0});t.description='mutated';const result=await d.getActiveTimer({scope,userId:'u'});result.description='changed';assert.deepEqual(await d.getActiveTimer({scope,userId:'u'}),timer());
+ for(const opts of [{limit:0},{limit:101},{offset:-1},{offset:1000001}])await assert.rejects(d.listTimeEntries({scope,...opts}),code('invalid_input'));await d.close();
+ const runs=[()=>d.commitTimeBilling({scope,changes:[],expectedRevision:0}),()=>d.getTimeEntry({scope,id:'e'}),()=>d.listTimeEntries({scope}),()=>d.setTimeEntriesBillingStatus({scope,entryIds:[],billingStatus:'billed',expectedRevision:0}),()=>d.getActiveTimer({scope,userId:'u'}),()=>d.putActiveTimer({scope,timer:timer(),expectedRevision:0}),()=>d.deleteActiveTimer({scope,userId:'u',expectedRevision:0}),()=>d.stopTimer({scope,userId:'u',entry:stopped(),expectedRevision:0}),()=>d.getFeeArrangement({scope}),()=>d.putFeeArrangement({scope,fee:fee(),expectedRevision:0}),()=>d.getClientHourlyRate({scope,clientId:'client'}),()=>d.putClientHourlyRate({scope,rate:rate(),expectedRevision:0}),()=>d.getMatterResolution({scope}),()=>d.putMatterResolution({scope,resolution:resolution(),expectedRevision:0}),()=>d.listTimeBillingAudits({scope})];for(const run of runs)await assert.rejects(run(),code('closed'));
+});

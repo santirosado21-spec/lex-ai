@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cuts": [
+    "H5b.1b.2",
+    "H5b.1b.3"
+  ],
+  "nativeSchema": 4,
+  "sources": {
+    "crates/lex-vault/src/lib.rs": "4052a155465504f840d4bdf87c833eb44b94751a878daf347f87d410c194577b",
+    "crates/lex-vault/src/proposals.rs": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301",
+    "crates/lex-vault/src/time_billing.rs": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82",
+    "crates/lex-vault/tests/proposals.rs": "21585731d755207f92090b83bac3a0d29cc2fdac0d08ffb60e192f653657cee1",
+    "crates/lex-vault/tests/time_billing.rs": "f1f81c255c29dc4482278b582b39ac4576dc5109425fed8fbf08b33852969874",
+    "server/privacy/vault-dao-contract.mjs": "21e5fd20a0cddddfcd1aabd1dce05e5a8f1a898917c2e8a02202ed95a612ca85",
+    "tests/vault-proposals-contract.test.mjs": "423f1a24692ba9a1087b210142dcca0c79195eca57080c2f69246a73f150fa3a",
+    "tests/vault-time-billing-contract.test.mjs": "c0e746c6d60676e2ae02cd3f113c03617701521b8d369e9649611513af2b46c1",
+    "tests/vault-reminders-contract.test.mjs": "b4a58c1ef5bc047e53376e4fa8aa3ad7804c050831b61e2c1e8cf6b1874b6334",
+    "crates/lex-vault/README.md": "e8a68cef404645578a36885378154317fb7d3d6dad5c17dda60ac8d3e7b0d162"
+  },
+  "verification": {
+    "builderNative": 36,
+    "independentNative": 36,
+    "builderNode": 29,
+    "independentNode": 29,
+    "independentAdditionalProbes": 3,
+    "reviewer": "gpt-6.1-sol",
+    "verdict": "APPROVE-inactive-storage-slice",
+    "rootSuite": 812,
+    "rootBuild": "PASS"
+  },
+  "matrix": {
+    "supportedCore": 3,
+    "partial": 27,
+    "notImplemented": 2,
+    "parityComplete": false
+  },
+  "logs": [
+    "artifacts/vault-h5b1/time-billing-native.log",
+    "artifacts/vault-h5b1/time-billing-node.tap",
+    "artifacts/phased-completion-20261110-batch2/npm-test.log",
+    "artifacts/phased-completion-20261110-batch2/build.log"
+  ],
+  "productionIntegrated": false,
+  "earlierSchemaMigration": false,
+  "custodyOrRecoveryValidated": false,
+  "financialCalculationsImplemented": false,
+  "clientDataUsed": false
+}
