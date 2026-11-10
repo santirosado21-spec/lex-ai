@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "S2b.1c",
+  "freeze": "legal-task-anchor-S2b1c-freeze-2026-11-10.json",
+  "report": {
+    "schemaVersion": 1,
+    "planSha256": "8b045b85dfb27e04d4b731fcd7924372e91a54289be4a2d0491e1d586ace2420",
+    "status": "finished",
+    "planned": 4,
+    "attempted": 4,
+    "plannedPairs": 2,
+    "pairedComplete": 2,
+    "groups": [
+      {
+        "model": "openai/gpt-oss-120b",
+        "arm": "literal-s1",
+        "planned": 2,
+        "attempted": 2,
+        "complete": 2,
+        "failed": 0,
+        "pending": 0,
+        "jsonValid": 2,
+        "contractValid": 2,
+        "citationsValid": 2,
+        "reportedUsage": {
+          "prompt_tokens": {
+            "reportedAttempts": 2,
+            "sum": 6890
+          },
+          "completion_tokens": {
+            "reportedAttempts": 2,
+            "sum": 1912
+          },
+          "total_tokens": {
+            "reportedAttempts": 2,
+            "sum": 8802
+          }
+        },
+        "latencyMs": {
+          "samples": 2,
+          "mean": 2600.5,
+          "p50": 2462,
+          "p95": 2739
+        },
+        "promptCharacters": {
+          "mean": 11877
+        }
+      },
+      {
+        "model": "openai/gpt-oss-120b",
+        "arm": "anchors-v2",
+        "planned": 2,
+        "attempted": 2,
+        "complete": 2,
+        "failed": 0,
+        "pending": 0,
+        "jsonValid": 2,
+        "contractValid": 2,
+        "citationsValid": 2,
+        "reportedUsage": {
+          "prompt_tokens": {
+            "reportedAttempts": 2,
+            "sum": 6746
+          },
+          "completion_tokens": {
+            "reportedAttempts": 2,
+            "sum": 899
+          },
+          "total_tokens": {
+            "reportedAttempts": 2,
+            "sum": 7645
+          }
+        },
+        "latencyMs": {
+          "samples": 2,
+          "mean": 1502.5,
+          "p50": 1338,
+          "p95": 1667
+        },
+        "promptCharacters": {
+          "mean": 11799.5
+        }
+      }
+    ],
+    "billedCost": "unknown",
+    "legalAccuracy": "not-evaluated",
+    "limitations": [
+      "Two fresh synthetic development cases, one repetition; no acceptance, winner selection or general legal quality. Literal S1 vs anchors v2, both native strict JSON and fixed skill; necessary citation/schema/context differences prevent treating this as a pure offset-only causal estimate. No general legal-quality claim.",
+      "Small-sample p95 is descriptive only.",
+      "Free attestation does not audit actual billing."
+    ],
+    "lastAttemptSha256": "66cbf6016d5595e032a6149fd2baa9321fcf52e95886c289218bd4ae241d9c9d",
+    "stopReason": null,
+    "httpRequests": 8,
+    "generationPosts": 4,
+    "totalElapsedMs": 198737
+  },
+  "reportSha256": "0eaa2b6d016b53d10e4bc9c092af0bad4f8074e8afe5d4ae558f7c1567cd17cc",
+  "sources": {
+    "scripts/probe-legal-task-anchors.mjs": "078e3844d864b5ff54fe243ab820d3408f2301979b400ccefc89efacb3aea80d",
+    "tests/legal-task-anchor-probe.test.mjs": "449c44f1986960b7d8269a74e9f58c6957c38cb89161e80e58f6a248dba40cf1",
+    "eval/legal-tasks/s2b-anchor-dev/cases.jsonl": "55e47be61106170b52c6761b6cf21fdb35e3d1cabea800925ff9730f04fd0817",
+    "eval/legal-tasks/s2b-anchor-dev/README.md": "d7e37f6e03c6467658713ea4929f50d42da82593a7ebf83815ac313878fe92e6",
+    "docs/architecture/legal-tasks/anchor-probe-v1.md": "420e82367996c8233b6592bed9b05bb75c3e2046877ad241e3b6e2df26c1486a"
+  },
+  "attemptsSummary": [
+    {
+      "jobId": "job-01",
+      "caseId": "dev-bruma-retention",
+      "requestedModel": "openai/gpt-oss-120b",
+      "observedModel": "openai/gpt-oss-120b",
+      "arm": "literal-s1",
+      "startedAt": "2026-11-10T17:16:03.988Z",
+      "generationElapsedMs": 2462,
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 3427,
+        "completion_tokens": 866,
+        "total_tokens": 4293,
+        "completion_tokens_details": {
+          "reasoning_tokens": 522
+        }
+      },
+      "httpStatus": 200,
+      "providerError": {},
+      "errorCode": null,
+      "outcome": "complete",
+      "attemptSha256": "ce54348e3bd8066af8690774a41c0a3e8c4c996489347c3b33112f3d33616be5"
+    },
+    {
+      "jobId": "job-02",
+      "caseId": "dev-bruma-retention",
+      "requestedModel": "openai/gpt-oss-120b",
+      "observedModel": "openai/gpt-oss-120b",
+      "arm": "anchors-v2",
+      "startedAt": "2026-11-10T17:17:09.285Z",
+      "generationElapsedMs": 1338,
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 3365,
+        "completion_tokens": 357,
+        "total_tokens": 3722,
+        "completion_tokens_details": {
+          "reasoning_tokens": 46
+        }
+      },
+      "httpStatus": 200,
+      "providerError": {},
+      "errorCode": null,
+      "outcome": "complete",
+      "attemptSha256": "b6906df8856a1a55625e31e666320979b35b9bc0ba3768ab17ce84ae957c8407"
+    },
+    {
+      "jobId": "job-03",
+      "caseId": "dev-lucerna-color",
+      "requestedModel": "openai/gpt-oss-120b",
+      "observedModel": "openai/gpt-oss-120b",
+      "arm": "anchors-v2",
+      "startedAt": "2026-11-10T17:18:14.523Z",
+      "generationElapsedMs": 1667,
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 3381,
+        "completion_tokens": 542,
+        "total_tokens": 3923,
+        "completion_tokens_details": {
+          "reasoning_tokens": 87
+        }
+      },
+      "httpStatus": 200,
+      "providerError": {},
+      "errorCode": null,
+      "outcome": "complete",
+      "attemptSha256": "fa2f418092c3b5a94b5131dfdaa8e93c1b5d08a508934e3cbc579b047bc254ed"
+    },
+    {
+      "jobId": "job-04",
+      "caseId": "dev-lucerna-color",
+      "requestedModel": "openai/gpt-oss-120b",
+      "observedModel": "openai/gpt-oss-120b",
+      "arm": "literal-s1",
+      "startedAt": "2026-11-10T17:19:19.748Z",
+      "generationElapsedMs": 2739,
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 3463,
+        "completion_tokens": 1046,
+        "total_tokens": 4509,
+        "completion_tokens_details": {
+          "reasoning_tokens": 645
+        }
+      },
+      "httpStatus": 200,
+      "providerError": {},
+      "errorCode": null,
+      "outcome": "complete",
+      "attemptSha256": "66cbf6016d5595e032a6149fd2baa9321fcf52e95886c289218bd4ae241d9c9d"
+    }
+  ],
+  "tokensReported": 16447,
+  "reasoningTokensAlreadyIncluded": 1300,
+  "independentReview": {
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-evidence-only",
+    "newTests": 20,
+    "replayAndFreezeMatch": true,
+    "qualitativeFictionRead": "No obvious invented real-law authority; not professional legal grading"
+  },
+  "builderCombinedTests": 51,
+  "productionEnabled": false,
+  "clientDataUsed": false,
+  "legalAccuracyValidated": false
+}
