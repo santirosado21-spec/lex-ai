@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:20:00.849831+00:00",
+  "scope": "independent proposed acceptance data and offline admission, not live generation or professional gold",
+  "sourceHashes": {
+    "eval/legal-tasks/s2b2/protocol.json": "d0d63102ad5ca31b24c2b8e14c515f58d26b0027f7dadd4996030ad7c34389d9",
+    "eval/legal-tasks/s2b2/annotation-guide.md": "a09f7645afc6fbca74675993bfdb551bf6f85842e95ec8e6f560c80f636b82fd",
+    "eval/legal-tasks/s2b2/cases.jsonl": "95f4d90c6895318cc85f28b88b241caed62c0b356d194b88002982ee3ee2dde3",
+    "eval/legal-tasks/s2b2/evidence.json": "18dacb8a200e197f4374ecf1964ae780645ce7a2fbc00d06a4e9e24890fb1e9f",
+    "eval/legal-tasks/s2b2/provenance.json": "0efdfffb1cad3a7efb60d2efc9b54a04390c975974a3fc77f6b97e37c4835f39",
+    "eval/legal-tasks/s2b2/README.md": "008b5a7f51d959f926d48019dffa0ee4dafd10827405a584b2876ea4ba4b8c6c"
+  },
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE after provenance-only correction, 32/32 literal PDF matches, 378 criterion locators",
+  "authorshipReadScopeDeviationDisclosed": true,
+  "counts": {
+    "planned": 30,
+    "researchSubstantive": 12,
+    "contractsSubstantive": 12,
+    "challenges": 6,
+    "instruments": 3,
+    "jurisdictions": 2,
+    "officialArticleRecords": 32,
+    "s1Admitted": 30,
+    "anchorsAdmitted": 29,
+    "postAttempted": 0,
+    "generated": 0,
+    "mechanicallyGraded": 0,
+    "substantivelyGradedLorenzo": 0,
+    "substantivelyGradedPedro": 0
+  },
+  "blockedAnchorCase": "S2B2-25",
+  "runConfigurationFrozen": false,
+  "wholePacketPreflightCompleted": false,
+  "liveAuthorized": false,
+  "professionallyReviewed": false,
+  "currentLawValidated": false,
+  "productionEnabled": false
+}
