@@ -5,10 +5,10 @@
   "sourceHashes": {
     "crates/lex-vault/Cargo.toml": "eebc597782d1e3d4cbb969898c46be0b810cfd9e2248afc6b4f9fb2a01777886",
     "crates/lex-vault/Cargo.lock": "f5ad6d515a05cf1b8306b10116862631728fa2d20175f1afe745c072a13d99fa",
-    "crates/lex-vault/README.md": "03c0f0d22df95cd5d569449e86e0f089fe71e8333f9c58b8342ecd8a4ec91c0b",
+    "crates/lex-vault/README.md": "5b292ffe1b04f4cbcf44d5357c3c2f1cf905329da15b30177c98c41245a19ec8",
     "crates/lex-vault/src/lib.rs": "5f9ce836e47731906349b606e43d6edd145342da3f0c2b4cb6a5a99450e9edf0",
     "crates/lex-vault/src/recovery.rs": "e8d85ca29bda9ea53ce81459e64b70fd3ebd9a6b5284089f1218b772c05e733d",
-    "crates/lex-vault/tests/recovery.rs": "973b1d010e86563b13ce9753d500f4b89079ccbcd1b0d4d5f452cd6cb2eae965",
+    "crates/lex-vault/tests/recovery.rs": "545535f9c7cab86f08cce2e5fdbd0938c84e41b115826a3ab95ebb6304226851",
     "crates/lex-vault/tests/recovery_process.rs": "cd7ce44167bb6f28143594358956bbb0e062cccedf72046966e891f0b1469b04",
     "crates/lex-vault/tests/support/recovery_fixture.rs": "faac4c6c63fb113b0480496ffee8d1738527d5a01849344a42a4d597ff10c4ba"
   },

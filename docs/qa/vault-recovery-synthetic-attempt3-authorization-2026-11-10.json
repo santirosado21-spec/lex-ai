@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "scope": "THIRD_EXPLICIT_SYNTHETIC_RECOVERY_BATCH",
+  "approvedBy": "codex/root",
+  "previousRunId": 42892963286,
+  "previousFreezeSha256": "d4cc6077830768d68d21dee286d819ec14797c35b4563e3b3adaa792835e5d2b",
+  "previousFreezePreserved": "docs/qa/vault-recovery-synthetic-attempt2-freeze-2026-11-10.json",
+  "diagnosis": "Exact observed EPERM spawning /bin/ps during R01 after9 preparation operations completed. Remove external sampler in favor of maintained libc own-child task RSS. No claim of the OS denial cause beyond observed EPERM.",
+  "independentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE static RSS delta",
+  "reviewPath": "docs/qa/vault-recovery-native-rss-review-2026-11-10.json",
+  "newFreezeSha256": "34ef1b820524b1b460ee8ace89e7440745a6fa9aab29731dd8cbb91ac09367ab",
+  "requiredFirstStage": "Exact harmless supervisor verifies positive native owned-sleep RSS, natural exit, invalid handle and cleanup before any crypto batch",
+  "budgetsAndCaseAssertionsUnchanged": true,
+  "networkSandboxAndPermissionsUnchanged": true,
+  "cryptographicSourceAndDependenciesUnchanged": true,
+  "automaticRetry": false,
+  "ownerMacNativeCodegenOrCallsAuthorized": false,
+  "productionEnabled": false,
+  "h5Complete": false
+}

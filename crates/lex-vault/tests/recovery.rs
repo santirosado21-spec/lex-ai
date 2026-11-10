@@ -13,7 +13,8 @@ use std::{
 use zeroize::Zeroizing;
 #[path = "support/recovery_fixture.rs"]
 mod fixture;
-// Sole custody of every spawned Child, including the RSS sampler. No raw-PID signal is
+// Sole custody of every spawned Child. RSS uses the maintained libc task-info API,
+// not an external process. No raw-PID signal is
 // issued: Child::kill tracks already-reaped children, so a reused PID cannot be killed.
 // Registry operations never perform pipe I/O, wait, join or callbacks while locked.
 // spawn is serialized with shutdown; no child can escape between spawn and registration.
@@ -29,6 +30,10 @@ struct ChildrenState {
     done: bool,
     cleanup_ok: bool,
 }
+enum OwnedSample {
+    Exited(ExitStatus),
+    Rss(u64),
+}
 impl Children {
     fn lock(&self) -> std::sync::MutexGuard<'_, ChildrenState> {
         self.state.lock().unwrap_or_else(|e| e.into_inner())
@@ -41,7 +46,7 @@ impl Children {
         if state.stopping {
             return Err(std::io::Error::other("supervisor stopped"));
         }
-        // Fixed bounded batch: at most 13 restores + 6000 RSS samples + synthetic tests.
+        // Fixed bounded batch: at most 13 restores plus harmless supervisor fixtures.
         if state.children.len() >= 8192 {
             return Err(std::io::Error::other("supervisor child limit"));
         }
@@ -67,6 +72,51 @@ impl Children {
             .get_mut(id)
             .ok_or_else(|| std::io::Error::other("unknown owned child"))?
             .try_wait()
+    }
+    fn sample_rss(&self, id: usize) -> std::io::Result<OwnedSample> {
+        // Keep the owned Child unreaped during the query. Shutdown uses this same
+        // registry lock, so a recycled PID cannot be queried after concurrent reaping.
+        let mut state = self.lock();
+        if state.stopping {
+            return Err(std::io::Error::other("supervisor stopped"));
+        }
+        let child = state
+            .children
+            .get_mut(id)
+            .ok_or_else(|| std::io::Error::other("unknown owned child"))?;
+        if let Some(status) = child.try_wait()? {
+            return Ok(OwnedSample::Exited(status));
+        }
+        #[cfg(target_os = "macos")]
+        {
+            let pid = libc::c_int::try_from(child.id())
+                .map_err(|_| std::io::Error::other("owned PID range"))?;
+            let mut info = std::mem::MaybeUninit::<libc::proc_taskinfo>::zeroed();
+            let size = std::mem::size_of::<libc::proc_taskinfo>() as libc::c_int;
+            // ABI/types/constants come from pinned libc, matching Apple's SDK headers.
+            // Only our registered live child is queried; no argv/env/name information.
+            let read = unsafe {
+                libc::proc_pidinfo(
+                    pid,
+                    libc::PROC_PIDTASKINFO,
+                    0,
+                    info.as_mut_ptr().cast::<libc::c_void>(),
+                    size,
+                )
+            };
+            if read == size {
+                let rss = unsafe { info.assume_init() }.pti_resident_size;
+                if rss > 0 {
+                    return Ok(OwnedSample::Rss(rss));
+                }
+            }
+        }
+        // A child can exit during the query. Accept only its exact observed status;
+        // a still-live child without a positive sample is a monitoring failure.
+        if let Some(status) = child.try_wait()? {
+            return Ok(OwnedSample::Exited(status));
+        }
+        Err(std::io::Error::other("owned child RSS unavailable"))
     }
     fn shutdown(&self) -> bool {
         let mut state = self.lock();
@@ -182,16 +232,9 @@ fn terminate_after_cleanup(children: &Children, code: i32) -> ! {
 }
 // A failed RSS sampler is harmless only when the owned restore has already exited.
 // Otherwise monitoring is unavailable: clean up and return the finite sampler-failure code.
-fn check_sampler_exit(
-    children: &Children,
-    restore: usize,
-    sampler_status: ExitStatus,
-) -> Result<Option<ExitStatus>, i32> {
-    if sampler_status.success() {
-        return Ok(None);
-    }
+fn resolve_sample_failure(children: &Children, restore: usize) -> Result<ExitStatus, i32> {
     match children.poll(restore) {
-        Ok(Some(status)) => Ok(Some(status)),
+        Ok(Some(status)) => Ok(status),
         Ok(None) | Err(_) => Err(cleanup_for_failure(children, 72)),
     }
 }
@@ -227,7 +270,7 @@ fn child_case(
     }
     part(&mut *input, &expected.to_private_bytes().unwrap());
     part(&mut *input, bytes);
-    let (child, pid, stdin, child_stdout) = guard
+    let (child, _pid, stdin, child_stdout) = guard
         .children
         .spawn(
             Command::new(env!("CARGO_BIN_EXE_lex-vault-recovery-fixture"))
@@ -261,58 +304,28 @@ fn child_case(
             let _ = writer.join();
             panic!("bounded recovery deadline")
         }
-        // Development-only monitor: owned child PID, fixed numeric ps column, no names/argv.
-        let (sampler, _, _, output) = guard
-            .children
-            .spawn(
-                Command::new("/bin/ps")
-                    .args(["-o", "rss=", "-p", &pid.to_string()])
-                    .env_clear()
-                    .env("PATH", "/usr/bin:/bin")
-                    .stdin(Stdio::null())
-                    .stdout(Stdio::piped())
-                    .stderr(Stdio::null()),
-            )
-            .unwrap();
-        // This sampler also belongs to the batch watchdog, including while its pipe stalls.
-        let mut output_bytes = Vec::new();
-        output
-            .unwrap()
-            .take(129)
-            .read_to_end(&mut output_bytes)
-            .unwrap();
-        let sampler_status = loop {
-            if let Some(status) = guard.children.poll(sampler).unwrap() {
-                break status;
-            }
-            thread::sleep(Duration::from_millis(1));
-        };
-        match check_sampler_exit(&guard.children, child, sampler_status) {
-            Ok(Some(status)) => break status,
-            Ok(None) => {}
-            Err(code) => std::process::exit(code), // cleanup/reaping already completed
-        }
-        assert!(output_bytes.len() <= 128);
-        if sampler_status.success() {
-            let rss = std::str::from_utf8(&output_bytes)
-                .unwrap()
-                .trim()
-                .parse::<u64>()
-                .unwrap()
-                .checked_mul(1024)
-                .unwrap();
-            peak = peak.max(rss);
-            let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
-            let measured = unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) } == 0;
-            let parent_rss = if measured {
-                unsafe { usage.assume_init() }.ru_maxrss as u64
-            } else {
-                u64::MAX
-            };
-            if rss.saturating_add(parent_rss) > 805_306_368 {
-                assert!(guard.children.shutdown());
-                let _ = writer.join();
-                panic!("bounded recovery RSS")
+        // Fixed native read of our owned child; no setuid ps executable under sandbox.
+        match guard.children.sample_rss(child) {
+            Ok(OwnedSample::Exited(status)) => break status,
+            Err(_) => match resolve_sample_failure(&guard.children, child) {
+                Ok(status) => break status,
+                Err(code) => std::process::exit(code), // cleanup/reaping already completed
+            },
+            Ok(OwnedSample::Rss(rss)) => {
+                peak = peak.max(rss);
+                let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
+                let measured =
+                    unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) } == 0;
+                let parent_rss = if measured {
+                    unsafe { usage.assume_init() }.ru_maxrss as u64
+                } else {
+                    u64::MAX
+                };
+                if rss.saturating_add(parent_rss) > 805_306_368 {
+                    assert!(guard.children.shutdown());
+                    let _ = writer.join();
+                    panic!("bounded recovery RSS")
+                }
             }
         }
         thread::sleep(Duration::from_millis(50));
@@ -653,19 +666,18 @@ fn supervisor_cleanup_without_crypto() {
         let owned = Children::default();
         let (id, pid) = spawn_sleep(&owned);
         assert!(owned.poll(id).unwrap().is_none());
+        assert!(matches!(owned.sample_rss(id).unwrap(), OwnedSample::Rss(bytes) if bytes > 0));
         assert_eq!(cleanup_for_failure(&owned, code), code);
         reaped(pid);
         assert!(owned.spawn(&mut Command::new("/usr/bin/true")).is_err());
         assert!(owned.shutdown()); // idempotence, no second raw-PID kill
     }
-    // Inject an unsuccessful ps status while the owned restore is demonstrably live.
-    // This exercises the same branch as the real sampler, without invoking ps or crypto.
-    use std::os::unix::process::ExitStatusExt;
-    let bad_ps = || ExitStatus::from_raw(1 << 8);
+    // Inject a failed sample while the owned restore is demonstrably live.
+    // This exercises the actual failure cleanup branch without ps or crypto.
     let owned = Children::default();
     let (id, pid) = spawn_sleep(&owned);
     assert!(owned.poll(id).unwrap().is_none());
-    assert_eq!(check_sampler_exit(&owned, id, bad_ps()).unwrap_err(), 72);
+    assert_eq!(resolve_sample_failure(&owned, id).unwrap_err(), 72);
     reaped(pid);
     assert!(owned.lock().done);
     // Two racing shutdown callers both return only after the single owner has reaped.
@@ -701,12 +713,11 @@ fn supervisor_cleanup_without_crypto() {
     }
     // The same failed sampler after normal restore exit preserves that exact exit status
     // and does not close the registry or turn it into a monitoring failure.
+    assert!(resolve_sample_failure(&owned, id).unwrap().success());
     assert!(
-        check_sampler_exit(&owned, id, bad_ps())
-            .unwrap()
-            .unwrap()
-            .success()
+        matches!(owned.sample_rss(id).unwrap(), OwnedSample::Exited(status) if status.success())
     );
+    assert!(owned.sample_rss(usize::MAX).is_err());
     assert!(!owned.lock().stopping);
     assert!(owned.shutdown());
     reaped(pid);
