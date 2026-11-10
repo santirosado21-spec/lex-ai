@@ -5,6 +5,8 @@ Fecha: 2026-11-09. H1, H2, H3, H3V, H4a, H5a, M1 y los cortes H4b.1/H5b.1a revis
 
 Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-plan-2026-11-09.md), con [aportaciones, cantidades y límites reales](hybrid-completion-review-2026-11-09.md). Es planificación: no modifica los estados pendientes ni inicia ejecución. H3V fija también el contrato legacy y de versiones; H4b cerrará tras congelar inventario/contratos H5a.
 
+Continuación actual tras S2a: [plan por fases F0–F8 y nombres N0–N2](product-completion-phases-2026-11-09.md). Conserva los IDs de este tablero y sus gates; no marca fases implementadas por redactarlas. Primeros cortes propuestos: F0/H4b.2a y primer dominio de paridad H5b.1b.1. Biblioteca y S2b pueden avanzar con público/sintético en paralelo.
+
 Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; las asignaciones y cierres efectivos figuran en la tabla.
 
 Requisito transversal reafirmado: **entrada confidencial local → extracción/detección/sustitución local → política del sobre completo → nube → validación/restitución local**. En demo web no subir el original para anonimizarlo en servidor ni pedir preparación manual al usuario. H4/H5/H6/H7 deben probarlo primero con información sensible inventada, incluidos archivo/metadatos/historial/logs y seguimiento que vuelve a protegerse. [Guion integrado](../qa/cofounder-hybrid-beta-2026-11-09.md#recorrido-integrado-desde-el-archivo-original). S2a/S2b de calidad jurídica no cierran ese requisito; sus estados y gates permanecen.
@@ -42,6 +44,12 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | S2 | Comparación pareada de skills y modelos por tarea | S1, aceptación independiente, acceso/presupuesto de evaluación | in-progress | S2a piloto SF gratuito autorizado; S2b evaluación ampliada/rutas producto y abogados pendiente |
 | S2a | Piloto pareado: V1 cancelado y V2 de seis casos independientes | S1 congelada, Free Groq vigente y arnés revisado | done | V2 24/24; 5 contratos válidos, 1 pase conjunto con reserva, 14 truncadas; 631/631+build; revisión ciega SF cerrada, abogado pendiente |
 | S2b | Formato/budget medidos, aceptación ampliada y revisión profesional | Resultados S2a, aceptación nueva y presupuesto/rutas propias | todo | Comparar JSON nativo/anclas/presupuesto en desarrollo; nuevo examen y abogados; sin ganador producto |
+| F0 | Contrato web/componente local, formatos y aceptación | Arquitectura y contratos actuales | todo | Propuesto junto a H4b.2a; decidir compatibilidad de bóveda web/nativa antes de H7 |
+| H4b.2a | Contrato operativo v2 y protocolo de examen nuevo | H4a/H5a; F0 incorporado en el corte | todo | Señales reales de extracción/incertidumbre, sin gold en runtime; todavía sin candidato nuevo |
+| H5b.1b.1 | Primer dominio atómico de paridad | Matriz H5b.1a; F0.1 decidido antes de implementar | todo | Inventario/protocolos pueden avanzar; reclamar filas/archivos, sin cambiar gate de paridad hasta cierre completo |
+| N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
+| N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |
+| N2 | Migración de identidad y compatibilidad | Nombre elegido tras N1 | todo | Sin replace global, cambios de datos/IDs o despliegue automático |
 
 ## H1 — Contrato y transporte simulado
 

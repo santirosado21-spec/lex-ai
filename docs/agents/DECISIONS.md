@@ -73,3 +73,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-09 18:49 — codex — La protección ocurre antes de cualquier subida del archivo privado
 
 **Por qué:** El dueño exige introducir primero información confidencial y que el componente local la sustituya antes del trabajo remoto. Una subida web al servidor para anonimizar allí incumpliría ese orden. Fijar extracción/protección en cliente o servicio local y tratar original, mapa, nombres, historial y metadatos antes del egreso; bloqueo si formato o tratamiento inciertos. Requisito de producto probado primero con sintéticos, sin habilitar datos reales o dar por aprobado detector/cifrado.
+
+## 2026-11-09 19:12 — codex — Ordenar fases sin confundir demo web, bóveda nativa y marca disponible
+
+**Por qué:** El dueño pide plan completo y otra identidad. Mantener privacidad/bóveda y calidad/corpus como frentes paralelos, resolver canal local web antes de implementar paridad que se acople a él y cerrar H4/H5 antes de integración H6/H7 según backlog. S2a no valida privacidad ni justifica ganador. No esperar toda la legislación nacional para subconjunto aprobado de demo, con cobertura explícita. Un buscador sin coincidencia no despeja marca/dominio; Folimbra/Cautria/Citeroa son propuestas creativas, IMPI/fonética/dominios y elección del dueño pendientes. No cambiar aún textos/IDs/paquetes ni borrar historial.

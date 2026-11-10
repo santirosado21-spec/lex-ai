@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "status": "preliminary-research-no-name-selected",
+  "scope": "Open-web collision sample, not trademark or domain clearance",
+  "queryCount": 29,
+  "queries": [
+    "\"Lex AI\" legal software",
+    "site.gob.mx/impi MARCia búsqueda marcas",
+    "site.wipo.int Global Brand Database search trademarks",
+    "\"Criterna\"",
+    "\"Foliara\"",
+    "\"Hiloza\"",
+    "\"Cautria\"",
+    "\"Cautria\" software abogados",
+    "\"Foliara\" software legal",
+    "\"Trazora\"",
+    "\"Orvanta\"",
+    "\"Cautria\"",
+    "\"Cautria\" \"software\"",
+    "\"Foliara\" \"software\"",
+    "\"Nodaria\" legal software",
+    "\"Folentra\"",
+    "\"Causelia\"",
+    "\"Cautria\" legal software México",
+    "\"Folentra\" software legal",
+    "\"Folvira\"",
+    "\"Trazelia\"",
+    "\"Cautria\" software",
+    "\"Folvira\" legal software",
+    "\"Citeroa\"",
+    "\"Cautriva\"",
+    "\"Folimbra\"",
+    "\"Citeroa\" software legal México",
+    "\"Cautriva\" software legal marca",
+    "\"Folimbra\" software legal marca"
+  ],
+  "directlyOpened": [
+    "https://decree.om/lex-user-guide/",
+    "https://www.wipo.int/en/web/global-brand-database",
+    "https://marcia.impi.gob.mx/marcas/search/quick"
+  ],
+  "primarySourcePagesReviewedInFull": false,
+  "screenedNamesIncludingCurrent": 15,
+  "shortlist": [
+    {
+      "name": "Folimbra",
+      "creativePriority": 1,
+      "openWebFinding": "No relevant software product identified in sampled exact query; contextual query returned empty results",
+      "trademarkAvailability": "unknown",
+      "domainAvailability": "unknown",
+      "impiCandidateSearchPerformed": false,
+      "wipoCandidateSearchPerformed": false
+    },
+    {
+      "name": "Cautria",
+      "creativePriority": 2,
+      "openWebFinding": "Personal names and unrelated results; no comparable legal product identified in sample",
+      "trademarkAvailability": "unknown",
+      "domainAvailability": "unknown",
+      "impiCandidateSearchPerformed": false,
+      "wipoCandidateSearchPerformed": false
+    },
+    {
+      "name": "Citeroa",
+      "creativePriority": 3,
+      "openWebFinding": "Unrelated OCR/listing/anagram results; no comparable legal product identified in sample",
+      "trademarkAvailability": "unknown",
+      "domainAvailability": "unknown",
+      "impiCandidateSearchPerformed": false,
+      "wipoCandidateSearchPerformed": false
+    }
+  ],
+  "otherScreened": [
+    {
+      "name": "Lex AI",
+      "finding": "existing-sector-use",
+      "sourceIdentifiedInSearch": "https://decree.om/lex-user-guide/"
+    },
+    {
+      "name": "Criterna",
+      "finding": "commercial-use-found",
+      "sourceIdentifiedInSearch": "https://criterna.net/"
+    },
+    {
+      "name": "Foliara",
+      "finding": "software-use-found",
+      "sourceIdentifiedInSearch": "https://devex.pe/en"
+    },
+    {
+      "name": "Hiloza",
+      "finding": "organisation-use-found",
+      "sourceIdentifiedInSearch": "https://dossierappel.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=52097&originePc=0&typeBac=0"
+    },
+    {
+      "name": "Trazora",
+      "finding": "commercial-use-found",
+      "sourceIdentifiedInSearch": "https://trazora.es/"
+    },
+    {
+      "name": "Orvanta",
+      "finding": "software-use-found",
+      "sourceIdentifiedInSearch": "https://orvanta.tech/"
+    },
+    {
+      "name": "Nodaria",
+      "finding": "software-use-in-Mexico-found",
+      "sourceIdentifiedInSearch": "https://www.nodaria.com.mx/"
+    },
+    {
+      "name": "Folentra",
+      "finding": "software-use-found",
+      "sourceIdentifiedInSearch": "https://folentra-tp.com/"
+    },
+    {
+      "name": "Causelia",
+      "finding": "historical-official-bulletin-search-hit-not-current-rights-verified",
+      "sourceIdentifiedInSearch": "https://www.inpi.fr/sites/default/files/import/bopis/2012-40v1.pdf"
+    },
+    {
+      "name": "Folvira",
+      "finding": "software-use-found",
+      "sourceIdentifiedInSearch": "https://folvira.com/"
+    },
+    {
+      "name": "Trazelia",
+      "finding": "third-party-homonym-signals-only",
+      "sourceIdentifiedInSearch": null
+    },
+    {
+      "name": "Cautriva",
+      "finding": "reserve-no-relevant-commercial-result-identified-in-sample",
+      "sourceIdentifiedInSearch": null
+    }
+  ],
+  "officialDatabaseAccess": {
+    "marcia": "Landing opened, no readable lines in extractor; no candidate query performed",
+    "wipo": "Scope/help page opened, no candidate query performed"
+  },
+  "modelContributions": {
+    "localDraft": {
+      "calls": 1,
+      "observedHelperModel": "gemma4:e4b-it-q4_K_M",
+      "elapsedSecondsReported": 15.7,
+      "ideasReturned": 15,
+      "tokens": null,
+      "limitations": "Many common words despite invented-name request; coordinator rejected or screened suggestions; not authority for legal or availability decisions"
+    },
+    "coordinator": "Codex; criteria, extra names, search and synthesis",
+    "independentReviewerAssigned": "gpt-6.1-sol",
+    "astraAssignments": 0,
+    "claudeCalls": 0
+  },
+  "registrationsOrPurchases": 0,
+  "rebrandApplied": false,
+  "notes": [
+    "No website/name collision alone is a legal conclusion on registrability in Mexico.",
+    "Negative search results do not establish availability or absence of similar marks.",
+    "Domain RDAP/registrar and handles not checked.",
+    "Do not copy third-party allegations about Trazelia as facts."
+  ],
+  "documentReview": {
+    "agent": "review_completion_phases",
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-documentary",
+    "checked": [
+      "coherence of plan/backlog/state",
+      "JSON validity and query/name counts",
+      "local file links",
+      "explicit pending trademark/domain checks"
+    ],
+    "independentWebVerification": false,
+    "legalClearance": false
+  }
+}
