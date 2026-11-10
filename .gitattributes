@@ -6,3 +6,10 @@
 /.github/workflows/windows-owned-tree-smoke.yml text eol=lf
 /server/windows-memory-monitor-v2.mjs text eol=lf
 /server/windows-process-memory.mjs text eol=lf
+
+# Exact diagnostic sources for the one-bootstrap investigation.
+/scripts/windows-owned-tree-bootstrap-diagnostic.mjs text eol=lf
+/tests/windows-owned-tree-bootstrap-diagnostic.test.mjs text eol=lf
+/resources/windows-owned-tree-bootstrap-diagnostic-v1.json text eol=lf
+/docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md text eol=lf
+/.github/workflows/windows-owned-tree-bootstrap-diagnostic.yml text eol=lf

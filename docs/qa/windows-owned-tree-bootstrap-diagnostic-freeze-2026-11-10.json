@@ -1,0 +1,19 @@
+{
+  "scope": "windows-owned-tree-bootstrap-diagnostic-v1",
+  "approvedForSingleDiagnosticRun": true,
+  "attempt3FreezeCanonicalSha256": "4802d36039f87449d98f588d946e565e3216fc3e64f03a7b76d01941c65cbac3",
+  "sourceHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+    "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+    "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+    ".github/workflows/windows-owned-tree-smoke.yml": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+    "scripts/windows-owned-tree-bootstrap-diagnostic.mjs": "627a8957f7805a974a453ee4d4737a8b3bf4773e3b0cf7564ddbf03bdd9a8516",
+    "tests/windows-owned-tree-bootstrap-diagnostic.test.mjs": "f72a68a207a6a3b27dda288deb2e6c2841856f60cb35fd3cacca2660fee6290e",
+    "resources/windows-owned-tree-bootstrap-diagnostic-v1.json": "e2e15492df3e62c0b2386d8f9f34c36cca4c957b9d787b0c318a23e139e6c044",
+    "docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md": "436866c4e35d1d99a3d8c5eb4091af890bd91a8ecc14a55a3b9d98970c7cbd05",
+    ".github/workflows/windows-owned-tree-bootstrap-diagnostic.yml": "670aca724318de18349d0f2d3cd07cfe4c5a42f652459285a5be8247e497e4be"
+  }
+}
