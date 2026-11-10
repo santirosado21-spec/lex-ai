@@ -53,7 +53,27 @@
     "mac-x64",
     "windows-x64"
   ],
-  "codeDeployed": false,
+  "codeDeployed": true,
   "hybridInstallerPublished": false,
-  "physical8GBValidated": false
+  "physical8GBValidated": false,
+  "preview": {
+    "url": "https://lex-54v3dj68b-santirosado21-8807s-projects.vercel.app",
+    "state": "READY",
+    "target": "preview",
+    "commit": "d4fc1de51211278086b0127b7e95c1fc835ebeaf",
+    "mechanism": "existing Git integration on branch push",
+    "httpChecks": {
+      "index.html": 200,
+      "script.js": 200,
+      "styles.css": 200,
+      "catalogue.json": 200
+    },
+    "exactSourceMatch": [
+      "script.js",
+      "styles.css",
+      "catalogue.json"
+    ],
+    "html": "Exact source prefix plus Vercel injected feedback script; no deployed browser execution claimed",
+    "productionChanged": false
+  }
 }

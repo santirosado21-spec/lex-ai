@@ -43,13 +43,21 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | S1 | Especificar/adaptar investigación y revisión contractual MX | S-R0 revisada, licencias/dependencias resueltas por módulo | done | `fcce90d`; dos skills/contratos offline, 12 fixtures, 605/605 y build; revisor Sol APPROVE |
 | S2 | Comparación pareada de skills y modelos por tarea | S1, aceptación independiente, acceso/presupuesto de evaluación | in-progress | S2a piloto SF gratuito autorizado; S2b evaluación ampliada/rutas producto y abogados pendiente |
 | S2a | Piloto pareado: V1 cancelado y V2 de seis casos independientes | S1 congelada, Free Groq vigente y arnés revisado | done | V2 24/24; 5 contratos válidos, 1 pase conjunto con reserva, 14 truncadas; 631/631+build; revisión ciega SF cerrada, abogado pendiente |
-| S2b | Formato/budget medidos, aceptación ampliada y revisión profesional | Resultados S2a, aceptación nueva y presupuesto/rutas propias | todo | Comparar JSON nativo/anclas/presupuesto en desarrollo; nuevo examen y abogados; sin ganador producto |
+| S2b | Formato/budget medidos, aceptación ampliada y revisión profesional | Resultados S2a, aceptación nueva y presupuesto/rutas propias | in-progress | Probe parcial preservado y anclas offline; nuevo examen y abogados pendientes, sin ganador producto |
 | F0 | Contrato web/componente local, formatos y aceptación | Arquitectura y contratos actuales | done | 4ba5262; ADR0004 y guard HTTP58/58, APPROVE; no demo privada integrada |
 | H4b.2a | Contrato operativo v2 y protocolo de examen nuevo | H4a/H5a; F0 incorporado en el corte | done | 4ba5262; v2+manifiesto/splits, freeze previo a autor300; revisiónSolAPPROVE, sin calidad nueva evaluada |
 | H5b.1b.1 | Primer dominio atómico de paridad | Matriz H5b.1a; F0.1 decidido antes de implementar | done | 4ba5262; recordatorios/auditoría atómicos, 17nativas/13Node, reviewSolAPPROVE; paridad3core/9parciales/20ausentes |
-| H4b.2b | Candidato pequeño local más reglas | H4b.2a/F0, modelo/licencia/digest y límites | in-progress | Astra runtime ONNX cuantizado optativo; sin producto o heldout puntuado |
-| H4b.2c | Nuevo examen independiente y medición única | Protocolo/corpus/candidato congelados y revisión | in-progress | Autor Sol300 casos sin dev/predicciones; revisión de anotación pendiente, no scoring |
-| S2b.1 | Diagnóstico de formato nativo y presupuesto común | S2a, acceso/budget propios antes de live | in-progress | Sol probe8jobsdev, tests27; revisión/transporte/live pendientes; no nuevo ganador |
+| H4b.2b | Candidato pequeño local más reglas | H4b.2a/F0, modelo/licencia/digest y límites | in-progress | 8152424: ONNX optativo dev12 TP2/FP16/FN1, todos bloqueados; inadecuado. Guardas runner95f4f48 revisadas; sin heldout puntuado |
+| H4b.2c | Nuevo examen independiente y medición única | Protocolo/corpus/candidato congelados y revisión | in-progress | 8152424: corpus300 y anotación revisados, manifiesto válido; falta candidato elegible/freeze y única medición |
+| S2b.1 | Diagnóstico de formato nativo y presupuesto común | S2a, acceso/budget propios antes de live | in-progress | 31f31ad: 3/8POST, HTTP400 detiene sin retry; replay/revisiónAPPROVE, sin pares completos ni ganador |
+| D0 | Landing con tres opciones de descarga | Pedido10nov, catálogo de activos reales | done | d4fc1de; 4Node/browserQA5anchos y reviewAPPROVE, previewREADY; sólo ARM0.4.3real, Intel/Win pendientes |
+| D1 | Portabilidad y empaquetado por target | Canal F0, manifiestos/runtime específicos | in-progress | D1a94e48c8 RSS Windows12/12, sin Windows real. D1b staging/arquitecturas en curso, instaladores Intel/Win pendientes |
+| H5b.1b.2 | Propuestas/logs nativos atómicos | H5b.1b.1 | done | 801b62a; cierre schema4 conjunto36nativas/29Node revisados, sin efectos de aprobación |
+| H5b.1b.3 | Horas/tarifas/resolución nativas | H5b.1b.2 | done | 801b62a;36nativas/29Node+3probes revisorSolAPPROVE, 3core27parciales2ausentes; sin puente/migración |
+| S2b.1b | Compilador de citas con anclas opacas | S1 y diagnóstico S2a | done | 31f31ad; 13nuevas/31conS1 por builder/revisor, root combinado52; literalidad no entailment |
+| D1a | Memoria de árbol de procesos Windows | D1 | done | 94e48c8; 12dirigidas, revisiónSolAPPROVE y controlMac; Windows físico/coste polling sinmedir |
+| D1b | Staging y verificación explícitos por target | D1a/inventario runtimes | done | 6d00b78;11/11/reviewSolAPPROVE, inventariosSHA/stagingatómico/offline; sin buildreal/Windows habilitado |
+| D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |
 | N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
 | N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |
 | N2 | Migración de identidad y compatibilidad | Nombre elegido tras N1 | todo | Sin replace global, cambios de datos/IDs o despliegue automático |
@@ -242,3 +250,9 @@ Tres contextos Sol autor/builder/revisor, Astra0; builder44/44, revisor26/26 y g
 ## Primer lote de ejecución continua
 
 Commit4ba5262: F0/H4b.2a y H5b.1b.1 revisados. QA docs/qa/hybrid-F0-H4b2a-H5b1b1-2026-11-09.md y JSON. Primera suite708/709 por marcadorUUID aleatorio que podía parecerCLABE: denegación antes del chunk, valor histórico no guardado. Fixture determinista y regresión de marcador numérico conservan puerta real/denegación; final721/721, buildOK, revisorSolAPPROVE. HTTP58/58, contrato61/61builder/26revisorfinal, nativas17/17 y Nodebóveda13/13. Sin aislamiento de sesión/llaves/custodia o recuperación completos; base activa sin cifrado; paridadfalse3/9/20. Nuevoheldout300 autorindependiente trasfreeze, candidatopequeño y probeS2b siguen como siguiente lote, sin activar cloud privado ni producto.
+
+## Continuación 2026-11-10
+
+Los límites de dos tareas son checkpoints revisables, no una orden de detener el trabajo continuo. Commits95f4f48/31f31ad/94e48c8 preservan guardas del examen, probe parcial/anclas y RSS Windows. Root52/52 combinadas de probe/anclas/semántico y16/16 distribución; estas dirigidas no sustituyen suite global actual. Propuestas/schema4 801b62a, landing d4fc1de y staging6d00b78 cerrados en su alcance con revisión independiente; root812/812 y buildOK. Sigue ablationdev detector y fuentes C1b, no ampliar esa aceptación a producto. Padre H4/H5/H6/H7 sin aceptación; no clientes reales o cloud privado.
+
+H4b.2b.3: ablation de desarrollo en preparación (mismos pesos/umbral,5etiquetas vs3documentadas) y60casosdev nuevos de autor independiente, revisión pendiente. Sin heldout o entrenamiento. C1b.1 busca fuentes oficiales para plazas pendientes, sin aprobarlas o descargar masivamente.
