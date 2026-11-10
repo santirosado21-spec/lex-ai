@@ -36,9 +36,7 @@
     ],
     "category": "Productivity",
     "shortDescription": "Espacio jurídico privado con IA local",
-    "resources": {
-      "../.desktop/app/": "app/"
-    },
+    "resources": {},
     "macOS": {
       "minimumSystemVersion": "14.0",
       "infoPlist": "Info.plist",
