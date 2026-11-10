@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T17:40:31.327424+00:00",
+  "approvedForBoundedPublicResearchCapture": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: APPROVE after robots correction;17/17 offline",
+  "sourceHashes": {
+    "scripts/inspect-nuevo-leon-links.py": "0294d183590c126bf7d6228f588b96968b320ec03828b3076b638de4016cbad7",
+    "tests/inspect_nuevo_leon_links_test.py": "d02ce1f29a2a79419449bd2540111bc8c9cecbfcca75ac93ef801ad65425bb31",
+    "tests/nuevo-leon-link-inspector.test.mjs": "26e7e78424075850601f5597e69a9582386fa0a3ac99fc7ac66346c9fea48d0c",
+    "docs/architecture/nuevo-leon-link-inspector-v1.md": "81eefeeffc64946c9fa043f70be308c19c6001236810dfad17444fbcdf325250"
+  },
+  "limits": {
+    "maxRequests": 4,
+    "maxHtmlBytes": 2097152,
+    "maxTotalBytes": 4194304,
+    "maxRobotsBytes": 131072,
+    "minGapSeconds": 2,
+    "requestTimeoutSeconds": 15,
+    "batchTimeoutSeconds": 120,
+    "concurrency": 1,
+    "retries": 0,
+    "redirects": 0
+  },
+  "rightsApproved": false,
+  "pdfRequestsAuthorized": false,
+  "productionEnabled": false
+}

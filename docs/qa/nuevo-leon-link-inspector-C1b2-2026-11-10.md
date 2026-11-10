@@ -1,0 +1,9 @@
+# C1b.2: dos páginas oficiales capturadas, enlaces sin aprobar
+
+El primer sondeo explícito completó dos capturas HTML de los códigos Civil y Penal de Nuevo León. **3HTTP,1.583.649bytes,4.658,804ms**, separaciones2,01s; robots200text/plainAllow/ y las dos páginas200text/htmlUTF8. [Datos/recibos](nuevo-leon-link-inspector-C1b2-2026-11-10.json), [freeze](nuevo-leon-link-inspector-C1b2-freeze-2026-11-10.json), [protocolo](../architecture/nuevo-leon-link-inspector-v1.md).
+
+Los snapshots originales, hashes, timestamps y reporte quedan en artifacts/public-corpus/nl-links-revision-01, con estado cuarentena. El revisor independiente confirmó las cuatro fuentes congeladas, tres snapshots/recibos/budgets y replay exacto del parser sin otra solicitud. Builder/revisor17/17 pruebas offline después de corregir robots: restricciones porcentuales/absolutas no soportadas ahora bloquean, incluso en otros grupos, en vez de desaparecer como permiso.
+
+Cada página dio dos candidatos permitidos: proceso_legislativo.pdf es un documento genérico del menú, **no el código**; el otro es el DOCX del instrumento. No se descargó ninguno. El PDF real de cada código aparece en línea556 del HTML, pero incluye query de fecha y el inspectorv1 lo rechaza conservando el literal: Civil?2026-06-26 y Penal?2026-06-15. No se quitó la query ni se inventó una URL canónica. Un capturador posterior necesitará capacidad específica para esos dos destinos exactos, con su evidencia; no una relajación genérica del transporte del cliente.
+
+Los textos del editor declaran reformas26junio/15junio2026; no son fechas de entrada en vigor verificadas. Rights/versionBinding siguen pending, effectiveAt:null, adquisición aprobadafalse. Dos HTML de investigación no son cuatro leyes ingeridas, PDFtext extraído o cobertura nacional. El piloto congelado conserva10PDFfederales y20plazas pendientes; sin cambio de registro, allowlist de producción, índice, publicación o envío privado.

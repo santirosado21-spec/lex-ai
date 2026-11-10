@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "C1b.2",
+  "freeze": "nuevo-leon-link-inspector-C1b2-freeze-2026-11-10.json",
+  "state": "complete-quarantine",
+  "reportSha256": "05ad65a4b84f011905f6336e4b94cece7800ffb71c010e863bf542b5f503a719",
+  "sourceHashes": {
+    "scripts/inspect-nuevo-leon-links.py": "0294d183590c126bf7d6228f588b96968b320ec03828b3076b638de4016cbad7",
+    "tests/inspect_nuevo_leon_links_test.py": "d02ce1f29a2a79419449bd2540111bc8c9cecbfcca75ac93ef801ad65425bb31",
+    "tests/nuevo-leon-link-inspector.test.mjs": "26e7e78424075850601f5597e69a9582386fa0a3ac99fc7ac66346c9fea48d0c",
+    "docs/architecture/nuevo-leon-link-inspector-v1.md": "81eefeeffc64946c9fa043f70be308c19c6001236810dfad17444fbcdf325250"
+  },
+  "httpRequests": 3,
+  "consumedBodyBytes": 1583649,
+  "elapsedMs": 4658.804,
+  "pdfOrWordRequests": 0,
+  "capturedHtml": 2,
+  "newApprovedCorpusDocuments": 0,
+  "requests": [
+    {
+      "url": "https://www.hcnl.gob.mx/robots.txt",
+      "requestedAt": "2026-11-10T17:40:31.372Z",
+      "status": 200,
+      "mime": "text/plain",
+      "finalUrl": "https://www.hcnl.gob.mx/robots.txt",
+      "bodyBytes": 24,
+      "sha256": "c70abcf98d7c268caa7a66739104962b1f5304d39762201e1074cacfcaba3134",
+      "snapshotPath": "robots.txt",
+      "error": null,
+      "contentType": "text/plain",
+      "finishedAt": "2026-11-10T17:40:31.550Z",
+      "elapsedMs": 177.508
+    },
+    {
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+      "requestedAt": "2026-11-10T17:40:33.382Z",
+      "status": 200,
+      "mime": "text/html",
+      "finalUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+      "bodyBytes": 1060809,
+      "sha256": "7ad6ac47640688a911f135a690080677f6e4e2cf5927e17e2d70637e601925c9",
+      "snapshotPath": "nl-civil.html",
+      "error": null,
+      "contentType": "text/html; charset=UTF-8",
+      "finishedAt": "2026-11-10T17:40:34.478Z",
+      "elapsedMs": 1095.955
+    },
+    {
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+      "requestedAt": "2026-11-10T17:40:35.392Z",
+      "status": 200,
+      "mime": "text/html",
+      "finalUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+      "bodyBytes": 522816,
+      "sha256": "f087c1a18f6784c0fa46ca9d7fae62dda745795109b226153ca481a09b57b356",
+      "snapshotPath": "nl-penal.html",
+      "error": null,
+      "contentType": "text/html; charset=UTF-8",
+      "finishedAt": "2026-11-10T17:40:36.007Z",
+      "elapsedMs": 614.245
+    }
+  ],
+  "documents": [
+    {
+      "id": "nl-civil",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+      "snapshotSha256": "7ad6ac47640688a911f135a690080677f6e4e2cf5927e17e2d70637e601925c9",
+      "state": "captured-quarantine",
+      "rightsReview": "pending",
+      "approvedForAcquisition": false,
+      "declaredReformRawSnippet": "Última Reforma 26 de Junio 2026 Consulta cronológica × Cerrar CONSULTA CRONOLÓGICA Se informa a las personas usuarias que el Centro de Documentación y Análisis, Archivos y Compilación de Leyes d",
+      "effectiveAt": null,
+      "candidates": [
+        {
+          "url": "https://www.hcnl.gob.mx/pdf/proceso_legislativo.pdf",
+          "literal": "https://www.hcnl.gob.mx/pdf/proceso_legislativo.pdf",
+          "htmlLine": 237,
+          "format": "pdf",
+          "via": "href",
+          "approvedForAcquisition": false,
+          "versionBindingReview": "pending"
+        },
+        {
+          "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.docx",
+          "literal": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.docx",
+          "htmlLine": 576,
+          "format": "docx",
+          "via": "href",
+          "approvedForAcquisition": false,
+          "versionBindingReview": "pending"
+        }
+      ],
+      "versionBindingReview": "pending",
+      "rejectedLawPdfLiterals": [
+        {
+          "literal": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.pdf?2026-06-26",
+          "via": "href",
+          "reason": "controls, query, fragment or backslash unsupported"
+        }
+      ]
+    },
+    {
+      "id": "nl-penal",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+      "snapshotSha256": "f087c1a18f6784c0fa46ca9d7fae62dda745795109b226153ca481a09b57b356",
+      "state": "captured-quarantine",
+      "rightsReview": "pending",
+      "approvedForAcquisition": false,
+      "declaredReformRawSnippet": "Última Reforma 15 de Junio 2026 Consulta cronológica × Cerrar CONSULTA CRONOLÓGICA Se informa a las personas usuarias que el Centro de Documentación y Análisis, Archivos y Compilación de Leyes d",
+      "effectiveAt": null,
+      "candidates": [
+        {
+          "url": "https://www.hcnl.gob.mx/pdf/proceso_legislativo.pdf",
+          "literal": "https://www.hcnl.gob.mx/pdf/proceso_legislativo.pdf",
+          "htmlLine": 237,
+          "format": "pdf",
+          "via": "href",
+          "approvedForAcquisition": false,
+          "versionBindingReview": "pending"
+        },
+        {
+          "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.docx",
+          "literal": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.docx",
+          "htmlLine": 576,
+          "format": "docx",
+          "via": "href",
+          "approvedForAcquisition": false,
+          "versionBindingReview": "pending"
+        }
+      ],
+      "versionBindingReview": "pending",
+      "rejectedLawPdfLiterals": [
+        {
+          "literal": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.pdf?2026-06-15",
+          "via": "href",
+          "reason": "controls, query, fragment or backslash unsupported"
+        }
+      ]
+    }
+  ],
+  "builderOfflineTests": 17,
+  "independentOfflineTests": 17,
+  "independentEvidenceReview": "APPROVE; source/raw snapshot hashes, robots, receipts and parser replay exact; no additional network",
+  "originalRegistryModified": false,
+  "productionAllowlistModified": false,
+  "published": false,
+  "indexed": false,
+  "currentLawValidated": false,
+  "commercialRightsApproved": false
+}
