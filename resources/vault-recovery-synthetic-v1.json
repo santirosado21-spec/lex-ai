@@ -1,0 +1,905 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "vault-recovery-synthetic-v1",
+  "phase": "F1B/H5b.2",
+  "status": "design-only-not-executed",
+  "dataClass": "synthetic",
+  "productionEnabled": false,
+  "activeStoreChanged": false,
+  "h5Complete": false,
+  "implementationAuthorizedByThisArtifact": false,
+  "scope": "Closed exclusive native synthetic SQLCipher snapshot, age-encrypted recovery and read-only clean-process restore into newly owned temporary root; no product activation",
+  "research": {
+    "observedDate": "2026-11-10",
+    "primarySources": [
+      {
+        "id": "release",
+        "url": "https://github.com/str4d/rage/releases/tag/v0.12.1",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "tag-change",
+        "url": "https://github.com/str4d/rage/commit/7a854c9",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "workspace-manifest",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/Cargo.toml",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "age-manifest",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/age/Cargo.toml",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "core-manifest",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/age-core/Cargo.toml",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "library",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/age/src/lib.rs",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "encryptor-api",
+        "url": "https://docs.rs/age/0.12.1/age/struct.Encryptor.html",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "decryptor-api",
+        "url": "https://docs.rs/age/0.12.1/age/struct.Decryptor.html",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "scrypt-api-source",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/age/src/native/scrypt.rs",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "license-mit",
+        "url": "https://raw.githubusercontent.com/str4d/rage/v0.12.1/LICENSE-MIT",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "format",
+        "url": "https://age-encryption.org/v1",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "sqlite-backup",
+        "url": "https://www.sqlite.org/backup.html",
+        "rawSnapshotSaved": false
+      },
+      {
+        "id": "sqlcipher-api",
+        "url": "https://www.zetetic.net/sqlcipher/sqlcipher-api/",
+        "rawSnapshotSaved": false
+      }
+    ],
+    "webQueriesAndOpens": 25,
+    "sendsPrivateData": false,
+    "newModelCalls": 0,
+    "candidate": {
+      "crate": "age",
+      "version": "0.12.1",
+      "defaultFeatures": false,
+      "optional": true,
+      "feature": "synthetic-recovery",
+      "upstreamTag": "v0.12.1",
+      "observedShortCommit": "7a854c9",
+      "fullCommitSha": null,
+      "registryChecksum": null,
+      "latestAtObservation": "GitHub release page labels v0.12.1 Latest; not future guarantee",
+      "releaseDate": "2026-07-14",
+      "license": "MIT OR Apache-2.0",
+      "declaredMsrv": "1.74",
+      "upstreamQualification": "pre-1.0 beta/testing only",
+      "selectedFor": "conditional synthetic test implementation only"
+    },
+    "declaredDependencyRanges": {
+      "age-core": "0.12.0",
+      "scrypt": "0.11",
+      "secrecy": "0.10",
+      "chacha20poly1305": "0.10",
+      "x25519-dalek": "2",
+      "hkdf": "0.12",
+      "hmac": "0.12",
+      "sha2": "0.10",
+      "sha3": "0.10",
+      "hpke": "0.12",
+      "p256": "0.13",
+      "ml-kem": "0.2",
+      "zeroize": "1"
+    },
+    "transitiveGraphExact": false,
+    "transitiveLicensesReviewed": false,
+    "offlineCache": {
+      "checkedBy": "local registry source/cache filenames and existing lockfile only; no Cargo invocation",
+      "absent": [
+        "age",
+        "age-core",
+        "secrecy",
+        "scrypt",
+        "chacha20poly1305",
+        "x25519-dalek",
+        "hkdf",
+        "hmac",
+        "aead"
+      ],
+      "present": {
+        "zeroize": "1.8.2",
+        "sha2": "0.10.9"
+      },
+      "ageOfflineBuild": "blocked-missing-dependencies"
+    },
+    "unavailableEvidence": [
+      "full upstream commit SHA",
+      "crate registry checksum",
+      "exact resolved dependency graph/licenses",
+      "some docs.rs and crates.io API pages inaccessible via web tool"
+    ]
+  },
+  "baselinePins": [
+    {
+      "path": "docs/architecture/adr/0003-private-vault.md",
+      "bytes": 13252,
+      "sha256": "ba57f23881e56b85c05a3107249b2d89075b276bb278e0cbfd60120b33a6755c"
+    },
+    {
+      "path": "docs/architecture/private-data-inventory.md",
+      "bytes": 20457,
+      "sha256": "263fdad737d37e5c652416016fa745c1e22c1491de5f98d5761aedaf78d0a858"
+    },
+    {
+      "path": "docs/qa/vault-test-protocol.md",
+      "bytes": 15240,
+      "sha256": "775cb72dab38645b8bae39f64931b0f0d19ec6c58b81d8b2f387f8241b50e1aa"
+    },
+    {
+      "path": "crates/lex-vault/README.md",
+      "bytes": 34091,
+      "sha256": "e8a68cef404645578a36885378154317fb7d3d6dad5c17dda60ac8d3e7b0d162"
+    },
+    {
+      "path": "crates/lex-vault/Cargo.toml",
+      "bytes": 516,
+      "sha256": "a4bd0dfda8b4fd67127aec4d43e98be0cb2d108743e6cb37cedd0b2b8d415a91"
+    },
+    {
+      "path": "crates/lex-vault/Cargo.lock",
+      "bytes": 13087,
+      "sha256": "6694ffbdbaf0e3d6831157f44eadf3cfe81511d525842691afea07d22aedcff5"
+    },
+    {
+      "path": "crates/lex-vault/src/lib.rs",
+      "bytes": 21586,
+      "sha256": "4052a155465504f840d4bdf87c833eb44b94751a878daf347f87d410c194577b"
+    },
+    {
+      "path": "crates/lex-vault/src/reminders.rs",
+      "bytes": 11145,
+      "sha256": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b"
+    },
+    {
+      "path": "crates/lex-vault/src/proposals.rs",
+      "bytes": 16452,
+      "sha256": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301"
+    },
+    {
+      "path": "crates/lex-vault/src/time_billing.rs",
+      "bytes": 28254,
+      "sha256": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82"
+    }
+  ],
+  "dependencyPreparation": {
+    "status": "not-run",
+    "actor": "coordinator after independent plan review",
+    "userPermissionOrProviderPurchaseRequiredByThisDesign": false,
+    "newFetchPerformed": false,
+    "futureBounds": {
+      "maxNewPackages": 100,
+      "maxCompressedBytes": 67108864,
+      "maxWallMs": 180000,
+      "retries": 0
+    },
+    "mustRecord": [
+      "registry archive checksum",
+      "exact lockfile SHA and all new package checksums",
+      "licenses/notices and feature graph",
+      "MSRV and target compatibility",
+      "crate source review for EOF/header/KDF bounds"
+    ],
+    "mustThenUse": "cargo --locked --offline; fail if cache incomplete; never custom crypto fallback",
+    "packet": {
+      "id": "vault-age-0.12.1-acquisition-proposal-v1",
+      "status": "not-authorized-or-executed-by-this-design",
+      "primaryPackage": {
+        "name": "age",
+        "version": "0.12.1",
+        "metadataUrl": "https://index.crates.io/3/a/age",
+        "alternativeMetadataUrl": "https://crates.io/api/v1/crates/age/0.12.1",
+        "archiveUrl": "https://static.crates.io/crates/age/age-0.12.1.crate",
+        "repositoryTagUrl": "https://github.com/str4d/rage/tree/v0.12.1",
+        "checksumSha256": null,
+        "checksumStatus": "unverified; MUST obtain exact0.12.1 cksum from official registry metadata BEFORE archive acceptance",
+        "maxArchiveBytes": 2097152,
+        "maxMetadataResponseBytes": 1048576
+      },
+      "approvedDestinationsIfCoordinatorAuthorizes": [
+        "https://index.crates.io",
+        "https://static.crates.io",
+        "https://crates.io",
+        "https://github.com/str4d/rage",
+        "https://raw.githubusercontent.com/str4d/rage"
+      ],
+      "transportPolicy": "HTTPS public package metadata/archives only; reject cross-host redirects/credentialed URLs; no private files/keys/payloads; no secrets in tool packet",
+      "resolution": "exact top-level age=0.12.1 optional default-features=false; produce candidate lock/feature graph in isolated build copy first; do not silently replace existing lock or choose a crypto fallback",
+      "maxNewPackages": 100,
+      "maxHttpAttempts": 240,
+      "maxMetadataBytesCombined": 8388608,
+      "maxArchiveBytesCombined": 67108864,
+      "maxWallMs": 180000,
+      "maxRequestMs": 15000,
+      "retries": 0,
+      "requiredInventoryPerPackage": [
+        "name",
+        "exact version",
+        "source registry/repository URL",
+        "registry archive checksum and locally measured archive SHA-256",
+        "archive bytes",
+        "license expression AND license/notice files with hashes",
+        "enabled features and dependency edges",
+        "declared Rust minimum",
+        "build script/proc macro/native dependency behavior"
+      ],
+      "currentlyVerified": [
+        "primary repo/tag/version/API manifests",
+        "root MIT OR Apache-2.0 license declaration and MIT notice",
+        "declared upstream Rust1.74",
+        "age default feature set empty",
+        "major declared crypto dependency ranges",
+        "absence from local Cargo source/archive caches and current lock"
+      ],
+      "currentlyUnverified": [
+        "age archive registry checksum/size/byte hash",
+        "full upstream commit SHA",
+        "exact transitive package versions/count/archive sizes/checksums",
+        "transitive SPDX/license files/notices",
+        "complete feature/build/proc-macro and platform compatibility",
+        "resolved native build and offline result"
+      ],
+      "releaseToBuilderConditions": [
+        "all expected checksum fields populated and matched; null is not approval",
+        "graph/licenses/features reviewed independently",
+        "local cache/lock/source receipts frozen",
+        "bounded acquisition succeeded or stopped with explicit pending denominator; no retry fallback",
+        "only then Astra implementation and --locked --offline tests"
+      ]
+    },
+    "budgetSupersededBy": "resources/vault-recovery-dependency-preparation-v2.json for root-reviewed D0 archive preparation only; recovery18/EOF gates unchanged"
+  },
+  "sourceClosure": {
+    "mode": "closed-exclusive-only",
+    "consume": [
+      "SyntheticVault",
+      "matching Vault",
+      "KeyMaterial",
+      "SyntheticRecoveryExpectation"
+    ],
+    "checks": [
+      "Arc::ptr_eq and strong_count==2 BEFORE closing; missing key blocks untouched",
+      "close via Connection::close; restore returned Connection on close failure",
+      "drop passed Vault only after successful close; strong_count(root)==1",
+      "sealed source has no reopen/write API",
+      "regular singly-linked vault.sqlite only; no symlink/journal/wal/shm/temp/unknown file",
+      "read-only keyed SQLCipher integrity/schema/scopes/revisions then close",
+      "bounded copy and pre/post inode/length/hash check"
+    ],
+    "sourceMutationPermitted": false,
+    "onlineBackupUsed": false,
+    "alternative": "separate reviewed maintained SQLite backup into new pre-keyed SQLCipher target; never unkeyed route helper",
+    "failureOwnership": {
+      "type": "Result<ClosedSyntheticSource, SealFailure>",
+      "retained": [
+        "original SyntheticVault owner",
+        "Option<Vault> (Some before close, None after successful close)",
+        "Option<KeyMaterial>",
+        "independent expectation"
+      ],
+      "noImplicitErrorConversion": true,
+      "debugOrSerializeSecrets": false,
+      "exportBorrowsSealedSource": true,
+      "callerDroppingFailureStillUsesNormalRaii": true,
+      "reason": "Never drop the sole original TempDir on an internal error; return capabilities to caller explicitly."
+    }
+  },
+  "envelope": {
+    "format": "standard binary age-encryption.org/v1",
+    "profile": "single scrypt passphrase recipient only",
+    "libraryApis": [
+      "age::scrypt::Recipient::new",
+      "Recipient::set_work_factor(18)",
+      "age::Encryptor::with_recipients",
+      "Encryptor::wrap_output",
+      "StreamWriter::finish",
+      "age::Decryptor::new_buffered",
+      "Decryptor::is_scrypt",
+      "age::scrypt::Identity::new",
+      "Identity::set_max_work_factor(18)",
+      "Decryptor::decrypt"
+    ],
+    "plaintextFraming": {
+      "magic": "LEXREC1\n",
+      "manifestLength": "checked u32 big-endian",
+      "manifest": "canonical UTF-8 JSON exact-key schema",
+      "key": "exactly 32 raw bytes through private guarded native IO; never serde/Debug",
+      "store": "exactly manifest.store.bytes SQLCipher ciphertext",
+      "end": "authenticated reader EOF and application EOF; no trailing members; full ciphertext consumption must be source-verified/tested"
+    },
+    "compression": false,
+    "externalMetadataTrusted": false,
+    "privateManifestOutsideEncryption": false,
+    "fullStreamAuthenticationBeforeExposure": true,
+    "keyBinding": "SHA-256(raw key) only inside encrypted manifest + store hash + real keyed integrity; hash is consistency, age provides authentication",
+    "mandatoryFirstBatchEofChecks": [
+      "R23a authenticated internal payload append",
+      "R23b external age ciphertext append"
+    ],
+    "roundtripAcceptanceBlockedUntilBothEofChecksPass": true
+  },
+  "manifest": {
+    "version": "lex-vault-recovery-manifest-v1",
+    "schemaVersion": 4,
+    "fields": [
+      "formatVersion",
+      "manifestVersion",
+      "payloadEncoding",
+      "serializationVersion",
+      "cryptoProfile",
+      "ageVersion",
+      "sourceAndLockPins",
+      "snapshotId",
+      "sourceVaultId",
+      "sourceLineageId",
+      "keyVersion",
+      "createdAt",
+      "schemaVersion",
+      "schemaDigest",
+      "cipherVersion",
+      "sqliteVersion",
+      "provider",
+      "store.bytes",
+      "store.sha256",
+      "keyBytesSha256",
+      "workspaceId",
+      "scopeRevisionVector",
+      "scopeRevisionDigest",
+      "objects",
+      "domainCounts",
+      "ftsCounts",
+      "extractionVersions",
+      "policyVersions",
+      "synthetic",
+      "productionEnabled",
+      "noExecution"
+    ],
+    "objectsRequired": [
+      "exact original PDF bytes/hash and exact document payload",
+      "synthetic typed Kind::Note map bytes/hash, namespace/version and parent document/text hash"
+    ],
+    "nativeH3MapIntegrationImplemented": false,
+    "unknownDuplicateMissingFields": "reject",
+    "normalization": "none implicit",
+    "mappingFixtureQualification": "mapping-shaped synthetic Kind::Note is opaque inert data; no H3 map DAO/service persistence/restoration/integration or completed typed native map domain"
+  },
+  "secretHandling": {
+    "keyMaterialDebugSerializeClone": false,
+    "secretViaArgvEnvLogsPlainBackup": false,
+    "entry": "synthetic ephemeral OS-random secret simulating human entry; private inherited pipe/stdin only",
+    "productionPassphraseUxOrKeychain": false,
+    "decryptedBuffers": "bounded Zeroizing memory only; no plaintext spill",
+    "memoryErasureGuarantee": "own allocations only; no OS/compiler/library-wide promise",
+    "missingBothCredentials": "unrecoverable; no backdoor/reset"
+  },
+  "limits": {
+    "maxDatabaseBytes": 16777216,
+    "maxCiphertextBytes": 18874368,
+    "maxManifestBytes": 262144,
+    "maxPlaintextBytes": 17825792,
+    "maxHeaderBytes": 16384,
+    "maxObjects": 128,
+    "maxJsonDepth": 12,
+    "maxOriginalPdfs": 4,
+    "maxOriginalPdfBytes": 1048576,
+    "maxMaps": 4,
+    "maxMapBytes": 65536,
+    "maxWorkspaces": 1,
+    "maxMatters": 2,
+    "maxThreadsPerMatter": 2,
+    "maxScopeRevisions": 8,
+    "ioChunkBytes": 65536,
+    "encryptScryptLogN": 18,
+    "decryptMaxScryptLogN": 18,
+    "concurrency": 1,
+    "retries": 0,
+    "maxCaseMs": 60000,
+    "maxBatchMs": 300000,
+    "rssCancellationThresholdBytes": 805306368,
+    "rssSamplingMaxMs": 50,
+    "hardPeakRssGuarantee": false,
+    "maxOwnedDiskBytesPerCase": 134217728,
+    "maxCaseInvocations": 48,
+    "maxReceiptBytes": 1048576
+  },
+  "restore": {
+    "root": "NEW random TempDir owned only by fixture, 0700; no caller path/store root",
+    "originalDekProvidedOutOfBand": false,
+    "stages": [
+      "size/header/KDF preflight",
+      "bounded decrypt to zeroizing RAM through authenticated EOF",
+      "strict manifest/expected/scope/version/key/store binding checks",
+      "write only SQLCipher ciphertext into new 0600 exclusive staging",
+      "read-only keyed integrity and original/map/payload/search/revision verification",
+      "return new read-only capability only after all validation"
+    ],
+    "newRestoreEpoch": true,
+    "epochPersistence": "live capability + private fixture receipt only; durable authenticated restart lineage deferred",
+    "sqlSchemaChange": false,
+    "targetSchema": 4,
+    "postRestoreWritesAllowed": false,
+    "rotationMigrationProductionActivation": false,
+    "sourceAndOldBackupPreserved": true,
+    "capabilityStatus": "new proposed synthetic API only; existing prototype has no restore epoch or permit system"
+  },
+  "failpoints": [
+    "pre-seal",
+    "other-handle",
+    "post-close",
+    "copy-ciphertext",
+    "pre-age-finish",
+    "post-finish-pre-fsync",
+    "pre-bundle-publication",
+    "decrypt",
+    "pre-staging-write",
+    "post-staging-write",
+    "validate-database",
+    "pre-capability-publication"
+  ],
+  "errorCategories": [
+    "invalid-input",
+    "missing-credential",
+    "cannot-decrypt",
+    "unsupported-format",
+    "scope-mismatch",
+    "revision-conflict",
+    "source-not-quiescent",
+    "source-integrity",
+    "resource-limit",
+    "cancelled",
+    "storage-failure",
+    "unsupported-backend"
+  ],
+  "caseMatrix": [
+    {
+      "id": "R01",
+      "h5Cases": [
+        "V01",
+        "V13"
+      ],
+      "description": "real clean-process recovery; original DEK dropped; exact ciphertext/PDF/map/payload/schema/revision/read/search equality",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R02",
+      "h5Cases": [
+        "V03"
+      ],
+      "description": "missing recovery passphrase; no fallback/empty vault/publication",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R03",
+      "h5Cases": [
+        "V03",
+        "V13"
+      ],
+      "description": "wrong passphrase and lost both credentials; no decoded payload exposure",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R04",
+      "h5Cases": [
+        "V03"
+      ],
+      "description": "wrong/missing source KeyMaterial; preserve source bytes",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R05",
+      "h5Cases": [
+        "V06",
+        "V20"
+      ],
+      "description": "another live or retained closed Vault handle via reopen; Arc exclusive seal fails",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R06",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "truncated age header/middle/final chunk and missing finish",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R07",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "ciphertext bit flip in header/body; authentication before data publication",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R08",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "authenticated fixture bundle with wrong store hash/key hash or wrong raw internal DEK",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R09",
+      "h5Cases": [
+        "V09",
+        "V10"
+      ],
+      "description": "valid age bundle from foreign workspace/vault/snapshot/scope vector",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R10",
+      "h5Cases": [
+        "V10"
+      ],
+      "description": "future payload/schema/serialization or unknown/duplicate fields/objects",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R11",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "missing/extra object, orphan map, wrong parent hash/version/namespace; no reconstruction",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R12",
+      "h5Cases": [
+        "V11",
+        "V12"
+      ],
+      "description": "stale expected source revision/ABA; no old snapshot overwrite or merge",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R13",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "symlink/hardlink/nonregular/traversal/output exists; only capability-owned new roots",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R14",
+      "h5Cases": [
+        "V06",
+        "V20"
+      ],
+      "description": "journal/WAL/SHM/residual temp/unknown source artifact; no automatic cleanup or replay",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R15",
+      "h5Cases": [
+        "V06",
+        "V08"
+      ],
+      "description": "failpoints at each declared persistence/publication boundary, short write/ENOSPC/flush failure",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R16",
+      "h5Cases": [
+        "V16"
+      ],
+      "description": "cancel/deadline before and during KDF/decrypt/copy/staging; child reaped and source intact",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R17",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "oversized ciphertext/plaintext/header/manifest/depth/objects/length arithmetic and scrypt>18",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R18",
+      "h5Cases": [
+        "V04",
+        "V19"
+      ],
+      "description": "scanner positive clear control; no DEK/passphrase/private manifest or canary in permitted persisted/log/argv/env surfaces",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R19",
+      "h5Cases": [
+        "V13"
+      ],
+      "description": "clean child HOME/TMPDIR no Keychain or hidden original key; success solely package+passphrase+expected policy",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R20",
+      "h5Cases": [
+        "V06"
+      ],
+      "description": "SIGKILL child at copy/finish/decrypt/staging; restart inspection only encrypted incomplete residue; no promotion",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R21",
+      "h5Cases": [
+        "V21"
+      ],
+      "description": "restored approved/submitting/proposals/jobs/timers are inert; no sends/actions/elapsed-time billing",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R22",
+      "h5Cases": [
+        "V01",
+        "V13"
+      ],
+      "description": "close/reopen read-only restored connection within live capability; exact Unicode/binary and scope isolation",
+      "expected": "pass",
+      "status": "not-run"
+    },
+    {
+      "id": "R23",
+      "h5Cases": [
+        "V09"
+      ],
+      "description": "append garbage inside payload or ciphertext; require full consumption policy verified with maintained reader",
+      "expected": "reject",
+      "status": "not-run"
+    },
+    {
+      "id": "R24",
+      "h5Cases": [
+        "V14",
+        "V15"
+      ],
+      "description": "restored capability denies writes/rekey/active replacement; fresh epoch differs from source, original remains usable",
+      "expected": "pass",
+      "status": "not-run"
+    }
+  ],
+  "futureCodeOwnership": {
+    "new": [
+      "crates/lex-vault/src/recovery.rs",
+      "crates/lex-vault/tests/recovery.rs",
+      "crates/lex-vault/tests/support/recovery_fixture.rs",
+      "crates/lex-vault/tests/recovery_process.rs"
+    ],
+    "minimalEdits": [
+      "crates/lex-vault/src/lib.rs",
+      "crates/lex-vault/Cargo.toml",
+      "crates/lex-vault/Cargo.lock",
+      "crates/lex-vault/README.md"
+    ],
+    "sqlSchemaEdits": [],
+    "forbidden": [
+      "native production bridge",
+      "user data directory",
+      "OS Keychain implementation",
+      "server/client route activation",
+      "legacy migration",
+      "dependency installation/fetch during this design task"
+    ],
+    "criticalBuilder": "Astra after independent design/dependency review",
+    "reviewer": "independent of builder before synthetic run"
+  },
+  "futureCommandsNotExecuted": [
+    "cargo test --locked --offline --manifest-path crates/lex-vault/Cargo.toml -- --test-threads=1",
+    "cargo test --locked --offline --manifest-path crates/lex-vault/Cargo.toml --features synthetic-recovery --test recovery -- --test-threads=1",
+    "cargo test --locked --offline --manifest-path crates/lex-vault/Cargo.toml --features synthetic-recovery --test recovery_process -- --test-threads=1"
+  ],
+  "remainingOpen": [
+    "production custody/Keychain/service bridge",
+    "app-wide lock/revocation/temp/process lifecycle",
+    "durable new lineage/CAS and post-restore writes",
+    "rotation, action/timer reconciliation and migration",
+    "full native H3 map integration/H3V",
+    "power-loss/VM",
+    "product parity and release portability",
+    "physical 8GB acceptance",
+    "H5/H6"
+  ],
+  "firstImplementationBatch": {
+    "status": "proposed-not-run",
+    "ids": [
+      "R01",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R09",
+      "R13",
+      "R17",
+      "R18",
+      "R23"
+    ],
+    "maxCaseInvocations": 18,
+    "mustCover": [
+      "closed coherent byte-exact recovery into clean child",
+      "wrong/lost passphrase and wrong source key",
+      "foreign live/retained closed handle blocks sealing",
+      "corrupt/truncated packet never exposes prefix",
+      "foreign scope/vault expectation rejected",
+      "new root only and no overwrite",
+      "size/header/decrypt/work-factor18 bounds",
+      "secret scanner positive control and negative persisted/log/argv/env checks",
+      "R23a internal authenticated plaintext append rejection before roundtrip acceptance",
+      "R23b external ciphertext append rejection/full consumption before roundtrip acceptance"
+    ],
+    "remainingMatrix": "R02/R08/R10-R12/R14-R16/R19-R24 except R23 stay not-run unless separately included by coordinator; unselected variants of partially sampled rows R06/R07/R09/R13/R17 also remain not-run. Both R23 checks are mandatory in first batch.",
+    "exactAllocatedInvocations": 18,
+    "allocation": [
+      {
+        "id": "R01",
+        "invocations": 1,
+        "selectedVariants": [
+          "one closed bundle and clean-child read-only roundtrip; provisional result only until R23a and R23b pass"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R03",
+        "invocations": 2,
+        "selectedVariants": [
+          "wrong passphrase",
+          "missing/lost passphrase with no credential fallback"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R04",
+        "invocations": 2,
+        "selectedVariants": [
+          "missing source KeyMaterial",
+          "wrong source KeyMaterial"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R05",
+        "invocations": 2,
+        "selectedVariants": [
+          "other live reopened Vault handle blocks seal",
+          "retained closed Vault handle blocks seal"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R06",
+        "invocations": 1,
+        "selectedVariants": [
+          "truncated final authenticated chunk/missing finish"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R07",
+        "invocations": 1,
+        "selectedVariants": [
+          "one body ciphertext bit flip"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R09",
+        "invocations": 1,
+        "selectedVariants": [
+          "valid bundle rejected against foreign workspace scope expectation"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R13",
+        "invocations": 1,
+        "selectedVariants": [
+          "existing vault.sqlite collision inside newly owned synthetic restore root; no overwrite"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R17",
+        "invocations": 4,
+        "selectedVariants": [
+          "ciphertext size over bound before age",
+          "header over16KiB before costly KDF",
+          "decoded plaintext over17MiB through bounded reader",
+          "scrypt logN19 rejected by maximum18 before running that KDF"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R18",
+        "invocations": 1,
+        "selectedVariants": [
+          "positive plaintext scanner control plus permitted artifacts/log/argv/env negative scan, no public secret output"
+        ],
+        "status": "not-run"
+      },
+      {
+        "id": "R23",
+        "invocations": 2,
+        "selectedVariants": [
+          "R23a: authenticated age plaintext contains one extra byte after exact declared inner payload; reject before exposing data/capability",
+          "R23b: one extra byte appended after complete age ciphertext; prove strict full-input consumption/rejection with maintained reader before exposing data/capability"
+        ],
+        "status": "not-run"
+      }
+    ],
+    "invocationDefinition": "One externally supervised recovery/seal attempt with one declared negative mutation or one happy restore; scanners/assertions within that attempt do not create hidden extra recovery attempts. Reusing fixture/package bytes does not reuse a failed destination.",
+    "fixtureReuse": "Generate/seal/encrypt one baseline synthetic source once; reuse its immutable ciphertext and independent expected fixture for restore negatives and R23 mutations into fresh owned destinations. R04/R05 source-seal attempts require separately owned small source fixtures. Never reuse a target or overwrite the baseline bundle.",
+    "acceptanceOrder": {
+      "happyRoundtrip": "R01 can be measured first, but acceptance is provisional",
+      "requiredBeforeRoundtripAcceptance": [
+        "R23a",
+        "R23b"
+      ],
+      "allRequiredBeforeBatchAcceptance": [
+        "R01",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R09",
+        "R13",
+        "R17",
+        "R18",
+        "R23"
+      ],
+      "ifAnyMissingUnsupportedOverBudget": "EOF-policy/batch acceptance blocked; preserve not-run or blocked statuses; no successful roundtrip acceptance or H5 completion",
+      "noAutomaticBudgetIncrease": true
+    }
+  }
+}
