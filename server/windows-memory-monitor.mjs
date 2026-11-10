@@ -1,7 +1,10 @@
 import {spawn} from 'node:child_process';
 import {performance} from 'node:perf_hooks';
 import {windowsPowerShellPath,parseWindowsProcessTreeRss} from './windows-process-memory.mjs';
-export const WINDOWS_MONITOR_COMMAND="$ErrorActionPreference='Stop'; [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false); [Console]::InputEncoding=New-Object System.Text.UTF8Encoding($false); try { while ($null -ne ($line=[Console]::ReadLine())) { $request=$line | ConvertFrom-Json; $keys=@($request.PSObject.Properties.Name | Sort-Object); if (($keys -join ',') -ne 'id,pid' -or $request.id -is [bool] -or $request.pid -is [bool] -or $request.id -isnot [ValueType] -or $request.pid -isnot [ValueType] -or $request.id -lt 1 -or $request.id -gt 9007199254740991 -or $request.id -ne [Math]::Floor($request.id) -or $request.pid -lt 1 -or $request.pid -gt 4294967295 -or $request.pid -ne [Math]::Floor($request.pid)) { exit 21 }; $rows=@(Get-CimInstance -ClassName Win32_Process -Property ProcessId,ParentProcessId,WorkingSetSize -ErrorAction Stop | Select-Object -Property ProcessId,ParentProcessId,WorkingSetSize); [Console]::WriteLine((@{id=$request.id;rows=$rows} | ConvertTo-Json -Depth 4 -Compress)) } } catch { exit 22 }";
+// Wire data consists only of fixed ASCII keys and numeric values. Do not
+// mutate console encodings: the common encoding-initialization interval
+// stalled in the bounded Windows diagnosis; its precise cause is unconfirmed.
+export const WINDOWS_MONITOR_COMMAND="$ErrorActionPreference='Stop'; try { while ($null -ne ($line=[Console]::ReadLine())) { $request=$line | ConvertFrom-Json; $keys=@($request.PSObject.Properties.Name | Sort-Object); if (($keys -join ',') -ne 'id,pid' -or $request.id -is [bool] -or $request.pid -is [bool] -or $request.id -isnot [ValueType] -or $request.pid -isnot [ValueType] -or $request.id -lt 1 -or $request.id -gt 9007199254740991 -or $request.id -ne [Math]::Floor($request.id) -or $request.pid -lt 1 -or $request.pid -gt 4294967295 -or $request.pid -ne [Math]::Floor($request.pid)) { exit 21 }; $rows=@(Get-CimInstance -ClassName Win32_Process -Property ProcessId,ParentProcessId,WorkingSetSize -ErrorAction Stop | Select-Object -Property ProcessId,ParentProcessId,WorkingSetSize); [Console]::WriteLine((@{id=$request.id;rows=$rows} | ConvertTo-Json -Depth 4 -Compress)) } } catch { exit 22 }";
 const MAX_OUTPUT=4*1024*1024;
 const SIGNALS=new Set(['SIGTERM','SIGKILL','SIGINT','SIGBREAK','SIGHUP']);
 export function createWindowsMemoryMonitor({rootPid,platform=process.platform,systemRoot=process.env.SystemRoot,spawnProcess=spawn,now=()=>performance.now(),schedule=setTimeout,cancel=clearTimeout}={}){
@@ -21,6 +24,7 @@ export function createWindowsMemoryMonitor({rootPid,platform=process.platform,sy
   if(!pending){failure('UNEXPECTED_OUTPUT');return;}
   buffer=Buffer.concat([buffer,chunk]);
   if(buffer.length>MAX_OUTPUT){failure('OUTPUT_LIMIT');return;}
+  if(chunk.some(byte=>byte>0x7f)){failure('MALFORMED_RESPONSE');return;}
   const end=buffer.indexOf(10);if(end<0)return;
   if(buffer.subarray(end+1).length){failure('MALFORMED_RESPONSE');return;}
   try{

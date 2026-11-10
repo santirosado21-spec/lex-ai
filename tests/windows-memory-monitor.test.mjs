@@ -38,3 +38,18 @@ test('closing an active request rejects it and confirms owned collector exit',as
 test('a late response cannot pass merely because timer callback was delayed',async()=>{
  for(const phase of ['startup','request']){const h=harness(),startup=h.monitor.start();if(phase==='request'){h.reply();await startup;}const pending=phase==='startup'?startup:h.monitor.readRss(),rejected=assert.rejects(pending,e=>e.category===(phase==='startup'?'STARTUP_TIMEOUT':'REQUEST_TIMEOUT'));h.advance(phase==='startup'?10000:2000);h.reply();await rejected;assert.equal(h.monitor.diagnostics().killed,true);await h.monitor.close();}
 });
+test('ASCII-only numeric protocol requires no console encoding mutation or New-Object',async()=>{
+ assert.doesNotMatch(WINDOWS_MONITOR_COMMAND,/OutputEncoding|InputEncoding|UTF8Encoding|New-Object/);
+ assert.match(WINDOWS_MONITOR_COMMAND,/Get-CimInstance -ClassName Win32_Process -Property ProcessId,ParentProcessId,WorkingSetSize/);
+ assert.ok([...WINDOWS_MONITOR_COMMAND].every(char=>char.charCodeAt(0)<=0x7f));
+ const h=harness(),startup=h.monitor.start();
+ assert.match(JSON.stringify(h.requests[0]),/^[\x00-\x7f]+$/);assert.deepEqual(h.requests[0],{id:1,pid:42});h.reply();assert.equal((await startup).rssBytes,100);await h.monitor.close();
+});
+test('literal non-ASCII bytes and escaped non-ASCII fields or string numeric data fail closed',async()=>{
+ const samples=[
+  '{"id":1,"rows":[{"ProcessId":42,"ParentProcessId":1,"WorkingSetSize":100}],"é":1}\n',
+  '{"id":1,"rows":[{"ProcessId":42,"ParentProcessId":1,"WorkingSetSize":100}],"\\u00e9":1}\n',
+  '{"id":1,"rows":[{"ProcessId":42,"ParentProcessId":1,"WorkingSetSize":"\\u0031"}]}\n'
+ ];
+ for(const sample of samples){const h=harness(),startup=h.monitor.start(),rejected=assert.rejects(startup,e=>e.category==='MALFORMED_RESPONSE');h.child.stdout.emit('data',Buffer.from(sample));await rejected;assert.equal(h.monitor.diagnostics().killed,true);await h.monitor.close();}
+});

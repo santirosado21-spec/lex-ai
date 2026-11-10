@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1f",
+  "status": "reviewed-before-minimal-hypothesis-ci",
+  "sourceHashes": {
+    "server/windows-memory-monitor.mjs": "6bd9929109ff01334a86d760312fed302dc30ad052fcf7c52739560b8046a159",
+    "tests/windows-memory-monitor.test.mjs": "9b1d608dbf94534cc4a6408167d0f0ecf404505662c795e40a1b0ba1bd28952b"
+  },
+  "change": "Remove console encoding mutation and New-Object; fixed numeric ASCII protocol with byte guard",
+  "startupLimitMs": 10000,
+  "requestLimitMs": 2000,
+  "outputLimitBytes": 4194304,
+  "routingOrEnvironmentChanged": false,
+  "builderTests": 31,
+  "independentTests": 27,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol",
+  "verdict": "APPROVE-one-controlled-normal-RSS-run",
+  "diagnosticBasisRun": 42868018670,
+  "preciseRootCauseEstablished": false,
+  "actualWindowsRun": null,
+  "performanceValidated": false,
+  "productionImported": false,
+  "physical8GBValidated": false
+}
