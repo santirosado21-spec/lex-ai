@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "gliner-pii-small-uint8-local-v2",
+  "status": "experimental-opt-in-not-evaluated",
+  "productionEnabled": false,
+  "model": {
+    "repository": "knowledgator/gliner-pii-small-v1.0",
+    "revision": "d21aad5b4a7ec82b3d0970fd1ac74a12c087d85e",
+    "licenseDeclared": "Apache-2.0",
+    "licenseSource": "https://huggingface.co/knowledgator/gliner-pii-small-v1.0/blob/d21aad5b4a7ec82b3d0970fd1ac74a12c087d85e/README.md",
+    "baseRepository": "jhu-clsp/ettin-encoder-68m",
+    "baseRevision": "ac19ae4bc51093b31c475665ac872a936d056cc2",
+    "baseLicenseDeclared": "MIT",
+    "languages": "card tags English/multilingual; Mexican Spanish not validated"
+  },
+  "runtime": {
+    "execution": "local CPU ONNX, no cloud/remote code",
+    "format": "GLiNER token-level",
+    "classToken": "<<ENT>>",
+    "separatorToken": "<<SEP>>",
+    "maxTextWords": 2048,
+    "maxSpanWidth": 12,
+    "threshold": 0.3,
+    "labels": [
+      {
+        "label": "name",
+        "category": "person"
+      },
+      {
+        "label": "organization",
+        "category": "organization"
+      },
+      {
+        "label": "location address",
+        "category": "address"
+      },
+      {
+        "label": "identifying context",
+        "category": "context"
+      },
+      {
+        "label": "sensitive relationship",
+        "category": "sensitive_relation"
+      }
+    ],
+    "labelsStatus": "initial development hypothesis; freeze candidate config before heldout"
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 15896,
+      "sha256": "f715f1ad8ff24c0f6f1b2745684a587dfe7390f8a1f0621deec57243b34a8b5a"
+    },
+    {
+      "path": "gliner_config.json",
+      "bytes": 4316,
+      "sha256": "c10803bade021f40072b194bc78bc2edd2bf3e60637a6f34cc9b00705bf3c168"
+    },
+    {
+      "path": "tokenizer.json",
+      "bytes": 3583593,
+      "sha256": "84b3a9b18f04a0ccd03b72d9f871b7e0bec40fd7021ef50bc30a7c3693c11205"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "bytes": 21214,
+      "sha256": "3398f6d1ad4b4c4f9874d390d060a75c58cad5e5ce9b22841b3e40643b4ada27"
+    },
+    {
+      "path": "special_tokens_map.json",
+      "bytes": 694,
+      "sha256": "ea97ecdbcc73713039d8d64dbb05e3689495c96657fbd9a18f5bed381be81049"
+    },
+    {
+      "path": "onnx/model_quint8.onnx",
+      "bytes": 82680500,
+      "sha256": "891589426ee96f2748b16439f44fad8c3f97e198e002a6637e58dee989500216"
+    }
+  ],
+  "download": {
+    "explicitOnly": true,
+    "maximumTotalBytes": 104857600,
+    "artifactDirectory": "artifacts/privacy/models/gliner-pii-small-uint8-v2",
+    "automaticInApp": false,
+    "paidServices": false
+  },
+  "resourceLimits": {
+    "incrementalRssBytes": 1073741824,
+    "timeoutMs": 15000,
+    "concurrency": 1
+  },
+  "limitations": [
+    "No whole-model quality claim from upstream marketing/benchmarks.",
+    "Not a conversational model; no private input may leave local process.",
+    "Dependencies/weights require explicit developer preparation, never app auto-download.",
+    "Rules and learned spans still require independent heldout and vertical/resource tests.",
+    "No model bytes have been downloaded or loaded when this selection metadata was created."
+  ]
+}

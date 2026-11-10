@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "purpose": "Reviewed independent corpus freeze; not candidate approval or model results",
+  "protocolFreeze": "privacy-v2-protocol-freeze-2026-11-09.json",
+  "cases": {
+    "dev": 12,
+    "heldout": 300
+  },
+  "heldoutCoverage": {
+    "entitiesTotal": 264,
+    "perCategory": 22,
+    "cleanComplete": 36,
+    "blockedTotal": 24,
+    "blockedPerReason": 4,
+    "uniqueSegmentTexts": 324
+  },
+  "author": {
+    "agent": "author_privacy_v2_heldout",
+    "assignedModel": "gpt-6.1-sol",
+    "noDevOrCandidateOrPredictionsReadReported": true
+  },
+  "review": {
+    "agent": "review_vault_reminders",
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-annotation-only",
+    "noDevOrCandidateOrPredictionsReadReported": true,
+    "checks": [
+      "UTF16 bounds/surrogate/duplicates",
+      "category boundaries/preservation spans",
+      "operational stimuli/reason precedence",
+      "coverage/hash/300 cases",
+      "apparent synthetic provenance"
+    ],
+    "limitations": [
+      "Repeated synthetic wrappers and explicit type labels; narrow distribution",
+      "Not professional validation or candidate quality"
+    ]
+  },
+  "crossSplitValidation": "corpus-valid, independently run by root via validateManifestBytes",
+  "candidateScored": false,
+  "productionEnabled": false,
+  "hashes": {
+    "eval/privacy-v2/protocol.json": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "eval/privacy-v2/annotation-guide.md": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "eval/privacy-v2/dev.jsonl": "db6cda2f90935c81e2e1950136fc7dbdbc7150d267288670fba54472fe439325",
+    "eval/privacy-v2/heldout.jsonl": "870ddb91f37a864605b811a40189cef8747bb67a1c5f88969ef2fde0bc9bb30b",
+    "eval/privacy-v2/heldout-provenance.json": "48fed9ed621665794540fa6861617e56eaf534a2eaaeaaf58a8ae33032740f2d",
+    "eval/privacy-v2/manifest.json": "3b05e12ef9c4e347292ff71d8fa52fd8a3c226088e440f1b83565705b502eff2"
+  }
+}

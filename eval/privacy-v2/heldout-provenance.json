@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-09",
+  "author": {
+    "agent": "author_privacy_v2_heldout",
+    "role": "independent heldout author",
+    "assignedModel": "gpt-6.1-sol",
+    "observedModelIdentity": "not independently attested by tool"
+  },
+  "synthetic": true,
+  "caseCount": 300,
+  "entityOccurrences": {
+    "person": 22,
+    "organization": 22,
+    "rfc": 22,
+    "curp": 22,
+    "clabe": 22,
+    "account": 22,
+    "email": 22,
+    "phone": 22,
+    "address": 22,
+    "case_id": 22,
+    "context": 22,
+    "sensitive_relation": 22
+  },
+  "cleanCompleteCases": 36,
+  "blockedCasesByReason": {
+    "scope_mismatch": 4,
+    "unknown_provenance": 4,
+    "unsupported_format": 4,
+    "partial_extraction": 4,
+    "ambiguous_context": 4,
+    "detector_failure": 4
+  },
+  "templateSources": "Fresh author-created HQ7N examples and wrappers after the protocol/guide freeze; no development templates used.",
+  "templateGroupPrefix": "hq7n-",
+  "uniqueSegmentTexts": 324,
+  "protocolSha256": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+  "annotationGuideSha256": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+  "heldoutSha256": "870ddb91f37a864605b811a40189cef8747bb67a1c5f88969ef2fde0bc9bb30b",
+  "noDevRead": true,
+  "noPredictionsRead": true,
+  "noRetiredV1Read": true,
+  "noCandidateImplementationRead": true,
+  "noTrainingDataRead": true,
+  "noExternalModelQueries": true,
+  "authoringMethod": "Direct author annotation; ephemeral JavaScript helper for original UTF-16 offset bookkeeping and schema checks only. No candidate execution or scoring.",
+  "limitation": "Small invented synthetic distribution; counts and schema checks do not establish authoring quality, representative coverage, privacy safety or professional/legal validation.",
+  "schemaValidation": {
+    "api": "validateCases(rows, {protocol, split: heldout})",
+    "result": "passed",
+    "scope": "Own heldout rows and frozen protocol only; no scoring or candidate execution"
+  }
+}
