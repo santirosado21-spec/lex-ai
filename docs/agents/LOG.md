@@ -203,3 +203,7 @@ VMmacos15 CI42887207030@041bc67 PASS Rust/Cargo1.99.1/179deps/15fuentes+workflow
 ## 2026-11-10 14:05 — codex — Supervisor H5 verde y primer lote cifrado en VM
 
 CI42890385232 @ecce707 pasó exactamente supervisor_cleanup_without_crypto (1/1), revisado independientemente; no crypto en esa prueba. Freeze nuevo ea94eb2 autoriza una única ejecución sintética de 18casos en VM pública limpia: CI42891631285 en curso. Nym v1 quedó FAILED/PARENT_OR_IPC_FAILURE; 5eventos guardados verifican carga/metadatos/4tokenizaciones/0forwards, revisión offline independiente aprueba sólo hechos parciales punto-en-tiempo, no postflight original o RSS combinado. Causa exacta desconocida. Producto y datos reales siguen locales/inactivos; sin validación8GB.
+
+## 2026-11-10 14:09 — codex — Primer lote H5 detenido; corrección de evidencia H4 revisada
+
+CI42891631285 @ea94eb2 primer lote sintético inició harness y salió71 con watchdog; wrapper60265.317ms, fase/casoscompletados/RSS/KDF desconocidos, sin recibo ni aceptaciónR23/recuperación. Compile/supervisor pasaron y preposthashes17; revisorSol aprobó sólo registro de fallo58f0c77. Astra diagnostica sin nuevas ejecuciones. Fix3d3d588 conserva prefijos/telemetría/errorprimario antes de limpieza;12selftests por autor/revisor/root, sin nueva carga del modelo o red. Plan Nym inferencia/decoder revisado, sin ejecuciónautorizada, shapesobservadas simbólicas separadas de expectativa batch1. Examen300 intacto; H4/H5 abiertos.
