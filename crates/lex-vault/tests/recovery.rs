@@ -29,6 +29,117 @@ struct ChildrenState {
     stopping: bool,
     done: bool,
     cleanup_ok: bool,
+    sampler: SamplerCounters,
+    last_sample: SampleObservation,
+}
+// Numeric diagnostic vocabulary: wait0=not attempted,1=running,2=exited,3=error;
+// rss0=not observed,1=zero,2=positive; result1=RSS,2=exited,3=error;
+// exit0=not observed,1=success,2=nonzero exit,3=signal/other Unix termination.
+#[derive(Clone, Copy, Default)]
+struct SampleObservation {
+    pre: u8,
+    post: u8,
+    pre_errno: i32,
+    post_errno: i32,
+    query_return: i32,
+    expected: i32,
+    query_attempted: bool,
+    errno: i32,
+    errno_captured: bool,
+    rss: u8,
+    result: u8,
+    exit: u8,
+}
+#[derive(Clone, Copy, Default)]
+struct SamplerCounters {
+    calls: u64,
+    queries: u64,
+    positive: u64,
+    zero: u64,
+    short_or_failed: u64,
+    exited: u64,
+    errors: u64,
+}
+static DIAGNOSTIC_LINES: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+static PARENT_USAGE_CHECKS: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+static PARENT_USAGE_FAILURES: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+fn diagnostic_line(arguments: std::fmt::Arguments<'_>) {
+    // Bounded even on a novel failure loop. No I/O while the Child mutex is held.
+    if DIAGNOSTIC_LINES.fetch_add(1, std::sync::atomic::Ordering::SeqCst) < 192 {
+        static START: std::sync::OnceLock<Instant> = std::sync::OnceLock::new();
+        let elapsed = START.get_or_init(Instant::now).elapsed().as_millis();
+        let mut out = std::io::stdout().lock();
+        let _ = writeln!(out, "LEX_RECOVERY_RSS_V1 elapsed_ms={elapsed} {arguments}");
+        let _ = out.flush();
+    }
+}
+fn emit_sample(source: u8, o: SampleObservation, c: SamplerCounters) {
+    diagnostic_line(format_args!(
+        "source={source} pre={} post={} pre_errno={} post_errno={} query={} returned={} expected={} errno_captured={} errno={} rss={} result={} exit={} calls={} queries={} positive={} zero={} short_or_failed={} exited={} errors={}",
+        o.pre,
+        o.post,
+        o.pre_errno,
+        o.post_errno,
+        u8::from(o.query_attempted),
+        o.query_return,
+        o.expected,
+        u8::from(o.errno_captured),
+        o.errno,
+        o.rss,
+        o.result,
+        o.exit,
+        c.calls,
+        c.queries,
+        c.positive,
+        c.zero,
+        c.short_or_failed,
+        c.exited,
+        c.errors
+    ));
+}
+fn observed_wait(
+    child: &mut Child,
+    observation: &mut SampleObservation,
+    pre: bool,
+) -> std::io::Result<Option<ExitStatus>> {
+    let result = child.try_wait();
+    let (state, errno) = match &result {
+        Ok(None) => (1, 0),
+        Ok(Some(status)) => {
+            observation.exit = if status.success() {
+                1
+            } else if status.code().is_some() {
+                2
+            } else {
+                3
+            };
+            (2, 0)
+        }
+        Err(error) => (3, error.raw_os_error().unwrap_or(0)),
+    };
+    if pre {
+        observation.pre = state;
+        observation.pre_errno = errno;
+    } else {
+        observation.post = state;
+        observation.post_errno = errno;
+    }
+    result
+}
+fn parent_usage(source: u8) -> Result<u64, ()> {
+    let checks = PARENT_USAGE_CHECKS.fetch_add(1, std::sync::atomic::Ordering::SeqCst) + 1;
+    let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
+    let returned = unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) };
+    if returned != 0 {
+        let errno = std::io::Error::last_os_error().raw_os_error().unwrap_or(0);
+        let failures = PARENT_USAGE_FAILURES.fetch_add(1, std::sync::atomic::Ordering::SeqCst) + 1;
+        diagnostic_line(format_args!(
+            "source={source} parent_return={returned} errno={errno} checks={checks} failures={failures}"
+        ));
+        Err(())
+    } else {
+        Ok(unsafe { usage.assume_init() }.ru_maxrss as u64)
+    }
 }
 enum OwnedSample {
     Exited(ExitStatus),
@@ -74,49 +185,89 @@ impl Children {
             .try_wait()
     }
     fn sample_rss(&self, id: usize) -> std::io::Result<OwnedSample> {
-        // Keep the owned Child unreaped during the query. Shutdown uses this same
-        // registry lock, so a recycled PID cannot be queried after concurrent reaping.
+        // The owned Child remains unreaped during query, serialized with shutdown.
         let mut state = self.lock();
-        if state.stopping {
-            return Err(std::io::Error::other("supervisor stopped"));
-        }
-        let child = state
-            .children
-            .get_mut(id)
-            .ok_or_else(|| std::io::Error::other("unknown owned child"))?;
-        if let Some(status) = child.try_wait()? {
-            return Ok(OwnedSample::Exited(status));
-        }
-        #[cfg(target_os = "macos")]
-        {
-            let pid = libc::c_int::try_from(child.id())
-                .map_err(|_| std::io::Error::other("owned PID range"))?;
-            let mut info = std::mem::MaybeUninit::<libc::proc_taskinfo>::zeroed();
-            let size = std::mem::size_of::<libc::proc_taskinfo>() as libc::c_int;
-            // ABI/types/constants come from pinned libc, matching Apple's SDK headers.
-            // Only our registered live child is queried; no argv/env/name information.
-            let read = unsafe {
-                libc::proc_pidinfo(
-                    pid,
-                    libc::PROC_PIDTASKINFO,
-                    0,
-                    info.as_mut_ptr().cast::<libc::c_void>(),
-                    size,
-                )
-            };
-            if read == size {
-                let rss = unsafe { info.assume_init() }.pti_resident_size;
-                if rss > 0 {
-                    return Ok(OwnedSample::Rss(rss));
+        let mut observation = SampleObservation::default();
+        let result = (|| {
+            if state.stopping {
+                return Err(std::io::Error::other("supervisor stopped"));
+            }
+            let child = state
+                .children
+                .get_mut(id)
+                .ok_or_else(|| std::io::Error::other("unknown owned child"))?;
+            if let Some(status) = observed_wait(child, &mut observation, true)? {
+                return Ok(OwnedSample::Exited(status));
+            }
+            #[cfg(target_os = "macos")]
+            {
+                let pid = libc::c_int::try_from(child.id())
+                    .map_err(|_| std::io::Error::other("owned PID range"))?;
+                let mut info = std::mem::MaybeUninit::<libc::proc_taskinfo>::zeroed();
+                let size = std::mem::size_of::<libc::proc_taskinfo>() as libc::c_int;
+                observation.query_attempted = true;
+                observation.expected = size;
+                let read = unsafe {
+                    libc::proc_pidinfo(
+                        pid,
+                        libc::PROC_PIDTASKINFO,
+                        0,
+                        info.as_mut_ptr().cast::<libc::c_void>(),
+                        size,
+                    )
+                };
+                // Capture errno immediately, before postquery try_wait or any logging.
+                // A short positive return need not set errno: observed value is not a causal claim.
+                let errno = if read != size {
+                    Some(std::io::Error::last_os_error().raw_os_error().unwrap_or(0))
+                } else {
+                    None
+                };
+                observation.query_return = read;
+                observation.errno_captured = errno.is_some();
+                observation.errno = errno.unwrap_or(0);
+                if read == size {
+                    let rss = unsafe { info.assume_init() }.pti_resident_size;
+                    observation.rss = if rss > 0 { 2 } else { 1 };
+                    if rss > 0 {
+                        return Ok(OwnedSample::Rss(rss));
+                    }
                 }
             }
+            if let Some(status) = observed_wait(child, &mut observation, false)? {
+                return Ok(OwnedSample::Exited(status));
+            }
+            Err(std::io::Error::other("owned child RSS unavailable"))
+        })();
+        observation.result = match &result {
+            Ok(OwnedSample::Rss(_)) => 1,
+            Ok(OwnedSample::Exited(_)) => 2,
+            Err(_) => 3,
+        };
+        let c = &mut state.sampler;
+        c.calls += 1;
+        c.queries += u64::from(observation.query_attempted);
+        c.positive += u64::from(observation.rss == 2);
+        c.zero += u64::from(observation.rss == 1);
+        c.short_or_failed += u64::from(
+            observation.query_attempted && observation.query_return != observation.expected,
+        );
+        c.exited += u64::from(observation.result == 2);
+        c.errors += u64::from(observation.result == 3);
+        let counters = *c;
+        state.last_sample = observation;
+        drop(state);
+        if observation.result == 3 || observation.query_attempted && observation.rss != 2 {
+            emit_sample(1, observation, counters);
         }
-        // A child can exit during the query. Accept only its exact observed status;
-        // a still-live child without a positive sample is a monitoring failure.
-        if let Some(status) = child.try_wait()? {
-            return Ok(OwnedSample::Exited(status));
-        }
-        Err(std::io::Error::other("owned child RSS unavailable"))
+        result
+    }
+    fn emit_sampler_snapshot(&self, source: u8) {
+        let state = self.lock();
+        let observation = state.last_sample;
+        let counters = state.sampler;
+        drop(state);
+        emit_sample(source, observation, counters);
     }
     fn shutdown(&self) -> bool {
         let mut state = self.lock();
@@ -128,7 +279,10 @@ impl Children {
         }
         state.stopping = true;
         let mut children = std::mem::take(&mut state.children);
+        let observation = state.last_sample;
+        let counters = state.sampler;
         drop(state);
+        emit_sample(2, observation, counters);
         // Kill every live owned process before waiting on any of them. wait observes/reaps
         // even if kill races natural exit. No writer join is needed to unblock cleanup.
         for child in &mut children {
@@ -181,11 +335,10 @@ impl BatchGuard {
                 {
                     terminate_after_cleanup(&owned, 71)
                 }
-                let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
-                if unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) } != 0 {
-                    terminate_after_cleanup(&owned, 72)
-                }
-                let bytes = unsafe { usage.assume_init() }.ru_maxrss as u64;
+                let bytes = match parent_usage(3) {
+                    Ok(bytes) => bytes,
+                    Err(()) => terminate_after_cleanup(&owned, 72),
+                };
                 peak_thread.fetch_max(bytes, Ordering::SeqCst);
                 if bytes > 805306368 {
                     terminate_after_cleanup(&owned, 73)
@@ -233,7 +386,26 @@ fn terminate_after_cleanup(children: &Children, code: i32) -> ! {
 // A failed RSS sampler is harmless only when the owned restore has already exited.
 // Otherwise monitoring is unavailable: clean up and return the finite sampler-failure code.
 fn resolve_sample_failure(children: &Children, restore: usize) -> Result<ExitStatus, i32> {
-    match children.poll(restore) {
+    let observed = children.poll(restore);
+    let (state, errno, exit) = match &observed {
+        Ok(Some(status)) => (
+            2,
+            0,
+            if status.success() {
+                1
+            } else if status.code().is_some() {
+                2
+            } else {
+                3
+            },
+        ),
+        Ok(None) => (1, 0, 0),
+        Err(error) => (3, error.raw_os_error().unwrap_or(0), 0),
+    };
+    diagnostic_line(format_args!(
+        "source=5 wait={state} errno={errno} exit={exit}"
+    ));
+    match observed {
         Ok(Some(status)) => Ok(status),
         Ok(None) | Err(_) => Err(cleanup_for_failure(children, 72)),
     }
@@ -313,14 +485,7 @@ fn child_case(
             },
             Ok(OwnedSample::Rss(rss)) => {
                 peak = peak.max(rss);
-                let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
-                let measured =
-                    unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) } == 0;
-                let parent_rss = if measured {
-                    unsafe { usage.assume_init() }.ru_maxrss as u64
-                } else {
-                    u64::MAX
-                };
+                let parent_rss = parent_usage(4).unwrap_or(u64::MAX);
                 if rss.saturating_add(parent_rss) > 805_306_368 {
                     assert!(guard.children.shutdown());
                     let _ = writer.join();
@@ -721,6 +886,89 @@ fn supervisor_cleanup_without_crypto() {
     assert!(!owned.lock().stopping);
     assert!(owned.shutdown());
     reaped(pid);
+    // Predeclared harmless rapid-exit investigation, not a crypto retry. At most24
+    // fresh true children; with the7 existing fixtures this test spawns at most31.
+    // Stop new dispatch after2s; each child is sampled once, then killed/reaped as needed.
+    let rapid_started = Instant::now();
+    let mut dispatched = 0u64;
+    let mut rss_observed = 0u64;
+    let mut exit_observed = 0u64;
+    let mut sample_errors = 0u64;
+    let mut monitoring_failures = 0u64;
+    let mut reaped_count = 0u64;
+    for iteration in 0..24 {
+        if rapid_started.elapsed() >= Duration::from_secs(2) {
+            break;
+        }
+        assert!(parent_usage(9).is_ok(), "diagnostic parent usage failure");
+        let owned = Children::default();
+        let (id, pid, _, _) = owned
+            .spawn(
+                Command::new("/usr/bin/true")
+                    .env_clear()
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null()),
+            )
+            .unwrap();
+        dispatched += 1;
+        match iteration % 3 {
+            1 => thread::yield_now(),
+            2 => thread::sleep(Duration::from_millis(1)),
+            _ => {}
+        }
+        let sample = owned.sample_rss(id);
+        owned.emit_sampler_snapshot(6);
+        let result = match sample {
+            Ok(OwnedSample::Rss(bytes)) => {
+                rss_observed += 1;
+                assert!(bytes > 0 && bytes <= 805306368);
+                1
+            }
+            Ok(OwnedSample::Exited(status)) => {
+                exit_observed += 1;
+                assert!(status.success());
+                2
+            }
+            Err(_) => {
+                sample_errors += 1;
+                match resolve_sample_failure(&owned, id) {
+                    Ok(status) => {
+                        exit_observed += 1;
+                        assert!(status.success());
+                        3
+                    }
+                    Err(code) => {
+                        assert_eq!(code, 72);
+                        monitoring_failures += 1;
+                        4
+                    }
+                }
+            }
+        };
+        assert!(owned.shutdown());
+        reaped(pid);
+        reaped_count += 1;
+        diagnostic_line(format_args!(
+            "source=7 iteration={iteration} schedule={} result={result} cleanup=1 reaped=1 rapid_elapsed_ms={}",
+            iteration % 3,
+            rapid_started.elapsed().as_millis()
+        ));
+    }
+    let checks = PARENT_USAGE_CHECKS.load(std::sync::atomic::Ordering::SeqCst);
+    let failures = PARENT_USAGE_FAILURES.load(std::sync::atomic::Ordering::SeqCst);
+    diagnostic_line(format_args!(
+        "source=8 dispatched={dispatched} rss_observed={rss_observed} exit_observed={exit_observed} sample_errors={sample_errors} monitoring_failures={monitoring_failures} reaped={reaped_count} parent_checks={checks} parent_failures={failures} rapid_elapsed_ms={}",
+        rapid_started.elapsed().as_millis()
+    ));
+    assert!(dispatched <= 24);
+    assert_eq!(dispatched, reaped_count);
+    // Recording a monitor failure is not successful RSS acceptance. Finish evidence and
+    // fail this supervisor regression if the predeclared probes exposed such a failure.
+    assert_eq!(
+        monitoring_failures, 0,
+        "rapid-exit monitoring failure recorded"
+    );
     // Deliberately injected test panic is caught only to inspect RAII cleanup, not as
     // recovery success. Production crypto errors/panics still fail exact case checks.
     let mut observed = None;
