@@ -70,12 +70,16 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | D1e | Diagnóstico etapas Windows | D1d/2fallosreales | done | 9b77171;42868018670diagnosiscomplete, sinREAD_READY/CIM_START, no performancepass |
 | D1f | Hipótesis de protocolo ASCII | D1e | done | 91fd4fa;31 tests/review27, CI42869183776 STARTUP_TIMEOUT10s; hipótesis sin mejora, negativa conservada |
 | D1g | Diagnóstico entorno/autoload A/B | D1f/3 fallos | done | 7fb989e+b0d6830; CI42872682039 ambas TIMEOUT_LOOKUP_UTILITY,0 muestras;20,09s/cleanup correcto, auditoría independiente; causa exacta pendiente |
-| H4b.2b.4b | Composición diagnóstica con prueba de contención | H4b.2b.4a | in-progress | Astra, archivos v2 nuevos; sin modificar baseline/umbrales/heldout ni liberar egreso |
+| H4b.2b.4b | Composición diagnóstica con prueba de contención | H4b.2b.4a | done | 23d0662;57 pruebas, revisión y60 replays,38 completos/22 bloqueados; sin score/egreso/elegibilidad, H4 abierto |
 | H4b.2d | Repetir H3V con detector elegible real | H4b.2b/H4b.2c | todo | Gate del plan F1A; los experimentos TokenNER no cierran esta vertical |
 | S2b.2a | Protocolo ampliado antes de autoría | S2a/S2b.1 | done | 77c4831;30 propuestos, denominadores/gates y revisión independiente; sin generación |
 | S2b.2b | Datos nuevos y rúbricas propuestas | S2b.2a | done | 837cd20;30 casos/32 artículos/3 instrumentos/2 jurisdicciones, revisión Sol; S1 30, anclas29; abogados y sobre completo pendientes |
 | C2a | Páginas estatales completas y candidatos | C1b.3/C1b.4 diagnóstico | done | 4d25180;619 páginas,3564 candidatos,13 repeticiones sin truncar;19 tests/reconstrucción independiente, cuarentena |
-| C2b | Comparación independiente de fidelidad | C2a | in-progress | Sol prepara protocolo estratificado de24 páginas, sin ejecutar o aprobar corpus |
+| C2b | Comparación independiente de fidelidad | C2a | done | ca2ccd8;24 páginas/48 comparaciones,45 normalizadas iguales/3 diferencias conservadas,6 renders vistos; revisión técnica, sin fidelidad integral aprobada |
+| D1h | Consulta WMI directa aislada | D1g | done | c473fab/df8e855;CI42875919825,1 raíz40.656.896B/5,15s/cleanup0;59 tests y auditoría; no árbol/polling todavía |
+| D1i | Colector de árbol WMI sin cmdlets | D1h | in-progress | Astra, v2 separado;10s arranque/2s muestra/4MiB, sin modificar helpers anteriores; espera revisión/CI |
+| C1b.5 | Doce plazas aún no investigadas | C1b.1 | review-pending | Sol:8 URLs candidatas/4 sin seleccionar,28 operaciones; corrección de trazabilidad antes de cierre |
+| H5b.2a | Diseño de recuperación sintética cifrada | H5a/H5b.1 | in-progress | Sol: age estándar, snapshot cerrado exclusivo y restore de lectura; dependencias/revisión previas a código Astra |
 | D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |
 | N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
 | N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |

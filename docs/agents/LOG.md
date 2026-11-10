@@ -187,3 +187,7 @@ Nuevos verificados: ablation7bdc217 falla5vs3labels; Rampartff0619b60dev13TP41FP
 ## 2026-11-10 12:22 — codex — Corpus estatal completo y aceptación nueva preservados
 
 C2a4d25180:619 páginas/3564 candidatos/13 repetidos,19 pruebas y reconstrucción independiente; cuarentena sin fidelidad/vigencia aprobadas. S2b2 protocolo77c4831/datos837cd20:30 casos/32 artículos, S1 30 y anclas29; cero generación/abogados. D1g b0d6830: ambas variantes TIMEOUT_LOOKUP_UTILITY, cero RSS, cleanup correcto; causa exacta pendiente. Checkpoint root932/932 y build OK antes de composición v2 en construcción. No clientes/cloud producto o compras.
+
+## 2026-11-10 12:40 — codex — Composición diagnóstica y primer resultado Windows directo
+
+23d0662:60dev38complete/22blocked,19cambios,76proofs sólo complete;57pruebas/revisión+60replays, sin score/egreso/heldout. ca2ccd8:48comparaciones24páginas45normalizadas iguales3discrepancias,6renders vistos, todo cuarentena. c473fab/df8e855:CI42875919825 WMI raíz40656896B/5.15s/cleanup0, auditoría; no árbol/polling. D1i v2 Astra en construcción, H5b2a diseño Sol y C1b5 revisión pendientes. Checkpoint932 anterior a estos nuevos cortes; nueva suite global tras D1i. PR#1 mantiene gates.
