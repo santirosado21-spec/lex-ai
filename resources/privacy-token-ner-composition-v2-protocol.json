@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "status": "experimental-development-only",
+  "scope": "local exact-scope immutable source text; no provider payload or grant",
+  "rules": "existing syntax-only detector, no legal-ID/checksum validity claim",
+  "unsupportedResolution": "one internal rule must fully contain each native unmapped text span; all segments complete first; no adjacent union",
+  "hardErrors": "operational/provenance/path/UNK/BIO/confidence/overflow/partial/unknown remain blocked",
+  "knownCategoryOverlap": "cross-category overlap blocks; same-category learned within rule dedups retaining whole rule",
+  "blockedOutput": "result detections empty; rule diagnostics retained separately; protectionPlan null",
+  "egressEligible": false,
+  "baselinePredictionsSha256": "9481e358a4306955f398fb4f4f8a9b7e62a3f9b7d9440ea0eb81f9f456d6cca8",
+  "devSha256": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d",
+  "maximumRequests": 60,
+  "scoreUse": "diagnostic only; rule-retention is not a quality improvement; no eligibility claim",
+  "canonicalBacklogId": "H4b.2b.4b",
+  "parentValidation": "Independently recompute operational gates, syntax rules and deterministic composition from original input and declared native spans; require exact complete output, internally valid blocked diagnostics, and absolute IPC request deadlines.",
+  "requestLifetime": "One absolute timeout includes readiness and IPC; cancellation before/during readiness terminates worker, removes request listener/timer and forbids dispatch after settlement."
+}

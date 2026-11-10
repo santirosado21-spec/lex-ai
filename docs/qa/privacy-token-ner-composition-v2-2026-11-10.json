@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "cut": "H4b.2b.4b",
+  "artifactDirectory": "artifacts/privacy/rampart-composition-v2-20261110-first",
+  "receiptHashes": {
+    "started.json": "f7d593b0f6d2fbab178dbee04f07a6d9aa72cd25a7b83ab2322216f8fd90db6c",
+    "execution.json": "e2b3933c9d8e477538fe37b5c66a5b5ffb05bfdc49c7bc8bd769e55dbf7a5f48",
+    "predictions.json": "c50473ef6da6f54276adc85bfeeaa2537222bee4f461f1720857f7c1035815f6"
+  },
+  "independentReview": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE31source/runtime bindings,60async parent replays, projected inputs/predictions/baseline comparison; no inference rerun",
+  "implementationReviewFindingsClosed": [
+    "P1 undefined parent request deadline",
+    "P2 parent operational/rule/proof reconstruction",
+    "P2 cancellation while awaiting readiness"
+  ],
+  "builderTests": 57,
+  "reviewerNewTests": 18,
+  "cases": 60,
+  "statuses": {
+    "complete": 38,
+    "blocked": 22,
+    "reasons": {
+      "detector_failure": 13,
+      "ambiguous_context": 7,
+      "unsupported_format": 1,
+      "partial_extraction": 1
+    }
+  },
+  "changedCases": 19,
+  "literalCoverageProofs": {
+    "complete": 76,
+    "blocked": 0,
+    "notCaseCount": true
+  },
+  "ruleDiagnosticSpans": {
+    "complete": 28,
+    "blocked": 16,
+    "notScoredBlockedDetections": true
+  },
+  "peakPartialRssBytes": 161660928,
+  "loadLatencyMs": 92.17266691848636,
+  "childLatencyNearestRankMs": {
+    "p50": 13.195708999999965,
+    "p95": 19.891209000000003,
+    "max": 31.632624999999962
+  },
+  "qualityScoreComputed": false,
+  "heldoutConsumed": false,
+  "privacyEligibilityEstablished": false,
+  "egressEligible": false,
+  "productionEnabled": false,
+  "physical8GBValidated": false
+}
