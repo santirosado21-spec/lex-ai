@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D0",
+  "sources": {
+    "landing/index.html": "f867641a1693d4a82022111494a6cfe9ba4bea4cdefa81c77959018e60e67ce2",
+    "landing/styles.css": "562bd767fa8945c30a605d421b4eadb680712f7fe88f47d11aa85a244132c727",
+    "landing/script.js": "2acb369ed527f8701983be9900d05520f5b5ac3e611c485edb175228cef78a45",
+    "landing/catalogue.json": "be354e66b6a167d8a3ad817a0b88b05315f69dca20f5194fa98c985434750c74",
+    "landing/README.md": "e5342feb51052d99152086ad1c55ab47cab79c334b4dda2d901be41306507544",
+    "scripts/landing-smoke.mjs": "926b597d8a6a749e53e4e4903fd685bade3888ed11fbd6431286f838968c95d2",
+    "tests/landing-downloads.test.mjs": "acfd1c07429e196d0606e8c581def41b7e6e5b2e794af53809338368d3ab25c7"
+  },
+  "unitTests": 4,
+  "rootCombinedTests": 16,
+  "independentReviewer": "gpt-6.1-sol",
+  "verdict": "APPROVE",
+  "browserEvidence": "artifacts/landing/20261110-downloads-2026-11-10T17-01-42-954Z",
+  "browserStatus": "PASS",
+  "anchorNavigation": [
+    {
+      "width": 390,
+      "skipClear": true,
+      "focusClear": true,
+      "headerBottom": 68,
+      "titleTop": 126.859375,
+      "scrollY": 6947,
+      "activeElement": ""
+    },
+    {
+      "width": 320,
+      "skipClear": true,
+      "focusClear": true,
+      "headerBottom": 68,
+      "titleTop": 126.9375,
+      "scrollY": 7309,
+      "activeElement": ""
+    }
+  ],
+  "observed": {
+    "browserExceptions": [],
+    "failedHttpResponses": [],
+    "thirdPartyRequests": [],
+    "intentionalCatalogueAbortCases": 1,
+    "downloadRequests": []
+  },
+  "preservedFailedSmoke": "artifacts/landing/20261110-downloads-2026-11-10T17-00-37-415Z",
+  "publicArtifactVerification": "GitHub release metadata and asset digest; installer not redownloaded",
+  "publishedPlatforms": [
+    "mac-arm64"
+  ],
+  "pendingPlatforms": [
+    "mac-x64",
+    "windows-x64"
+  ],
+  "codeDeployed": false,
+  "hybridInstallerPublished": false,
+  "physical8GBValidated": false
+}

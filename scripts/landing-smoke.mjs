@@ -6,6 +6,18 @@ import assert from 'node:assert/strict';
 import {chromium, expect} from '@playwright/test';
 
 const root = path.resolve('landing');
+const output = path.resolve('artifacts/landing/20261110-downloads-' + new Date().toISOString().replace(/[:.]/g,'-'));
+const platformKeys=['mac-arm64','mac-x64','windows-x64'];
+const card=(page,key)=>page.locator(`[data-platform="${key}"]`);
+const field=(page,key,name)=>card(page,key).locator(`[data-field="${name}"]`);
+async function assertInert(page,key){
+ await expect(field(page,key,'download')).toHaveAttribute('aria-disabled','true');
+ await expect(field(page,key,'download')).not.toHaveAttribute('href',/./);
+ await expect(field(page,key,'download')).toHaveAttribute('tabindex','-1');
+ await expect(field(page,key,'copy')).toBeDisabled();
+ await expect(field(page,key,'sha')).toHaveText('Pendiente de publicación');
+}
+
 const config = JSON.parse(await readFile(path.join(root, 'vercel.json'), 'utf8'));
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.json':'application/json','.woff2':'font/woff2','.txt':'text/plain'};
 const server = createServer(async (req, res) => {
@@ -34,11 +46,12 @@ async function assertNoOverflow(page, width) {
   await page.setViewportSize({width, height:844});
   await page.goto(base, {waitUntil:'networkidle'});
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `horizontal overflow at ${width}px`);
-  await page.screenshot({path:`artifacts/landing/${width}.png`, fullPage:true});
+  await page.screenshot({path:path.join(output,`${width}.png`), fullPage:true});
 }
 
 try {
-  await mkdir('artifacts/landing', {recursive:true});
+  await mkdir(output, {recursive:true});
+  report.output=output;
   browser = await chromium.launch({headless:true});
   const page = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
   const errors = [];
@@ -83,20 +96,21 @@ try {
   assert.match(await page.locator('#link-path').getAttribute('d'), /^M [\d.]+ [\d.]+ C /);
   assert.doesNotMatch(await page.locator('body').innerText(), /\u2014/, 'no em dash in visible copy');
   assert.doesNotMatch(await page.title(), /\u2014/);
-  // Live catalogue: the published release must be offered with its real hash.
-  await expect(page.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.3');
-  await expect(page.locator('#download-button')).toHaveAttribute('aria-disabled', 'false');
-  await expect(page.locator('#download-button')).toHaveAttribute('href', /^https:\/\/github\.com\/santirosado21-spec\/lex-ai-descargas\/releases\/download\/v0\.4\.3\/LEX-AI-0\.4\.3-arm64\.dmg$/);
-  await expect(page.locator('#download-sha')).toHaveText('85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4');
-  await expect(page.locator('#copy-sha')).toBeEnabled();
-
-  const catalogueResponse = await page.request.get(base + '/catalogue.json');
-  assert.equal(catalogueResponse.status(), 200);
-  const catalogue = JSON.parse(await catalogueResponse.text());
-  assert.equal(catalogue.schemaVersion, 2);
-  assert.equal(catalogue.version, '0.4.3');
-  assert.equal(catalogue.bytes, 401541849);
-  assert.match(catalogue.sha256, /^[a-f0-9]{64}$/);
+  // Published ARM asset remains an explicitly older local experimental release.
+  await expect(page.locator('[data-platform]')).toHaveCount(3);
+  await expect(field(page,'mac-arm64','download')).toHaveAttribute('aria-disabled','false');
+  await expect(field(page,'mac-arm64','download')).toHaveAttribute('href', /^https:\/\/github\.com\/santirosado21-spec\/lex-ai-descargas\/releases\/download\/v0\.4\.3\/LEX-AI-0\.4\.3-arm64\.dmg$/);
+  await expect(field(page,'mac-arm64','sha')).toHaveText('85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4');
+  await expect(field(page,'mac-arm64','version')).toHaveText('Versión 0.4.3');
+  await expect(field(page,'mac-arm64','state')).toContainText('anterior local experimental');
+  await assertInert(page,'mac-x64');await assertInert(page,'windows-x64');
+  const catalogueResponse=await page.request.get(base+'/catalogue.json');
+  assert.equal(catalogueResponse.status(),200);
+  const catalogue=JSON.parse(await catalogueResponse.text());
+  assert.equal(catalogue.schemaVersion,3);
+  assert.equal(catalogue.platforms['mac-arm64'].version,'0.4.3');
+  assert.equal(catalogue.platforms['mac-arm64'].bytes,401541849);
+  assert.equal(catalogue.platforms['mac-arm64'].requirements.physical8GBValidated,false);
   assert.doesNotMatch(await page.locator('body').innerText(), /Gemma|Ollama/i);
   assert.equal(await page.evaluate(() => document.fonts.check('18px Newsreader')), true);
   assert.equal(await page.evaluate(() => document.fonts.check('18px "Schibsted Grotesk"')), true);
@@ -120,42 +134,116 @@ try {
   assert.equal(await page.locator('form,input[type="email"],input[type="file"]').count(), 0);
   assert.doesNotMatch(await readFile(path.join(root, 'styles.css'), 'utf8'), /gradient/i);
   assert.match(config.headers[0].headers.find(header => header.key === 'Content-Security-Policy').value, /connect-src 'self'/);
-  await page.screenshot({path:'artifacts/landing/1440.png', fullPage:true});
+  await page.screenshot({path:path.join(output,'1440.png'), fullPage:true});
 
-  const pendingPage = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
-  await pendingPage.route('**/catalogue.json', route => route.fulfill({contentType:'application/json', body:JSON.stringify({...catalogue, downloadUrl:null, bytes:null, sha256:null})}));
-  await pendingPage.goto(base, {waitUntil:'networkidle'});
-  await expect(pendingPage.locator('#download-button')).toHaveText('Disponible muy pronto');
-  await expect(pendingPage.locator('#download-button')).toHaveAttribute('aria-disabled', 'true');
-  await expect(pendingPage.locator('#download-button')).not.toHaveAttribute('href', /./);
-  await expect(pendingPage.locator('#copy-sha')).toBeDisabled();
-  await expect(pendingPage.locator('#download-sha')).toHaveText('Pendiente de publicación');
-  await pendingPage.close();
-
-  const availablePage = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
-  const testOnlyCatalogue = {
-    ...catalogue,
-    // Route-only fixture: it is never written to landing/catalogue.json or requested as a download.
-    downloadUrl:'/test-only-available-download.dmg',
-    bytes:3221225472,
-    sha256:'a'.repeat(64)
-  };
-  await availablePage.route('**/catalogue.json', route => route.fulfill({contentType:'application/json', body:JSON.stringify(testOnlyCatalogue)}));
-  await availablePage.goto(base, {waitUntil:'networkidle'});
-  await expect(availablePage.locator('#download-button')).toHaveText('Descargar LEX AI 0.4.3');
-  await expect(availablePage.locator('#download-button')).toHaveAttribute('aria-disabled', 'false');
-  await expect(availablePage.locator('#download-button')).toHaveAttribute('href', /test-only-available-download\.dmg$/);
-  await expect(availablePage.locator('#download-size')).toHaveText('3.22 GB');
-  await expect(availablePage.locator('#download-sha')).toHaveText('a'.repeat(64));
-  await expect(availablePage.locator('#copy-sha')).toBeEnabled();
-  await availablePage.close();
+  const fixturePage=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+  fixturePage.on('pageerror',error=>errors.push(error.message));
+  fixturePage.on('request',request=>requests.push(request.url()));
+  fixturePage.on('response',response=>{if(response.status()>=400)failed.push({url:response.url(),status:response.status()});});
+  await fixturePage.addInitScript(()=>{
+    window.testCopied=[];
+    Object.defineProperty(navigator,'clipboard',{value:{writeText:async value=>window.testCopied.push(value)},configurable:true});
+  });
+  // Entirely route-only fixtures: no binary is requested, clicked or published.
+  const future=structuredClone(catalogue);
+  for(const [key,suffix] of [['mac-x64','x64.dmg'],['windows-x64','x64.exe']]) {
+    future.platforms[key]={...catalogue.platforms['mac-arm64'],version:'9.8.7',status:'experimental',bytes:3221225472,sha256:'a'.repeat(64),
+      downloadUrl:`https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v9.8.7/LEX-AI-9.8.7-${suffix}`};
+  }
+  let fixture=future,fetchFailure=false;
+  await fixturePage.route('**/catalogue.json',route=>fetchFailure?route.abort('failed'):route.fulfill({contentType:'application/json',body:JSON.stringify(fixture)}));
+  await fixturePage.goto(base,{waitUntil:'networkidle'});
+  for(const key of platformKeys){
+    await expect(field(fixturePage,key,'download')).toHaveAttribute('href',future.platforms[key].downloadUrl);
+    await expect(field(fixturePage,key,'download')).toHaveAttribute('aria-disabled','false');
+    await expect(field(fixturePage,key,'copy')).toBeEnabled();
+    await field(fixturePage,key,'copy').click();
+    await expect(field(fixturePage,key,'copy-status')).toContainText(`Versión ${future.platforms[key].version}`);
+    assert.equal((await fixturePage.evaluate(()=>window.testCopied)).at(-1),future.platforms[key].sha256);
+  }
+  await expect(field(fixturePage,'mac-x64','size')).toHaveText('3.22 GB');
+  // Independently corrupt each card while both other cards remain enabled.
+  for(const key of platformKeys){
+    const entry=future.platforms[key];
+    const badEntries=[null,{...entry,sha256:'bad'},{...entry,bytes:0},{...entry,bytes:-1},
+      {...entry,version:'<img src=x onerror="window.testXss=true">'},
+      ...['javascript:alert(1)','/relative.dmg','https://evil.example/download',entry.downloadUrl+'?x=1',entry.downloadUrl+'#x',
+        entry.downloadUrl.replace('santirosado21-spec','other-owner'),
+        entry.downloadUrl.replace(/(arm64|x64)\.(dmg|exe)$/,(match,arch,ext)=>`${arch==='arm64'?'x64':'arm64'}.${ext}`)]
+       .map(downloadUrl=>({...entry,downloadUrl}))];
+    for(const bad of badEntries){
+      fixture=structuredClone(future);fixture.platforms[key]=bad;
+      await fixturePage.reload({waitUntil:'networkidle'});await assertInert(fixturePage,key);
+      for(const other of platformKeys.filter(other=>other!==key))await expect(field(fixturePage,other,'download')).toHaveAttribute('href',future.platforms[other].downloadUrl);
+      assert.equal(await fixturePage.evaluate(()=>Boolean(window.testXss)),false);
+      assert.equal(await fixturePage.locator('[data-platform] img').count(),0);
+    }
+  }
+  fixture=structuredClone(catalogue);
+  for(const key of platformKeys)fixture.platforms[key]={version:null,status:'pending',downloadUrl:null,bytes:null,sha256:null,requirements:null};
+  await fixturePage.reload({waitUntil:'networkidle'});
+  for(const key of platformKeys){
+    await assertInert(fixturePage,key);
+    const link=field(fixturePage,key,'download');
+    assert.equal(await link.evaluate(element=>{
+      const click=new MouseEvent('click',{bubbles:true,cancelable:true});
+      const enter=new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true});
+      const space=new KeyboardEvent('keydown',{key:' ',bubbles:true,cancelable:true});
+      element.dispatchEvent(click);element.dispatchEvent(enter);element.dispatchEvent(space);
+      return click.defaultPrevented&&enter.defaultPrevented&&space.defaultPrevented;
+    }),true);
+  }
+  fetchFailure=true;await fixturePage.reload({waitUntil:'networkidle'});
+  for(const key of platformKeys)await assertInert(fixturePage,key);
+  await fixturePage.close();
 
   for (const width of [1440, 1024, 768, 390, 320]) await assertNoOverflow(page, width);
+  // Clean viewport evidence follows real navigation from a fresh page, not
+  // locator screenshots that scroll a clipped card under the sticky header.
+  report.anchorNavigation=[];
+  for(const width of [390,320]) {
+    const clean=await browser.newPage({viewport:{width,height:844},reducedMotion:'reduce'});
+    clean.on('pageerror',error=>errors.push(error.message));
+    clean.on('request',request=>requests.push(request.url()));
+    await clean.goto(base,{waitUntil:'networkidle'});
+    await clean.keyboard.press('Tab');
+    await expect(clean.getByText('Saltar al contenido',{exact:true})).toBeFocused();
+    const skipClear=await clean.locator('.skip-link').evaluate(element=>{
+      const box=element.getBoundingClientRect();
+      return element===document.elementFromPoint(box.left+box.width/2,box.top+box.height/2);
+    });
+    assert.equal(skipClear,true,`skip link visually reachable at ${width}px`);
+    await clean.screenshot({path:path.join(output,`${width}-skip-focused.png`)});
+    // Leave the focused skip control through ordinary keyboard navigation;
+    // its intentional overlay can cover header links at narrow widths.
+    await clean.keyboard.press('Tab');
+    await expect(clean.locator('.skip-link')).not.toBeFocused();
+    await clean.locator('.nav-cta').click();
+    await expect(clean).toHaveURL(/#descargar$/);
+    await expect(clean.locator('.skip-link')).not.toBeFocused();
+    const geometry=await clean.evaluate(()=>{
+      const header=document.querySelector('.site-header').getBoundingClientRect();
+      const title=document.querySelector('#download-title').getBoundingClientRect();
+      return {headerBottom:header.bottom,titleTop:title.top,scrollY,activeElement:document.activeElement.className};
+    });
+    assert.ok(geometry.titleTop>=geometry.headerBottom,`download heading obscured at ${width}px`);
+    await clean.screenshot({path:path.join(output,`${width}-downloads-anchor-viewport.png`)});
+    await clean.locator('[data-platform="mac-arm64"] [data-field="download"]').focus();
+    const focusClear=await clean.locator('[data-platform="mac-arm64"] [data-field="download"]').evaluate(element=>{
+      const box=element.getBoundingClientRect(),header=document.querySelector('.site-header').getBoundingClientRect();
+      return box.top>=header.bottom&&box.bottom<=innerHeight;
+    });
+    assert.equal(focusClear,true,`download focus obscured at ${width}px`);
+    await clean.screenshot({path:path.join(output,`${width}-download-focused-viewport.png`)});
+    report.anchorNavigation.push({width,skipClear,focusClear,...geometry});await clean.close();
+  }
   assert.deepEqual(errors, []);
   assert.deepEqual(failed, []);
   const origin = new URL(base).origin;
   assert.deepEqual(requests.filter(url => new URL(url).origin !== origin), []);
-  report.checks.push('local Newsreader and Schibsted Grotesk load', 'landing theme toggle cycles Automatic, Light, and Dark with the matching mark', 'eleven tools grouped by task are visible', 'integrations show Próxima versión for catalogue 0.4.3', 'demo tabs work with arrow keys and the citation link draws on focus', 'no em dash in visible copy or title', 'answer method, matters-as-projects and FAQ sections render with honest release labels', 'catalogue null state disables the download and copy controls', 'route-intercepted catalogue enables the button and renders URL, size, and SHA-256', 'keyboard focus is visible', 'no horizontal overflow at 1440/1024/768/390/320', 'no failed resources, browser exceptions, or third-party requests');
+  report.checks.push('local Newsreader and Schibsted Grotesk load', 'landing theme toggle cycles Automatic, Light, and Dark with the matching mark', 'eleven tools grouped by task are visible', 'integrations show Próxima versión for catalogue 0.4.3', 'demo tabs work with arrow keys and the citation link draws on focus', 'no em dash in visible copy or title', 'answer method, matters-as-projects and FAQ sections render with honest release labels', 'schema3 keeps three explicit independent platform choices; only older ARM0.4.3 is published', 'route-only Intel/Windows valid fixtures enable without requesting binaries', 'all three cards independently reject null/hash/bytes/crossarch/repo/URL/XSS failures', 'all-null and catalogue-fetch failure disable every control', 'clipboard identifies platform/version and disabled links prevent pointer/Enter/Space', 'keyboard focus is visible', 'no horizontal overflow at 1440/1024/768/390/320', 'no failed resources, browser exceptions, or third-party requests');
+  report.observed={browserExceptions:errors,failedHttpResponses:failed,thirdPartyRequests:requests.filter(url=>new URL(url).origin!==origin),intentionalCatalogueAbortCases:1,downloadRequests:requests.filter(url=>url.includes('/releases/download/'))};
+  assert.deepEqual(report.observed.downloadRequests,[]);
   report.status = 'PASS';
 } catch (error) {
   report.status = 'FAIL';
@@ -165,6 +253,6 @@ try {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
   report.finishedAt = new Date().toISOString();
-  await writeFile('artifacts/landing/smoke.json', JSON.stringify(report, null, 2) + '\n');
+  await writeFile(path.join(output,'smoke.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report, null, 2));
 }

@@ -56,7 +56,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:600;letter-spacing:0;line-
 strong{font-weight:600}
 .shell{width:min(1200px,calc(100% - 64px));margin-inline:auto}
 .section{padding-block:120px}
-.skip-link{position:fixed;top:-100px;left:20px;z-index:10;background:var(--surface);border:2px solid var(--seal);padding:10px 14px}
+.skip-link{position:fixed;top:-100px;left:20px;z-index:30;background:var(--surface);border:2px solid var(--seal);padding:10px 14px}
 .skip-link:focus{top:16px}
 a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--seal);outline-offset:4px;border-radius:4px}
 .intro-line{margin-bottom:16px;color:var(--ink-2);font-size:.9rem}
@@ -338,3 +338,17 @@ blockquote{margin:8px 0 0;font-family:var(--serif);font-size:1.12rem;line-height
   .faq-list summary{font-size:1.12rem}
 }
 @media (max-width:980px){.site-header nav a:not(.nav-cta){display:none}}
+
+/* Explicit platform choices; no architecture inference from the browser. */
+.download-copy{max-width:76ch}
+.platform-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:36px}
+.platform-grid .release-card{min-width:0;display:flex;flex-direction:column}
+.platform-grid h3{font-family:var(--serif);font-size:1.6rem}
+.platform-version{margin-top:12px;font-weight:600}
+.platform-requirements{margin-top:12px;color:var(--ink-2);font-size:.9rem}
+.platform-grid .download-button{margin-top:24px;padding:12px;text-align:center}
+.platform-grid .download-state{flex:1}
+.platform-size{margin-top:12px;font-size:.9rem}
+.platform-grid .checksum-row{align-items:flex-start;flex-direction:column}
+@media(max-width:980px){.platform-grid{grid-template-columns:1fr}.platform-grid .checksum-row{flex-direction:row}.platform-grid .release-card{max-width:100%}}
+@media(max-width:620px){.platform-grid .checksum-row{flex-direction:column}}

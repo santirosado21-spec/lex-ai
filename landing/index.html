@@ -38,7 +38,7 @@
         <h1 id="hero-title">Una respuesta debe poder volver al pasaje que la sostiene.</h1>
         <p class="lede">LEX AI organiza el asunto, recupera la fuente pertinente y deja la cita a la vista. Tus documentos y el asistente trabajan en tu Mac.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#descargar">Descargar para Mac</a>
+          <a class="button button-primary" href="#descargar">Ver descargas</a>
           <a class="quiet-link" href="#herramientas">Conocer las herramientas</a>
         </div>
         <p class="local-note"><span class="device-mark" aria-hidden="true"></span>Después de la preparación inicial, el trabajo funciona sin conexión.</p>
@@ -224,36 +224,59 @@
     </section>
 
     <section class="download-section" id="descargar" aria-labelledby="download-title">
-      <div class="shell download-layout">
-        <div>
-          <p class="intro-line">Descarga</p>
-          <h2 id="download-title">Instala LEX AI en tu Mac.</h2>
-          <p class="download-copy">La versión pública se publica aquí con su tamaño y suma de verificación. No necesitas crear una cuenta ni subir documentos a este sitio.</p>
-          <a class="button button-primary download-button" id="download-button" role="button" aria-disabled="true" tabindex="-1">Disponible muy pronto</a>
-          <p class="download-state" id="download-state" aria-live="polite">La descarga aún no está publicada.</p>
+      <div class="shell">
+        <p class="intro-line">Descargas</p>
+        <h2 id="download-title">Elige tu equipo.</h2>
+        <p class="download-copy">Sólo está publicado el instalador anterior 0.4.3 para Mac con Apple Silicon: una versión local experimental. El nuevo flujo híbrido aún no está disponible. Este sitio no recibe documentos.</p>
+        <div class="platform-grid">
+          <article class="release-card" data-platform="mac-arm64" aria-labelledby="title-mac-arm64">
+            <h3 id="title-mac-arm64">Mac · Apple Silicon</h3>
+            <p class="platform-version" data-field="version">Versión pendiente</p>
+            <p class="platform-requirements">Chip M1 o posterior. Objetivo: 8 GB de RAM, sin validación en un equipo físico de 8 GB; ~3 GB libres y ~1.95 GB de preparación inicial. Sin notarización de Apple.</p>
+            <a class="button button-primary download-button" data-field="download" role="link" aria-disabled="true" tabindex="-1" aria-describedby="state-mac-arm64">Pendiente de publicación</a>
+            <p class="download-state" data-field="state" id="state-mac-arm64" aria-live="polite">No hay un instalador verificado para esta opción.</p>
+            <p class="platform-size" data-field="size">Tamaño pendiente</p>
+            <div class="checksum-block">
+              <p class="checksum-label">SHA-256 del archivo</p>
+              <div class="checksum-row"><code data-field="sha">Pendiente de publicación</code><button type="button" class="copy-button" data-field="copy" aria-label="Copiar SHA-256 para Mac · Apple Silicon" disabled>Copiar</button></div>
+              <p class="copy-status" data-field="copy-status" aria-live="polite"></p>
+            </div>
+          </article>
+          <article class="release-card" data-platform="mac-x64" aria-labelledby="title-mac-x64">
+            <h3 id="title-mac-x64">Mac · Intel</h3>
+            <p class="platform-version" data-field="version">Versión pendiente</p>
+            <p class="platform-requirements">Instalador y requisitos pendientes de publicación y pruebas. No uses el instalador para Apple Silicon.</p>
+            <a class="button button-primary download-button" data-field="download" role="link" aria-disabled="true" tabindex="-1" aria-describedby="state-mac-x64">Pendiente de publicación</a>
+            <p class="download-state" data-field="state" id="state-mac-x64" aria-live="polite">No hay un instalador verificado para esta opción.</p>
+            <p class="platform-size" data-field="size">Tamaño pendiente</p>
+            <div class="checksum-block">
+              <p class="checksum-label">SHA-256 del archivo</p>
+              <div class="checksum-row"><code data-field="sha">Pendiente de publicación</code><button type="button" class="copy-button" data-field="copy" aria-label="Copiar SHA-256 para Mac · Intel" disabled>Copiar</button></div>
+              <p class="copy-status" data-field="copy-status" aria-live="polite"></p>
+            </div>
+          </article>
+          <article class="release-card" data-platform="windows-x64" aria-labelledby="title-windows-x64">
+            <h3 id="title-windows-x64">Windows</h3>
+            <p class="platform-version" data-field="version">Versión pendiente</p>
+            <p class="platform-requirements">Instalador, arquitectura compatible y requisitos pendientes de publicación y pruebas.</p>
+            <a class="button button-primary download-button" data-field="download" role="link" aria-disabled="true" tabindex="-1" aria-describedby="state-windows-x64">Pendiente de publicación</a>
+            <p class="download-state" data-field="state" id="state-windows-x64" aria-live="polite">No hay un instalador verificado para esta opción.</p>
+            <p class="platform-size" data-field="size">Tamaño pendiente</p>
+            <div class="checksum-block">
+              <p class="checksum-label">SHA-256 del archivo</p>
+              <div class="checksum-row"><code data-field="sha">Pendiente de publicación</code><button type="button" class="copy-button" data-field="copy" aria-label="Copiar SHA-256 para Windows" disabled>Copiar</button></div>
+              <p class="copy-status" data-field="copy-status" aria-live="polite"></p>
+            </div>
+          </article>
         </div>
-        <div class="release-card">
-          <div class="release-topline"><span>Versión <strong data-release-version>0.4.3</strong></span><span>macOS, Apple Silicon</span></div>
-          <dl class="requirements-list">
-            <div><dt>Equipo</dt><dd>Mac con Apple Silicon</dd></div>
-            <div><dt>Memoria</dt><dd>8 GB de RAM como mínimo</dd></div>
-            <div><dt>Espacio libre</dt><dd>~3 GB para la instalación</dd></div>
-            <div><dt>Primera preparación</dt><dd>Descarga ~1.95 GB de componentes del asistente; después funciona localmente.</dd></div>
-            <div><dt>Archivo</dt><dd id="download-size">Tamaño pendiente de publicación</dd></div>
-          </dl>
-          <div class="checksum-block">
-            <p class="checksum-label">SHA-256 del archivo</p>
-            <div class="checksum-row"><code id="download-sha">Pendiente de publicación</code><button type="button" class="copy-button" id="copy-sha" disabled>Copiar</button></div>
-            <p class="copy-status" id="copy-status" aria-live="polite"></p>
-          </div>
-        </div>
+        <p class="download-state">En tu Mac, abre el menú Apple &gt; Acerca de esta Mac: “Chip” indica Apple Silicon; “Procesador Intel” indica Intel. Elige la opción manualmente.</p>
       </div>
     </section>
 
     <section class="install shell section" aria-labelledby="install-title">
       <div class="section-heading">
-        <div><p class="intro-line">Después de descargar</p><h2 id="install-title">Instalación en cuatro pasos.</h2></div>
-        <p>La primera apertura requiere una acción adicional porque este build todavía no cuenta con notarización de Apple.</p>
+        <div><p class="intro-line">Después de descargar</p><h2 id="install-title">Instalar la versión anterior en Apple Silicon.</h2></div>
+        <p>Estos pasos son sólo para el DMG 0.4.3 de Apple Silicon. Mac Intel y Windows siguen pendientes; no hay instrucciones de instalación verificadas para esas opciones.</p>
       </div>
       <ol class="install-steps">
         <li><span>1</span><div><h3>Abre el DMG</h3><p>Cuando termine la descarga, abre el archivo de instalación.</p></div></li>
@@ -270,8 +293,8 @@
         <p>Las respuestas describen esta versión experimental, no un compromiso futuro.</p>
       </div>
       <div class="faq-list">
-        <details><summary>¿Mis documentos salen de mi Mac?</summary><p>No. Los documentos, las consultas y el asistente funcionan en tu Mac. Este sitio sólo ofrece la descarga y la ficha pública de la versión.</p></details>
-        <details><summary>¿Necesito conexión a internet?</summary><p>Sólo para descargar la app y, la primera vez, los componentes del asistente (unos 1.95 GB). Después, el trabajo funciona sin conexión.</p></details>
+        <details><summary>¿Qué versión puedo descargar?</summary><p>La 0.4.3 para Mac con Apple Silicon, anterior y experimental, usa un motor local. Mac Intel y Windows siguen pendientes. El nuevo flujo híbrido no está publicado; no se presenta aquí como privacidad o cifrado ya validados. Este sitio sólo ofrece información y descargas, sin subida de documentos.</p></details>
+        <details><summary>¿Necesito conexión a internet?</summary><p>En la versión anterior 0.4.3, para descargar la app y sus componentes iniciales (unos 1.95 GB); después usa el motor local. Esto no describe versiones futuras para Intel, Windows ni el flujo híbrido en desarrollo.</p></details>
         <details><summary>¿Qué pasa si LEX AI no encuentra la fuente?</summary><p>Te lo dice. No inventa artículos, fechas ni plazos: te pide la disposición, el documento o la jurisdicción para poder fundamentar la respuesta.</p></details>
         <details><summary>¿Sirve para estados además de la federación?</summary><p>La biblioteca es federal, con una selección parcial de Jalisco y Nuevo León. Para otros estados, LEX AI te pide el texto oficial aplicable.</p></details>
         <details><summary>¿Funciona en una Mac con 8 GB de RAM?</summary><p>Está diseñada para ese mínimo, pero esta versión aún no se ha probado en una Mac física con 8 GB. Si la memoria libre no alcanza, LEX AI lo avisa en lugar de bloquear el equipo.</p></details>
