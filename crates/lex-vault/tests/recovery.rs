@@ -141,6 +141,11 @@ fn parent_usage(source: u8) -> Result<u64, ()> {
         Ok(unsafe { usage.assume_init() }.ru_maxrss as u64)
     }
 }
+#[derive(Debug)]
+enum SampleFailure {
+    Unavailable,
+    Observation,
+}
 enum OwnedSample {
     Exited(ExitStatus),
     Rss(u64),
@@ -184,7 +189,7 @@ impl Children {
             .ok_or_else(|| std::io::Error::other("unknown owned child"))?
             .try_wait()
     }
-    fn sample_rss(&self, id: usize) -> std::io::Result<OwnedSample> {
+    fn sample_rss(&self, id: usize) -> Result<OwnedSample, SampleFailure> {
         // The owned Child remains unreaped during query, serialized with shutdown.
         let mut state = self.lock();
         let mut observation = SampleObservation::default();
@@ -260,7 +265,13 @@ impl Children {
         if observation.result == 3 || observation.query_attempted && observation.rss != 2 {
             emit_sample(1, observation, counters);
         }
-        result
+        result.map_err(|_| {
+            if observation.pre == 1 && observation.post == 1 {
+                SampleFailure::Unavailable
+            } else {
+                SampleFailure::Observation
+            }
+        })
     }
     fn emit_sampler_snapshot(&self, source: u8) {
         let state = self.lock();
@@ -343,7 +354,7 @@ impl BatchGuard {
                 if bytes > 805306368 {
                     terminate_after_cleanup(&owned, 73)
                 }
-                thread::sleep(Duration::from_millis(50));
+                thread::sleep(SAMPLE_INTERVAL);
             }
         });
         Self {
@@ -355,11 +366,20 @@ impl BatchGuard {
             children,
         }
     }
+    fn deadline(&self) -> Instant {
+        (self.started
+            + Duration::from_millis(self.stage.load(std::sync::atomic::Ordering::SeqCst))
+            + Duration::from_secs(60))
+        .min(self.started + Duration::from_secs(300))
+    }
     fn next(&self) {
+        let previous_deadline = self.deadline();
+        enforce_deadline(&self.children, previous_deadline);
         self.stage.store(
             self.started.elapsed().as_millis() as u64,
             std::sync::atomic::Ordering::SeqCst,
         );
+        enforce_deadline(&self.children, previous_deadline);
     }
     fn peak(&self) -> u64 {
         self.peak.load(std::sync::atomic::Ordering::SeqCst)
@@ -383,33 +403,117 @@ fn cleanup_for_failure(children: &Children, code: i32) -> i32 {
 fn terminate_after_cleanup(children: &Children, code: i32) -> ! {
     std::process::exit(cleanup_for_failure(children, code))
 }
-// A failed RSS sampler is harmless only when the owned restore has already exited.
-// Otherwise monitoring is unavailable: clean up and return the finite sampler-failure code.
-fn resolve_sample_failure(children: &Children, restore: usize) -> Result<ExitStatus, i32> {
-    let observed = children.poll(restore);
-    let (state, errno, exit) = match &observed {
-        Ok(Some(status)) => (
-            2,
-            0,
-            if status.success() {
-                1
-            } else if status.code().is_some() {
-                2
-            } else {
-                3
-            },
-        ),
-        Ok(None) => (1, 0, 0),
-        Err(error) => (3, error.raw_os_error().unwrap_or(0), 0),
-    };
-    diagnostic_line(format_args!(
-        "source=5 wait={state} errno={errno} exit={exit}"
-    ));
-    match observed {
-        Ok(Some(status)) => Ok(status),
-        Ok(None) | Err(_) => Err(cleanup_for_failure(children, 72)),
+fn enforce_deadline(children: &Children, deadline: Instant) {
+    if Instant::now() >= deadline {
+        terminate_after_cleanup(children, 71);
     }
 }
+// Exit-only settlement is a narrow monitoring-contract change, not an RSS retry.
+const SAMPLE_INTERVAL: Duration = Duration::from_millis(50);
+#[derive(Default)]
+struct SettlementObservation {
+    polls: u32,
+    wait: u8,
+    errno: i32,
+    elapsed_us: u128,
+    outcome: u8, // 1 settled, 2 settlement expiry, 3 poll error, 4 poll cap, 5 TIME
+}
+fn settle_exit(
+    outer_deadline: Duration,
+    mut clock: impl FnMut() -> Duration,
+    mut poll: impl FnMut() -> std::io::Result<Option<ExitStatus>>,
+    mut sleep: impl FnMut(Duration),
+) -> (Option<ExitStatus>, SettlementObservation) {
+    let start = clock();
+    let deadline = start.saturating_add(SAMPLE_INTERVAL).min(outer_deadline);
+    let mut o = SettlementObservation::default();
+    // Also bounds injected/nonadvancing clocks; production uses monotonic Instant.
+    for _ in 0..51 {
+        let before = clock();
+        o.elapsed_us = before.saturating_sub(start).as_micros();
+        if before >= deadline {
+            o.outcome = if before >= outer_deadline { 5 } else { 2 };
+            return (None, o);
+        }
+        let result = poll();
+        o.polls += 1;
+        o.wait = match &result {
+            Ok(Some(_)) => 2,
+            Ok(None) => 1,
+            Err(error) => {
+                o.errno = error.raw_os_error().unwrap_or(0);
+                3
+            }
+        };
+        let after = clock();
+        o.elapsed_us = after.saturating_sub(start).as_micros();
+        if after >= deadline {
+            o.outcome = if after >= outer_deadline { 5 } else { 2 };
+            return (None, o);
+        }
+        match result {
+            Ok(Some(status)) => {
+                o.outcome = 1;
+                return (Some(status), o);
+            }
+            Err(_) => {
+                o.outcome = 3;
+                return (None, o);
+            }
+            Ok(None) => {
+                let before_sleep = clock();
+                if before_sleep >= deadline {
+                    o.elapsed_us = before_sleep.saturating_sub(start).as_micros();
+                    o.outcome = if before_sleep >= outer_deadline { 5 } else { 2 };
+                    return (None, o);
+                }
+                sleep(Duration::from_millis(1).min(deadline - before_sleep));
+                let after_sleep = clock();
+                if after_sleep >= deadline {
+                    o.elapsed_us = after_sleep.saturating_sub(start).as_micros();
+                    o.outcome = if after_sleep >= outer_deadline { 5 } else { 2 };
+                    return (None, o);
+                }
+            }
+        }
+    }
+    o.outcome = 4;
+    (None, o)
+}
+fn finish_settlement(
+    status: Option<ExitStatus>,
+    cleanup: impl FnOnce() -> i32,
+) -> Result<ExitStatus, i32> {
+    status.ok_or_else(cleanup)
+}
+fn resolve_sample_failure(
+    children: &Children,
+    restore: usize,
+    outer_deadline: Instant,
+) -> Result<ExitStatus, i32> {
+    let started = Instant::now();
+    let (status, o) = settle_exit(
+        outer_deadline.saturating_duration_since(started),
+        || started.elapsed(),
+        || children.poll(restore),
+        thread::sleep,
+    );
+    diagnostic_line(format_args!(
+        "source=5 wait={} errno={} polls={} settlement_us={} outcome={}",
+        o.wait, o.errno, o.polls, o.elapsed_us, o.outcome
+    ));
+    // Logging or scheduling after the final poll cannot turn a late result into success.
+    if Instant::now() >= outer_deadline {
+        return Err(cleanup_for_failure(children, 71));
+    }
+    if started.elapsed() >= SAMPLE_INTERVAL && status.is_some() {
+        return Err(cleanup_for_failure(children, 72));
+    }
+    finish_settlement(status, || {
+        cleanup_for_failure(children, if o.outcome == 5 { 71 } else { 72 })
+    })
+}
+
 fn part(writer: &mut impl Write, bytes: &[u8]) {
     writer
         .write_all(&(bytes.len() as u32).to_be_bytes())
@@ -424,7 +528,8 @@ fn child_case(
     batch: Instant,
     guard: &BatchGuard,
 ) -> (u8, u64) {
-    assert!(batch.elapsed() < Duration::from_secs(300));
+    let deadline = guard.deadline().min(batch + Duration::from_secs(300));
+    enforce_deadline(&guard.children, deadline);
     let root = tempfile::Builder::new()
         .prefix("lex-recovery-child-synthetic-")
         .tempdir()
@@ -464,25 +569,32 @@ fn child_case(
         drop(input);
         result
     });
-    let started = Instant::now();
     let mut peak = 0u64;
     let status = loop {
-        if let Some(status) = guard.children.poll(child).unwrap() {
-            break status;
-        }
-        if started.elapsed() > Duration::from_secs(60) || batch.elapsed() > Duration::from_secs(300)
-        {
-            assert!(guard.children.shutdown());
-            let _ = writer.join();
-            panic!("bounded recovery deadline")
+        enforce_deadline(&guard.children, deadline);
+        let polled = guard.children.poll(child);
+        enforce_deadline(&guard.children, deadline);
+        match polled {
+            Ok(Some(status)) => break status,
+            Ok(None) => {}
+            Err(_) => terminate_after_cleanup(&guard.children, 72),
         }
         // Fixed native read of our owned child; no setuid ps executable under sandbox.
-        match guard.children.sample_rss(child) {
+        enforce_deadline(&guard.children, deadline);
+        let sampled = guard.children.sample_rss(child);
+        enforce_deadline(&guard.children, deadline);
+        match sampled {
             Ok(OwnedSample::Exited(status)) => break status,
-            Err(_) => match resolve_sample_failure(&guard.children, child) {
-                Ok(status) => break status,
-                Err(code) => std::process::exit(code), // cleanup/reaping already completed
-            },
+            Err(SampleFailure::Observation) => terminate_after_cleanup(&guard.children, 72),
+            Err(SampleFailure::Unavailable) => {
+                match resolve_sample_failure(&guard.children, child, deadline) {
+                    Ok(status) => {
+                        enforce_deadline(&guard.children, deadline);
+                        break status;
+                    }
+                    Err(code) => std::process::exit(code), // cleanup/reaping already completed
+                }
+            }
             Ok(OwnedSample::Rss(rss)) => {
                 peak = peak.max(rss);
                 let parent_rss = parent_usage(4).unwrap_or(u64::MAX);
@@ -493,8 +605,11 @@ fn child_case(
                 }
             }
         }
-        thread::sleep(Duration::from_millis(50));
+        enforce_deadline(&guard.children, deadline);
+        thread::sleep(SAMPLE_INTERVAL.min(deadline.saturating_duration_since(Instant::now())));
+        enforce_deadline(&guard.children, deadline);
     };
+    enforce_deadline(&guard.children, deadline);
     let _ = writer.join().unwrap();
     let mut stdout = Vec::new();
     child_stdout
@@ -517,6 +632,7 @@ fn child_case(
     assert_eq!(status.success(), code == 0);
     // Only ciphertext residuals may exist. Clean child capabilities should remove all owned DBs.
     assert_eq!(fs::read_dir(root.path().join("tmp")).unwrap().count(), 0);
+    enforce_deadline(&guard.children, deadline);
     (code as u8, peak)
 }
 // Fixed, non-JSON diagnostic vocabulary only. These observations never reset the guard.
@@ -802,6 +918,121 @@ fn first_batch_18() {
 #[test]
 #[ignore = "harmless process supervision requires separate reviewed clean-VM execution"]
 fn supervisor_cleanup_without_crypto() {
+    // Pure settlement regressions: no clock sleep, native call or fresh process.
+    {
+        use std::cell::Cell;
+        use std::os::unix::process::ExitStatusExt;
+        // scenarios: delayed exact nonzero exit, live, late exit, poll error,
+        // equality at completion, equality before poll, sleeper overshoot.
+        for scenario in 0..7 {
+            let now = Cell::new(Duration::ZERO);
+            let polls = Cell::new(0u32);
+            let sleeps = Cell::new(0u32);
+            let (status, observation) = settle_exit(
+                Duration::from_secs(300),
+                || now.get(),
+                || {
+                    polls.set(polls.get() + 1);
+                    match scenario {
+                        0 if polls.get() == 3 => Ok(Some(ExitStatus::from_raw(7 << 8))),
+                        2 => {
+                            now.set(Duration::from_millis(51));
+                            Ok(Some(ExitStatus::from_raw(0)))
+                        }
+                        3 => Err(std::io::Error::from_raw_os_error(libc::ECHILD)),
+                        4 => {
+                            now.set(SAMPLE_INTERVAL);
+                            Ok(Some(ExitStatus::from_raw(0)))
+                        }
+                        _ => Ok(None),
+                    }
+                },
+                |duration| {
+                    sleeps.set(sleeps.get() + 1);
+                    assert!(duration <= Duration::from_millis(1));
+                    now.set(match scenario {
+                        5 => SAMPLE_INTERVAL,
+                        6 => Duration::from_millis(51),
+                        _ => now.get() + duration,
+                    });
+                },
+            );
+            let cleaned = Cell::new(false);
+            let result = finish_settlement(status, || {
+                cleaned.set(true);
+                72
+            });
+            if scenario == 0 {
+                assert_eq!(result.unwrap().code(), Some(7));
+                assert!(!cleaned.get());
+                assert_eq!(observation.outcome, 1);
+                assert_eq!(polls.get(), 3);
+                assert_eq!(sleeps.get(), 2);
+            } else {
+                assert_eq!(result.unwrap_err(), 72);
+                assert!(cleaned.get());
+                assert_eq!(observation.outcome, if scenario == 3 { 3 } else { 2 });
+                assert!(polls.get() <= 50);
+                if scenario >= 2 {
+                    assert_eq!(polls.get(), 1);
+                }
+            }
+        }
+        // Ten milliseconds remain in the original stage or global batch. No new
+        // 50ms grace may supersede either absolute deadline; equality is expired.
+        for limit in [60_000u64, 300_000u64] {
+            for delta in [9u64, 10, 11] {
+                let start = Duration::from_millis(limit - 10);
+                let now = Cell::new(start);
+                let polls = Cell::new(0);
+                let (status, o) = settle_exit(
+                    Duration::from_millis(limit),
+                    || now.get(),
+                    || {
+                        polls.set(polls.get() + 1);
+                        now.set(start + Duration::from_millis(delta));
+                        Ok(Some(ExitStatus::from_raw(7 << 8)))
+                    },
+                    |_| panic!("exit poll must not sleep"),
+                );
+                assert_eq!(polls.get(), 1);
+                let cleaned = Cell::new(false);
+                let result = finish_settlement(status, || {
+                    cleaned.set(true);
+                    if o.outcome == 5 { 71 } else { 72 }
+                });
+                if delta == 9 {
+                    assert_eq!(result.unwrap().code(), Some(7));
+                    assert!(!cleaned.get());
+                } else {
+                    assert_eq!(result.unwrap_err(), 71);
+                    assert!(cleaned.get());
+                    assert_eq!(o.outcome, 5);
+                }
+            }
+            let now = Cell::new(Duration::from_millis(limit - 10));
+            let (status, o) = settle_exit(
+                Duration::from_millis(limit),
+                || now.get(),
+                || Ok(None),
+                |d| now.set(now.get() + d),
+            );
+            assert!(status.is_none());
+            assert_eq!(o.polls, 10);
+            assert_eq!(o.outcome, 5);
+            let (status, o) = settle_exit(
+                Duration::from_millis(limit),
+                || Duration::from_millis(limit),
+                || panic!("expired stage must not poll"),
+                |_| panic!("expired stage must not sleep"),
+            );
+            assert!(status.is_none());
+            assert_eq!(o.polls, 0);
+            assert_eq!(o.outcome, 5);
+        }
+        // Cleanup failure cannot be transformed into sampler success.
+        assert_eq!(finish_settlement(None, || 74).unwrap_err(), 74);
+    }
     fn spawn_sleep(owned: &Children) -> (usize, u32) {
         let (id, pid, _, _) = owned
             .spawn(
@@ -842,7 +1073,10 @@ fn supervisor_cleanup_without_crypto() {
     let owned = Children::default();
     let (id, pid) = spawn_sleep(&owned);
     assert!(owned.poll(id).unwrap().is_none());
-    assert_eq!(resolve_sample_failure(&owned, id).unwrap_err(), 72);
+    assert_eq!(
+        resolve_sample_failure(&owned, id, Instant::now() + Duration::from_secs(60)).unwrap_err(),
+        72
+    );
     reaped(pid);
     assert!(owned.lock().done);
     // Two racing shutdown callers both return only after the single owner has reaped.
@@ -878,11 +1112,18 @@ fn supervisor_cleanup_without_crypto() {
     }
     // The same failed sampler after normal restore exit preserves that exact exit status
     // and does not close the registry or turn it into a monitoring failure.
-    assert!(resolve_sample_failure(&owned, id).unwrap().success());
+    assert!(
+        resolve_sample_failure(&owned, id, Instant::now() + Duration::from_secs(60))
+            .unwrap()
+            .success()
+    );
     assert!(
         matches!(owned.sample_rss(id).unwrap(), OwnedSample::Exited(status) if status.success())
     );
-    assert!(owned.sample_rss(usize::MAX).is_err());
+    assert!(matches!(
+        owned.sample_rss(usize::MAX),
+        Err(SampleFailure::Observation)
+    ));
     assert!(!owned.lock().stopping);
     assert!(owned.shutdown());
     reaped(pid);
@@ -930,9 +1171,15 @@ fn supervisor_cleanup_without_crypto() {
                 assert!(status.success());
                 2
             }
-            Err(_) => {
+            Err(failure) => {
                 sample_errors += 1;
-                match resolve_sample_failure(&owned, id) {
+                let resolution = match failure {
+                    SampleFailure::Unavailable => {
+                        resolve_sample_failure(&owned, id, Instant::now() + Duration::from_secs(60))
+                    }
+                    SampleFailure::Observation => Err(cleanup_for_failure(&owned, 72)),
+                };
+                match resolution {
                     Ok(status) => {
                         exit_observed += 1;
                         assert!(status.success());

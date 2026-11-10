@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "scope": "EXIT_ONLY_SETTLEMENT_SUPERVISOR_ONLY",
+  "approvedBy": "codex/root",
+  "previousHarmlessRunId": 42897012527,
+  "previousResult": "PASS24probes17positiveRSS7preexits,no failure reproduced",
+  "originalR09CauseKnown": false,
+  "newContract": "At most50ms exit-only settlement composed with original stage60s/batch300s; no RSS requery or restore restart/continuation. Equal/late observations fail TIME71; live/error fails72; cleanup failure74.",
+  "independentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE after deadline-composition P2 correction",
+  "newFreezeSha256": "9129414e9547956fa6cdfa134dd96725a3225548a6b5d8c13f04ddfe9b111a3f",
+  "cryptoTestsAuthorized": false,
+  "recoveryHelperAuthorized": false,
+  "automaticRetry": false,
+  "ownerMacNativeCodegenOrCallsAuthorized": false
+}
