@@ -1,0 +1,52 @@
+# C1b.5 — doce posiciones pendientes de fuentes mexicanas
+
+2026-11-10. Investigación pública de metadatos lista para revisión independiente, sin aprobación de adquisición. Se aplicó PSF con autoría directa de Codex (Sol solicitado en el encargo; identidad efectiva no atestada por herramienta); no se consultaron proveedores LLM ni trabajadores locales. Sólo se escriben este informe y su JSON paralelo.
+
+Se revisaron las doce plazas que C1b.1 dejó sin comprobar: seis Jalisco, cuatro Nuevo León y dos SJF. Resultado: **ocho nuevos destinos concretos candidatos y cuatro plazas todavía sin selección**. Junto a los ocho candidatos anteriores son dieciséis posiciones con propuesta, no dieciséis textos adquiridos. El registro piloto permanece intacto: diez documentos federales concretos y veinte posiciones pendientes. No se añade otra entidad para llenar una plaza bloqueada.
+
+## Trazabilidad de las doce posiciones
+
+| Plaza | Instrumento o tema | Resultado y fuente primaria |
+|---|---|---|
+| jalisco-pending-03 | Código de Procedimientos Civiles del Estado de Jalisco | candidate-proposed: [enlace oficial](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20de%20Procedimientos%20Civiles%20del%20Estado%20de%20Jalisco-180424.pdf) |
+| jalisco-pending-04 | Código Fiscal del Estado de Jalisco | checked-unselected: [enlace oficial](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm) |
+| jalisco-pending-05 | Código Urbano para el Estado de Jalisco | checked-unselected: [enlace oficial](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm) |
+| jalisco-pending-06 | Constitución Política del Estado de Jalisco | candidate-proposed: [enlace oficial](https://congresoweb.congresojal.gob.mx/oic/content/constituci%C3%B3n-pol%C3%ADtica-del-estado-de-jalisco-%C3%BAltima-actualizaci%C3%B3n-06072021) |
+| jalisco-pending-07 | Ley de Justicia Administrativa del Estado de Jalisco | checked-unselected: [enlace oficial](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm) |
+| jalisco-pending-08 | Ley del Gobierno y la Administración Pública Municipal del Estado de Jalisco | checked-unselected: [enlace oficial](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm) |
+| nuevo-leon-pending-05 | LEY DE PROPIEDAD EN CONDOMINIO DE INMUEBLES PARA EL ESTADO DE NUEVO LEÓN | candidate-proposed: [enlace oficial](https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_propiedad_en_condominio_de_inmuebles_para_el_estado_de_nuevo_leon/) |
+| nuevo-leon-pending-06 | LEY DE MECANISMOS ALTERNATIVOS PARA LA SOLUCIÓN DE CONTROVERSIAS PARA EL ESTADO DE NUEVO LEÓN | candidate-proposed: [enlace oficial](https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_mecanismos_alternativos_para_la_solucion_de_controversias_para_el_estado_de_nuevo_leon/) |
+| nuevo-leon-pending-07 | LEY DE RESPONSABILIDADES ADMINISTRATIVAS DEL ESTADO DE NUEVO LEÓN | candidate-proposed: [enlace oficial](https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_responsabilidades_administrativas_del_estado_de_nuevo_leon/) |
+| nuevo-leon-pending-08 | LEY DE PROTECCIÓN DE DATOS PERSONALES EN POSESIÓN DE SUJETOS OBLIGADOS DEL ESTADO DE NUEVO LEÓN | candidate-proposed: [enlace oficial](https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_proteccion_de_datos_personales_en_posesion_de_sujetos_obligados_del_estado_de_nuevo_leon/) |
+| sjf-pending-03 | Presunción de inocencia como regla de trato en vertiente extraprocesal | candidate-proposed: [enlace oficial](https://sjf2.scjn.gob.mx/detalle/tesis/2003693) |
+| sjf-pending-04 | Presunción de inocencia: confrontación de pruebas de cargo y descargo | candidate-proposed: [enlace oficial](https://sjf2.scjn.gob.mx/detalle/tesis/2031026) |
+
+Las cuatro leyes de Nuevo León se abrieron como documentos HTML oficiales; sus cabeceras declaran reformas de 11-10-2023, 30-12-2020, 02-10-2026 y 11-12-2019 respectivamente. Fechas originales declaradas: 02-05-2017, 13-01-2017, 07-06-2019 y 11-12-2019. Son declaraciones del editor, sin conclusión de vigencia. El último documento dice también TEXTO ORIGINAL; no se interpreta la etiqueta de reforma como prueba de una modificación adicional. Se observaron etiquetas PDF/Word, sin resolver ni inventar sus destinos exactos. [Índice del Congreso](https://www.hcnl.gob.mx/trabajo_legislativo/leyes/).
+
+El CPC Jalisco tiene una URL PDF exacta en resultados del dominio oficial, con sufijo180424; apareció también otra130324. Ninguno se abrió. El catálogo reescrito muestra05/09/2023 y A.I.9/2022: no se convierte el sufijo de archivo o una fila de catálogo en versión legal vigente. El registro constitucional OIC tiene título de actualización06/07/2021 y etiqueta de archivo070721; el catálogo declara29/10/2026/A.L.322/LXIV/25. Son observaciones distintas, sin equivalencia ni selección canónica probada. [Catálogo oficial, representación reescrita por herramienta](https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado%272.cfm).
+
+Los dos registros SJF nuevos son identificadores concretos descubiertos en metadatos del host primario. Los temas de la tabla son etiquetas descriptivas, no rubros oficiales completos. En2031026 el índice declara publicación22-08-2025/10:30; no se corrobora el registro completo ni obligatoriedad actual. No hubo apertura de esos registros, API alternativa, automatización de navegador o evasión del bloqueo anterior. [Registro2003693](https://sjf2.scjn.gob.mx/detalle/tesis/2003693), [registro2031026](https://sjf2.scjn.gob.mx/detalle/tesis/2031026).
+
+## Preservación, permisos y límites
+
+Los ocho candidatos de71ad54f permanecen en el informe anterior, referenciado por hash en JSON; no se sustituyen ni sobrescriben. Continúa el conflicto de Jalisco Penal: representación directa/revisada08/03/2026/A.I.48/2026 frente a índice de búsqueda27/08/2026/30145. No se elige fecha o decreto canónico. Los bloqueos previos robots Jalisco406 y SJF403 conservan su significado y no se reintentan. El portal de catálogo de Jalisco devolvió HTML/representación reescrita durante esta investigación; eso no resuelve robots ni aprueba adquisición.
+
+Un único intento actual de robots Nuevo León falló por inaccesibilidad de la herramienta, sin estado HTTP conocido. Se conserva separadamente la observación previa HTTP200/Allow/, pero no se presenta como nueva comprobación. Permisos de reutilización y adquisición: UNKNOWN/no aprobado para todos los candidatos nuevos. La falta de evidencia no se transforma en permiso.
+
+Se rechazaron como sustitutos un catálogo explícitamente OBSOLETO, copias de catálogo, referencias históricas externas.doc, decretos/iniciativas de2012, un modelo de política de integridad, un libro de historia institucional y agregadores/noticias. No son destinos de los textos consolidados buscados. El JSON enumera sus URLs y motivos. Fiscal, Urbano, Justicia Administrativa y Gobierno Municipal de Jalisco siguen sin URL documental suficientemente establecida; ninguna fila de catálogo cuenta como texto.
+
+## Presupuesto y evidencia reproducible
+
+**Registro del autor:28/28 operaciones,15 consultas,9 aperturas y4 clics;8 llamadas y máximo4consultas por llamada según reconstrucción de su historial. Estas dos últimas afirmaciones no tienen verificación independiente.** Cada objetivo cuenta, incluso error y reapertura de una vista exitosa. El JSON añade ocho grupos `author-call-01` a `author-call-08` con IDs de operaciones y consultas concretas; son etiquetas locales, no IDs inventados del proveedor. Las peticiones HTTP internas, caché y redirecciones del proveedor son desconocidas:28operaciones no significa28HTTP medidos. El JSON registra individualmente fecha, consulta/URL, tipo, resultado y referencia de herramienta.
+
+Cero aperturas/descargas dePDF, activos masivos, instantáneas HTML guardadas, dependencias, LLM auxiliares, cambios de registro, allowlist, corpus o índice. Los resultados de búsqueda devolvieron fragmentos dePDF indexados; no se descargaron sus cuerpos ni se incorporaron como corpus. No hay hashes de nuevos originales, bytes adquiridos, revisión textual de corpus, aprobación de derechos o precisión jurídica acreditada. Los estados HTTP, bytes y hashes de originales actuales permanecen desconocidos cuando la herramienta no los expone. Las URLs devueltas se conservan; el catálogo de Jalisco sí mostró una URL de redirección explícita, sin recibo HTTP independiente. Los doce IDs no se solapan con los ocho anteriores; los ocho nuevos destinos son distintos entre sí y de todos los anteriores.
+
+Siguiente: revisión independiente de selección/trazabilidad, luego un lote distinto y autorizado de permisos/robots/versiones y destinos. No autoriza rastreador, expansión deallowlist, adquisición, biblioteca activa ni uso de datos reales.
+
+## Corrección de trazabilidad tras revisión independiente P2
+
+Sin consultas nuevas ni cambios de candidatos, estados, plazas o conteos, se añadió al JSON el enlace entre las ocho llamadas declaradas y operaciones1–28. Grupos de consultas:4,0,0,0,4,4,2,1. El historial del autor permite reconstruirlos y comprobar coherencia interna; no se conservaron recibos originales de llamada ni respuestas brutas/hash, por lo que el número histórico de llamadas y el límite por llamada siguen declarados por el autor, no auditados independientemente. Los tiempos exactos por llamada, IDs reales del proveedor y HTTP internos son desconocidos.
+
+Referencias disponibles en ese historial: OIC constitucional `turn97search0` (grupo06); SJF2003693 `turn91search4` y2031026 `turn91search5` (grupo01); CPC Jalisco `turn99search9` y alternativa `turn99search10` (grupo08). Son referencias de sesión a resultados del host primario, no instantáneas autenticadas. Cada candidato de búsqueda incluye ese vínculo y el límite en JSON. Los resultados de una llamada con varias consultas vienen fusionados: no se inventa correspondencia exacta consulta→resultado para los casos no retenidos. Algunos IDs de resultado siguen desconocidos.
+
+Los metadatos obtenidos sólo mediante búsqueda —OIC, SJF y URL PDF del CPC— son evidencia más débil que abrir un documento primario: no demuestran acceso directo, texto completo, fidelidad, fecha operativa o permiso. La corrección documental no vuelve a comprobar las fuentes ni consume más presupuesto web.

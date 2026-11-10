@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "sourceHashes": {
+    "docs/research/mexico-remaining-sources-2026-11-10.md": "2599b49b7ee3ec97ae74f310a724e9cd7b649bead1291a372052c4946e00ccf3",
+    "docs/research/mexico-remaining-sources-2026-11-10.json": "6e8aff54a0cd967a1da0e9c157e92be805b073a91553e859cbb0f802ae22ad0e"
+  },
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE local slot/hash/registry/count consistency and provenance limitations after P2 correction; no reviewer web operations",
+  "previousCandidateSlots": 8,
+  "newlyInvestigatedSlots": 12,
+  "newCandidateSlots": 8,
+  "checkedUnselectedSlots": 4,
+  "pilotPendingSlotsUnchanged": 20,
+  "authorReportedWebOperations": {
+    "queries": 15,
+    "opens": 9,
+    "clicks": 4,
+    "total": 28
+  },
+  "reconstructedCallGroups": 8,
+  "historicalCallCountIndependentlyVerified": false,
+  "rawCallReceiptsRetained": false,
+  "searchOnlyEvidenceIndependentlyVerified": false,
+  "documentsAcquired": 0,
+  "corpusApproved": 0,
+  "currentLawApproved": 0,
+  "productionEnabled": false
+}
