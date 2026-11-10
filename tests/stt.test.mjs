@@ -27,5 +27,26 @@ async function ready(stt){await stt.initialize();for(let n=0;n<30;n++){const sta
 
 test('downloads only the approved bytes, verifies hash and constructs fixed whisper argv',async t=>{const f=await fixture(t);await ready(f.stt);const result=await f.stt.transcribe({audioBase64:wav().toString('base64')});assert.equal(result.text,'Texto sintético');assert.deepEqual(f.calls[0].slice(0,6),['-m',path.join(f.models,'model.bin'),'-l','es','-nt','-np']);assert.equal(f.calls[0][6],'-f');assert.match(f.calls[0][7],/dictation-tmp\/.+\.wav$/);});
 test('refuses a model whose downloaded hash does not match the approved catalog',async t=>{const f=await fixture(t,{body:Buffer.from('esperado')});const bad=createStt({dataDir:f.root,runtimeDir:path.join(f.root,'runtime'),modelsDir:path.join(f.root,'bad-models'),catalog:{small:{file:'model.bin',bytes:8,sha256:digest('different'),minFreeMemoryGB:1,default:true}},dependencies:{fetch:async()=>({ok:true,status:200,headers:{get:()=>null},body:(async function*(){yield Buffer.from('esperado');})()}),memory:async()=>({availableBytes:2e9})}});await bad.initialize();for(let n=0;n<20;n++){const status=await bad.status();if(!status.busy){assert.equal(status.installed,false);assert.match(status.message,/integridad/);return;}await new Promise(resolve=>setTimeout(resolve,2));}assert.fail('la descarga dañada no terminó');});
-test('rejects oversize audio and a concurrent job before spawning a second process',async t=>{let child;const f=await fixture(t,{spawnImpl:()=>{const value=new EventEmitter();value.stdout=new EventEmitter();value.stderr=new EventEmitter();value.kill=()=>{};child=value;return value;}});await ready(f.stt);await assert.rejects(f.stt.transcribe({audioBase64:Buffer.alloc(4*1024*1024+1).toString('base64')}),/hasta 4 MB/);const first=f.stt.transcribe({audioBase64:wav().toString('base64')});await assert.rejects(f.stt.transcribe({audioBase64:wav().toString('base64')}),/operación de dictado/);for(let n=0;!child&&n<10;n++)await new Promise(resolve=>setTimeout(resolve,1));assert.ok(child);child.stdout.emit('data',Buffer.from('Una prueba'));child.emit('exit',0);await first;assert.equal(f.calls.length,1);});
+test('rejects oversize audio and a concurrent job before spawning a second process',{timeout:5000},async t=>{
+ let child,notifySpawn;
+ const spawned=new Promise(resolve=>{notifySpawn=resolve;});
+ const f=await fixture(t,{spawnImpl:()=>{
+  child=new EventEmitter();child.stdout=new EventEmitter();child.stderr=new EventEmitter();child.kill=()=>{};
+  notifySpawn();return child;
+ }});
+ await ready(f.stt);
+ await assert.rejects(f.stt.transcribe({audioBase64:Buffer.alloc(4*1024*1024+1).toString('base64')}),/hasta 4 MB/);
+ const first=f.stt.transcribe({audioBase64:wav().toString('base64')});
+ try{
+  // Synchronize with the actual injected spawn, not an assumed filesystem latency.
+  await Promise.race([spawned,first.then(()=>assert.fail('job ended before spawn'))]);
+  await assert.rejects(f.stt.transcribe({audioBase64:wav().toString('base64')}),/operación de dictado/);
+  assert.equal(f.calls.length,1);
+  child.stdout.emit('data',Buffer.from('Una prueba'));child.emit('exit',0);
+  await first;
+ }finally{
+  child?.emit('exit',0);
+  await first.catch(()=>{});
+ }
+});
 test('times out and deletes its owner-only temporary WAV in finally',async t=>{let killed=false;const f=await fixture(t,{timeoutMs:5,spawnImpl:()=>{const child=new EventEmitter();child.stdout=new EventEmitter();child.stderr=new EventEmitter();child.kill=()=>{killed=true;};return child;}});await ready(f.stt);await assert.rejects(f.stt.transcribe({audioBase64:wav().toString('base64')}),/60 segundos/);assert.equal(killed,true);const files=await readdir(path.join(f.root,'dictation-tmp'));assert.deepEqual(files,[]);});
