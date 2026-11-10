@@ -199,3 +199,7 @@ Checkpoint988/988 Node y build OK. D1i CI42878658531 real startup3551ms/cuatro23
 ## 2026-11-10 13:45 — codex — Compilación H5 nativa aprobada sin ejecutar criptografía
 
 VMmacos15 CI42887207030@041bc67 PASS Rust/Cargo1.99.1/179deps/15fuentes+workflow verificadas pre-post/8ejecutables/1m44scompiler. RevisorSol verificólogsha a7f9...deaf, no rerun. E0308anterior preservado. 283e32d lanza SUPERVISOR_ONLY con selector exacto sinDB/keys/KDF;18cases/R23 requieren nuevofreeze. No Rustcodegen host ni inferenciaNym. Checkpoint988Node+build no equivalecrypto/recovery/product.
+
+## 2026-11-10 14:05 — codex — Supervisor H5 verde y primer lote cifrado en VM
+
+CI42890385232 @ecce707 pasó exactamente supervisor_cleanup_without_crypto (1/1), revisado independientemente; no crypto en esa prueba. Freeze nuevo ea94eb2 autoriza una única ejecución sintética de 18casos en VM pública limpia: CI42891631285 en curso. Nym v1 quedó FAILED/PARENT_OR_IPC_FAILURE; 5eventos guardados verifican carga/metadatos/4tokenizaciones/0forwards, revisión offline independiente aprueba sólo hechos parciales punto-en-tiempo, no postflight original o RSS combinado. Causa exacta desconocida. Producto y datos reales siguen locales/inactivos; sin validación8GB.
