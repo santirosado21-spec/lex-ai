@@ -89,3 +89,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 12:22 — codex — Conservar la vertical H4b.2d abierta
 
 **Por qué:** El plan reserva H4b.2d para repetir H3V con detector elegible. Informes históricos Rampart usaron por error ese ID; mantener bytes/hash y registrar alias canónicos H4b.2b.4/4a evita declarar completa una integración aún pendiente. Composición nueva H4b.2b.4b sigue diagnóstica.
+
+## 2026-11-10 13:40 — codex — Ejecutar nuevas dependencias nativas sólo en VM efímera limpia
+
+**Por qué:** Cuatro probes locales de datos sintéticos probaron file/network deny pero no bloquearon argv/env del helper mediante KERN_PROCARGS2. No se inspeccionaron secretos reales ni se amplían permisos host. Compilar/tests optativos H5/age pasan a macos-15 estándar de GitHub público, entorno vacío, checkout sin credenciales persistidas, código/datos públicos-sintéticos; crypto requiere freeze separado. D0preserva249GETverificados y183archives; presupuesto v2de256HTTP/112nuevos se basó en149deps resueltas, no compras.

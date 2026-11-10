@@ -77,9 +77,12 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | C2a | Páginas estatales completas y candidatos | C1b.3/C1b.4 diagnóstico | done | 4d25180;619 páginas,3564 candidatos,13 repeticiones sin truncar;19 tests/reconstrucción independiente, cuarentena |
 | C2b | Comparación independiente de fidelidad | C2a | done | ca2ccd8;24 páginas/48 comparaciones,45 normalizadas iguales/3 diferencias conservadas,6 renders vistos; revisión técnica, sin fidelidad integral aprobada |
 | D1h | Consulta WMI directa aislada | D1g | done | c473fab/df8e855;CI42875919825,1 raíz40.656.896B/5,15s/cleanup0;59 tests y auditoría; no árbol/polling todavía |
-| D1i | Colector de árbol WMI sin cmdlets | D1h | in-progress | Astra, v2 separado;10s arranque/2s muestra/4MiB, sin modificar helpers anteriores; espera revisión/CI |
-| C1b.5 | Doce plazas aún no investigadas | C1b.1 | review-pending | Sol:8 URLs candidatas/4 sin seleccionar,28 operaciones; corrección de trazabilidad antes de cierre |
-| H5b.2a | Diseño de recuperación sintética cifrada | H5a/H5b.1 | in-progress | Sol: age estándar, snapshot cerrado exclusivo y restore de lectura; dependencias/revisión previas a código Astra |
+| D1i | Colector de árbol WMI sin cmdlets | D1h | done | 467d7fd/e8e63ba;CI42878658531:arranque3551ms/4muestras237–248ms,una raíz48,1MB;73dirigidas/988global+build,reviewAPPROVE; no instaladores/8GB |
+| C1b.5 | Doce plazas aún no investigadas | C1b.1 | done | 867d88b;8URLs/4sinselección,28operaciones declaradas;review documental,8llamadas reconstruidas/noatestadas,0adquisición |
+| H5b.2a | Diseño de recuperación sintética cifrada | H5a/H5b.1 | done | 44b387a;18casos/R23,propiedad retenida en fallo,D0verificado;revisiónSol; no recuperación probada |
+| H5b.2b | Recuperación nativa sintética de lectura | H5b.2a | in-progress | 041bc67/283e32d;compile2VM42887207030PASS179deps,988Node+build;supervisorOnlyenVM,0KDF/restore nuevo;H5abierto |
+| H4b.2b.5 | Preparación Nym multilingüe | H4b.2b.4b/diagnóstico | done | 20a8aa2;6files151MB/4HTTP verificadas,sin runtime;53Python/review;licenciarelease pendiente |
+| H4b.2b.5a | Contrato runtime/tokenizer Nym | H4b.2b.5 | in-progress | Sol prepara probe CPU sólo metadata/4tokenizaciones fijas,0forwards/golds/privacidad medida |
 | D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |
 | N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
 | N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |

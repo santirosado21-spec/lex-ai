@@ -191,3 +191,11 @@ C2a4d25180:619 páginas/3564 candidatos/13 repetidos,19 pruebas y reconstrucció
 ## 2026-11-10 12:40 — codex — Composición diagnóstica y primer resultado Windows directo
 
 23d0662:60dev38complete/22blocked,19cambios,76proofs sólo complete;57pruebas/revisión+60replays, sin score/egreso/heldout. ca2ccd8:48comparaciones24páginas45normalizadas iguales3discrepancias,6renders vistos, todo cuarentena. c473fab/df8e855:CI42875919825 WMI raíz40656896B/5.15s/cleanup0, auditoría; no árbol/polling. D1i v2 Astra en construcción, H5b2a diseño Sol y C1b5 revisión pendientes. Checkpoint932 anterior a estos nuevos cortes; nueva suite global tras D1i. PR#1 mantiene gates.
+
+## 2026-11-10 13:40 — codex — Windows medido, Nym preparado y compilación nativa separada
+
+Checkpoint988/988 Node y build OK. D1i CI42878658531 real startup3551ms/cuatro237-248ms raíz48123904B,scopeuna raíz/overheadunmeasured. Nym20a8aa2:151135538B cacheverificada4HTTP sinload/inferencia;fallov1y2HTTPdiagnóstico preservados,release no cleared. H5codefuente optativadefaultoff/esquema4/typedfailure;compilación1 CI42886309129 E0308prueba,no tests;fix&mut revisado041bc67/compilación2 en curso. No nuevoKDF/restore ejecutado; stage18 posterior confreeze propio.
+
+## 2026-11-10 13:45 — codex — Compilación H5 nativa aprobada sin ejecutar criptografía
+
+VMmacos15 CI42887207030@041bc67 PASS Rust/Cargo1.99.1/179deps/15fuentes+workflow verificadas pre-post/8ejecutables/1m44scompiler. RevisorSol verificólogsha a7f9...deaf, no rerun. E0308anterior preservado. 283e32d lanza SUPERVISOR_ONLY con selector exacto sinDB/keys/KDF;18cases/R23 requieren nuevofreeze. No Rustcodegen host ni inferenciaNym. Checkpoint988Node+build no equivalecrypto/recovery/product.
