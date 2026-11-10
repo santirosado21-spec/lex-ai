@@ -1,4 +1,6 @@
 //! Inactive H5b.1 spike. No production constructor, paths, SQL, shell, or IPC exposed.
+#[cfg(feature = "synthetic-recovery")]
+pub mod recovery;
 mod proposals;
 mod reminders;
 mod time_billing;

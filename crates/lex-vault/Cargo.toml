@@ -6,7 +6,12 @@ rust-version = "1.89"
 publish = false
 description = "Inactive synthetic SQLCipher viability spike; not the production store"
 
+[features]
+default = []
+synthetic-recovery = ["dep:age"]
+
 [dependencies]
+age = { version = "=0.12.1", default-features = false, optional = true }
 rusqlite = { version = "=0.41.1", features = ["bundled-sqlcipher"] }
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = "=1.0.145"
@@ -17,3 +22,12 @@ zeroize = { version = "=1.8.2", features = ["derive"] }
 unicode-normalization = "=0.1.24"
 
 [workspace]
+
+[[bin]]
+name = "lex-vault-recovery-fixture"
+path = "tests/recovery_process.rs"
+required-features = ["synthetic-recovery"]
+
+[dev-dependencies]
+# Already present in the reviewed resolved graph; native own-process RSS watchdog only.
+libc = "=0.2.191"
