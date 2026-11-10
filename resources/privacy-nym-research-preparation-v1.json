@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-research-preparation-v1",
+  "status": "inactive-development-tool-requires-reviewed-freeze",
+  "productionEnabled": false,
+  "automaticDownload": false,
+  "sourceManifest": "resources/privacy-nym-int8-candidate-v1.json",
+  "sourceManifestSha256": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+  "revision": "4348999cd3c2e20c49615e9af7c6bbb45b64cd85",
+  "fixedOutputDirectory": "artifacts/privacy/models/nym-int8-local-v1",
+  "fixedFreezePath": "docs/qa/privacy-nym-research-preparation-v1-freeze.json",
+  "planSha256": "5009ba2609c1e0c83a10cbbb44a0c8b978dcffa71d51edfc5c844b8862e7ec61",
+  "limits": {
+    "maximumTotalBytes": 183500800,
+    "requestSeconds": 60,
+    "batchSeconds": 120,
+    "gapSeconds": 2,
+    "maximumHTTPRequests": 6,
+    "maximumRedirectsPerFile": 2,
+    "concurrency": 1,
+    "retries": 0
+  },
+  "allowedRedirectHosts": [
+    "huggingface.co",
+    "cas-bridge.xethub.hf.co",
+    "cdn-lfs.huggingface.co",
+    "cdn-lfs-us-1.hf.co"
+  ],
+  "fullLicenseNoticeMissing": true,
+  "distributionAndProductReleaseBlocked": true,
+  "boundedResearchOnlyRootDecisionRequired": true,
+  "runtimeLoadAllowed": false,
+  "trainingAllowed": false,
+  "providerEgressAllowed": false,
+  "completionPostflightRequired": {
+    "freezeExactSha256Unchanged": true,
+    "reviewedSourceFiles": 5,
+    "publishedPayloadFiles": 6,
+    "payloadSizeSha256RegularAndReadonly": true
+  }
+}

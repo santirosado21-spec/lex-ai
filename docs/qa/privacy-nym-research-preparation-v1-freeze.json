@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-research-preparation-v1",
+  "status": "frozen-reviewed",
+  "scope": "public-research-cache-only",
+  "planSha256": "5009ba2609c1e0c83a10cbbb44a0c8b978dcffa71d51edfc5c844b8862e7ec61",
+  "sourceHashes": {
+    "scripts/prepare-privacy-nym-research.py": "7be1d448a413496db849125aec2423eb121264f23780a0987a20cf4a2305b939",
+    "tests/privacy-nym-preparation.test.mjs": "1c693984e80e4c0a5e47524a51058bcfa79751f6e7acee6594bb5c5692a5eb51",
+    "resources/privacy-nym-research-preparation-v1.json": "ddd017c3a61709dcdb2be62b904773d71c393e925c65d9b0295d9cb917cc9f24",
+    "docs/architecture/privacy-nym-research-preparation-v1.md": "d768322a1de050dfba3d9c7e8cbd683afc0e813d35a52ab50516dd227f0e3afd",
+    "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297"
+  },
+  "limits": {
+    "batchSeconds": 120,
+    "concurrency": 1,
+    "gapSeconds": 2,
+    "maximumHTTPRequests": 6,
+    "maximumRedirectsPerFile": 2,
+    "maximumTotalBytes": 183500800,
+    "requestSeconds": 60,
+    "retries": 0
+  },
+  "outputDirectory": "artifacts/privacy/models/nym-int8-local-v1",
+  "independentReview": {
+    "identity": "review_completion_phases / gpt-6.1-sol",
+    "reviewedAt": "2026-11-10T19:10:34.362879+00:00",
+    "verdict": "APPROVE",
+    "independentFromBuilder": true
+  },
+  "rootAuthorization": {
+    "by": "codex-root",
+    "authorizedAt": "2026-11-10T19:10:34.362879+00:00",
+    "status": "authorized",
+    "scope": "bounded-research-only",
+    "missingLicenseNoticeAcknowledged": true
+  }
+}
