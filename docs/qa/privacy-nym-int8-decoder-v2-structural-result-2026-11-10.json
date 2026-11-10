@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:18:33.065843+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_FAILED_ATTEMPT_EVIDENCE_ONLY",
+  "artifactHashes": {
+    "docs/qa/privacy-nym-int8-decoder-v2-freeze.json": "5a9d5e7d9e097c9d91b1d0d828c79c474840564fd3342417839f00ee018857c7",
+    "artifacts/privacy/nym-int8-decoder-v2-first/before-cleanup.json": "0aa9b86206d1f701a688d77afd5c79b7b4f023e30f038f0cfbd585d6c5e7962f",
+    "artifacts/privacy/nym-int8-decoder-v2-first/receipt.json": "0ea3dd4694c7dce1d53aadc794dee686d1417c27b8ca8ed32a1ba8aa07531582",
+    "artifacts/privacy/nym-int8-decoder-v2-first/started.json": "2abe105c052fa5b2e73cc8b524f497d8dd462af3afef326536a576fa9a08913b",
+    "artifacts/phased-completion-20261110-batch2/nym-decoder-v2-structural-first.log": "406abd6d362366929d2e3137c2254eecf9735ba4d31e0637f35259ba340276ac"
+  },
+  "identityChecks": {
+    "recordedPreflightIdentityMatchesFreeze": true,
+    "currentSourceHashes": {
+      "scripts/privacy-nym-int8-worker-v2.py": "89aa18c196a6ecfda484233722af6f86c580e5a61ddc83c8f512b90fe4559394",
+      "server/privacy/nym-int8-decoder-v2.mjs": "c01d114afd3abb328fecccdb63d21e0ad05162f3783c5a4fe7c543520554864f",
+      "tests/privacy-nym-int8-decoder-v2.test.mjs": "98266bc97c32de7a7aa48d3c3a08e0f9f964f0b532f574ff02398aa8f91776de",
+      "docs/architecture/privacy-nym-int8-decoder-v2.md": "f16c47bc42a46cd7090611587e6879d3c7d1ccf439919bf8c8a08017f3cb96b5",
+      "resources/privacy-nym-original-content-witness-v2.json": "eadeb76ec850e65bfefad38e00e9cf2f3633bd2efb7c07a7783fc56b4c8c8102",
+      "resources/privacy-nym-structural-witnesses-v1.json": "8c266b1fb5d49dc0929af610dd2484783d3cd71bd856c34baeb908bb082a0b24",
+      "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+      "resources/privacy-nym-inference-development-v1.json": "5b3df7a6d443790edcdbac14d829745c090873f8440de98dc540ccf23137a2eb",
+      "resources/privacy-nym-original-alignment-audit-v2a.json": "c0073f8100171af4bf78af61978579ab3ec1885b5a4303cfea4c1c157ddd7c7a",
+      "resources/privacy-nym-offset-proof-research-v2.json": "ded20f23244783731ddf7d0cf695001d2d24b1c5ae08755019dd1e097d4f649b"
+    },
+    "currentCacheFiles": [
+      {
+        "path": "README.md",
+        "bytes": 6717,
+        "sha256": "74c55f42afcad1e5c1ea9b059f37d9d48e5641e04628642a12444721c57f3d9e"
+      },
+      {
+        "path": "int8/config.json",
+        "bytes": 5688,
+        "sha256": "3f07065571e22bb73eba28ddb1fae4509c0cf703762e3bfa7a6ab2111cf7cb88"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 573,
+        "sha256": "02055b886266b1a475bc324da83e273fe96e4974002f9d970f26e94aa73e5885"
+      },
+      {
+        "path": ".gitattributes",
+        "bytes": 1687,
+        "sha256": "48030a73329817519a47704c56b3e891b4227a19742a138374b9f6ccde002004"
+      },
+      {
+        "path": "int8/model_int8.onnx",
+        "bytes": 138730982,
+        "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286"
+      },
+      {
+        "path": "int8/tokenizer.json",
+        "bytes": 12389891,
+        "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de"
+      }
+    ],
+    "currentRuntimeIdentity": {
+      "algorithm": "relative-path-and-file-sha256-canonical-frames-v1",
+      "runtimeTreeSha256": "b4617cbe5ebb453dd597460a816f1c67c44bf99cf702673758fb204f4a172b6c",
+      "runtimeRegularFileCount": 2396,
+      "pythonBinarySha256": "a395f264e5612a2819662ed3e37fd30d39ed61179b98e5f86c3c783a008d8623",
+      "requirementsSha256": "80035e6aedaaca16ddc7fd9195642fbc3a292fb381b095281ad42b061a8bf9d8",
+      "expectedVersions": {
+        "python": "3.12.13",
+        "numpy": "2.5.4",
+        "onnxruntime": "1.31.1",
+        "tokenizers": "0.23.3"
+      },
+      "platform": "darwin",
+      "architecture": "arm64"
+    },
+    "currentRuntimeFileCountIndependentlyHashed": 2396,
+    "currentRuntimeTreeSha256IndependentlyRecomputed": "b4617cbe5ebb453dd597460a816f1c67c44bf99cf702673758fb204f4a172b6c",
+    "temporalScope": "Recorded identities show successful original preflight. Independent byte hashes are current point-in-time checks only; original postflight never completed and is not retroactively established."
+  },
+  "observedFailure": {
+    "status": "failed",
+    "failure": "SAMPLE_GAP",
+    "phase": "CONTENT_INVENTORY",
+    "elapsedMs": 598.977,
+    "maximumObservedSampleGapMs": 143.671,
+    "samples": 23,
+    "sampledPeakCombinedRssBytes": 32669696,
+    "counts": {
+      "admitted": 0,
+      "attempted": 0,
+      "blocked": 0,
+      "decoded": 0,
+      "forwardReturned": 0,
+      "forwardStarted": 0
+    },
+    "workerExitCode": null,
+    "cleanupObserved": true,
+    "cleanupFailures": [],
+    "validatedPrefix": []
+  },
+  "interpretation": [
+    "Failure occurred while parent constructed content inventory, before ledger creation, child dispatch, tokenization, model load or NN forwards.",
+    "cleanupObserved=true is vacuous because no child was dispatched; it does not mean a worker exited successfully.",
+    "32,669,696 bytes is a partial sampled parent peak before failure, not a completed inventory, model-load or inference peak.",
+    "143.671ms observed sample gap exceeds unchanged 50ms gate; successful independent mock tests and closed copy P2s do not establish actual resource compliance.",
+    "Original failed files preserved; no replay, threshold/cap increase, retry or replacement authorized.",
+    "A separate build-time derived-inventory proposal requires its own source/provenance review and freeze; this audit grants no execution permission."
+  ],
+  "auditOperations": {
+    "runtimeOrModelOrTokenizerImports": 0,
+    "inference": 0,
+    "network": 0,
+    "replay": false,
+    "goldOrHeldoutRead": false,
+    "sourceEdits": false
+  },
+  "findings": []
+}

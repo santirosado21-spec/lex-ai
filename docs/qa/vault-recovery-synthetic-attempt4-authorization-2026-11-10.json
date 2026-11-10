@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "scope": "FOURTH_EXPLICIT_SYNTHETIC_RECOVERY_BATCH_AFTER_DIAGNOSIS",
+  "approvedBy": "codex/root",
+  "priorFailedCryptoRuns": [
+    42891631285,
+    42892963286,
+    42894691715
+  ],
+  "dedicatedHarmlessDiagnosticRun": 42897012527,
+  "newBoundedContractActualSupervisorRun": 42900589961,
+  "supervisorResult": "PASS exacttest,deadlinefixtures,24rapidprobes/cleanup",
+  "originalR09CauseKnown": false,
+  "reason": "Three failures retained and diagnosed separately. Test new exit-only settlement strictly bounded by50ms and original stage60s/batch300s after independent code review and actual harmless regression. No recovery algorithm, case category or R23 weakened.",
+  "newFreezeSha256": "718d4307d991ffbe2069a27403c63340ecbadfd75bb5dbc5bc87de46f25adb8e",
+  "previousActiveFreezeSha256": "34ef1b820524b1b460ee8ace89e7440745a6fa9aab29731dd8cbb91ac09367ab",
+  "newWorkflowTriggerReview": "review_vault_reminders: APPROVE one exactfreeze path,commands/budgets/18receipt unchanged",
+  "caseInvocations": 18,
+  "preparationSeparate": true,
+  "r23Mandatory": true,
+  "maxCaseMs": 60000,
+  "maxBatchMs": 300000,
+  "maxRssBytes": 805306368,
+  "automaticRetry": false,
+  "ownerMacNativeCodegenOrCallsAuthorized": false,
+  "productionEnabled": false,
+  "h5Complete": false
+}

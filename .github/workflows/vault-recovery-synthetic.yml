@@ -4,6 +4,7 @@ on:
     branches: [docs/hybrid-psf-development-loop]
     paths:
       - crates/lex-vault/**
+      - docs/qa/vault-recovery-synthetic-freeze-2026-11-10.json
       - .github/workflows/vault-recovery-synthetic.yml
 permissions:
   contents: read
