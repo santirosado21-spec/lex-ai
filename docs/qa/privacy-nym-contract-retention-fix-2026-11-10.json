@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:06:56.233891+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_RETENTION_FIX_SOURCE_ONLY",
+  "scope": "Incremental parent retention/cleanup fix; no actual contract probe, model/runtime/tokenizer load or new freeze.",
+  "reviewedSourceHashes": {
+    "scripts/probe-privacy-nym-contract.py": "7602c63ca83fe750ce3449c91455f24b77f5fa1c667399845227f2aacfe4e812",
+    "docs/architecture/privacy-nym-contract-probe-v1.md": "dede0c3733e9d98c08a1c4c8655b34f0f4795f953050da49bdbea006e14afdd0"
+  },
+  "tests": {
+    "command": "python3 -I -B scripts/probe-privacy-nym-contract.py --self-test",
+    "passed": 12,
+    "failed": 0,
+    "reportedDurationSeconds": 0.06,
+    "testData": "Fixed synthetic structures/fakes and own standard-library child only; no actual model ledger replay.",
+    "meaningfulRegressions": [
+      "Five validated fake events and sampled fake telemetry survive stdout.close ValueError; cleanup failure remains failure.",
+      "Primary JSONDecodeError/validate-event phase survives subsequent cleanup ValueError, retained separately.",
+      "Stale prefix resets before sampler initialization; absent measurements remain null."
+    ]
+  },
+  "reviewFindings": [],
+  "verifiedBehavior": [
+    "Publish copied validated event prefix after schema/order checks and before ledger writes.",
+    "Publish telemetry incrementally and before cleanup.",
+    "Independently guard selector, poll, owned group kill, wait/reap and stream closes.",
+    "Preserve primary exception type and phase; keep cleanup failures separate.",
+    "Record only allowlisted exception type or OtherException, fixed phases and bounded numeric exit code; no raw exception text/stderr/env/path.",
+    "Cleanup failure after otherwise successful observation yields WORKER_CLEANUP_FAILED.",
+    "Comparisons/postflight failure retains partial observations and finite parent diagnostics."
+  ],
+  "historicalEvidence": {
+    "receipt": {
+      "path": "artifacts/privacy/nym-contract-probe-v1/receipt.json",
+      "sha256": "0d1d34d56892419970e96fe618dea5d33bf41027f7aa5583c9e78d710644e610",
+      "state": "failed-retained-no-retry",
+      "failureCode": "PARENT_OR_IPC_FAILURE",
+      "originalExceptionTypeKnown": false
+    },
+    "ledger": {
+      "path": "artifacts/privacy/nym-contract-probe-v1/ledger.jsonl",
+      "sha256": "ce4d46258c36333432a41abf00adb6fd41a922a099f67af4212bb627dde0d263"
+    },
+    "freeze": {
+      "path": "docs/qa/privacy-nym-contract-probe-v1-freeze.json",
+      "sha256": "41300da0231a591f1af91ffa727e2bbf47dbfbf2ea97edc350da6b3db943b654",
+      "intentionallyStaleForChangedSources": true
+    },
+    "originalRunReclassified": false,
+    "originalPostflightEstablished": false,
+    "lostCombinedRssRecovered": false,
+    "cleanupFaultProvesOriginalCause": false
+  },
+  "auditExecution": {
+    "actualRuntimeModelTokenizerLoads": 0,
+    "nnForwards": 0,
+    "networkRequests": 0,
+    "actualProbeOrHandoffExecutions": 0,
+    "freezeOrReceiptEdits": false,
+    "heldoutOrGoldAccess": false
+  },
+  "limits": [
+    "Source and synthetic regression approval only. A future real run requires a separately versioned cut, fresh independent review/root authorization and freeze; existing exclusive output is not resumable.",
+    "Original failed run and unknown cause remain unchanged.",
+    "No privacy, detector, Spanish quality, license distribution, H5 or physical8GB acceptance."
+  ]
+}

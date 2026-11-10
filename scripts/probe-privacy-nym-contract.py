@@ -309,49 +309,79 @@ class RssSampler:
  def sample(self,pid):
   buf=ctypes.create_string_buffer(96);n=self.fn(pid,4,0,buf,96);require(n==96,'RSS_UNAVAILABLE');return int.from_bytes(buf.raw[8:16],sys.byteorder)
 
+EXCEPTION_TYPES={'Failure','ValueError','TypeError','OSError','TimeoutExpired','JSONDecodeError','BlockingIOError','BrokenPipeError','PermissionError','ProcessLookupError','ChildProcessError','AttributeError','AssertionError','RuntimeError','KeyboardInterrupt','SystemExit','FileNotFoundError','NotADirectoryError','IsADirectoryError'}
+def exception_type(error):
+ name=type(error).__name__;return name if name in EXCEPTION_TYPES else 'OtherException'
+
 def observe_worker(ticket,record,check):
- sampler=RssSampler();profile=sandbox_profile();env={'PATH':'/usr/bin:/bin','LANG':'en_US.UTF-8','PYTHONNOUSERSITE':'1','TOKENIZERS_PARALLELISM':'false','OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','HF_HUB_OFFLINE':'1','TRANSFORMERS_OFFLINE':'1','LEX_NYM_CONTRACT_WORKER':'required'}
- child=None;events=[];raw_buffer=b'';total=0;peak=0;samples=0;max_gap=0;last=None;complete=False
- telemetry={'sampledPeakCombinedRssBytes':0,'samples':0,'maximumObservedSampleGapMs':0,'workerReportedPeakRssBytes':None,'resourceScope':'sampled partial RSS plus worker-reported peak when available; not physical8GB validation'}
+ child=None;sel=None;events=[];raw_buffer=b'';total=0;peak=0;samples=0;max_gap=0;last=None;complete=False;primary=None;result=None;phase='initialize'
+ telemetry={'sampledPeakCombinedRssBytes':None,'samples':0,'maximumObservedSampleGapMs':None,'workerReportedPeakRssBytes':None,'resourceScope':'sampled partial RSS plus worker-reported peak when available; not physical8GB validation'}
+ diagnostics={'phase':phase,'exceptionType':None,'workerExitCode':None,'cleanupFailures':[]}
+ def publish():
+  observe_worker.partial={'workerEvents':list(events),'resourceObservations':dict(telemetry),'parentDiagnostics':{**diagnostics,'cleanupFailures':list(diagnostics['cleanupFailures'])}}
+ def exit_code(value):
+  if type(value) is int and -255<=value<=255:diagnostics['workerExitCode']=value
+ def cleanup(action,fn):
+  try:return fn()
+  except BaseException as error:
+   diagnostics['cleanupFailures'].append({'phase':action,'exceptionType':exception_type(error)})
+   if diagnostics['exceptionType'] is None:diagnostics.update(phase=action,exceptionType=exception_type(error))
+   return None
+  finally:publish()
+ publish() # Reset stale state even if sampler/launch fails before the first event.
  try:
-  child=subprocess.Popen(['/usr/bin/sandbox-exec','-p',profile,str(ROOT/PYTHON),'-I','-B',str(ROOT/SCRIPT),'--worker'],cwd='/',env=env,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,start_new_session=True)
-  record.event({'event':'worker-dispatch','network':'sandbox-required','sessionRunsAllowed':0});ticket={**ticket,'parentPid':os.getpid()};child.stdin.write(canonical(ticket)+b'\n');child.stdin.close();os.set_blocking(child.stdout.fileno(),False)
+  phase='rss-initialize';sampler=RssSampler();profile=sandbox_profile();env={'PATH':'/usr/bin:/bin','LANG':'en_US.UTF-8','PYTHONNOUSERSITE':'1','TOKENIZERS_PARALLELISM':'false','OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','HF_HUB_OFFLINE':'1','TRANSFORMERS_OFFLINE':'1','LEX_NYM_CONTRACT_WORKER':'required'}
+  phase='launch';child=subprocess.Popen(['/usr/bin/sandbox-exec','-p',profile,str(ROOT/PYTHON),'-I','-B',str(ROOT/SCRIPT),'--worker'],cwd='/',env=env,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,start_new_session=True)
+  phase='write-ticket';record.event({'event':'worker-dispatch','network':'sandbox-required','sessionRunsAllowed':0});ticket={**ticket,'parentPid':os.getpid()};child.stdin.write(canonical(ticket)+b'\n');child.stdin.close();os.set_blocking(child.stdout.fileno(),False)
   sel=selectors.DefaultSelector();sel.register(child.stdout,selectors.EVENT_READ)
-  try:
-   while True:
-    check();alive=child.poll() is None
-    if alive:
-     sampled=time.monotonic()
-     if last is not None:max_gap=max(max_gap,(sampled-last)*1000);require(max_gap<=LIMITS['maximumSampleGapMs'],'RSS_MONITOR_DELAY')
-     last=sampled
-     try:current=sampler.sample(child.pid)
-     except Failure:
-      if child.poll() is None:raise
-      current=None
-     if current is not None:peak=max(peak,current+self_rss());samples+=1;telemetry.update(sampledPeakCombinedRssBytes=peak,samples=samples,maximumObservedSampleGapMs=round(max_gap,3));require(peak<=LIMITS['maximumRssBytes'],'RSS_LIMIT')
-    ready=sel.select(LIMITS['sampleIntervalMs']/1000 if alive else 0)
-    if ready:
-     chunk=os.read(child.stdout.fileno(),32769);total+=len(chunk);require(total<=LIMITS['maximumWorkerStdoutBytes'],'STDOUT_BUDGET');raw_buffer+=chunk
-     while b'\n' in raw_buffer:
-      line,raw_buffer=raw_buffer.split(b'\n',1);event=validate_event(json.loads(line));events.append(event);require(len(events)<=LIMITS['maximumEvents'],'IPC_SCHEMA');telemetry['workerReportedPeakRssBytes']=max(telemetry['workerReportedPeakRssBytes'] or 0,event['peakRssBytes']);require(event['peakRssBytes']+self_rss()<=LIMITS['maximumRssBytes'],'RSS_LIMIT');record.event({'event':'worker-event','value':event})
-      expected=('sandbox','versions','graph','tokenizer','complete')
-      if event['event']=='failed':raise Failure('WORKER_REPORTED_FAILURE')
-      require(len(events)<=len(expected) and event['event']==expected[len(events)-1],'IPC_ORDER');complete=event['event']=='complete'
-     if not chunk and not alive:break
-    if not alive and not ready:break
-   require(not raw_buffer and child.wait(timeout=1)==0 and complete and samples>0,'WORKER_INCOMPLETE');return events,telemetry
-  finally:sel.close()
+  while True:
+   phase='monitor';check();status=child.poll();exit_code(status);alive=status is None
+   if alive:
+    sampled=time.monotonic()
+    if last is not None:
+     max_gap=max(max_gap,(sampled-last)*1000);telemetry['maximumObservedSampleGapMs']=round(max_gap,3);publish();require(max_gap<=LIMITS['maximumSampleGapMs'],'RSS_MONITOR_DELAY')
+    last=sampled
+    try:current=sampler.sample(child.pid)
+    except Failure:
+     if child.poll() is None:raise
+     current=None
+    if current is not None:
+     peak=max(peak,current+self_rss());samples+=1;telemetry.update(sampledPeakCombinedRssBytes=peak,samples=samples,maximumObservedSampleGapMs=round(max_gap,3));publish();require(peak<=LIMITS['maximumRssBytes'],'RSS_LIMIT')
+   phase='read-stdout';ready=sel.select(LIMITS['sampleIntervalMs']/1000 if alive else 0)
+   if ready:
+    chunk=os.read(child.stdout.fileno(),32769);total+=len(chunk);require(total<=LIMITS['maximumWorkerStdoutBytes'],'STDOUT_BUDGET');raw_buffer+=chunk
+    while b'\n' in raw_buffer:
+     phase='validate-event';line,raw_buffer=raw_buffer.split(b'\n',1);event=validate_event(json.loads(line));require(len(events)<LIMITS['maximumEvents'],'IPC_SCHEMA')
+     expected=('sandbox','versions','graph','tokenizer','complete')
+     if event['event']!='failed':require(len(events)<len(expected) and event['event']==expected[len(events)],'IPC_ORDER')
+     events.append(event);telemetry['workerReportedPeakRssBytes']=max(telemetry['workerReportedPeakRssBytes'] or 0,event['peakRssBytes']);publish()
+     phase='record-event';record.event({'event':'worker-event','value':event})
+     require(event['peakRssBytes']+self_rss()<=LIMITS['maximumRssBytes'],'RSS_LIMIT')
+     if event['event']=='failed':raise Failure('WORKER_REPORTED_FAILURE')
+     complete=event['event']=='complete'
+    if not chunk and not alive:break
+   if not alive and not ready:break
+  phase='wait-exit';status=child.wait(timeout=1);exit_code(status);publish();require(not raw_buffer and status==0 and complete and samples>0,'WORKER_INCOMPLETE');result=(events,telemetry)
+ except BaseException as error:
+  primary=error;diagnostics.update(phase=phase,exceptionType=exception_type(error));publish()
  finally:
+  publish() # Validated prefix and measured telemetry survive every cleanup action.
+  if sel is not None:cleanup('cleanup-selector',sel.close)
   if child is not None:
-   if child.poll() is None:
-    try:os.killpg(child.pid,signal.SIGKILL)
-    except ProcessLookupError:pass
-   try:child.wait(timeout=2)
-   finally:
-    if child.stdout:child.stdout.close()
-    if child.stdin and not child.stdin.closed:child.stdin.close()
-  # Keep any valid prefix and partial RSS on finite failure.
-  observe_worker.partial={'workerEvents':events,'resourceObservations':telemetry}
+   status=cleanup('cleanup-poll',child.poll);exit_code(status)
+   if status is None:
+    def kill_own_group():
+     try:os.killpg(child.pid,signal.SIGKILL)
+     except ProcessLookupError:pass
+    cleanup('cleanup-kill',kill_own_group)
+   exit_code(cleanup('cleanup-wait',lambda:child.wait(timeout=2)))
+   cleanup('cleanup-stdout',lambda:child.stdout.close() if child.stdout is not None else None)
+   cleanup('cleanup-stdin',lambda:child.stdin.close() if child.stdin is not None and not child.stdin.closed else None)
+  if diagnostics['exceptionType'] is None:diagnostics['phase']='complete'
+  publish()
+ if primary is not None:raise primary
+ if diagnostics['cleanupFailures']:raise Failure('WORKER_CLEANUP_FAILED')
+ return result
 
 observe_worker.partial={}
 def comparisons(events):
@@ -364,11 +394,15 @@ def probe():
  h=helper();fd=h.root_fd(ROOT);record=None;receipt={'schemaVersion':1,'id':ID,'state':'preflight','startedAt':now(),'sessionRuns':0,'qualityEvaluated':False,'productionEnabled':False,'fullLicenseNoticeMissing':True,'redistributionAndProductReleaseBlocked':True,'physical8GBValidated':False,'workerEvents':[]}
  try:
   f,fsha=checked_freeze(h,fd);receipt.update(freezeSha256=fsha,sourceHashes=source_hashes(h,fd));require(receipt['sourceHashes']==f['sourceHashes'],'SOURCE_CHANGED');identity=runtime_identity(check);require(identity==f['runtimeIdentity'],'RUNTIME_IDENTITY');cache=verify_cache(h,fd,check);check();record=Recorder(h,fd);receipt.update(state='running',runtimeIdentity=identity,cacheReceiptSha256=RECEIPT_SHA,cacheFiles=cache,limits=dict(LIMITS));record.event({'event':'probe-started','freezeSha256':fsha,'planSha256':plan()['planSha256']})
+  phase='observe-worker'
   try:
-   events,observations=observe_worker({'id':ID,'sourceHashes':f['sourceHashes'],'freezeSha256':fsha,'runtimeIdentity':identity},record,check);receipt.update(workerEvents=events,resourceObservations=observations,observedComparisons=comparisons(events))
-   require(sha(h.read_confined(fd,FREEZE))==fsha and source_hashes(h,fd)==f['sourceHashes'],'POSTFLIGHT_SOURCE_CHANGED');verify_cache(h,fd,check);require(runtime_identity(check)==identity,'POSTFLIGHT_RUNTIME_CHANGED');check();receipt['state']='complete-contract-observed-zero-forwards'
+   events,observations=observe_worker({'id':ID,'sourceHashes':f['sourceHashes'],'freezeSha256':fsha,'runtimeIdentity':identity},record,check);receipt.update(workerEvents=events,resourceObservations=observations,parentDiagnostics=observe_worker.partial['parentDiagnostics'])
+   phase='comparisons';receipt['observedComparisons']=comparisons(events)
+   phase='postflight';require(sha(h.read_confined(fd,FREEZE))==fsha and source_hashes(h,fd)==f['sourceHashes'],'POSTFLIGHT_SOURCE_CHANGED');verify_cache(h,fd,check);require(runtime_identity(check)==identity,'POSTFLIGHT_RUNTIME_CHANGED');check();receipt['state']='complete-contract-observed-zero-forwards'
   except BaseException as error:
-   receipt.update(observe_worker.partial);receipt['state']='failed-retained-no-retry';receipt['failureCode']=error.code if isinstance(error,Failure) else 'PARENT_OR_IPC_FAILURE'
+   receipt.update(observe_worker.partial);diagnostic=receipt.get('parentDiagnostics',{'cleanupFailures':[],'workerExitCode':None})
+   if diagnostic.get('exceptionType') is None:diagnostic.update(phase=phase,exceptionType=exception_type(error))
+   receipt.update(parentDiagnostics=diagnostic,state='failed-retained-no-retry',failureCode=error.code if isinstance(error,Failure) else 'PARENT_OR_IPC_FAILURE')
   finally:
    receipt.update(finishedAt=now(),elapsedMs=round((time.monotonic()-started)*1000,3));record.event({'event':'probe-finished','state':receipt['state'],'failureCode':receipt.get('failureCode')});record.finish(receipt)
   return receipt
@@ -435,6 +469,49 @@ def self_tests():
   def test_embedded_graph_and_invalid_envelope(self):
    guard_embedded_graph(bytes([0x3a,0]))
    with self.assertRaises(Failure):guard_embedded_graph(bytes([0x3a,9,1]))
+  def fake_metadata_events(self):
+   special={t:None for t in TOKENS};special.update({'<bos>':2,'<eos>':1,'<unk>':5})
+   fixtures=[]
+   for id,text in FIXTURES:
+    class E:pass
+    e=E();e.ids=[2,5,1];e.offsets=[(0,0),(0,len(text)),(0,0)];e.attention_mask=[1,1,1];e.special_tokens_mask=[1,0,1];e.overflowing=[]
+    fixtures.append(encoding_summary(id,text,e,{1,2,5},5))
+   graph={'inputs':[{'name':'input_ids','type':'tensor(int64)','shape':['batch','sequence']}],'outputs':[{'name':'logits','type':'tensor(float)','shape':['batch','sequence',81]}],'providers':['CPUExecutionProvider'],'threads':1,'graphOptimizations':'ORT_DISABLE_ALL'}
+   tok={'vocabWithAdded':3,'vocabWithoutAdded':3,'vocabUniqueIds':3,'minimumId':1,'maximumId':5,'specialTokenIds':special,'fixtures':fixtures}
+   return [{'event':kind,'data':data,'elapsedMs':0,'peakRssBytes':1} for kind,data in [('sandbox',{'networkDeniedEPERM':True,'probeNonceSha256':sha(NONCE)}),('versions',EXPECTED_VERSIONS),('graph',graph),('tokenizer',tok),('complete',{'sessionRuns':0,'nerPredictions':0,'qualityEvaluated':False})]]
+  def replay_fake_child(self,malformed=False):
+   # Only a new own stdlib child emitting fixed synthetic metadata. This is not
+   # an ORT/tokenizer/runtime replay, sandbox check or actual resource evidence.
+   payload=''.join(json.dumps(e)+'\n' for e in self.fake_metadata_events())+('not-json\n' if malformed else '')
+   code='import sys,time;sys.stdin.buffer.readline();sys.stdout.write('+repr(payload)+');sys.stdout.flush();time.sleep(.02)'
+   actual=subprocess.Popen
+   class BadClose:
+    def __init__(self,stream):self.stream=stream
+    def __getattr__(self,key):return getattr(self.stream,key)
+    def close(self):self.stream.close();raise ValueError('synthetic cleanup fault')
+   class Sampler:
+    def sample(self,pid):return 1
+   class Record:
+    def __init__(self):self.events=[]
+    def event(self,e):self.events.append(e)
+   record=Record()
+   def fake(*args,**kwargs):
+    child=actual([sys.executable,'-I','-B','-c',code],cwd='/',env={'PATH':'/usr/bin:/bin'},stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,start_new_session=True);child.stdout=BadClose(child.stdout);return child
+   with mock.patch.object(subprocess,'Popen',side_effect=fake),mock.patch.dict(globals(),{'RssSampler':Sampler}):
+    if malformed:
+     with self.assertRaises(json.JSONDecodeError):observe_worker({'id':ID},record,lambda:None)
+    else:
+     with self.assertRaisesRegex(Failure,'WORKER_CLEANUP_FAILED'):observe_worker({'id':ID},record,lambda:None)
+   return record,observe_worker.partial
+  def test_cleanup_fault_preserves_five_valid_events(self):
+   record,partial=self.replay_fake_child();self.assertEqual(len(partial['workerEvents']),5);self.assertEqual(sum(e['event']=='worker-event' for e in record.events),5);diag=partial['parentDiagnostics'];self.assertEqual(diag['exceptionType'],'ValueError');self.assertEqual(diag['phase'],'cleanup-stdout');self.assertEqual(diag['workerExitCode'],0);self.assertGreater(partial['resourceObservations']['samples'],0)
+  def test_primary_failure_survives_cleanup_failure(self):
+   record,partial=self.replay_fake_child(True);self.assertEqual(len(partial['workerEvents']),5);diag=partial['parentDiagnostics'];self.assertEqual(diag['exceptionType'],'JSONDecodeError');self.assertEqual(diag['phase'],'validate-event');self.assertTrue(any(f['phase']=='cleanup-stdout' and f['exceptionType']=='ValueError' for f in diag['cleanupFailures']));self.assertIsInstance(diag['workerExitCode'],int)
+  def test_prefix_reset_before_sampler_initialization(self):
+   observe_worker.partial={'workerEvents':[{'old':'stale'}]}
+   with mock.patch.dict(globals(),{'RssSampler':mock.Mock(side_effect=OSError('synthetic'))}):
+    with self.assertRaises(OSError):observe_worker({'id':ID},None,lambda:None)
+   self.assertEqual(observe_worker.partial['workerEvents'],[]);self.assertEqual(observe_worker.partial['resourceObservations']['samples'],0);self.assertIsNone(observe_worker.partial['resourceObservations']['sampledPeakCombinedRssBytes']);self.assertEqual(observe_worker.partial['parentDiagnostics']['phase'],'rss-initialize')
   def test_ipc_rejects_unknown_fields(self):
    event={'event':'complete','data':{'sessionRuns':0,'nerPredictions':0,'qualityEvaluated':False},'elapsedMs':1,'peakRssBytes':1};validate_event(event);event['rawPrivatePath']='not permitted'
    with self.assertRaises(Failure):validate_event(event)

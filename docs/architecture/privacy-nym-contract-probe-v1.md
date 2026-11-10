@@ -4,7 +4,7 @@ Herramienta de investigación fija; no es decoder/detector ni evaluación de cal
 
 ## Modos y autorización
 
-`python3 -I -B scripts/probe-privacy-nym-contract.py` o `--plan`: PLAN puro, sin leer artefactos, escribir, acceder a red o importar/cargar runtime/modelo/tokenizer. `--self-test`: nueve verificaciones pequeñas de estructuras sintéticas/fakes, también sin artefactos/runtime/sockets reales. Esas son las únicas validaciones ejecutadas al construir el código.
+`python3 -I -B scripts/probe-privacy-nym-contract.py` o `--plan`: PLAN puro, sin leer artefactos, escribir, acceder a red o importar/cargar runtime/modelo/tokenizer. `--self-test`: doce verificaciones pequeñas de estructuras sintéticas/fakes, también sin artefactos/runtime/sockets reales. Esas son las únicas validaciones ejecutadas al construir el código.
 
 Tras revisión, `--handoff` realiza sólo lecturas/hashes del código, protocolo, documento, manifiesto, helper público fijado, runtime existente y seis archivos de caché. No importa las librerías del modelo ni crea sesión/tokenizer o artefactos. Permite preparar los pins antes de aprobar carga real. No se ejecutó handoff durante esta autoría.
 
@@ -42,4 +42,16 @@ Stdout worker acumulado máximo32KiB/seis eventos, con esquemas exactos y orden 
 
 ## Verificación previa y siguiente corte
 
-Se ejecutaron PLAN y nueve self-tests sin carga: pureza PLAN, shape/nombres de tensores, sesión fake sin forward, límites/overflow de offsets, EPERM fake, Tensor externo rechazado, sobre embebido sintético y validación IPC. No es validación de ORT/tokenizer real, recursos ni seguridad general. Root revisará fuente/protocolo, obtendrá handoff, fijará freeze y decidirá una sola inspección real; después otro revisor contrastará recibo con evidencia efectiva. Cero forwards y cuatro tokenizaciones no constituyen evaluación de detección ni cierran H4/H5/H6/H7/licencia/8GB.
+Se ejecutaron PLAN y doce self-tests sin carga: pureza PLAN, shape/nombres de tensores, sesión fake sin forward, límites/overflow de offsets, EPERM fake, Tensor externo rechazado, sobre embebido sintético y validación IPC. No es validación de ORT/tokenizer real, recursos ni seguridad general. Root revisará fuente/protocolo, obtendrá handoff, fijará freeze y decidirá una sola inspección real; después otro revisor contrastará recibo con evidencia efectiva. Cero forwards y cuatro tokenizaciones no constituyen evaluación de detección ni cierran H4/H5/H6/H7/licencia/8GB.
+
+## Corrección P2 de retención del padre — sin nueva carga
+
+El primer intento real y su fuente/freeze/historia quedaron conservados en `f22b8a8`. El recibo v1 permanece `failed-retained-no-retry`: cinco eventos reales validados están en su ledger, pero el recibo perdió el prefijo y la telemetría al producirse una excepción genérica del padre. El tipo y la causa exacta de esa excepción original siguen **UNKNOWN/no retenidos**. Ni el éxito de replays sintéticos ni un fallo de cierre inyectado prueban su causa. La revisión offline del material existente es un registro nuevo de otro instante, sin reclasificar el intento original o inventar el RSS muestreado perdido.
+
+Defecto P2 reproducido: la publicación de `observe_worker.partial` estaba después de operaciones de limpieza; una excepción sintética de `stdout.close` podía saltarla pese a cinco eventos ya validados. Para futuras llamadas se reinicia el estado parcial antes de inicializar sampler/worker, se publica cada prefijo tras validar esquema/orden y antes de escribir al ledger, se conserva cada muestra real disponible y se vuelve a publicar antes de cualquier limpieza. Un valor sin muestras es null, no un RSS observado cero.
+
+Selector, poll, kill del grupo propio, wait/reap y cierres se protegen por separado. `parentDiagnostics` conserva fase, TYPE de lista finita (o OtherException), exitcode numérico cuando se observó y `cleanupFailures` separados; nunca mensajes de excepción, stderr, env o paths. Un error de limpieza tras éxito produce `WORKER_CLEANUP_FAILED`, con el prefijo intacto. Si ya existía un error principal, éste conserva su TYPE/fase y los errores de limpieza no lo reemplazan. Los errores posteriores en comparaciones/postflight también conservan el prefijo y una fase finita. Esto mejora evidencia, sin convertir un fallo en éxito.
+
+Se agregaron tres pruebas: hijo propio de biblioteca estándar con cinco eventos totalmente sintéticos y cierre defectuoso; error primario JSON más cierre defectuoso conservando ambos; y reinicio de un prefijo viejo cuando falla la inicialización. Total12self-tests. Esos hijos no cargan ORT/model/tokenizer, no usan datos del ledger real, no realizan EPERM/red real y sus métricas fake no son mediciones del candidato. No se hizo una segunda carga, tokenización real, forward, HTTP o reejecución del runtime de modelo.
+
+No se modifican el freeze ni recibo/ledger del intento v1, cachés o QA conservados. El script/documento actuales cambian sus hashes y, por ello, el freeze v1 original ya no los autoriza. El leaf exclusivo v1 existente tampoco puede reanudarse. Una futura llamada real exige otro corte versionado, revisión y freeze de root; esta corrección no crea un replay CLI, nuevo freeze o retry automático.
