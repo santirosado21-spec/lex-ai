@@ -1,0 +1,54 @@
+{
+  "id": "privacy-development-v3",
+  "authoredAt": "2026-11-10",
+  "purpose": "Exposed synthetic development only; not blinded validation or legal acceptance",
+  "author": "Codex independent author",
+  "counts": {
+    "cases": 60,
+    "sensitive": 48,
+    "clean": 8,
+    "operationalBlocked": 4,
+    "entities": 48
+  },
+  "entitiesByCategory": {
+    "person": 4,
+    "organization": 4,
+    "rfc": 4,
+    "curp": 4,
+    "clabe": 4,
+    "account": 4,
+    "email": 4,
+    "phone": 4,
+    "address": 4,
+    "case_id": 4,
+    "context": 4,
+    "sensitive_relation": 4
+  },
+  "casesSha256": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d",
+  "protocolSha256": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+  "annotationGuideSha256": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+  "readInputs": [
+    "AGENTS.md",
+    "/Users/santiagorosado/.agents/skills/psf/SKILL.md",
+    "eval/privacy-v2/protocol.json",
+    "eval/privacy-v2/annotation-guide.md",
+    "server/privacy/operational-v2.mjs",
+    "scripts/eval-privacy-v2.mjs",
+    "scripts/eval-privacy.mjs"
+  ],
+  "excludedInputs": "No prior development/heldout text, predictions, model configuration or evaluation outcomes read",
+  "authoring": "Original Spanish examples; marked-span constructor stripped markers and calculated JS UTF-16 offsets. No model/provider consultation. Security-sensitive annotation authored and checked directly.",
+  "validation": {
+    "operationalProjection": "60/60 projectPrivacyCase accepted",
+    "operationalReasons": "60/60 evaluateOperationalPreparation matched expected status/reason",
+    "coverage": "4 entities for every protocol category; 8 complete clean cases; 4 explicit distinct operational failures",
+    "canonicalValidateCases": "PASS: validateCases(cases,{protocol,split:dev}), all 60 cases",
+    "multisegmentCases": 4
+  },
+  "limitations": [
+    "Synthetic identities and identifiers are invented, not claims of registry validity or real contactability.",
+    "No national legal accuracy, privacy efficacy, actual extraction failure handling, restoration or transport safety measured.",
+    "Public institutions and legal titles in clean controls are public references, not synthetic private entities.",
+    "No heldout leakage comparison performed, because heldout access was prohibited."
+  ]
+}
