@@ -7,8 +7,10 @@ import {copyPrivacyJson,exactFields,validateOperationalInput} from '../server/pr
 const python=fileURLToPath(new URL('../artifacts/privacy/onnx-env/bin/python',import.meta.url));
 const script=fileURLToPath(new URL('./privacy-onnx-worker.py',import.meta.url));
 const fail=()=>({status:'blocked',reasonCategory:'detector_failure',detections:[]});
-export function startPythonBackend(){
- const child=spawn(python,['-I','-B',script,'--serve'],{stdio:['pipe','pipe','ignore'],env:{PATH:'/usr/bin:/bin',LANG:'en_US.UTF-8',PYTHONNOUSERSITE:'1',TOKENIZERS_PARALLELISM:'false',OMP_NUM_THREADS:'1',OPENBLAS_NUM_THREADS:'1',HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',LEX_PRIVACY_NETWORK_SANDBOX:'required'}});
+export function startPythonBackend({ablation=false}={}){
+ if(typeof ablation!=='boolean')throw Error('invalid_configuration');
+ const candidateId=ablation?'gliner-pii-small-uint8-local-v3':SEMANTIC_VERSION;
+ const child=spawn(python,['-I','-B',script,'--serve',...(ablation?['--ablation-v3']:[])],{stdio:['pipe','pipe','ignore'],env:{PATH:'/usr/bin:/bin',LANG:'en_US.UTF-8',PYTHONNOUSERSITE:'1',TOKENIZERS_PARALLELISM:'false',OMP_NUM_THREADS:'1',OPENBLAS_NUM_THREADS:'1',HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1',LEX_PRIVACY_NETWORK_SANDBOX:'required'}});
  let pending=null,dead=false,buffer='',metadata=null,peakRssBytes=0,readyResolve,readyReject;
  const ready=new Promise((resolve,reject)=>{readyResolve=resolve;readyReject=reject;});
  function stop(){if(dead)return;dead=true;clearTimeout(initial);child.kill('SIGKILL');readyReject(Error('detector_failure'));pending?.reject(Error('detector_failure'));pending=null;}
@@ -20,7 +22,7 @@ export function startPythonBackend(){
    const at=buffer.indexOf('\n'),line=buffer.slice(0,at);buffer=buffer.slice(at+1);
    try{
     const result=JSON.parse(line);
-    if(!metadata){exactFields(result,['ready']);metadata=copyPrivacyJson(result.ready);if(metadata.candidateId!==SEMANTIC_VERSION||metadata.executionProvider!=='CPUExecutionProvider')return stop();clearTimeout(initial);peakRssBytes=metadata.peakRssBytes;readyResolve(metadata);}
+    if(!metadata){exactFields(result,['ready']);metadata=copyPrivacyJson(result.ready);if(metadata.candidateId!==candidateId||metadata.executionProvider!=='CPUExecutionProvider')return stop();clearTimeout(initial);peakRssBytes=metadata.peakRssBytes;readyResolve(metadata);}
     else {if(!pending)return stop();const request=pending;const {peakRssBytes:rss,...output}=result;if(!Number.isInteger(rss)||rss<0||rss>924*1024*1024)return stop();peakRssBytes=Math.max(peakRssBytes,rss);pending=null;request.resolve(output);}
    }catch{stop();}
   }
@@ -34,7 +36,8 @@ export function startPythonBackend(){
  };
 }
 if(process.send){
- const backend=startPythonBackend(),detector=createSemanticPrivacyDetector({backend});let busy=false;
+ if(process.argv.slice(2).length && JSON.stringify(process.argv.slice(2))!==JSON.stringify(['--ablation-v3']))throw Error('invalid_configuration');
+ const backend=startPythonBackend({ablation:process.argv[2]==='--ablation-v3'}),detector=createSemanticPrivacyDetector({backend});let busy=false;
  const memory=setInterval(()=>{if(process.resourceUsage().maxRSS*1024>100*1024*1024){backend.close();process.exit(3);}},25);
  process.on('disconnect',()=>{clearInterval(memory);backend.close();process.exit(0);});
  backend.ready.then(metadata=>process.send({ready:metadata})).catch(()=>{process.send({errorCategory:'detector_failure'});process.exitCode=2;backend.close();clearInterval(memory);process.disconnect();});

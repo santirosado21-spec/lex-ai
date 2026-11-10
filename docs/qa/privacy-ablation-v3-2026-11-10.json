@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "H4b.2b.3",
+  "status": "diagnostic-only-inadequate-both",
+  "freeze": "privacy-ablation-v3-freeze-2026-11-10.json",
+  "executionArtifact": "artifacts/privacy/ablation-v3-20261110-first/ablation-execution.json",
+  "executionSha256": "e348b477e3ba6949cc658263d2eead0ab4db462e0924e4f5b08dbaeb1fe3eb8d",
+  "caseDispatches": 120,
+  "caseDispatchesNotOnnxForwardCallCount": true,
+  "configurations": 2,
+  "casesPerConfiguration": 60,
+  "binding": {
+    "version": 1,
+    "candidateIds": [
+      "gliner-pii-small-uint8-local-v2",
+      "gliner-pii-small-uint8-local-v3"
+    ],
+    "identity": {
+      "sources": {
+        "server/privacy/semantic-v2.mjs": "831b7b1b2089de04f9e40cb454c38cdc12ebeee00413cc47702861016e33ec64",
+        "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+        "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+        "server/privacy/operational-v2.mjs": "864b71ca4d2488729d398bf4e5090186c17b20adc7866353aa0c0019e856b2c9",
+        "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+        "scripts/privacy-onnx-worker.py": "bb9547e601e1f14f5bb5bc0d90ee51c10a056780869a1065efb11d323afb5837",
+        "scripts/privacy-candidate-worker-v2.mjs": "d434dddd0e449d0e51ead6d8838035b72cbae2c953bdfcfcc9c8b47712794b62",
+        "scripts/run-privacy-detector-v2.mjs": "9e525c1d5e1c422760b613972a65adf47bfa57a785dac6ca938c6f49683633c5",
+        "scripts/eval-privacy-v2.mjs": "7869b36f411deaf192b65faa8070696474437bdb9120edcaee81a08baf0436c6",
+        "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f",
+        "resources/privacy-detector-candidate-v2.json": "659e1e3cdb2e118e32cdf263f16f5ceea3014ee456d7a8fe660fdd9f7c238bfd",
+        "scripts/run-privacy-ablation-v3.mjs": "72feb6d5963063cb6bc24948133531f29dbfc7b6f0b93e249cae391f455e2ccd",
+        "resources/privacy-detector-candidate-v3.json": "0c10329bbbd5e0055ec64b11d571896de326efcc8b41156de4fb8f84b50653d3"
+      },
+      "runtime": {
+        "runtimeTreeSha256": "d470ad37523ba7fead3f48e783784f710cd7f45002e2a1fc65d38189d388888b",
+        "node": "v22.22.3",
+        "platform": "darwin",
+        "arch": "arm64"
+      }
+    },
+    "manifestSha256": [
+      "659e1e3cdb2e118e32cdf263f16f5ceea3014ee456d7a8fe660fdd9f7c238bfd",
+      "0c10329bbbd5e0055ec64b11d571896de326efcc8b41156de4fb8f84b50653d3"
+    ],
+    "protocolSha256": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "guideSha256": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "devSha256": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d",
+    "cases": 60,
+    "threshold": 0.3
+  },
+  "results": [
+    {
+      "candidateId": "gliner-pii-small-uint8-local-v2",
+      "exact": {
+        "tp": 33,
+        "fp": 228,
+        "fn": 15,
+        "precision": 0.12643678160919541,
+        "recall": 0.6875,
+        "precisionInsufficient": false,
+        "recallInsufficient": false,
+        "precisionWilson95": {
+          "lower": 0.09146442416851774,
+          "upper": 0.17224602030527952
+        },
+        "recallWilson95": {
+          "lower": 0.5466692858410841,
+          "upper": 0.8005431655341219
+        },
+        "zeroMissUpper95": null
+      },
+      "overlap": {
+        "tp": 43,
+        "fp": 218,
+        "fn": 5,
+        "precision": 0.16475095785440613,
+        "recall": 0.8958333333333334,
+        "precisionInsufficient": false,
+        "recallInsufficient": false,
+        "precisionWilson95": {
+          "lower": 0.12467351739832067,
+          "upper": 0.2145538045653435
+        },
+        "recallWilson95": {
+          "lower": 0.7783257830561368,
+          "upper": 0.9546782809581869
+        },
+        "zeroMissUpper95": null
+      },
+      "cleanComplete": {
+        "rate": 0,
+        "numerator": 0,
+        "denominator": 8,
+        "insufficient": false,
+        "wilson95": {
+          "lower": 0,
+          "upper": 0.32440756488388023
+        }
+      },
+      "blockedStatus": {
+        "rate": 1,
+        "numerator": 4,
+        "denominator": 4,
+        "insufficient": false,
+        "wilson95": {
+          "lower": 0.5101091635454027,
+          "upper": 1
+        },
+        "perReason": {
+          "scope_mismatch": {
+            "rate": null,
+            "numerator": 0,
+            "denominator": 0,
+            "insufficient": true,
+            "wilson95": null
+          },
+          "unknown_provenance": {
+            "rate": null,
+            "numerator": 0,
+            "denominator": 0,
+            "insufficient": true,
+            "wilson95": null
+          },
+          "unsupported_format": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "partial_extraction": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "ambiguous_context": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "detector_failure": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          }
+        }
+      },
+      "correctBlockReason": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1,
+        "perReason": {
+          "scope_mismatch": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "unknown_provenance": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "detector_failure": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "unsupported_format": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "partial_extraction": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "ambiguous_context": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          }
+        }
+      },
+      "statusCounts": {
+        "blocked": 60,
+        "complete": 0
+      },
+      "p50Ms": 27.942249999999945,
+      "p95Ms": 49.76145799999995,
+      "maxMs": 60.487333000000035,
+      "peakRssBytes": 300990464,
+      "metadata": {
+        "candidateId": "gliner-pii-small-uint8-local-v2",
+        "manifestSha256": "659e1e3cdb2e118e32cdf263f16f5ceea3014ee456d7a8fe660fdd9f7c238bfd",
+        "modelRevision": "d21aad5b4a7ec82b3d0970fd1ac74a12c087d85e",
+        "modelSha256": "891589426ee96f2748b16439f44fad8c3f97e198e002a6637e58dee989500216",
+        "runtimeVersions": {
+          "numpy": "2.5.4",
+          "onnxruntime": "1.31.1",
+          "tokenizers": "0.23.3"
+        },
+        "python": "3.12.13",
+        "loadLatencyMs": 366.3960420526564,
+        "peakRssBytes": 236568576,
+        "cpuThreads": 1,
+        "executionProvider": "CPUExecutionProvider",
+        "networkSandboxRequired": true,
+        "sandboxProbe": {
+          "networkDenied": true,
+          "devCorpusReadDenied": true,
+          "evaluatorReadDenied": true,
+          "generalFilesystemSandbox": false
+        }
+      },
+      "experimentalGate": {
+        "status": "diagnostic-only",
+        "failures": [
+          "precision:person",
+          "precision:organization",
+          "recall:account",
+          "precision:account",
+          "precision:phone",
+          "recall:address",
+          "precision:address",
+          "recall:case_id",
+          "recall:context",
+          "precision:context",
+          "recall:sensitive_relation",
+          "precision:sensitive_relation",
+          "cleanCompleteRate"
+        ],
+        "minimumFailures": [],
+        "minimumsApplied": false,
+        "meaning": "eligible-for-integration-evaluation only; never safe-egress or pilot-ready"
+      }
+    },
+    {
+      "candidateId": "gliner-pii-small-uint8-local-v3",
+      "exact": {
+        "tp": 32,
+        "fp": 113,
+        "fn": 16,
+        "precision": 0.2206896551724138,
+        "recall": 0.6666666666666666,
+        "precisionInsufficient": false,
+        "recallInsufficient": false,
+        "precisionWilson95": {
+          "lower": 0.16088528505362193,
+          "upper": 0.2949115027380186
+        },
+        "recallWilson95": {
+          "lower": 0.5254010970594798,
+          "upper": 0.7832321930518142
+        },
+        "zeroMissUpper95": null
+      },
+      "overlap": {
+        "tp": 39,
+        "fp": 106,
+        "fn": 9,
+        "precision": 0.2689655172413793,
+        "recall": 0.8125,
+        "precisionInsufficient": false,
+        "recallInsufficient": false,
+        "precisionWilson95": {
+          "lower": 0.20344255259370747,
+          "upper": 0.3464140496536988
+        },
+        "recallWilson95": {
+          "lower": 0.680601328507153,
+          "upper": 0.8980860904515235
+        },
+        "zeroMissUpper95": null
+      },
+      "cleanComplete": {
+        "rate": 0,
+        "numerator": 0,
+        "denominator": 8,
+        "insufficient": false,
+        "wilson95": {
+          "lower": 0,
+          "upper": 0.32440756488388023
+        }
+      },
+      "blockedStatus": {
+        "rate": 1,
+        "numerator": 4,
+        "denominator": 4,
+        "insufficient": false,
+        "wilson95": {
+          "lower": 0.5101091635454027,
+          "upper": 1
+        },
+        "perReason": {
+          "scope_mismatch": {
+            "rate": null,
+            "numerator": 0,
+            "denominator": 0,
+            "insufficient": true,
+            "wilson95": null
+          },
+          "unknown_provenance": {
+            "rate": null,
+            "numerator": 0,
+            "denominator": 0,
+            "insufficient": true,
+            "wilson95": null
+          },
+          "unsupported_format": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "partial_extraction": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "ambiguous_context": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          },
+          "detector_failure": {
+            "rate": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "insufficient": false,
+            "wilson95": {
+              "lower": 0.20654931437723745,
+              "upper": 1
+            }
+          }
+        }
+      },
+      "correctBlockReason": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1,
+        "perReason": {
+          "scope_mismatch": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "unknown_provenance": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "detector_failure": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "unsupported_format": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "partial_extraction": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          },
+          "ambiguous_context": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1
+          }
+        }
+      },
+      "statusCounts": {
+        "blocked": 60,
+        "complete": 0
+      },
+      "p50Ms": 23.27758300000005,
+      "p95Ms": 42.72787499999998,
+      "maxMs": 52.102084000000104,
+      "peakRssBytes": 300498944,
+      "metadata": {
+        "candidateId": "gliner-pii-small-uint8-local-v3",
+        "manifestSha256": "0c10329bbbd5e0055ec64b11d571896de326efcc8b41156de4fb8f84b50653d3",
+        "modelRevision": "d21aad5b4a7ec82b3d0970fd1ac74a12c087d85e",
+        "modelSha256": "891589426ee96f2748b16439f44fad8c3f97e198e002a6637e58dee989500216",
+        "runtimeVersions": {
+          "numpy": "2.5.4",
+          "onnxruntime": "1.31.1",
+          "tokenizers": "0.23.3"
+        },
+        "python": "3.12.13",
+        "loadLatencyMs": 289.42500008270144,
+        "peakRssBytes": 237142016,
+        "cpuThreads": 1,
+        "executionProvider": "CPUExecutionProvider",
+        "networkSandboxRequired": true,
+        "sandboxProbe": {
+          "networkDenied": true,
+          "devCorpusReadDenied": true,
+          "evaluatorReadDenied": true,
+          "generalFilesystemSandbox": false
+        }
+      },
+      "experimentalGate": {
+        "status": "diagnostic-only",
+        "failures": [
+          "precision:person",
+          "precision:organization",
+          "recall:account",
+          "precision:account",
+          "precision:phone",
+          "recall:address",
+          "precision:address",
+          "recall:case_id",
+          "recall:context",
+          "precision:context",
+          "recall:sensitive_relation",
+          "precision:sensitive_relation",
+          "cleanCompleteRate"
+        ],
+        "minimumFailures": [],
+        "minimumsApplied": false,
+        "meaning": "eligible-for-integration-evaluation only; never safe-egress or pilot-ready"
+      }
+    }
+  ],
+  "independentReview": {
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-evidence-only",
+    "recomputedScoresExactMatch": true,
+    "currentBindingHashesMatch": true,
+    "newInferenceUsed": false
+  },
+  "tests": {
+    "builderTargeted": 18,
+    "reviewerTargeted": 18
+  },
+  "heldoutReadOrScored": false,
+  "newModelDownloads": false,
+  "productionEnabled": false,
+  "physical8GBValidated": false,
+  "next": "Preserve both failures; evaluate a different compact Spanish token classifier separately with frozen mapping and no heldout tuning."
+}

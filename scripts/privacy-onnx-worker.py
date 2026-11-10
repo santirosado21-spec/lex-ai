@@ -100,10 +100,11 @@ def verify_sandbox():
     return {'networkDenied':True,'devCorpusReadDenied':True,'evaluatorReadDenied':True,'generalFilesystemSandbox':False}
 
 class Runtime:
-    def __init__(self):
-        start=time.perf_counter();sandbox=verify_sandbox();raw=MANIFEST.read_bytes();self.manifest=json.loads(raw);self.manifest_hash=hashlib.sha256(raw).hexdigest()
+    def __init__(self, ablation=False):
+        manifest_path=ROOT/'resources/privacy-detector-candidate-v3.json' if ablation else MANIFEST
+        start=time.perf_counter();sandbox=verify_sandbox();raw=manifest_path.read_bytes();self.manifest=json.loads(raw);self.manifest_hash=hashlib.sha256(raw).hexdigest()
         m=self.manifest
-        if m['id']!='gliner-pii-small-uint8-local-v2' or m['productionEnabled'] is not False:raise ValueError('manifest')
+        if m['id']!=('gliner-pii-small-uint8-local-v3' if ablation else 'gliner-pii-small-uint8-local-v2') or m['productionEnabled'] is not False:raise ValueError('manifest')
         directory=ROOT/m['download']['artifactDirectory']
         if directory != ROOT/'artifacts/privacy/models/gliner-pii-small-uint8-v2' or directory.is_symlink():raise ValueError('path')
         for spec in m['files']:
@@ -112,7 +113,9 @@ class Runtime:
         config=json.loads((directory/'gliner_config.json').read_bytes())
         if config['span_mode']!='token_level' or config['words_splitter_type']!='whitespace' or config['subtoken_pooling']!='first' or config['class_token_index']!=50368 or config['max_len']!=2048 or config['max_width']!=12:raise ValueError('config')
         self.labels=m['runtime']['labels'];self.threshold=m['runtime']['threshold'];self.max_tokens=config['encoder_config']['max_position_embeddings']
-        if len(self.labels)!=5 or not 0<self.threshold<1:raise ValueError('labels')
+        expected=[{'label':'name','category':'person'},{'label':'organization','category':'organization'},{'label':'location address','category':'address'}]
+        if not ablation:expected += [{'label':'identifying context','category':'context'},{'label':'sensitive relationship','category':'sensitive_relation'}]
+        if self.labels!=expected or self.threshold!=0.3:raise ValueError('labels')
         import numpy as np
         import onnxruntime as ort
         from tokenizers import Tokenizer
@@ -155,10 +158,10 @@ class Runtime:
         return {'status':'complete','reasonCategory':None,'detections':detections}
 
 def main():
-    if sys.argv[1:]!=['--serve'] or os.environ.get('LEX_PRIVACY_NETWORK_SANDBOX')!='required':raise ValueError('explicit_sandbox_required')
+    if sys.argv[1:] not in (['--serve'],['--serve','--ablation-v3']) or os.environ.get('LEX_PRIVACY_NETWORK_SANDBOX')!='required':raise ValueError('explicit_sandbox_required')
     threading.Thread(target=watch_memory,daemon=True).start()
     signal.signal(signal.SIGALRM,lambda *_:os._exit(4));signal.alarm(15)
-    runtime=Runtime();signal.alarm(0)
+    runtime=Runtime(ablation=sys.argv[1:]==['--serve','--ablation-v3']);signal.alarm(0)
     print(json.dumps({'ready':runtime.metadata}),flush=True)
     while True:
         line=sys.stdin.buffer.readline(MAX_LINE+1)
