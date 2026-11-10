@@ -1,6 +1,7 @@
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import os from 'node:os';
+import {windowsProcessTreeRss} from './windows-process-memory.mjs';
 const exec=promisify(execFile);
 // Apple: https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/AboutMemory.html
 // Inactive pages can be reclaimed, but may need paging. Credit only half as a
@@ -42,4 +43,4 @@ export function parseProcessTreeRss(text,rootPid){
  // Shared pages may be counted more than once: intentionally conservative.
  return rows.filter(r=>owned.has(r.pid)).reduce((n,r)=>n+r.rss,0);
 }
-export async function processTreeRss(pid){const {stdout}=await exec('/bin/ps',['-axo','pid=,ppid=,rss='],{timeout:2000,maxBuffer:4*1024*1024,env:{PATH:'/usr/bin:/bin',LC_ALL:'C'}});return parseProcessTreeRss(stdout,pid);}
+export async function processTreeRss(pid,{platform=os.platform(),execute=exec,systemRoot=process.env.SystemRoot}={}){if(platform==='win32')return windowsProcessTreeRss(pid,{execute,systemRoot});const {stdout}=await execute('/bin/ps',['-axo','pid=,ppid=,rss='],{timeout:2000,maxBuffer:4*1024*1024,env:{PATH:'/usr/bin:/bin',LC_ALL:'C'}});return parseProcessTreeRss(stdout,pid);}

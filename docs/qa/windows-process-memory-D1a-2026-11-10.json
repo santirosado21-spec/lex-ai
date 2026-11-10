@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1a",
+  "status": "technical-prototype-only",
+  "sources": {
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+    "server/runtime-memory.mjs": "49101201121fd808f80da8dd9dfe1720f8218c46c704a27411102e99c609d042",
+    "tests/windows-process-memory.test.mjs": "0902abf6aa0459b411d1ee06b83bf65e956116c46f849445714e9d74806d9a3b"
+  },
+  "verification": {
+    "builderTargeted": 12,
+    "independentReviewer": "gpt-6.1-sol",
+    "independentVerdict": "APPROVE",
+    "rootCombinedDistributionTests": 16,
+    "rootLog": "artifacts/phased-completion-20261110-batch2/distribution-tests.log"
+  },
+  "measured": {
+    "actualMacPs": true,
+    "windowsFixtures": true
+  },
+  "notMeasured": [
+    "Actual Windows execution",
+    "500ms polling overhead",
+    "PID reuse identity",
+    "Physical 8GB product footprint"
+  ],
+  "productWindowsEnabled": false,
+  "clientDataUsed": false
+}

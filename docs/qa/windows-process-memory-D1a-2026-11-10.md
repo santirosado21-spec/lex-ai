@@ -1,0 +1,7 @@
+# D1a: medición de procesos preparada para Windows
+
+Se añadió una ruta Windows para sumar WorkingSetSize del proceso del motor y sus descendientes. Pide únicamente identificadores de proceso/padre y memoria mediante CIM, sin nombres, rutas ni líneas de comando. PowerShell se ejecuta desde SystemRoot confiable con argumentos fijos, sin shell, perfiles o bypass de políticas, con límites de dos segundos y 4 MiB. [Datos y hashes](windows-process-memory-D1a-2026-11-10.json).
+
+El parser rechaza filas inesperadas, duplicados, ciclos, raíz ausente, números inseguros y desbordamiento. Una medición fallida no se transforma en cero. La ruta Unix conserva su comportamiento y tiene un control real con ps en este Mac. Referencias: [Win32_Process](https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process) y [Get-CimInstance](https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-5.1).
+
+Builder y revisor independiente Sol aprobaron las doce pruebas dirigidas; root ejecutó dieciséis combinadas con el catálogo de descargas. Son fixtures Windows y un control macOS: no hubo ejecución en Windows, medición del coste de sondear cada 500 ms, identidad duradera ante reutilización de PID o validación física de 8 GB. Esto no habilita inferencia, launcher o instalador Windows. D1 continúa con preparación por target y pruebas nativas de cada sistema.
