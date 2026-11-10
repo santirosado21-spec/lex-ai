@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-structural-witnesses-v1",
+  "scope": "public synthetic Unicode/tokenizer/shape witnesses only; no entity gold or quality evaluation",
+  "author": "codex/root independent of decoder builder Astra",
+  "modelOutputsConsulted": false,
+  "heldoutOrDevelopmentGoldConsulted": false,
+  "maximumForwardsAfterSeparateAuthorization": 8,
+  "executionAuthorized": false,
+  "productionEnabled": false,
+  "fixtures": [
+    {
+      "id": "ascii",
+      "text": "La solicitud de prueba contiene dos parrafos y una cita ficticia.",
+      "utf8Sha256": "ad54c4a93379364a09d31d328c2171c31eccbe2f57a8499dd1216a94e6f405a1",
+      "utf8Bytes": 65,
+      "pythonCodepoints": 65,
+      "javascriptUtf16Units": 65
+    },
+    {
+      "id": "spanish",
+      "text": "Íñigo Pérez Muñoz preparó este ejemplo ficticio en Querétaro.",
+      "utf8Sha256": "3510feb8a6f7c51df1e8231cba2c7b9baf8386198154c4a9c8c44829c19cb692",
+      "utf8Bytes": 67,
+      "pythonCodepoints": 61,
+      "javascriptUtf16Units": 61
+    },
+    {
+      "id": "astral-zwj",
+      "text": "Prueba sintética: 🧑‍⚖️ 😀 documento terminado.",
+      "utf8Sha256": "2b3c9546af38e0652b878a3aa6753452be3ce7a8f840609d360741a33467a7e4",
+      "utf8Bytes": 58,
+      "pythonCodepoints": 45,
+      "javascriptUtf16Units": 47
+    },
+    {
+      "id": "nfd",
+      "text": "Irene redactó: María revisa una cláusula sin datos reales.",
+      "utf8Sha256": "968fe5f32ff40a6dc001231486d2bb9d4dd7236984b2fc9c45db3098eba46f67",
+      "utf8Bytes": 63,
+      "pythonCodepoints": 60,
+      "javascriptUtf16Units": 60
+    },
+    {
+      "id": "cjk",
+      "text": "Ejemplo sintético: 東京の文書を確認します。 Fin del texto.",
+      "utf8Sha256": "da19e24f12572e35e20d4a10769d1813329cbd1e5b0f7d7564e684794e0baa84",
+      "utf8Bytes": 71,
+      "pythonCodepoints": 46,
+      "javascriptUtf16Units": 46
+    },
+    {
+      "id": "crlf",
+      "text": "Primera línea sintética.\r\nSegunda línea de prueba.\r\n",
+      "utf8Sha256": "c77a366820834ccae1d044adfa874c63627e814de8f29b14b2fbdc09debe952a",
+      "utf8Bytes": 55,
+      "pythonCodepoints": 52,
+      "javascriptUtf16Units": 52
+    },
+    {
+      "id": "leading-space",
+      "text": "  \tNota sintética con espacios iniciales y\tuna tabulación.",
+      "utf8Sha256": "858b12154ceccd077268ee66947a81b6b8078af97c70b02b05e6b58b00ffb364",
+      "utf8Bytes": 60,
+      "pythonCodepoints": 58,
+      "javascriptUtf16Units": 58
+    },
+    {
+      "id": "literal-special",
+      "text": "El texto de prueba cita literalmente <bos> y <end_of_turn> como datos.",
+      "utf8Sha256": "39ec297b486bd453d9267e1d8734ab29d1ccbba8d5bf0356d0d0bbe8108d5fa2",
+      "utf8Bytes": 70,
+      "pythonCodepoints": 70,
+      "javascriptUtf16Units": 70
+    }
+  ]
+}
