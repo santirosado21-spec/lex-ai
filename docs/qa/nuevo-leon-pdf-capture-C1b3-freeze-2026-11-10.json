@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T17:51:39.636823+00:00",
+  "approvedForBoundedPublicResearchCapture": true,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE17offline + real source preflight without network",
+  "sourceHashes": {
+    "scripts/capture-nuevo-leon-pdfs.py": "dab58faebb598c3ce4b48333b1e618bb3a4ccda2ae4268f0ba3965be50b0f944",
+    "tests/capture_nuevo_leon_pdfs_test.py": "41b7472ccd893745d416e1b67e772fc67a9831b9fe5b87d238624a81a2b06efb",
+    "tests/nuevo-leon-pdf-research.test.mjs": "c319ab331f2c8514b64c04b2652cda14e2da9e183fe746048e63f46e9d04bdeb",
+    "docs/architecture/nuevo-leon-pdf-research-v1.md": "9c17021c45cd95dc51a7f78644dc062bf4d468c987c1142eac0210654571ffcd",
+    "scripts/inspect-nuevo-leon-links.py": "0294d183590c126bf7d6228f588b96968b320ec03828b3076b638de4016cbad7"
+  },
+  "limits": {
+    "maxRequests": 3,
+    "maxPdfBytes": 10485760,
+    "maxTotalBytes": 20971520,
+    "maxRobotsBytes": 131072,
+    "minGapSeconds": 2,
+    "requestTimeoutSeconds": 15,
+    "batchTimeoutSeconds": 120,
+    "concurrency": 1,
+    "retries": 0,
+    "redirects": 0
+  },
+  "scope": "exact two previously captured official PDF hrefs including date queries; research quarantine only",
+  "rightsCommercialApproved": false,
+  "legalVersionApproved": false,
+  "productionEnabled": false
+}
