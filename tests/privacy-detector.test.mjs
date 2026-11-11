@@ -49,6 +49,15 @@ test('nested sensitive relationship and person ranges are retained separately; c
  const person=out.detections.find(d=>d.category==='person'),relation=out.detections.find(d=>d.category==='sensitive_relation');assert.ok(person.start>=relation.start&&person.end<=relation.end);
 });
 
+test('scaffold colons do not widen a sensitive-relation span and guillemets open a context clause',async()=>{
+ const relation='Ensayo DEV: contexto sintético: la persona evaluada es pareja de la paciente ficticia; solo es un ejemplo inventado.';
+ const r1=setup(relation),o1=await r1.detector.detect(r1.input);
+ assert.deepEqual(spans(o1,relation,'sensitive_relation'),['la persona evaluada es pareja de la paciente ficticia']);
+ const quoted='Se registra «la única persona zurda del taller violeta» únicamente como dato inventado.';
+ const r2=setup(quoted),o2=await r2.detector.detect(r2.input);
+ assert.deepEqual(spans(o2,quoted,'context'),['la única persona zurda del taller violeta']);
+});
+
 test('trusted extraction and assessment failures block even when visible content is clean, with fixed reason codes',async()=>{
  for(const [status,expected] of [['partial','partial_extraction'],['unsupported','unsupported_format'],['failed','detector_failure']]) {
   const {detector,input}=setup('texto genérico',{source:{extraction:{status,extractorVersion:'txt-v1',originalSha256:privacyTextHash('bytes')}}});
