@@ -80,3 +80,42 @@ estática separada (`landing/`, raíz del despliegue Vercel).
   requiere sesión con la app servida o capturas de la máquina del dueño.
 - Ninguna afirmación sobre la UI real de Harvey tras login debe tratarse como
   verificada por esta nota.
+
+## Verificación visual directa — 2026-11-11 (navegador, sitio público)
+
+Inspección visual del sitio público de Harvey (harvey.ai, capturas en
+/downloads/cloud-browser-20261111-191202.png, -191210.png, -191215.png).
+El producto tras login sigue sin ser accesible; las observaciones de UI de
+producto provienen de las capturas de producto que Harvey publica en su
+propia página y blog (evidencia de marketing, no del producto en vivo).
+
+Tokens medidos (getComputedStyle, portada):
+
+- Tipografía: familia sans propia "HarveySans" para UI/texto y "HarveySerif"
+  para titulares display (h1 96px, peso 400, tracking -1.2px). Cuerpo 16px/24px.
+- Color: tinta casi-negra cálida rgb(15,14,13) sobre blanco cálido; gris
+  apagado rgb(112,109,102) para texto secundario; botón primario negro pleno
+  con texto rgb(250,250,249).
+- Radio: 4px en botones; botón 14px/500, padding 0 12px, sin borde.
+
+UI de producto visible en capturas oficiales:
+
+- Raíl lateral izquierdo OSCURO con navegación: New Thread, Agents, Vaults,
+  Command Center (activo en píldora), More; sección "Apps" (Contract
+  Intelligence). Lienzo principal claro cálido.
+- Título de vista en serif ("Whitford Lane's Command Center"); acciones
+  arriba-derecha; botón primario negro "Ask Harvey".
+- Tarjetas blancas redondeadas, bordes mínimos, datos densos (métricas,
+  gráficas) — "every pixel works hard" confirmado en la práctica.
+- Blog propio (29-jul-2025, "A More Unified Harvey Experience", captura
+  anotada): ventana de prompt simplificada, fuentes de conocimiento
+  personalizadas, recomendaciones de workflow, selector de modelo/estilos de
+  escritura/Magic Prompt, matter y proyecto detectables por consulta, drafts
+  y chat "en un solo lugar" (fin del cambio de contexto drafting↔chat).
+
+Contraste con Rejon (verificado en tokens): Rejon ya comparte el patrón
+serif-editorial (Newsreader) + sans de trabajo (IBM Plex) y paleta sobria;
+las brechas visibles son de ESTRUCTURA (asistente en panel lateral separado
+vs flujo unificado con raíl oscuro + lienzo claro + drafting in situ) más que
+de tipografía. Pendiente declarado: render local de la app Rejon para el
+lado a lado (headless Chrome disponible en el entorno de build).
