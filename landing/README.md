@@ -2,7 +2,7 @@
 
 Sitio estático, sin framework ni dependencias de ejecución. La raíz de despliegue es `landing/`: sirve HTML, CSS, JavaScript, catálogo y assets locales. Para revisión local normal puede usarse `python3 -m http.server 4175 --directory landing` desde la raíz del repositorio.
 
-La dirección visual es “Sello y pizarra”: pizarra clara, papel, tinta y un solo acento granate. Newsreader se usa para títulos y Schibsted Grotesk para interfaz. Las fuentes son WOFF2 locales de `@fontsource`; sus licencias OFL y hashes están en `assets/fonts/`. El logo de la página es la copia de `src/assets/lex-mark.svg`; `assets/favicon.svg` conserva el icono de la app.
+La dirección visual es “Sello y pizarra”: pizarra clara, papel, tinta y un solo acento granate. Newsreader se usa para títulos y Schibsted Grotesk para interfaz. Las fuentes son WOFF2 locales de `@fontsource`; sus licencias OFL y hashes están en `assets/fonts/`. El logo de la página es la copia de `src/assets/rejon-mark.svg`; `assets/favicon.svg` usa el nuevo monograma R. Fuente editable: [Figma Rejon.AI](https://www.figma.com/design/qyHmTkSSjvsowzDG1nsLez).
 
 `catalogue.json` es la fuente de disponibilidad por plataforma; los controles sólo se habilitan con metadatos completos y válidos según el esquema 3 descrito abajo.
 

@@ -1,6 +1,6 @@
 import jurisdictions from '../resources/mexico-jurisdictions.json';
-import lexMark from './assets/lex-mark.svg';
-import lexMarkDark from './assets/lex-mark-dark.svg';
+import rejonMark from './assets/rejon-mark.svg';
+import rejonMarkDark from './assets/rejon-mark-dark.svg';
 import MetalPromptBar, {type PromptSelection} from './components/ui/metal-prompt-bar';
 import {AILoader} from './components/ui/ai-loader';
 import {assistantPresentation} from './assistant-presentation';
@@ -223,7 +223,7 @@ export default function App() {
   return <div className={`app-shell ${sidebarCollapsed?'sidebar-collapsed':''} macos-workspace`}>
 
     <aside className={`sidebar ${mobileNavOpen?'mobile-open':''}`} hidden={(sidebarCollapsed&&!mobileNavOpen)||!data.workspace}>
-      <div className="brand"><span className="brand-mark" aria-hidden="true"><img src={lexMark} className="lex-brand-symbol theme-mark-light" alt=""/><img src={lexMarkDark} className="lex-brand-symbol theme-mark-dark" alt=""/></span><span>Rejon<span className="brand-ai">.AI</span></span><span className="pilot">Piloto</span></div>
+      <div className="brand"><span className="brand-mark" aria-hidden="true"><img src={rejonMark} className="lex-brand-symbol theme-mark-light" alt=""/><img src={rejonMarkDark} className="lex-brand-symbol theme-mark-dark" alt=""/></span><span>Rejon<span className="brand-ai">.AI</span></span><span className="pilot">Piloto</span></div>
       <div className="firm-name"><LockKeyhole size={13}/><span>{data.workspace?.name || 'Espacio jurídico privado'}</span></div>
       <nav aria-label="Navegación principal">{navigationGroups.map(group=>{const isOpen=openNavigationGroups[group.label];return <section className="nav-group" key={group.label}><button className="nav-group-toggle" aria-expanded={isOpen} aria-controls={`nav-group-${group.label}`} onClick={()=>setOpenNavigationGroups(previous=>({...previous,[group.label]:!previous[group.label]}))}><span>{group.label}</span><ChevronDown size={16}/></button><div id={`nav-group-${group.label}`} hidden={!isOpen}>{group.ids.map(id=>pages.find(item=>item.id===id)!).map(({id,label,icon:Icon})=>{const active=page===id||(id==='matters'&&page==='dossier');const count=id==='pending'&&pendingCount>0?pendingCount:undefined;return <button key={id} className={active?'nav-item active':'nav-item'} aria-current={active?'page':undefined} onClick={()=>navigateTo(id)}><Icon size={18}/><span>{label}</span>{count!==undefined&&<small className="nav-count">{count}</small>}</button>;})}</div></section>;})}</nav><button className="text-button tools-trigger" onClick={openCommands}><Search size={16}/> Buscar acciones <kbd>⌘ K</kbd></button>
       <div className="sidebar-bottom"><button className="appearance-quick-toggle" aria-label={`Cambiar apariencia: ${appearanceLabels[appearance]}`} title={`Apariencia: ${appearanceLabels[appearance]}`} onClick={()=>setAppearance(value=>value==='auto'?'light':value==='light'?'dark':'auto')}>{appearance==='auto'?<Monitor size={16}/>:appearance==='light'?<Sun size={16}/>:<Moon size={16}/>}<span>Apariencia</span><small>{appearanceLabels[appearance]}</small></button><button className="runtime-status" aria-label="Estado de Rejon.AI" title={assistantLabel} onClick={()=>setPage('settings')}><span className={`status-dot ${state==='ready'?'ready':state==='error'?'failed':''}`}/><span>{assistantLabel}<small>Rejon.AI · En este equipo</small></span><ChevronRight size={14}/></button><p><ShieldCheck size={12}/> Inferencia y archivos locales</p></div>

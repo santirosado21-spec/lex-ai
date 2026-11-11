@@ -263,3 +263,7 @@ Dueño autorizó máximo USD6 de créditos existentes. Verificado: dos endpoints
 ## 2026-11-10 20:29 — codex — Rejon.AI aplicado a app y landing
 
 Verificado: nombre visible Rejon.AI en fuente de app, landing, prompts activos, correo, DOCX y Tauri para futuro build. npm test 1104/1104, build, UI smoke sintético y landing smoke PASS. Captura artifacts/ui-workspace.png muestra nuevo nombre. No se construyó instalador nativo; DMG0.4.3 sigue LEX AI. Logo L, favicon, iconos, dominio e IMPI pendientes; Keychain y rutas antiguas preservadas. Plan docs/brand/rejon-transition-2026-11-10.md.
+
+## 2026-11-10 20:38 — codex — Marca vectorial Rejon.AI integrada en fuente
+
+Verificado: monograma R creado en Figma con variantes clara/oscura; SVGs integrados en app y landing, favicon e iconos Tauri de escritorio regenerados. npm test 1104/1104, npm run build, npm run test:ui y landing-smoke pasaron con datos sintéticos; captura UI inspeccionada. No medido: binario nativo ni equipo 8 GB. El build nativo requiere LEX_RUNTIME_INVENTORY y LEX_RUNTIME_ARTIFACTS revisados, ausentes aquí. Cuenta Vercel conectada no lista rejon.ai; consulta de disponibilidad positiva no acredita propiedad. DMG 0.4.3 sigue LEX AI; no se cambiaron descargas.

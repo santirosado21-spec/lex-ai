@@ -121,3 +121,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 20:29 — codex — Nombre público Rejon.AI; compatibilidad LEX AI preservada
 
 **Por qué:** El dueño fijó Rejon.AI el 10 de noviembre. UI, landing, prompts activos y metadatos visibles adoptan el nombre. Se mantienen IDs de almacenamiento, servicio Keychain, URLs GitHub y el nombre real del DMG anterior para evitar pérdida de datos, clave o descargas engañosas; requieren migración y nuevo build separado.
+
+## 2026-11-10 20:38 — codex — Monograma R de Rejon.AI para app y landing
+
+**Por qué:** El dueño eligió Rejon.AI. Se creó la marca vectorial original en Figma y se usó una misma geometría para SVG, favicon e iconos de escritorio. Los identificadores internos y el instalador anterior conservan compatibilidad hasta contar con migración y build verificado.
