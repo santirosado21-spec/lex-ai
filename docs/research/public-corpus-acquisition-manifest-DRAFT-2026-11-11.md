@@ -78,7 +78,7 @@ Lectura operativa para este corpus:
 - diputados-fed: ejecutado — 10/10 documentos, estado `complete` (`artifacts/public-corpus/pilot/`).
 - nuevo-leon: fuente aprobada tras revisión del 2026-11-11 (`docs/research/public-corpus-rights-review-2026-11-11.md`); ejecutado — 8/8 documentos, estado `complete` (`artifacts/public-corpus/pilot-mx-nle-2026-11-11/`). Bindings corregidos de página HTML a PDF exacto.
 - congreso-jalisco: derechos revisados y resueltos; **canal bloqueado** — robots.txt redirige 301 a página de error y el pipeline falla cerrado (`robots-unavailable`). Documentos de vuelta a `pending`. Decisión pendiente del proyecto: política de robots o canal oficial alterno.
-- sjf: pendiente — decisión del dueño (términos SCJN anti-comercialización + canal solo-navegador); ver `public-corpus-rights-review-2026-11-11.md`.
+- sjf: pendiente — el canal oficial alterno ya existe (Gaceta del SJF en PDF sobre www.scjn.gob.mx, robots sin restricción para /sites/default/files/, compatible con el pipeline); la única cuestión abierta son los términos SCJN (cláusula anti-comercialización vs LFDA Art. 14 VIII), decisión del responsable del producto; ver `public-corpus-rights-review-2026-11-11.md`.
 
 ## 5. Ruta de ejecución propuesta para lo pendiente
 
