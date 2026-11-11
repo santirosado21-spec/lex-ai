@@ -1,4 +1,5 @@
 import {validateModelOutput} from './skills.mjs';
+import {reporteCitaEstructural} from './citation-fractions.mjs';
 const KINDS=['observacion','inferencia','pendiente','borrador'];
 const normalize=text=>text.normalize('NFC').replace(/\s+/g,' ').trim();
 function citeableEvidence(evidence){
@@ -41,7 +42,8 @@ export function validateGroundedOutput(raw,evidence){
  const sources=citeableEvidence(evidence);if(!sources.length)throw Error('No hay citas aprobadas suficientes para generar.');
  const minSources=Math.min(2,sources.length),allowed=new Map(sources.map(s=>[s.source.id,s]));
  if(output.paragraphs.length<minSources||output.paragraphs.length>3)throw Error('Cantidad de párrafos fuera del esquema.');
- const used=new Set(),paragraphs=[];
+ const used=new Set(),paragraphs=[],citationFindings=[];
+ let citationChecked=0;
  for(const p of output.paragraphs){
   if(!isObject(p)||Object.keys(p).some(k=>!['sourceId','quote','text','kind'].includes(k))||!['sourceId','quote','text'].every(k=>typeof p[k]==='string')||p.kind!==undefined&&!KINDS.includes(p.kind))throw Error('Párrafo fuera del esquema.');
   const entry=allowed.get(p.sourceId);
@@ -63,6 +65,13 @@ export function validateGroundedOutput(raw,evidence){
   const own=!privateDocument&&entry.source.article?String(entry.source.article).replace(/^art[ií]culo\s+/i,'').trim():'';
   const checked=own?p.text.replace(new RegExp(`\\bart[ií]culos?\\s+${own.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}(?![\\p{L}\\p{N}])`,'giu'),' '):p.text;
   if(numericClaims(checked).some(claim=>!quoteClaims.has(claim)))throw unsupported('Número, artículo o fecha sin respaldo en la cita del párrafo.');
+  // H5/S2 citation syntax pilot: REPORT ONLY. No changed acceptance decision.
+  // Never inspect private D* evidence or record source/paragraph contents.
+  if(!privateDocument){
+   citationChecked++;
+   const check=reporteCitaEstructural(p.text,{label:typeof entry.source.article==='string'?entry.source.article:'',text:entry.source.text});
+   if(!check.ok)citationFindings.push({sourceId:p.sourceId,reason:check.reason});
+  }
   used.add(p.sourceId);paragraphs.push({...p});
  }
  if(used.size<minSources)throw Error('Faltan fuentes distintas requeridas.');
@@ -72,5 +81,6 @@ export function validateGroundedOutput(raw,evidence){
  const validated=validateModelOutput(legacyJSON,evidence);
  validated.validation.groundedContract='paragraph-citations-v1';
  validated.validation.legalAccuracy='not-evaluated';
+ validated.validation.citationFractions={mode:'report-only',checkedParagraphs:citationChecked,wouldReject:citationFindings.length,findings:citationFindings};
  return {legacyJSON,paragraphs,validated};
 }
