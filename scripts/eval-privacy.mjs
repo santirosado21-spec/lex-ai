@@ -23,14 +23,30 @@ const list=(value,label)=>{if(!Array.isArray(value))fail(`Invalid ${label} list.
 // derived from gold/candidates. V1 material carries neither and validates unchanged.
 const S_OPTIONAL=['extractionStatus','assessment'];
 const S_ENUM={extractionStatus:['complete','partial','unsupported','failed'],assessment:['known','ambiguous','failed']};
-const segmentFields=segment=>{
+// v2 operational blockReasons and the segment state that evidences each one
+// (frozen v2 caseContract.operationalStateMapping). scope_mismatch and
+// unknown_provenance are governed by originScope/classification, not states.
+const OP_STATE={unsupported_format:'extractionStatus:unsupported',partial_extraction:'extractionStatus:partial',ambiguous_context:'assessment:ambiguous',detector_failure:'extractionStatus:failed'};
+const stateEvidence=segment=>{
+ const found=[];
+ if(segment.extractionStatus&&segment.extractionStatus!=='complete')found.push(`extractionStatus:${segment.extractionStatus}`);
+ if(segment.assessment&&segment.assessment!=='known')found.push(`assessment:${segment.assessment}`);
+ return found;
+};
+const segmentFields=(segment,version)=>{
  const required=['id','path','text','originScope','classification'];
  if(!object(segment)||required.some(field=>!Object.hasOwn(segment,field))||Object.keys(segment).some(field=>!required.includes(field)&&!S_OPTIONAL.includes(field)))fail('Invalid segment fields.');
- for(const field of S_OPTIONAL)if(Object.hasOwn(segment,field)&&!S_ENUM[field].includes(segment[field]))fail(`Invalid segment ${field}.`);
+ for(const field of S_OPTIONAL) {
+  if(!Object.hasOwn(segment,field))continue;
+  if(version!==2)fail(`Segment ${field} requires protocol version 2.`);
+  if(!S_ENUM[field].includes(segment[field]))fail(`Invalid segment ${field}.`);
+ }
 };
 
 export function validateProtocol(protocol) {
- if(!object(protocol)||protocol.version!==1||!opaque(protocol.id)||!hash(protocol.annotationGuideSha256))fail('Unsupported protocol/annotation guide.');
+ // Additive version awareness: version 1 keeps exactly the frozen v1 rules;
+ // version 2 keeps them all and additionally binds the frozen v2 additions.
+ if(!object(protocol)||![1,2].includes(protocol.version)||!opaque(protocol.id)||!hash(protocol.annotationGuideSha256))fail('Unsupported protocol/annotation guide.');
  for(const field of ['categories','mandatoryCategories','blockReasons']) {
   if(!Array.isArray(protocol[field])||!protocol[field].length||!unique(protocol[field])||protocol[field].some(value=>!opaque(value)))fail(`Invalid protocol ${field}.`);
  }
@@ -41,6 +57,14 @@ export function validateProtocol(protocol) {
  for(const field of ['mandatoryExactRecall','otherCategoryExactRecallMinimum','exactPrecisionMinimumPerCategory','cleanCompleteRateMinimum','requiredBlockedStatusRate'])if(!Number.isFinite(protocol.experimentalGates[field])||protocol.experimentalGates[field]<0||protocol.experimentalGates[field]>1)fail('Invalid experimental threshold.');
  if(protocol.experimentalGates.minimumDenominatorsMustPass!==true||protocol.experimentalGates.blockedEntityCasesStillCountAsMisses!==true)fail('Unsupported gate semantics.');
  if(!Number.isInteger(protocol.resourceProtocol.inputEnvelopeMaximumUtf16)||protocol.resourceProtocol.inputEnvelopeMaximumUtf16<1)fail('Invalid envelope limit.');
+ if(protocol.version===2) {
+  // Frozen v2 additions must be present; nothing v1 requires is relaxed.
+  if(typeof protocol.annotationGuideRef!=='string'||!protocol.annotationGuideRef.trim())fail('Missing v2 annotation guide reference.');
+  if(typeof protocol.corpusRules.heldoutOperationalStateCoverage!=='string'||!protocol.corpusRules.heldoutOperationalStateCoverage.trim())fail('Missing v2 operational state coverage rule.');
+  for(const field of ['operationalStatesRule','operationalStateMapping','statusDetectionOrthogonality','blockingConditionUniqueness']) {
+   if(typeof protocol.caseContract?.[field]!=='string'||!protocol.caseContract[field].trim())fail(`Missing v2 case contract rule ${field}.`);
+  }
+ }
  return protocol;
 }
 
@@ -66,26 +90,44 @@ export function validateCases(cases,{protocol,split}) {
  validateProtocol(protocol);if(!['dev','heldout'].includes(split))fail('Invalid split.');
  if(!Array.isArray(cases)||!cases.length)fail('Empty corpus split.');
  const ids=new Set(),texts=new Set();
- const coverage={cases:cases.length,entities:Object.fromEntries(protocol.categories.map(category=>[category,0])),cleanCases:0,blocked:Object.fromEntries(protocol.blockReasons.map(reason=>[reason,0]))};
+ const coverage={cases:cases.length,entities:Object.fromEntries(protocol.categories.map(category=>[category,0])),cleanCases:0,blocked:Object.fromEntries(protocol.blockReasons.map(reason=>[reason,0])),operational:Object.fromEntries(Object.keys(OP_STATE).map(reason=>[reason,0]))};
  for(const row of cases) {
   exact(row,C_FIELDS,'case');
   if(!opaque(row.id)||ids.has(row.id)||row.split!==split||!opaque(row.templateGroup)||row.synthetic!==true)fail('Invalid/duplicate case identity or synthetic provenance.');ids.add(row.id);scope(row.scope);
   if(!Array.isArray(row.segments)||!row.segments.length||!unique(row.segments.map(segment=>segment?.id)))fail('Invalid segments.');
   let length=0,scopeMismatch=false,unknown=false;
+  const conditions=new Set(),evidence=new Set();
   for(const segment of row.segments) {
-   segmentFields(segment);
+   segmentFields(segment,protocol.version);
    if(segment.originScope===null) {
     if(segment.classification!=='unknown'||row.expectedStatus!=='blocked'||row.blockReason!=='unknown_provenance')fail('Null origin requires blocked unknown provenance.');
    } else scope(segment.originScope);
    if(!opaque(segment.id)||typeof segment.path!=='string'||!segment.path.trim()||typeof segment.text!=='string'||!segment.text.length||!['synthetic','public','unknown'].includes(segment.classification))fail('Invalid segment content/classification.');
    length+=segment.text.length;texts.add(segment.text);
    scopeMismatch ||= segment.originScope!==null&&!sameScope(segment.originScope,row.scope);unknown ||= segment.classification==='unknown';
+   for(const item of stateEvidence(segment))evidence.add(item);
   }
+  if(scopeMismatch)conditions.add('scope_mismatch');
+  if(unknown)conditions.add('unknown_provenance');
+  for(const reason of Object.keys(OP_STATE))if(evidence.has(OP_STATE[reason]))conditions.add(reason);
   if(length>protocol.resourceProtocol.inputEnvelopeMaximumUtf16)fail('Envelope exceeds protocol UTF16 budget.');
   validateDetections(row.entities,row.segments,protocol);
   if(!['complete','blocked'].includes(row.expectedStatus)||row.expectedStatus==='complete'&&row.blockReason!==null||row.expectedStatus==='blocked'&&!protocol.blockReasons.includes(row.blockReason))fail('Invalid expected status/block reason.');
   if((scopeMismatch||unknown)&&row.expectedStatus!=='blocked')fail('Unsafe complete status contradicts provenance.');
   if(row.blockReason==='scope_mismatch'&&!scopeMismatch||row.blockReason==='unknown_provenance'&&!unknown)fail('Block reason contradicts provenance.');
+  if(protocol.version===2) {
+   // Frozen v2 blockingConditionUniqueness / operationalStateMapping, fail-closed:
+   // 'failed' assessment is reserved and barred from scored material; a complete
+   // case carries no blocking condition and default states only; a blocked case
+   // maps to exactly one unequivocal reason, every non-default state and every
+   // scope/provenance condition corresponds to that reason, and the declared
+   // blockReason equals it. Two segments with the SAME state are one reason;
+   // two distinct states (e.g. partial + unsupported) are two reasons: rejected.
+   if(evidence.has('assessment:failed'))fail('Reserved assessment state in scored material.');
+   if(row.expectedStatus==='complete'&&conditions.size)fail('Complete case carries a blocking condition.');
+   if(row.expectedStatus==='blocked'&&(conditions.size!==1||[...conditions][0]!==row.blockReason))fail('Blocked case must map to exactly one unequivocal block reason matching its states and provenance.');
+   if(row.expectedStatus==='blocked'&&Object.hasOwn(OP_STATE,row.blockReason))coverage.operational[row.blockReason]++;
+  }
   const preservation=new Set();
   for(const preserve of list(row.preserve,'preservation')) {
    exact(preserve,['segmentId','start','end','kind'],'preservation');validRange(preserve,row.segments);
@@ -104,6 +146,14 @@ function minimumFailures(coverage,protocol) {
  for(const category of protocol.categories)if(coverage.entities[category]<rules.heldoutMinEntitiesPerCategory)failures.push(`entities:${category}`);
  if(coverage.cleanCases<rules.heldoutMinCleanCases)failures.push('cleanCases');
  for(const reason of protocol.blockReasons)if(coverage.blocked[reason]<rules.heldoutMinBlockedPerReason)failures.push(`blocked:${reason}`);
+ if(protocol.version===2) {
+  // Frozen v2 corpusRules.heldoutOperationalStateCoverage: per operational
+  // blockReason, at least heldoutMinBlockedPerReason blocked cases CARRYING the
+  // corresponding state. Under enforced uniqueness this equals the blocked
+  // count; the explicit recount keeps the state-evidence requirement load-bearing
+  // rather than implied.
+  for(const reason of Object.keys(OP_STATE))if(coverage.operational[reason]<rules.heldoutMinBlockedPerReason)failures.push(`operationalState:${reason}`);
+ }
  return failures;
 }
 
@@ -188,6 +238,18 @@ export function scorePredictions({protocol,cases,split,artifact,protocolSha256,c
  blockedStatus.perReason=Object.fromEntries(protocol.blockReasons.map(reason=>{
   const rows=blocked.filter(row=>row.blockReason===reason);return [reason,binomial(rows.filter(row=>predictions.get(row.id).status==='blocked').length,rows.length)];
  }));
+ // Frozen v2 metrics.stratifiedByExpectedStatus: diagnostic-only exact-mode
+ // recall/precision split by expectedStatus, each with its Wilson interval.
+ // Never a gate; primary denominators and every gate above are unchanged.
+ const stratifiedByExpectedStatus=Object.fromEntries(['complete','blocked'].map(status=>{
+  const subset=cases.filter(row=>row.expectedStatus===status);
+  let tp=0,fp=0,fn=0;
+  for(const row of subset) {
+   const matched=maximumMatches(row.entities,predictions.get(row.id).detections,false);
+   tp+=matched;fp+=predictions.get(row.id).detections.length-matched;fn+=row.entities.length-matched;
+  }
+  return [`${status}Only`,counts(tp,fp,fn)];
+ }));
  const thresholds=protocol.experimentalGates,failures=[];
  for(const category of protocol.categories) {
   const value=metrics.exact.perCategory[category],requiredRecall=protocol.mandatoryCategories.includes(category)?thresholds.mandatoryExactRecall:thresholds.otherCategoryExactRecallMinimum;
@@ -200,7 +262,7 @@ export function scorePredictions({protocol,cases,split,artifact,protocolSha256,c
  const status=split==='dev'?'diagnostic-only':minimums.length?'incomplete':failures.length?'failed':'eligible-for-integration-evaluation';
  return {version:1,candidateId:artifact.candidateId,protocolSha256,corpusSha256,split,metrics,cleanComplete,blockedStatus,coverage,
   experimentalGate:{status,failures,minimumFailures:split==='heldout'?minimums:[],minimumsApplied:split==='heldout',meaning:'eligible-for-integration-evaluation only; never safe-egress or pilot-ready'},
-  routingSafety:'not-evaluated',preservation:'not-evaluated'};
+  stratifiedByExpectedStatus,routingSafety:'not-evaluated',preservation:'not-evaluated'};
 }
 
 async function confinedFile(root,entry) {

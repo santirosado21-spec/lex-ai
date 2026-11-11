@@ -16,11 +16,13 @@ import {projectPrivacyCase,startCandidateWorker} from '../scripts/run-privacy-de
 const root=fileURLToPath(new URL('../',import.meta.url));
 const load=async relative=>JSON.parse(await readFile(path.join(root,relative),'utf8'));
 
-const protocol=await load('eval/privacy/protocol.json');
+// DEV4 carries v2-only segment states: it validates against the FROZEN v2 contract
+// (eval/privacy/protocol-v2.json), never against v1 (v1 rejects state fields).
+const protocol=await load('eval/privacy/protocol-v2.json');
 const corpusBytes=await readFile(path.join(root,'eval/privacy-development-v4/cases.jsonl'));
 const rows=corpusBytes.toString('utf8').trimEnd().split('\n').map(line=>JSON.parse(line));
 
-test('diagnostic: DEV4 corpus validates under the v1 protocol with additive v2 segment fields',()=>{
+test('diagnostic: DEV4 corpus validates under the frozen v2 contract',()=>{
  const {coverage}=validateCases(rows,{protocol,split:'dev'});
  assert.equal(coverage.cases,16);
  assert.deepEqual(coverage.blocked,{scope_mismatch:0,unknown_provenance:0,unsupported_format:3,partial_extraction:3,ambiguous_context:3,detector_failure:3});

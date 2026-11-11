@@ -1,0 +1,136 @@
+{
+  "id": "privacy-eval-v2-annotation-2",
+  "version": 2,
+  "frozenAt": "2026-11-11",
+  "purpose": "Experimental detector assessment only; never authorization or legal/product validation",
+  "offsetUnit": "UTF-16 code units, half-open [start,end), original text without Unicode normalization",
+  "categories": [
+    "person",
+    "organization",
+    "rfc",
+    "curp",
+    "clabe",
+    "account",
+    "email",
+    "phone",
+    "address",
+    "case_id",
+    "context",
+    "sensitive_relation"
+  ],
+  "mandatoryCategories": [
+    "rfc",
+    "curp",
+    "clabe",
+    "account",
+    "email",
+    "phone",
+    "case_id"
+  ],
+  "blockReasons": [
+    "scope_mismatch",
+    "unknown_provenance",
+    "unsupported_format",
+    "partial_extraction",
+    "ambiguous_context",
+    "detector_failure"
+  ],
+  "corpusRules": {
+    "heldoutMinEntitiesPerCategory": 20,
+    "heldoutMinCleanCases": 30,
+    "heldoutMinBlockedPerReason": 4,
+    "disjointIds": true,
+    "disjointTemplateGroups": true,
+    "disjointSegmentTexts": true,
+    "syntheticOnly": true,
+    "heldoutAuthorCannotReadDev": true,
+    "heldoutOperationalStateCoverage": "For each operational blockReason (unsupported_format, partial_extraction, ambiguous_context, detector_failure): at least heldoutMinBlockedPerReason blocked cases with that blockReason, each carrying the corresponding state on at least one segment. Complete cases carry default states only (extractionStatus=complete, assessment=known)."
+  },
+  "caseContract": {
+    "fields": [
+      "id",
+      "split",
+      "templateGroup",
+      "synthetic",
+      "scope",
+      "segments",
+      "entities",
+      "expectedStatus",
+      "blockReason",
+      "preserve"
+    ],
+    "scope": "exact {workspaceId,matterId,threadId}, opaque identifiers",
+    "segment": "{id,path,text,originScope,classification,extractionStatus?,assessment?}; extractionStatus in complete|partial|unsupported|failed (default complete); assessment in known|ambiguous|failed (default known; 'failed' is reserved and MUST NOT appear in scored heldout material until a normative mapping is defined); both are intrinsic operational pipeline states of the synthetic case, presented to the candidate as structured envelope metadata; path is a nonempty string naming content/history/metadata/schema/tool representation",
+    "classification": [
+      "synthetic",
+      "public",
+      "unknown"
+    ],
+    "entity": "{segmentId,start,end,category}; nonempty valid UTF16 range, no duplicate gold entity, ranges may overlap when separately annotated",
+    "expectedStatus": [
+      "complete",
+      "blocked"
+    ],
+    "blockReason": "null for complete; exactly one listed block reason for blocked",
+    "preserve": "[{segmentId,start,end,kind}] with kind date|amount|citation; annotations only, restoration fidelity is a separate integration measurement",
+    "operationalStatesRule": "Operational states are intrinsic properties of the synthetic case's simulated upstream pipeline, authored under the annotation guide's operational-state authoring rules as structured segment fields. They are presented to the candidate as structured envelope metadata with the case; they are NOT gold and are NEVER derived from expectedStatus/blockReason annotations, candidate output, or detector behavior (operationalFlagsFromGold=false). Each non-default state must additionally be grounded in authoring evidence within the case material, validated structurally in H4a for auditability; the candidate consumes the structured field and is never required to infer operational states from segment text. Text mentioning an operational state is inert data, not the state.",
+    "operationalStateMapping": "Normative mapping from intrinsic segment states to blockReason. unsupported_format: some segment extractionStatus=unsupported. partial_extraction: some segment extractionStatus=partial. ambiguous_context: some segment assessment=ambiguous. detector_failure: some segment extractionStatus=failed, where the failure is a simulated upstream pipeline property of the synthetic case, never a property of the candidate detector. scope_mismatch and unknown_provenance: governed by the originScope/classification rules already defined, carrying default states on all segments. A blocked case with an operational blockReason MUST carry the corresponding state on at least one segment; a blocked case with a non-operational blockReason carries default states on all segments.",
+    "statusDetectionOrthogonality": "expectedStatus governs the egress-decision metrics only. Detection scoring on visible text applies to every case regardless of status: entities in blocked cases remain in the primary recall/precision denominators and absent detections still count as misses (blockedEntityCasesStillCountAsMisses preserved). Blocking concerns transmission, not detection measurement.",
+    "blockingConditionUniqueness": "Blocking conditions: (a) foreign originScope triple; (b) null originScope with classification unknown; (c) extractionStatus != complete on any segment; (d) assessment=ambiguous on any segment. A scored blocked case MUST map to exactly one unequivocal blockReason: ALL non-default operational states and ALL scope/provenance conditions in the case MUST correspond to that single reason. Multiple distinct blockReasons are prohibited in scored material, even within the same condition class: one segment with extractionStatus=partial and another with extractionStatus=unsupported is two reasons (partial_extraction and unsupported_format) and is forbidden; several segments evidencing the SAME reason are permitted (two segments both extractionStatus=partial both map to partial_extraction). A scored complete case exhibits no blocking condition and default states on all segments. Multi-reason fixtures are out of scope for this version; introducing them requires a new protocol version with preregistered precedence."
+  },
+  "predictionContract": {
+    "artifact": "{candidateId,protocolSha256,corpusSha256,predictions:[{id,status,detections:[{segmentId,start,end,category}]}]}",
+    "status": [
+      "complete",
+      "blocked"
+    ],
+    "onePredictionPerCase": true,
+    "unknownCaseIdsRejected": true,
+    "invalidRangesRejected": true,
+    "duplicateDetectionsRejected": true,
+    "surrogateSplitsRejected": true,
+    "noInferenceOrOracleBuiltIn": true,
+    "blockedStatusDetections": "detections MAY be present with status blocked; they are scored against gold normally (TP on match, FP otherwise). Precision remains TP/(TP+FP) over candidate detections, unchanged.",
+    "candidateVisibleFields": "Candidate-visible at run time, as structured envelope metadata: id, scope, segments (id, path, text, originScope, classification, extractionStatus, assessment). Scorer-only: entities, expectedStatus, blockReason, preserve. The intended execution scope against which originScope is compared is documented runner input, recorded with the run manifest."
+  },
+  "metrics": {
+    "exact": "Maximum-cardinality one-to-one match by segment/category/start/end",
+    "overlap": "Separate maximum-cardinality one-to-one match by same segment/category and positive interval intersection; diagnostic only",
+    "emptyDenominator": "null and insufficient, never 1 or 100 percent",
+    "micro": "sum TP/FP/FN before ratios; exact and overlap separately",
+    "macro": "unweighted mean over categories with defined values, report category count; missing categories prevent gate pass",
+    "interval": "95 percent Wilson interval for recall/precision and complete clean-case rate",
+    "zeroMisses": "Also report one-sided 95 percent binomial upper miss-probability bound 1-0.05^(1/n), without risk-zero claims",
+    "routingSafety": "not-evaluated by this prediction scorer; requires separate H3V/H4b observed transport integration",
+    "preservation": "not-evaluated by this prediction scorer; requires actual prepared/restored output comparison",
+    "stratifiedByExpectedStatus": "Diagnostic only, never a gate: recall/precision additionally reported split by expectedStatus (complete-only and blocked-only), each with its own 95 percent Wilson interval. Primary denominators and all gates are unchanged."
+  },
+  "experimentalGates": {
+    "mandatoryExactRecall": 1,
+    "otherCategoryExactRecallMinimum": 0.95,
+    "exactPrecisionMinimumPerCategory": 0.9,
+    "cleanCompleteRateMinimum": 0.9,
+    "requiredBlockedStatusRate": 1,
+    "minimumDenominatorsMustPass": true,
+    "blockedEntityCasesStillCountAsMisses": true,
+    "resultMeaning": "eligible-for-integration-evaluation only; never safe-egress or pilot-ready"
+  },
+  "resourceProtocol": {
+    "experimentalApplicationTreeRssCeilingBytes": 4294967296,
+    "experimentalDetectorIncrementalRssCeilingBytes": 1073741824,
+    "experimentalDetectorP95Ms": 5000,
+    "inputEnvelopeMaximumUtf16": 7000,
+    "warmSamplesMinimum": 30,
+    "coldStartsMinimum": 3,
+    "timeoutMaximumMs": 15000,
+    "concurrency": 1,
+    "memoryDefinition": "Observed process-tree peak RSS, may double-count shared pages; compare baseline and candidate in matched runs",
+    "status": "Preregistered experimental ceilings, not measured guarantees; native Tauri and physical 8 GB validation pending"
+  },
+  "contaminationPolicy": "Heldout is created after this freeze by a separate author without dev templates/predictions. Validate structure/hashes only in H4a; no candidate scored. If used for tuning or inspected to fix detector, retire the entire version and create a new independent heldout. Public storage is not access control.",
+  "annotationGuideSha256": "cc26b2457e78fc34713d7f2d9b62f981c385b736eeca5e9497f05f825ba31e31",
+  "status": "FROZEN 2026-11-11 by the coordinator under the roles memo, after complete independent methodological review. Valid contract for independent heldout authoring. This freeze does NOT authorize any candidate freeze, any heldout run, any publication or push.",
+  "annotationGuideRef": "Privacy annotation policy v2 (FROZEN 2026-11-11)",
+  "h4aStructuralChecks": "Advisory mechanical checklist for the coordinator, before any candidate run: (1) enum values and defaults valid on every segment, including reserved assessment=failed absent from scored material; (2) reason uniqueness: every blocked case maps to exactly one unequivocal blockReason and all its non-default states and scope/provenance conditions correspond to that reason (multiple reasons prohibited even within the same condition class); complete cases exhibit none; (3) per operational blockReason, at least heldoutMinBlockedPerReason blocked cases carrying the corresponding state; (4) authoring evidence for each non-default state present in the case material; (5) candidate-visible vs scorer-only field separation intact; (6) disjunction of ids, templateGroups and segment texts vs dev; (7) syntheticOnly; (8) freeze diff: frozen files differ from the reviewed drafts only in freeze metadata (id, frozenAt, status, hash bindings, provenance field rename); any other change voids the review; (9) all hashes computed and recorded in freeze-manifest-privacy-eval-v2.",
+  "provenance": "privacy-eval-v1-annotation-1 (frozenAt 2026-11-09); constructor draft PROTOCOLO-V2-BORRADOR-NO-CONGELADO (2026-11-11, not frozen); independent methodological review iterations v2.1 and v2.2 (2026-11-11, not frozen); this freeze incorporates the review with no v1 guarantee weakened: gates, primary denominators, blockedEntityCasesStillCountAsMisses, resourceProtocol and contaminationPolicy preserved verbatim."
+}

@@ -62,10 +62,14 @@ export async function candidateSourceHashes() {
   return Object.fromEntries(await Promise.all(CANDIDATE_SOURCES.map(async file=>[file,sha(await readFile(path.join(root,file)))])));
 }
 
-export async function assertCandidateFreeze(freeze) {
+export async function assertCandidateFreeze(freeze,manifestName='manifest.json') {
   const hashes=await candidateSourceHashes();
-  const manifest=JSON.parse(await readFile(path.join(root,'eval/privacy/manifest.json'),'utf8'));
+  const manifest=JSON.parse(await readFile(path.join(root,'eval/privacy',manifestName),'utf8'));
+  // The freeze record names the exact manifest it binds to (v1 freezes carry
+  // 'manifest.json'; a v2 freeze names the separately reviewed v2 manifest,
+  // never an overwritten v1 file). Wrong or missing binding fails closed.
   if(freeze?.candidateId!==CANDIDATE_ID||freeze?.approvedForSingleHeldoutRun!==true||freeze?.productionEnabled!==false||
+    freeze.manifest!==manifestName||
     freeze.protocolSha256!==manifest.protocol.sha256||freeze.heldoutSha256!==manifest.splits.heldout.sha256||
     !freeze.sourceHashes||Object.keys(freeze.sourceHashes).length!==CANDIDATE_SOURCES.length||
     CANDIDATE_SOURCES.some(file=>freeze.sourceHashes[file]!==hashes[file]))throw Error('candidate_not_frozen');
@@ -83,12 +87,17 @@ async function confinedEvalFile(reference) {
 
 export async function main(args=process.argv.slice(2)) {
   const options={};
-  for(let i=0;i<args.length;i+=2){if(!['--split','--out-dir','--freeze'].includes(args[i])||options[args[i]]||!args[i+1])throw Error('invalid_arguments');options[args[i]]=args[i+1];}
+  for(let i=0;i<args.length;i+=2){if(!['--split','--out-dir','--freeze','--manifest'].includes(args[i])||options[args[i]]||!args[i+1])throw Error('invalid_arguments');options[args[i]]=args[i+1];}
   const split=options['--split'];if(!['dev','heldout'].includes(split)||!options['--out-dir'])throw Error('split_and_new_output_directory_required');
+  // Versioned manifest selection: basename only, confined under eval/privacy.
+  // Default stays the frozen v1 manifest; v2 runs name a NEW v2 manifest file
+  // (coordination decision: never overwrite the v1 manifest).
+  const manifestName=options['--manifest']??'manifest.json';
+  if(path.basename(manifestName)!==manifestName)throw Error('invalid_manifest_name');
   let sourceHashes=await candidateSourceHashes();
   if(split==='heldout'){
     if(!options['--freeze'])throw Error('heldout_requires_reviewed_freeze');
-    sourceHashes=await assertCandidateFreeze(JSON.parse(await readFile(options['--freeze'],'utf8')));
+    sourceHashes=await assertCandidateFreeze(JSON.parse(await readFile(options['--freeze'],'utf8')),manifestName);
   }
   const out=path.resolve(options['--out-dir']),artifacts=path.join(root,'artifacts/privacy');
   if(path.dirname(out)!==artifacts)throw Error('output_must_be_a_new_direct_child_of_artifacts_privacy');
@@ -97,7 +106,7 @@ export async function main(args=process.argv.slice(2)) {
   const parent=await realpath(path.dirname(out));
   if(parent!==canonicalArtifacts)throw Error('output_must_be_in_artifacts_privacy');
   await mkdir(out); // Never overwrite a previous experiment or evaluation input.
-  const manifest=JSON.parse(await readFile(path.join(root,'eval/privacy/manifest.json'),'utf8'));
+  const manifest=JSON.parse(await readFile(path.join(root,'eval/privacy',manifestName),'utf8'));
   const protocol=JSON.parse(await confinedEvalFile(manifest.protocol));
   const bytes=await confinedEvalFile(manifest.splits[split]);
   const rows=bytes.toString('utf8').trimEnd().split('\n').map(line=>JSON.parse(line));

@@ -36,9 +36,11 @@ test('candidate process deadline rejects without inventing successful prediction
 test('heldout freeze rejects missing approval, changed source hashes and extra/missing sources',async()=>{
   const sourceHashes=await candidateSourceHashes();
   const manifest=JSON.parse(await readFile(new URL('../eval/privacy/manifest.json',import.meta.url),'utf8'));
-  const freeze={candidateId:CANDIDATE_ID,approvedForSingleHeldoutRun:true,productionEnabled:false,sourceHashes,
+  const freeze={candidateId:CANDIDATE_ID,approvedForSingleHeldoutRun:true,productionEnabled:false,manifest:'manifest.json',sourceHashes,
     protocolSha256:manifest.protocol.sha256,heldoutSha256:manifest.splits.heldout.sha256};
   await assertCandidateFreeze(freeze);
+  const noBinding={...freeze};delete noBinding.manifest;
+  await assert.rejects(assertCandidateFreeze(noBinding)); // freeze must name its manifest binding
   await assert.rejects(assertCandidateFreeze({...freeze,approvedForSingleHeldoutRun:false}));
   await assert.rejects(assertCandidateFreeze({...freeze,sourceHashes:{...sourceHashes,'evil.mjs':'0'.repeat(64)}}));
   await assert.rejects(assertCandidateFreeze({...freeze,sourceHashes:{...sourceHashes,'server/privacy/detector.mjs':'0'.repeat(64)}}));
