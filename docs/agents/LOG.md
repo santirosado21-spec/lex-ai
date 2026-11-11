@@ -247,3 +247,7 @@ Verificado: Astra implementó lector de Keychain de producto, 6/6 pruebas simula
 ## 2026-11-10 19:04 — codex — Prueba visual UI local para revisión
 
 Verificado: npm run test:ui PASS con inferencia simulada y datos sintéticos; cubre onboarding, asuntos, importación TXT, chats, fuentes, DOCX, feedback, biblioteca y 700 px sin desbordamiento. Capturas en artifacts/ui-app-cover.png, ui-workspace.png y ui-responsive.png. Se abrió una instancia local limpia en el navegador del dueño. OpenRouter no está conectado al producto; no hay credencial exclusiva ni egreso. Esta prueba no valida calidad jurídica ni 8 GB.
+
+## 2026-11-10 19:10 — claude — Pulido UI de la app (solo interfaz)
+
+Capa 'Polish 2026-11-10' al final de src/design-system.css y copia 'dashboard'->'panel'. Medido en capturas 1440x900 claro/oscuro y 390px con datos sintéticos e inferencia simulada: barra lateral cabe sin scroll, cifras del Panel en numerales lineales, botón primario del Panel legible en oscuro, buscador de Biblioteca sin doble borde, Inicio sin textura de cuadrícula, borde izquierdo común (1120px), compositor visible en móvil. npm test 1104/1104, ui-smoke y ui-dashboard-smoke PASS. Sin commit. No medido: WKWebView/Tauri real ni equipo 8GB.
