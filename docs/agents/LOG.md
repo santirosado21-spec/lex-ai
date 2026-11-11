@@ -295,3 +295,7 @@ El dueño indicó que la fila de API Platform termina en OAwA. Una comparación 
 ## 2026-11-11 07:31 — codex — OpenAI API de desarrollo conectada
 
 El dueño entregó la clave completa mediante TXT temporal fuera del repo. GET de gpt-6-luna HTTP200 y una generación sintética store:false completada: 40 tokens entrada, 6 salida, 2056 ms, costo estimado USD0,000007; cargo y saldo no auditados. La importación de 164 caracteres por stdin a security -w se truncó a 128 en esta máquina. La clave completa quedó verificada en Keychain, el TXT y el ítem duplicado se eliminaron, y --auth pasó. Pendiente lote S2b público/sintético y verificación de facturación.
+
+## 2026-11-11 — ChatGPT (Pedro) — Reserva y primer parche H5b.2c sin aceptación
+
+Se revisaron AGENTS, STATE, workboard y vault-next-native-slices §1 antes de editar. H5b.2c sin dueño quedó reservado a Pedro en `pedro/h5b2c-pseudonym-maps-20261111`. Nuevo schema 5 sólo constructor synthetic, API estricta de mapas, CAS revision/activo, linaje por prefijo, marcadores de historial, referencias FK+hash, auditoría sin textos y nueve tests sintéticos. Workflow público macos-15 configurado; a la fecha de esta entrada no hay resultado CI, auditoría independiente ni ejecución local válida. No se usó Mac del dueño, ningún documento real, proveedor OpenRouter ni conexión del producto. Schema4 create/reopen se mantienen; H5 completo, custodia/bridge, linaje sourceVersion autenticado, 8 GB y evaluación jurídica siguen abiertos.
