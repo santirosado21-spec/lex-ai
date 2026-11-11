@@ -1,6 +1,6 @@
 # Estado compartido — LEX AI
 
-**Última actualización:** 2026-11-10 18:08 por codex: H5 synthetic subset, Nym inventory and Windows classification
+**Última actualización:** 2026-11-10 18:10 por codex: Kimi source critique unavailable
 
 ## Objetivo y autoridad vigentes
 
