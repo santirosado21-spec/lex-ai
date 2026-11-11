@@ -29,6 +29,23 @@
 
 **Valor:** un solo canal para los 32 estados, útil como base histórica/datada y para estados sin portal propio navegable; NO como fuente vigente. Para Jalisco podría aportar versiones base con fecha declarada visible, pero mezclar texto rezagado en un producto legal es una decisión de producto — no se da por resuelta aquí, y la decisión de política de robots del canal oficial de Jalisco sigue abierta por separado.
 
+### Bindings OJN investigados para Jalisco (etiqueta: HISTÓRICO / VIGENCIA NO VERIFICADA — no son candidatos de incorporación)
+
+Los 8 documentos piloto de Jalisco existen en OJN, TODOS en formato .doc (el pipeline solo ingiere PDF) y con fechas de ficha muy rezagadas frente a las versiones oficiales vivas ya vinculadas en el manifiesto:
+
+| slot piloto | idArchivo OJN | fecha de ficha OJN | versión oficial viva (manifiesto) | formato OJN |
+| --- | --- | --- | --- | --- |
+| jalisco-pending-01 Código Civil | 79065 | 28-dic-2017 | sufijo 240626 (jun-2024) | .doc |
+| jalisco-pending-02 Código Penal | 79061 | 25-ene-2018 | sufijo 271026 (oct-2026) | .doc |
+| jalisco-pending-03 Proc. Civiles | 79066 | 19-sep-2017 | sufijo 250424 (abr-2024) | .doc |
+| jalisco-pending-04 Código Fiscal | 79069 | 04-nov-2017 | sufijo 220726 (jul-2026) | .doc |
+| jalisco-pending-05 Código Electoral | 81461 (nombre vigente) / 79067 (nombre anterior) | 05-ago-2008 | sufijo 300926 (sep-2026) | .doc |
+| jalisco-pending-06 Constitución | 79053 | (ficha no inspeccionada) | índice 29-oct-2026 | .doc (presumido) |
+| jalisco-pending-07 Código Urbano | 79063 | 11-ene-2018 | sufijo 080726 (jul-2026) | .doc |
+| jalisco-pending-08 Asistencia Social | 79068 | 11-oct-2016 | sufijo 251125 (nov-2025) | .doc |
+
+Conclusión de contraste: las copias OJN de Jalisco van de 8 a 18 años detrás de las versiones oficiales vivas. **El OJN no es una vía para el texto vigente de Jalisco**; como mucho sería base histórica con fecha visible, decisión de producto. La decisión del canal oficial de Jalisco (robots 301→error, fail-closed correcto) sigue siendo la única ruta al texto vigente y permanece abierta.
+
 ## 2. Diario Oficial de la Federación — dof.gob.mx
 
 | recurso | URL | resultado |
