@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=12;
+export const EXTRACTOR_VERSION=13;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -116,7 +116,7 @@ export async function discoverRegulationsLibrary({outputDir,catalogPath,indexFil
 }
 
 export function splitForLaw(lawId){const bucket=parseInt(digest('lex-law-split-v1:'+lawId).slice(0,8),16)%100;return bucket<80?'train':bucket<90?'validation':'test';}
-const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:[oº°](?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.\-–:]|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
+const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:[oº°](?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)(?:[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS))?[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.\-–:]|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
 const amendment=/^(?:Art[íi]culo|P[áa]rrafo|Fracci[óo]n|Inciso|Numeral|Apartado|Cap[íi]tulo|Secci[óo]n|Denominaci[óo]n|T[íi]tulo)\b.*\b(?:reformad[oa]|adicionad[oa]|derogad[oa]|recorrid[oa])\b.*\bDOF\b/i;
 const section=/^(?:LIBRO|T[IÍ]TULO|CAP[IÍ]TULO|SECCI[ÓO]N|SUBSECCI[ÓO]N)\s+(?:[IVXLCDM]+|\d+|PRIMER[OA]|SEGUND[OA]|TERCER[OA]?|CUART[OA]|QUINT[OA]|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO|[ÚU]NIC[OA])\b/i;
 const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;

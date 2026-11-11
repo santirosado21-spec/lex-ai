@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "legal-acquisition-fed-expansion-2026-11-11",
+  "registryVersion": "v1",
+  "dataClass": "public-legal",
+  "productionEnabled": false,
+  "policy": {
+    "approvalAuthority": "developer-reviewed",
+    "purpose": "bounded-public-acquisition",
+    "scope": "public-legal"
+  },
+  "limits": {
+    "maxDocuments": 5,
+    "maxRequests": 20,
+    "maxTotalBytes": 20971520,
+    "maxDocumentBytes": 5242880,
+    "maxDurationMs": 600000,
+    "rateMs": 2000,
+    "concurrency": 1,
+    "timeoutMs": 45000,
+    "maxRetries": 0,
+    "maxRedirects": 3
+  },
+  "sources": [
+    {
+      "id": "diputados-fed",
+      "title": "Cámara de Diputados del H. Congreso de la Unión",
+      "jurisdiction": "MX-FED",
+      "collection": "federal-legislation",
+      "status": "approved",
+      "discovery": {
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+        "evidence": "Live official index fetched 2026-11-11; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 317 recognized main PDF links; 5 additional documents selected for bounded expansion; each candidate PDF verified live HEAD HTTP200 application/pdf (CNPP 1704798 B, CNPCF 2680035 B, LISR 3021915 B, LIVA 1249332 B, LFPDPPP 457399 B)",
+        "observedAt": "2026-11-11T19:04:13.000Z"
+      },
+      "rightsReview": {
+        "status": "approved",
+        "reviewedBy": "instinct-rejon-agent",
+        "reviewedAt": "2026-11-11T19:04:13.000Z",
+        "basis": "Technical channel/rights review under owner instruction 2026-11-11 to expand the federal repertoire beyond the 10-document pilot, relayed through Instinct task delegation. Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot registry; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+        "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+        "scope": "bounded-public-pilot"
+      },
+      "version": {
+        "id": "diputados-index-20261111",
+        "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+        "observedAt": "2026-11-11T19:04:13.000Z"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "cnpcf",
+      "sourceId": "diputados-fed",
+      "title": "CÓDIGO Nacional de Procedimientos Civiles y Familiares",
+      "jurisdiction": "MX-FED",
+      "status": "approved",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPCF.pdf",
+      "versionId": "diputados-index-20261111",
+      "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+    },
+    {
+      "id": "cnpp",
+      "sourceId": "diputados-fed",
+      "title": "CÓDIGO Nacional de Procedimientos Penales",
+      "jurisdiction": "MX-FED",
+      "status": "approved",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CNPP.pdf",
+      "versionId": "diputados-index-20261111",
+      "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+    },
+    {
+      "id": "lisr",
+      "sourceId": "diputados-fed",
+      "title": "LEY del Impuesto sobre la Renta",
+      "jurisdiction": "MX-FED",
+      "status": "approved",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf",
+      "versionId": "diputados-index-20261111",
+      "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+    },
+    {
+      "id": "liva",
+      "sourceId": "diputados-fed",
+      "title": "LEY del Impuesto al Valor Agregado",
+      "jurisdiction": "MX-FED",
+      "status": "approved",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+      "versionId": "diputados-index-20261111",
+      "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+    },
+    {
+      "id": "lfpdppp",
+      "sourceId": "diputados-fed",
+      "title": "LEY Federal de Protección de Datos Personales en Posesión de los Particulares",
+      "jurisdiction": "MX-FED",
+      "status": "approved",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf",
+      "versionId": "diputados-index-20261111",
+      "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+    }
+  ]
+}
