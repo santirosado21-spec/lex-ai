@@ -26,7 +26,27 @@ Los 9 documentos con candidato oficial verificado hoy llevan ahora `url` y `evid
 
 Cambio de binding con proveniencia notable: `jalisco-pending-06` — el candidato previo (página constitucional de la OIC) resultó obsoleto (versión 2021) frente al índice legislativo oficial (29-oct-2026); el PDF -180424 de `jalisco-pending-03` también quedó obsoleto (actual -250424). Ambos reemplazos documentados en el anexo QA. Advertencia estructural: los sufijos de fecha de Jalisco caducan sin aviso — re-vincular desde el índice legislativo actual antes de cualquier adquisición futura.
 
-Sin candidato exacto seleccionado (siguen `url: null`): jalisco-pending-02/04/05/07/08, nuevo-leon-pending-01/02/03/04, sjf-pending-01/02.
+### Segunda tanda de bindings (misma fecha, verificación en vivo)
+
+| slot | documento | URL oficial | versión declarada por la fuente | vía de verificación |
+| --- | --- | --- | --- | --- |
+| jalisco-pending-02 | Código Penal para el Estado Libre y Soberano de Jalisco | …/Código Penal para el Estado Libre y Soberano de Jalisco -271026.pdf | PDF sufijo 271026 | HEAD 200, 1,227,998 B, LM 2026-10-27 |
+| jalisco-pending-04 | Código Fiscal del Estado de Jalisco | …/Código Fiscal del Estado de Jalisco-220726.pdf | PDF sufijo 220726 | HEAD 200, 530,974 B, LM 2026-07-22 |
+| jalisco-pending-05 | Código Electoral del Estado de Jalisco | …/Código Electoral del Estado de Jalisco-300926.pdf | PDF sufijo 300926 | HEAD 200, 1,133,292 B, LM 2026-09-30 |
+| jalisco-pending-07 | Código Urbano para el Estado de Jalisco | …/Código Urbano para el Estado de Jalisco-080726.pdf | PDF sufijo 080726 | HEAD 200, 1,139,227 B, LM 2026-07-08 |
+| jalisco-pending-08 | Código de Asistencia Social del Estado de Jalisco | …/Código de Asistencia Social del Estado de Jalisco-251125.pdf | PDF sufijo 251125 | HEAD 200, 627,545 B, LM 2025-11-26 |
+| nuevo-leon-pending-01 | Código Civil para el Estado de Nuevo León | https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/ | Última reforma 26-jun-2026 | página en vivo (HTTP 200) |
+| nuevo-leon-pending-02 | Código Penal para el Estado de Nuevo León | https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/ | Última reforma 15-jun-2026 | página en vivo (HTTP 200) |
+| nuevo-leon-pending-03 | Código de Procedimientos Civiles del Estado de Nuevo León | https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/ | Última reforma 10-jun-2022 | página en vivo (HTTP 200) |
+| nuevo-leon-pending-04 | Ley de los Derechos de Niñas, Niños y Adolescentes para el Estado de Nuevo León | https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/ | Última reforma 07-nov-2025 | página en vivo (HTTP 200) |
+| sjf-pending-01 | Jurisprudencia P./J. 39/2026 (12a.), Pleno — alerta registral y protección de datos personales | https://sjf2.scjn.gob.mx/detalle/tesis/2031956 | Época 12a., jurisprudencia | render real (navegador), metadatos visibles |
+| sjf-pending-02 | Jurisprudencia P./J. 211/2026 (12a.), Pleno — registro digital de contratos de arrendamiento | https://sjf2.scjn.gob.mx/detalle/tesis/2032822 | Época 12a., jurisprudencia | render real (navegador), metadatos visibles |
+
+Evento de caducidad observado en esta tanda: el candidato previo de `jalisco-pending-02` (Código Penal -240626, propuesto 2026-11-10) ya fue reemplazado en el índice por -271026 (LM 2026-10-27). Segunda caducidad de sufijo Jalisco en dos días: confirma que la re-vinculación desde el índice legislativo vigente es obligatoria antes de cualquier adquisición.
+
+Las 4 plazas Jalisco sin candidato previo (04/05/07/08) se llenaron con los códigos estatales restantes del índice oficial: Fiscal, Electoral, Urbano y Asistencia Social.
+
+Con esta tanda, las 20 plazas pendientes del registro tienen binding oficial verificado; el registro ya no contiene `url: null`. Ningún documento cambia de `status`: todos siguen `pending`.
 
 ## 2. Robots por fuente (estado observado hoy)
 

@@ -237,12 +237,12 @@
     {
       "id": "jalisco-pending-02",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 02; no representa ley adquirida",
+      "title": "Código Penal para el Estado Libre y Soberano de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Penal%20para%20el%20Estado%20Libre%20y%20Soberano%20de%20Jalisco%20-271026.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-03",
@@ -257,22 +257,22 @@
     {
       "id": "jalisco-pending-04",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 04; no representa ley adquirida",
+      "title": "Código Fiscal del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Fiscal%20del%20Estado%20de%20Jalisco-220726.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-05",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 05; no representa ley adquirida",
+      "title": "Código Electoral del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Electoral%20del%20Estado%20de%20Jalisco-300926.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-06",
@@ -287,62 +287,62 @@
     {
       "id": "jalisco-pending-07",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 07; no representa ley adquirida",
+      "title": "Código Urbano para el Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Urbano%20para%20el%20Estado%20de%20Jalisco-080726.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-08",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 08; no representa ley adquirida",
+      "title": "Código de Asistencia Social del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20de%20Asistencia%20Social%20del%20Estado%20de%20Jalisco-251125.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "nuevo-leon-pending-01",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 01; no representa ley adquirida",
+      "title": "Código Civil para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-02",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 02; no representa ley adquirida",
+      "title": "Código Penal para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-03",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 03; no representa ley adquirida",
+      "title": "Código de Procedimientos Civiles del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-04",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 04; no representa ley adquirida",
+      "title": "Ley de los Derechos de Niñas, Niños y Adolescentes para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-05",
@@ -387,22 +387,22 @@
     {
       "id": "sjf-pending-01",
       "sourceId": "sjf",
-      "title": "Plaza judicial pendiente de selección 01; no representa criterio adquirido",
+      "title": "Jurisprudencia P./J. 39/2026 (12a.), Pleno — registro digital 2031956 (alerta registral)",
       "jurisdiction": "MX",
       "status": "pending",
-      "url": null,
+      "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2031956",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://sjf2.scjn.gob.mx/detalle/tesis/2031956"
     },
     {
       "id": "sjf-pending-02",
       "sourceId": "sjf",
-      "title": "Plaza judicial pendiente de selección 02; no representa criterio adquirido",
+      "title": "Jurisprudencia P./J. 211/2026 (12a.), Pleno — registro digital 2032822 (registro digital de arrendamiento)",
       "jurisdiction": "MX",
       "status": "pending",
-      "url": null,
+      "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2032822",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://sjf2.scjn.gob.mx/detalle/tesis/2032822"
     },
     {
       "id": "sjf-pending-03",
