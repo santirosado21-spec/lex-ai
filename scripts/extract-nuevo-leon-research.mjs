@@ -11,7 +11,7 @@ export const REPOSITORY_ROOT=path.resolve(path.dirname(fileURLToPath(import.meta
 export const CAPTURE_ROOT='artifacts/public-corpus/nl-pdfs-revision-01';
 export const CAPTURE_REPORT_SHA256='888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246';
 export const HTML_REPORT_SHA256='05ad65a4b84f011905f6336e4b94cece7800ffb71c010e863bf542b5f503a719';
-export const PARSER_VERSION='legal-library-6';
+export const PARSER_VERSION='legal-library-11';
 export const FROZEN_HASHES=Object.freeze({
   'server/legal-library.mjs':'e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6',
   'scripts/capture-nuevo-leon-pdfs.py':'dab58faebb598c3ce4b48333b1e618bb3a4ccda2ae4268f0ba3965be50b0f944',
@@ -131,7 +131,7 @@ function boundedStrings(value){if(!Array.isArray(value)||value.length>5000||valu
 function declaredDate(value){if(value===null)return null;if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!iso(value+'T00:00:00.000Z'))throw fail('parser-result-invalid');return value;}
 export function quarantineExtraction(raw,input,limits=LIMITS){
   const {doc,capturedAt,binding}=input;
-  if(raw?.schemaVersion!==1||raw.extractorVersion!==6||raw.lawId!==doc.lawId||raw.pdfSha256!==doc.sha256||raw.sourceUrl!==doc.url||raw.retrievedAt!==capturedAt||typeof raw.versionId!=='string'||!raw.versionId.startsWith(doc.lawId+'@')||!raw.versionId.endsWith('+'+doc.sha256.slice(0,16)))throw fail('parser-provenance');
+  if(raw?.schemaVersion!==1||raw.extractorVersion!==11||raw.lawId!==doc.lawId||raw.pdfSha256!==doc.sha256||raw.sourceUrl!==doc.url||raw.retrievedAt!==capturedAt||typeof raw.versionId!=='string'||!raw.versionId.startsWith(doc.lawId+'@')||!raw.versionId.endsWith('+'+doc.sha256.slice(0,16)))throw fail('parser-provenance');
   if(!Array.isArray(raw.records)||!raw.coverage||!Number.isSafeInteger(raw.coverage.pages)||raw.coverage.pages<1)throw fail('parser-result-invalid');
   if(raw.coverage.pages>limits.maxPages)throw fail('page-budget');
   if(raw.records.length>limits.maxRecords)throw fail('record-budget');
@@ -173,7 +173,7 @@ async function immutableWrite(root,relative,bytes){
   try{await handle.writeFile(bytes);await handle.sync();await handle.chmod(0o400);}finally{await handle.close();}
   return {path:relative,bytes:bytes.length,sha256:hash(bytes)};
 }
-async function defaultExtractor(file,source,metadata){const library=await import('../server/legal-library.mjs');if(library.EXTRACTOR_VERSION!==6)throw fail('source-drift');return library.parsePdfInWorker(file,source,metadata);}
+async function defaultExtractor(file,source,metadata){const library=await import('../server/legal-library.mjs');if(library.EXTRACTOR_VERSION!==11)throw fail('source-drift');return library.parsePdfInWorker(file,source,metadata);}
 function limited(values){const limits={...LIMITS,...values};if(Object.keys(limits).length!==Object.keys(LIMITS).length)throw fail('source-drift');for(const [key,max]of Object.entries(LIMITS))if(!Number.isSafeInteger(limits[key])||limits[key]<=0||limits[key]>max||(key==='concurrency'&&limits[key]!==1))throw fail('source-drift');return limits;}
 
 export async function runResearchExtraction({outName,repositoryRoot=REPOSITORY_ROOT,extractor,fixturePins,bounds,clock=()=>performance.now(),now=stamp}={}){

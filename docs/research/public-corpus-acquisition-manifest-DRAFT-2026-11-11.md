@@ -79,6 +79,7 @@ Lectura operativa para este corpus:
 - nuevo-leon: fuente aprobada tras revisión del 2026-11-11 (`docs/research/public-corpus-rights-review-2026-11-11.md`); ejecutado — 8/8 documentos, estado `complete` (`artifacts/public-corpus/pilot-mx-nle-2026-11-11/`). Bindings corregidos de página HTML a PDF exacto.
 - congreso-jalisco: derechos revisados y resueltos; **canal bloqueado** — robots.txt redirige 301 a página de error y el pipeline falla cerrado (`robots-unavailable`). Documentos de vuelta a `pending`. Decisión pendiente del proyecto: política de robots o canal oficial alterno.
 - sjf: pendiente — el canal oficial alterno ya existe (Gaceta del SJF en PDF sobre www.scjn.gob.mx, robots sin restricción para /sites/default/files/, compatible con el pipeline); la única cuestión abierta son los términos SCJN (cláusula anti-comercialización vs LFDA Art. 14 VIII), decisión del responsable del producto; ver `public-corpus-rights-review-2026-11-11.md`.
+- extracción: auditada al 2026-11-11 con extractor v11 — 8,086 registros federales y 5,608 de NL, cadenas de integridad y hashes verificados, sin duplicados; limitaciones documentadas (segunda serie de NL-03 en cuarentena por reinicio real de numeración; 4 documentos NL sin marcador TRANSITORIOS). Detalle: `docs/qa/public-corpus-extraction-audit-2026-11-11.md`.
 
 ## 5. Ruta de ejecución propuesta para lo pendiente
 

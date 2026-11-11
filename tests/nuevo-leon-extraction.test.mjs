@@ -72,11 +72,11 @@ test('offline extraction preserves exact source/hash/pages, quarantines every re
   assert.deepEqual(await read(root,report.artifactDirectory+'/report.json'),report);
 });
 
-test('unrecognized abbreviated Civil headings remain visible as zero candidates in quarantine',async t=>{
+test('abbreviated Civil headings are recognized and preserved in quarantine with provenance',async t=>{
   const {options,root}=await setup(t);
-  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>extractArticles([{number:1,text:'Art. 1o.- Texto sintético con encabezado abreviado.\nTRANSITORIOS'}],source,meta)});
+  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>extractArticles([{number:1,text:'Art. 1o.- Texto sintético con encabezado abreviado y contenido propio verificable para segmentación.\nTRANSITORIOS'}],source,meta)});
   assert.equal(report.state,'complete-quarantine');assert.equal(report.documents.length,2);
-  for(const d of report.documents){const saved=await read(root,report.artifactDirectory+'/'+d.extractionPath);assert.equal(saved.records.length,0);assert.equal(saved.diagnostics.missingNumericHeadings,true);assert.ok(saved.documentAnomalies.includes('no-numeric-article-headings'));assert.equal(saved.coverage.pages,1);}
+  for(const d of report.documents){const saved=await read(root,report.artifactDirectory+'/'+d.extractionPath);assert.equal(saved.records.length,1);assert.equal(saved.records[0].articleId,'1');assert.equal(saved.records[0].status,'quarantined');assert.equal(saved.records[0].trainingExported,false);assert.equal(saved.coverage.pages,1);}
 });
 
 test('declared reform is recognized only from parser text; query dates never supply it',async t=>{
