@@ -352,6 +352,16 @@
   .app-shell.macos-workspace :is(.appearance-quick-toggle,.runtime-status){min-height:var(--control-h)}
 }
 
+/* Narrow drawers are touch surfaces even without a coarse pointer (docked
+   windows, stylus laptops, headless checks): keep the 44px HIG target the
+   base mobile rule and --control-h already intend. The compaction above is
+   desktop-only. */
+@media (max-width:768px){
+  .app-shell.macos-workspace .nav-group-toggle{min-height:var(--control-h)!important}
+  .app-shell.macos-workspace .nav-item,
+  .app-shell.macos-workspace :is(.appearance-quick-toggle,.runtime-status){min-height:var(--control-h)}
+}
+
 /* One content measure for every page, so the left edge does not jump between views. */
 .app-shell.macos-workspace .page:not(.assistant-home){max-width:1120px;margin-inline:auto}
 .app-shell.macos-workspace :is(.pending-page,.agent-actions-page,.conflict-check-page,.checklist-page,.local-email-page,.settings-page,.time-billing-page)>*{max-width:880px}
