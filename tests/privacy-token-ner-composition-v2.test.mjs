@@ -104,14 +104,15 @@ async function parentHarness(onSend,{timeoutMs=100}={}){
  return {worker,ready,child,get sent(){return sent;},get killed(){return killed;}};
 }
 const packet=composition=>({composition,telemetry:null,latencyMs:1,peakRssBytes:100});
-test('real parent IPC protocol waits for ready, sends whitelist and receives response without a model',async()=>{
+const MACOS_IPC={skip:process.platform!=='darwin'&&'requires macOS sandbox-exec profile'};
+test('real parent IPC protocol waits for ready, sends whitelist and receives response without a model',MACOS_IPC,async()=>{
  const composition=await detect(input(),[native()]);const h=await parentHarness((child,message)=>{assert.deepEqual(message,{input:input()});queueMicrotask(()=>child.emit('message',packet(composition)));});
  try{const request=h.worker.request(input());await new Promise(r=>setImmediate(r));assert.equal(h.sent,0);h.ready();await h.worker.ready;assert.deepEqual((await request).composition,composition);assert.equal(h.sent,1);}finally{h.worker.close();}assert.equal(h.killed,1);
 });
-test('real parent IPC abort closes once and prohibits retry',async()=>{
+test('real parent IPC abort closes once and prohibits retry',MACOS_IPC,async()=>{
  const h=await parentHarness(()=>{});h.ready();await h.worker.ready;const controller=new AbortController();const request=h.worker.request(input(),{signal:controller.signal});await new Promise(r=>setImmediate(r));controller.abort();await assert.rejects(request);assert.equal(h.sent,1);assert.equal(h.killed,1);await assert.rejects(h.worker.request(input()));assert.equal(h.sent,1);
 });
-test('real parent IPC enforces both timer expiry and absolute deadline before late fulfillment',async()=>{
+test('real parent IPC enforces both timer expiry and absolute deadline before late fulfillment',MACOS_IPC,async()=>{
  const composition=await detect(input(),[native()]);
  for(const late of [false,true]){const h=await parentHarness(child=>{if(late){const until=performance.now()+15;while(performance.now()<until){}child.emit('message',packet(composition));}},{timeoutMs:5});h.ready();await h.worker.ready;await assert.rejects(h.worker.request(input()));assert.equal(h.killed,1);assert.equal(h.sent,1);await assert.rejects(h.worker.request(input()));}
 });
@@ -121,11 +122,11 @@ test('late invalid complete output is excluded from failure receipt validated pr
  const worker=async()=>({ready:Promise.resolve({candidateId:TOKEN_NER_VERSION,manifestSha256:f.freeze.binding.modelManifestSha256,executionProvider:'CPUExecutionProvider',cpuThreads:1,peakRssBytes:100}),async request(v){const composition=await detect(v,[]);if(++count===3)composition.diagnostic.nativeSpans=[native(0,5,'TAX_ID')];return packet(composition);},close(){}});
  try{await assert.rejects(runDevelopment(f,{startWorker:worker,failureDirectory:directory}));const receipt=JSON.parse(await readFile(path.join(directory,'failure.json')));assert.equal(receipt.completedCases,2);assert.equal(receipt.comparisonComplete,false);assert.equal(receipt.failureCode,'INVALID_OUTPUT');}finally{await rm(directory,{recursive:true,force:true});}
 });
-test('parent IPC rejects wrong readiness identity before any request',async()=>{
+test('parent IPC rejects wrong readiness identity before any request',MACOS_IPC,async()=>{
  const h=await parentHarness(()=>{});const rejected=assert.rejects(h.worker.ready);h.child.emit('message',{ready:{candidateId:'wrong',manifestSha256:'0'.repeat(64)}});await rejected;assert.equal(h.sent,0);assert.equal(h.killed,1);
 });
 
-test('parent IPC cancellation before readiness settles immediately and removes listener on every path',async()=>{
+test('parent IPC cancellation before readiness settles immediately and removes listener on every path',MACOS_IPC,async()=>{
  const {getEventListeners}=await import('node:events');
  const composition=await detect(input(),[native()]);
  for(const mode of ['already-aborted','loading','ready-abort-race']){
@@ -140,7 +141,7 @@ test('parent IPC cancellation before readiness settles immediately and removes l
  }
  const h=await parentHarness((child)=>queueMicrotask(()=>child.emit('message',packet(composition)))),controller=new AbortController();h.ready();await h.worker.request(input(),{signal:controller.signal});assert.equal(getEventListeners(controller.signal,'abort').length,0);controller.abort();assert.equal(h.killed,0);h.worker.close();
 });
-test('parent IPC request absolute budget includes readiness and rejects late ready before IPC',async()=>{
+test('parent IPC request absolute budget includes readiness and rejects late ready before IPC',MACOS_IPC,async()=>{
  const {getEventListeners}=await import('node:events');
  for(const lateReady of [false,true]){
   const h=await parentHarness(()=>{},{timeoutMs:5}),controller=new AbortController();
