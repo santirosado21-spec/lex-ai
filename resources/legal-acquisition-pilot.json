@@ -227,12 +227,12 @@
     {
       "id": "jalisco-pending-01",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 01; no representa ley adquirida",
+      "title": "Código Civil del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Civil%20del%20Estado%20de%20Jalisco-240626.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-02",
@@ -247,12 +247,12 @@
     {
       "id": "jalisco-pending-03",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 03; no representa ley adquirida",
+      "title": "Código de Procedimientos Civiles del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20de%20Procedimientos%20Civiles%20del%20Estado%20de%20Jalisco-250424.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-04",
@@ -277,12 +277,12 @@
     {
       "id": "jalisco-pending-06",
       "sourceId": "jalisco",
-      "title": "Plaza pendiente de selección oficial 06; no representa ley adquirida",
+      "title": "Constitución Política del Estado de Jalisco",
       "jurisdiction": "MX-JAL",
       "status": "pending",
-      "url": null,
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/Constituci%C3%B3n/Documentos_PDF-Constituci%C3%B3n/Constituci%C3%B3n%20Pol%C3%ADtica%20del%20Estado%20de%20Jalisco-291026.pdf",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
       "id": "jalisco-pending-07",
@@ -347,42 +347,42 @@
     {
       "id": "nuevo-leon-pending-05",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 05; no representa ley adquirida",
+      "title": "Ley de Propiedad en Condominio de Inmuebles para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_propiedad_en_condominio_de_inmuebles_para_el_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_propiedad_en_condominio_de_inmuebles_para_el_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-06",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 06; no representa ley adquirida",
+      "title": "Ley de Mecanismos Alternativos para la Solución de Controversias para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_mecanismos_alternativos_para_la_solucion_de_controversias_para_el_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_mecanismos_alternativos_para_la_solucion_de_controversias_para_el_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-07",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 07; no representa ley adquirida",
+      "title": "Ley de Responsabilidades Administrativas del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_responsabilidades_administrativas_del_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_responsabilidades_administrativas_del_estado_de_nuevo_leon/"
     },
     {
       "id": "nuevo-leon-pending-08",
       "sourceId": "nuevo-leon",
-      "title": "Plaza pendiente de selección oficial 08; no representa ley adquirida",
+      "title": "Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
       "status": "pending",
-      "url": null,
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_proteccion_de_datos_personales_en_posesion_de_sujetos_obligados_del_estado_de_nuevo_leon/",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_proteccion_de_datos_personales_en_posesion_de_sujetos_obligados_del_estado_de_nuevo_leon/"
     },
     {
       "id": "sjf-pending-01",
@@ -407,22 +407,22 @@
     {
       "id": "sjf-pending-03",
       "sourceId": "sjf",
-      "title": "Plaza judicial pendiente de selección 03; no representa criterio adquirido",
+      "title": "Tesis aislada 1a. CLXXVI/2013 (10a.), Primera Sala — registro digital 2003693",
       "jurisdiction": "MX",
       "status": "pending",
-      "url": null,
+      "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2003693",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://sjf2.scjn.gob.mx/detalle/tesis/2003693"
     },
     {
       "id": "sjf-pending-04",
       "sourceId": "sjf",
-      "title": "Plaza judicial pendiente de selección 04; no representa criterio adquirido",
+      "title": "Jurisprudencia 1a./J. 186/2025 (11a.), Primera Sala — registro digital 2031026",
       "jurisdiction": "MX",
       "status": "pending",
-      "url": null,
+      "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2031026",
       "versionId": "discovered-20261109",
-      "evidenceUrl": null
+      "evidenceUrl": "https://sjf2.scjn.gob.mx/detalle/tesis/2031026"
     }
   ]
 }
