@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-10 23:36 por codex: Clave OpenAI reemplazada: invalid_api_key en catálogo
+**Última actualización:** 2026-11-10 23:55 por codex: OpenAI API: 401 persiste tras margen de propagación
 
 ## Objetivo y autoridad vigentes
 
@@ -12,7 +12,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
-- **API OpenAI:** dueño informó organización Rejon.AI con USD 20 de créditos hasta 16nov y USD 100 mensuales después; saldo/fecha no comprobados en consola. Plan en `docs/orchestration/openai-api-credit-window-2026-11-10.md`. Chequeo de desarrollo `scripts/openai-dev/smoke.mjs` usa Luna, texto inventado, `store:false`, sin herramientas. Primera clave: dos POST HTTP401. Clave reemplazada: dos GET HTTP401; último código `invalid_api_key`. Cero generaciones/usage/recibos. Preflight exacto añadido para impedir POST sin acceso de catálogo; 4 pruebas dirigidas, suite1108/1108, build y revisión independiente PASS. Se pidió confirmar origen de la clave; no más reintentos con la actual. Los créditos API no aumentan la cuota Codex.
+- **API OpenAI:** dueño informó organización Rejon.AI con USD 20 de créditos hasta 16nov y USD 100 mensuales después; saldo/fecha no comprobados en consola. Plan en `docs/orchestration/openai-api-credit-window-2026-11-10.md`. Chequeo de desarrollo `scripts/openai-dev/smoke.mjs` usa Luna, texto inventado, `store:false`, sin herramientas. Primera clave: dos POST HTTP401. Clave reemplazada: dos GET HTTP401, último `invalid_api_key`; otro GET tras más de15min siguió HTTP401. El dueño confirmó origen API Platform/proyecto Rejon.AI; Keychain leyó forma de clave de proyecto ASCII sin espacios extra. Cero generaciones/usage/recibos. Preflight exacto impide POST sin acceso de catálogo; 4 pruebas dirigidas, suite1108/1108, build y revisión independiente PASS. Pendiente comparar últimos4 con fila activa y revisar restricciones; sin más reintentos con la actual. Los créditos API no aumentan la cuota Codex.
 - **Paquete Instinct:** `artifacts/Rejon-AI-Instinct-handoff-2026-11-10.zip` (local, ignorado por Git) contiene contexto de conversación, encargo de investigación de fuentes jurídicas públicas, cuatro capturas de UI sintética y manifiesto SHA-256. ZIP9 archivos/1.204.457B; integridad y hashes verificados. No contiene claves ni documentos de clientes según revisión de contenido y patrones básicos; no se ha enviado a Instinct ni se ha validado su informe.
 - **Nombre público:** el dueño eligió **Rejon.AI** el 2026-11-10. App, landing, prompts activos y nombre visible Tauri actualizados en fuente. Monograma R editable en Figma, SVG en app/landing, favicon e iconos Tauri de escritorio regenerados e inspeccionados a 512/32 px; suite 1104/1104, build, UI smoke sintético y landing smoke pasaron. Identificadores de almacenamiento/Keychain/GitHub y DMG LEX AI 0.4.3 se mantienen por compatibilidad. No hay instalador nuevo: faltan variables del inventario de runtime aprobado para el build. `rejon.ai` no aparece en Vercel conectado, aunque disponibilidad consultada fue positiva; no se acreditó titularidad. DNS e IMPI pendientes. Ver `docs/brand/rejon-transition-2026-11-10.md`.
 - **OpenRouter pagado, pruebas ficticias:** el dueño autorizó hasta USD 6 de créditos existentes y aclaró que «eso en mi cuenta» se refería a estos créditos. Dos rutas pagadas exactas con ZDR y `data_collection:deny` completaron HTTP 200: GPT-OSS 120B/PrimeIntellect respondió `OK`; Gemma 4/PrimeIntellect extrajo obligaciones ficticias y jurisdicción faltante. Metadatos de generación confirmaron USD 0.000005785 + 0.000002290 = **USD 0.000008075** reportados. Sin documentos de cliente, compras, fallback ni herramientas. No es evaluación jurídica ni ruta activa de producto. `docs/qa/openrouter-paid-zdr-smoke-2026-11-10.md` contiene límites y preflight.
@@ -40,7 +40,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-**API OpenAI:** confirmar que la clave guardada proviene del proyecto Rejon.AI de API Platform y corregir `invalid_api_key`. Sólo tras cambiarla, comprobar autenticación con `--auth` y ejecutar una llamada sintética acotada. Registrar usage/modelo/costo estimado y revisar el cargo en consola. Después congelar un lote S2b público/sintético antes de comparar Luna/Sol. La app privada H6 sigue condicionada por H4/H5.
+**API OpenAI:** comparar últimos4 de la clave guardada con la fila activa de API Platform y revisar permisos/organización para resolver `invalid_api_key`. Sólo tras corregirlo, comprobar autenticación con `--auth` y ejecutar una llamada sintética acotada. Registrar usage/modelo/costo estimado y revisar el cargo en consola. Después congelar un lote S2b público/sintético antes de comparar Luna/Sol. La app privada H6 sigue condicionada por H4/H5.
 
 **Pendiente externo:** recibir el informe de Instinct sobre fuentes oficiales y herramientas GitHub. Comprobar cada enlace, permiso, versión y prioridad antes de incorporarlo al backlog; no asumir que su investigación ejecutó adquisición ni validación jurídica.
 

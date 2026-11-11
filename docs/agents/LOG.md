@@ -283,3 +283,7 @@ Dueño informó USD20 de créditos hasta 16nov y USD100/mes después; saldo no a
 ## 2026-11-10 23:36 — codex — Clave OpenAI reemplazada: invalid_api_key en catálogo
 
 El dueño reemplazó la clave de desarrollo en Keychain. GET /v1/models/gpt-6-luna devolvió HTTP401; último GET /v1/models devolvió HTTP401 con error.code invalid_api_key. Ambos sin generación; no se ejecutó POST con la nueva clave ni se imprimió secreto/cuerpo. Sin usage ni costo reportado. Se añadió preflight GET exacto al script antes de POST y modo --auth; cuatro pruebas dirigidas, suite1108/1108, build y revisión independiente Sol PASS. Se pidió confirmar origen del secreto de proyecto; sin más reintentos hasta cambio. Saldo USD20/fecha16nov siguen declarados, no auditados.
+
+## 2026-11-10 23:55 — codex — OpenAI API: 401 persiste tras margen de propagación
+
+El dueño confirmó crear clave en API Platform bajo proyecto Rejon.AI. Keychain leyó cadena con forma sk-proj, ASCII y sin espacios extra. Consulta --auth GET /v1/models/gpt-6-luna más de15min tras actualizar el ítem siguió HTTP401; no hubo POST, generación, usage ni recibo. Dos GET previos con clave nueva dieron401, uno invalid_api_key. Se pidió comparar sólo últimos4 de fila activa con Keychain; no más reintentos con la clave actual. Navegador de consola no disponible por herramienta. Saldo y fecha crédito no auditados.
