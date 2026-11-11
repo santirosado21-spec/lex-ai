@@ -1,5 +1,7 @@
 # LEX AI
 
+**Estado de `main` (10 de noviembre de 2026): integración experimental para colaboradores.** La aplicación activa aún usa inferencia local y SQLite sin cifrado; los módulos de privacidad, recuperación y nube en desarrollo no forman un flujo privado validado. Usar sólo datos públicos o sintéticos. [Plan de lo que falta](docs/orchestration/main-cofounder-execution-plan-2026-11-10.md) · [Guía para Lorenzo y Pedro](docs/qa/cofounder-main-handoff-2026-11-10.md). La landing muestra Mac Silicon, Intel y Windows; sólo ofrece el DMG ARM **anterior** 0.4.3 como descarga real.
+
 Diálogo por defecto **0.4.13**: chat con contexto propio; las fuentes se usan para consultas jurídicas/documentales y sus seguimientos. La naturalidad sigue en evaluación, con fallos conservados. [Comparación e instalación](docs/qa/dialogue-routing-context-0.4.13.md).
 
 Conversación base **0.4.12**: corrige peticiones de fuentes al responder listas, cálculos y correos, y evita convertir operaciones aritméticas en consultas de leyes. [Pruebas reales e instalación](docs/qa/general-chat-base-0.4.12.md).
