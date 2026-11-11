@@ -29,7 +29,7 @@ fn main() {
   };
   match conn {Ok(connection)=>{app.manage(Runtime{child:Mutex::new(child),connection});},Err(e)=>{let _=child.kill();return Err(e.into());}}
   Ok(())
- }).invoke_handler(tauri::generate_handler![connection]).build(tauri::generate_context!()).expect("No se pudo abrir LEX AI");
+ }).invoke_handler(tauri::generate_handler![connection]).build(tauri::generate_context!()).expect("No se pudo abrir Rejon.AI");
  app.run(|handle,event|{if let tauri::RunEvent::Exit=event {
   if let Some(state)=handle.try_state::<Runtime>() {if let Ok(mut child)=state.child.lock(){
    // Closing stdin triggers graceful shutdown of Node and its owned inference process.

@@ -117,3 +117,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 20:21 — codex — Permitir pruebas pagadas ZDR dentro de USD 6, sin activar egreso privado
 
 **Por qué:** El dueño autorizó expresamente USD6 para pruebas. Las rutas gratuitas no completaron una generación, mientras dos rutas pagadas ZDR respondieron con texto ficticio a costo reportado de USD0.000008075. Mantener endpoints exactos, límites de precio y recibos; H4/H5/H7 bloquean documentos reales.
+
+## 2026-11-10 20:29 — codex — Nombre público Rejon.AI; compatibilidad LEX AI preservada
+
+**Por qué:** El dueño fijó Rejon.AI el 10 de noviembre. UI, landing, prompts activos y metadatos visibles adoptan el nombre. Se mantienen IDs de almacenamiento, servicio Keychain, URLs GitHub y el nombre real del DMG anterior para evitar pérdida de datos, clave o descargas engañosas; requieren migración y nuevo build separado.

@@ -9,12 +9,12 @@ async function ready(options){const engine=createMockInference(options);await en
 test('mock is opt-in, stopped initially and reports simulation without claiming hardware validation',async()=>{
  const engine=createMockInference({responses:['Ficticio']});
  assert.equal(engine.outputContract,'paragraph-citations-v1');
- assert.deepEqual(await engine.status(),{state:'stopped',model:'LEX AI',simulated:true,busy:false,progress:0});
- await assert.rejects(collect(engine.generate(messages())),/Prepara LEX AI/);assert.deepEqual(engine.sent,[]);
+ assert.deepEqual(await engine.status(),{state:'stopped',model:'Rejon.AI',simulated:true,busy:false,progress:0});
+ await assert.rejects(collect(engine.generate(messages())),/Prepara Rejon.AI/);assert.deepEqual(engine.sent,[]);
  assert.equal((await engine.initialize()).state,'ready');assert.equal((await engine.initialize()).state,'ready');
  assert.deepEqual(await collect(engine.generate(messages())),['Ficticio']);
  assert.equal((await engine.stop()).state,'stopped');assert.equal((await engine.stop()).state,'stopped');
- await assert.rejects(collect(engine.generate(messages())),/Prepara LEX AI/);
+ await assert.rejects(collect(engine.generate(messages())),/Prepara Rejon.AI/);
 });
 
 test('mock streams queued chunks and fails closed on exhaustion instead of inventing a response',async()=>{

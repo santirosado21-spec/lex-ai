@@ -81,7 +81,7 @@ try {
   await expect(faq).toHaveAttribute('open', '');
   await expect(page.locator('#preguntas details')).toHaveCount(6);
   // Hero demo: keyboard tabs and citation link.
-  const appTab = page.getByRole('tab', {name:'En LEX AI'});
+  const appTab = page.getByRole('tab', {name:'En Rejon.AI'});
   const wordTab = page.getByRole('tab', {name:'En Word'});
   await appTab.focus();
   await page.keyboard.press('ArrowRight');
@@ -102,7 +102,7 @@ try {
   await expect(field(page,'mac-arm64','download')).toHaveAttribute('href', /^https:\/\/github\.com\/santirosado21-spec\/lex-ai-descargas\/releases\/download\/v0\.4\.3\/LEX-AI-0\.4\.3-arm64\.dmg$/);
   await expect(field(page,'mac-arm64','sha')).toHaveText('85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4');
   await expect(field(page,'mac-arm64','version')).toHaveText('Versión 0.4.3');
-  await expect(field(page,'mac-arm64','state')).toContainText('anterior local experimental');
+  await expect(field(page,'mac-arm64','state')).toContainText('anterior LEX AI, local y experimental');
   await assertInert(page,'mac-x64');await assertInert(page,'windows-x64');
   const catalogueResponse=await page.request.get(base+'/catalogue.json');
   assert.equal(catalogueResponse.status(),200);

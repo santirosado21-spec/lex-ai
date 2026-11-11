@@ -1,4 +1,6 @@
-# LEX AI development instructions
+# Rejon.AI development instructions
+
+> Owner update, 2026-11-10 (product name): the user-facing product is now **Rejon.AI**. Replace current UI, landing, assistant self-identification and new release metadata accordingly. Preserve historical evidence, existing storage identifiers, Keychain service IDs, GitHub URLs and legacy download URLs until a separately verified migration/release; do not present an old LEX AI installer as a new Rejon.AI build. This supersedes the 2026-10-30 user-facing LEX AI identity direction.
 
 > Owner distribution direction, 2026-11-10: provide landing download choices for Mac Apple Silicon, Mac Intel and Windows. These are target channels, not a claim that packages exist or are validated. Keep per-platform version/URL/bytes/SHA-256 tied to actual verified artifacts; no wrong-architecture fallback or fabricated links. Existing public arm64 0.4.3 is an older local experimental release, not the integrated hybrid candidate. Build/runtime portability, signing and OS/8 GB acceptance remain explicit work. Preserve the ongoing phases and do not restore large automatic local inference/downloads to fill a platform slot.
 

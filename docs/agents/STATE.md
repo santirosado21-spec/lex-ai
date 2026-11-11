@@ -1,6 +1,6 @@
-# Estado compartido — LEX AI
+# Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-10 20:21 por codex: decisión — Permitir pruebas pagadas ZDR dentro de USD 6, sin activar egreso privado
+**Última actualización:** 2026-11-10 20:29 por codex: Rejon.AI aplicado a app y landing
 
 ## Objetivo y autoridad vigentes
 
@@ -12,6 +12,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- **Nombre público:** el dueño eligió **Rejon.AI** el 2026-11-10. App, landing, prompts activos y nombre visible Tauri actualizados en fuente; suite 1104/1104, build, UI smoke sintético y landing smoke pasaron. Identificadores de almacenamiento/Keychain/GitHub y DMG LEX AI 0.4.3 se mantienen por compatibilidad; logo L, iconos, instalador nuevo, dominio e IMPI pendientes. Ver `docs/brand/rejon-transition-2026-11-10.md`.
 - **OpenRouter pagado, pruebas ficticias:** el dueño autorizó hasta USD 6 de créditos existentes. Dos rutas pagadas exactas con ZDR y `data_collection:deny` completaron HTTP 200: GPT-OSS 120B/PrimeIntellect respondió `OK`; Gemma 4/PrimeIntellect extrajo obligaciones ficticias y jurisdicción faltante. Metadatos de generación confirmaron USD 0.000005785 + 0.000002290 = **USD 0.000008075** reportados. Sin documentos de cliente, compras, fallback ni herramientas. No es evaluación jurídica ni ruta activa de producto. `docs/qa/openrouter-paid-zdr-smoke-2026-11-10.md` contiene límites y preflight.
 - **Cuenta OpenRouter:** el dueño guardó una clave exclusiva en Keychain. Lectura real y `GET /api/v1/key` autenticaron (`isFreeTier:false`, límite configurado); no se registró la clave ni el importe. Catálogo gratuito: 12 modelos publicados con precios cero en esta consulta; `google/gemma-4-26b-a4b-it:free`/`google-ai-studio` tenía endpoint de precio cero. Generación ficticia con ZDR falló HTTP 404 por política de retención; una variante ficticia sin ZDR falló HTTP 429 del proveedor. Cero respuestas y ningún documento de cliente. El producto activo sigue local y el adaptador H6 apagado. Evidencia `docs/qa/openrouter-account-smoke-2026-11-10.md`.
 - **OpenRouter H6a:** `1704658` añadió adaptador optativo, apagado y separado del flujo activo, con límite de precio cero y modelo `:free`; 8 pruebas dirigidas, suite local 1098/1098 y build pasaron. Claude revisó la pieza estática de forma independiente tras correcciones; no hizo prueba de red. No hay clave de producto, verificación de cuenta real, generación remota ni egreso privado. H6 completo sigue bloqueado por H4/H5. La clave PSF de desarrollo no se reutiliza. La reserva de archivos y tareas para Lorenzo y Pedro está en `docs/notes/cofounder-workboard-2026-11-10.md`; hay copia en Notas del dueño, sin confirmar que se haya compartido.

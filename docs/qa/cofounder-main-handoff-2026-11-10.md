@@ -1,5 +1,7 @@
 # Guía de trabajo desde `main` para Lorenzo y Pedro
 
+El nombre público vigente es **Rejon.AI**. El repositorio y el DMG 0.4.3 anterior conservan identificadores LEX AI; no se ha publicado un instalador con la nueva marca. Ver [transición de marca](../brand/rejon-transition-2026-11-10.md).
+
 El repositorio en `main` es el **código experimental de integración**. Permite revisar y proponer cambios; no es una versión lista para expedientes reales. El producto que hoy arranca usa inferencia local y SQLite sin cifrado. Los prototipos de detector, recuperación y router no convierten esa aplicación en la demo híbrida completa.
 
 Para evitar trabajo duplicado, consultar y actualizar el [tablero de responsables y archivos](../notes/cofounder-workboard-2026-11-10.md) antes de empezar. El adaptador OpenRouter H6a está reservado a Codex en este corte; la revisión jurídica S2b.2 queda propuesta a Lorenzo y Pedro sin adjudicarles cambios de código automáticamente.

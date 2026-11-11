@@ -78,7 +78,7 @@ function renderPlatform(card, entry) {
   button.textContent=`Descargar para ${label}`;
   field('version').textContent=`Versión ${entry.version}`;
   field('state').textContent=entry.status==='experimental-local-legacy'
-    ? 'Versión anterior local experimental; no incluye el nuevo flujo híbrido.'
+    ? 'Versión anterior LEX AI, local y experimental; aún no es un instalador de Rejon.AI ni incluye el nuevo flujo híbrido.'
     : 'Instalador publicado; revisa los requisitos y límites de esta versión.';
   field('size').textContent=formatBytes(entry.bytes);field('sha').textContent=entry.sha256;copy.disabled=false;
 }

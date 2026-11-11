@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "product": "LEX AI",
-  "assistantName": "LEX AI",
+  "product": "Rejon.AI",
+  "assistantName": "Rejon.AI",
   "platforms": {
     "mac-arm64": {
       "version": "0.4.3",

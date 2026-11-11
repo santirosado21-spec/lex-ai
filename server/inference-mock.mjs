@@ -12,7 +12,7 @@ export function createMockInference({responses=[],chunkDelayMs=0,maxInputCharact
  if(!Number.isInteger(maxInputCharacters)||maxInputCharacters<1||maxInputCharacters>7000)throw Error('Presupuesto simulado inválido.');
  const queue=fixtures.map(r=>typeof r==='string'?[r]:r),sent=[];
  let state='stopped',active;
- const status=()=>({state,model:'LEX AI',simulated:true,busy:Boolean(active),progress:state==='ready'?100:0});
+ const status=()=>({state,model:'Rejon.AI',simulated:true,busy:Boolean(active),progress:state==='ready'?100:0});
  const cancelled=()=>Error('Análisis cancelado o tiempo máximo excedido.');
  return {
   outputContract:'paragraph-citations-v1',
@@ -21,7 +21,7 @@ export function createMockInference({responses=[],chunkDelayMs=0,maxInputCharact
   async status(){return status();},
   async initialize(){state='ready';return status();},
   async *generate(messages,{signal,outputSchema,responseFormat='json'}={}){
-   if(state!=='ready')throw Error('Prepara LEX AI antes de analizar documentos.');
+   if(state!=='ready')throw Error('Prepara Rejon.AI antes de analizar documentos.');
    if(active)throw Error('Ya hay un análisis en curso.');
    if(!['json','text'].includes(responseFormat)||responseFormat==='text'&&outputSchema)throw Error('Formato de respuesta no admitido.');
    if(!Array.isArray(messages)||!messages.length||messages.length>16)throw Error('El contexto excede el presupuesto local. Acota tu pregunta y las fuentes.');

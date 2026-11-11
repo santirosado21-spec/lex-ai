@@ -1,4 +1,6 @@
-# LEX AI
+# Rejon.AI
+
+Nombre público vigente desde el 10 de noviembre de 2026. Los identificadores internos, el repositorio `lex-ai`, las rutas de datos y los instaladores anteriores conservan el nombre LEX AI para no romper compatibilidad ni atribuir la nueva marca a un binario antiguo. No hay instalador Rejon.AI verificado todavía.
 
 **Estado de `main` (10 de noviembre de 2026): integración experimental para colaboradores.** La aplicación activa aún usa inferencia local y SQLite sin cifrado; los módulos de privacidad, recuperación y nube en desarrollo no forman un flujo privado validado. Usar sólo datos públicos o sintéticos. [Plan de lo que falta](docs/orchestration/main-cofounder-execution-plan-2026-11-10.md) · [Guía para Lorenzo y Pedro](docs/qa/cofounder-main-handoff-2026-11-10.md). La landing muestra Mac Silicon, Intel y Windows; sólo ofrece el DMG ARM **anterior** 0.4.3 como descarga real.
 

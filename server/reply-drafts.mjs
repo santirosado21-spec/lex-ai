@@ -34,7 +34,7 @@ export function createReplyDrafts({store,workspace,matter,openFile,clock=()=>new
   if(existing)return view(checked(existing.id,p.matterId).draft);
   return store.transaction(()=>{
    const draft={id:randomUUID(),workspaceId:w.id,matterId:p.matterId,replyId:reply.id,originalHash:digest({text:reply.text,citations:reply.citations||[]}),original:{text:reply.text,citations:reply.citations||[],validation:reply.validation||null},createdAt:stamp(),updatedAt:stamp(),version:1};
-   const first={id:randomUUID(),workspaceId:w.id,matterId:p.matterId,draftId:draft.id,version:1,title:(reply.question||'Respuesta de LEX AI').slice(0,200),text:reply.text,isOriginal:true,createdAt:stamp(),contentHash:digest({title:(reply.question||'Respuesta de LEX AI').slice(0,200),text:reply.text})};
+   const first={id:randomUUID(),workspaceId:w.id,matterId:p.matterId,draftId:draft.id,version:1,title:(reply.question||'Respuesta de Rejon.AI').slice(0,200),text:reply.text,isOriginal:true,createdAt:stamp(),contentHash:digest({title:(reply.question||'Respuesta de Rejon.AI').slice(0,200),text:reply.text})};
    const initialized={...draft,current:first};store.put('reply-draft',initialized);store.put('reply-draft-version',first);store.audit('draft.create',draft.id);return view(initialized);
   });
  }
@@ -59,7 +59,7 @@ export function createReplyDrafts({store,workspace,matter,openFile,clock=()=>new
   const edited=selected.version!==1;
   const answer={...reply,question:selected.title,text:(edited?'BORRADOR EDITADO POR EL USUARIO. Las referencias conservadas pertenecen a la respuesta original; el texto modificado no ha sido comprobado nuevamente.\n\n':'')+selected.text,citations:draft.original.citations,validation:{status:edited?'edited-draft-unverified':reply.validation?.status,citationIntegrity:!edited&&reply.validation?.citationIntegrity===true,requiresLawyerReview:true}};
   const bytes=await buildAnswerDocx({firm:w,matter:m||{title:'Conversación general del despacho'},answer});
-  store.audit('draft.export',draft.id);return {name:`LEX-AI-escrito-v${selected.version}.docx`,mime:DOCX_MIME,base64:bytes.toString('base64')};
+  store.audit('draft.export',draft.id);return {name:`Rejon-AI-escrito-v${selected.version}.docx`,mime:DOCX_MIME,base64:bytes.toString('base64')};
  }
  function presentMany(replies){
   const w=workspace();if(!w)return replies;

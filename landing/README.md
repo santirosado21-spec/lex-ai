@@ -1,4 +1,4 @@
-# Landing pública de LEX AI
+# Landing pública de Rejon.AI
 
 Sitio estático, sin framework ni dependencias de ejecución. La raíz de despliegue es `landing/`: sirve HTML, CSS, JavaScript, catálogo y assets locales. Para revisión local normal puede usarse `python3 -m http.server 4175 --directory landing` desde la raíz del repositorio.
 

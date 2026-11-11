@@ -18,7 +18,7 @@ function inert(card){assert.equal(card.fields.download.href,undefined);assert.eq
 test('schema 3 has three explicit choices and preserves the verified older ARM artifact',async()=>{
  assert.equal(catalogue.schemaVersion,3);assert.deepEqual(Object.keys(catalogue.platforms),keys);assert.equal(catalogue.version,undefined);
  const arm=catalogue.platforms['mac-arm64'];assert.equal(arm.version,'0.4.3');assert.equal(arm.status,'experimental-local-legacy');assert.equal(arm.bytes,401541849);assert.equal(arm.sha256,'85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4');
- const {cards,requests}=await render();assert.equal(cards[0].fields.download.href,arm.downloadUrl);assert.match(cards[0].fields.state.textContent,/anterior local experimental/);assert.match(cards[0].fields.version.textContent,/0\.4\.3/);
+ const {cards,requests}=await render();assert.equal(cards[0].fields.download.href,arm.downloadUrl);assert.match(cards[0].fields.state.textContent,/anterior LEX AI, local y experimental/);assert.match(cards[0].fields.version.textContent,/0\.4\.3/);
  inert(cards[1]);inert(cards[2]);assert.equal(requests.length,1);assert.equal(requests[0][0],'catalogue.json');
  for(const key of keys){assert.ok(html.includes(`data-platform="${key}"`));assert.ok(html.includes(`aria-describedby="state-${key}"`));}
  assert.match(html,/Ver descargas/);assert.doesNotMatch(script,/userAgent|innerHTML/);assert.match(html,/nuevo flujo híbrido aún no está disponible/);

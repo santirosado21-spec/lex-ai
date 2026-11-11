@@ -106,7 +106,7 @@ export async function ensureBundledModel({bundleDir,modelsDir,catalog,signal,res
  }
  const availableBytes=Number(disk.bavail)*Number(disk.bsize);
  if(!Number.isFinite(availableBytes)||availableBytes<0)throw Error('No se pudo comprobar el espacio en disco.');
- if(availableBytes<requiredBytes)throw Error(`Se necesitan ${(requiredBytes/1024**3).toFixed(1)} GB libres en disco para preparar LEX AI y conservar el espacio de trabajo. Libera espacio y vuelve a intentarlo.`);
+ if(availableBytes<requiredBytes)throw Error(`Se necesitan ${(requiredBytes/1024**3).toFixed(1)} GB libres en disco para preparar Rejon.AI y conservar el espacio de trabajo. Libera espacio y vuelve a intentarlo.`);
  for(const file of copies)await atomicCopy(modelsDir,file.relative,path.join(bundleDir,file.relative),signal);
  for(const relative of writes)await atomicWrite(modelsDir,relative,approved.raw,signal);
  return {available:true,seeded:copies.length+writes.length>0,files:approved.files.length+3,bytes:catalog.downloadBytes,bytesNeeded};

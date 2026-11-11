@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "LEX AI",
+  "productName": "Rejon.AI",
   "version": "0.4.14",
   "identifier": "mx.lexai.desktop",
   "build": {
@@ -10,7 +10,7 @@
   "app": {
     "windows": [
       {
-        "title": "LEX AI",
+        "title": "Rejon.AI",
         "width": 1440,
         "height": 960,
         "minWidth": 1000,

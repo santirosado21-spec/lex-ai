@@ -259,3 +259,7 @@ Verificado con clave de producto Keychain: GET /api/v1/key conectado, cuenta no 
 ## 2026-11-10 20:21 — codex — OpenRouter pagado ZDR: dos generaciones ficticias
 
 Dueño autorizó máximo USD6 de créditos existentes. Verificado: dos endpoints exactos ZDR sin fallback, GPT-OSS120B y Gemma4; ambas respuestas HTTP200 con texto ficticio, costos confirmados en metadatos USD0.000005785 y USD0.000002290, total USD0.000008075 reportado. Sin documentos de cliente, herramientas ni compras. No medido: calidad jurídica, integración de la app, 8GB o conciliación de factura. Evidencia docs/qa/openrouter-paid-zdr-smoke-2026-11-10.md.
+
+## 2026-11-10 20:29 — codex — Rejon.AI aplicado a app y landing
+
+Verificado: nombre visible Rejon.AI en fuente de app, landing, prompts activos, correo, DOCX y Tauri para futuro build. npm test 1104/1104, build, UI smoke sintético y landing smoke PASS. Captura artifacts/ui-workspace.png muestra nuevo nombre. No se construyó instalador nativo; DMG0.4.3 sigue LEX AI. Logo L, favicon, iconos, dominio e IMPI pendientes; Keychain y rutas antiguas preservadas. Plan docs/brand/rejon-transition-2026-11-10.md.

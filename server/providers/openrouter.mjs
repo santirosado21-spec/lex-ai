@@ -73,7 +73,7 @@ export function createOpenRouterProvider({enabled=false,getApiKey,model,endpoint
  };
  return {
   outputContract:'paragraph-citations-v1',
-  status(){return {state:enabled?'configured':'disabled',busy,model:'LEX AI',remote:true,accountConnected};},
+  status(){return {state:enabled?'configured':'disabled',busy,model:'Rejon.AI',remote:true,accountConnected};},
   checkAccount:account,
   get lastReceipt(){return lastReceipt?{...lastReceipt}:null;},
   async *generate(messages,{responseFormat='text',signal}={}){

@@ -50,7 +50,7 @@ export default function OfficeIntegration({matterId}:{matterId:string}){
     <div className="settings-panel office-steps">
       <ol>
         <li><span className="office-step-number" aria-hidden="true">1</span><div><strong>Prepara los complementos</strong><p>Ejecuta <code>Preparar complementos.command</code> una vez en este Mac y reinicia Word o Excel.</p></div></li>
-        <li><span className="office-step-number" aria-hidden="true">2</span><div><strong>Vincula el panel con este asunto</strong><p>{matterId?'Genera un código y escríbelo en el panel de LEX AI dentro del documento.':'Selecciona un asunto para vincular el panel.'}</p>
+        <li><span className="office-step-number" aria-hidden="true">2</span><div><strong>Vincula el panel con este asunto</strong><p>{matterId?'Genera un código y escríbelo en el panel de Rejon.AI dentro del documento.':'Selecciona un asunto para vincular el panel.'}</p>
           <details className="office-sharepoint"><summary>¿Usas SharePoint Online?</summary><label>Dirección del sitio<input value={tenant} placeholder="https://despacho.sharepoint.com" onChange={event=>{setTenant(event.target.value);setMessage('');}}/></label></details>
           {pairing&&!expired?<div className="office-code" aria-label="Código de vinculación"><span className="office-code-value">{pairing.code}</span><div><span className="office-code-expiry">Vence en {remaining(pairing.expiresAt,now)}</span><button type="button" className="secondary" onClick={()=>void copy()}>{copied?<Check size={14}/>:<Copy size={14}/>}{copied?'Copiado':'Copiar'}</button></div></div>:null}
           {pairing&&expired?<p className="office-expired">El código venció. Genera uno nuevo.</p>:null}

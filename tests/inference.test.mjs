@@ -61,7 +61,7 @@ test('catalog pins small official model and rejects heavy budgets/path injection
  assert.equal(modelPolicy({...catalog,id:'qwen2.5:1.5b'}).manifestPath,'manifests/registry.ollama.ai/library/qwen2.5/1.5b');assert.equal(catalog.id,'qwen3.5:2b-q4_K_M');assert.equal(catalog.downloadBytes,1945781358);assert.equal(catalog.memoryMeasured,false);assert.equal(catalog.minMemoryGB,8);
  assert.throws(()=>modelPolicy({...catalog,downloadBytes:16e9}),/2 GB/);assert.throws(()=>modelPolicy({...catalog,id:'../../bad:tag'}),/inválido/);assert.throws(()=>modelPolicy({...catalog,contextLength:8192}),/Presupuesto/);
 });
-test('no automatic startup; supported target is explicitly unmeasured',async t=>{const f=await fixture(t);assert.equal(f.children.length,0);const s=await f.engine.status();assert.equal(s.supported,true);assert.equal(s.memoryMeasured,false);await assert.rejects(async()=>{for await(const _ of f.engine.generate([])){}},/Prepara LEX AI/);});
+test('no automatic startup; supported target is explicitly unmeasured',async t=>{const f=await fixture(t);assert.equal(f.children.length,0);const s=await f.engine.status();assert.equal(s.supported,true);assert.equal(s.memoryMeasured,false);await assert.rejects(async()=>{for await(const _ of f.engine.generate([])){}},/Prepara Rejon.AI/);});
 test('Intel is supported by the catalog while incompatible targets remain blocked',async t=>{
  for(const hardware of [{platform:'darwin',arch:'x64',memoryGB:8},{platform:'darwin',arch:'x64',memoryGB:4},{platform:'linux',arch:'x64',memoryGB:8},{platform:'darwin',arch:'ia32',memoryGB:8}]){
   const f=await fixture(t,{hardware});const supported=hardware.platform==='darwin'&&hardware.arch==='x64'&&hardware.memoryGB>=8;
