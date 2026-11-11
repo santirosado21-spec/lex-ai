@@ -468,3 +468,26 @@ body .macos-workspace{background:var(--paper)!important;color:var(--ink)!importa
 .app-shell.dock-mode .analysis-header,.app-shell.dock-mode .workspace-composer{flex-shrink:0}
 .app-shell.dock-mode .analysis-scroll{flex:1;min-height:0;max-height:none;overflow:auto}
 .app-shell.dock-mode .workspace-composer{margin-top:0}
+
+/* Dark navigation rail (verified Harvey product pattern: dark rail + light canvas),
+   Rejon's own dark-theme palette. Light appearance only; dark theme keeps its tokens. */
+:root[data-theme='light']{--rail-bg:#0F1B2D;--rail-strong:#E8ECF2;--rail-text:#AAB4C3;--rail-muted:#7F8A9A;--rail-hover:rgba(232,236,242,.06);--rail-active:rgba(232,236,242,.10);--rail-line:#2A3646}
+@media (prefers-color-scheme:light){:root:not([data-theme='dark']){--rail-bg:#0F1B2D;--rail-strong:#E8ECF2;--rail-text:#AAB4C3;--rail-muted:#7F8A9A;--rail-hover:rgba(232,236,242,.06);--rail-active:rgba(232,236,242,.10);--rail-line:#2A3646}}
+body .app-shell.macos-workspace>.sidebar{background:var(--rail-bg,var(--sidebar))!important;border-right-color:var(--rail-line,var(--rule))!important}
+body .app-shell.macos-workspace>.sidebar .brand{color:var(--rail-strong,var(--lex-ink-950))}
+body .app-shell.macos-workspace>.sidebar .brand-ai{color:var(--rail-text,var(--lex-ink-800))}
+body .app-shell.macos-workspace>.sidebar .pilot{border-color:var(--rail-line,var(--rule));color:var(--rail-muted,var(--muted))}
+body .app-shell.macos-workspace>.sidebar .firm-name{color:var(--rail-muted,var(--muted))}
+body .app-shell.macos-workspace>.sidebar .nav-group-toggle{color:var(--rail-muted,var(--muted))}
+body .app-shell.macos-workspace>.sidebar .nav-item{color:var(--rail-text,var(--ink))}
+body .app-shell.macos-workspace>.sidebar .nav-item:hover:not(.active){background:var(--rail-hover,var(--hover))}
+body .app-shell.macos-workspace>.sidebar .nav-item.active{background:var(--rail-active,#dde8f0)!important;color:var(--rail-strong,var(--accent))!important}
+body .app-shell.macos-workspace>.sidebar .nav-item.active:hover{background:var(--rail-active,#d2e0ea)!important}
+body .app-shell.macos-workspace>.sidebar .tools-trigger{color:var(--rail-muted,var(--muted))}
+body .app-shell.macos-workspace>.sidebar :is(.appearance-quick-toggle,.runtime-status){color:var(--rail-text,var(--ink-2))!important}
+body .app-shell.macos-workspace>.sidebar :is(.appearance-quick-toggle,.runtime-status):hover{background:var(--rail-hover,var(--hover))!important;color:var(--rail-strong,var(--ink))!important}
+body .app-shell.macos-workspace>.sidebar .runtime-status{border-top-color:var(--rail-line,var(--rule))}
+body .app-shell.macos-workspace>.sidebar .sidebar-bottom>p{color:var(--rail-muted,var(--muted))}
+:root[data-theme='light'] body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-light{display:none}
+:root[data-theme='light'] body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-dark{display:block}
+@media (prefers-color-scheme:light){:root:not([data-theme='dark']) body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-light{display:none}:root:not([data-theme='dark']) body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-dark{display:block}}
