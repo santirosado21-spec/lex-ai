@@ -73,9 +73,16 @@ Lectura operativa para este corpus:
 - Los términos de uso del sitio y las condiciones del canal son una cuestión separada del derecho de autor; la fuente SJF exige navegador real y su robots es indeterminado, por lo que su vía queda documentada-sin-ejecutar.
 - La fuente federal `diputados-fed` ya tiene `rightsReview.status: approved` en el registro (revisión previa del proyecto). Las fuentes Jalisco/NL/SJF mantienen revisión pendiente: este borrador es insumo, no sustituto.
 
-## 4. Ruta de ejecución propuesta (cuando exista autorización)
+## 4. Estado de ejecución al 2026-11-11 (acotado, en cuarentena)
 
-1. Jalisco/NL: ingesta vía `scripts/legal-acquisition.mjs` tras `rightsReview: approved` de cada fuente y `status: approved` de cada documento; límites existentes (presupuesto de peticiones, rateMs) sin cambios.
+- diputados-fed: ejecutado — 10/10 documentos, estado `complete` (`artifacts/public-corpus/pilot/`).
+- nuevo-leon: fuente aprobada tras revisión del 2026-11-11 (`docs/research/public-corpus-rights-review-2026-11-11.md`); ejecutado — 8/8 documentos, estado `complete` (`artifacts/public-corpus/pilot-mx-nle-2026-11-11/`). Bindings corregidos de página HTML a PDF exacto.
+- congreso-jalisco: derechos revisados y resueltos; **canal bloqueado** — robots.txt redirige 301 a página de error y el pipeline falla cerrado (`robots-unavailable`). Documentos de vuelta a `pending`. Decisión pendiente del proyecto: política de robots o canal oficial alterno.
+- sjf: pendiente — decisión del dueño (términos SCJN anti-comercialización + canal solo-navegador); ver `public-corpus-rights-review-2026-11-11.md`.
+
+## 5. Ruta de ejecución propuesta para lo pendiente
+
+1. Jalisco: tras resolver la política de robots/canal, re-vinculación desde el índice vigente e ingesta vía `scripts/legal-acquisition.mjs` con los límites existentes.
 2. SJF: vía documentada en `docs/qa/public-corpus-slot-verification-2026-11-11.md` (navegador real; sin cliente programático). No automatizable por el pipeline actual.
 3. Jalisco: re-vinculación obligatoria desde el índice legislativo vigente antes de ejecutar (sufijos caducables).
 

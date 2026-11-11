@@ -59,17 +59,17 @@
         "observedAt": "2026-11-09T23:31:16.688Z"
       },
       "rightsReview": {
-        "status": "pending",
-        "reviewedBy": null,
-        "reviewedAt": null,
-        "basis": "Pending source-specific review; catalogue visibility does not authorize acquisition",
-        "evidenceUrl": null,
+        "status": "approved",
+        "reviewedBy": "instinct-rejon-dev-loop",
+        "reviewedAt": "2026-11-11T15:35:34.328Z",
+        "basis": "Source-specific review 2026-11-11 (docs/research/public-corpus-rights-review-2026-11-11.md): LFDA Art.14 VIII excludes state legislative texts from copyright; robots soft-404 (no policy), pipeline re-verifies per run; only privacy notice found, no restrictive content terms; PDFs public over direct HTTP; index requires real browser for re-binding only. Date suffixes expire without notice: re-bind from current index before every run. Channel check 2026-11-11: robots.txt 301-redirects to an error page; the acquisition pipeline fails closed (robots-unavailable) and no gate-weakening or block evasion is applied. Documents stay pending until an official channel or explicit pipeline policy decision exists.",
+        "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
         "scope": "bounded-public-pilot"
       },
       "version": {
-        "id": "discovered-20261109",
-        "evidenceUrl": null,
-        "observedAt": "2026-11-09T23:31:16.688Z"
+        "id": "jalisco-index-20261111",
+        "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+        "observedAt": "2026-11-11T15:35:34.328Z"
       }
     },
     {
@@ -77,24 +77,24 @@
       "title": "Congreso de Nuevo León",
       "jurisdiction": "MX-NLE",
       "collection": "state-legislation",
-      "status": "pending",
+      "status": "approved",
       "discovery": {
         "url": "https://www.hcnl.gob.mx/",
         "evidence": "Discovery only from official directory/research; acquisition route and conditions not approved",
         "observedAt": "2026-11-09T23:31:16.688Z"
       },
       "rightsReview": {
-        "status": "pending",
-        "reviewedBy": null,
-        "reviewedAt": null,
-        "basis": "Pending source-specific review; catalogue visibility does not authorize acquisition",
-        "evidenceUrl": null,
+        "status": "approved",
+        "reviewedBy": "instinct-rejon-dev-loop",
+        "reviewedAt": "2026-11-11T15:35:13.344Z",
+        "basis": "Source-specific review 2026-11-11 (docs/research/public-corpus-rights-review-2026-11-11.md): LFDA Art.14 VIII excludes state legislative texts from copyright; robots Allow:/; only privacy notice found, no restrictive content terms; direct HTTP channel verified. Preserve exact official text and provenance; editorial additions and legal applicability unreviewed.",
+        "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
         "scope": "bounded-public-pilot"
       },
       "version": {
-        "id": "discovered-20261109",
-        "evidenceUrl": null,
-        "observedAt": "2026-11-09T23:31:16.688Z"
+        "id": "hcnl-index-20261111",
+        "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+        "observedAt": "2026-11-11T15:35:13.344Z"
       }
     },
     {
@@ -112,7 +112,7 @@
         "status": "pending",
         "reviewedBy": null,
         "reviewedAt": null,
-        "basis": "Pending source-specific review; catalogue visibility does not authorize acquisition",
+        "basis": "Reviewed 2026-11-11 (docs/research/public-corpus-rights-review-2026-11-11.md): unresolved - SCJN terms prohibit commercializing portal content and unauthorized access (applicability to sjf2 subdomain undetermined); channel requires real browser (anti-bot). Owner decision required; discovery grants no egress.",
         "evidenceUrl": null,
         "scope": "bounded-public-pilot"
       },
@@ -231,7 +231,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Civil%20del%20Estado%20de%20Jalisco-240626.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -241,7 +241,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Penal%20para%20el%20Estado%20Libre%20y%20Soberano%20de%20Jalisco%20-271026.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -251,7 +251,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20de%20Procedimientos%20Civiles%20del%20Estado%20de%20Jalisco-250424.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -261,7 +261,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Fiscal%20del%20Estado%20de%20Jalisco-220726.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -271,7 +271,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Electoral%20del%20Estado%20de%20Jalisco-300926.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -281,7 +281,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/Constituci%C3%B3n/Documentos_PDF-Constituci%C3%B3n/Constituci%C3%B3n%20Pol%C3%ADtica%20del%20Estado%20de%20Jalisco-291026.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -291,7 +291,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Urbano%20para%20el%20Estado%20de%20Jalisco-080726.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -301,7 +301,7 @@
       "jurisdiction": "MX-JAL",
       "status": "pending",
       "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20de%20Asistencia%20Social%20del%20Estado%20de%20Jalisco-251125.pdf",
-      "versionId": "discovered-20261109",
+      "versionId": "jalisco-index-20261111",
       "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
     },
     {
@@ -309,9 +309,9 @@
       "sourceId": "nuevo-leon",
       "title": "Código Civil para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/"
     },
     {
@@ -319,9 +319,9 @@
       "sourceId": "nuevo-leon",
       "title": "Código Penal para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/"
     },
     {
@@ -329,9 +329,9 @@
       "sourceId": "nuevo-leon",
       "title": "Código de Procedimientos Civiles del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20DE%20PROCEDIMIENTOS%20CIVILES%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/"
     },
     {
@@ -339,9 +339,9 @@
       "sourceId": "nuevo-leon",
       "title": "Ley de los Derechos de Niñas, Niños y Adolescentes para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20LOS%20DERECHOS%20DE%20NINAS%20NINOS%20Y%20ADOLESCENTES%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/"
     },
     {
@@ -349,9 +349,9 @@
       "sourceId": "nuevo-leon",
       "title": "Ley de Propiedad en Condominio de Inmuebles para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_propiedad_en_condominio_de_inmuebles_para_el_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20PROPIEDAD%20EN%20CONDOMINIO%20DE%20INMUEBLES%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_propiedad_en_condominio_de_inmuebles_para_el_estado_de_nuevo_leon/"
     },
     {
@@ -359,9 +359,9 @@
       "sourceId": "nuevo-leon",
       "title": "Ley de Mecanismos Alternativos para la Solución de Controversias para el Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_mecanismos_alternativos_para_la_solucion_de_controversias_para_el_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20MECANISMOS%20ALTERNATIVOS%20PARA%20LA%20SOLUCION%20DE%20CONTROVERSIAS%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_mecanismos_alternativos_para_la_solucion_de_controversias_para_el_estado_de_nuevo_leon/"
     },
     {
@@ -369,9 +369,9 @@
       "sourceId": "nuevo-leon",
       "title": "Ley de Responsabilidades Administrativas del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_responsabilidades_administrativas_del_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20RESPONSABILIDADES%20ADMINISTRATIVAS%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_responsabilidades_administrativas_del_estado_de_nuevo_leon/"
     },
     {
@@ -379,9 +379,9 @@
       "sourceId": "nuevo-leon",
       "title": "Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Nuevo León",
       "jurisdiction": "MX-NLE",
-      "status": "pending",
-      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_proteccion_de_datos_personales_en_posesion_de_sujetos_obligados_del_estado_de_nuevo_leon/",
-      "versionId": "discovered-20261109",
+      "status": "approved",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20PROTECCION%20DE%20DATOS%20PERSONALES%20EN%20POSESION%20DE%20SUJETOS%20OBLIGADOS%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+      "versionId": "hcnl-index-20261111",
       "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_proteccion_de_datos_personales_en_posesion_de_sujetos_obligados_del_estado_de_nuevo_leon/"
     },
     {
