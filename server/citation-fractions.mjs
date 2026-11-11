@@ -113,41 +113,51 @@ function articleSet({label,text}) {
  const chosen=fromLabel.length?fromLabel:articulos(text);
  return new Set(chosen.map(a=>a.article));
 }
-export function fraccionesSostenidas({label='',text=''}) {
+function soportePorArticulo({label='',text=''}) {
  if (typeof label!=='string'||typeof text!=='string') throw malformed('invalid_source');
- const supported=new Set(), own=articleSet({label,text});
- for (const f of fracciones(label)) for (const value of f.values) supported.add(value);
+ const own=articleSet({label,text});
+ const byArticle=new Map([...own].map(article=>[article,new Set()]));
+ const put=(article,values)=>{
+  const supported=byArticle.get(article);
+  if (supported) for (const value of values) supported.add(value);
+ };
+ // Metadata labels may explicitly enumerate fractions; preserve article pairing.
+ for (const pair of paresDeCita(label)) {
+  if (pair.fraccion!==null) put(pair.articulo,[pair.fraccion]);
+ }
  const bodyArticles=articulos(text);
- // Enumerations of the owning article in the actual passage (never "C. Ciudadano").
+ const closest=position=>bodyArticles.filter(a=>a.start<position).at(-1)?.article;
+ // The passage's list bullets substantiate only the enclosing article.
+ // Single-letter C. does not open an enumeration (e.g. "C. Ciudadano").
  for (const match of text.matchAll(ENUM_RE)) {
   const roman=match[1].toUpperCase();
   if (roman.length===1&&!['I','V','X'].includes(roman)) continue;
-  if (bodyArticles.some(a=>own.has(a.article))) {
-   try {supported.add(String(romanoAEntero(roman)));} catch { /* lexical noise */ }
-  }
+  const owner=closest(match.index) ?? (own.size===1?[...own][0]:null);
+  if (!owner) continue;
+  try { put(owner,[String(romanoAEntero(roman))]); } catch { /* lexical noise */ }
  }
  for (const f of fracciones(text)) {
   const after=text.slice(f.end,f.end+90);
   const explicitAfter=/^\s*(?:de este art[ií]culo\b|del art[ií]culo\s+(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?))/iu.exec(after);
-  let bound=false;
+  let owner;
   if (explicitAfter) {
-   bound=!explicitAfter[1] || own.has(articuloCanon(explicitAfter[1]));
-  } else {
-   const before=bodyArticles.filter(a=>a.start<f.start);
-   bound=before.length>0 && own.has(before.at(-1).article);
-  }
-  if (bound) for (const value of f.values) supported.add(value);
+   owner=explicitAfter[1]?articuloCanon(explicitAfter[1]):closest(f.start) ?? (own.size===1?[...own][0]:null);
+  } else owner=closest(f.start);
+  if (owner) put(owner,f.values);
  }
- return supported;
+ return byArticle;
+}
+export function fraccionesSostenidas({label='',text=''}) {
+ const byArticle=soportePorArticulo({label,text});
+ return new Set([...byArticle.values()].flatMap(values=>[...values]));
 }
 export function reporteCitaEstructural(texto,{label='',text=''}) {
  try {
   const pairs=paresDeCita(texto);
   if (!pairs.length) return {ok:true,reason:null};
-  const own=articleSet({label,text});
-  const sustained=fraccionesSostenidas({label,text});
-  if (pairs.some(({articulo})=>!own.has(articulo))) return {ok:false,reason:'article_not_in_source'};
-  if (pairs.some(({fraccion})=>fraccion!==null&&!sustained.has(fraccion))) {
+  const byArticle=soportePorArticulo({label,text});
+  if (pairs.some(({articulo})=>!byArticle.has(articulo))) return {ok:false,reason:'article_not_in_source'};
+  if (pairs.some(({articulo,fraccion})=>fraccion!==null&&!byArticle.get(articulo).has(fraccion))) {
    return {ok:false,reason:'fraction_not_supported'};
   }
   return {ok:true,reason:null};
