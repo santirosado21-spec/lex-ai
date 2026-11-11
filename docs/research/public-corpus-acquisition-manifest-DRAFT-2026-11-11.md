@@ -1,7 +1,7 @@
 # Manifiesto de adquisición de corpus público — BORRADOR 2026-11-11
 
 **Estado: BORRADOR. Nada de este documento declara adquisición, aprobación, ejecución ni vigencia jurídica.**
-Reconstruido/derivado de fuentes actuales el 2026-11-11. Este borrador prepara la adquisición solicitada por el coordinador (mensaje parental del 2026-11-11 ~09:19 CST: actualizar candidatos pendientes a bindings oficiales verificados conservando URL anterior/proveniencia; continuar investigación de fuentes públicas y condiciones sin convertir interés en autoridad de gasto/egreso).
+Reconstruido/derivado de fuentes públicas verificadas el 2026-11-11. Este borrador prepara la adquisición pública del corpus legal dentro de los límites vigentes de derechos, canal y gasto: candidatos pendientes actualizados a bindings oficiales verificados conservando URL anterior y proveniencia, e investigación de fuentes públicas y condiciones. No es autorización de gasto ni de egreso de contenido privado.
 
 Relación con artefactos existentes:
 - Registro: `resources/legal-acquisition-pilot.json` (fuente aprobada: `diputados-fed`; fuentes pendientes: `congreso-jalisco`, `hcnuevo-leon`, `sjf-pleno-primera-sala`).
