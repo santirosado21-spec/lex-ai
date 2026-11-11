@@ -4,7 +4,12 @@
 import {canonicalJson} from '../canonical-json.mjs';
 import {validPrivacyScope,validPrivacyRange} from './provenance.mjs';
 
-export const DETECTOR_VERSION = 'local-rules-baseline-v4';
+// v5 identity (2026-11-11): rules UNCHANGED from v4; the candidate input space widened
+// with the executable optional v2 segment states (extractionStatus/assessment, enum-only,
+// synthetic stimuli, never gold). Widening is exercised only by development corpus
+// privacy-development-v4: NOT integrated into the product and NOT officially evaluated.
+// Any future freeze must record these source hashes and the widened input explicitly.
+export const DETECTOR_VERSION = 'local-rules-baseline-v5';
 export const DETECTION_CATEGORIES = Object.freeze(['person','organization','rfc','curp','clabe','account','email','phone','address','case_id','context','sensitive_relation']);
 const reasons = ['scope_mismatch','unknown_provenance','unsupported_format','partial_extraction','ambiguous_context','detector_failure'];
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
