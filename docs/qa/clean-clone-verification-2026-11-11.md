@@ -12,6 +12,10 @@ Reconstruidos y re-derivados de la fuente actual, no recuperados del parche perd
 
 Validación en este estado: `npm test` por defecto 1113 pruebas, 1080 pasan, 0 fallan, 33 se omiten con razón explícita (exit 0). `npm run test:fidelity` (modo requerido) falla cerrado con exit 1: 1113 pruebas, 1080 pasan, 23 fallos todos nombrados `FIDELITY PREREQUISITE MISSING` (17 de activos, 6 de plataforma), 10 omitidas. `npm run build` exit 0. Los smokes de UI (ui-smoke, ui-dashboard, ui-hig) pasan; el panel abierto a 390px se inspeccionó visualmente con filas de 44px sin desbordamiento.
 
+## Verificación desde clon fresco independiente
+
+El parche acumulado de los 6 commits se aplicó con `git am` sobre un segundo clon fresco de GitHub en `d1518eb`, sin reutilizar el directorio de trabajo: aplicación limpia, `npm ci` exit 0, `npm test` 1113/1080/0 fallos/33 omitidas exit 0, `npm run test:fidelity` exit 1 con exactamente los 23 fallos nombrados de prerrequisito, `npm run build` exit 0. El hash del commit resultante difiere del de la rama de trabajo sólo por fecha de committer, como espera `git am`; el contenido aplicado es idéntico.
+
 ## Límites
 
 Los conteos documentados en el README del vault y en la matriz de código coinciden hoy (3/27/2, `VAULT_PARITY_COMPLETE=false`); la guardia nueva sólo detecta deriva futura, no cambia el estado de paridad. Las conclusiones de reproducibilidad del índice público y de fragmentos aplican sólo a fixtures sintéticos en este entorno; los hashes exactos de artefactos de producción quedan intactos y no se re-fijó nada. Este documento no autoriza push, despliegue ni ejecución de adquisición de corpus.
