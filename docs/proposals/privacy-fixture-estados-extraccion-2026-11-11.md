@@ -1,54 +1,75 @@
-# Propuesta: estados de extracción evaluables en el fixture de privacidad (NO aplicada)
+# Propuesta: estados de extracción evaluables en privacidad (NO aplicada, v2 corregida)
 
-Fecha: 2026-11-11. Estado: propuesta técnica para decisión de gobernanza. Nada de este
-documento está aplicado al corpus, al protocolo ni al runner oficiales.
+Fecha: 2026-11-11. Estado: propuesta técnica revisable. Nada de este documento está
+aplicado al corpus, al protocolo, al runner ni a freeze alguno.
 
-## Evidencia de política congelada (eval/privacy/protocol.json, frozenAt 2026-11-09)
+> Corrección 2026-11-11 (misma fecha): la versión primera de esta propuesta incluía
+> re-anotar DEV_027..DEV_030 desde su blockReason. Eso viola la restricción congelada
+> (`operationalFlagsFromGold: false`, "Never inject annotation blockReason into
+> detector input", docs/qa/privacy-detector-freeze-2026-11-09.json; eval/privacy/
+> README.md: "no inventarlos desde gold para lograr bloqueos"). Retirada.
 
-- `experimentalGates.requiredBlockedStatusRate: 1` — la tasa de status blocked correcto
-  debe ser 1.0 para que un candidato sea eligible-for-integration-evaluation.
-- `experimentalGates.blockedEntityCasesStillCountAsMisses: true` — las entidades en
-  casos bloqueados cuentan como misses si no se detectan (motivó el detector v4:
-  escaneo desacoplado de la resolución de procedencia).
-- `blockReasons`: scope_mismatch, unknown_provenance, unsupported_format,
-  partial_extraction, ambiguous_context, detector_failure.
-- `caseContract.fields`: id, split, templateGroup, synthetic, scope, segments,
-  entities, expectedStatus, blockReason, preserve. **No existe campo de extracción
-  ni de assessment por segmento.**
-- `contaminationPolicy`: el heldout lo crea un autor separado; si se usa para ajustar,
-  se retira la versión completa.
+## Evidencia de política congelada
+
+- eval/privacy/protocol.json: `requiredBlockedStatusRate: 1`,
+  `blockedEntityCasesStillCountAsMisses: true`, 6 blockReasons, caseContract sin
+  campos de extracción/assessment.
+- eval/privacy/README.md: "El corpus v1 no tiene flags operativos de
+  formato/extracción/ambigüedad/fallo: no inventarlos desde gold para lograr
+  bloqueos. Pruebas de integración sí ejercitan señales locales independientes.
+  El próximo protocolo debe solucionar esa limitación con nuevas entradas y examen
+  independiente." Y: "Heldout exige un freeze de fuentes/protocolo/corpus aprobado;
+  el freeze publicado autorizó una corrida ya ejecutada, no repeticiones para
+  afinar."
+- docs/qa/privacy-detector-freeze-2026-11-09.json: freeze del baseline v1 aprobado
+  por revisor independiente (`independentReviewer: review_detector_vault`),
+  `candidateBuilderSawHeldout: false`, `operationalFlagsFromGold: false`,
+  `goldInputsAllowed: false`.
+- eval/privacy/heldout-provenance.json: examen de autor independiente que nunca leyó
+  dev, plantillas dev, salidas de candidato ni implementación del evaluador.
 
 ## Hallazgo (medición dev 2026-11-11, candidate local-rules-baseline-v4)
 
-El worker del fixture (scripts/privacy-candidate-worker.mjs) registra cada segmento
-con `extraction.status='complete'` y `assessment='known'` fijos. Por tanto, de las 6
-razones de bloqueo, 4 son **inevaluables** en el harness actual:
+El worker del fixture fija `extraction.status='complete'` y `assessment='known'`;
+4 de 6 razones de bloqueo son inevaluables en el harness oficial. Detalle de la
+medición en el reporte de la corrida `artifacts/privacy/dev-rules-baseline-v4-2026-11-11`
+(artefacto local, gitignored).
 
-| Razón esperada (dev) | Señal necesaria | Disponible en fixture v4 |
-| --- | --- | --- |
-| scope_mismatch | originScope ≠ scope de la solicitud | sí (evaluada, 1/1) |
-| unknown_provenance | originScope null / clasificación unknown | sí (evaluada, 1/1) |
-| unsupported_format | extraction.status='unsupported' | no (fijada a complete) |
-| partial_extraction | extraction.status='partial' | no (fijada a complete) |
-| ambiguous_context | assessment='ambiguous' | no (fijada a known) |
-| detector_failure | extraction.status='failed' o assessment='failed' | no |
+## Lo que YA existe como evidencia sancionada (aplicado, diagnóstico)
 
-Resultado: blockedStatusRate dev = 0.333 (2/6) con candidato v3 y v4, sin que el
-detector pueda influir. El gate `requiredBlockedStatusRate: 1` es inalcanzable con el
-corpus y fixture actuales, no por calidad del candidato.
+El README sanciona "pruebas de integración [que] ejercitan señales locales
+independientes". Implementadas como harness DIAGNOSTIC-ONLY (no puntúan bajo el
+protocolo, no alimentan gates, no son evidencia de elegibilidad):
 
-## Opciones
+- `tests/privacy-provenance-states-diagnostic.test.mjs`: las 6 razones de bloqueo
+  contra detector+procedencia reales, con estados de extracción/assessment reales
+  construidos por el propio fixture de prueba (no desde gold).
+- `tests/privacy-preservation-diagnostic.test.mjs`: fidelidad de preservación
+  (fechas/montos/citas) en protect/restore/restoreStream y tras ciclo sellado.
 
-### A. Extender corpus + fixture oficiales (requiere decisión de gobernanza)
+## Lo que queda FUERA del alcance del constructor del candidato (y por qué)
 
-El corpus congelado no porta estados de extracción; extenderlo cambia
-corpusSha256 y exige nueva versión, nuevo autor para heldout y nuevo freeze.
+El valor del examen depende de propiedades de independencia que el constructor no
+puede auto-suministrar sin falsificarlas:
 
-Diff propuesto (**NO aplicado**):
+1. **Autor independiente del examen**: nunca leyó dev, plantillas, salidas de
+   candidato ni implementación. El constructor del detector no puede ser ese autor.
+2. **Revisor independiente del freeze**: aprueba UNA corrida heldout. El constructor
+   no puede aprobar su propio freeze.
+3. **Entradas nuevas, no derivadas de gold**: cualquier flag operativo debe nacer de
+   casos nuevos escritos bajo la guía de anotación, nunca de los blockReason
+   existentes.
+
+Por tanto, la ruta oficial correcta (cuando se decida) es un **protocolo v2** con:
+caseContract ampliado (`extractionStatus?`, `assessment?` por segmento, defaults
+complete/known), entradas dev NUEVAS que ejerciten esos estados, runner/fixture que
+los proyecte, y un examen heldout NUEVO de autor independiente comisionado por el
+coordinador, con freeze revisado por revisor independiente. Borrador de contrato
+(disponible para revisión, no aplicado):
 
 ```diff
---- a/eval/privacy/protocol.json
-+++ b/eval/privacy/protocol.json
+--- a/eval/privacy/protocol.json (v1, congelado)
++++ b/eval/privacy-v2/protocol.json (borrador, NO congelado)
 @@ caseContract
 -    "segment": "{id,path,text,originScope,classification}; ...",
 +    "segment": "{id,path,text,originScope,classification,extractionStatus?,assessment?}; extractionStatus in complete|partial|unsupported|failed (default complete); assessment in known|ambiguous|failed (default known)",
@@ -64,31 +85,16 @@ Diff propuesto (**NO aplicado**):
 +      segments:[{id:segment.id,path:segment.path,text:segment.text}],assessment:segment.assessment ?? 'known'}).segments[0];
 ```
 
-Y en scripts/run-privacy-detector.mjs, `projectPrivacyCase` pasaría los dos campos
-opcionales (la whitelist actual los descarta). Casos dev existentes sin los campos
-conservan el comportamiento actual por los defaults.
+## Qué puede hacer el constructor sin violar nada (reversible, sin freeze)
 
-Costo: nueva versión de corpus (dev y heldout), nuevo freeze, re-anotación de los 4
-casos DEV_027..DEV_030 con los estados que su blockReason ya declara.
-
-### B. Harness diagnóstico independiente (sin tocar lo congelado)
-
-Un runner separado (p. ej. `scripts/run-privacy-provenance-diagnostic.mjs`) con sus
-propios casos sintéticos en `tests/fixtures/provenance-states/`, nombrado
-**diagnóstico**, que ejercite las 6 razones contra server/privacy/detector.mjs +
-provenance.mjs reales. No produce score.json bajo el protocolo, no alimenta gates
-oficiales y su salida dice "diagnostic-only". Aporta evidencia de que el detector
-bloquea correctamente cuando el registro sí reporta estados no-Complete.
-
-Costo: ninguno sobre corpus/protocolo; es código de prueba adicional.
-
-## Recomendación
-
-B ahora (evidencia sin tocar lo congelado); A cuando se decida la próxima versión del
-corpus. La corrida heldout sigue requiriendo freeze revisado con
-approvedForSingleHeldoutRun=true y no se contempla aquí.
+- Mantener y ampliar los harnesses diagnósticos (hecho).
+- Preparar el borrador de protocolo v2 y casos dev NUEVOS con estados operativos
+  (dev es afinable por el constructor; heldout nunca).
+- Dejar el runner listo para proyectar los campos cuando existan (detrás del
+  contrato v2; el contrato v1 congelado no se toca).
 
 ## Fuera de alcance
 
-Heldout, freeze, remoto, categoría pseudonymized en H2, y cualquier cambio a gates o
-umbrales. routingSafety y preservation siguen "not-evaluated" por diseño del scorer.
+Heldout, freeze, examen, remoto, categoría pseudonymized, y cualquier cambio a
+gates o umbrales. routingSafety y preservation siguen "not-evaluated" en el scorer
+oficial; la evidencia diagnóstica no los sustituye.

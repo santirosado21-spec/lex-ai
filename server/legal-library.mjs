@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=15;
+export const EXTRACTOR_VERSION=16;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -136,10 +136,10 @@ function midSentenceFragment(lines,i,checkNext=true){
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
   const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
-  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Última\s+Reforma(?:\s+publicada)?(?:\s+DOF)?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
+  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+DOF)?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const value=normalize(line);if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
-    if(upper===titleFold||/^CÁMARA DE DIPUTADOS|^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Última Reforma DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
+    if(upper===titleFold||/^CÁMARA DE DIPUTADOS|^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
   const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false;const seen=new Set();
   function finish(){if(!current)return;const anomalies=[...(current.anomalies??[])];const body=current.lines.map(x=>x.text);while(body.length&&/^(?:DE LA CAPACIDAD|DE LOS COMERCIANTES|DE LA FORMA)$/i.test(body.at(-1)))body.pop();const text=normalize(body.join(' '));
     if(text.length<60)anomalies.push('too-short-for-structural-export');if(/\uFFFD|Secretaría General|CÁMARA DE DIPUTADOS/.test(text))anomalies.push('extraction-artifact');if(text.length>60000)anomalies.push('article-exceeds-60000-characters');if(/(?:\bSe deroga\b|\bDerogado\b)/i.test(text)&&text.length<140)anomalies.push('repealed-marker-not-training-example');
