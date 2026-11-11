@@ -113,3 +113,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 20:17 — codex — No relajar ZDR para documentos privados por fallo de ruta gratuita
 
 **Por qué:** La cuenta autenticó, pero el endpoint gratuito rechazó Zero data retention con 404; quitar esa restricción para una prueba ficticia tampoco produjo respuesta (429). H4/H5 siguen pendientes y la autorización sólo cubre datos públicos/sintéticos. Mantener el adaptador de producto apagado y separar diagnóstico sintético de política de egreso privado.
+
+## 2026-11-10 20:21 — codex — Permitir pruebas pagadas ZDR dentro de USD 6, sin activar egreso privado
+
+**Por qué:** El dueño autorizó expresamente USD6 para pruebas. Las rutas gratuitas no completaron una generación, mientras dos rutas pagadas ZDR respondieron con texto ficticio a costo reportado de USD0.000008075. Mantener endpoints exactos, límites de precio y recibos; H4/H5/H7 bloquean documentos reales.

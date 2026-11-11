@@ -34,6 +34,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H6a | Adaptador OpenRouter aislado y gratuito, sin activación | H2, H3V, M1 | done | `1704658`; 8 pruebas dirigidas/1098 suite local+build, revisión estática independiente APPROVE sólo pieza; sin credencial producto, red real ni egreso privado |
 | H6b.1 | Lector local Keychain de credencial OpenRouter exclusiva | H6a | done | 6 pruebas simuladas, build y revisión estática independiente APPROVE sólo pieza; apagado, sin provisión/revocación, lectura real, cuenta conectada ni egreso |
 | H6b.2 | Comprobar cuenta de producto y ruta gratuita sintética | H6b.1 | partial | Keychain real y GET `/api/v1/key` autenticaron; endpoint gratuito de precio cero identificado. Envío ficticio ZDR HTTP 404 por política, variante sin ZDR HTTP 429. Sin generación, recibo de uso, integración ni egreso privado; [evidencia](../qa/openrouter-account-smoke-2026-11-10.md) |
+| H6b.3 | Probar rutas pagadas ZDR dentro de USD 6 | H6b.1 | done | Dos generaciones ficticias HTTP 200, modelo/proveedor observados y metadatos de costo: USD 0.000008075 en total. GPT-OSS 120B y Gemma 4 en endpoints exactos ZDR, sin fallback; [evidencia](../qa/openrouter-paid-zdr-smoke-2026-11-10.md). No integra producto ni habilita datos privados |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |

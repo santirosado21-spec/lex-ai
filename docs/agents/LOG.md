@@ -255,3 +255,7 @@ Capa 'Polish 2026-11-10' al final de src/design-system.css y copia 'dashboard'->
 ## 2026-11-10 20:17 — codex — Cuenta OpenRouter autenticada, generación aún fallida
 
 Verificado con clave de producto Keychain: GET /api/v1/key conectado, cuenta no free-tier y con límite configurado; sin mostrar clave. Catálogo público 12 modelos free de precio cero; endpoint google-ai-studio de Gemma-4-26b-a4b-it free en cero. Dos pruebas ficticias: con ZDR HTTP404 por política, sin ZDR HTTP429 del proveedor; cero generaciones/recibos y ningún documento de cliente. Producto activo sigue local. Evidencia docs/qa/openrouter-account-smoke-2026-11-10.md.
+
+## 2026-11-10 20:21 — codex — OpenRouter pagado ZDR: dos generaciones ficticias
+
+Dueño autorizó máximo USD6 de créditos existentes. Verificado: dos endpoints exactos ZDR sin fallback, GPT-OSS120B y Gemma4; ambas respuestas HTTP200 con texto ficticio, costos confirmados en metadatos USD0.000005785 y USD0.000002290, total USD0.000008075 reportado. Sin documentos de cliente, herramientas ni compras. No medido: calidad jurídica, integración de la app, 8GB o conciliación de factura. Evidencia docs/qa/openrouter-paid-zdr-smoke-2026-11-10.md.
