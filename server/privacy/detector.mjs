@@ -4,7 +4,7 @@
 import {canonicalJson} from '../canonical-json.mjs';
 import {validPrivacyScope,validPrivacyRange} from './provenance.mjs';
 
-export const DETECTOR_VERSION = 'local-rules-baseline-v2';
+export const DETECTOR_VERSION = 'local-rules-baseline-v3';
 export const DETECTION_CATEGORIES = Object.freeze(['person','organization','rfc','curp','clabe','account','email','phone','address','case_id','context','sensitive_relation']);
 const reasons = ['scope_mismatch','unknown_provenance','unsupported_format','partial_extraction','ambiguous_context','detector_failure'];
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -41,7 +41,7 @@ function scan(text,segmentId) {
  const roleWords=/^(?:Artículo|Constitución|Código|Ley|Suprema|Diario|Calle|Avenida|Colonia|Ciudad|Estado|Tribunal|Poder|Derechos|Buenas|Muchas|Lorem|Documento|Reporte|Informe|Consulta|Resumen|Datos|Sin|Solo|Fecha|Total|Monto|El|La|Los|Las|Un|Una|En|No|Por|Para|Se|Si|Cuando|Con)\b/u;
  matches(/(?<![\p{L}\p{N}])([\p{Lu}][\p{Ll}\p{M}]+(?:[-'’][\p{L}\p{M}]+)*(?:\s+(?:(?:de|del|la|las|los|y)\s+)*[\p{Lu}][\p{Ll}\p{M}]+(?:[-'’][\p{L}\p{M}]+)*){1,5})(?![\p{L}\p{N}])/dgu,'person',1,(match,range)=>!roleWords.test(match[1])&&!found.some(item=>['organization','address'].includes(item.category)&&intersects(item,range)));
  matches(/(?:^|[.!?;\n]\s*|:\s*[«"']?)([^.!?;\n«»"<>:]*(?:es\s+(?:hij[oa]|cónyuge|pareja|víctima|victima|paciente|testigo protegido)|padece\s+|vive\s+con\s+VIH|tiene\s+(?:VIH|cáncer)|está\s+embarazada|esta\s+embarazada)[^.!?;\n«»"<>]*)/dgiu,'sensitive_relation',1);
- matches(/(?:^|[.!?;\n]\s*|:\s*[«"']?|«\s*)([^.!?;\n«»"<>]*\b(?:la única persona|el único|la única|únic[oa]\s+(?:testigo|paciente|emplead[oa]|habitante))\b[^.!?;\n«»"<>]*)/dgiu,'context',1);
+ matches(/(?:^|[.!?;\n]\s*|:\s*[«"']?|«\s*)([^.!?;\n«»"<>]*\b(?:la única persona|el único|la única|únic[oa]\s+(?:testigo|paciente|emplead[oa]|habitante)|(?:el|la)\s+[\p{Ll}\p{M}]+\s+del?\s+(?:[\p{L}\p{M}]+\s+){0,3}de\s+(?:\d{1,2}|dos|tres|cuatro|cinco|seis|siete)\s+(?:integrantes|miembros))\b[^.!?;\n«»"<>]*)/dgiu,'context',1);
  const unique=new Map();
  for(const item of found) {
   // Regex clause captures can include label-adjacent blanks. Preserve every internal

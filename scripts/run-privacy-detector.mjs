@@ -7,7 +7,7 @@ import path from 'node:path';
 import {validateCases,scorePredictions} from './eval-privacy.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
-export const CANDIDATE_ID='local-rules-baseline-v2';
+export const CANDIDATE_ID='local-rules-baseline-v3';
 export const CANDIDATE_SOURCES=['server/privacy/detector.mjs','server/privacy/provenance.mjs','server/canonical-json.mjs','scripts/privacy-candidate-worker.mjs','scripts/run-privacy-detector.mjs','scripts/eval-privacy.mjs'];
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 

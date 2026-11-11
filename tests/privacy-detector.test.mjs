@@ -58,6 +58,16 @@ test('scaffold colons do not widen a sensitive-relation span and guillemets open
  assert.deepEqual(spans(o2,quoted,'context'),['la única persona zurda del taller violeta']);
 });
 
+test('small-group membership with explicit size is context; generic groups alone are not',async()=>{
+ const small='Se registra «la tesorera del club ficticio de cuatro integrantes» únicamente como dato inventado.';
+ const r1=setup(small),o1=await r1.detector.detect(r1.input);
+ assert.deepEqual(spans(o1,small,'context'),['la tesorera del club ficticio de cuatro integrantes']);
+ for(const negative of ['El consejo de cinco miembros aprueba el acta.','La mayoría de los integrantes votó.','La tesorera del club ficticio presentó el informe.']) {
+  const r=setup(negative),o=await r.detector.detect(r.input);
+  assert.deepEqual(spans(o,negative,'context'),[]);
+ }
+});
+
 test('trusted extraction and assessment failures block even when visible content is clean, with fixed reason codes',async()=>{
  for(const [status,expected] of [['partial','partial_extraction'],['unsupported','unsupported_format'],['failed','detector_failure']]) {
   const {detector,input}=setup('texto genérico',{source:{extraction:{status,extractorVersion:'txt-v1',originalSha256:privacyTextHash('bytes')}}});
