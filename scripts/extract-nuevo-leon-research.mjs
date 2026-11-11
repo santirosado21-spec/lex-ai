@@ -11,9 +11,9 @@ export const REPOSITORY_ROOT=path.resolve(path.dirname(fileURLToPath(import.meta
 export const CAPTURE_ROOT='artifacts/public-corpus/nl-pdfs-revision-01';
 export const CAPTURE_REPORT_SHA256='888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246';
 export const HTML_REPORT_SHA256='05ad65a4b84f011905f6336e4b94cece7800ffb71c010e863bf542b5f503a719';
-export const PARSER_VERSION='legal-library-14';
+export const PARSER_VERSION='legal-library-15';
 export const FROZEN_HASHES=Object.freeze({
-  'server/legal-library.mjs':'a29063f81e8f6c01bbed254fe0519f636f402733ae23bef66dfbeb8cc6697e0c',
+  'server/legal-library.mjs':'b2e7bb70657a7bffd0f5b31da6d32405a6be43691683817b70d869ed35c017ed',
   'scripts/capture-nuevo-leon-pdfs.py':'dab58faebb598c3ce4b48333b1e618bb3a4ccda2ae4268f0ba3965be50b0f944',
   'scripts/inspect-nuevo-leon-links.py':'0294d183590c126bf7d6228f588b96968b320ec03828b3076b638de4016cbad7',
   'docs/architecture/nuevo-leon-pdf-research-v1.md':'9c17021c45cd95dc51a7f78644dc062bf4d468c987c1142eac0210654571ffcd',
@@ -131,7 +131,7 @@ function boundedStrings(value){if(!Array.isArray(value)||value.length>5000||valu
 function declaredDate(value){if(value===null)return null;if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!iso(value+'T00:00:00.000Z'))throw fail('parser-result-invalid');return value;}
 export function quarantineExtraction(raw,input,limits=LIMITS){
   const {doc,capturedAt,binding}=input;
-  if(raw?.schemaVersion!==1||raw.extractorVersion!==14||raw.lawId!==doc.lawId||raw.pdfSha256!==doc.sha256||raw.sourceUrl!==doc.url||raw.retrievedAt!==capturedAt||typeof raw.versionId!=='string'||!raw.versionId.startsWith(doc.lawId+'@')||!raw.versionId.endsWith('+'+doc.sha256.slice(0,16)))throw fail('parser-provenance');
+  if(raw?.schemaVersion!==1||raw.extractorVersion!==15||raw.lawId!==doc.lawId||raw.pdfSha256!==doc.sha256||raw.sourceUrl!==doc.url||raw.retrievedAt!==capturedAt||typeof raw.versionId!=='string'||!raw.versionId.startsWith(doc.lawId+'@')||!raw.versionId.endsWith('+'+doc.sha256.slice(0,16)))throw fail('parser-provenance');
   if(!Array.isArray(raw.records)||!raw.coverage||!Number.isSafeInteger(raw.coverage.pages)||raw.coverage.pages<1)throw fail('parser-result-invalid');
   if(raw.coverage.pages>limits.maxPages)throw fail('page-budget');
   if(raw.records.length>limits.maxRecords)throw fail('record-budget');
