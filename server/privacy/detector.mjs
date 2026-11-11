@@ -4,7 +4,7 @@
 import {canonicalJson} from '../canonical-json.mjs';
 import {validPrivacyScope,validPrivacyRange} from './provenance.mjs';
 
-export const DETECTOR_VERSION = 'local-rules-baseline-v3';
+export const DETECTOR_VERSION = 'local-rules-baseline-v4';
 export const DETECTION_CATEGORIES = Object.freeze(['person','organization','rfc','curp','clabe','account','email','phone','address','case_id','context','sensitive_relation']);
 const reasons = ['scope_mismatch','unknown_provenance','unsupported_format','partial_extraction','ambiguous_context','detector_failure'];
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -101,10 +101,12 @@ export function createLocalPrivacyDetector({provenanceRegistry}={}) {
      // Numeric metadata can encode identifiers with lost zeroes/precision. A
      // large/long numeric lexeme is unresolved, even if no string rule matches.
      if(segment.scalarType==='number' && (Math.abs(Number(segment.text))>=1e9 || segment.text.replace(/\D/g,'').length>=10))reason ??= 'ambiguous_context';
-     const local=scan(segment.text,segment.id);
-     detections.push(...local);
-     if((segment.structural&&local.length)||scan(segment.path,segment.id).length)reason ??= 'ambiguous_context';
     } catch(error) {reason ??= error?.name==='PrivacyProvenanceError'&&reasons.includes(error.code)?error.code:'detector_failure';}
+    // Scanning never depends on provenance success: a segment whose provenance
+    // fails still gets detection evidence. Status stays blocked either way.
+    const local=scan(segment.text,segment.id);
+    detections.push(...local);
+    if((segment.structural&&local.length)||scan(segment.path,segment.id).length)reason ??= 'ambiguous_context';
    }
    if(signal?.aborted)return blocked('detector_failure',detections);
    return reason?blocked(reason,detections):{status:'complete',detections,reasonCategory:null};
