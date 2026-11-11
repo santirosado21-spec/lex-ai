@@ -7,6 +7,7 @@ import os from 'node:os';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { createService } from './service.mjs';
 import { createInference } from './inference.mjs';
+import { createGenerationGateway } from './generation-gateway.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
 import { openPublicLibrary } from './public-library.mjs';
@@ -19,7 +20,11 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
  const openFile=process.platform==='darwin'&&process.env.LEX_DESKTOP==='1'?createLocalFileOpener({dataDir}):null;
- inference ||= createInference({dataDir});try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile});}catch(e){publicLibrary?.close();throw e;}
+ inference ||= createInference({dataDir});
+ // H4: every product generation goes through the gateway. Remote destinations
+ // stay disabled by default; the local route is a pure passthrough.
+ inference = createGenerationGateway({local: inference});
+ try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile});}catch(e){publicLibrary?.close();throw e;}
  let officeBridge=null, officeStarting=null;
  async function enableOffice() {
   if (officeBridge) return officeBridge;
