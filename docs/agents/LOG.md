@@ -287,3 +287,7 @@ El dueño reemplazó la clave de desarrollo en Keychain. GET /v1/models/gpt-6-lu
 ## 2026-11-10 23:55 — codex — OpenAI API: 401 persiste tras margen de propagación
 
 El dueño confirmó crear clave en API Platform bajo proyecto Rejon.AI. Keychain leyó cadena con forma sk-proj, ASCII y sin espacios extra. Consulta --auth GET /v1/models/gpt-6-luna más de15min tras actualizar el ítem siguió HTTP401; no hubo POST, generación, usage ni recibo. Dos GET previos con clave nueva dieron401, uno invalid_api_key. Se pidió comparar sólo últimos4 de fila activa con Keychain; no más reintentos con la clave actual. Navegador de consola no disponible por herramienta. Saldo y fecha crédito no auditados.
+
+## 2026-11-11 07:23 — codex — Discrepancia entre Keychain y fila OpenAI
+
+El dueño indicó que la fila de API Platform termina en OAwA. Una comparación local en memoria confirmó que el ítem de Keychain no coincide con ese sufijo. No se mostró la clave ni se hizo otra petición API. Pendiente reemplazar el ítem y validar coincidencia antes de un GET de autenticación.
