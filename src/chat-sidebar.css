@@ -30,3 +30,23 @@
 .lex-chats-dialog::backdrop{background:#0005}
 .app-shell.macos-workspace .lex-chats-dialog .lex-chats-panel{position:static;top:auto;height:100%;box-sizing:border-box;border:0}
 @media(max-width:1100px){.lex-chats-panel button,.lex-chats-panel input,.lex-chats-panel select{min-height:44px!important}}
+/* Dark chat rail on light appearance (Harvey product pattern: single dark rail holds new-chat + history); --rail-* vars only defined in light appearance, dark theme untouched via fallbacks */
+.app-shell.macos-workspace .lex-chats-panel{background:var(--rail-bg,var(--surface-2));border-right-color:var(--rail-line,var(--line));color:var(--rail-text,var(--ink))}
+.app-shell.macos-workspace .lex-chats-heading h2{color:var(--rail-strong,var(--ink))}
+.lex-chats-panel button:focus-visible,.lex-chats-panel input:focus-visible,.lex-chats-panel select:focus-visible{outline-color:var(--rail-focus,var(--seal))}
+.app-shell.macos-workspace .lex-chats-new{background:var(--rail-hover,var(--surface));border-color:var(--rail-line,var(--line));color:var(--rail-strong,var(--ink))}
+.app-shell.macos-workspace .lex-chats-new:hover:not(:disabled){background:var(--rail-active,var(--surface))}
+.app-shell.macos-workspace .lex-chats-search input{background:var(--rail-hover,var(--surface))!important;border-color:var(--rail-line,var(--line));color:var(--rail-text,var(--ink))}
+.app-shell.macos-workspace .lex-chats-search input::placeholder{color:var(--rail-muted,var(--ink-3))}
+.app-shell.macos-workspace .lex-chats-search>svg{color:var(--rail-muted,var(--ink-3))}
+.app-shell.macos-workspace .lex-chats-scope{color:var(--rail-muted,var(--ink-2))}
+.app-shell.macos-workspace .lex-chats-scope :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select){background-color:var(--rail-hover,var(--surface));border-color:var(--rail-line,var(--line));color:var(--rail-text,var(--ink))}
+.app-shell.macos-workspace .lex-chats-section{color:var(--rail-muted,var(--ink-3))}
+.app-shell.macos-workspace .lex-chats-item{color:var(--rail-text,var(--ink))}
+.app-shell.macos-workspace .lex-chats-item>svg{color:var(--rail-muted,var(--ink-3))}
+.app-shell.macos-workspace .lex-chats-item small{color:var(--rail-muted,var(--ink-3))}
+.app-shell.macos-workspace .lex-chats-item:hover:not(:disabled){background:var(--rail-hover,var(--surface))}
+.app-shell.macos-workspace .lex-chats-item[aria-current=true]{background:var(--rail-active,var(--seal-soft));border-color:var(--rail-line,var(--line));color:var(--rail-strong,var(--seal))}
+.app-shell.macos-workspace .lex-chats-item[aria-current=true]>svg{color:var(--rail-strong,var(--seal))}
+.app-shell.macos-workspace .lex-chats-empty{color:var(--rail-muted,var(--ink-2))}
+.app-shell.macos-workspace .lex-chats-privacy{border-top-color:var(--rail-line,var(--line));color:var(--rail-muted,var(--ink-3))}
