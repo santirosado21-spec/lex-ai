@@ -305,3 +305,65 @@ impl Vault {
             .collect::<rusqlite::Result<Vec<_>>>()?)
     }
 }
+
+
+#[cfg(test)]
+mod internal_schema_guards {
+    use super::*;
+    use serde_json::json;
+    use sha2::{Digest,Sha256};
+
+    #[test]
+    fn immutable_history_tables_reject_update_and_delete_in_actual_sqlite() {
+        let key=crate::KeyMaterial::generate().unwrap();
+        let (_,mut v)=crate::SyntheticVault::create_with_pseudonym_maps(&key).unwrap();
+        let s=Scope::new("firm","matter",None).unwrap();
+        let bytes=b"FICTITIOUS_SOURCE_1";
+        let payload=json!({"id":"doc_1","workspaceId":"firm","matterId":"matter","threadId":null}).to_string();
+        let r=v.insert_document(&s,"doc_1",&payload,bytes,&[],0).unwrap();
+        let ns="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        let id="11111111111111111111111111111111";
+        let token=format!("[[LEX_{ns}_22222222222222222222222222222222]]");
+        let data=json!({"namespace":ns,"versionId":id,"parentVersionId":null,
+          "serializationVersion":1,
+          "entries":[{"text":"PERSONA_FICTICIA_1","marker":token}],
+          "sources":[{"documentId":"doc_1","sourceVersion":"source_1",
+            "sha256":format!("{:x}",Sha256::digest(bytes))}]}).to_string();
+        assert_eq!(v.commit_pseudonym_version(&s,r,None,&data).unwrap(),r+1);
+        let statements=[
+          "UPDATE pseudonym_versions SET serialization_version=1",
+          "DELETE FROM pseudonym_versions",
+          "UPDATE pseudonym_marker_registry SET original_text='MODIFICADO'",
+          "DELETE FROM pseudonym_marker_registry",
+          "UPDATE pseudonym_version_entries SET ordinal=0",
+          "DELETE FROM pseudonym_version_entries",
+          "UPDATE pseudonym_sources SET source_version='MODIFICADO'",
+          "DELETE FROM pseudonym_sources",
+          "UPDATE pseudonym_audits SET action='commit'",
+          "DELETE FROM pseudonym_audits",
+        ];
+        for stmt in statements {
+            assert!(v.conn().unwrap().execute(stmt,[]).is_err(),"immutable trigger missing");
+        }
+        assert_eq!(v.revision(&s).unwrap(),r+1);
+        assert_eq!(v.get_pseudonym_version(&s,id).unwrap().unwrap().entries.len(),1);
+        assert_eq!(v.list_pseudonym_audits(&s,10).unwrap().len(),1);
+    }
+
+    #[test]
+    fn source_foreign_key_refuses_nonexistent_scoped_original_in_sql() {
+        let key=crate::KeyMaterial::generate().unwrap();
+        let (_,mut v)=crate::SyntheticVault::create_with_pseudonym_maps(&key).unwrap();
+        let s=Scope::new("w","m",None).unwrap();
+        let id="11111111111111111111111111111111";
+        let ns="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        let data=json!({"namespace":ns,"versionId":id,"parentVersionId":null,
+          "serializationVersion":1,"entries":[],"sources":[]}).to_string();
+        v.commit_pseudonym_version(&s,0,None,&data).unwrap();
+        let attempted=v.conn().unwrap().execute(
+          "INSERT INTO pseudonym_sources(workspace,matter,version_id,document_id,source_version,sha256,source_thread) VALUES(?,?,?,?,?,?,'')",
+          params!["w","m",id,"does_not_exist","v_1","0".repeat(64)]);
+        assert!(attempted.is_err());
+        assert!(v.get_pseudonym_version(&s,id).unwrap().unwrap().sources.is_empty());
+    }
+}
