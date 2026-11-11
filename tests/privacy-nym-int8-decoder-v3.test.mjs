@@ -20,6 +20,26 @@ test('first piece exact prefix, leading source space, later exact; no inverse tr
  blocked(fixture('AnaX',['▁Ana','▁X'],[[0,3],[3,4]]),'CONTENT');
  blocked(fixture('Ana Ana',['▁Ana'],[[4,7]]),'COVERAGE');
 });
+test('original-content proof rejects whitespace gaps before ordinary and added tokens in JS and Python',()=>{
+ const cases=[
+  {f:fixture('abcd',['▁ab','cd'],[[0,2],[2,4]]),vocab:{'▁ab':1000,cd:1001},extras:[],expect:'accepted'},
+  {f:fixture('ab cd',['▁ab','cd'],[[0,2],[3,5]]),vocab:{'▁ab':1000,cd:1001},extras:[],expect:'CONTENT'},
+  {f:fixture('ab\n',['▁ab','\n'],[[0,2],[2,3]],[1000,108],[added(108,'\n')]),vocab:{'▁ab':1000,'\n':108},extras:[added(108,'\n')],expect:'accepted'},
+  {f:fixture('ab \n',['▁ab','\n'],[[0,2],[3,4]],[1000,108],[added(108,'\n')]),vocab:{'▁ab':1000,'\n':108},extras:[added(108,'\n')],expect:'CONTENT'},
+  {f:fixture('A\r',['▁A','<0x0D>'],[[0,1],[1,2]]),vocab:{'▁A':1000,'<0x0D>':1001},extras:[],expect:'accepted'},
+  {f:fixture('A \r',['▁A','<0x0D>'],[[0,1],[2,3]]),vocab:{'▁A':1000,'<0x0D>':1001},extras:[],expect:'CONTENT'},
+  {f:fixture('ab ',['▁ab'],[[0,2]]),vocab:{'▁ab':1000},extras:[],expect:'CONTENT'},
+  {f:fixture(' ab',['▁ab'],[[1,3]]),vocab:{'▁ab':1000},extras:[],expect:'CONTENT'}
+ ];
+ for(const {f,expect} of cases){if(expect==='accepted')assert.equal(decodeNymNative(f).status,'native-complete');else blocked(f,expect);}
+ const r=python(`out=[]
+for case in x:
+ i=m.tiny_inventory_for_tests(case['vocab'],case['extras'])
+ try:m.validate_encoding(case['text'],case['encoding'],i);out.append('accepted')
+ except m.Failure as error:out.append(error.code)
+print(json.dumps(out))`,cases.map(({f,vocab,extras})=>({text:f.text,encoding:f.encoding,vocab,extras})));
+ assert.deepEqual(r,cases.map(({expect})=>expect));
+});
 test('exact added whitespace resets piece, consecutive entries retained; no forged flags/reset',()=>{
  const f=fixture('Ana\n\t\tX',['▁Ana','\n','\t\t','▁X'],[[0,3],[3,4],[4,6],[6,7]],[1000,108,198773,1001],[added(108,'\n'),added(198773,'\t\t')]);
  assert.equal(decodeNymNative(f).scannedTokens,6);
@@ -402,25 +422,26 @@ with tempfile.TemporaryDirectory() as directory:
   (base/'second').unlink(missing_ok=True)
 print(json.dumps(bad))`);assert.equal(r,6);
 });
-test('critical v2 and v3 content/BIO/encoding functions are byte-identical; prepared bindings fixed',()=>{
+test('v3 strengthens only content witness; other critical v2 functions and prepared bindings fixed',()=>{
  const r=python(`import ast,pathlib
 old=pathlib.Path('scripts/privacy-nym-int8-worker-v2.py').read_text();new=pathlib.Path('scripts/privacy-nym-int8-worker-v3.py').read_text()
 def functions(source):
  tree=ast.parse(source);return {n.name:ast.get_source_segment(source,n) for n in tree.body if isinstance(n,ast.FunctionDef)}
 a=functions(old);b=functions(new)
-assert all(a[k]==b[k] for k in ('coordinates','validate_encoding','content_witness','decode_native','validate_result','validate_grant','await_grant'))
+assert all(a[k]==b[k] for k in ('coordinates','validate_encoding','decode_native','validate_result','validate_grant','await_grant'))
+assert a['content_witness']!=b['content_witness'] and 'previous_end' in b['content_witness']
 assert "CACHE+'/int8/tokenizer.json'" not in b['metadata'] and "CACHE+'/int8/config.json'" in b['metadata']
 assert '.splitlines(' not in b['parse_inventory_stream']
 assert len(m.PREP_SOURCES)==4 and all(p in m.SOURCES for p in m.PREP_SOURCES)
 assert m.PROTOCOL in m.SOURCES and m.PROTOCOL=='resources/privacy-nym-streaming-inventory-v3.json'
-print(json.dumps({'identical':True,'sources':list(m.SOURCES),'assets':m.ASSETS}))`);
- assert.equal(r.identical,true);assert.equal(r.assets['inventory.ndjson'].sha256,'34ec3e534699ab59b4a25a040c3a536aa54ef057056948d785f4260a3bbc9f5d');
+print(json.dumps({'preservedExceptWitness':True,'sources':list(m.SOURCES),'assets':m.ASSETS}))`);
+ assert.equal(r.preservedExceptWitness,true);assert.equal(r.assets['inventory.ndjson'].sha256,'34ec3e534699ab59b4a25a040c3a536aa54ef057056948d785f4260a3bbc9f5d');
  assert.ok(r.sources.includes('server/privacy/nym-int8-decoder-v3.mjs'));
 });
-test('v3 protocol digest and JS critical functions retain frozen v2 semantics',()=>{
+test('v3 protocol digest and JS critical functions outside strengthened witness retain frozen v2 semantics',()=>{
  const old=readFileSync('server/privacy/nym-int8-decoder-v2.mjs','utf8'),current=readFileSync('server/privacy/nym-int8-decoder-v3.mjs','utf8');
  const core=s=>s.slice(s.indexOf('export function validateNymEncoding'),s.indexOf('// Inventory handles'));
- assert.equal(core(current),core(old));assert.equal(current.slice(current.indexOf('function witnessContent')),old.slice(old.indexOf('function witnessContent')));
+ assert.equal(core(current),core(old));assert.notEqual(current.slice(current.indexOf('function witnessContent')),old.slice(old.indexOf('function witnessContent')));
  const p=python("print(json.dumps({'protocol':m.PROTOCOL,'sha':m.PROTOCOL_SHA}))");assert.equal(createHash('sha256').update(readFileSync(p.protocol)).digest('hex'),p.sha);
 });
 test('stream total cap rejects before read and callbacks remain bounded between parsed rows',()=>{

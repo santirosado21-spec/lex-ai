@@ -101,3 +101,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 18:20 — codex — Main es rama experimental de integración para cofundadores
 
 **Por qué:** El dueño autorizó push a main. Se verificó que main anterior 68eb716 era ancestro sin divergencia; la promoción por fast-forward conserva historia y permite colaborar. El producto activo aún usa SQLite sin cifrar y no tiene flujo híbrido validado, por lo que main no equivale a release ni habilita expedientes de clientes. CI de clon limpio tendrá un subconjunto explícito hasta resolver FTS5 y activos generados.
+
+## 2026-11-10 18:29 — codex — V3 Nym no ejecuta modelo hasta cerrar V3-R1 y V3-R2
+
+**Por qué:** Revisión independiente Claude Opus5.5 de fuente pública encontró que content_witness en Python y JS admite huecos de whitespace entre offsets; Codex lo reprodujo con fixture sintético, aunque egreso sigue false. La identidad de venv no cubre pyvenv.cfg/base stdlib. Corregir y revisar ambas condiciones sin modificar evidencia V1/V2, luego congelar nueva ejecución con límites intactos. Cero forwards autorizados en este estado.

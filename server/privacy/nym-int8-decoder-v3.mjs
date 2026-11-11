@@ -98,9 +98,10 @@ export function pinnedInventoryFromBytes(){fail('CONTENT');}
 
 function witnessContent(c,e,handle){
  const inv=inventories.get(handle);if(!inv||c.chars.includes('▁'))fail('CONTENT');
- let pieceStart=0,first=true;
+ let pieceStart=0,first=true,previousEnd=0;
  for(let i=1;i<e.ids.length-1;i++){
   const id=e.ids[i],[a,b]=e.offsets[i],slice=c.chars.slice(a,b).join(''),raw=inv.raw.get(id),added=inv.extras.get(id);
+  if(a!==previousEnd)fail('CONTENT');previousEnd=b;
   if(typeof raw!=='string')fail('CONTENT');
   const ordinarySpaceRun=id>=139&&id<=168&&added&&['special','normalized','lstrip','rstrip','single_word'].every(k=>added[k]===false)&&added.id===id&&added.content===raw&&raw==='▁'.repeat(id-137)&&slice===' '.repeat(id-137);
   if(added&&!ordinarySpaceRun){
@@ -115,4 +116,5 @@ function witnessContent(c,e,handle){
   if(first){if(a!==pieceStart||raw!==(slice.startsWith(' ')?normalized:'▁'+normalized))fail('CONTENT');first=false;}
   else if(raw!==normalized)fail('CONTENT');
  }
+ if(previousEnd!==c.chars.length)fail('CONTENT');
 }

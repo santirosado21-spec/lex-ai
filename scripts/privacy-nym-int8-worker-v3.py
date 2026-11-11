@@ -22,7 +22,7 @@ ROOT=Path(__file__).resolve().parents[1]
 ID='nym-int8-native-decoder-v3'
 SCRIPT='scripts/privacy-nym-int8-worker-v3.py'
 PROTOCOL='resources/privacy-nym-streaming-inventory-v3.json'
-PROTOCOL_SHA='b4efa9c7099b52aee420d04c50809abb2f31ea002452cb4722a676e67634f498'
+PROTOCOL_SHA='5b5fefd7eaebc9366af47ca52eddedf1b4a3761c2c371bb199e1e2b5eb60073f'
 WITNESSES='resources/privacy-nym-structural-witnesses-v1.json'
 WITNESSES_SHA='8c266b1fb5d49dc0929af610dd2484783d3cd71bd856c34baeb908bb082a0b24'
 FREEZE='docs/qa/privacy-nym-int8-decoder-v3-freeze.json'
@@ -193,8 +193,9 @@ def pinned_inventory(observe=lambda:None):
  need(len(allowed)==61,'IDENTITY');observe();return inv
 
 def content_witness(text,e,inventory):
- need(isinstance(inventory,Inventory) and '▁' not in text,'CONTENT');piece_start=0;first=True
+ need(isinstance(inventory,Inventory) and '▁' not in text,'CONTENT');piece_start=0;first=True;previous_end=0
  for token,(a,z) in zip(e['ids'][1:-1],e['offsets'][1:-1]):
+  need(a==previous_end,'CONTENT');previous_end=z
   raw=inventory.raw.get(token);need(type(raw) is str,'CONTENT');part=text[a:z];added=inventory.added.get(token)
   ordinary_space_run=(139<=token<=168 and added is not None and all(added.get(k) is False for k in ('special','normalized','lstrip','rstrip','single_word')) and added['id']==token and added['content']==raw=='▁'*(token-137) and part==' '*(token-137))
   if added is not None and not ordinary_space_run:
@@ -205,6 +206,7 @@ def content_witness(text,e,inventory):
   if first:
    need(a==piece_start and raw==(normalized if part.startswith(' ') else '▁'+normalized),'CONTENT');first=False
   else:need(raw==normalized,'CONTENT')
+ need(previous_end==len(text),'CONTENT')
 
 def decode_native(text,encoding,logits,inventory):
  prefix=[];phase='INPUT'

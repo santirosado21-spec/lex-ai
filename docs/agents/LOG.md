@@ -227,3 +227,11 @@ One independent Kimi CLI attempt for public Nym V3 streaming source used explici
 ## 2026-11-10 18:23 — codex — Main experimental para cofundadores con CI limpio
 
 El dueño autorizó main. Verificado: origin/main anterior 68eb716 era ancestro, push fast-forward sin divergencia; plan y guía para Lorenzo/Pedro en main. Local npm test 1088/1088 y build PASS. CI inicial42930193693 falló 173/1082 por FTS5/activos y otros; segundo42930477532 82/83 falló sólo score float Python/JS. Tercer CI42930797269 @117033d PASS npm ci, build y 83/83 contratos portables, con comparación histórica de float excluida explícitamente y nuevo test40etiquetas/tolerancia1e-12. Suite completa de clon limpio sigue pendiente. Vercel landing automática de117033d READY; producto híbrido privado, instaladores Intel/Windows, hardware8GB y prueba de abogados siguen pendientes. PSF: Gemma draft, Kimi opinión, Groq casos preliminares corregidos; Gemini sin cuota/no llamada.
+
+## 2026-11-10 18:29 — codex — Revisión independiente V3 detecta hueco de offsets
+
+Claude Code modelo observado claude-opus-5-5 revisó estáticamente 3 fuentes públicas V3 sin herramientas. Hallazgo V3-R1: content witness acepta hueco whitespace entre offsets ordinarios; Codex reprodujo con ab cd, tokens ▁ab/ cd y offsets 0:2/3:5: Python validate_encoding aceptó y JS native-complete diagnóstico. V3-R2: pyvenv.cfg/base stdlib no cubiertos por identidad actual; lectura local confirma include-system-site-packages=false, pero sys.path incluye base_prefix. Veredicto REQUEST_CHANGES antes de prueba real V3; cero forwards/cliente. Uso CLI reportado: input2/cacheCreate31247/cacheRead649/output12114 incl thinking10123, costo estimado de lista USD0.4923938, factura real desconocida.
+
+## 2026-11-10 18:35 — codex — V3-R1 corregido y revisado sin ejecutar modelo
+
+Contigüidad completa de offsets originales en Python y JS, con casos positivos/negativos ordinarios, añadidos y byte fallback. 27 pruebas V3, 63 combinadas V1/V2/V3 y suite local 1090/1090 PASS; revisión estática acotada Claude PASS de R1. V3-R2 identidad de Python base sigue bloqueando freeze, carga real e inferencia. Sin datos de clientes ni egreso.

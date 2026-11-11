@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "scope": "V3-R1 original-content witness closure only",
+  "verdict": "PASS_STATIC_R1_ONLY_R2_RUNTIME_IDENTITY_BLOCKS_REAL_RUN",
+  "reviewer": "Claude Code CLI requested opus alias, no tools/file access; first review observed claude-opus-5-5, effective model on follow-up calls not separately attested",
+  "sequence": [
+    "initial static review BLOCK: interior whitespace gap reproduced by Codex in Python and JS",
+    "first patch static follow-up BLOCK: trailing whitespace and test/binding gaps",
+    "final patch static follow-up PASS for V3-R1; no reviewer execution"
+  ],
+  "reviewedSourceHashes": {
+    "scripts/privacy-nym-int8-worker-v3.py": "448a32d93d400ef0b82e3b2d709591397d587b8e620ef9269089baaa8f45513c",
+    "server/privacy/nym-int8-decoder-v3.mjs": "e2e6071a9f540da8ea0f9d0d70150d597f1d59b3e3230419046d8294179f0a3b",
+    "tests/privacy-nym-int8-decoder-v3.test.mjs": "19bceafda1c5ec90f0420fab2e8773bcda74739aef9672c64ad95a738d6f532d",
+    "resources/privacy-nym-streaming-inventory-v3.json": "5b5fefd7eaebc9366af47ca52eddedf1b4a3761c2c371bb199e1e2b5eb60073f",
+    "docs/architecture/privacy-nym-int8-decoder-v3.md": "a7eda4e20d09630de4952a7389d2b99d18d0cbfd820928547c933423e270231a"
+  },
+  "rootVerification": {
+    "targetedV3Tests": 27,
+    "combinedV1V2V3Tests": 63,
+    "fullLocalTests": 1090,
+    "fullLocalFailures": 0,
+    "actualTokenizerOrModelRuns": 0,
+    "clientData": false
+  },
+  "resolved": [
+    "leading/interior/trailing original offsets contiguous in Python and JS",
+    "ordinary, added whitespace and ASCII byte-fallback paired positive/negative cases in Python and JS",
+    "V3 resource SHA bound by worker PROTOCOL_SHA and checked in test",
+    "contentProtocolSha256 explicitly remains historical V2 reference; V3 freeze not created"
+  ],
+  "remaining": [
+    "V3-R2 pyvenv.cfg and base Python stdlib/dynload identity boundary requires design, implementation and independent review",
+    "no real prepared inventory/tokenizer/model test, performance or physical 8GB evidence",
+    "no egress/mapping/product activation or legal/privacy quality claim"
+  ],
+  "followupUsageReported": [
+    {
+      "review": "first-patch",
+      "inputTokens": 2,
+      "cacheCreationInputTokens": 5365,
+      "cacheReadInputTokens": 1592,
+      "outputTokens": 4109,
+      "thinkingTokens": 1991
+    },
+    {
+      "review": "final-patch",
+      "inputTokens": 2,
+      "cacheCreationInputTokens": 9617,
+      "cacheReadInputTokens": 1592,
+      "outputTokens": 2046,
+      "thinkingTokens": 950
+    }
+  ]
+}

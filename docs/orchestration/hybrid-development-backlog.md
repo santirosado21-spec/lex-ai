@@ -94,7 +94,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H5b.2c | Mapas H3 seudonimizados tipados/versionados | H5b.2b.1 y contrato H3 | todo | Contrato y límites en vault-next-native-slices; código/VM/review pendientes |
 | H5b.2d | Aprobación atómica de propuesta de recordatorio | H5b.1b.2 y H5b.2c | todo | Una transacción/CAS/idempotencia; revisión/VM pendientes |
 | H4b.2b.5g | Inventario preparado Nym separado | H4b.2b.5f | done | 198804filas/13.533.851B, auditoría independiente total; asset de construcción, no inferencia ni20ms runtime |
-| H4b.2b.5h | Decoder V3 streaming | H4b.2b.5g | in-progress | Astra fuente+26mocks; revisión independiente agotó cuota, sin carga real/forward/score/activación |
+| H4b.2b.5h | Decoder V3 streaming | H4b.2b.5g | review-pending | Fuente V3+63 pruebas puras combinadas/27 V3 y suite local1090 PASS; V3-R1 contigüidad y cola corregidas, tercera revisión estática Claude PASS sólo R1; V3-R2 identidad de base Python pendiente, sin freeze/carga real/forward/score/activación; QA de revisión inicial y cierre acotado |
 | D1k | Diagnóstico bootstrap/identidad de descendientes | D1j tres fallos | done-with-gap | CI42901408180 cierre6/3extras desconocidos; cleanup sólo3conocidos; sin aceptación rendimiento |
 | D1l | Clasificación acotada de extras Windows | D1k | done-with-gap | CI42928786842: cierre6/3extras con ruta exacta sistema conhost.exe; identidad/cleanup extra sin probar, rendimiento/instalador bloqueados; reviewfuente+17tests |
 | D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |

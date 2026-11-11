@@ -30,6 +30,10 @@
   },
   "preparationFreezeSha256": "004dfa83672b8031f8dc2d437878ad166e24b0a0df914c4a5e93e4c8e4eefe8c",
   "contentProtocolSha256": "eadeb76ec850e65bfefad38e00e9cf2f3633bd2efb7c07a7783fc56b4c8c8102",
+  "v3ContentWitnessStrengthening": {
+    "allNonSpecialOriginalOffsetsContiguous": true,
+    "uncoveredWhitespaceCannotEstablishProof": true
+  },
   "stream": {
     "framing": "binary LF only; mandatory final LF; canonical UTF8 JSON per row",
     "maximumLineBytes": 4096,
