@@ -219,3 +219,7 @@ SegundoCI42892963286 concluyó4.51snativas/4746.919mswrapper:9preparacionesDONE4
 ## 2026-11-10 18:08 — codex — H5 synthetic subset, Nym inventory and Windows classification
 
 Verified: public Mac CI42904113430 passed 18 bounded synthetic read-only recovery invocations with independent Sol audit; parent and sampled child RSS peaks are separate. Nym inventory build produced 198804 audited rows; V2 real run failed 143.671 ms sampling gap before any NN. Windows public CI42928786842 classified three extra closure members by exact system-directory conhost.exe path; independent reaping/authenticity/performance remain unproven. Nym V3 source has pure mocks only; attempted independent delegate review failed due Codex collaborator usage limit. No private cloud route, real client docs, Intel/Windows installers or 8 GB physical acceptance.
+
+## 2026-11-10 18:10 — codex — Kimi source critique unavailable
+
+One independent Kimi CLI attempt for public Nym V3 streaming source used explicit requested model k3.1-pro in empty temporary directory. CLI exited 1 before generation: model not configured in config.toml. No source opinion or review result; no fallback model silently selected and no retry. V3 remains inactive/unreviewed and no real runtime load was authorized.
