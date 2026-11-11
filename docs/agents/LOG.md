@@ -291,3 +291,7 @@ El dueño confirmó crear clave en API Platform bajo proyecto Rejon.AI. Keychain
 ## 2026-11-11 07:23 — codex — Discrepancia entre Keychain y fila OpenAI
 
 El dueño indicó que la fila de API Platform termina en OAwA. Una comparación local en memoria confirmó que el ítem de Keychain no coincide con ese sufijo. No se mostró la clave ni se hizo otra petición API. Pendiente reemplazar el ítem y validar coincidencia antes de un GET de autenticación.
+
+## 2026-11-11 07:31 — codex — OpenAI API de desarrollo conectada
+
+El dueño entregó la clave completa mediante TXT temporal fuera del repo. GET de gpt-6-luna HTTP200 y una generación sintética store:false completada: 40 tokens entrada, 6 salida, 2056 ms, costo estimado USD0,000007; cargo y saldo no auditados. La importación de 164 caracteres por stdin a security -w se truncó a 128 en esta máquina. La clave completa quedó verificada en Keychain, el TXT y el ítem duplicado se eliminaron, y --auth pasó. Pendiente lote S2b público/sintético y verificación de facturación.
