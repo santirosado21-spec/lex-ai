@@ -7,7 +7,7 @@ const FRAC_LIST_PREFIX = /^(?:[IVXLCDM]+|\d+)(?:(?:\s*(?:,\s*(?:y|e)?|[-–—]|
 const ROMAN_RE = /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
 const ORDINARY_TOKEN_RE = /^(?:\d+|[IVXLCDM]+)/i;
 const CONNECTOR_RE = /^(?:,\s*(?:y|e)?|[-–—]|(?:hasta|al|a|y|e)\b)/i;
-const ENUM_RE = /(?:^|[;:.!?\n]\s*)\s*([IVXLCDM]{1,12})\s*[.)]\s+(?=\p{L})/gimu;
+const ENUM_RE = /(?:^|[;:.!?\n][\s-]*)\s*([IVXLCDM]{1,12})\s*[.)]\s+(?=\p{L})/gimu;
 function malformed(reason) {
  const err = Error('Estructura de artículo o fracción no sustentada.');
  err.code='UNSUPPORTED_CITATION_STRUCTURE';
