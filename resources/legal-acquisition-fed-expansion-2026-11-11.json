@@ -37,7 +37,7 @@
         "status": "approved",
         "reviewedBy": "instinct-rejon-agent",
         "reviewedAt": "2026-11-11T19:04:13.000Z",
-        "basis": "Technical channel/rights review under owner instruction 2026-11-11 to expand the federal repertoire beyond the 10-document pilot, relayed through Instinct task delegation. Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot registry; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+        "basis": "Bounded technical channel/rights review: same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot registry; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content. Operational scope: repertoire-expansion batch executed 2026-11-11 per the product owner's instruction of that date; quarantine only, no publication or product integration.",
         "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
         "scope": "bounded-public-pilot"
       },
