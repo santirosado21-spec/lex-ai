@@ -63,8 +63,10 @@ robots.
 - El "repertorio" de Luthor combina catálogo (metadatos de ~113k normas, no
   necesariamente con texto completo: «el texto de las que lo tienen») con
   texto curado de un subconjunto. Rejon hoy tiene texto completo extraído y
-  auditado de 18 documentos; alcanzar la escala de catálogo declarada es un
-  programa de adquisición multi-fuente de semanas/meses, no un ajuste.
+  auditado de 18 documentos; alcanzar la escala de catálogo declarada exige
+  un programa de adquisición multi-fuente (estado por estado, con su revisión
+  de canal y derechos), no un ajuste. No se estima aquí un plazo: depende de
+  decisiones de alcance y de la revisión por fuente.
 - La prioridad de mayor valor por esfuerzo verificado: (1) completar federales
   si se aprueba ampliar el piloto, (2) flujo DOF para reglamentos/decretos
   (diseño listo), (3) estados uno a uno replicando la revisión de NL.
