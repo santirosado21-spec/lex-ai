@@ -352,3 +352,18 @@ blockquote{margin:8px 0 0;font-family:var(--serif);font-size:1.12rem;line-height
 .platform-grid .checksum-row{align-items:flex-start;flex-direction:column}
 @media(max-width:980px){.platform-grid{grid-template-columns:1fr}.platform-grid .checksum-row{flex-direction:row}.platform-grid .release-card{max-width:100%}}
 @media(max-width:620px){.platform-grid .checksum-row{flex-direction:column}}
+
+/* ---------- Polish 2026-11-10 ---------- */
+/* Sticky header: background and rule span the full window, so content no longer shows through at the sides. */
+.site-header{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:transparent}
+.site-header::before{content:"";position:absolute;inset:0 -100vmax;z-index:-1;background:color-mix(in oklab,var(--bg) 97%,transparent);border-bottom:1px solid var(--line);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
+html,body{overflow-x:clip}
+
+/* Two plain sections in a row shared 240 px of empty space; keep one gap. */
+.section+.section{padding-top:0}
+
+/* Download cards: version, button, size and checksum line up across the three cards. */
+@supports (grid-template-rows:subgrid){
+  .platform-grid .release-card{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0;align-content:start}
+  .platform-grid .download-state{flex:none}
+}
