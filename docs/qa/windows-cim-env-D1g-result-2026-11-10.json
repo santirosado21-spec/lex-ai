@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T18:19:35.016815+00:00",
+  "runId": 42872682039,
+  "commit": "7fb989e4ee945718eee483c915bbc1f33591842b",
+  "workflowConclusion": "success-diagnostic-only",
+  "log": "artifacts/phased-completion-20261110-batch2/windows-cim-env-first.log",
+  "logSha256": "21b4a3303d26cfa71633a4da5744c412a01f7b9710c7484f2ccf5b7c6621ff3a",
+  "independentAudit": "port_windows_memory / gpt-6.1-sol: APPROVE actual facts and five frozen source hashes",
+  "observedReport": {
+    "status": "DIAGNOSTIC_ONLY",
+    "diagnosticOnly": true,
+    "performanceValidated": false,
+    "maximumPowerShellProcesses": 2,
+    "maximumFixtureProcesses": 1,
+    "maximumConfiguredMs": 27000,
+    "orderConfounding": true,
+    "probes": [
+      {
+        "variant": "minimal",
+        "diagnosticOnly": true,
+        "stages": [
+          {
+            "stage": "BOOT",
+            "elapsedMs": 1939.8642
+          },
+          {
+            "stage": "ENV",
+            "elapsedMs": 1954.8199
+          },
+          {
+            "stage": "LOOKUP_UTILITY",
+            "elapsedMs": 1954.8336
+          }
+        ],
+        "category": "TIMEOUT_LOOKUP_UTILITY",
+        "exitObserved": true,
+        "killed": true,
+        "requestSent": false,
+        "modulePathEntryCount": 6,
+        "builtinPathPresent": true,
+        "exitCode": null,
+        "elapsedMs": 10017.9007
+      },
+      {
+        "variant": "builtin",
+        "diagnosticOnly": true,
+        "stages": [
+          {
+            "stage": "BOOT",
+            "elapsedMs": 130.08209999999963
+          },
+          {
+            "stage": "ENV",
+            "elapsedMs": 139.78039999999964
+          },
+          {
+            "stage": "LOOKUP_UTILITY",
+            "elapsedMs": 139.79150000000118
+          }
+        ],
+        "category": "TIMEOUT_LOOKUP_UTILITY",
+        "exitObserved": true,
+        "killed": true,
+        "requestSent": false,
+        "modulePathEntryCount": 2,
+        "builtinPathPresent": true,
+        "exitCode": null,
+        "elapsedMs": 10021.637900000002
+      }
+    ],
+    "diagnosticComplete": true,
+    "cleanup": {
+      "exitObserved": true,
+      "expectedExitZero": true
+    },
+    "elapsedMs": 20085.788399999998,
+    "withinConfiguredBound": true
+  },
+  "validRssSamples": 0,
+  "productionEnabled": false,
+  "rootCauseEstablished": false,
+  "interpretation": "Both probes stopped after LOOKUP_UTILITY before LOOKUP_CIM/JSON/stdin/CIM. Builtin module path membership is observed, not module-file availability. Order is confounded; no performance pass."
+}

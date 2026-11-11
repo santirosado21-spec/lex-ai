@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "frozenAt": "2026-11-10T00:19:31.755Z",
+  "planSha256": "7f287b0b539911d22b8dbfd3ae20291c095d226723e481ea7daaa1680a7fbd29",
+  "reviewer": "review_s2_pilot",
+  "reviewerModel": "gpt-6.1-sol",
+  "review": "APPROVE bounded development pilot before live",
+  "sourceHashes": {
+    "scripts/eval-legal-task-skills.mjs": "523aa52201a747a6f37a08de733153189ddc37921bb2d22b81f8106e918c857b",
+    "tests/legal-task-eval.test.mjs": "e1d1f2e0ca9f181218e6ae1fd0fc686f6d123b7550f82572853da7cd820ea3ac",
+    "scripts/dsystem/remote.mjs": "fe8b3742de2de65600573025d836b751e44607da905eae4e4d8ee7251623a75c",
+    "server/legal-tasks/contracts.mjs": "340c0edb8262780f18c9f175af6b46738cc887577d9ebc25869080fa2822ce1f",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "resources/legal-task-skills/manifest.json": "ec4a065a034a4406d5e93d95bad2141a1b6af28e12a8650e6c5d3551898296d2",
+    "resources/legal-task-skills/investigacion-juridica-mx/SKILL.md": "1430f49206245983062088fcb57687115aa1011f9b08c4963871fa18d3c65eba",
+    "resources/legal-task-skills/revision-contratos-mx/SKILL.md": "78a6b4a41f7a2a43abdfc88b43770fe7f864b2177c76d2a1e13395727cb358ed",
+    "docs/architecture/legal-tasks/paired-evaluation-v1.md": "f6075df44917f977a32767bb56924a1223bcaba85fa8fd283720436dceb0275e"
+  },
+  "datasetHashes": {
+    "eval/legal-tasks/s2/cases.jsonl": "8ccdba8a3af46e6e48f4324fd3ef9d91c7b6657ff891bd71bf0e36ae7020f89d",
+    "eval/legal-tasks/s2/rubrics.json": "677883dcbfc607fe44720af9bde44715a0667ed7e45d76d40dcebe4070bcc5a3"
+  },
+  "blindingMapSha256": "ab6007020af65649c65d34e5eacece5b773a7283307aa4924c65751773509700",
+  "accessEvidence": "legal-task-skills-S2-access-2026-11-09.json",
+  "limits": {
+    "posts": 32,
+    "http": 100,
+    "durationMs": 1800000,
+    "spacingMs": 65000,
+    "maxTokens": 2500,
+    "timeoutMs": 45000,
+    "temperature": 0
+  },
+  "plannedModels": [
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b"
+  ],
+  "plannedGenerations": 32,
+  "skillsChangedAfterS1": false,
+  "productProviderActivated": false,
+  "professionalValidation": false,
+  "caseAcceptanceStatus": "frozen for one pilot, retire after review/publication"
+}

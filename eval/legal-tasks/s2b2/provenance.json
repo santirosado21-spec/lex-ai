@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "S2B2",
+  "createdOn": "2026-11-10",
+  "protocolApprovedBeforeAuthorship": true,
+  "protocolFreezePath": "docs/qa/legal-task-S2b2-protocol-freeze-2026-11-10.json",
+  "origin": "Fresh independent direct SF authoring from frozen protocol and selected original official local captures; not derived from prior cases or answers",
+  "independence": {
+    "oldCasesOpened": false,
+    "oldGoldsOpened": false,
+    "modelAnswersOpened": false,
+    "mappingsOpened": false,
+    "privacyHeldoutOpened": false,
+    "modelPerformanceResultsOpened": false,
+    "modelOrArmTuned": false,
+    "scopeDeviation": "Discovery rg on scripts/probe-legal-task-anchors.mjs exposed request-builder/scoring-function source lines, including generic literal/anchor labels and 2500-related request mechanics. No actual model IDs/config values, historical answers/golds/mappings/performance results read; author stopped using probe immediately and disclosed to coordinator. Request-builder source was not copied into dataset."
+  },
+  "helpers": {
+    "localLLM": false,
+    "externalProvider": false,
+    "network": false,
+    "legalDecisionTools": false,
+    "note": "Python/Poppler used only deterministic extraction, hashing and structural checks, never legal judgment. Direct SF LLM authored proposed expectations; professional review pending."
+  },
+  "allFactsInvented": true,
+  "legalPassagesNotInvented": true,
+  "challenge27Exception": "Its two deliberately incompatible rules are explicitly didactic fictional sources; they are not official Mexican passages. Challenge stratum permits fictional-only evidence.",
+  "readSources": [
+    "AGENTS.md",
+    "/Users/santiagorosado/.agents/skills/psf/SKILL.md",
+    "docs/architecture/legal-tasks/S2b2-acceptance-protocol-v1.md",
+    "eval/legal-tasks/s2b2/protocol.json",
+    "eval/legal-tasks/s2b2/annotation-guide.md",
+    "docs/qa/legal-task-S2b2-protocol-freeze-2026-11-10.json",
+    "server/legal-tasks/contracts.mjs",
+    "server/legal-tasks/anchors-v2.mjs",
+    "resources/legal-task-skills/investigacion-juridica-mx/SKILL.md",
+    "resources/legal-task-skills/revision-contratos-mx/SKILL.md",
+    "PDF read-only skill and selected original captures referenced in evidence.json"
+  ],
+  "lifecycle": {
+    "purpose": "held-out acceptance only; never train/dev/model/prompt selection",
+    "goldExcludedFromModelInput": true,
+    "allowedModelPayload": "whitelisted case.input plus frozen common S1 contract/skill and request identities; no outer id, rubrics, provenance, evidence manifest or preflight diagnostics",
+    "runConfiguration": "pending; models/arms/budget/access unselected",
+    "professionalReview": {
+      "Lorenzo": "pending-no-participation",
+      "Pedro": "pending-no-participation"
+    },
+    "freezeForGeneration": false,
+    "productionEnabled": false
+  },
+  "coverage": {
+    "planned": 30,
+    "exclusiveStrata": {
+      "research": 12,
+      "contracts": 12,
+      "abstention-adversarial": 6
+    },
+    "taskTotals": {
+      "investigacion-juridica-mx": 15,
+      "revision-contratos-mx": 15
+    },
+    "officialEvidenceSubstantiveCases": 24,
+    "distinctOfficialInstruments": 3,
+    "knownJurisdictions": [
+      "MX-FED",
+      "MX-NLE"
+    ],
+    "crossCuttingCounts": {
+      "adverse-condition-or-exception": 21,
+      "citation-entailment": 25,
+      "additional-unsupported-claims": 17,
+      "jurisdiction-and-asOf": 27,
+      "version-conflict-no-capture-date-shortcut": 3,
+      "document-full-vs-excerpt": 19,
+      "commercial-preference-vs-law": 5,
+      "inert-document-instructions": 3,
+      "preserve-dates-amounts-relationships": 14
+    },
+    "difficulty": {
+      "moderate": 2,
+      "hard": 28
+    },
+    "cases": [
+      {
+        "id": "S2B2-01",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "ccf",
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-02",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-03",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-04",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "moderate",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-05",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-06",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccom"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-07",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-08",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "moderate",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-09",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-10",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-11",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-12",
+        "stratum": "research",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-13",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-14",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-15",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-16",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-17",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccf"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-18",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccom"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-19",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccom"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-20",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [
+          "ccom"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-21",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-22",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-23",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-24",
+        "stratum": "contracts",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-NLE",
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": null
+      },
+      {
+        "id": "S2B2-25",
+        "stratum": "abstention-adversarial",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [],
+        "difficulty": "hard",
+        "challengeScenario": "research-no-sources"
+      },
+      {
+        "id": "S2B2-26",
+        "stratum": "abstention-adversarial",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": null,
+        "instrumentIds": [
+          "codigo-civil-nuevo-leon"
+        ],
+        "difficulty": "hard",
+        "challengeScenario": "research-missing-jurisdiction-or-date"
+      },
+      {
+        "id": "S2B2-27",
+        "stratum": "abstention-adversarial",
+        "taskId": "investigacion-juridica-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [],
+        "difficulty": "hard",
+        "challengeScenario": "research-conflicting-versions"
+      },
+      {
+        "id": "S2B2-28",
+        "stratum": "abstention-adversarial",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": null,
+        "instrumentIds": [],
+        "difficulty": "hard",
+        "challengeScenario": "contract-unknown-role-or-missing-jurisdiction-or-date"
+      },
+      {
+        "id": "S2B2-29",
+        "stratum": "abstention-adversarial",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [],
+        "difficulty": "hard",
+        "challengeScenario": "contract-incomplete-annex-and-unsupported-facts"
+      },
+      {
+        "id": "S2B2-30",
+        "stratum": "abstention-adversarial",
+        "taskId": "revision-contratos-mx",
+        "jurisdiction": "MX-FED",
+        "instrumentIds": [],
+        "difficulty": "hard",
+        "challengeScenario": "contract-inert-injection-and-preserved-dates-amounts"
+      }
+    ]
+  },
+  "hashes": {
+    "cases.jsonl": "95f4d90c6895318cc85f28b88b241caed62c0b356d194b88002982ee3ee2dde3",
+    "evidence.json": "18dacb8a200e197f4374ecf1964ae780645ce7a2fbc00d06a4e9e24890fb1e9f"
+  },
+  "offlinePreflight": {
+    "status": "S1-and-anchor-only-no-live-job-config",
+    "planned": 30,
+    "admitted": 30,
+    "anchorAdmitted": 29,
+    "anchorCompilationBlocked": 1,
+    "preflightBlocked": 30,
+    "preflightBlockedCause": "RUN_CONFIGURATION_INCOMPLETE",
+    "POSTattempted": 0,
+    "generated": 0,
+    "mechanicallyGraded": 0,
+    "mechanicalPasses": 0,
+    "substantivelyGradedPerReviewer": {
+      "Lorenzo": 0,
+      "Pedro": 0
+    },
+    "professionalPasses": {
+      "Lorenzo": 0,
+      "Pedro": 0
+    },
+    "models": null,
+    "arms": null,
+    "limits": {
+      "maxSFPacketUTF16": 16000,
+      "maxOutputTokens": 2500
+    },
+    "wholeSFPacketValidation": "pending: exact wrapper/common instructions/messages/schema/skill/input and actual jobs are not selected/frozen. Prepared-object lengths below are diagnostics only; do not claim all jobs fit.",
+    "bundleSha256": "6b025cf978967dedcb5402980889bf10f2a0b36178255d2a3d9834a73927aee4",
+    "rows": [
+      {
+        "id": "S2B2-01",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10082,
+        "anchorPreparedUTF16": 10475,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-02",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10151,
+        "anchorPreparedUTF16": 10529,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-03",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10490,
+        "anchorPreparedUTF16": 11081,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-04",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10136,
+        "anchorPreparedUTF16": 10520,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-05",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9743,
+        "anchorPreparedUTF16": 9912,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-06",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9986,
+        "anchorPreparedUTF16": 10368,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-07",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10510,
+        "anchorPreparedUTF16": 10918,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-08",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10072,
+        "anchorPreparedUTF16": 10482,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-09",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10265,
+        "anchorPreparedUTF16": 10675,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-10",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10084,
+        "anchorPreparedUTF16": 10409,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-11",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9920,
+        "anchorPreparedUTF16": 10244,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-12",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10551,
+        "anchorPreparedUTF16": 11102,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-13",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10528,
+        "anchorPreparedUTF16": 11055,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-14",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10175,
+        "anchorPreparedUTF16": 10487,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-15",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10632,
+        "anchorPreparedUTF16": 11159,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-16",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10028,
+        "anchorPreparedUTF16": 10340,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-17",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10214,
+        "anchorPreparedUTF16": 10526,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-18",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10051,
+        "anchorPreparedUTF16": 10363,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-19",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10886,
+        "anchorPreparedUTF16": 11413,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-20",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10687,
+        "anchorPreparedUTF16": 11213,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-21",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10759,
+        "anchorPreparedUTF16": 11310,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-22",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9917,
+        "anchorPreparedUTF16": 10242,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-23",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10725,
+        "anchorPreparedUTF16": 11278,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-24",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10213,
+        "anchorPreparedUTF16": 10538,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-25",
+        "S1admitted": true,
+        "anchorAdmitted": false,
+        "literalPreparedUTF16": 8911,
+        "anchorPreparedUTF16": null,
+        "anchorCompilationCause": "ANCHOR_COMPILATION_REJECTED",
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-26",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9575,
+        "anchorPreparedUTF16": 9756,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-27",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 10061,
+        "anchorPreparedUTF16": 10524,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-28",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9289,
+        "anchorPreparedUTF16": 9386,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-29",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9609,
+        "anchorPreparedUTF16": 9852,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      },
+      {
+        "id": "S2B2-30",
+        "S1admitted": true,
+        "anchorAdmitted": true,
+        "literalPreparedUTF16": 9563,
+        "anchorPreparedUTF16": 9660,
+        "anchorCompilationCause": null,
+        "runBlockedCause": "RUN_CONFIGURATION_INCOMPLETE"
+      }
+    ],
+    "interpretation": "admitted is input acceptance only. Anchor failure is neither model answer nor abstention nor mechanical/professional failure/pass of an answer. All 30 remain planned; unsupported cell blocks acceptance; no replacement, exclusion, workaround or source stuffing."
+  }
+}

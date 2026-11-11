@@ -1,0 +1,236 @@
+name: Vault recovery supervisor resources only
+on:
+  push:
+    branches: [docs/hybrid-psf-development-loop]
+    paths:
+      - crates/lex-vault/**
+      - .github/workflows/vault-recovery-supervisor.yml
+permissions:
+  contents: read
+jobs:
+  supervisor-only:
+    if: ${{ github.event.repository.private == false && startsWith(github.event.head_commit.message, '[vault-recovery-supervisor]') }}
+    runs-on: macos-15
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 1
+    concurrency:
+      group: vault-recovery-supervisor-public
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Frozen compile then exact harmless process-supervisor test only
+        shell: bash
+        run: |
+          python3 - <<'PY_CI'
+          import hashlib, json, os, pathlib, re, shutil, signal, stat, subprocess, sys, tempfile, time
+          if sys.version_info < (3, 11):
+              print('{"status":"SUPERVISOR_ONLY","result":"FAIL","category":"PREINSTALLED_PYTHON_TOO_OLD","testsExecuted":false,"supervisorTestOnly":true,"cryptoTestsExecuted":false,"cryptographyValidated":false,"h5Complete":false,"physical8GBValidated":false}')
+              sys.exit(1)
+          import tomllib
+          repo = pathlib.Path.cwd().resolve()
+          freeze_path = 'docs/qa/vault-recovery-supervisor-freeze-2026-11-10.json'
+          workflow_path = '.github/workflows/vault-recovery-supervisor.yml'
+          crate_prefix = 'crates/lex-vault/'
+          native = {crate_prefix + p for p in ['Cargo.toml', 'Cargo.lock', 'README.md', 'src/lib.rs', 'src/recovery.rs', 'tests/recovery.rs', 'tests/recovery_process.rs', 'tests/support/recovery_fixture.rs']}
+          report = {'status': 'SUPERVISOR_ONLY', 'result': 'FAIL', 'category': None, 'feature': 'synthetic-recovery', 'testsExecuted': False, 'supervisorTestOnly': True, 'supervisorTestInvoked': False, 'cryptoTestsExecuted': False, 'h5Complete': False, 'recoveryHelperInvoked': False, 'cryptographyValidated': False, 'physical8GBValidated': False, 'thirdPartyBuildCodeMayExecute': True, 'sourceFreezePre': False, 'sourceFreezePost': False, 'compilationAttempted': False}
+          expires = time.monotonic() + 540
+          stage = 'SOURCE_PREFLIGHT'
+          expected = None
+          task = None
+          copied = None
+          supervisor_log = None
+          supervisor_started = None
+          def check(condition):
+              if not condition:
+                  raise ValueError('policy')
+          def safe_file(root, relative):
+              check(isinstance(relative, str) and relative and '\\' not in relative and not relative.startswith('/'))
+              parts = relative.split('/')
+              check(all(p not in ('', '.', '..') for p in parts))
+              current = root
+              for i, part in enumerate(parts):
+                  current = current / part
+                  info = current.lstat()
+                  check(not stat.S_ISLNK(info.st_mode))
+                  check(stat.S_ISREG(info.st_mode) if i == len(parts)-1 else stat.S_ISDIR(info.st_mode))
+              return current
+          def digest(file):
+              result = hashlib.sha256()
+              with open(file, 'rb') as source:
+                  for chunk in iter(lambda: source.read(1048576), b''):
+                      result.update(chunk)
+              return result.hexdigest()
+          def verify(root):
+              for file, sha in expected.items():
+                  check(digest(safe_file(root, file)) == sha)
+              check(digest(safe_file(repo, workflow_path)) == freeze['workflowSha256'])
+          def remaining(limit):
+              value = min(limit, expires-time.monotonic())
+              if value <= 0:
+                  raise TimeoutError('driver budget')
+              return value
+          def captured(args, cwd, env, timeout=15):
+              return subprocess.run(args, cwd=cwd, env=env, check=True, capture_output=True, text=True, timeout=remaining(timeout)).stdout.strip()
+          try:
+              freeze = json.loads(safe_file(repo, freeze_path).read_text())
+              check(freeze.get('schemaVersion') == 1 and freeze.get('scope') == 'SUPERVISOR_ONLY')
+              check(freeze.get('feature') == 'synthetic-recovery' and freeze.get('minimumRustVersion') == '1.99.0')
+              check(freeze.get('approvedForSingleSupervisorOnlyRun') is True)
+              check(isinstance(freeze.get('sourceHashes'), dict) and set(freeze['sourceHashes']) == native)
+              check(isinstance(freeze.get('baselineSourceHashes'), dict))
+              check(not set(freeze['sourceHashes']).intersection(freeze['baselineSourceHashes']))
+              expected = {**freeze['sourceHashes'], **freeze['baselineSourceHashes']}
+              check(all(isinstance(h, str) and re.fullmatch('[0-9a-f]{64}', h) for h in [*expected.values(), freeze.get('workflowSha256')]))
+              tracked = captured(['/usr/bin/git', 'ls-files', '-z', '--', 'crates/lex-vault'], repo, os.environ).split('\0')
+              tracked = {p for p in tracked if p}
+              check(set(expected) == tracked)
+              check(all(p.startswith(crate_prefix) and (p.endswith('.rs') or p in native) for p in tracked))
+              verify(repo)
+              manifest = tomllib.loads(safe_file(repo, crate_prefix+'Cargo.toml').read_text())
+              lock = tomllib.loads(safe_file(repo, crate_prefix+'Cargo.lock').read_text())
+              check(manifest['package']['name'] == 'lex-vault' and manifest.get('workspace') == {})
+              check(manifest['features']['default'] == [] and manifest['features']['synthetic-recovery'] == ['dep:age'])
+              check(manifest['dependencies']['age']['optional'] is True and manifest['dependencies']['age']['default-features'] is False)
+              check('patch' not in manifest and 'replace' not in manifest)
+              for tables in [manifest, *manifest.get('target', {}).values()]:
+                  for section in ['dependencies', 'dev-dependencies', 'build-dependencies']:
+                      for entry in tables.get(section, {}).values():
+                          if isinstance(entry, dict):
+                              check(not {'path', 'git', 'registry', 'registry-index', 'workspace', 'branch', 'tag', 'rev'}.intersection(entry))
+              for kind in ['bin', 'test', 'example', 'bench']:
+                  for entry in manifest.get(kind, []):
+                      if 'path' in entry:
+                          check(crate_prefix+entry['path'] in tracked)
+              for entry in [manifest.get('lib', {}), manifest['package']]:
+                  for key in ['path', 'build']:
+                      if key in entry and entry[key] is not False:
+                          check(isinstance(entry[key], str) and crate_prefix+entry[key] in tracked)
+              locals_ = [p for p in lock['package'] if 'source' not in p]
+              check(len(locals_) == 1 and locals_[0]['name'] == 'lex-vault' and locals_[0]['version'] == manifest['package']['version'])
+              registry = [p for p in lock['package'] if 'source' in p]
+              check(len(registry) == 179)
+              check(all(p['source'] == 'registry+https://github.com/rust-lang/crates.io-index' and re.fullmatch('[0-9a-f]{64}', p.get('checksum', '')) for p in registry))
+              report['lockedRegistryPackages'] = len(registry)
+              report['sourceFreezePre'] = True
+              stage = 'PREINSTALLED_TOOLCHAIN'
+              runner_temp = pathlib.Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+              task = pathlib.Path(tempfile.mkdtemp(prefix='lex-vault-compile-', dir=runner_temp))
+              lookup_env = dict(os.environ)
+              lookup_env.pop('RUSTUP_TOOLCHAIN', None)
+              lookup_env['RUSTUP_AUTO_INSTALL'] = '0'
+              rustup = pathlib.Path(shutil.which('rustup') or '').resolve(strict=True)
+              check(rustup.is_file() and os.access(rustup, os.X_OK))
+              tools = {}
+              for name in ['cargo', 'rustc', 'rustdoc']:
+                  value = captured([str(rustup), 'which', name], task, lookup_env)
+                  check(pathlib.Path(value).is_absolute())
+                  tool = pathlib.Path(value).resolve(strict=True)
+                  check(tool.name == name and tool.is_file() and os.access(tool, os.X_OK))
+                  tools[name] = tool
+              check(len({p.parent for p in tools.values()}) == 1)
+              cargo_home, target, temporary = [task / p for p in ['cargo-home', 'target', 'tmp']]
+              for directory in [cargo_home, target, temporary]:
+                  directory.mkdir(mode=0o700)
+              clean = {'PATH': str(tools['cargo'].parent)+':/usr/bin:/bin:/usr/sbin:/sbin', 'CARGO_HOME': str(cargo_home), 'CARGO_TARGET_DIR': str(target), 'TMPDIR': str(temporary)+'/', 'RUSTC': str(tools['rustc']), 'RUSTDOC': str(tools['rustdoc']), 'CARGO_NET_RETRY': '0', 'CARGO_HTTP_TIMEOUT': '15', 'CARGO_REGISTRIES_CRATES_IO_PROTOCOL': 'sparse', 'CARGO_TERM_COLOR': 'never', 'CARGO_BUILD_JOBS': '1', 'CARGO_BUILD_TARGET': 'aarch64-apple-darwin', 'LANG': 'C', 'LC_ALL': 'C', 'TZ': 'UTC', 'RUSTUP_AUTO_INSTALL': '0'}
+              def isolated(args, timeout, sandbox=False, output=None):
+                  command = ['/usr/bin/env', '-i', *[k+'='+v for k, v in clean.items()]]
+                  if sandbox:
+                      command += ['/usr/bin/sandbox-exec', '-f', str(task/'compile-no-network.sb')]
+                  allotted = remaining(timeout)
+                  output_file = open(output, 'wb') if output is not None else None
+                  process = subprocess.Popen([*command, *args], cwd=copied or task, env=clean, start_new_session=True, stdout=output_file, stderr=subprocess.STDOUT if output_file is not None else None)
+                  try:
+                      check(process.wait(timeout=allotted) == 0)
+                  except subprocess.TimeoutExpired:
+                      os.killpg(process.pid, signal.SIGTERM)
+                      try:
+                          process.wait(timeout=5)
+                      except subprocess.TimeoutExpired:
+                          os.killpg(process.pid, signal.SIGKILL)
+                          process.wait(timeout=5)
+                      raise
+                  finally:
+                      if output_file is not None:
+                          output_file.close()
+              version = captured([str(tools['rustc']), '--version'], task, clean)
+              match = re.fullmatch(r'rustc (\d+)\.(\d+)\.(\d+)(?: .*)?', version)
+              check(match is not None and tuple(map(int, match.groups())) >= (1, 99, 0))
+              check('host: aarch64-apple-darwin' in captured([str(tools['rustc']), '-vV'], task, clean))
+              report['rustcVersion'] = version
+              report['cargoVersion'] = captured([str(tools['cargo']), '--version'], task, clean)
+              print(json.dumps({'preinstalledRustc': version, 'preinstalledCargo': report['cargoVersion']}), flush=True)
+              stage = 'PREINSTALLED_SDK'
+              developer = pathlib.Path(captured(['/usr/bin/xcode-select', '-p'], task, clean)).resolve(strict=True)
+              check(developer.is_dir())
+              sdk = pathlib.Path(captured(['/usr/bin/xcrun', '--show-sdk-path'], task, clean)).resolve(strict=True)
+              check(sdk.is_dir())
+              for name in ['clang', 'clang++']:
+                  compiler = pathlib.Path(captured(['/usr/bin/xcrun', '--find', name], task, clean)).resolve(strict=True)
+                  check(compiler.is_file() and os.access(compiler, os.X_OK))
+                  clean['CC' if name == 'clang' else 'CXX'] = str(compiler)
+              clean['SDKROOT'] = str(sdk)
+              check(pathlib.Path('/usr/bin/sandbox-exec').is_file())
+              (task/'compile-no-network.sb').write_text('(version 1)\n(allow default)\n(deny network*)\n')
+              stage = 'ISOLATED_COPY'
+              copied = task / 'source'
+              copied.mkdir()
+              for file in sorted(tracked):
+                  relative = file[len(crate_prefix):]
+                  destination = copied / relative
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(safe_file(repo, file), destination)
+              check({p.relative_to(copied).as_posix() for p in copied.rglob('*') if p.is_file()} == {p[len(crate_prefix):] for p in tracked})
+              for ancestor in [copied, *copied.parents]:
+                  check(not (ancestor/'.cargo/config').exists() and not (ancestor/'.cargo/config.toml').exists())
+              (cargo_home/'config.toml').write_text('[net]\nretry = 0\n[http]\ntimeout = 15\n[registries.crates-io]\nprotocol = "sparse"\n')
+              stage = 'ANONYMOUS_LOCKED_FETCH'
+              isolated([str(tools['cargo']), 'fetch', '--locked', '--target', 'aarch64-apple-darwin', '--manifest-path', str(copied/'Cargo.toml')], 240)
+              stage = 'OFFLINE_COMPILATION_NO_RUN'
+              clean['CARGO_NET_OFFLINE'] = 'true'
+              report['compilationAttempted'] = True
+              isolated([str(tools['cargo']), 'test', '--locked', '--offline', '--features', 'synthetic-recovery', '--no-run', '--jobs', '1', '--target', 'aarch64-apple-darwin', '--manifest-path', str(copied/'Cargo.toml')], 300, sandbox=True)
+              stage = 'SUPERVISOR_RESOURCE_TEST'
+              supervisor_log = task/'supervisor-test-output.txt'
+              supervisor_started = time.monotonic()
+              report['supervisorTestInvoked'] = True
+              isolated([str(tools['cargo']), 'test', '--locked', '--offline', '--manifest-path', str(copied/'Cargo.toml'), '--features', 'synthetic-recovery', '--test', 'recovery', 'supervisor_cleanup_without_crypto', '--', '--ignored', '--exact', '--nocapture', '--test-threads=1'], 90, sandbox=True, output=supervisor_log)
+              check(supervisor_log.stat().st_size <= 1048576)
+              supervisor_output = supervisor_log.read_text()
+              check(re.search(r'^running 1 test$', supervisor_output, re.M) is not None)
+              check(re.search(r'^test result: ok\. 1 passed; 0 failed; 0 ignored;', supervisor_output, re.M) is not None)
+              check('supervisor_cleanup_without_crypto' in supervisor_output)
+              report['testsExecuted'] = True
+              report['supervisorTestResult'] = 'PASS'
+              report['result'] = 'PASS'
+          except Exception:
+              report['category'] = stage
+          finally:
+              if supervisor_started is not None:
+                  report['supervisorWallMs'] = round((time.monotonic()-supervisor_started)*1000, 3)
+              if supervisor_log is not None and supervisor_log.exists():
+                  if supervisor_log.stat().st_size <= 1048576:
+                      output = supervisor_log.read_text(errors='replace')
+                      report['testsExecuted'] = re.search(r'^running 1 test$', output, re.M) is not None
+                      print(output, flush=True)
+                  else:
+                      report['category'] = 'SUPERVISOR_OUTPUT_LIMIT'
+                      report['result'] = 'FAIL'
+              try:
+                  if expected is not None:
+                      verify(repo)
+                      if copied is not None:
+                          for file, sha in expected.items():
+                              check(digest(safe_file(copied, file[len(crate_prefix):])) == sha)
+                          check({p.relative_to(copied).as_posix() for p in copied.rglob('*') if p.is_file()} == {p[len(crate_prefix):] for p in expected})
+                          check(not any(p.is_symlink() for p in copied.rglob('*')))
+                      report['sourceFreezePost'] = True
+              except Exception:
+                  report['category'] = 'SOURCE_FREEZE_POST'
+                  report['result'] = 'FAIL'
+              print(json.dumps(report, sort_keys=True), flush=True)
+          sys.exit(0 if report['result'] == 'PASS' and report['sourceFreezePost'] else 1)
+          PY_CI

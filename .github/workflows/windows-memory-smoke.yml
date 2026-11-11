@@ -1,0 +1,123 @@
+name: Windows owned-process RSS smoke
+on:
+  push:
+    branches: [docs/hybrid-psf-development-loop]
+    paths:
+      - .github/workflows/windows-memory-smoke.yml
+      - scripts/windows-wmi-direct-diagnostic.mjs
+      - tests/windows-wmi-direct-diagnostic.test.mjs
+      - resources/windows-wmi-direct-diagnostic-v1.json
+      - scripts/windows-cim-env-diagnostic.mjs
+      - tests/windows-cim-env-diagnostic.test.mjs
+      - resources/windows-cim-env-diagnostic-v1.json
+      - scripts/windows-cim-diagnostic.mjs
+      - tests/windows-cim-diagnostic.test.mjs
+      - scripts/windows-memory-smoke.mjs
+      - server/windows-memory-monitor-v2.mjs
+      - tests/windows-memory-monitor-v2.test.mjs
+      - resources/windows-memory-monitor-v2.json
+      - server/windows-memory-monitor.mjs
+      - tests/windows-memory-monitor.test.mjs
+      - server/windows-process-memory.mjs
+      - server/runtime-memory.mjs
+      - tests/windows-memory-smoke.test.mjs
+      - tests/windows-process-memory.test.mjs
+      - tests/runtime-memory.test.mjs
+permissions:
+  contents: read
+jobs:
+  windows-rss:
+    # Evaluated before runner allocation. Never consume a private-repo budget.
+    if: ${{ github.event.repository.private == false && !contains(github.event.head_commit.message, '[windows-cim-diagnostic]') && !startsWith(github.event.head_commit.message, '[windows-env-diagnostic]') && !startsWith(github.event.head_commit.message, '[windows-wmi-diagnostic]') }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      # Official actions/checkout v4.3.1, tag SHA verified with git ls-remote.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Targeted contract and lifecycle tests
+        shell: pwsh
+        run: node --test tests/runtime-memory.test.mjs tests/windows-process-memory.test.mjs tests/windows-memory-smoke.test.mjs tests/windows-memory-monitor.test.mjs tests/windows-memory-monitor-v2.test.mjs
+      - name: Protocol 3 cold bootstrap and four steady direct WMI samples
+        shell: pwsh
+        # Public standard runner is a 16 GB VM; this proves neither physical
+        # 8 GB acceptance, an installer, nor product inference portability.
+        run: node scripts/windows-memory-smoke.mjs --wmi
+
+  windows-cim-diagnostic:
+    # One explicitly marked diagnosis commit after the two retained failures.
+    # A subsequent unmarked fix restores the normal RSS job above.
+    if: ${{ github.event.repository.private == false && contains(github.event.head_commit.message, '[windows-cim-diagnostic]') && !startsWith(github.event.head_commit.message, '[windows-env-diagnostic]') && !startsWith(github.event.head_commit.message, '[windows-wmi-diagnostic]') }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Offline diagnostic contract tests
+        shell: pwsh
+        run: node --test tests/windows-cim-diagnostic.test.mjs
+      - name: Bounded stage diagnosis only, never a performance pass
+        shell: pwsh
+        run: node scripts/windows-cim-diagnostic.mjs
+
+  windows-env-diagnostic:
+    # D1g only: explicit head-message prefix; unmarked next commit restores RSS.
+    if: ${{ github.event.repository.private == false && startsWith(github.event.head_commit.message, '[windows-env-diagnostic]') && !startsWith(github.event.head_commit.message, '[windows-wmi-diagnostic]') }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Offline environment diagnostic tests
+        shell: pwsh
+        run: node --test tests/windows-cim-env-diagnostic.test.mjs tests/windows-cim-diagnostic.test.mjs
+      - name: DIAGNOSTIC ONLY minimal versus builtin module path
+        shell: pwsh
+        run: node scripts/windows-cim-env-diagnostic.mjs
+
+  windows-wmi-direct-diagnostic:
+    # D1h single-query diagnosis; no prior diagnostic or RSS job runs with it.
+    if: ${{ github.event.repository.private == false && startsWith(github.event.head_commit.message, '[windows-wmi-diagnostic]') }}
+    runs-on: windows-2025
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require preinstalled Node
+        shell: pwsh
+        run: |
+          node --version
+          node --input-type=module -e "import {requireNodeVersion} from './scripts/windows-memory-smoke.mjs'; requireNodeVersion(process.version);"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Offline direct WMI diagnostic tests
+        shell: pwsh
+        run: node --test tests/windows-wmi-direct-diagnostic.test.mjs
+      - name: DIAGNOSTIC ONLY one typed local WMI query
+        shell: pwsh
+        run: node scripts/windows-wmi-direct-diagnostic.mjs

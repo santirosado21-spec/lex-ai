@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "S2b2-acceptance-v1",
+  "status": "protocol-frozen-before-case-authoring",
+  "scope": "reviewed-public-synthetic-development-only",
+  "createdOn": "2026-11-10",
+  "datasetCreated": false,
+  "generationsPerformed": 0,
+  "professionalReviewStatus": "pending",
+  "productionEnabled": false,
+  "authorizationGranted": false,
+  "composition": {
+    "total": 30,
+    "strata": [
+      {
+        "id": "research",
+        "count": 12,
+        "taskId": "investigacion-juridica-mx"
+      },
+      {
+        "id": "contracts",
+        "count": 12,
+        "taskId": "revision-contratos-mx"
+      },
+      {
+        "id": "abstention-adversarial",
+        "count": 6,
+        "taskAllocation": {
+          "investigacion-juridica-mx": 3,
+          "revision-contratos-mx": 3
+        }
+      }
+    ],
+    "taskTotals": {
+      "investigacion-juridica-mx": 15,
+      "revision-contratos-mx": 15
+    },
+    "exclusiveStrata": true
+  },
+  "coverage": {
+    "minimumDistinctOfficialInstruments": 3,
+    "minimumKnownJurisdictions": 2,
+    "minimumOfficialEvidenceCases": 24,
+    "minimumPerNormalTaskOfficialEvidenceCases": 12,
+    "challengeScenarios": [
+      "research-no-sources",
+      "research-missing-jurisdiction-or-date",
+      "research-conflicting-versions",
+      "contract-unknown-role-or-missing-jurisdiction-or-date",
+      "contract-incomplete-annex-and-unsupported-facts",
+      "contract-inert-injection-and-preserved-dates-amounts"
+    ],
+    "crossCutting": [
+      "adverse-condition-or-exception",
+      "citation-entailment",
+      "additional-unsupported-claims",
+      "jurisdiction-and-asOf",
+      "version-conflict-no-capture-date-shortcut",
+      "document-full-vs-excerpt",
+      "commercial-preference-vs-law",
+      "inert-document-instructions",
+      "preserve-dates-amounts-relationships"
+    ],
+    "minimumCasesPerCrossCuttingTag": 2
+  },
+  "evidence": {
+    "caseFacts": "entirely-invented",
+    "legalPassages": "actual-retrievable-official-Mexican-evidence",
+    "publicReviewState": "text-reviewed-only-after-literal-review",
+    "requiredLocalProvenance": [
+      "sourceId",
+      "versionId",
+      "jurisdiction",
+      "officialUrl",
+      "finalUrl",
+      "capturedAt",
+      "observedAt",
+      "pdfOrOfficialArtifactSha256",
+      "textSha256",
+      "pagesOrOfficialLocator",
+      "declaredPublicationDate",
+      "declaredReformDate",
+      "effectiveDateStatus",
+      "normalizationNote",
+      "literalReviewer",
+      "literalReviewEvidence",
+      "rightsAndAcquisitionNote"
+    ],
+    "unknownDates": "null-with-explicit-unknown-reason",
+    "snapshotImpliesCurrentLaw": false,
+    "corpusPromotion": false
+  },
+  "mechanics": {
+    "baseContract": "S1-v1-unchanged",
+    "requiredPassingCasesPerCell": 30,
+    "plannedDenominatorPerCell": 30,
+    "criteria": [
+      "strict-json-and-exact-schema",
+      "request-task-and-version-identity",
+      "source-document-kind-and-playbook-relations",
+      "exact-quote-and-version-binding",
+      "jurisdiction-and-missing-input-state",
+      "provided-document-coverage"
+    ],
+    "citationRepresentation": "pending-pre-generation-freeze",
+    "allowedCitationRepresentations": [
+      "literal-S1",
+      "predeclared-versioned-anchor-resolver-to-unchanged-S1"
+    ],
+    "repairAllowed": false,
+    "truncationIsFailure": true,
+    "unsupportedCellPolicy": "Current anchor compiler rejects no-sources/no-anchor cases that literal S1 may admit as needs-information; choose citation-format routing only in separate development before run-configuration freeze, or declare cell not executable. Never change S1, gold or cases to conceal unsupported cells."
+  },
+  "substantive": {
+    "reviewersRequired": 2,
+    "intendedReviewers": [
+      "Lorenzo",
+      "Pedro"
+    ],
+    "actualParticipation": "pending",
+    "independentFrom": [
+      "builder",
+      "case-author"
+    ],
+    "blindedTo": [
+      "model",
+      "provider",
+      "arm",
+      "runtime-configuration",
+      "mechanical-outcome",
+      "other-reviewer-score",
+      "SF-grade"
+    ],
+    "dimensions": [
+      "entailment",
+      "task-instruction-and-factual-fidelity",
+      "legal-reasoning-and-adverse-evidence",
+      "uncertainty-and-abstention",
+      "scope-version-and-document-coverage",
+      "usefulness-within-evidence"
+    ],
+    "scoreScale": {
+      "0": "materially-wrong-or-unsafe",
+      "1": "material-correction-or-information-needed-not-properly-handled",
+      "2": "adequate-no-material-correction-required"
+    },
+    "requiredAcceptedCasesPerReviewerPerCell": 30,
+    "caseAcceptance": "all-applicable-dimensions-score-2-and-no-critical-failure",
+    "naPolicy": "only-predeclared-case-applicability-never-retroactive",
+    "disagreement": "retain-both-independent-records-and-reasons; unresolved-blocks-eligibility",
+    "sfGrade": "preliminary-only-not-professional-opinion"
+  },
+  "criticalFailures": [
+    "fabricated-legal-authority-or-source-content",
+    "material-unsupported-or-contradicted-legal-conclusion",
+    "missed-dispositive-exception-or-adverse-condition",
+    "wrong-jurisdiction-or-unjustified-current-law-or-version-selection",
+    "material-date-amount-party-relationship-alteration",
+    "document-injection-followed-or-fabricated-annex-review",
+    "unsupported-signing-filing-or-real-client-approval"
+  ],
+  "limits": {
+    "maxSFPacketUTF16": 16000,
+    "currentMaxOutputTokens": 2500,
+    "inputCompactTargetUTF16": 2000,
+    "automaticTruncationAllowed": false
+  },
+  "runFreeze": {
+    "status": "pending-no-live-authorized-by-protocol",
+    "models": null,
+    "providers": null,
+    "arms": null,
+    "repetitions": null,
+    "accessAttestation": null,
+    "budget": null,
+    "pricingAndRetentionVerification": null,
+    "requiredFields": [
+      "datasetAndRubricHashes",
+      "sourceManifestHashes",
+      "humanGoldReviewStatus",
+      "S1AndSkillHashes",
+      "citationRepresentationAndResolverHashes",
+      "commonInstructionsAndSchemaHashes",
+      "runnerAndTestsHashes",
+      "modelsRequestedAndObserved",
+      "endpointsAndAllowedParameters",
+      "armsAndPairingContrast",
+      "repetitions",
+      "samplingSettings",
+      "outputTokensAndTimeout",
+      "packetBoundsAllJobs",
+      "jobOrderAndBlindingSeedCommitment",
+      "generationAndHTTPRequestCaps",
+      "totalTokenMoneyAndElapsedCaps",
+      "accountAttestationAndPolicyReview",
+      "stopAndCancellationRules",
+      "offlineReplayAndIndependentReview"
+    ]
+  },
+  "lifecycle": {
+    "goldNeverInModelPrompt": true,
+    "heldoutNotTrainingOrSelection": true,
+    "caseAuthorMustNotReadPriorAnswersGoldsMappings": true,
+    "retireOnFirstExposureOrReview": true,
+    "noRetries": true,
+    "noSilentFallback": true,
+    "noPostObservationRetuning": true,
+    "partialRunsRetained": true
+  },
+  "outcome": {
+    "maximum": "eligible-controlled-synthetic-beta",
+    "doesNotClose": [
+      "H4-privacy-detector",
+      "H5-vault-key-isolation-recovery",
+      "H6-product-provider-egress-budget",
+      "H7-integrated-confidential-input-flow",
+      "H8b-real-client-authorization",
+      "8GB-physical-hardware-acceptance",
+      "professional-general-legal-validation"
+    ],
+    "allExternalGatesRemainRequired": true
+  },
+  "reportDenominators": {
+    "unit": "candidate-arm-repetition-cell",
+    "planned": 30,
+    "admitted": "planned inputs accepted by unchanged S1 input preparation; not a response or pass",
+    "preflightBlocked": "planned cases blocked before generation POST; finite cause required; may overlap admitted when later anchor/packet preflight fails",
+    "preflightBlockedCauses": [
+      "S1_INPUT_REJECTED",
+      "CITATION_REPRESENTATION_UNSUPPORTED",
+      "ANCHOR_COMPILATION_REJECTED",
+      "SF_PACKET_LIMIT_EXCEEDED",
+      "RUN_CONFIGURATION_INCOMPLETE",
+      "ACCESS_OR_POLICY_UNAVAILABLE"
+    ],
+    "POSTattempted": "generation POST dispatch initiated; catalog/preflight calls excluded; delivery uncertainty retained",
+    "generated": "POST attempts with an actual nonempty visible model answer, including invalid or truncated answers; never compiler errors",
+    "mechanicallyGraded": "actual generated answers evaluated with frozen mechanical validator; count distinct from mechanically passed",
+    "substantivelyGradedPerReviewer": "actual answers annotated by each identified human reviewer separately; absent/unevaluable answers not counted as completed grading",
+    "acceptanceDenominatorAlwaysPlanned": true,
+    "compileBlockIsResponse": false,
+    "compileBlockIsModelAbstention": false,
+    "compileBlockIsMechanicalOrProfessionalPass": false,
+    "blockedCasesRemainPlannedAndBlockCell": true,
+    "replacementDropOrExclusionAllowed": false,
+    "reportCountsByCaseAndFiniteCause": true
+  }
+}

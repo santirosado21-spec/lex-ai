@@ -1,0 +1,921 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-10T17:10:04.978Z",
+  "researchDate": "2026-11-10",
+  "scope": "C1b.1 bounded official-source candidate research only",
+  "dataClass": "public-development",
+  "productionEnabled": false,
+  "approvalGranted": false,
+  "registry": {
+    "path": "resources/legal-acquisition-pilot.json",
+    "fileSha256": "bb5135acbcd4cac431b708fb5115a526f2acad3cc6f6324c0f192b8c2a3f1f08",
+    "modified": false,
+    "plannedSlots": 30,
+    "alreadyConcreteFederalDocuments": 10,
+    "pendingSlots": 20
+  },
+  "budget": {
+    "maximumWebOperations": 30,
+    "usedWebOperations": 27,
+    "countingRule": "Each submitted search query, page open or page click counts as one operation, including errors; counts do not measure provider-internal HTTP requests.",
+    "pdfOpensOrDownloads": 0,
+    "newDependencies": 0,
+    "providerGenerations": 0,
+    "scope": "Original builder research only; independent review is separately counted below."
+  },
+  "summary": {
+    "pendingSlots": 20,
+    "proposedCandidates": 8,
+    "directOfficialHtmlDocumentsObserved": 4,
+    "pdfCandidatesDiscoveredWithoutOpening": 2,
+    "judicialSearchCandidatesWithDirectJavaScriptShell": 2,
+    "remainingSlotsNotChecked": 12,
+    "newlyApproved": 0,
+    "newlyAcquired": 0
+  },
+  "sources": [
+    {
+      "id": "jalisco",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "canonicalIndexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "portalUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/leyesestatales.cfm",
+      "robotsUrl": "https://congresoweb.congresojal.gob.mx/robots.txt",
+      "rightsStatus": "pending",
+      "robotsStatus": "unknown",
+      "productionHostAllowed": false,
+      "robotsStatusScope": "Initial builder web-tool observation only; see separate coordinatorObservations.",
+      "coordinatorRobotsStatus": "http406; policy unknown"
+    },
+    {
+      "id": "nuevo-leon",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "canonicalIndexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "portalUrl": "https://www.hcnl.gob.mx/",
+      "robotsUrl": "https://www.hcnl.gob.mx/robots.txt",
+      "rightsStatus": "pending",
+      "robotsStatus": "unknown",
+      "productionHostAllowed": false,
+      "robotsStatusScope": "Initial builder web-tool observation only; see separate coordinatorObservations.",
+      "coordinatorRobotsStatus": "allow-policy-observed; not acquisition approval"
+    },
+    {
+      "id": "sjf",
+      "authority": "Suprema Corte de Justicia de la Nación, Semanario Judicial de la Federación",
+      "canonicalIndexUrl": "https://sjf2.scjn.gob.mx/",
+      "portalUrl": "https://sjf2.scjn.gob.mx/",
+      "robotsUrl": "https://sjf2.scjn.gob.mx/robots.txt",
+      "rightsStatus": "pending",
+      "robotsStatus": "unknown",
+      "productionHostAllowed": false,
+      "robotsStatusScope": "Initial builder web-tool observation only; see separate coordinatorObservations.",
+      "coordinatorRobotsStatus": "http403; policy unknown"
+    }
+  ],
+  "constraints": [
+    "All source hosts remain outside the unchanged downloader allowlist. Research does not authorize allowlist expansion.",
+    "Current factory accepts PDFs, so HTML and JavaScript candidates require a separately reviewed adapter or a verified PDF attachment; changing URL alone is insufficient.",
+    "No PDF MIME, bytes, hash, textual fidelity, current-law completeness, effective date or commercial redistribution rights were verified.",
+    "Official search snippets and catalogue dates are discovery/provenance metadata, not current-law or legally validated text.",
+    "No client data, private queries, accounts, paywalls, access-control bypass, paid APIs, mass crawling, production configuration or deployment."
+  ],
+  "observations": [
+    {
+      "sourceId": "jalisco",
+      "url": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado.cfm",
+      "result": "Official host returned ColdFusion template-not-found; do not treat as live catalogue."
+    },
+    {
+      "sourceId": "jalisco",
+      "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+      "result": "Metadata index accessible; encoded-apostrophe request reported redirect to apostrophe form. This exact destination needs review; no approval inferred."
+    },
+    {
+      "sourceId": "nuevo-leon",
+      "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos.php",
+      "result": "One timeout through web tool; document pages were accessible separately."
+    },
+    {
+      "sourceId": "sjf",
+      "url": "https://sjf2.scjn.gob.mx/",
+      "result": "Direct host and two detail pages returned only JavaScript-required shell."
+    }
+  ],
+  "webOperationBatches": [
+    {
+      "batch": 1,
+      "operations": 3,
+      "type": "search queries",
+      "targets": [
+        "site.congresojal.gob.mx BibliotecaVirtual código civil código penal legislación",
+        "site.hcnl.gob.mx trabajos legislativos leyes codigo civil codigo penal",
+        "site.sjf2.scjn.gob.mx/detalle/tesis 2026"
+      ],
+      "note": "Initial searches returned mixed-domain results; only official primary hosts were used as evidence."
+    },
+    {
+      "batch": 2,
+      "operations": 3,
+      "type": "page opens",
+      "targets": [
+        "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado.cfm",
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+        "https://sjf2.scjn.gob.mx/"
+      ],
+      "note": "Jalisco legacy route returned template-not-found; NL index accessible; SJF JavaScript shell."
+    },
+    {
+      "batch": 3,
+      "operations": 3,
+      "type": "two search queries and one page click",
+      "targets": [
+        "Código Civil legislación Biblioteca Virtual; domain congresojal.gob.mx",
+        "site:sjf2.scjn.gob.mx/detalle/tesis/ Registro digital; domain sjf2.scjn.gob.mx",
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos.php"
+      ],
+      "note": "Codes index click timed out once; no automatic retry."
+    },
+    {
+      "batch": 4,
+      "operations": 5,
+      "type": "one search query and four page opens",
+      "targets": [
+        "Leyes Biblioteca Códigos; domain congresojal.gob.mx",
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+        "https://sjf2.scjn.gob.mx/detalle/tesis/2031956",
+        "https://sjf2.scjn.gob.mx/detalle/tesis/2032822"
+      ]
+    },
+    {
+      "batch": 5,
+      "operations": 5,
+      "type": "page opens",
+      "targets": [
+        "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/leyesestatales.cfm",
+        "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+        "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "https://www.hcnl.gob.mx/robots.txt",
+        "https://sjf2.scjn.gob.mx/robots.txt"
+      ],
+      "note": "All three robots targets inaccessible through this tool; policies remain unknown."
+    },
+    {
+      "batch": 6,
+      "operations": 3,
+      "type": "one page open and two search queries",
+      "targets": [
+        "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+        "Código Penal 2026; domain congresoweb.congresojal.gob.mx",
+        "Código de Procedimientos Civiles Código Fiscal; domain congresoweb.congresojal.gob.mx"
+      ],
+      "note": "Index initially requested with %27; web tool reported final apostrophe route. PDFs appeared in search results only and were not opened."
+    },
+    {
+      "batch": 7,
+      "operations": 3,
+      "type": "one page open and two search queries",
+      "targets": [
+        "https://www.congresojal.gob.mx/boletines/presentan-micro-sitio-de-congreso-abierto",
+        "Código Penal 270826; domain congresoweb.congresojal.gob.mx",
+        "CÓDIGO CIVIL PARA EL ESTADO DE NUEVO LEÓN pdf; domain www.hcnl.gob.mx"
+      ],
+      "note": "No exact current Jalisco attachment binding established."
+    },
+    {
+      "batch": 8,
+      "operations": 2,
+      "type": "page opens",
+      "targets": [
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
+        "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/"
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "jalisco-pending-01",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": {
+        "title": "Código Civil del Estado de Jalisco",
+        "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Civil%20del%20Estado%20de%20Jalisco-240626.pdf",
+        "documentType": "state-code",
+        "format": "pdf-url-only",
+        "verification": "official-index-and-official-host-search; PDF not opened",
+        "evidenceUrls": [
+          "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/leyesestatales.cfm",
+          "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+          "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
+        ],
+        "declaredDates": [
+          {
+            "label": "Fecha Ultima Modificacion",
+            "value": "2026-06-18",
+            "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+            "evidenceMode": "official index row",
+            "scope": "catalogue metadata only"
+          }
+        ],
+        "versionEvidence": {
+          "catalogueDecree": "30196",
+          "filenameSuffix": "240626",
+          "currentVersionVerified": false,
+          "note": "Other indexed PDF suffixes 121125,100424,280526 exist. Filename suffix is not a verified legal date; current index-to-PDF binding must be captured before approval."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "jalisco-pending-02",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": {
+        "title": "Código Penal para el Estado Libre y Soberano de Jalisco",
+        "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Penal%20para%20el%20Estado%20Libre%20y%20Soberano%20de%20Jalisco%20-240626.pdf",
+        "documentType": "state-code",
+        "format": "pdf-url-only",
+        "verification": "official-index-and-official-host-search; PDF not opened",
+        "evidenceUrls": [
+          "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/leyesestatales.cfm",
+          "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+          "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm"
+        ],
+        "declaredDates": [
+          {
+            "label": "Fecha Ultima Modificacion",
+            "value": "2026-08-27",
+            "rawValue": "27/08/2026",
+            "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+            "evidenceMode": "original builder official-host search-index row expansion; research batches 4/6",
+            "scope": "conflicting reported catalogue observation, not accepted as current",
+            "acceptedAsCurrent": false
+          },
+          {
+            "label": "Fecha Ultima Modificacion",
+            "value": "2026-03-08",
+            "rawValue": "08/03/2026",
+            "evidenceUrl": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+            "evidenceMode": "independent reviewer direct web.open extracted/rewritten-summary output, line16; not raw HTML",
+            "scope": "conflicting reported catalogue observation, not accepted as current",
+            "acceptedAsCurrent": false
+          }
+        ],
+        "versionEvidence": {
+          "catalogueDecree": null,
+          "canonicalLastModificationDate": null,
+          "canonicalRowStatus": "conflicting-observations-unresolved",
+          "filenameSuffix": "240626",
+          "currentVersionVerified": false,
+          "observations": [
+            {
+              "observer": "builder",
+              "observedAt": null,
+              "observedBeforeUtc": "2026-11-10T17:10:04.978Z",
+              "observedDateUtc": "2026-11-10",
+              "datePrecision": "Exact probe timestamp not exposed; report generation provides only an upper bound.",
+              "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+              "mode": "official-host search-index row expansion in research batches4/6",
+              "declaredModificationRaw": "27/08/2026",
+              "declaredModification": "2026-08-27",
+              "decree": "30145",
+              "httpStatus": null,
+              "rawSnapshotPath": null
+            },
+            {
+              "observer": "independent reviewer /root/port_windows_memory",
+              "observedAt": null,
+              "observedBeforeUtc": "2026-11-10T17:12:43Z",
+              "observedDateUtc": "2026-11-10",
+              "datePrecision": "Exact probe timestamp not exposed; reviewer clock check provides only an upper bound.",
+              "url": "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+              "mode": "direct web.open extracted/rewritten-summary output; text/html;507lines; Penal row line16",
+              "declaredModificationRaw": "08/03/2026",
+              "declaredModification": "2026-03-08",
+              "decree": "A.I. 48/2026",
+              "httpStatus": null,
+              "rawSnapshotPath": null,
+              "redirectObservation": "Tool described rewritten summary and reported final apostrophe URL; no raw response retained."
+            }
+          ],
+          "note": "Conflicting reported catalogue observations preserved. Cause, canonical row, modification date and decree remain unresolved; neither observation is asserted current. PDF filename suffix is not a verified legal date. Preserve candidate URL without approval; independently capture the exact index-to-document/version relationship before acquisition."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Resolve conflicting catalogue observations using retrievable source evidence, then review permissions/robots and exact destination/version before any proposed acquisition batch."
+    },
+    {
+      "id": "jalisco-pending-03",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "jalisco-pending-04",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "jalisco-pending-05",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "jalisco-pending-06",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "jalisco-pending-07",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "jalisco-pending-08",
+      "sourceId": "jalisco",
+      "jurisdiction": "MX-JAL",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Congreso del Estado de Jalisco, Biblioteca Virtual",
+      "indexUrl": "https://congresoweb.congresojal.gob.mx/BibliotecaVirtual/busquedasleyes/Listado_Buscador.cfm",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "nuevo-leon-pending-01",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": {
+        "title": "Código Civil para el Estado de Nuevo León",
+        "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+        "documentType": "state-code",
+        "format": "html",
+        "verification": "direct official HTML opened; heading and reform date observed",
+        "evidenceUrls": [
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/"
+        ],
+        "declaredDates": [
+          {
+            "label": "Última Reforma",
+            "value": "2026-06-26",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML header",
+            "scope": "publisher declaration, not independent applicability review"
+          }
+        ],
+        "versionEvidence": {
+          "currentVersionVerified": false,
+          "note": "Direct HTML is accessible. Actual PDF URL/bytes/MIME/hash and HTML/PDF parity have not been checked."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "nuevo-leon-pending-02",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": {
+        "title": "Código Penal para el Estado de Nuevo León",
+        "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+        "documentType": "state-code",
+        "format": "html",
+        "verification": "direct official HTML opened; heading and reform date observed",
+        "evidenceUrls": [
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/"
+        ],
+        "declaredDates": [
+          {
+            "label": "Última Reforma",
+            "value": "2026-06-15",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_penal_para_el_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML header",
+            "scope": "publisher declaration, not independent applicability review"
+          }
+        ],
+        "versionEvidence": {
+          "currentVersionVerified": false,
+          "note": "Use HTML as a verified discovery candidate only; reviewed PDF destination or explicit HTML adapter remains required."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "nuevo-leon-pending-03",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": {
+        "title": "Código de Procedimientos Civiles del Estado de Nuevo León",
+        "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
+        "documentType": "state-procedure-code",
+        "format": "html",
+        "verification": "direct official HTML opened; reform/publication declarations observed",
+        "evidenceUrls": [
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/"
+        ],
+        "declaredDates": [
+          {
+            "label": "Última Reforma",
+            "value": "2022-06-10",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML header",
+            "scope": "publisher declaration"
+          },
+          {
+            "label": "Ley publicada en periódico Oficial",
+            "value": "1973-02-03",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML body header",
+            "scope": "original publication declaration"
+          }
+        ],
+        "versionEvidence": {
+          "currentVersionVerified": false,
+          "note": "Do not infer current procedural applicability or national-code transition from this compilation. HTML contains PDF/Word labels; direct attachment URLs not resolved."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "nuevo-leon-pending-04",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": {
+        "title": "Ley de los Derechos de Niñas, Niños y Adolescentes para el Estado de Nuevo León",
+        "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/",
+        "documentType": "state-law",
+        "format": "html",
+        "verification": "direct official HTML opened; reform/publication declarations observed",
+        "evidenceUrls": [
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+          "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/"
+        ],
+        "declaredDates": [
+          {
+            "label": "Última Reforma",
+            "value": "2025-11-07",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML header",
+            "scope": "publisher declaration"
+          },
+          {
+            "label": "Ley publicada en P.O. 150-III",
+            "value": "2015-11-27",
+            "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_de_los_derechos_de_ninas_ninos_y_adolescentes_para_el_estado_de_nuevo_leon/",
+            "evidenceMode": "direct HTML body header",
+            "scope": "original publication declaration"
+          }
+        ],
+        "versionEvidence": {
+          "currentVersionVerified": false,
+          "note": "HTML contains PDF/Word labels; direct attachment URLs not resolved. Full fidelity, attachment parity and operative status remain unreviewed."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "nuevo-leon-pending-05",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "nuevo-leon-pending-06",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "nuevo-leon-pending-07",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "nuevo-leon-pending-08",
+      "sourceId": "nuevo-leon",
+      "jurisdiction": "MX-NLE",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "H. Congreso del Estado de Nuevo León",
+      "indexUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "sjf-pending-01",
+      "sourceId": "sjf",
+      "jurisdiction": "MX",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "Suprema Corte de Justicia de la Nación, Semanario Judicial de la Federación",
+      "indexUrl": "https://sjf2.scjn.gob.mx/",
+      "candidate": {
+        "title": "Alerta registral y protección de datos personales",
+        "titleKind": "short topic label, not full official rubro",
+        "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2031956",
+        "documentType": "judicial-jurisprudence-record",
+        "format": "html-javascript-shell",
+        "verification": "official-host search metadata observed; direct open returns JavaScript-required shell",
+        "evidenceUrls": [
+          "https://sjf2.scjn.gob.mx/detalle/tesis/2031956"
+        ],
+        "declaredDates": [
+          {
+            "label": "Publicación en SJF",
+            "value": "2026-03-27",
+            "evidenceUrl": "https://sjf2.scjn.gob.mx/detalle/tesis/2031956",
+            "evidenceMode": "official-host search index only",
+            "scope": "must be corroborated against retrievable official record"
+          }
+        ],
+        "versionEvidence": {
+          "digitalRegister": "2031956",
+          "thesis": "P./J. 39/2026 (12a.)",
+          "authority": "Pleno",
+          "currentVersionVerified": false,
+          "note": "Search metadata is discovery, not an acquired or verified complete record. No browser automation or alternate API route attempted; no general binding effect inferred."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://sjf2.scjn.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "sjf-pending-02",
+      "sourceId": "sjf",
+      "jurisdiction": "MX",
+      "registryStatus": "pending",
+      "researchStatus": "candidate-proposed",
+      "authority": "Suprema Corte de Justicia de la Nación, Semanario Judicial de la Federación",
+      "indexUrl": "https://sjf2.scjn.gob.mx/",
+      "candidate": {
+        "title": "Registro digital de contratos de arrendamiento de casa habitación",
+        "titleKind": "short topic label, not full official rubro",
+        "url": "https://sjf2.scjn.gob.mx/detalle/tesis/2032822",
+        "documentType": "judicial-jurisprudence-record",
+        "format": "html-javascript-shell",
+        "verification": "official-host search metadata observed; direct open returns JavaScript-required shell",
+        "evidenceUrls": [
+          "https://sjf2.scjn.gob.mx/detalle/tesis/2032822"
+        ],
+        "declaredDates": [],
+        "versionEvidence": {
+          "digitalRegister": "2032822",
+          "thesis": "P./J. 211/2026 (12a.)",
+          "authority": "Pleno",
+          "currentVersionVerified": false,
+          "note": "Exact publication date not observed reliably; relative search age is not a legal date. Complete text, authentication/access conditions and binding status are unverified."
+        }
+      },
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://sjf2.scjn.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Review source permissions/robots, bind exact destination/version, and separately review any host/format adapter change before creating a new approved batch."
+    },
+    {
+      "id": "sjf-pending-03",
+      "sourceId": "sjf",
+      "jurisdiction": "MX",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Suprema Corte de Justicia de la Nación, Semanario Judicial de la Federación",
+      "indexUrl": "https://sjf2.scjn.gob.mx/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://sjf2.scjn.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    },
+    {
+      "id": "sjf-pending-04",
+      "sourceId": "sjf",
+      "jurisdiction": "MX",
+      "registryStatus": "pending",
+      "researchStatus": "not-checked",
+      "authority": "Suprema Corte de Justicia de la Nación, Semanario Judicial de la Federación",
+      "indexUrl": "https://sjf2.scjn.gob.mx/",
+      "candidate": null,
+      "permissionStatus": "unknown; source-specific review not completed",
+      "robots": {
+        "url": "https://sjf2.scjn.gob.mx/robots.txt",
+        "status": "unknown",
+        "observation": "Attempted once through web tool; inaccessible through tool. No HTTP status or policy text verified.",
+        "observationScope": "Initial builder web-tool probe only; separate coordinator observations are retained at report.coordinatorObservations."
+      },
+      "effectiveAt": null,
+      "approvedForAcquisition": false,
+      "nextAction": "Select a concrete official document in a later bounded research batch; no inferred URL or replacement."
+    }
+  ],
+  "correction": {
+    "correctedAt": "2026-11-10T17:13:38.453Z",
+    "reason": "Independent review identified conflicting Jalisco Penal catalogue date/decree; original observation was previously presented too strongly as current index metadata.",
+    "affectedSlot": "jalisco-pending-02",
+    "resolution": "Both observations retained; canonical row/date/decree unresolved; effectiveAt remains null; no URL, approval, frozen registry or plan change.",
+    "newWebRequestsForCorrection": 0,
+    "coordinatorEvidenceAdded": true
+  },
+  "independentReview": {
+    "agent": "/root/port_windows_memory",
+    "observationDateUtc": "2026-11-10",
+    "officialHtmlOpens": 4,
+    "pdfOpensOrDownloads": 0,
+    "targets": [
+      "https://congresoweb.congresojal.gob.mx/bibliotecavirtual/busquedasleyes/Listado'2.cfm",
+      "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_civil_para_el_estado_de_nuevo_leon/",
+      "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/codigos/codigo_de_procedimientos_civiles_del_estado_de_nuevo_leon/",
+      "https://sjf2.scjn.gob.mx/detalle/tesis/2031956"
+    ],
+    "findings": [
+      "Jalisco Penal catalogue date/decree conflict preserved in affected slot.",
+      "Jalisco Civil metadata, NL Civil/CPC declared dates and SJF JavaScript-only response corroborated."
+    ],
+    "knownCombinedWebOperations": 31,
+    "budgetNote": "Original builder research used27/30; reviewer subsequently made4additionalopens. Known combined research+review operations are31 and are not represented as within a shared30-operation budget."
+  },
+  "coordinatorObservations": {
+    "scope": "Separate coordinator robots-only probes; source permissions and acquisition approval remain pending.",
+    "artifactPath": "artifacts/public-corpus/source-probes-20261110/robots-probes.json",
+    "artifactSha256": "7917e5860039b11f28cd2ed5943ccd9b32fdca87792e55d4ab2d563b5386ce3e",
+    "probes": [
+      {
+        "url": "https://www.hcnl.gob.mx/robots.txt",
+        "requestedAt": "2026-11-10T17:12:58.401087+00:00",
+        "maxBytes": 131072,
+        "retry": false,
+        "status": 200,
+        "finalUrl": "https://www.hcnl.gob.mx/robots.txt",
+        "contentType": "text/plain",
+        "bytes": 24,
+        "sha256": "c70abcf98d7c268caa7a66739104962b1f5304d39762201e1074cacfcaba3134",
+        "body": "User-agent: *\nAllow: /\n\n"
+      },
+      {
+        "url": "https://congresoweb.congresojal.gob.mx/robots.txt",
+        "requestedAt": "2026-11-10T17:13:00.588874+00:00",
+        "maxBytes": 131072,
+        "retry": false,
+        "status": 406,
+        "finalUrl": "https://congresoweb.congresojal.gob.mx/error/?404;https://congresoweb.congresojal.gob.mx:443/robots.txt",
+        "contentType": "text/html",
+        "bodySaved": false
+      },
+      {
+        "url": "https://sjf2.scjn.gob.mx/robots.txt",
+        "requestedAt": "2026-11-10T17:13:02.798623+00:00",
+        "maxBytes": 131072,
+        "retry": false,
+        "status": 403,
+        "finalUrl": "https://sjf2.scjn.gob.mx/robots.txt",
+        "contentType": "application/json",
+        "bodySaved": false
+      }
+    ],
+    "reportedControls": {
+      "maximumSecondsPerProbe": 15,
+      "maximumBytesPerProbe": 131072,
+      "automaticRetry": false,
+      "minimumGapMs": 2000
+    },
+    "interpretation": {
+      "nuevo-leon": "HTTP200 robots text observed: wildcard user-agent Allow /. This does not establish reuse rights or acquisition approval; runtime must recheck.",
+      "jalisco": "HTTP406 observed with final error URL containing404. This is not a verified404 response or readable robots policy.",
+      "sjf": "HTTP403 application/json observed. Body not retained; access/policy unresolved. No bypass or retry authorized."
+    },
+    "additionalHttpProbes": 3,
+    "knownCombinedResearchReviewAndCoordinatorOperations": 34,
+    "budgetNote": "Builder27web operations, independentreview4HTMLopens, coordinator3HTTPprobes are separate scopes; combined known34 is not represented as within a shared30-operation budget."
+  }
+}

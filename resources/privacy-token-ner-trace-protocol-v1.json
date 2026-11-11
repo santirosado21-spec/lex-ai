@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "purpose": "telemetry only; exact final-result invariance required",
+  "backendCodes": [
+    "COMPLETE",
+    "UNKNOWN",
+    "UNK",
+    "OFFSET",
+    "COVERAGE",
+    "OVERFLOW",
+    "SHAPE",
+    "BIO_ORPHAN",
+    "BIO_INVALID",
+    "LOW_CONFIDENCE",
+    "UNMAPPED",
+    "INPUT"
+  ],
+  "compositionCodes": [
+    "COMPLETE",
+    "UNKNOWN",
+    "OPERATIONAL",
+    "RULES",
+    "BACKEND",
+    "PATH",
+    "TIMEOUT_OR_CANCEL"
+  ],
+  "fields": {
+    "backend": [
+      "code",
+      "streamIndex",
+      "streamKind",
+      "entityKind"
+    ],
+    "composition": [
+      "code"
+    ]
+  },
+  "forbidden": [
+    "raw text",
+    "token IDs",
+    "credentials",
+    "gold annotations",
+    "automatic repair"
+  ],
+  "baselinePredictionsSha256": "9481e358a4306955f398fb4f4f8a9b7e62a3f9b7d9440ea0eb81f9f456d6cca8",
+  "maximumRequests": 60,
+  "changesAllowed": "diagnostic metadata only; status/reason/detections must match all60 baseline results",
+  "failureCodes": [
+    "BACKEND_FAILURE",
+    "WORKER_METADATA",
+    "INVALID_OUTPUT",
+    "INVARIANCE_MISMATCH",
+    "IDENTITY_CHANGED",
+    "PUBLICATION_FAILED",
+    "UNKNOWN"
+  ],
+  "failureEvidence": {
+    "file": "failure.json",
+    "exclusive": true,
+    "diagnosticOnly": true,
+    "invariancePassed": false,
+    "completedPrefixOnly": true,
+    "scores": false,
+    "rawExceptions": false,
+    "automaticRetry": false
+  }
+}

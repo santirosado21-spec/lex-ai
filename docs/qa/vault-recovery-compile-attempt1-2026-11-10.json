@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "attempt": 1,
+  "runId": 42886309129,
+  "commit": "dc3accbb9ac1b1c8fde8a536bddf8d7e859a2a02",
+  "scope": "COMPILATION_ONLY",
+  "result": "FAIL",
+  "category": "OFFLINE_COMPILATION_NO_RUN",
+  "compilerError": "E0308:tests/recovery.rs:578 requires mutable Command borrow",
+  "logSha256": "52c2bc78d17fe6dd4241810469e12cde42e337528fa82a0d13b9b43e4accae97",
+  "freezeSha256": "f8de8cc14146c0325cb6e89cdadcbaefd50d20dcf4117630a3b8745d6ec2fec0",
+  "rustcVersion": "1.99.1",
+  "cargoVersion": "1.99.1",
+  "registryPackages": 179,
+  "sourceFreezePre": true,
+  "sourceFreezePost": true,
+  "testsExecuted": false,
+  "recoveryHelperInvoked": false,
+  "cryptographyValidated": false,
+  "independentAudit": "review_vault_reminders / gpt-6.1-sol: verified actual error/source bindings, APPROVE single-line mutable borrow correction; no local codegen"
+}

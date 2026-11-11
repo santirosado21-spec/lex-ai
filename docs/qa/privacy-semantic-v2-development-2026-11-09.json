@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "scope": "initial developer-only learned+rules runtime; no product/heldout acceptance",
+  "candidateId": "gliner-pii-small-uint8-local-v2",
+  "sources": {
+    "server/privacy/semantic-v2.mjs": "831b7b1b2089de04f9e40cb454c38cdc12ebeee00413cc47702861016e33ec64",
+    "scripts/privacy-onnx-worker.py": "eafe16451cb3b138ff8e2a13245b39957d51fcc0f74dc36d40df88be3831a997",
+    "scripts/privacy-candidate-worker-v2.mjs": "85a5af31824d653447aca997d5c3c1abe18109f55cd35bf1d5301da64291e619",
+    "scripts/run-privacy-detector-v2.mjs": "e1d5ca6d23e93fa5c9cf5952d9d7230c543b87d88079d087784b3eb00a7c4c27",
+    "scripts/prepare-privacy-onnx.py": "1dc55780b008b8b32e6515f32f5acc1a61ec49cf6c4281184733db1b1539fc91",
+    "tests/privacy-semantic-v2.test.mjs": "2a2c2dc7f50d041c98eb9b29ff4f1596d2a06f136409cb0c7b02e86e008ad0a4",
+    "resources/privacy-detector-candidate-v2.json": "659e1e3cdb2e118e32cdf263f16f5ceea3014ee456d7a8fe660fdd9f7c238bfd"
+  },
+  "runtime": {
+    "modelPayloadBytes": 86306213,
+    "onnxWeightBytes": 82680500,
+    "wheelPayloadBytes": 35815117,
+    "python": "3.12.13",
+    "onnxruntime": "1.31.1",
+    "tokenizers": "0.23.3",
+    "numpy": "2.5.4",
+    "loadMsReported": 296,
+    "devSummedPeakRssBytes": 288980992,
+    "independentProbePeakRssBytes": 290766848,
+    "cpuThreads": 1,
+    "concurrency": 1
+  },
+  "verification": {
+    "builderNewTests": 8,
+    "builderCombinedTests": 34,
+    "independentNewTests": 8,
+    "independentSyntheticProbe": true,
+    "networkPositiveAndDeniedControls": true,
+    "evalCorpusAndScorerReadDenied": true,
+    "fullFilesystemIsolation": false
+  },
+  "development": {
+    "cases": 12,
+    "tp": 2,
+    "fp": 16,
+    "fn": 1,
+    "exactPrecision": 0.1111111111111111,
+    "exactRecall": 0.6666666666666666,
+    "blocked": 12,
+    "unexpectedBlocks": 6,
+    "requiredReasonBlocks": 6,
+    "status": "diagnostic-only-inadequate",
+    "goldEntitiesOnly": 3,
+    "representativeQuality": false
+  },
+  "independentReview": {
+    "agent": "review_completion_phases",
+    "modelAssigned": "gpt-6.1-sol",
+    "verdict": "APPROVE-dev-only; heldout runner corrections required",
+    "findings": [
+      "Heldout path must validate actual manifest/guide/cross-split corpus before dispatch",
+      "Single-use identity must be canonical semantic freeze identity, not raw file formatting"
+    ]
+  },
+  "explorationFailures": [
+    "Initial strict filesystem allowlist made Node SIGABRT, including --version; diagnosed file-read restriction. Replaced explicitly with network/write and corpus/evaluator deny, no fullFS claim.",
+    "Early direct synthetic ONNX shape probe before sandbox had no enforced OS network/minimal-env policy; no requested network calls, not a network capture guarantee.",
+    "First dev CLI invocation exit2 before artifacts for unconfirmed cause; preserved as unresolved exploratory failure, subsequent controlled smoke/dev succeed technically."
+  ],
+  "heldoutScored": false,
+  "productionEnabled": false,
+  "clientDataUsed": false,
+  "next": "Preserve failed baseline; develop on separate dev material/configs. Runner findings closed, but no acceptance freeze or heldout scoring for inadequate dev candidate.",
+  "runnerSafeguardsClosure": {
+    "localDate": "2026-11-10",
+    "builder": "gpt-6-astra",
+    "independentReviewer": "gpt-6.1-sol",
+    "verdict": "APPROVE-runner-only",
+    "independentTargetedTests": 12,
+    "actualHeldoutScored": false,
+    "sources": {
+      "scripts/run-privacy-detector-v2.mjs": "9e525c1d5e1c422760b613972a65adf47bfa57a785dac6ca938c6f49683633c5",
+      "tests/privacy-semantic-v2.test.mjs": "6088e7460f2e1cd0569d9c8b60a1a41c77e233086e5a9552a0054165132a7f7f",
+      "scripts/privacy-onnx-worker.py": "1fc20d079aa46b629a957d71e95636169778f3102977d06b46d3381598a4b80b"
+    },
+    "checks": [
+      "Actual manifest, guide and complete disjoint corpus validated before backend startup",
+      "Canonical single-use execution identity ignores formatting and review metadata",
+      "Exclusive retained reservation; no automatic retry on failure"
+    ]
+  }
+}

@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
   <key>NSMicrophoneUsageDescription</key>
-  <string>LEX AI usa el micrófono para convertir tu dictado en texto dentro de este equipo.</string>
+  <string>Rejon.AI usa el micrófono para convertir tu dictado en texto dentro de este equipo.</string>
   <key>NSAppleEventsUsageDescription</key>
-  <string>LEX AI usa Mail para consultar tus cuentas y enviar los correos que apruebes.</string>
+  <string>Rejon.AI usa Mail para consultar tus cuentas y enviar los correos que apruebes.</string>
 </dict>
 </plist>

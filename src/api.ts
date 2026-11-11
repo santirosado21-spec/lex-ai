@@ -25,7 +25,7 @@ async function getConnection() {
 }
 async function request(path: string, body: unknown, signal?: AbortSignal) {
   const { url, token } = await getConnection();
-  if (!token) throw new Error('No se recibió la clave de esta sesión. Abre LEX AI desde su lanzador local.');
+  if (!token) throw new Error('No se recibió la clave de esta sesión. Abre Rejon.AI desde su lanzador local.');
   const response = await fetch(`${url}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(body), signal });
   if (!response.ok) {
     const error = await response.json().catch(() => ({})) as { error?: string; message?: string };
@@ -37,7 +37,7 @@ export async function api<T = unknown>(action: string, payload: unknown = {}): P
   try { return await (await request('/api', { action, payload })).json() as T; }
   catch (error) {
     // Keep runtime diagnostics out of product UI, including errors thrown during setup.
-    if (action.startsWith('engine.')) throw new Error('No se pudo completar la operación de LEX AI. Actualiza el estado y vuelve a intentarlo.');
+    if (action.startsWith('engine.')) throw new Error('No se pudo completar la operación de Rejon.AI. Actualiza el estado y vuelve a intentarlo.');
     throw error;
   }
 }

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T18:37:06.187862+00:00",
+  "runId": 42875919825,
+  "commit": "c473fabe6a6797eace6b91c30c1936d2c487256d",
+  "log": "artifacts/phased-completion-20261110-batch2/windows-wmi-direct-first.log",
+  "logSha256": "ac9774ae0ee9a212f3835905464591176a087930f1ee82709135f3bd7c8023eb",
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE6freeze hashes and actual stage/protocol/cleanup facts; no repeated run",
+  "observedReport": {
+    "status": "DIAGNOSTIC_ONLY",
+    "diagnosticOnly": true,
+    "performanceValidated": false,
+    "maximumPowerShellProcesses": 1,
+    "maximumFixtureProcesses": 1,
+    "maximumWmiQueries": 1,
+    "maximumConfiguredMs": 15000,
+    "diagnosticComplete": true,
+    "physical8GBValidation": false,
+    "inferenceValidation": false,
+    "probe": {
+      "diagnosticOnly": true,
+      "performanceValidated": false,
+      "stages": [
+        {
+          "stage": "BOOT",
+          "elapsedMs": 4768.833799999999
+        },
+        {
+          "stage": "TYPE_RESOLVE",
+          "elapsedMs": 4769.2152
+        },
+        {
+          "stage": "TYPE_READY",
+          "elapsedMs": 4772.1224999999995
+        },
+        {
+          "stage": "READ_READY",
+          "elapsedMs": 4772.1348
+        },
+        {
+          "stage": "QUERY_CONSTRUCT",
+          "elapsedMs": 4851.8629
+        },
+        {
+          "stage": "QUERY_READY",
+          "elapsedMs": 4881.7292
+        },
+        {
+          "stage": "WMI_GET",
+          "elapsedMs": 4881.7418
+        },
+        {
+          "stage": "WMI_ENUMERATE",
+          "elapsedMs": 4908.3526
+        },
+        {
+          "stage": "RESULT",
+          "elapsedMs": 5005.1777
+        },
+        {
+          "stage": "DISPOSED",
+          "elapsedMs": 5008.377399999999
+        },
+        {
+          "stage": "DONE",
+          "elapsedMs": 5008.3799
+        }
+      ],
+      "category": null,
+      "requestSent": true,
+      "killed": false,
+      "exitObserved": true,
+      "exitCode": 0,
+      "signal": null,
+      "ownedProcessCount": 1,
+      "ownedRootRssBytes": 40656896,
+      "elapsedMs": 5060.9535
+    },
+    "cleanup": {
+      "exitObserved": true,
+      "expectedExitZero": true
+    },
+    "elapsedMs": 5150.0113,
+    "withinConfiguredBound": true
+  },
+  "individualPidIdentityInLog": false,
+  "identityEvidence": "Frozen code validates the private owned fixture PID, unique returned row, unsigned parent and positive safe RSS before aggregate output; no raw PID replay is claimed.",
+  "processTreeValidated": false,
+  "pollingValidated": false,
+  "physical8GBValidated": false,
+  "rootCauseEstablished": false,
+  "productionEnabled": false
+}

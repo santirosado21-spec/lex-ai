@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "scope": "ACTUAL_FIXED_STRUCTURAL_DIAGNOSTIC_ONLY",
+  "reviewer": "review_vault_reminders",
+  "verdict": "APPROVE-observed-structural-evidence-only",
+  "artifactHashes": {
+    "artifacts/privacy/nym-int8-decoder-v1-first/started.json": "d5a21064ea8e103e4184894c759092f5af61715fa30481924817c2d02af5fff7",
+    "artifacts/privacy/nym-int8-decoder-v1-first/ledger.jsonl": "4b89d7304f37bc052dc87101e4ba29d7f957d4a8a82a60c5b85e5c6814924051",
+    "artifacts/privacy/nym-int8-decoder-v1-first/before-cleanup.json": "037b283732f2ad59611c2d9b79d4a63f6e141e63c441f3fa2d78c973296ab85b",
+    "artifacts/privacy/nym-int8-decoder-v1-first/receipt.json": "f3253cef5b7d61d78a81bee1eb638e0088334d235818e17642d523be0217750f"
+  },
+  "freeze": {
+    "path": "docs/qa/privacy-nym-int8-decoder-v1-freeze.json",
+    "sha256": "3db968d3fc5f208d8e9f76e4f60caecb0836608a8fe3b33fe5c3c3f534a047fc",
+    "identityMatchesStartedAndFinal": true
+  },
+  "pointInTimeVerification": {
+    "sourceHashes": 7,
+    "cacheFiles": 6,
+    "cacheBytesSizes0400AndHashesMatch": true,
+    "runtimeFiles": 2396,
+    "runtimeBinaryRequirementsTreeHashesMatch": true,
+    "scope": "Current read-only byte verification agrees with frozen identity and success-path pre/post checks; not an independently replayed runtime."
+  },
+  "observed": {
+    "status": "complete-native-diagnostic",
+    "counts": {
+      "admitted": 1,
+      "attempted": 8,
+      "blocked": 8,
+      "decoded": 0,
+      "forwardReturned": 0,
+      "forwardStarted": 0
+    },
+    "offsetProofEstablished": false,
+    "structuralReasons": [
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 0,
+        "roundtripExact": false,
+        "tokenCount": 17,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 1,
+        "roundtripExact": false,
+        "tokenCount": 17,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": "OVERLAP",
+        "event": "structural-done",
+        "index": 2,
+        "roundtripExact": false,
+        "tokenCount": 23,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 3,
+        "roundtripExact": false,
+        "tokenCount": 20,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 4,
+        "roundtripExact": false,
+        "tokenCount": 15,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 5,
+        "roundtripExact": false,
+        "tokenCount": 15,
+        "tokenSlicesExact": false
+      },
+      {
+        "code": null,
+        "event": "structural-done",
+        "index": 6,
+        "roundtripExact": true,
+        "tokenCount": 16,
+        "tokenSlicesExact": true
+      },
+      {
+        "code": "CONTROL",
+        "event": "structural-done",
+        "index": 7,
+        "roundtripExact": false,
+        "tokenCount": 16,
+        "tokenSlicesExact": false
+      }
+    ],
+    "eventCount": 18,
+    "cleanupObserved": true,
+    "workerExitCode": 0,
+    "sampledPeakCombinedRssBytes": 440565760,
+    "samples": 120,
+    "maximumObservedSampleGapMs": 21.066,
+    "elapsedMs": 1467.235
+  },
+  "interpretation": {
+    "tokenizerRuntimeExecuted": true,
+    "onnxRuntimeLoad": "Not reached in frozen source: false offset proof returns before NumPy/ORT imports/session construction. No module telemetry independently measured.",
+    "neuralForwards": 0,
+    "qualityEvaluated": false,
+    "phaseField": "PREFLIGHT is stale on success; ordered ledger proves structural completion. No failure inferred from that field.",
+    "resourceScope": "Parent plus tokenizer structural worker only, not neural inference RAM/latency, hard peak or physical8GB validation."
+  },
+  "auditExecution": {
+    "newRuntimeLoads": 0,
+    "newTokenizations": 0,
+    "newNeuralForwards": 0,
+    "newNetwork": 0,
+    "evaluationGoldAccess": false,
+    "originalArtifactsMutated": false
+  },
+  "limitations": [
+    "Conservative original-source offset proof unestablished; all8neural admissions blocked.",
+    "No threshold/gap relaxation, offset repair, mapping/composition/egress/provider or detector selection authorized.",
+    "No privacy/legal/product quality, rights-chain clearance or physical8GB validation."
+  ]
+}

@@ -1,0 +1,37 @@
+name: Windows owned tree bootstrap diagnostic only
+on:
+  push:
+    branches: [docs/hybrid-psf-development-loop]
+    paths:
+      - scripts/windows-owned-tree-bootstrap-diagnostic.mjs
+      - tests/windows-owned-tree-bootstrap-diagnostic.test.mjs
+      - resources/windows-owned-tree-bootstrap-diagnostic-v1.json
+      - docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md
+      - docs/qa/windows-owned-tree-bootstrap-diagnostic-freeze-2026-11-10.json
+      - .github/workflows/windows-owned-tree-bootstrap-diagnostic.yml
+permissions:
+  contents: read
+concurrency:
+  group: windows-owned-tree-bootstrap-diagnostic
+  cancel-in-progress: false
+jobs:
+  bootstrap-diagnostic:
+    if: github.event.repository.private == false && startsWith(github.event.head_commit.message, '[windows-owned-tree-bootstrap-diagnostic]')
+    runs-on: windows-2025
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Offline real-monitor integration contracts
+        shell: pwsh
+        run: |
+          node --version
+          node --test tests/windows-owned-tree-bootstrap-diagnostic.test.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: One bootstrap diagnostic only
+        shell: pwsh
+        run: |
+          node scripts/windows-owned-tree-bootstrap-diagnostic.mjs --run
+          exit $LASTEXITCODE

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "scope": "STATIC_NATIVE_SAMPLER_NUMERIC_DIAGNOSTICS_ONLY",
+  "reviewer": "review_vault_reminders",
+  "verdict": "APPROVE-for-new-SUPERVISOR_ONLY-freeze-decision",
+  "sourceHashes": {
+    "crates/lex-vault/tests/recovery.rs": "21f4cfbb5e5c77b3429cba6ea2c1f6c3cacf4ee131468d9c966dc27578c85248",
+    "crates/lex-vault/README.md": "8248f9cf7039ef42e546c29d3a1247f5ada6bfd179fe5bcb009c3ba2dae39376"
+  },
+  "findings": [],
+  "checks": {
+    "firstBatch18BodyByteIdentical": true,
+    "guardResetSitesUnchanged": 4,
+    "existingFfiAbiUnchanged": true,
+    "immediateErrno": "Captured on non-full return before any wait/logging; explicitly not assumed causal when a short positive API result leaves stale errno.",
+    "sampleSemantics": "Exact-size positive RSS still required; full-size zero remains unavailable; pre/post wait and third resolution re-poll retain original finite status/failure handling.",
+    "lockOrder": "Registry covers child prewait/query/postwait; numeric observations/counters copied and lock dropped before stdout. Shutdown also snapshots after unlocking, then kills/waits outside mutex.",
+    "logging": "Fixed numeric-only LEX_RECOVERY_RSS_V1 prefix, maximum192 lines globally; no PID, raw status, payload, paths, argv/env or secrets.",
+    "rapidProbe": "At most24 independent own true children; seven existing fixtures give at most31 total; one sample per new child with immediate/yield/1ms schedule and pre-dispatch2s check.",
+    "settlement": "Owned shutdown/wait/ECHILD follows each new fixture; unresolved monitoring failures accumulate evidence then fail final regression, never count as valid RSS.",
+    "cryptoDependenciesLimitsAndR23Unchanged": true
+  },
+  "execution": {
+    "rustCodegen": false,
+    "nativeCalls": false,
+    "tests": false,
+    "network": false,
+    "freezeEdits": false
+  },
+  "limitations": [
+    "Static source review only; actual diagnostic distribution and syscall failure causes require separately frozen harmless VM execution.",
+    "The2s gate bounds dispatch intent, not kernel/scheduler duration; a0-dispatch or truncated probe count must be reported honestly, not counted as24tested.",
+    "Stdout/syscall/kernel stalls remain outside hard real-time guarantees.",
+    "No fourth crypto attempt, new permissions, sampling relaxation, recovery acceptance or H5 completion authorized.",
+    "Third crypto attempt failure cause is not established merely by adding diagnostic fields."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "codex/root independent of author build_corpus_registry",
+  "verdict": "APPROVE_PUBLIC_RESEARCH_RECORD_ONLY",
+  "sourceSha256": "7df38cab081e6bca1b170196ae671ca1017bc67785b339f36294007c062e43b2",
+  "savedResponseBodiesRehashed": 4,
+  "bodyBytesVerified": 61255,
+  "publisherNoticeBytes": 1093,
+  "publisherNoticeSha256": "e472349c75aebe097074c210e5bbbeacf1dd4fd9366e8d312538a40d47260967",
+  "gitBlobVerified": true,
+  "originalCandidateUnchanged": true,
+  "networkHistory": "Author-observed requests retained; reviewer rehashed saved bodies and metadata only, did not independently reissue HTTP",
+  "licenseDecisionMade": false,
+  "weightsLicenseChainVerified": false,
+  "redistributionCleared": false,
+  "newInferenceOrNetworkByReviewer": false
+}

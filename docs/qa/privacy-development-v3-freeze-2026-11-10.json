@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "purpose": "Independent synthetic development authoring, not acceptance",
+  "sources": {
+    "eval/privacy-development-v3/cases.jsonl": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d",
+    "eval/privacy-development-v3/README.md": "7b84c9a0f7e4530b77fd76e041bbef0c2eaac140f1e2b6eebbf385e7127e2c32",
+    "eval/privacy-development-v3/provenance.json": "cd82708d72219d684ce0f7afc3c00d9cb21cbf1819a8a9743d2a3ac4fb587921"
+  },
+  "authorAssignedModel": "gpt-6.1-sol",
+  "independentReviewerAssignedModel": "gpt-6.1-sol",
+  "separateContexts": true,
+  "verdict": "APPROVE-annotation-only",
+  "cases": 60,
+  "sensitive": 48,
+  "entities": 48,
+  "entitiesPerCategory": 4,
+  "clean": 8,
+  "blocked": 4,
+  "multisegment": 4,
+  "canonicalValidationPassed": true,
+  "operationalChecks": "60/60",
+  "heldoutReadOrCompared": false,
+  "candidateRun": false,
+  "limitations": [
+    "Small synthetic exposed development set",
+    "Two blocking reasons intentionally omitted",
+    "Some filenames contain unusually long prose",
+    "No representative privacy or legal acceptance"
+  ]
+}

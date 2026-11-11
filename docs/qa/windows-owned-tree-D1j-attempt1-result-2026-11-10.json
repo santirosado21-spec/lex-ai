@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:23:49.417443+00:00",
+  "scope": "D1j attempt1 source-author factual diagnosis; root and independent audit still required",
+  "verdict": "FAILED_NO_MEASUREMENT_PROOF",
+  "runId": 42894576266,
+  "runUrl": "https://github.com/santirosado21-spec/lex-ai/actions/runs/42894576266",
+  "commit": "c75b1e7f58ae13f65ad7eb1919c03244788f099d",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-owned-tree-first.log",
+    "sha256": "d7f1ff58188247ea31848fda7bd0fd8ea16f4aef1de7aba6fb561382bc9e8c8c",
+    "bytes": 26054
+  },
+  "frozenSource": {
+    "originalPath": "docs/qa/windows-owned-tree-smoke-freeze-2026-11-10.json",
+    "attemptCopyPath": "docs/qa/windows-owned-tree-D1j-attempt1-freeze-2026-11-10.json",
+    "sha256": "9cf0081a344ff7db9bc15166465e868b9fc4e5bd8b2d1d9e0e1352bd449b63bb",
+    "copyExactBytes": true,
+    "matchesCommittedFreeze": true,
+    "sourceChecks": {
+      "scripts/windows-owned-tree-smoke.mjs": {
+        "expectedSha256": "3beb1f1b61dfad85e5513e7d8458675383f40c41d1966774e6bb88c990e5b8b2",
+        "committedSha256": "3beb1f1b61dfad85e5513e7d8458675383f40c41d1966774e6bb88c990e5b8b2",
+        "matches": true
+      },
+      "tests/windows-owned-tree-smoke.test.mjs": {
+        "expectedSha256": "f112305fb7bab43ff8d398c89f91e0cbea990a4ed54ea5ff2a91880e5574408b",
+        "committedSha256": "f112305fb7bab43ff8d398c89f91e0cbea990a4ed54ea5ff2a91880e5574408b",
+        "matches": true
+      },
+      "docs/architecture/windows-owned-tree-smoke-v1.md": {
+        "expectedSha256": "2839a84d04d9938027336d20e1c3c3b5f79abb6bbf010b50601b98cda09d6fe9",
+        "committedSha256": "2839a84d04d9938027336d20e1c3c3b5f79abb6bbf010b50601b98cda09d6fe9",
+        "matches": true
+      },
+      "resources/windows-owned-tree-smoke-v1.json": {
+        "expectedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "committedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "matches": true
+      },
+      ".github/workflows/windows-owned-tree-smoke.yml": {
+        "expectedSha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+        "committedSha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+        "matches": true
+      },
+      "server/windows-memory-monitor-v2.mjs": {
+        "expectedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "committedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "matches": true
+      },
+      "server/windows-process-memory.mjs": {
+        "expectedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "committedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "matches": true
+      }
+    }
+  },
+  "actualLogFacts": {
+    "runner": "Windows Server 2025 Datacenter 10.0.26100",
+    "image": "windows-2025-vs2026 20261103.298.1",
+    "nodeVersion": "v22.23.4",
+    "offlineContracts": {
+      "passed": 12,
+      "failed": 0,
+      "durationMs": 1015.0212,
+      "separateActualStdlibTreeTestPassed": true,
+      "separateActualStdlibTreeTestDurationMs": 309.979
+    },
+    "smokeConsoleReport": {
+      "protocol": "windows-owned-tree-smoke-v1",
+      "status": "FAIL",
+      "category": "PREFLIGHT_OR_RUN"
+    },
+    "smokeExitCode": 1,
+    "smokeStepGroupAt": "2026-11-10T20:22:21.4067194Z",
+    "smokeReportAt": "2026-11-10T20:22:21.7622508Z",
+    "smokeErrorAt": "2026-11-10T20:22:21.8165754Z"
+  },
+  "smokeEvidence": {
+    "exactFailedStage": null,
+    "originalExceptionType": null,
+    "startedReceiptAvailable": false,
+    "completedReceiptAvailable": false,
+    "ownedFixtureReadinessObserved": false,
+    "actualSmokeProcessCount": null,
+    "wmiCollectorStartObserved": false,
+    "startupSnapshotsProven": 0,
+    "steadySamplesProven": 0,
+    "treeClosureProofsProven": 0,
+    "fixtureCleanup": null,
+    "collectorCleanup": null,
+    "orphanFreeCleanupEstablished": false,
+    "note": "Unavailable stage/process/cleanup fields are unknown, not zero activity. Separate offline stdlib fixture test is not the measurement fixture."
+  },
+  "staticDiagnosis": {
+    "committedArtifactsPathCount": 0,
+    "workflowCreatesArtifactsParent": false,
+    "outputLeafCreation": "mkdir artifacts/windows-owned-tree-smoke-v1 recursive:false",
+    "freshCheckoutDefect": "Missing artifacts parent makes nonrecursive output-leaf creation fail before runOwnedTreeSmoke if earlier preflight succeeds.",
+    "confidence": "high confidence deterministic source defect; not proven original thrown exception",
+    "alternativeEarlierFailure": "Freeze byte validation or another earlier preflight operation could fail; checkout byte hashes were not logged. Exact committed bytes match all seven frozen hashes, not proof of runner worktree byte hashes.",
+    "minimumFixProposal": [
+      "Create/validate fixed artifacts parent safely without weakening fresh exclusive output leaf; reject symlink/non-directory ancestors.",
+      "Record finite sanitized preflight stage/category so freeze, output initialization, measurement and postflight failures remain distinguishable; no raw exception text.",
+      "Regression for fresh checkout without artifacts parent and existing-output refusal, using temp synthetic files and injected run without WMI."
+    ],
+    "budgetsNeedChange": false,
+    "collectorChangesNeeded": false,
+    "sourceFixImplemented": false
+  },
+  "claims": {
+    "actualMultilevelRssValidated": false,
+    "collectorOverheadMeasured": false,
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false,
+    "productionEnabled": false
+  },
+  "auditExecution": {
+    "modelLoads": 0,
+    "wmiRuns": 0,
+    "networkRequests": 0,
+    "ciRuns": 0,
+    "sourceEdits": 0,
+    "testsRerun": 0,
+    "commits": 0
+  },
+  "independentReviewPending": true
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:45:02.014305+00:00",
+  "cut": "D1i",
+  "approvedForSingleBoundedWindowsRssRun": true,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE73targeted tests and YAML4public-exclusive jobs; historical V1 hashes unchanged",
+  "sourceHashes": {
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "tests/windows-memory-monitor-v2.test.mjs": "16a416ae9c1c52538816d9d8ed437e83b949697c9c55e7fd09364b2ddb6f3513",
+    "resources/windows-memory-monitor-v2.json": "fe65320482b2362868a6e5e959ecec2c00dbb4b352287c6fd439767f0ba1bf6c",
+    "docs/architecture/windows-memory-monitor-v2.md": "f0ba9c4e0503525c64b4c6c3cbe2c425b62c7be869ab6fcf49014fb6c01aebd9",
+    "scripts/windows-memory-smoke.mjs": "3b6dd508d65b17484901d3075f32cce46505df13e9e0c00e7457fcc07435fdd7",
+    "tests/windows-memory-smoke.test.mjs": "4d9b7b40adf1862454804f6ed9063a4d441198d197b54c9920bd6860ef567945",
+    ".github/workflows/windows-memory-smoke.yml": "f0e8d91b5d4bdb8b3de9de70f57b89cb72412bfe01095328cc6dd9d84ea41e78"
+  },
+  "baselineHashes": {
+    "server/windows-memory-monitor.mjs": "6bd9929109ff01334a86d760312fed302dc30ad052fcf7c52739560b8046a159",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  },
+  "limits": {
+    "startupMs": 10000,
+    "freshRequestMs": 2000,
+    "frameBytes": 4194304,
+    "rows": 4096,
+    "concurrency": 1,
+    "samples": 4,
+    "configuredPhaseMs": 35000,
+    "retries": 0
+  },
+  "actualRun": null,
+  "productionImported": false,
+  "physical8GBValidated": false
+}

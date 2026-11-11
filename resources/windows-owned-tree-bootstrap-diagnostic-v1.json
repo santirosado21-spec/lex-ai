@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-owned-tree-bootstrap-diagnostic-v1",
+  "backlogId": "D1k",
+  "status": "implemented-not-Windows-executed",
+  "diagnosticOnly": true,
+  "performanceValidated": false,
+  "productionEnabled": false,
+  "measurementRetriesAuthorized": 0,
+  "bootstrapSnapshots": 1,
+  "steadyRequests": 0,
+  "limits": {
+    "readinessMs": 5000,
+    "bootstrapMs": 10000,
+    "collectorCleanupMs": 6000,
+    "fixtureCleanupMs": 3500,
+    "maximumFrameBytes": 4194304,
+    "maximumRows": 4096,
+    "retries": 0,
+    "fixtureLifetimeMs": 60000
+  },
+  "frozenBaselineHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+    "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+    "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+    ".github/workflows/windows-owned-tree-smoke.yml": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  },
+  "resultMetadata": [
+    "observerStage",
+    "errorCategory",
+    "chunkCount",
+    "byteCount",
+    "frameAscii",
+    "terminalCRLF",
+    "frameCount",
+    "proofCount",
+    "fixtureLive",
+    "roles.root.present/parentMatches/rssPositive",
+    "roles.child.present/parentMatches/rssPositive",
+    "roles.grandchild.present/parentMatches/rssPositive",
+    "closureCount",
+    "collectorExcluded",
+    "outsideExcluded",
+    "sumEqualsMonitor",
+    "collectorCleanup",
+    "fixtureCleanup"
+  ],
+  "retainedUnknown": "D1j attempt3 original thrown observer reason and proof count remain unknown; new mocks do not establish actual cause.",
+  "executionAuthorized": false
+}

@@ -61,8 +61,8 @@ try {
  await page.getByLabel('Nombre del despacho').fill('Despacho sintético UI');
  await page.getByRole('button',{name:'Crear espacio privado',exact:true}).click();
  await page.getByRole('heading',{name:'Asistente',exact:true}).waitFor();
- await page.getByRole('button',{name:'Preparar LEX AI',exact:true}).click();
- await expect(page.getByRole('button',{name:'Estado de LEX AI',exact:true})).toHaveAttribute('title','LEX AI listo');
+ await page.getByRole('button',{name:'Preparar Rejon.AI',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Estado de Rejon.AI',exact:true})).toHaveAttribute('title','Rejon.AI listo');
  report.checks.push('onboarding firm and explicit local model initialization');
  const nav=page.getByRole('navigation',{name:'Navegación principal'});for(const label of ['Trabajo','Herramientas jurídicas','Sistema','Asistente','Asuntos','Escritos','Biblioteca federal','Conflictos','Checklist','Pendientes','Acciones propuestas','Panel','Inicio','Calidad del asistente','Configuración'])await expect(nav.getByRole('button',{name:label,exact:true})).toBeVisible();await page.getByRole('button',{name:'Asuntos',exact:true}).click();
  await page.getByRole('button',{name:'Nuevo asunto',exact:true}).click();
@@ -250,7 +250,7 @@ try {
  await page.clock.runFor(31_000);
  assert.equal(sourceStatusReads,readsAfterLeaving,'sources polling stops when leaving sources view');
  await page.getByRole('button',{name:'Detener',exact:true}).click();
- await page.getByText('LEX AI detenido',{exact:true}).last().waitFor();
+ await page.getByText('Rejon.AI detenido',{exact:true}).last().waitFor();
  report.checks.push('official corpus search and local engine stop');
  await page.setViewportSize({width:700,height:900});
  // This test controls animation time; flush resize before targeting the new nav.

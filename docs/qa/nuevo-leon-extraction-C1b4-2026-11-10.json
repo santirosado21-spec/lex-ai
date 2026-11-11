@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "C1b.4",
+  "freeze": "nuevo-leon-extraction-C1b4-freeze-2026-11-10.json",
+  "reportSha256": "008253594bb118b74c700b37dd4a7b12f4e1d64a05e5645f692f5dfb3794833d",
+  "sourceHashes": {
+    "scripts/extract-nuevo-leon-research.mjs": "c8ae506abd7a19a81971e305c3cf25719c4d3eb3570cebd8c53f966cd2d3783a",
+    "tests/nuevo-leon-extraction.test.mjs": "2f9d2180b03bcbf6c3236fc406be3290f912b439e7bd3eab5e4f90835e374e47",
+    "docs/architecture/nuevo-leon-extraction-v1.md": "4b56b4202bbe69d53535369dfec4ea6b7b7dc2d75574691587c5b1cb9077903b",
+    "server/legal-library.mjs": "e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6"
+  },
+  "summary": {
+    "attempted": 2,
+    "editorialNotes": 0,
+    "extractedQuarantine": 2,
+    "failed": 0,
+    "indexed": 0,
+    "missingHeadingsDocuments": 0,
+    "newlyApprovedCorpusDocuments": 0,
+    "pages": 619,
+    "planned": 2,
+    "published": 0,
+    "records": 102,
+    "recordsWithAnomalies": 100,
+    "trainingExported": 0,
+    "transitoryBoundaryDocuments": 1
+  },
+  "documents": [
+    {
+      "approvedForAcquisition": false,
+      "coverage": {
+        "operativeArticleCandidates": 2,
+        "pages": 396,
+        "rawCharacters": 1023867,
+        "removedEditorialLines": 14,
+        "removedHeaderLines": 1,
+        "structuralCandidateCount": 2,
+        "transitoryStartPage": 374
+      },
+      "declaredAmendedAt": null,
+      "diagnostics": {
+        "editorialNotes": 0,
+        "fidelityReview": "not performed; page references do not attest raw text or full transitory coverage",
+        "missingNumericHeadings": false,
+        "rawPageTextStored": false,
+        "records": 2,
+        "recordsWithAnomalies": 0,
+        "transitoryBoundaryObserved": true
+      },
+      "documentAnomalies": [],
+      "effectiveAt": null,
+      "extractionPath": "nl-civil.extraction.json",
+      "id": "nl-civil",
+      "indexed": false,
+      "legalReview": "pending",
+      "parserVersion": "legal-library-6",
+      "pdfSha256": "a517709dd10664bbf7fc4ee77e32e4a0da7fdfbce45b662166dc706ead3c8af7",
+      "published": false,
+      "rightsReview": "pending",
+      "state": "quarantined",
+      "status": "quarantined",
+      "textReview": "pending",
+      "trainingExported": false,
+      "versionBindingReview": "pending"
+    },
+    {
+      "approvedForAcquisition": false,
+      "coverage": {
+        "operativeArticleCandidates": 100,
+        "pages": 223,
+        "rawCharacters": 504568,
+        "removedEditorialLines": 56,
+        "removedHeaderLines": 2,
+        "stoppedAt": {
+          "articleId": "96",
+          "line": "ARTICULO 96.- EN LOS CASOS PREVISTOS EN ESTE CAPITULO, LOS ENFERMOS A",
+          "page": 27
+        },
+        "structuralCandidateCount": 0,
+        "transitoryStartPage": null
+      },
+      "declaredAmendedAt": null,
+      "diagnostics": {
+        "editorialNotes": 0,
+        "fidelityReview": "not performed; page references do not attest raw text or full transitory coverage",
+        "missingNumericHeadings": false,
+        "rawPageTextStored": false,
+        "records": 100,
+        "recordsWithAnomalies": 100,
+        "transitoryBoundaryObserved": false
+      },
+      "documentAnomalies": [
+        "operative-numbering-restarts-before-transitory-boundary"
+      ],
+      "effectiveAt": null,
+      "extractionPath": "nl-penal.extraction.json",
+      "id": "nl-penal",
+      "indexed": false,
+      "legalReview": "pending",
+      "parserVersion": "legal-library-6",
+      "pdfSha256": "440f28ca7515f63c35e5e9034086e843e126bed75f6d07dfe1067537607c3d76",
+      "published": false,
+      "rightsReview": "pending",
+      "state": "quarantined",
+      "status": "quarantined",
+      "textReview": "pending",
+      "trainingExported": false,
+      "versionBindingReview": "pending"
+    }
+  ],
+  "parserInvocations": 2,
+  "networkRequests": 0,
+  "elapsedMs": 819.879417,
+  "inputLedger": [
+    {
+      "bytes": 28108,
+      "path": "server/legal-library.mjs",
+      "sha256": "e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6"
+    },
+    {
+      "bytes": 19320,
+      "path": "scripts/capture-nuevo-leon-pdfs.py",
+      "sha256": "dab58faebb598c3ce4b48333b1e618bb3a4ccda2ae4268f0ba3965be50b0f944"
+    },
+    {
+      "bytes": 21272,
+      "path": "scripts/inspect-nuevo-leon-links.py",
+      "sha256": "0294d183590c126bf7d6228f588b96968b320ec03828b3076b638de4016cbad7"
+    },
+    {
+      "bytes": 8406,
+      "path": "docs/architecture/nuevo-leon-pdf-research-v1.md",
+      "sha256": "9c17021c45cd95dc51a7f78644dc062bf4d468c987c1142eac0210654571ffcd"
+    },
+    {
+      "bytes": 7558,
+      "path": "docs/architecture/nuevo-leon-link-inspector-v1.md",
+      "sha256": "81eefeeffc64946c9fa043f70be308c19c6001236810dfad17444fbcdf325250"
+    },
+    {
+      "bytes": 1342,
+      "path": "docs/qa/nuevo-leon-pdf-capture-C1b3-freeze-2026-11-10.json",
+      "sha256": "5af6d8246548dcfab7e358ac14973e121c268d339ad4dc0ff2b9cbe2ad3930d4"
+    },
+    {
+      "bytes": 10708,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/report.json",
+      "sha256": "888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246"
+    },
+    {
+      "bytes": 40241,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/source-report.json",
+      "sha256": "05ad65a4b84f011905f6336e4b94cece7800ffb71c010e863bf542b5f503a719"
+    },
+    {
+      "bytes": 24,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/robots.txt",
+      "sha256": "c70abcf98d7c268caa7a66739104962b1f5304d39762201e1074cacfcaba3134"
+    },
+    {
+      "bytes": 1060809,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/source-nl-civil.html",
+      "sha256": "7ad6ac47640688a911f135a690080677f6e4e2cf5927e17e2d70637e601925c9"
+    },
+    {
+      "bytes": 1779177,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/nl-civil.pdf",
+      "sha256": "a517709dd10664bbf7fc4ee77e32e4a0da7fdfbce45b662166dc706ead3c8af7"
+    },
+    {
+      "bytes": 522816,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/source-nl-penal.html",
+      "sha256": "f087c1a18f6784c0fa46ca9d7fae62dda745795109b226153ca481a09b57b356"
+    },
+    {
+      "bytes": 1222017,
+      "path": "artifacts/public-corpus/nl-pdfs-revision-01/nl-penal.pdf",
+      "sha256": "440f28ca7515f63c35e5e9034086e843e126bed75f6d07dfe1067537607c3d76"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 10708,
+      "path": "source-capture-report.json",
+      "sha256": "888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246"
+    },
+    {
+      "bytes": 40241,
+      "path": "source-html-report.json",
+      "sha256": "05ad65a4b84f011905f6336e4b94cece7800ffb71c010e863bf542b5f503a719"
+    },
+    {
+      "bytes": 1779177,
+      "path": "nl-civil.pdf",
+      "sha256": "a517709dd10664bbf7fc4ee77e32e4a0da7fdfbce45b662166dc706ead3c8af7"
+    },
+    {
+      "bytes": 1222017,
+      "path": "nl-penal.pdf",
+      "sha256": "440f28ca7515f63c35e5e9034086e843e126bed75f6d07dfe1067537607c3d76"
+    },
+    {
+      "bytes": 11387,
+      "path": "nl-civil.extraction.json",
+      "sha256": "e511893f7c49ec8334f6e1fba81a42b5706887be594f59f4861a5c8308fbb3ef"
+    },
+    {
+      "bytes": 190583,
+      "path": "nl-penal.extraction.json",
+      "sha256": "f76d0d81b11d2ecb2e5658ab229ad35a8a2148a4f692638e2374cd4e89556c4a"
+    }
+  ],
+  "builderTests": 15,
+  "independentTests": 15,
+  "independentVerdict": "APPROVE-evidence-only",
+  "physicalVisualSamples": {
+    "civilPage1": "artifacts/public-corpus/nl-pdfs-visual-20261110/civil-page1.png",
+    "penalPage1": "artifacts/public-corpus/nl-pdfs-visual-20261110/penal-page1.png",
+    "penalPages26And27": [
+      "artifacts/public-corpus/nl-pdfs-visual-20261110/penal-review-026.png",
+      "artifacts/public-corpus/nl-pdfs-visual-20261110/penal-review-027.png"
+    ],
+    "scope": "Root inspected rendered samples only, not full fidelity/legal review"
+  },
+  "sourceLayoutFinding": "Penal page26 reference ARTICULO96. wraps to its own line inside article89; existing generic regex falsely treats it as heading before actual96 onpage27. Civil uses Art.1o.- abbreviation unsupported by generic heading regex.",
+  "allRecordsQuarantined": true,
+  "completeArticleCoverageValidated": false,
+  "legalAccuracyValidated": false,
+  "commercialRightsApproved": false,
+  "published": false,
+  "indexed": false,
+  "trainingExported": false
+}

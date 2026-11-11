@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:03:55.031943+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_PARTIAL_METADATA_FACTS_ONLY",
+  "scope": "Read-only independent offline audit; current point-in-time identity, not successful original parent run or retrospective original postflight.",
+  "originalRun": {
+    "state": "failed-retained-no-retry",
+    "failureCode": "PARENT_OR_IPC_FAILURE",
+    "elapsedMs": 1277.223,
+    "originalExceptionTypeKnown": false,
+    "originalPostflightEstablished": false,
+    "receiptWorkerEvents": [],
+    "combinedParentWorkerRssAvailable": false
+  },
+  "evidence": {
+    "receipt": {
+      "path": "artifacts/privacy/nym-contract-probe-v1/receipt.json",
+      "sha256": "0d1d34d56892419970e96fe618dea5d33bf41027f7aa5583c9e78d710644e610"
+    },
+    "ledger": {
+      "path": "artifacts/privacy/nym-contract-probe-v1/ledger.jsonl",
+      "sha256": "ce4d46258c36333432a41abf00adb6fd41a922a099f67af4212bb627dde0d263"
+    },
+    "freeze": {
+      "path": "docs/qa/privacy-nym-contract-probe-v1-freeze.json",
+      "sha256": "41300da0231a591f1af91ffa727e2bbf47dbfbf2ea97edc350da6b3db943b654"
+    },
+    "currentSourceHashes": {
+      "docs/architecture/privacy-nym-contract-probe-v1.md": "519a5e0b368e2c1be48eebfc51cdddc377faf1ac615c961e1826eca84c768259",
+      "resources/privacy-nym-contract-probe-v1.json": "bdcbdb01c3c4c6fbb0628cab129776dd714dc2ded1961de06c8de71bb2e234d1",
+      "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+      "scripts/prepare-privacy-nym-research.py": "f7947e09e7b5087d68b9acdf12c281526d80cd99e46a84284d66781f2e69b535",
+      "scripts/probe-privacy-nym-contract.py": "4fdec8cb46798b220f7bc3af796ce80a2070a26e46d065ded6b463d18d57ec7b"
+    },
+    "currentRuntimeIdentity": {
+      "algorithm": "relative-path-and-file-sha256-canonical-frames-v1",
+      "architecture": "arm64",
+      "expectedVersions": {
+        "numpy": "2.5.4",
+        "onnxruntime": "1.31.1",
+        "python": "3.12.13",
+        "tokenizers": "0.23.3"
+      },
+      "platform": "darwin",
+      "pythonBinarySha256": "a395f264e5612a2819662ed3e37fd30d39ed61179b98e5f86c3c783a008d8623",
+      "requirementsSha256": "80035e6aedaaca16ddc7fd9195642fbc3a292fb381b095281ad42b061a8bf9d8",
+      "runtimeRegularFileCount": 2396,
+      "runtimeTreeSha256": "b4617cbe5ebb453dd597460a816f1c67c44bf99cf702673758fb204f4a172b6c"
+    },
+    "currentCacheFiles": [
+      {
+        "bytes": 6717,
+        "path": "README.md",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "74c55f42afcad1e5c1ea9b059f37d9d48e5641e04628642a12444721c57f3d9e"
+      },
+      {
+        "bytes": 5688,
+        "path": "int8/config.json",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "3f07065571e22bb73eba28ddb1fae4509c0cf703762e3bfa7a6ab2111cf7cb88"
+      },
+      {
+        "bytes": 573,
+        "path": "tokenizer_config.json",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "02055b886266b1a475bc324da83e273fe96e4974002f9d970f26e94aa73e5885"
+      },
+      {
+        "bytes": 1687,
+        "path": ".gitattributes",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "48030a73329817519a47704c56b3e891b4227a19742a138374b9f6ccde002004"
+      },
+      {
+        "bytes": 138730982,
+        "path": "int8/model_int8.onnx",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286"
+      },
+      {
+        "bytes": 12389891,
+        "path": "int8/tokenizer.json",
+        "postflight": "exact-byte-sha256",
+        "readonly": true,
+        "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de"
+      }
+    ],
+    "identityAuditTemporalScope": "Source/freeze/runtime hashes and six cached regular0400 file byte hashes matched the frozen identities at independent audit time. This does not recover missing original postflight or parent sampling."
+  },
+  "checks": {
+    "sourceHashCount": 5,
+    "runtimeRegularFileCount": 2396,
+    "cacheFiles": 6,
+    "cacheRegularReadonly0400BytesAndHashesVerified": true,
+    "validatedLedgerEventCount": 5,
+    "eventOrder": [
+      "sandbox",
+      "versions",
+      "graph",
+      "tokenizer",
+      "complete"
+    ],
+    "pureValidateEventPassed": true,
+    "pureComparisonsPassed": true,
+    "receiptAndLedgerHashesMatchPartialRecord": true
+  },
+  "observations": {
+    "networkProbeDeniedEPERM": true,
+    "provider": "CPUExecutionProvider",
+    "cpuThreads": 1,
+    "graphOptimizations": "ORT_DISABLE_ALL",
+    "inputs": [
+      {
+        "name": "input_ids",
+        "type": "tensor(int64)",
+        "shape": [
+          "batch_size",
+          "sequence_length"
+        ]
+      },
+      {
+        "name": "attention_mask",
+        "type": "tensor(int64)",
+        "shape": [
+          "batch_size",
+          "sequence_length"
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "logits",
+        "type": "tensor(float)",
+        "shape": [
+          "batch_size",
+          "sequence_length",
+          81
+        ]
+      }
+    ],
+    "vocabWithAdded": 198804,
+    "vocabWithoutAdded": 198804,
+    "maximumTokenId": 198803,
+    "declaredConfigVocabSize": 256000,
+    "specialTokenIds": {
+      "<bos>": 2,
+      "<eos>": 1,
+      "<unk>": 3,
+      "<pad>": 0,
+      "<mask>": 4,
+      "<start_of_turn>": 106,
+      "<end_of_turn>": 107
+    },
+    "declaredConfigClsId": 1,
+    "descriptorClsBosSymbolComparison": "Observed <bos> ID2 differs from declared CLS1; descriptor-symbol comparison only, no postprocessor/remapping proof.",
+    "fixedFixtureTokenCounts": {
+      "spanish": 10,
+      "emoji": 12,
+      "nfd": 9,
+      "rfc-like": 19
+    },
+    "emojiRepeatedNonSpecialOffset": {
+      "range": [
+        7,
+        8
+      ],
+      "occurrences": 4,
+      "unitStatus": "compatibility-only-unverified-for-decoding"
+    },
+    "workerReportedPeakRssBytes": 782876672,
+    "workerPeakScope": "Worker-reported only; combined parent/worker samples were lost and remain unavailable.",
+    "sessionRuns": 0,
+    "nerPredictions": 0
+  },
+  "retentionDefect": {
+    "sourcePatternConfirmed": true,
+    "description": "An exception while closing child stdout can bypass observe_worker.partial assignment placed after cleanup. A pure fake-child fault demonstrates the loss pattern, not the original exception or root cause.",
+    "independentOriginalCauseEstablished": false,
+    "actualModelReplayPerformed": false
+  },
+  "auditExecution": {
+    "runtimeModelTokenizerImports": 0,
+    "modelLoads": 0,
+    "tokenizations": 0,
+    "nnForwards": 0,
+    "networkRequests": 0,
+    "heldoutOrGoldAccess": false,
+    "cacheOrSourceMutation": false
+  },
+  "limits": {
+    "wholeProbeSucceeded": false,
+    "offsetContractValidated": false,
+    "privacyValidated": false,
+    "qualityEvaluated": false,
+    "spanishQualityValidated": false,
+    "physical8GBValidated": false,
+    "redistributionApproved": false,
+    "fullLicenseNoticeMissing": true,
+    "productionEnabled": false
+  }
+}

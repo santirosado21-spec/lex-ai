@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-owned-tree-smoke-v1",
+  "backlogId": "D1j",
+  "status": "implemented-not-Windows-executed",
+  "productionEnabled": false,
+  "automaticRun": false,
+  "freezePath": "docs/qa/windows-owned-tree-smoke-freeze-2026-11-10.json",
+  "freezeScope": "windows-owned-tree-smoke-v1",
+  "approvalField": "approvedForSingleRun",
+  "limits": {
+    "processLevels": 3,
+    "syntheticBytesPerProcess": 8388608,
+    "fixtureLifetimeMs": 60000,
+    "readinessMs": 5000,
+    "bootstrapMs": 10000,
+    "steadyQueryMs": 2000,
+    "steadySamples": 4,
+    "responseBytes": 4194304,
+    "collectorCleanupMs": 6000,
+    "fixtureCleanupMs": 3500,
+    "retries": 0
+  },
+  "pinnedBaselineHashes": {
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  },
+  "proof": "Each of five transient snapshots must contain exactly the three owned descendants, positive individual RSS and exact PPID chain. Collector and outside coordinator must not belong to subtree. No raw rows/PIDs persisted.",
+  "claims": {
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false,
+    "collectorOverheadMeasured": false
+  },
+  "historicalEvidence": "D1i run42878658531 passed one real root/four fresh samples; actual multilevel descendants unmeasured."
+}

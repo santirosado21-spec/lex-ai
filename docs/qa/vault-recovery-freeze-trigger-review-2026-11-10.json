@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "reviewer": "review_vault_reminders / Sol",
+  "verdict": "APPROVE_STATIC_TRIGGER_DELTA_ONLY",
+  "workflow": ".github/workflows/vault-recovery-synthetic.yml",
+  "previousSha256": "04d45f44cf0d91055a0ee453168ac6ef68cc471210dc270a16ce7f60628a1b8d",
+  "currentSha256": "0a4cccb85fa6ff18c47fa3b6c193c605b59b238a854f9093a8510706fc932716",
+  "delta": {
+    "addedPushPath": "docs/qa/vault-recovery-synthetic-freeze-2026-11-10.json",
+    "exactSingleLineAdditionVerified": true,
+    "removingAddedLineRestoresPreviouslyReviewedBytes": true
+  },
+  "unchanged": [
+    "public repository and head-commit-prefix job guard",
+    "fixed commands and exact test selectors",
+    "budgets and cleanup policy",
+    "18-case/R23 requirements",
+    "strict final-receipt parser"
+  ],
+  "scope": "Allows freeze-only pushes to reach existing guarded job; root must separately decide and issue the explicit matching freeze before any fourth crypto run.",
+  "cryptoRunAuthorizedByReview": false,
+  "executionPerformed": false,
+  "testsCodegenNativeCallsCINetworkPerformed": false,
+  "prerequisiteObservedSupervisorRun": 42900589961
+}

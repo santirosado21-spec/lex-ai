@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "scope": "STATIC_EXIT_ONLY_SETTLEMENT_CONTRACT",
+  "reviewer": "review_vault_reminders",
+  "verdict": "APPROVE_STATIC_FOR_NEW_SUPERVISOR_ONLY_FREEZE_DECISION",
+  "sourceHashes": {
+    "crates/lex-vault/tests/recovery.rs": "3198bb3327e1076e857d56e875d92355542e7e9fac41b9fff081b70720ce0a18",
+    "crates/lex-vault/README.md": "a3df89bd884710f3955004d45f094c4b490e96cd000a8c10b29cebb7ef441ced"
+  },
+  "findings": [
+    {
+      "severity": "P2",
+      "id": "settlement-must-compose-case-and-batch-deadlines",
+      "source": "crates/lex-vault/tests/recovery.rs::resolve_sample_failure / child_case",
+      "description": "A fresh50ms settlement window is not bounded by absolute child-case60s and batch300s deadlines. The loop checks case time before native sampling; settlement can then accept an exact exit after case expiry but before its own50ms deadline. A later guard.next may reset the watchdog before its next50ms observation.",
+      "staticExample": "Unavailable sample near59.99s; exact exit at60.02s accepted within settlement50ms, then child_case breaks without an absolute post-settlement case check. This is reasoning, not an executed reproduction.",
+      "requestedChange": "Compose min(settlement-start+50ms, absolute case deadline, absolute batch deadline), checking strictly before and after every poll. Never extend/reset case or batch deadline. Add pure injected-clock near-case and near-batch expiry/equality cases.",
+      "status": "statically-closed-runtime-not-run",
+      "closure": "Settlement now capped by original guard stage/batch and explicit caller batch deadlines. Child immediate poll, native sample, settlement, sleep, post-loop and pre-return receipt paths enforce strict absolute expiry; guard.next cannot forgive an expired previous stage."
+    }
+  ],
+  "positiveChecks": [
+    "Original failure cause remains UNKNOWN; rapid24probe did not reproduce unavailable native query.",
+    "Only pre/post owned-handle running observations permit settlement; registry and observation errors fail directly.",
+    "No native RSS requery, restore restart, new OS children or acceptance of zero RSS added.",
+    "Same owned Child handle and exact exit status retained; bounded poll count and1ms sleeps prevent an injected nonadvancing-clock infinite loop.",
+    "Logging remains finite numeric-only outside registry lock; no key/payload/PID disclosure.",
+    "First batch body/categories/R23 and four reset sites unchanged.",
+    "New50ms monitoring tradeoff is documented rather than called unchanged failure policy."
+  ],
+  "execution": {
+    "nativeCalls": 0,
+    "codegen": 0,
+    "tests": 0,
+    "network": 0,
+    "sourceEdits": false,
+    "freezeEdits": false
+  },
+  "limits": [
+    "Static review only; new policy not runtime validated.",
+    "No fourth crypto run or H5/recovery acceptance authorized.",
+    "Hard instantaneous child RSS and kernel/scheduler bounds remain unestablished."
+  ],
+  "initialReview": {
+    "verdict": "P2_DEADLINE_COMPOSITION_REQUIRED",
+    "sourceHashes": {
+      "crates/lex-vault/tests/recovery.rs": "e827831e29d1682c8e6668ce967c7ee6111d33945eb58256b529ef17763f87f2",
+      "crates/lex-vault/README.md": "d2ec937de69b63f9a880ed6113a6ea3dc7d04d65b7a425019779cabab98fa973"
+    }
+  },
+  "rereview": {
+    "hashesMatch": true,
+    "firstBatchBodyAndR23Unchanged": true,
+    "guardResetSites": 4,
+    "originalStageDeadline": "guard.started + stored original stage elapsed +60s",
+    "originalBatchDeadline": "min(guard.started+300s, caller batch+300s)",
+    "settlementDeadline": "min(now+50ms, original stage and batch absolute deadline)",
+    "timeFailure": "71 after owned cleanup;74 if cleanup/reaping observation fails",
+    "checks": [
+      "Strict before/after poll and sleep, post-diagnostic and returned-status checks prevent equality/late exits from passing.",
+      "Already-exited direct-poll and OwnedSample::Exited paths are checked after observation, without postspawn case clock restart.",
+      "Pre/post existing stage-reset checks reject expired preceding stages.",
+      "Pure near-case/batch9ms pass,10ms equality and11ms late fail, live expiry and zero-poll expired-boundary assertions added."
+    ],
+    "execution": "Read-only static analysis only; no native calls/codegen/tests/network.",
+    "cryptoRunAuthorized": false,
+    "supervisorRuntimeValidated": false
+  }
+}

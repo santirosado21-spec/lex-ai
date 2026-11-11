@@ -52,7 +52,7 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
  deps.memory=dependencies.memory||(dependencies.freeMemory?async()=>({freeBytes:deps.freeMemory(),availableBytes:deps.freeMemory(),method:'injected-test',estimated:true}):availableMemory);deps.rss=dependencies.rss||processTreeRss;
  const hardware=deps.hardware();
  const supported=hardware.platform===catalog.platform&&(catalog.supportedArchs||[catalog.arch]).includes(hardware.arch)&&hardware.memoryGB>=catalog.minMemoryGB;
- let state={state:'stopped',model:'LEX AI',modelId:catalog.id,supported,hardware,message:supported?'Inicializa el modelo local para comenzar.':`Requiere una Mac compatible y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`,downloadGB:catalog.downloadGB,downloadBytes:catalog.downloadBytes,license:catalog.license,licenseUrl:catalog.licenseUrl,progress:0,contextLength:catalog.contextLength,outputTokens:catalog.outputTokens,memoryEstimateGB:catalog.memoryEstimateGB,memoryMeasured:false,minMemoryGB:catalog.minMemoryGB,minFreeMemoryGB:catalog.minFreeMemoryGB,minFreeDiskGB:catalog.minFreeDiskGB,validationStatus:catalog.validationStatus};
+ let state={state:'stopped',model:'Rejon.AI',modelId:catalog.id,supported,hardware,message:supported?'Inicializa el modelo local para comenzar.':`Requiere una Mac compatible y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`,downloadGB:catalog.downloadGB,downloadBytes:catalog.downloadBytes,license:catalog.license,licenseUrl:catalog.licenseUrl,progress:0,contextLength:catalog.contextLength,outputTokens:catalog.outputTokens,memoryEstimateGB:catalog.memoryEstimateGB,memoryMeasured:false,minMemoryGB:catalog.minMemoryGB,minFreeMemoryGB:catalog.minFreeMemoryGB,minFreeDiskGB:catalog.minFreeDiskGB,validationStatus:catalog.validationStatus};
  let child,base,controller,initializing=false,busy=false,stopping=false,shutdown=false,initController,bootTask,stopPromise;
  const modelRoot=modelsDir||path.join(dataDir,'models');
  const set=s=>{state={...state,...s};};
@@ -70,7 +70,7 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
   }
   if(child===owned)child=undefined;
  }
- const memoryRequirementMessage=`Libera al menos ${catalog.minFreeMemoryGB} GB de RAM disponible antes de usar LEX AI. Estimación conservadora, no garantía de rendimiento.`;
+ const memoryRequirementMessage=`Libera al menos ${catalog.minFreeMemoryGB} GB de RAM disponible antes de usar Rejon.AI. Estimación conservadora, no garantía de rendimiento.`;
  async function readMemory(){const memory=await deps.memory();set({freeMemoryGB:memory.freeBytes/GiB,availableMemoryGB:memory.availableBytes/GiB,memoryAvailabilityMethod:memory.method,memoryAvailabilityEstimated:memory.estimated});return memory;}
  async function refreshMemoryWarning(){
   try{
@@ -135,13 +135,13 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
    await start();const tags=await(await request('/api/tags')).json();cancelled();
    if(!tags.models?.some(x=>x.name===catalog.id)){
     if(catalog.localOnly===true)throw Error('El candidato local de evaluación no está importado en este almacén.');
-    if(!allowDownload)throw Error('No se encontraron los recursos incluidos de LEX AI. Vuelve a instalar la aplicación completa.');
+    if(!allowDownload)throw Error('No se encontraron los recursos incluidos de Rejon.AI. Vuelve a instalar la aplicación completa.');
     // Inspect only the small official manifest before allowing a tag pull. No cloud inference.
     const response=await deps.fetch(policy.manifestUrl,{headers:{Accept:'application/vnd.docker.distribution.manifest.v2+json'},redirect:'error',signal:AbortSignal.any([initController.signal,AbortSignal.timeout(15000)])});
     if(!response.ok)throw Error('No se pudo verificar el manifiesto oficial.');
     const manifest=validateManifest(await boundedBytes(response,65536),catalog);
     const allowed=new Map([manifest.config,...manifest.layers].map(l=>[l.digest,l.size]));
-    set({state:'downloading',message:`Descargando LEX AI (${(catalog.downloadBytes/1e9).toFixed(2)} GB). Puedes cancelar.`,progress:0});
+    set({state:'downloading',message:`Descargando Rejon.AI (${(catalog.downloadBytes/1e9).toFixed(2)} GB). Puedes cancelar.`,progress:0});
     const r=await request('/api/pull',{model:catalog.id,stream:true},3600_000);let success=false;
     for await(const d of records(r.body)){
      cancelled();if(d.error)throw Error('La descarga local falló.');
@@ -152,7 +152,7 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
     }
     if(!success)throw Error('La descarga se interrumpió.');
    }
-   cancelled();await verify();cancelled();await refreshMemoryWarning();set({state:'ready',manifestDigest:catalog.manifestDigest,progress:100,message:'LEX AI está disponible. Los documentos se procesan en este equipo.'});
+   cancelled();await verify();cancelled();await refreshMemoryWarning();set({state:'ready',manifestDigest:catalog.manifestDigest,progress:100,message:'Rejon.AI está disponible. Los documentos se procesan en este equipo.'});
   }catch(e){await killOwned();set({state:shutdown?'stopped':'error',message:shutdown?'Motor detenido.':e.message});}finally{initializing=false;}
  }
  return {
@@ -160,13 +160,13 @@ export function createInference({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,
   status:async()=>({...state,hardware:{...hardware},busy}),
   initialize:async()=>{if(stopPromise)await stopPromise;if(initializing||state.state==='ready')return {...state};shutdown=false;stopping=false;initController=new AbortController();initializing=true;set({state:'starting',message:'Iniciando motor local…',progress:0});bootTask=boot();return {...state};},
   async *generate(messages,{signal,outputSchema,responseFormat='json'}={}){
-   if(state.state!=='ready')throw Error('Prepara LEX AI antes de analizar documentos.');
+   if(state.state!=='ready')throw Error('Prepara Rejon.AI antes de analizar documentos.');
    if(busy)throw Error('Ya hay un análisis en curso.');
    if(!['json','text'].includes(responseFormat)||responseFormat==='text'&&outputSchema)throw Error('Formato de respuesta no admitido.');
    if(!Array.isArray(messages)||!messages.length||messages.length>16||messages.some(m=>!['system','user','assistant'].includes(m.role)||typeof m.content!=='string')||messages.reduce((n,m)=>n+m.content.length,0)>catalog.maxInputCharacters||JSON.stringify(outputSchema||{}).length>16000)throw Error('El contexto excede el presupuesto local. Acota tu pregunta y las fuentes.');
    await checkMemory();if(busy)throw Error('Ya hay un análisis en curso.');busy=true;controller=new AbortController();const active=controller,timer=setTimeout(()=>active.abort(),180_000);
    let rssTimer,rssChecking=false,guardError;
-   const sampleRss=async()=>{if(rssChecking||shutdown||!child)return;rssChecking=true;try{const rss=await deps.rss(child.pid);if(controller!==active||active.signal.aborted)return;if(!Number.isFinite(rss)||rss<0)throw Error('Medición RSS inválida.');set({runtimeRssGB:rss/GiB,runtimeRssLimitGB:3});if(rss>3*GiB)throw Error('LEX AI superó el límite de memoria de 3 GiB. Motor detenido.');}catch(e){guardError=Error(e.message?.includes('3 GiB')?e.message:'No se pudo supervisar la memoria del motor.');active.abort();await killOwned();set({state:'error',message:guardError.message});}finally{rssChecking=false;}};
+   const sampleRss=async()=>{if(rssChecking||shutdown||!child)return;rssChecking=true;try{const rss=await deps.rss(child.pid);if(controller!==active||active.signal.aborted)return;if(!Number.isFinite(rss)||rss<0)throw Error('Medición RSS inválida.');set({runtimeRssGB:rss/GiB,runtimeRssLimitGB:3});if(rss>3*GiB)throw Error('Rejon.AI superó el límite de memoria de 3 GiB. Motor detenido.');}catch(e){guardError=Error(e.message?.includes('3 GiB')?e.message:'No se pudo supervisar la memoria del motor.');active.abort();await killOwned();set({state:'error',message:guardError.message});}finally{rssChecking=false;}};
    try{
     await sampleRss();if(guardError)throw guardError;rssTimer=setInterval(()=>void sampleRss(),500);
     const r=await request('/api/chat',{model:catalog.id,messages,stream:true,think:false,truncate:false,shift:false,...(responseFormat==='text'?{}:{format:outputSchema||'json'}),keep_alive:0,options:generationOptions(catalog.contextLength,catalog.outputTokens)},180_000,AbortSignal.any([active.signal,...(signal?[signal]:[])]));

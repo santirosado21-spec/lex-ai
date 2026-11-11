@@ -1,12 +1,6 @@
 'use strict';
 
-const downloadButton = document.getElementById('download-button');
-const downloadState = document.getElementById('download-state');
-const downloadSize = document.getElementById('download-size');
-const downloadSha = document.getElementById('download-sha');
-const copyButton = document.getElementById('copy-sha');
-const copyStatus = document.getElementById('copy-status');
-const versionNodes = document.querySelectorAll('[data-release-version]');
+const platformCards = [...document.querySelectorAll('[data-platform]')];
 const themeToggle = document.getElementById('theme-toggle');
 const themeLabels = {auto:'Automático', light:'Claro', dark:'Oscuro'};
 const integrationsStatus = document.getElementById('integrations-status');
@@ -53,64 +47,68 @@ function formatBytes(bytes) {
   return `${gib >= 1 ? gib.toFixed(2) : (bytes / 1e6).toFixed(1)} ${gib >= 1 ? 'GB' : 'MB'}`;
 }
 
-function setUnavailable(message = 'La descarga aún no está publicada.') {
-  downloadButton.removeAttribute('href');
-  downloadButton.setAttribute('aria-disabled', 'true');
-  downloadButton.setAttribute('tabindex', '-1');
-  downloadButton.textContent = 'Disponible muy pronto';
-  downloadState.textContent = message;
-  downloadSize.textContent = 'Tamaño pendiente de publicación';
-  downloadSha.textContent = 'Pendiente de publicación';
-  copyButton.disabled = true;
+const PLATFORM_LABELS = {'mac-arm64':'Mac · Apple Silicon','mac-x64':'Mac · Intel','windows-x64':'Windows'};
+const FILE_SUFFIXES = {'mac-arm64':['arm64.dmg'],'mac-x64':['x64.dmg'],'windows-x64':['x64.exe','x64.msi']};
+function validPlatformRelease(key, entry) {
+  if (!entry || !['experimental-local-legacy','experimental','published'].includes(entry.status)
+      || !/^\d+\.\d+\.\d+$/.test(entry.version || '')
+      || !Number.isSafeInteger(entry.bytes) || entry.bytes <= 0
+      || typeof entry.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(entry.sha256)
+      || !entry.requirements || typeof entry.requirements !== 'object' || Array.isArray(entry.requirements)
+      || !Number.isFinite(entry.requirements.minimumMemoryGB) || entry.requirements.minimumMemoryGB <= 0
+      || !Number.isFinite(entry.requirements.minimumFreeDiskGB) || entry.requirements.minimumFreeDiskGB <= 0
+      || typeof entry.downloadUrl !== 'string' || !FILE_SUFFIXES[key]) return false;
+  // Literal canonical URLs only: no userinfo, query, fragment, encoding or redirects.
+  return FILE_SUFFIXES[key].some(suffix => entry.downloadUrl ===
+    `https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v${entry.version}/LEX-AI-${entry.version}-${suffix}`);
 }
-
-function setAvailable(catalogue) {
-  downloadButton.href = catalogue.downloadUrl;
-  downloadButton.setAttribute('download', '');
-  downloadButton.setAttribute('aria-disabled', 'false');
-  downloadButton.removeAttribute('tabindex');
-  downloadButton.textContent = `Descargar LEX AI ${catalogue.version}`;
-  downloadState.textContent = 'La descarga incluye un archivo DMG para Apple Silicon.';
-  downloadSize.textContent = formatBytes(catalogue.bytes);
-  downloadSha.textContent = catalogue.sha256;
-  copyButton.disabled = false;
+function renderPlatform(card, entry) {
+  const key=card.dataset.platform, label=PLATFORM_LABELS[key];
+  const field=name=>card.querySelector(`[data-field="${name}"]`);
+  const button=field('download'), copy=field('copy');
+  button.removeAttribute('href');button.removeAttribute('download');
+  button.setAttribute('aria-disabled','true');button.setAttribute('tabindex','-1');
+  button.textContent='Pendiente de publicación';copy.disabled=true;
+  field('version').textContent='Versión pendiente';field('size').textContent='Tamaño pendiente';
+  field('sha').textContent='Pendiente de publicación';field('copy-status').textContent='';
+  field('state').textContent='No hay un instalador verificado para esta opción.';
+  if (!validPlatformRelease(key,entry)) return;
+  button.href=entry.downloadUrl;button.setAttribute('download','');
+  button.setAttribute('aria-disabled','false');button.removeAttribute('tabindex');
+  button.textContent=`Descargar para ${label}`;
+  field('version').textContent=`Versión ${entry.version}`;
+  field('state').textContent=entry.status==='experimental-local-legacy'
+    ? 'Versión anterior LEX AI, local y experimental; aún no es un instalador de Rejon.AI ni incluye el nuevo flujo híbrido.'
+    : 'Instalador publicado; revisa los requisitos y límites de esta versión.';
+  field('size').textContent=formatBytes(entry.bytes);field('sha').textContent=entry.sha256;copy.disabled=false;
 }
-
-function isSafeDownloadUrl(value) {
-  try {
-    const url = new URL(value, window.location.href);
-    return url.origin === window.location.origin || url.protocol === 'https:';
-  } catch {
-    return false;
-  }
-}
-
 async function loadCatalogue() {
   try {
-    const response = await fetch('catalogue.json', {credentials: 'same-origin'});
-    if (!response.ok) throw new Error('No se pudo leer el catálogo.');
-    const catalogue = await response.json();
-    versionNodes.forEach(node => { node.textContent = catalogue.version || '0.4.3'; });
-    setIntegrationsStatus(catalogue.version);
-    const available = typeof catalogue.downloadUrl === 'string' && isSafeDownloadUrl(catalogue.downloadUrl)
-      && Number.isFinite(catalogue.bytes) && catalogue.bytes > 0
-      && typeof catalogue.sha256 === 'string' && /^[a-f0-9]{64}$/i.test(catalogue.sha256);
-    if (!available) return setUnavailable();
-    setAvailable(catalogue);
+    const response=await fetch('catalogue.json',{credentials:'same-origin'});
+    if (!response.ok) throw new Error('Catálogo no disponible.');
+    const catalogue=await response.json();
+    if (catalogue.schemaVersion!==3 || !catalogue.platforms || typeof catalogue.platforms!=='object') throw new Error('Catálogo no admitido.');
+    platformCards.forEach(card=>renderPlatform(card,catalogue.platforms[card.dataset.platform]));
+    const arm=catalogue.platforms['mac-arm64'];
+    setIntegrationsStatus(validPlatformRelease('mac-arm64',arm)?arm.version:'0');
   } catch {
-    setIntegrationsStatus('0');
-    setUnavailable('La descarga no está disponible en este momento.');
+    platformCards.forEach(card=>renderPlatform(card,null));setIntegrationsStatus('0');
   }
 }
-
-copyButton.addEventListener('click', async () => {
-  if (copyButton.disabled) return;
-  try {
-    await navigator.clipboard.writeText(downloadSha.textContent);
-    copyStatus.textContent = 'SHA-256 copiado.';
-  } catch {
-    copyStatus.textContent = 'No se pudo copiar; selecciona el SHA-256 manualmente.';
-  }
+platformCards.forEach(card=>{
+  const download=card.querySelector('[data-field="download"]');
+  download.addEventListener('click',event=>{if(download.getAttribute('aria-disabled')==='true')event.preventDefault();});
+  download.addEventListener('keydown',event=>{if(download.getAttribute('aria-disabled')==='true' && ['Enter',' '].includes(event.key))event.preventDefault();});
+  const copy=card.querySelector('[data-field="copy"]');
+  copy.addEventListener('click',async()=>{
+    if(copy.disabled)return;
+    const version=card.querySelector('[data-field="version"]').textContent;
+    const status=card.querySelector('[data-field="copy-status"]');
+    try {
+      await navigator.clipboard.writeText(card.querySelector('[data-field="sha"]').textContent);
+      status.textContent=`SHA-256 copiado: ${PLATFORM_LABELS[card.dataset.platform]}, ${version}.`;
+    } catch {status.textContent='No se pudo copiar; selecciona el SHA-256 manualmente.';}
+  });
 });
 
 setTheme(currentTheme());

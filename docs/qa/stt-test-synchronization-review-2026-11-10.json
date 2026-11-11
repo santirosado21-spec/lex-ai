@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:30:55.699349+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_TEST_SYNCHRONIZATION_ONLY",
+  "reviewedHashes": {
+    "tests/stt.test.mjs": "59af6bece6b9af97e750165c50a9d20c3b5fbeaeb711662c1e3b35b9dfb21bd7",
+    "server/stt.mjs": "0a8bd282412c789836c5c964bd8254f3b510ea18a5ae4eb1eb724d779d98ab9b"
+  },
+  "tests": {
+    "command": "node --test tests/stt.test.mjs",
+    "passed": 5,
+    "failed": 0,
+    "reportedDurationMs": 65.617375,
+    "syntheticStubOnly": true
+  },
+  "findings": [],
+  "reviewedBehavior": [
+    "Deferred spawned promise resolves from injected spawn; no filesystem-latency polling assumption.",
+    "Promise.race propagates first-job rejection and rejects premature first-job completion.",
+    "Second call is rejected while the first spawned job remains pending; exactly one process call asserted.",
+    "Finally emits fake exit and awaits first-job settlement so temp-file cleanup can finish on assertion failure.",
+    "Five-second timeout belongs only to this test; production STT unchanged."
+  ],
+  "historicalFailure": {
+    "log": "artifacts/phased-completion-20261110-batch2/npm-test-checkpoint-nym-decoder-v1.log",
+    "reportedSuite": "1019/1020 with assert.ok(child) after10x1ms polling",
+    "interpretation": "The replaced short polling budget was scheduler/filesystem dependent; this review does not rerun the full suite."
+  },
+  "limits": [
+    "This test now synchronizes concurrency assertion to an actual pending injected spawn; it is not a separate test of every pre-spawn preparation interleaving. Production source still reserves busy before asynchronous temp preparation.",
+    "No real engine, audio source, model download, network or full-suite run."
+  ],
+  "productionEdits": false,
+  "actualEngineExecuted": false,
+  "networkRequests": 0
+}

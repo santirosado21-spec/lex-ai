@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "status": "diagnostic-only-not-executed-on-windows",
+  "markerPrefix": "[windows-env-diagnostic]",
+  "maximumPowerShellProcesses": 2,
+  "maximumFixtureProcesses": 1,
+  "probeTimeoutMs": 10000,
+  "globalAbortMs": 26000,
+  "maximumConfiguredMs": 27000,
+  "variants": ["minimal", "builtin"],
+  "onlyEnvironmentDifference": "PSModulePath from validated system PowerShell launcher directory + Modules",
+  "sameCommandBothVariants": true,
+  "stages": ["BOOT", "ENV", "LOOKUP_UTILITY", "LOOKUP_CIM", "READ_READY", "JSON", "CIM", "RESULT", "DONE"],
+  "allowedMeasurements": ["finite stage/category", "elapsed milliseconds", "exit observed/code", "module path entry count", "builtin path membership boolean", "owned process count", "owned root working-set bytes"],
+  "forbiddenOutput": ["paths", "environment values", "process names", "command lines", "raw errors", "stderr", "client data"],
+  "orderConfounding": true,
+  "performanceValidated": false,
+  "productionChanges": false,
+  "retry": false,
+  "fallback": false
+}

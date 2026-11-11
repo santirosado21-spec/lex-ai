@@ -1,0 +1,40 @@
+{
+  "scope": "bounded developer public trial only",
+  "officialIndex": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "httpStatus": 200,
+    "sha256": "a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca",
+    "recognizedPdfs": 317,
+    "observedAt": "2026-11-09T23:30:31.431Z"
+  },
+  "robotsPreflight": {
+    "url": "https://www.diputados.gob.mx/robots.txt",
+    "httpStatus": 404,
+    "bytes": 208,
+    "sha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe",
+    "meaning": "No robots file at observed path, not a rights permission; runtime enforcement still required"
+  },
+  "rightsSource": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "articleReference": "14 VIII",
+    "sourceDeclaredReform": "2026-05-14",
+    "interpretation": "Narrow operational basis for public statutory trial; not an individualized commercial reuse opinion"
+  },
+  "approvedExactDocumentIds": [
+    "cpeum",
+    "ccf",
+    "ccom",
+    "cff",
+    "cpf",
+    "lft",
+    "lfpc",
+    "lfda",
+    "lgsm",
+    "lamp"
+  ],
+  "pendingSlots": 20,
+  "commercialRedistributionReviewed": false,
+  "legalApplicabilityReviewed": false,
+  "massAcquisitionAuthorized": false,
+  "reviewedAt": "2026-11-09T23:31:16.688294+00:00"
+}

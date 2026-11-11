@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1b",
+  "sources": {
+    "server/desktop-target.mjs": "edd4c82ba4d063c75073d7d193741be141217301048e60ae1246c257fb521100",
+    "scripts/build-desktop.mjs": "aac4e594f93f2f5e8df0d1c5c9f7f9a018912de9fc70fcb929cf93d1a409ae31",
+    "scripts/prepare-desktop.mjs": "3dbbc671f771cdcd4a6dcf30a149de4752e0207969211420d67d13d991c7e8f2",
+    "scripts/verify-package.mjs": "14216930e0de570ddf8e5f6924beda778c8376abdc84d3166c0ccb732fb257c3",
+    "tests/desktop-target.test.mjs": "e8d0b519e4180c6ae297eb793bd1b27cae57483c412286f3b1dd808f64a18d6d",
+    "package.json": "bb43516c0012e4cf8973580dd827904cc95dfb8e5e97168298beeac1558c20c1",
+    "src-tauri/tauri.conf.json": "c7d4947b545bec414ed895b4b0bf6066a5d46213dcafff7f424410f6ff485f54"
+  },
+  "builderTests": 11,
+  "independentTests": 11,
+  "reviewer": "gpt-6.1-sol",
+  "verdict": "APPROVE-staging-scope",
+  "rootSuite": 812,
+  "rootBuild": "PASS",
+  "actualMacNodeArchitectureChecked": true,
+  "stagingUsesSyntheticFixtures": true,
+  "actualTauriOverlayBundle": false,
+  "installerBuilt": false,
+  "windowsBuildEnabled": false,
+  "physicalIntelOrWindowsTest": false,
+  "automaticModelOrRuntimeDownloads": false,
+  "references": [
+    "https://v2.tauri.app/reference/cli/",
+    "https://v2.tauri.app/develop/configuration-files/"
+  ]
+}

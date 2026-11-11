@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:35:48.766690+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_SOURCE_DIAGNOSTIC_ONLY_FOR_SEPARATE_ROOT_FREEZE",
+  "reviewedHashes": {
+    "scripts/windows-owned-tree-source-diagnostic.mjs": "0ae0dfaaf24c95a99dc8642f117dde594835b6c241bc8c0519ee6863608d6a87",
+    "tests/windows-owned-tree-source-diagnostic.test.mjs": "6dbd5de687d76a2eb9dc438afa3d100ab6e59bd20f796305174e3851caaf7b96",
+    ".github/workflows/windows-owned-tree-source-diagnostic.yml": "1d36e9a08f62818c3c6b33b567edf6f795e800fad383bcbc6e49d7e5d47d66a6",
+    "docs/architecture/windows-owned-tree-source-diagnostic-v1.md": "cc0df85b28461bcc1fe84719d3707db51366b25185a3343a45929dec6294105a"
+  },
+  "tests": {
+    "command": "node --test tests/windows-owned-tree-source-diagnostic.test.mjs",
+    "passed": 5,
+    "failed": 0,
+    "reportedDurationMs": 52.386584,
+    "WindowsGitWmiOrCIExecuted": false
+  },
+  "findings": [],
+  "reviewedContract": [
+    "Exactly11sequential absolute Git show HEAD fixed allowlisted path commands;2s/1MiB each,30s monotonic acceptance deadline, no retry/shell/arbitrary CLI command.",
+    "Four diagnostic self committed blobs must match new freeze; exact working bytes or in-memory CRLF-to-LF equality witness only. No normalization writes.",
+    "Old seven smoke sources retain strict exact hashes and report working/blob mismatch facts under fixed role names, never source content.",
+    "New public-prefix standardWindows3min workflow,readonly pinned checkout without persistent credentials; no WMI/fixture/smoke command/upload/cache/deploy."
+  ],
+  "attempt2IndependentAudit": {
+    "verdict": "APPROVE_FAILED_PREFLIGHT_FACTS_ONLY",
+    "runId": 42895998118,
+    "commit": "25d3922f529d769111bb5c571e36847b02f2993a",
+    "logSha256": "9a7af0f48fbe9b89499541bf81cbb42f3d9896bc443ad68bf476fb38017d8cf2",
+    "freezeCopySha256": "9c05df15075ad0c5826953cbdd1eccf4e62eae1741522177402ea34072f6944a",
+    "freezeCopyEqualsCommitted": true,
+    "allSevenCommittedBlobHashesMatchFreeze": true,
+    "offlineTestsPassed": 15,
+    "reportedPhase": "source-preflight",
+    "reportedCode": "SOURCE_HASH_MISMATCH",
+    "outputOrSmokeFixtureOrWmiReached": false,
+    "mismatchingFileKnown": false,
+    "runnerWorkingBytesKnown": false,
+    "crlfCauseProven": false,
+    "attempt1CauseRemainsUnknown": true
+  },
+  "limits": [
+    "Diagnostic-only self EOL equivalence is explicitly approved only for these four new pinned public textual files; no weakening of measurement sources/freeze.",
+    "Trusted public checkout only, not hostile-repository/general filesystem sandbox.",
+    "No actual Windows source diagnostic, source EOL repair, third RSS attempt or new freeze authorized by this audit.",
+    "No RSS/performance/installer/inference/physical8GB acceptance."
+  ],
+  "auditExecution": {
+    "networkRequests": 0,
+    "WmiRuns": 0,
+    "CIRuns": 0,
+    "sourceEdits": 0,
+    "fileNormalizationWrites": 0
+  }
+}

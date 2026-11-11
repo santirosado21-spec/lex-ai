@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "scope": "ONE_FIXED_NYM_STRUCTURAL_RUN",
+  "approvedBy": "codex/root",
+  "sourceCommit": "a501868",
+  "independentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE source after P2 typed IPC correction,19pure/mock tests",
+  "freezeSha256": "3db968d3fc5f208d8e9f76e4f60caecb0836608a8fe3b33fe5c3c3f534a047fc",
+  "fixedWitnessCount": 8,
+  "maximumForwards": 8,
+  "globalOriginalCoordinateProofRequiredBeforeAnyForward": true,
+  "blockedWitnessesRetained": true,
+  "qualityEvaluationAuthorized": false,
+  "heldoutOrDevGoldAccessAuthorized": false,
+  "modelWeightsRedistributionApproved": false,
+  "missingApplicableLicenseNoticeAcknowledgedForBoundedResearchOnly": true,
+  "automaticRetry": false,
+  "productionEnabled": false,
+  "newNativeH5CompilationOnOwnerMacAuthorized": false
+}

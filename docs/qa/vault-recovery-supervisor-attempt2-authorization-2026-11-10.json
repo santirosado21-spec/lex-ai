@@ -1,0 +1,9 @@
+{
+  "scope": "SECOND_EXPLICIT_SUPERVISOR_ONLY",
+  "reason": "Diagnosed fixed macOS utility path; assertions and supervisor/encryption logic unchanged",
+  "independentReviewer": "review_vault_reminders / gpt-6.1-sol: APPROVE",
+  "newFreezeSha256": "f94de549146126f28351d479a6f9b82a1625706189907ae2b84f6dfd45eaa8a9",
+  "automaticRetry": false,
+  "cryptoTestsAuthorized": false,
+  "ownerMacRustCodegenAuthorized": false
+}

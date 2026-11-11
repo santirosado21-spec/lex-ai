@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:06:13.278841+00:00",
+  "approvedForBoundedOfflineResearchExtraction": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: APPROVE15injected tests +13input localpreflight, no actualparse",
+  "sourceHashes": {
+    "scripts/extract-nuevo-leon-research.mjs": "c8ae506abd7a19a81971e305c3cf25719c4d3eb3570cebd8c53f966cd2d3783a",
+    "tests/nuevo-leon-extraction.test.mjs": "2f9d2180b03bcbf6c3236fc406be3290f912b439e7bd3eab5e4f90835e374e47",
+    "docs/architecture/nuevo-leon-extraction-v1.md": "4b56b4202bbe69d53535369dfec4ea6b7b7dc2d75574691587c5b1cb9077903b",
+    "server/legal-library.mjs": "e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6"
+  },
+  "captureReportSha256": "888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246",
+  "limits": {
+    "documents": 2,
+    "concurrency": 1,
+    "workerTimeoutMs": 120000,
+    "workerOldGenerationHeapMiB": 768,
+    "pagesPerDocument": 1200,
+    "batchTimeoutMs": 300000,
+    "maxPdfBytes": 10485760,
+    "maxTotalPdfBytes": 20971520,
+    "maxRecordsPerDocument": 20000,
+    "maxJsonBytes": 67108864
+  },
+  "networkAuthorized": false,
+  "textFidelityReviewed": false,
+  "legalAccuracyReviewed": false,
+  "productionEnabled": false
+}

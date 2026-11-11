@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "frozenAt": "2026-11-10T00:26:55.739Z",
+  "planSha256": "f7a927dad744a85256c17fddc1673d14cc08d6398510fe971ad98066747bf209",
+  "reviewer": "review_s2_pilot",
+  "reviewerModel": "gpt-6.1-sol",
+  "review": "APPROVE corrected development pilot, 26/26 independent mocked tests",
+  "sourceHashes": {
+    "scripts/eval-legal-task-skills.mjs": "df12d2ed305e4fc1877342f0879f971d97d05fe5549a535ac0414761c4d1002f",
+    "tests/legal-task-eval.test.mjs": "b13ddf7384bb856d0b752c600af742ee7ddb901fe73f7ad62ae9942130191acb",
+    "scripts/dsystem/remote.mjs": "fe8b3742de2de65600573025d836b751e44607da905eae4e4d8ee7251623a75c",
+    "server/legal-tasks/contracts.mjs": "340c0edb8262780f18c9f175af6b46738cc887577d9ebc25869080fa2822ce1f",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "resources/legal-task-skills/manifest.json": "ec4a065a034a4406d5e93d95bad2141a1b6af28e12a8650e6c5d3551898296d2",
+    "resources/legal-task-skills/investigacion-juridica-mx/SKILL.md": "1430f49206245983062088fcb57687115aa1011f9b08c4963871fa18d3c65eba",
+    "resources/legal-task-skills/revision-contratos-mx/SKILL.md": "78a6b4a41f7a2a43abdfc88b43770fe7f864b2177c76d2a1e13395727cb358ed",
+    "docs/architecture/legal-tasks/paired-evaluation-v2.md": "736b36c41ccd1032220e2beb617f47e7606feaa0c41b91b7a8d059a0f28f7ee6"
+  },
+  "datasetHashes": {
+    "eval/legal-tasks/s2-v2/cases.jsonl": "323e2b6ca1eb76ad34dbf1ccbc967aedb003f040d1c369d1050fc29c92da7b0b",
+    "eval/legal-tasks/s2-v2/rubrics.json": "d1729c63b92981ebc2db0836bd555a41bedfe536456acc5d9b998589205c811d"
+  },
+  "blindingMapSha256": "85892778a144b813dbb8a645a40dcb13297f6c4452e41430eee38ff88319d023",
+  "s1Freeze": "legal-task-skills-S1-freeze-2026-11-09.json",
+  "priorCancelledPilot": {
+    "commit": "69ebff1",
+    "attempts": 6,
+    "reportSha256": "8e98ade1aa54940481d7d04f827c26154fe2f4dd17bd44c26a815bd154d023c5",
+    "excludedFromEfficacy": true
+  },
+  "limits": {
+    "posts": 24,
+    "http": 100,
+    "durationMs": 1800000,
+    "spacingMs": 65000,
+    "maxTokens": 2500,
+    "timeoutMs": 45000,
+    "temperature": 0
+  },
+  "plannedModels": [
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b"
+  ],
+  "plannedCases": 6,
+  "plannedGenerations": 24,
+  "cumulativeSessionMaximumGenerations": 30,
+  "initialSessionCeiling": 32,
+  "sourcePassagesReviewed": {
+    "ids": [
+      "s1796",
+      "s1797"
+    ],
+    "physicalPages": [
+      175,
+      175
+    ],
+    "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+    "normalizedTextMatchesC1": true,
+    "productPromotion": false
+  },
+  "skillsChangedAfterS1": false,
+  "productionEnabled": false,
+  "professionalValidation": false,
+  "caseAcceptanceStatus": "frozen independent V2; retire after review/publication"
+}

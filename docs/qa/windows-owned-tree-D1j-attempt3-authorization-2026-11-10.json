@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "scope": "THIRD_EXPLICIT_WINDOWS_OWNED_TREE_SMOKE",
+  "approvedBy": "codex/root",
+  "previousRunId": 42895998118,
+  "sourceDiagnosticRunId": 42897065529,
+  "previousFreezeSha256": "9c05df15075ad0c5826953cbdd1eccf4e62eae1741522177402ea34072f6944a",
+  "diagnosedCurrentCheckoutDifference": "All7 oldsource workingbytes exactly equal LF-frozenblobs converted toCRLF; actualolderattempt2 workingbytes notretained",
+  "fix": "Sevenexactpath text eol=lf checkoutattributes; originalbyteverifier unchanged",
+  "attributesSha256": "c48902f36fa25c81acc74cfe0d44346c8ae3163976d395942caf8a862db5c1cb",
+  "independentReview": "review_completion_phases / gpt-6.1-sol: APPROVE LFcontract+singletriggerpathaddendum",
+  "newFreezeSha256": "d52dea6a270d4fa3df5d06d7e40b07932fd75a59f44c530702b4640e617bd08a",
+  "otherSixSourcesAndMonitorAndBudgetsUnchanged": true,
+  "automaticRetry": false,
+  "physical8GBValidated": false,
+  "installersValidated": false
+}

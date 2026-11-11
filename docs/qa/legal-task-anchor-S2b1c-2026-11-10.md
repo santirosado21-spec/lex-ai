@@ -1,0 +1,11 @@
+# S2b.1c: dos pares de citas completados
+
+El primer ensayo congelado terminó4/4: dos casos inventados nuevos, literalS1 frente a anclasv2, sólo openai/gpt-oss-120b en Groq. Ambos brazos usan JSONnativo estricto, skillS1 fija, esfuerzo bajo, razonamiento textual excluido, temperatura0 y2500tokens máximos. El orden se invierte en el segundo par. [Métricas/recibos resumidos](legal-task-anchor-S2b1c-2026-11-10.json), [freeze previo](legal-task-anchor-S2b1c-freeze-2026-11-10.json), [protocolo](../architecture/legal-tasks/anchor-probe-v1.md).
+
+Literal2/2 y anclas2/2 pasan JSON, S1 y citas. No se repararon respuestas, anclas, quotes u offsets. Hay dos pares completos; cuatroPOST/ochoHTTP,198.737ms con esperas65.297/65.238/65.225ms y ningún retry/fallback. Modelos observados coinciden en4/4, HTTP200/finishstop. El20b del ensayo anterior no se volvió a invocar.
+
+Uso reportado: literal8.802tokens, anclas7.645, total**16.447**. Los1.300 de razonamiento ya están incluidos en completion, sin sumarlos otra vez. Factura/cuota desconocidas; atestaciónFree actual de la credencial de desarrollo comprobada, no autorización de ruta comercial. Latencias descriptivas de dos muestras por brazo: literal media2600,5/p95máximo2739ms; anclas1502,5/1667ms. Dos casos y diferencias necesarias de esquema/contexto/instrucción no permiten atribuir causalmente ventaja al formato o elegir proveedor.
+
+Revisión previa encontróP2: finish_reason arbitrario podía reflejar una credencial en metadatos guardados. El nuevo arnés usa vocabulario finito y observedModel sólo exacto; unknown termina con categoría segura y null. Probes adversariales y replay rechazan incluso recibos rehasheados con metadatos inyectados. Las fuentes históricas congeladas no se reescribieron. Builder51/51 combinadas; revisor20/20 nuevas y reproducción de la sonda. Tras live, revisor confirmó hashes/binding/cadena/wire/espaciado/usage y replay completo sin otras llamadas.
+
+Las cuatro respuestas de ficción no mostraron una invención jurídica evidente en lectura cualitativa SF; eso no es evaluación profesional, corrección mexicana, entailment general o aceptación. S2b.2 aún necesita casos independientes amplios y abogados. El motor de producto no cambia y el buen formato no sustituye detector, cifrado recuperable o permisos de nube.

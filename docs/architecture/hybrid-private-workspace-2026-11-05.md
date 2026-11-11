@@ -1,5 +1,7 @@
 # LEX AI: espacio jurídico híbrido y control de datos
 
+> Actualización 2026-11-09: la [nueva dirección de privacidad local y modelos por tarea](hybrid-local-privacy-router-2026-11-09.md) sustituye la prioridad de acceso ChatGPT de este documento. Mantiene los controles de datos y continuidad del producto. Este archivo se conserva como antecedente.
+
 Fecha: 2026-11-05. Estado: dirección del dueño y propuesta de arquitectura; integración remota y cifrado pendientes de implementación. Se revisaron código y documentación pública, sin llamadas de inferencia ni envío de documentos del despacho.
 
 ## Decisión y continuidad del producto

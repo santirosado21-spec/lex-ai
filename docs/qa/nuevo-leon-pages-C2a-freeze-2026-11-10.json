@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:18:51.750141+00:00",
+  "approvedForBoundedOfflineResearchExtraction": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: APPROVE19synthetic tests; no actualPDFparse",
+  "sourceHashes": {
+    "server/corpus/state-page-evidence.mjs": "0912ec270610b7f1f3ff62b86c846b28c9ebd0c86ff0d846f4208099ee5e9bad",
+    "scripts/extract-nuevo-leon-pages.mjs": "9cf36f0789e5a091985bdfe0ebd59596014b2c477a8771953355a756e03d9fcb",
+    "tests/state-page-evidence.test.mjs": "6cb7c26f07bb7bc9ca31df42302a2aa5223275118aeed553445cd90b78850a31",
+    "tests/nuevo-leon-pages.test.mjs": "0eae3bf32433c94154a36ee06ec7e833aab6f131016cb99050619836e5302d01",
+    "docs/architecture/nuevo-leon-page-evidence-v1.md": "554f16380113834e2160990c2b3f65b31fde7d6b19e389bd27b14e61c78f73ac",
+    "server/legal-library.mjs": "e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6"
+  },
+  "captureReportSha256": "888972f9e20cfc17f573ed43b37d23ab3c00db4efc2b963ed7b1483478759246",
+  "scope": "2 fixed PDFs, all pages and raw text/items, candidate headings only, no operative classification",
+  "networkAuthorized": false,
+  "textFidelityReviewed": false,
+  "legalAccuracyReviewed": false,
+  "productionEnabled": false
+}

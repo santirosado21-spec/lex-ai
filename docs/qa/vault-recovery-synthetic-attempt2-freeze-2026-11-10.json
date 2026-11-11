@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "feature": "synthetic-recovery",
+  "minimumRustVersion": "1.99.0",
+  "sourceHashes": {
+    "crates/lex-vault/Cargo.toml": "eebc597782d1e3d4cbb969898c46be0b810cfd9e2248afc6b4f9fb2a01777886",
+    "crates/lex-vault/Cargo.lock": "f5ad6d515a05cf1b8306b10116862631728fa2d20175f1afe745c072a13d99fa",
+    "crates/lex-vault/README.md": "03c0f0d22df95cd5d569449e86e0f089fe71e8333f9c58b8342ecd8a4ec91c0b",
+    "crates/lex-vault/src/lib.rs": "5f9ce836e47731906349b606e43d6edd145342da3f0c2b4cb6a5a99450e9edf0",
+    "crates/lex-vault/src/recovery.rs": "e8d85ca29bda9ea53ce81459e64b70fd3ebd9a6b5284089f1218b772c05e733d",
+    "crates/lex-vault/tests/recovery.rs": "973b1d010e86563b13ce9753d500f4b89079ccbcd1b0d4d5f452cd6cb2eae965",
+    "crates/lex-vault/tests/recovery_process.rs": "cd7ce44167bb6f28143594358956bbb0e062cccedf72046966e891f0b1469b04",
+    "crates/lex-vault/tests/support/recovery_fixture.rs": "faac4c6c63fb113b0480496ffee8d1738527d5a01849344a42a4d597ff10c4ba"
+  },
+  "baselineSourceHashes": {
+    "crates/lex-vault/src/proposals.rs": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301",
+    "crates/lex-vault/src/reminders.rs": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b",
+    "crates/lex-vault/src/time_billing.rs": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82",
+    "crates/lex-vault/tests/proposals.rs": "21585731d755207f92090b83bac3a0d29cc2fdac0d08ffb60e192f653657cee1",
+    "crates/lex-vault/tests/reminders.rs": "6fc57916503ae276b406dac3060968758c46c364049885fd78049c3c378c8b7a",
+    "crates/lex-vault/tests/time_billing.rs": "f1f81c255c29dc4482278b582b39ac4576dc5109425fed8fbf08b33852969874",
+    "crates/lex-vault/tests/viability.rs": "3c99c0c452593f40389451f5dc1ebf456501e564016da0bcd4f78980696e3fc7"
+  },
+  "scope": "SYNTHETIC_RECOVERY_FIRST_BATCH",
+  "workflowSha256": "04d45f44cf0d91055a0ee453168ac6ef68cc471210dc270a16ce7f60628a1b8d",
+  "approvedForSingleSyntheticRecoveryRun": true,
+  "protocolSha256": "1b1125e92adb2e1360c67ca3dcaa1b86daa01e26591e7f6df496f7cd73195794",
+  "expectedCaseInvocations": 18,
+  "maxCaseMs": 60000,
+  "maxBatchMs": 300000,
+  "maxRssBytes": 805306368,
+  "rssIntervalMs": 50,
+  "requiredCaseIds": [
+    "R01",
+    "R03-wrong",
+    "R03-missing",
+    "R04-missing",
+    "R04-wrong",
+    "R05-live",
+    "R05-retained-closed",
+    "R06-final-truncate",
+    "R07-body-flip",
+    "R09-foreign",
+    "R13-staging-collision",
+    "R17-cipher-size",
+    "R17-header",
+    "R17-plain-size",
+    "R17-log19",
+    "R23a-internal-append",
+    "R23b-external-append",
+    "R18-scanner"
+  ],
+  "r23Bindings": {
+    "R23a-internal-append": {
+      "categoryCode": 4,
+      "published": false
+    },
+    "R23b-external-append": {
+      "categoryCode": 3,
+      "published": false
+    }
+  },
+  "expectedPreparation": {
+    "baseFixture": 1,
+    "negativeSealFixtures": 4,
+    "baseExports": 1,
+    "authenticatedNegativeEnvelopes": 2
+  }
+}

@@ -62,7 +62,7 @@ export default function PendingView({matter}:{matter:Matter}) {
     {error?<div className="pending-error" role="alert"><span>{error}</span><button className="text-button" type="button" onClick={()=>setError('')}>Cerrar</button></div>:null}
 
     <section className="pending-suggestions" aria-labelledby={`${titleId}-suggestions`}>
-      <div className="section-heading"><div><h2 id={`${titleId}-suggestions`}>Sugerencias de LEX AI</h2><p>Estas sugerencias permanecen en este equipo; nada se envía fuera de esta computadora.</p></div><span>{proposed.length}</span></div>
+      <div className="section-heading"><div><h2 id={`${titleId}-suggestions`}>Sugerencias de Rejon.AI</h2><p>Estas sugerencias permanecen en este equipo; nada se envía fuera de esta computadora.</p></div><span>{proposed.length}</span></div>
       {proposed.length?<div className="pending-list">{proposed.map(item=><ReminderCard key={item.id} item={item} matter={matter} actions={<><button className="secondary" type="button" disabled={Boolean(busy)} onClick={()=>void update(item.id,'approved')}>Aprobar</button><button className="text-button" type="button" disabled={Boolean(busy)} onClick={()=>void update(item.id,'dismissed')}>Descartar</button></>}/>)}</div>:<p className="pending-empty">No hay sugerencias por revisar. Puedes revisar pendientes cuando quieras; las sugerencias requieren aprobación explícita.</p>}
     </section>
 
@@ -79,7 +79,7 @@ export default function PendingView({matter}:{matter:Matter}) {
         <label htmlFor="pending-title">Pendiente</label><input id="pending-title" value={title} onChange={event=>setTitle(event.target.value)} maxLength={200} required placeholder="Preparar respuesta"/>
         <div className="pending-form-row"><div><label htmlFor="pending-kind">Tipo</label><select id="pending-kind" value={kind} onChange={event=>setKind(event.target.value as 'deadline'|'followup')}><option value="deadline">Fecha límite</option><option value="followup">Seguimiento</option></select></div><div><label htmlFor="pending-date">Fecha</label><input id="pending-date" type="date" value={dueAt} onChange={event=>setDueAt(event.target.value)} required/></div></div>
         <label htmlFor="pending-note">Nota opcional</label><textarea id="pending-note" value={note} onChange={event=>setNote(event.target.value)} maxLength={3600} rows={3} placeholder="Contexto para tu seguimiento"/>
-        <p className="pending-legal-note">LEX AI no calcula términos legales; captura la fecha que tú determines.</p>
+        <p className="pending-legal-note">Rejon.AI no calcula términos legales; captura la fecha que tú determines.</p>
         <button className="primary" type="submit" disabled={Boolean(busy)||!title.trim()||!dueAt}><Plus size={16}/>{busy==='create'?'Guardando…':'Agregar pendiente'}</button>
       </form>
     </section>

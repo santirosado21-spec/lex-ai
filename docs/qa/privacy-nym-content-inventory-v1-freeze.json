@@ -1,0 +1,21 @@
+{
+  "id": "nym-content-inventory-v1",
+  "status": "frozen-reviewed",
+  "rootAuthorization": "one-public-build-preparation",
+  "independentReview": "approved",
+  "sourceHashes": {
+    "scripts/prepare-nym-content-inventory.py": "c3aa09e0483e121097619dffb27564c3735bcb4b7c9e544fea4fe49a23acfbcf",
+    "tests/privacy-nym-inventory-preparation.test.mjs": "7805be2f9b7456b22e756805265b3fe2b09b4a7e011cae492d2c5a11bd5f7523",
+    "resources/privacy-nym-inventory-preparation-v1.json": "34a2bf1e84fa63dc546d20b435817454519d0cebb3f0d9de75a433f69aa1b521",
+    "docs/architecture/privacy-nym-inventory-preparation-v1.md": "8ba306c635c1feddd1e6262295d8b920d77b66062b35e960a436b24e12fd5bbb"
+  },
+  "tokenizerSha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+  "limits": {
+    "seconds": 30,
+    "peakRssBytes": 402653184,
+    "lineBytes": 4096,
+    "inventoryBytes": 33554432,
+    "rows": 198804,
+    "addedEntries": 249
+  }
+}

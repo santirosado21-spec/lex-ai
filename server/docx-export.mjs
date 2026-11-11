@@ -127,7 +127,7 @@ export async function buildAnswerDocx({firm,matter,answer}) {
     new Paragraph({style:'Disclaimer',children:[new TextRun({text:'Este documento es un borrador informativo elaborado con base en las fuentes recuperadas para este asunto. No sustituye el análisis del abogado responsable, no constituye una opinión legal definitiva y no acredita la vigencia de las disposiciones citadas. Antes de usarlo, confirme los hechos, las fuentes y su vigencia aplicable.',font:BODY_FONT,size:20,italics:true,color:MUTED})]}),
   ];
   const document=new Document({
-    creator:'LEX AI',title:'Análisis jurídico',description:'Borrador con fuentes para revisión profesional',
+    creator:'Rejon.AI',title:'Análisis jurídico',description:'Borrador con fuentes para revisión profesional',
     footnotes,
     styles:{
       default:{document:{run:{font:BODY_FONT,size:22,color:INK},paragraph:bodyParagraph}},
@@ -197,7 +197,7 @@ export async function buildComparisonDocx({firm,matter,comparison,documents}) {
     ?[new Paragraph({text:'Cambios léxicos que conviene revisar',style:'ComparisonHeading'}),new Paragraph({...paragraphStyle,children:comparison.criticalChanges.flatMap((change,index)=>[run(`${index?', ':''}${change.text}`,change.type)])})]
     :[];
   const document=new Document({
-    creator:'LEX AI',title:'Comparación de versiones',description:'Comparación automática léxica; no es análisis jurídico',
+    creator:'Rejon.AI',title:'Comparación de versiones',description:'Comparación automática léxica; no es análisis jurídico',
     styles:{default:{document:{run:{font:BODY_FONT,size:21,color:INK},paragraph:paragraphStyle}},paragraphStyles:[
       {id:'ComparisonFirm',name:'Despacho comparación',basedOn:'Normal',run:{font:BODY_FONT,size:24,bold:true},paragraph:{spacing:{after:70}}},
       {id:'ComparisonTitle',name:'Título comparación',basedOn:'Normal',run:{font:BODY_FONT,size:32,bold:true},paragraph:{spacing:{after:100}}},

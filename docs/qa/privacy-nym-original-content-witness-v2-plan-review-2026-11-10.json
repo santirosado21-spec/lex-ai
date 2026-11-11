@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:57:03.283565+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_DOCUMENTARY_CONTENT_WITNESS_CONTRACT_ONLY",
+  "reviewedHashes": {
+    "resources/privacy-nym-original-content-witness-v2.json": "eadeb76ec850e65bfefad38e00e9cf2f3633bd2efb7c07a7783fc56b4c8c8102",
+    "docs/architecture/privacy-nym-original-content-witness-v2.md": "8c1175938a47c213b9f8fad5d17c9d129edf9135e6c74785f77ebeb8387fa596"
+  },
+  "referenceChecks": {
+    "fourPinnedSourceDocumentHashesMatch": true,
+    "twoPreservedAuditsSourceOperations": 12,
+    "all12EmbeddedSourceBodiesBytesAndSha256Verified": true,
+    "upstreamCommit": "301277072263fb3830eb66eec7e47adadf76f1dc",
+    "originalV1Receipt": {
+      "path": "artifacts/privacy/nym-int8-decoder-v1-first/receipt.json",
+      "sha256": "f3253cef5b7d61d78a81bee1eb638e0088334d235818e17642d523be0217750f",
+      "attempted": 8,
+      "blocked": 8,
+      "forwardStarted": 0,
+      "forwardReturned": 0,
+      "decoded": 0,
+      "offsetProofEstablished": false
+    }
+  },
+  "findings": [],
+  "reasoning": [
+    "Exact raw-token content vs immutable original slice is an additional attribution witness; it is not inverse-decoder equality or offset bounds alone.",
+    "Piece start0/reset solely by exact allowed whitespace added token supports the source-derived Metaspace prepend; later ordinary tokens have no prefix exception. Original literal marker remains blocked, so proof-only space replacement cannot conflate original marker with space.",
+    "Each permitted added whitespace token must match pinned ID/content and all five flagsfalse; keep the contributor/logit. Unknown/non-whitespace added IDs cannot reset a piece.",
+    "Single strict ASCII-byte fallback is permitted only after first ordinary piece token and must equal entire positive original slice; no multibyte/grouping/overlap/dedup/recovery.",
+    "Ordered disjoint positive offsets, exact original UTF8/UTF16 endpoint tables and all-nonwhitespace coverage restrict coordinate fallback errors; token inventory/proof cannot be supplied as worker/model authority.",
+    "All attended non-special contributors retained, including whitespace and O, with finite81rows/unique argmax/.4floor/strictBIO. No semantic mapping/composition/egress introduced."
+  ],
+  "requiredImplementationChallenges": [
+    "Parent must derive used-ID raw-token and added-token facts from fixed full tokenizer hash, not an IPC-supplied or synthetic test inventory.",
+    "Validate complete sequence IDs/masks/special boundaries and every contributor; a whitespace gap cannot excuse missing encoded tokens.",
+    "Negative tests for forged content/ID/ranges/piece reset, leading/consecutive added whitespace, same-substring misassignment, literal marker, single vs multi-byte fallback, overlap/zero/UNK/control, and all UTF8/UTF16 endpoints.",
+    "Global six-witness content gate indices0,1,3,4,5,6 before any forward, with overlap2/control7 blocked in eight planned; every later input independently witnessed.",
+    "Retain inverse mismatch diagnostics and v1false/zero-forward evidence; no per-case patching after new outcomes.",
+    "Own new versioned files/output/freeze and retain CPU1/disableall/512/16KiB/1GiB/60s+cleanupreserve/no retries and resource-gap acceptance checks."
+  ],
+  "limits": [
+    "Upstream source/API review is not reproducible deployed-wheel attestation or universal correctness proof; runtime pins remain required.",
+    "This approval changes a proposed structural admission contract only, not v1 history or execution authorization.",
+    "No code/runtime/model/tokenizer execution, inference, new network, evaluation corpus/gold/heldout read or scoring performed.",
+    "No privacy quality, model eligibility, full-request protection, license clearance, real-client or physical8GB acceptance."
+  ],
+  "implementationAuthorized": false,
+  "executionAuthorized": false,
+  "productionEnabled": false,
+  "egressEligible": false,
+  "reviewHistory": [
+    {
+      "reviewedHashes": {
+        "resources/privacy-nym-original-content-witness-v2.json": "66fd8c134643d0f4e8bad6f04b7f9da2a6bb6686c2475bca6e81848490932718",
+        "docs/architecture/privacy-nym-original-content-witness-v2.md": "b4425ae3566d89ef81afbc76f79c815630b9cb611b8d8e6aacd848ea586e0ffb"
+      },
+      "verdict": "APPROVE_DOCUMENTARY_CONTENT_WITNESS_CONTRACT_ONLY",
+      "scope": "Original proposal before base-space-run BPE addendum, preserved in94dd1aa."
+    }
+  ],
+  "addendumReview": {
+    "recordedAt": "2026-11-10T21:02:26.540485+00:00",
+    "verdict": "APPROVE_NARROW_BASE_SPACE_RUN_BPE_PATH_PLAN_ONLY",
+    "finalReviewedHashes": {
+      "resources/privacy-nym-original-content-witness-v2.json": "eadeb76ec850e65bfefad38e00e9cf2f3633bd2efb7c07a7783fc56b4c8c8102",
+      "docs/architecture/privacy-nym-original-content-witness-v2.md": "8c1175938a47c213b9f8fad5d17c9d129edf9135e6c74785f77ebeb8387fa596"
+    },
+    "tokenizerInspectedAsJsonDataOnly": {
+      "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+      "ids": [
+        {
+          "id": 139,
+          "markerCount": 2,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 140,
+          "markerCount": 3,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 141,
+          "markerCount": 4,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 142,
+          "markerCount": 5,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 143,
+          "markerCount": 6,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 144,
+          "markerCount": 7,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 145,
+          "markerCount": 8,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 146,
+          "markerCount": 9,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 147,
+          "markerCount": 10,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 148,
+          "markerCount": 11,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 149,
+          "markerCount": 12,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 150,
+          "markerCount": 13,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 151,
+          "markerCount": 14,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 152,
+          "markerCount": 15,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 153,
+          "markerCount": 16,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 154,
+          "markerCount": 17,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 155,
+          "markerCount": 18,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 156,
+          "markerCount": 19,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 157,
+          "markerCount": 20,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 158,
+          "markerCount": 21,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 159,
+          "markerCount": 22,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 160,
+          "markerCount": 23,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 161,
+          "markerCount": 24,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 162,
+          "markerCount": 25,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 163,
+          "markerCount": 26,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 164,
+          "markerCount": 27,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 165,
+          "markerCount": 28,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 166,
+          "markerCount": 29,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 167,
+          "markerCount": 30,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        },
+        {
+          "id": 168,
+          "markerCount": 31,
+          "baseIdEqualsAddedId": true,
+          "allFiveFlagsFalse": true
+        }
+      ]
+    },
+    "sourceLemma": {
+      "cachedSourceAudit": "resources/privacy-nym-original-alignment-audit-v2a.json",
+      "source": "tokenizers/src/tokenizer/added_vocabulary.rs",
+      "pinnedCommit": "301277072263fb3830eb66eec7e47adadf76f1dc",
+      "lines": [
+        "379-421",
+        "523-553"
+      ],
+      "reason": "normalized:false entries go exclusively into non_normalized_pairs/split_trie; that extraction runs on original before normalization. They are absent from split_normalized_trie. With literal originalU2581 globally blocked, these marker-only strings cannot match original added substrings; same IDs remain base-vocabulary entries."
+    },
+    "requiredGuards": [
+      "Exact fixed IDs139..168, raw marker counts2..31, added allfiveflagsfalse and same-ID base-vocabulary identity from trusted pinned data.",
+      "Full positive original slice exactly N ASCIIspaces and rawtoken exactly N markers; exact existing content/coordinate/order/coverage checks still apply.",
+      "Classify as ordinary BPE: do not reset added-token pieceStart, do not discard any token/logit; first ordinary token still obeys a==pieceStart and later tokens have no virtual-prefix exception.",
+      "Literal marker, other nonwhitespace added paths, unknown/overlap/zero/control/multibyte grouping remain blocked.",
+      "Any unknown origin/path or metadata/config drift invalidates lemma and blocks; no raw-ID-only exemption."
+    ],
+    "findings": [],
+    "limitations": [
+      "Source-derived path exclusion, not observation of a new tokenization or proof of a binary build.",
+      "No code/model/runtime/tokenizer execution, forwards, gold/corpus/network or new run authorization.",
+      "Original v1false/zero-forward and prior plan review hashes remain historical unchanged."
+    ]
+  }
+}

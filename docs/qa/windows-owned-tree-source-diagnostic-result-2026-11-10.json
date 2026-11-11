@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:40:29.761703+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_SOURCE_DIAGNOSTIC_FACTS",
+  "runId": 42897065529,
+  "commit": "5714afbee4c3e9ed261594615121e4487b93fe9f",
+  "workflowConclusion": "success-diagnostic-only",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-owned-tree-source-diagnostic-first.log",
+    "sha256": "f9e1a149e7ad74902499f05db31bacb993a352eaa550128be024a2a0703693c8",
+    "bytes": 27888
+  },
+  "freeze": {
+    "path": "docs/qa/windows-owned-tree-source-diagnostic-freeze-2026-11-10.json",
+    "sha256": "64819db46692c78acd7bbd55235e6e9729b2fb52a0b44f9c08b058403745a97b",
+    "sourceHashes": {
+      "scripts/windows-owned-tree-source-diagnostic.mjs": "0ae0dfaaf24c95a99dc8642f117dde594835b6c241bc8c0519ee6863608d6a87",
+      "tests/windows-owned-tree-source-diagnostic.test.mjs": "6dbd5de687d76a2eb9dc438afa3d100ab6e59bd20f796305174e3851caaf7b96",
+      "docs/architecture/windows-owned-tree-source-diagnostic-v1.md": "cc0df85b28461bcc1fe84719d3707db51366b25185a3343a45929dec6294105a",
+      ".github/workflows/windows-owned-tree-source-diagnostic.yml": "1d36e9a08f62818c3c6b33b567edf6f795e800fad383bcbc6e49d7e5d47d66a6"
+    },
+    "fourCommittedDiagnosticBlobsVerified": true,
+    "sourceEolWitnessScope": "Diagnostic success under frozen code confirms four self files passed exact bytes or CRLF-to-LF in-memory equivalence. Their actual worktree hashes were not output, so do not infer which self files differed."
+  },
+  "oldSmokeFreezeCanonicalSha256": "5408f2b2ebccb290211d0438b2b3ad1363bc80c33a65c055ba4aa48545287bbe",
+  "rows": [
+    {
+      "role": "smoke",
+      "expectedSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+      "committed": {
+        "sha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "bytes": 11041,
+        "lfCount": 86,
+        "crlfCount": 0,
+        "loneLfCount": 86,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "773e613c847b479b44803a58412816bad59c3e0b060708d6eb89508e5caeb9c1",
+        "bytes": 11127,
+        "lfCount": 86,
+        "crlfCount": 86,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "contracts",
+      "expectedSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+      "committed": {
+        "sha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "bytes": 7860,
+        "lfCount": 35,
+        "crlfCount": 0,
+        "loneLfCount": 35,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "e0f34c61164db5c7fd0eb073c182665367831128bf1ad41cfb4ba53504d09a75",
+        "bytes": 7895,
+        "lfCount": 35,
+        "crlfCount": 35,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "design",
+      "expectedSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+      "committed": {
+        "sha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "bytes": 7480,
+        "lfCount": 29,
+        "crlfCount": 0,
+        "loneLfCount": 29,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "6e66e9a8dd7a9fc7446ee8fbd0835c9cfbc4a2da6f18a935e2485baa06688ce5",
+        "bytes": 7509,
+        "lfCount": 29,
+        "crlfCount": 29,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "protocol",
+      "expectedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+      "committed": {
+        "sha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "bytes": 1456,
+        "lfCount": 36,
+        "crlfCount": 0,
+        "loneLfCount": 36,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "fddb2543dd969a41ca18ef1f7edfc31ca70a60eeb463cb9c24866e251f589609",
+        "bytes": 1492,
+        "lfCount": 36,
+        "crlfCount": 36,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "workflow",
+      "expectedSha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+      "committed": {
+        "sha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+        "bytes": 1255,
+        "lfCount": 37,
+        "crlfCount": 0,
+        "loneLfCount": 37,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "63613c3729f700eb9be4248f48f66ddccb77ea0b2e918219755c0c237d367b91",
+        "bytes": 1292,
+        "lfCount": 37,
+        "crlfCount": 37,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "monitor",
+      "expectedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+      "committed": {
+        "sha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "bytes": 10439,
+        "lfCount": 131,
+        "crlfCount": 0,
+        "loneLfCount": 131,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "1e3c778505727801c6377bb74a51a06b10e35395ccbc593d21d8a6e97d809cf2",
+        "bytes": 10570,
+        "lfCount": 131,
+        "crlfCount": 131,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    },
+    {
+      "role": "parser",
+      "expectedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+      "committed": {
+        "sha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "bytes": 3616,
+        "lfCount": 51,
+        "crlfCount": 0,
+        "loneLfCount": 51,
+        "loneCrCount": 0
+      },
+      "working": {
+        "sha256": "5b159f5003143d7dc54b973bd3e130f9cd35237a9e601747bde4fcfa09b1603a",
+        "bytes": 3667,
+        "lfCount": 51,
+        "crlfCount": 51,
+        "loneLfCount": 0,
+        "loneCrCount": 0
+      },
+      "committedMatchesFreeze": true,
+      "workingMatchesFreeze": false,
+      "workingMatchesCommitted": false,
+      "eolOnly": true,
+      "eolOnlyEvidence": "SHA256 and byte count of exact LF-to-CRLF transformed frozen blob match observed worktree; not inferred from counts alone."
+    }
+  ],
+  "mismatchingRoles": [
+    "smoke",
+    "contracts",
+    "design",
+    "protocol",
+    "workflow",
+    "monitor",
+    "parser"
+  ],
+  "allSevenCommittedBlobsMatchOldFreeze": true,
+  "allSevenWorkingHashesDifferByProvenCrlfOnlyTransform": true,
+  "diagnosticGitCommandCount": {
+    "fixedCodeCalls": 11,
+    "scope": "Four self identity and seven source HEAD blobs, executed sequentially by frozen successful diagnostic; no individual per-command timing receipts."
+  },
+  "wmiExecuted": false,
+  "fixtureExecuted": false,
+  "interpretation": {
+    "observedCurrentCheckoutMismatchCause": "All seven frozen LF source blobs become exact observed CRLF worktree byte hashes. This establishes an EOL-only checkout mismatch for this diagnostic run.",
+    "previousAttempt2": "The same seven committed source hashes and strict verifier explain the reproducible preflight blocker. Attempt2 worktree bytes were not retained; its exact individual failing file/configuration is not retrospectively observed.",
+    "osOrGitConfigCauseEstablished": false,
+    "coreAutocrlfValueObserved": false,
+    "attempt1OriginalCauseKnown": false
+  },
+  "minimumSolutionRecommendation": "Separate reviewed targeted .gitattributes text eol=lf contract for the exact seven smoke-frozen source paths (and any future freeze-bound diagnostic paths as explicitly chosen), with committed source bytes unchanged and exact-hash verification retained. Do not normalize within the measurement verifier or change global Git/OS configuration. New root freeze/authorization before another smoke.",
+  "claims": {
+    "performanceValidated": false,
+    "multilevelRssValidated": false,
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false,
+    "productionEnabled": false
+  },
+  "auditExecution": {
+    "newWindowsDiagnosticRuns": 0,
+    "CIRuns": 0,
+    "networkRequests": 0,
+    "nativeOrModelCalls": 0,
+    "sourceEdits": 0,
+    "fileNormalizationWrites": 0
+  }
+}

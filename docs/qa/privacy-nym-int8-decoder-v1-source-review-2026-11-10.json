@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "scope": "INACTIVE_NYM_NATIVE_DECODER_SOURCE_REVIEW",
+  "reviewer": "review_vault_reminders",
+  "verdict": "APPROVE_INACTIVE_SOURCE_ONLY",
+  "sourceHashes": {
+    "scripts/privacy-nym-int8-worker.py": "ddbc53a3061966f28595aa5c46ecff215b637487cab2f09810f73f4aceab89d7",
+    "tests/privacy-nym-int8-decoder.test.mjs": "318a42c44d5ac470fde1cd710cd3a608c05209537a6586988508ee7a528228f8",
+    "docs/architecture/privacy-nym-int8-decoder-v1.md": "69237265226c3b9cb139fc87ea94db9002b25fe141725a6824a1ad4e21459561",
+    "server/privacy/nym-int8-decoder.mjs": "60157faeb51d1c93d2fcf48ca751eb82e774d089d4694a824371176f0651df5a"
+  },
+  "verification": {
+    "command": "node --test tests/privacy-nym-int8-decoder.test.mjs",
+    "passed": 19,
+    "failed": 0,
+    "scope": "Pure JS, standard-library Python and fake runtime modules only. No actual model/tokenizer/runtime load, tokenization or neural forward."
+  },
+  "findings": [
+    {
+      "severity": "P2",
+      "id": "strict-ipc-admission-schema",
+      "source": "scripts/privacy-nym-int8-worker.py:265",
+      "description": "structural-done permits code=None with tokenCount outside valid3..512; global proof and forward admission trust these flags without independently checking this bound. Event indices and several result numeric coordinates/version use equality without exact integer guards, allowing Python booleans to satisfy integer comparisons.",
+      "requestedChange": "Require integer tokenCount3..512 whenever structural code is None; retain bounded diagnostic counts for blocked rows. Require exact integer types for every event index, result version/scannedTokens and UTF16/UTF8 coordinates; reject booleans. Keep admission transactional and add pure malformed-event regressions. Do not relax proof, confidence or mapping criteria.",
+      "impact": "Parent may accept malformed claimed structure or result schemas as a valid diagnostic prefix. This is an IPC validation gap, not a demonstrated model behavior or privacy-quality result.",
+      "status": "statically-closed-and-pure-regressions-passed",
+      "closure": "Exact nonbool integer guards now cover all event indices, result version/scanned counts and eight coordinates. code=None requires3..512 tokens; structurally_admitted rechecks proof/forward/completion/receipt counts. Original P2 retained for audit."
+    }
+  ],
+  "positiveReview": [
+    "Strict81-label decoding retains40native kinds and diagnostic-only/no-egress flags.",
+    "Confidence0.4 applies to O; finite/tie/strictBIO/UNK/overlap/coverage/coordinate guards are conservative.",
+    "Global witness0..6 full-decode and per-token slice equality precedes all real forwards; failed proof leads to zero forwards.",
+    "PLAN/default path imports standard library only; fixed packets/cache/runtime/source pins and exclusive artifact publication are explicit.",
+    "Deadline/resource/late-event/validated-prefix/cleanup logic reviewed statically; mocks pass without conferring measured runtime guarantees."
+  ],
+  "execution": {
+    "realTokenizerRuntimeImports": 0,
+    "realModelLoads": 0,
+    "realTokenizations": 0,
+    "neuralForwards": 0,
+    "networkRequests": 0,
+    "evalDatasetDevHeldoutGoldRead": false,
+    "sourceEdits": false
+  },
+  "limits": [
+    "Own-process libproc/sandbox/runtime lifecycle remains unmeasured; no actual60s/1GiB/20ms/50ms validation.",
+    "Prior heldout knowledge was not used to tune, select or compare this candidate; no evaluation corpus or predictions opened for this task.",
+    "No actual inference authorization, mapping/composition authority, egress, provider activation or privacy/legal/product/8GB acceptance.",
+    "Complete license/rights chain remains unresolved."
+  ],
+  "initialReview": {
+    "verdict": "P2_CHANGES_REQUIRED_BEFORE_REAL_FROZEN_RUN",
+    "sourceHashes": {
+      "scripts/privacy-nym-int8-worker.py": "c8d47ef2a9e1b79e574b8bac78453f3f5cf2aabbc10c57187e845e90ee47316a",
+      "server/privacy/nym-int8-decoder.mjs": "60157faeb51d1c93d2fcf48ca751eb82e774d089d4694a824371176f0651df5a",
+      "tests/privacy-nym-int8-decoder.test.mjs": "c5847ddec251f441687807bc18868567ab6180805101dc5a664a6fcb6ad2b566",
+      "docs/architecture/privacy-nym-int8-decoder-v1.md": "105ddcf0b942603b4fb647954ae2ba08fcc065e948f5c0984e25f238c5cfa2ae"
+    },
+    "verification": {
+      "command": "node --test tests/privacy-nym-int8-decoder.test.mjs",
+      "passed": 19,
+      "failed": 0,
+      "scope": "Pure JS, standard-library Python and fake runtime modules only. No actual model/tokenizer/runtime load, tokenization or neural forward."
+    }
+  },
+  "rereview": {
+    "scope": "Focused P2 closure only",
+    "passed": 19,
+    "failed": 0,
+    "newTests": [
+      "out-of-bound admitted token counts and non-integer indices",
+      "strict versions/scanned counts/all coordinates"
+    ],
+    "executionAuthorized": false,
+    "actualRuntimeResourcesValidated": false,
+    "realModelTokenizerRuntimeLoads": 0,
+    "neuralForwards": 0,
+    "networkRequests": 0,
+    "evalDatasetDevHeldoutGoldRead": false
+  }
+}

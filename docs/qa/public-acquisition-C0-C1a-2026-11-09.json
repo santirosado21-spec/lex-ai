@@ -1,0 +1,641 @@
+{
+  "schemaVersion": 1,
+  "scope": "C0 bounded source authority and C1a factory + first federal batch; C1 30-slot pilot remains partial",
+  "generatedAt": "2026-11-09T23:40:19.680Z",
+  "finalFreeze": "public-acquisition-final-freeze-2026-11-09.json",
+  "sourceReview": "public-acquisition-source-review-2026-11-09.json",
+  "planSha256": "6f14ac187d7b20923211f56c1d08f91052bece482c7d1a8434a23edaf6f18fd2",
+  "registrySha256": "6ab9b8f6170aeff7cb353dc9a15482cec3b1efe6932897be493e113bbeb4d563",
+  "finalSourceHash": "77b780108243e1062087f833a87e47669e2e3d35c72aeefe57a443c683db37d3",
+  "initialRun": {
+    "freeze": "public-acquisition-freeze-2026-11-09.json",
+    "reportSha256": "83f9997bffc6ce29e559a03bd9ebd9874661902ad454b91a68eb9b49f33172af",
+    "summary": {
+      "planned": 30,
+      "approved": 10,
+      "approvedNotSelected": 0,
+      "selected": 10,
+      "pending": 20,
+      "blocked": 0,
+      "downloaded": 10,
+      "extracted": 10,
+      "cached": 0,
+      "failed": 0,
+      "published": 0,
+      "indexed": 0
+    },
+    "metrics": {
+      "requests": 20,
+      "decodedBodyBytes": 23803914,
+      "elapsedMs": 38324,
+      "rssStartBytes": 57114624,
+      "rssEndBytes": 189857792,
+      "rssMeasurement": "coordinator start/end samples; excludes terminated extraction workers, not peak RSS"
+    },
+    "note": "Initial module loaded f1999bb; receipt addition was written during the run. Preserved without claiming it tests final source."
+  },
+  "live": {
+    "reportSha256": "3b7d6197e3ff41c174ac3434223aee17be2c1a00475cd61fc926f3bd550ebdcb",
+    "summary": {
+      "planned": 30,
+      "approved": 10,
+      "approvedNotSelected": 0,
+      "selected": 10,
+      "pending": 20,
+      "blocked": 0,
+      "downloaded": 10,
+      "extracted": 10,
+      "cached": 0,
+      "failed": 0,
+      "published": 0,
+      "indexed": 0
+    },
+    "metrics": {
+      "requests": 20,
+      "decodedBodyBytes": 23803914,
+      "elapsedMs": 38391,
+      "rssStartBytes": 57376768,
+      "rssEndBytes": 223444992,
+      "rssMeasurement": "coordinator start/end samples; excludes terminated extraction workers, not peak RSS"
+    },
+    "peakRssBytes": 304349184
+  },
+  "offline": {
+    "reportSha256": "412e3dd3085a0f9de949447c2e7fa20e7744e0c5122f0e2fd3fbc1ba4b5380fb",
+    "summary": {
+      "planned": 30,
+      "approved": 10,
+      "approvedNotSelected": 0,
+      "selected": 10,
+      "pending": 20,
+      "blocked": 0,
+      "downloaded": 0,
+      "extracted": 10,
+      "cached": 10,
+      "failed": 0,
+      "published": 0,
+      "indexed": 0
+    },
+    "metrics": {
+      "requests": 0,
+      "decodedBodyBytes": 0,
+      "elapsedMs": 79,
+      "rssStartBytes": 88145920,
+      "rssEndBytes": 122716160,
+      "rssMeasurement": "coordinator start/end samples; excludes terminated extraction workers, not peak RSS"
+    },
+    "peakRssBytes": 129220608,
+    "ledgerByteIdentical": true,
+    "ledgerSha256": "5e94c8b59c4cfd20a3cedf59731317e43eaf07cc96d372b3890eec53c3d6a5fb",
+    "verifiedLedgerFiles": 31
+  },
+  "totals": {
+    "records": 8086,
+    "pdfPages": 2652,
+    "recordsWithAnomalies": 1400,
+    "recordsWithEditorialNotes": 4175
+  },
+  "tests": {
+    "initialFullSuite": {
+      "passed": 586,
+      "total": 587,
+      "failedTest": "rate and robots crawl-delay are applied across the entire sequential run",
+      "reason": "Wall-clock lower-bound assertion invalid under parallel load; monotonic time replaced with deterministic mock in test only."
+    },
+    "finalFullSuite": {
+      "passed": 587,
+      "total": 587
+    },
+    "build": "TypeScript and Vite passed",
+    "acquisitionTestSha256": "2b5eaa7a06bbacb9ebe69dead51aaef6ddfc961d2999ffa1dca4b38abd9b4661"
+  },
+  "independentReview": {
+    "agent": "review_public_factory",
+    "model": "gpt-6.1-sol",
+    "codeVerdict": "APPROVE bounded public trial",
+    "focusedTests": 35,
+    "finalEvidenceReview": "APPROVE",
+    "evidenceChecks": [
+      "31 ledger file hashes, frozen source hashes and all PDF/extraction/version receipts verified",
+      "8086 text and page-reference hashes and quarantine flags verified",
+      "Live/offline counters, totals, saved logs and RSS independently corroborated",
+      "Corrected deterministic throttle test independently rerun: 20/20 acquisition tests"
+    ]
+  },
+  "sf": {
+    "builderAssignments": 2,
+    "independentReviewerAssignments": 1,
+    "assignedModel": "gpt-6.1-sol",
+    "astraAssignments": 0,
+    "newExternalProviderGenerations": 0,
+    "tokensAndQuota": "not exposed"
+  },
+  "documents": [
+    {
+      "id": "ccf",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+      "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+      "pdfBytes": 3415624,
+      "capturedAt": "2026-11-09T23:38:56.066Z",
+      "declaredAmendedAt": "2025-11-14",
+      "effectiveAt": null,
+      "records": 3085,
+      "coverage": {
+        "pages": 370,
+        "rawCharacters": 1075089,
+        "removedHeaderLines": 2222,
+        "removedEditorialLines": 750,
+        "operativeArticleCandidates": 3085,
+        "transitoryStartPage": 304,
+        "structuralCandidateCount": 2893
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 2893,
+        "quarantined": 192
+      },
+      "recordsWithAnomalies": 192,
+      "recordsWithEditorialNotes": 613,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 3415624,
+          "bodySha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76"
+        }
+      ],
+      "extractionSha256": "8e62b75c06037029ee4360ebdd8e520c63810d7c91e7938fbab9a698204e207b",
+      "versionEvidenceSha256": "16d3b6028594c63c1f21047f89ee3587456d73810bb10799ddd23f24c68be11c",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "ccom",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+      "pdfSha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef",
+      "pdfBytes": 2630704,
+      "capturedAt": "2026-11-09T23:38:59.048Z",
+      "declaredAmendedAt": "2025-11-14",
+      "effectiveAt": null,
+      "records": 1641,
+      "coverage": {
+        "pages": 291,
+        "rawCharacters": 785369,
+        "removedHeaderLines": 1748,
+        "removedEditorialLines": 1667,
+        "operativeArticleCandidates": 1641,
+        "transitoryStartPage": 212,
+        "structuralCandidateCount": 780
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 780,
+        "quarantined": 861
+      },
+      "recordsWithAnomalies": 861,
+      "recordsWithEditorialNotes": 1364,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 2630704,
+          "bodySha256": "b99bbf981434011b6351ef308922fea90f6f0f8777b113183cf1737840c5bbef"
+        }
+      ],
+      "extractionSha256": "2a6fa8d938876734e36d42f36a609ba9f6ea5d40ce5f863d9f499faddcb33575",
+      "versionEvidenceSha256": "8d36eca37f56c6e87f25b5b6f4f50cf6f1bc47972a29a5ef1df4d6817fc55164",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "cff",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+      "pdfSha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d",
+      "pdfBytes": 3134465,
+      "capturedAt": "2026-11-09T23:39:03.433Z",
+      "declaredAmendedAt": "2026-04-09",
+      "effectiveAt": null,
+      "records": 421,
+      "coverage": {
+        "pages": 377,
+        "rawCharacters": 1301482,
+        "removedHeaderLines": 2279,
+        "removedEditorialLines": 299,
+        "operativeArticleCandidates": 421,
+        "transitoryStartPage": 243,
+        "structuralCandidateCount": 336
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 336,
+        "quarantined": 85
+      },
+      "recordsWithAnomalies": 85,
+      "recordsWithEditorialNotes": 123,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 3134465,
+          "bodySha256": "be7427b20d3552775ab42018f8f87578078770095bf8cf46322c25e36ee3aa7d"
+        }
+      ],
+      "extractionSha256": "1386c1bcbb98c31500f919fec6c0a04b10f7fc254a834e1db40ae28ad4a256ec",
+      "versionEvidenceSha256": "39010c8320f30351873be3a808c5586069bf5f149904b4d733124e0419bd62d6",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "cpeum",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+      "pdfSha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65",
+      "pdfBytes": 3146661,
+      "capturedAt": "2026-11-09T23:39:07.140Z",
+      "declaredAmendedAt": "2026-10-07",
+      "effectiveAt": null,
+      "records": 136,
+      "coverage": {
+        "pages": 416,
+        "rawCharacters": 1282660,
+        "removedHeaderLines": 2500,
+        "removedEditorialLines": 920,
+        "operativeArticleCandidates": 136,
+        "transitoryStartPage": 162,
+        "structuralCandidateCount": 136
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 136
+      },
+      "recordsWithAnomalies": 0,
+      "recordsWithEditorialNotes": 119,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 3146661,
+          "bodySha256": "cefb525ae8dfc97a7da40597d2ee918fe254d4bfce88301ff3c9959ced9e6e65"
+        }
+      ],
+      "extractionSha256": "80e2b5e7f0626e08140dbeb16879dba58a386c2affe0843d198938f0bb07296f",
+      "versionEvidenceSha256": "00bc4d9da90adcad0751a2280940a74fab6a188da4a687680b1b31a86423d018",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "cpf",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf",
+      "pdfSha256": "a2d80c4383c5fbc8453cf290c19b7853eb0a5a05d1e366572da384edfafda88c",
+      "pdfBytes": 2794133,
+      "capturedAt": "2026-11-09T23:39:11.297Z",
+      "declaredAmendedAt": "2026-03-13",
+      "effectiveAt": null,
+      "records": 546,
+      "coverage": {
+        "pages": 353,
+        "rawCharacters": 902168,
+        "removedHeaderLines": 2120,
+        "removedEditorialLines": 991,
+        "operativeArticleCandidates": 546,
+        "transitoryStartPage": 147,
+        "structuralCandidateCount": 453
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 453,
+        "quarantined": 93
+      },
+      "recordsWithAnomalies": 93,
+      "recordsWithEditorialNotes": 476,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 2794133,
+          "bodySha256": "a2d80c4383c5fbc8453cf290c19b7853eb0a5a05d1e366572da384edfafda88c"
+        }
+      ],
+      "extractionSha256": "38494ac1265f802ead27aefbe0ad533c74b5e64e5482f9841d6d04e2c9c51139",
+      "versionEvidenceSha256": "ad0c14dbe9e2e4f6e6184543164e53bf593a3ebf340a7eb0a9affe142b4c5119",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "lamp",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+      "pdfSha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d",
+      "pdfBytes": 1369391,
+      "capturedAt": "2026-11-09T23:39:15.046Z",
+      "declaredAmendedAt": "2025-10-16",
+      "effectiveAt": null,
+      "records": 272,
+      "coverage": {
+        "pages": 119,
+        "rawCharacters": 428387,
+        "removedHeaderLines": 595,
+        "removedEditorialLines": 418,
+        "operativeArticleCandidates": 272,
+        "transitoryStartPage": 84,
+        "structuralCandidateCount": 266
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 266,
+        "quarantined": 6
+      },
+      "recordsWithAnomalies": 6,
+      "recordsWithEditorialNotes": 205,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 1369391,
+          "bodySha256": "05560493ac2b17b9e77eeb9741843176ee0fde76f05e75f853465b13621be78d"
+        }
+      ],
+      "extractionSha256": "1481f85cf9c4f551f29b61a7e9dbc6ba82892c798cb8ddc9446e30d107f1fdbd",
+      "versionEvidenceSha256": "51cd165515a4bda906f72fc7b8945ad3b3b760d00cfe4505b7e6503f07ef3a4f",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "lfda",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+      "pdfSha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5",
+      "pdfBytes": 969098,
+      "capturedAt": "2026-11-09T23:39:18.492Z",
+      "declaredAmendedAt": "2026-05-14",
+      "effectiveAt": null,
+      "records": 254,
+      "coverage": {
+        "pages": 87,
+        "rawCharacters": 272714,
+        "removedHeaderLines": 524,
+        "removedEditorialLines": 117,
+        "operativeArticleCandidates": 254,
+        "transitoryStartPage": 55,
+        "structuralCandidateCount": 254
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 254
+      },
+      "recordsWithAnomalies": 0,
+      "recordsWithEditorialNotes": 77,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 969098,
+          "bodySha256": "1844f4e56b279c17061db90f4ab7970df3794e3a5ae10d74a0aec1f12641e7a5"
+        }
+      ],
+      "extractionSha256": "ff795ab902f2c42162a005e68964c49d54d9a01f091fabd13ed94cadb3ccfaa7",
+      "versionEvidenceSha256": "bfd740a64bbfc8ffb007d303a301b4201fe18074003e342e8cfe46ad2e7d9fed",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "lfpc",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf",
+      "pdfSha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55",
+      "pdfBytes": 1279976,
+      "capturedAt": "2026-11-09T23:39:22.427Z",
+      "declaredAmendedAt": "2025-12-12",
+      "effectiveAt": null,
+      "records": 188,
+      "coverage": {
+        "pages": 119,
+        "rawCharacters": 348870,
+        "removedHeaderLines": 716,
+        "removedEditorialLines": 290,
+        "operativeArticleCandidates": 188,
+        "transitoryStartPage": 54,
+        "structuralCandidateCount": 180
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 180,
+        "quarantined": 8
+      },
+      "recordsWithAnomalies": 8,
+      "recordsWithEditorialNotes": 134,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 1279976,
+          "bodySha256": "7fea623841fd6e05e8c0d01d2cf09f85b0b8e58ba4d9e4f6711f8bad1f448e55"
+        }
+      ],
+      "extractionSha256": "db5f3f2e6073a589caa51faa9686037f98cde9d90f4b52d1d8c4ca20a68a5cb5",
+      "versionEvidenceSha256": "3cf032840de3ce9605fbd710dc6ce73fc6f0d28b05f2df8c99c9c1174db73825",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "lft",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "pdfSha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7",
+      "pdfBytes": 4225835,
+      "capturedAt": "2026-11-09T23:39:26.521Z",
+      "declaredAmendedAt": "2026-05-14",
+      "effectiveAt": null,
+      "records": 1266,
+      "coverage": {
+        "pages": 457,
+        "rawCharacters": 1474522,
+        "removedHeaderLines": 2744,
+        "removedEditorialLines": 1612,
+        "operativeArticleCandidates": 1266,
+        "transitoryStartPage": 400,
+        "structuralCandidateCount": 1115
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 1115,
+        "quarantined": 151
+      },
+      "recordsWithAnomalies": 151,
+      "recordsWithEditorialNotes": 951,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 4225835,
+          "bodySha256": "12f09393a1951a91c3f57f579bf611b034edf1a5f78cdbfb828e23ff3a9acbf7"
+        }
+      ],
+      "extractionSha256": "5c4faf877613d60e9ce650663034b50d33fa2411a77fb1a3e35077be4f3af543",
+      "versionEvidenceSha256": "185e4836517ba787a9074d9fb446a9e548ee83e72d2f452adbbe6ad654593671",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    },
+    {
+      "id": "lgsm",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+      "pdfSha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3",
+      "pdfBytes": 835947,
+      "capturedAt": "2026-11-09T23:39:31.297Z",
+      "declaredAmendedAt": "2023-10-20",
+      "effectiveAt": null,
+      "records": 277,
+      "coverage": {
+        "pages": 63,
+        "rawCharacters": 190362,
+        "removedHeaderLines": 380,
+        "removedEditorialLines": 162,
+        "operativeArticleCandidates": 277,
+        "transitoryStartPage": 49,
+        "structuralCandidateCount": 273
+      },
+      "parserDiagnosticCounts": {
+        "structurally-verified": 273,
+        "quarantined": 4
+      },
+      "recordsWithAnomalies": 4,
+      "recordsWithEditorialNotes": 113,
+      "documentAnomalies": [],
+      "requests": [
+        {
+          "url": "https://www.diputados.gob.mx/robots.txt",
+          "status": 404,
+          "kind": "robots",
+          "mime": "text/html",
+          "decodedBodyBytes": 208,
+          "bodySha256": "e10aa5cfb3a2675cfb50f056b3c0b1b08e96f4ed5da21c4a7744773374e35fbe"
+        },
+        {
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSM.pdf",
+          "status": 200,
+          "kind": "document",
+          "mime": "application/pdf",
+          "decodedBodyBytes": 835947,
+          "bodySha256": "72b051296792cad896ac90e814ff8949e4ac140bf5ca5cc08f2f03e5e95aeac3"
+        }
+      ],
+      "extractionSha256": "f499de3ab65b3cc9d90e801d6cb3401be24b8a392348f51b623e5a6c6e40fc3e",
+      "versionEvidenceSha256": "3f35637fdf87fbe0f4f5a2494969a1f7d064ce74f132d05c093ad1c2f66267a3",
+      "textReview": "pending",
+      "legalReview": "pending",
+      "published": false,
+      "indexed": false
+    }
+  ],
+  "limitations": [
+    "Not national coverage; 20 planned slots have no approved concrete URL.",
+    "All 8086 candidate segments are quarantined, including structurally-verified parser diagnostics.",
+    "Native extraction omits separate transitory/reform history; no whole-law fidelity or OCR validation.",
+    "Source declared dates are not legal applicability determinations.",
+    "RSS measured on 24 GiB developer Mac, factory process only; not client/8 GB certification.",
+    "No cloud deployment/product provider/client transmission/publication/training activation."
+  ]
+}

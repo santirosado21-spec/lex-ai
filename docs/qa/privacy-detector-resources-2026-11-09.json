@@ -1,0 +1,523 @@
+{
+  "version": 1,
+  "baseline": {
+    "version": 1,
+    "mode": "baseline",
+    "synthetic": true,
+    "measuredAt": "2026-11-09T22:52:29.302Z",
+    "node": "v22.22.3",
+    "platform": "darwin",
+    "arch": "arm64",
+    "hostMemoryBytes": 25769803776,
+    "runtime": "packaged-node",
+    "ui": "headless Chromium, not native Tauri/WKWebView",
+    "inference": "mock; no model initialization/download",
+    "workload": {
+      "matters": 4,
+      "documents": 20,
+      "charactersPerDocument": 5000,
+      "detectorEnvelopeLengthsUtf16": [
+        256,
+        2048,
+        6800
+      ],
+      "coldProcessStarts": 3,
+      "warmSamples": 30,
+      "concurrency": 1
+    },
+    "cold": [],
+    "samples": [
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 555286528
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 555368448
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 555433984
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 555925504
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 556122112
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 556154880
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 556220416
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 556236800
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 556253184
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 556269568
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 556384256
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 556400640
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 556417024
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 556433408
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557334528
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 557350912
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 557350912
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557350912
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 557350912
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 557350912
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557367296
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 557432832
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 557416448
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557432832
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 557449216
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 557449216
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557531136
+      },
+      {
+        "lengthUtf16": 256,
+        "treeRssBytes": 557531136
+      },
+      {
+        "lengthUtf16": 2048,
+        "treeRssBytes": 557531136
+      },
+      {
+        "lengthUtf16": 6800,
+        "treeRssBytes": 557531136
+      }
+    ],
+    "limitations": [
+      "one matched synthetic workload, not representative of legal traffic",
+      "cold means fresh process, not OS cache purge",
+      "RSS sampling may miss peaks and double-count shared pages",
+      "no semantic entity/context model or real inference",
+      "24 GiB does not validate a physical 8 GB machine; native Tauri pending"
+    ],
+    "sourceRevision": "7658d930f30d204827055693d5061311439ac473",
+    "candidateSourceHashes": {
+      "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+      "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+      "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+      "scripts/privacy-candidate-worker.mjs": "03e1e982eed7a495987a31736c837c4c95c43ecfe78e31240cd079fc69683bc5",
+      "scripts/run-privacy-detector.mjs": "4f385734d69908e83aae0687b8edf74972b41f0ac8cec1528246c0343011ec19",
+      "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f"
+    },
+    "serverSourcesSha256": "97156eb9201551f51ce915ff3331785f4803f677c32bdf54293cea8b4aa2317c",
+    "builtAssetsSha256": "db9b243f9dd69b0fc464bdaf530f1470e004a0a6a9e9756075d9e6f74205858b",
+    "measurementScriptSha256": "870cb698181b4c566c0ac805c796ce3e61c0659b1688b2c68fc4272afb085c49",
+    "browserVersion": "156.0.8078.4",
+    "sqliteBytes": 745472,
+    "peakObservedRssBytes": 557531136,
+    "status": "measured-not-product-validated",
+    "cleanup": {
+      "workerClosed": true,
+      "browserClosed": true,
+      "serverClosed": true,
+      "ownTemporaryDirectoryRemoved": true
+    }
+  },
+  "candidate": {
+    "version": 1,
+    "mode": "candidate",
+    "synthetic": true,
+    "measuredAt": "2026-11-09T22:53:00.434Z",
+    "node": "v22.22.3",
+    "platform": "darwin",
+    "arch": "arm64",
+    "hostMemoryBytes": 25769803776,
+    "runtime": "packaged-node",
+    "ui": "headless Chromium, not native Tauri/WKWebView",
+    "inference": "mock; no model initialization/download",
+    "workload": {
+      "matters": 4,
+      "documents": 20,
+      "charactersPerDocument": 5000,
+      "detectorEnvelopeLengthsUtf16": [
+        256,
+        2048,
+        6800
+      ],
+      "coldProcessStarts": 3,
+      "warmSamples": 30,
+      "concurrency": 1
+    },
+    "cold": [
+      {
+        "startupAndDetectionMs": 33.834667000000024,
+        "peakRssBytes": 46530560,
+        "status": "complete"
+      },
+      {
+        "startupAndDetectionMs": 34.57591599999995,
+        "peakRssBytes": 46415872,
+        "status": "complete"
+      },
+      {
+        "startupAndDetectionMs": 33.153707999999995,
+        "peakRssBytes": 46596096,
+        "status": "complete"
+      }
+    ],
+    "samples": [
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.29483299999992596,
+        "detectorMs": 0.19162500000000193,
+        "detectorPeakRssBytes": 46465024,
+        "status": "complete",
+        "treeRssBytes": 597082112
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.8515829999998914,
+        "detectorMs": 0.5399579999999844,
+        "detectorPeakRssBytes": 46628864,
+        "status": "complete",
+        "treeRssBytes": 597803008
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.2312919999999394,
+        "detectorMs": 0.8142919999999663,
+        "detectorPeakRssBytes": 47136768,
+        "status": "complete",
+        "treeRssBytes": 597884928
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.6870830000000296,
+        "detectorMs": 0.3539580000000342,
+        "detectorPeakRssBytes": 47136768,
+        "status": "complete",
+        "treeRssBytes": 598425600
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 1.4391249999998763,
+        "detectorMs": 0.7991660000000138,
+        "detectorPeakRssBytes": 47235072,
+        "status": "complete",
+        "treeRssBytes": 598736896
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.6731250000000273,
+        "detectorMs": 1.2251249999999345,
+        "detectorPeakRssBytes": 47316992,
+        "status": "complete",
+        "treeRssBytes": 598884352
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.7322090000000117,
+        "detectorMs": 0.3774999999999409,
+        "detectorPeakRssBytes": 47366144,
+        "status": "complete",
+        "treeRssBytes": 598982656
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 1.6023749999999382,
+        "detectorMs": 1.1125829999999723,
+        "detectorPeakRssBytes": 47415296,
+        "status": "complete",
+        "treeRssBytes": 599048192
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.8468339999999444,
+        "detectorMs": 1.4014159999999265,
+        "detectorPeakRssBytes": 47431680,
+        "status": "complete",
+        "treeRssBytes": 599080960
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.6419160000000375,
+        "detectorMs": 0.33900000000016917,
+        "detectorPeakRssBytes": 47431680,
+        "status": "complete",
+        "treeRssBytes": 599113728
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.48779100000001563,
+        "detectorMs": 0.2767499999999927,
+        "detectorPeakRssBytes": 47431680,
+        "status": "complete",
+        "treeRssBytes": 599130112
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.052708000000166,
+        "detectorMs": 0.826917000000094,
+        "detectorPeakRssBytes": 47661056,
+        "status": "complete",
+        "treeRssBytes": 599425024
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.758125000000291,
+        "detectorMs": 0.3958749999999327,
+        "detectorPeakRssBytes": 47661056,
+        "status": "complete",
+        "treeRssBytes": 600588288
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.8109580000000278,
+        "detectorMs": 0.548082999999906,
+        "detectorPeakRssBytes": 47661056,
+        "status": "complete",
+        "treeRssBytes": 600588288
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.3049590000000535,
+        "detectorMs": 0.9462080000000697,
+        "detectorPeakRssBytes": 47693824,
+        "status": "complete",
+        "treeRssBytes": 600621056
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.7292500000003201,
+        "detectorMs": 0.3922090000000935,
+        "detectorPeakRssBytes": 47710208,
+        "status": "complete",
+        "treeRssBytes": 600653824
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 1.0023329999999078,
+        "detectorMs": 0.6668749999998909,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600784896
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.7651250000003529,
+        "detectorMs": 1.341457999999875,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600801280
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.6528749999997672,
+        "detectorMs": 0.32404100000030667,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600817664
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.82549999999992,
+        "detectorMs": 0.5233329999996386,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600834048
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.5571250000002692,
+        "detectorMs": 1.0828750000000582,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600915968
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.7931250000001455,
+        "detectorMs": 0.45458300000018426,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600948736
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.4297500000002401,
+        "detectorMs": 0.2820830000000569,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600965120
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 0.9070829999996022,
+        "detectorMs": 0.7058749999996508,
+        "detectorPeakRssBytes": 47824896,
+        "status": "complete",
+        "treeRssBytes": 600981504
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.3387910000001284,
+        "detectorMs": 0.17870799999991505,
+        "detectorPeakRssBytes": 47841280,
+        "status": "complete",
+        "treeRssBytes": 601047040
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.6767089999993914,
+        "detectorMs": 0.4589579999997113,
+        "detectorPeakRssBytes": 47841280,
+        "status": "complete",
+        "treeRssBytes": 601047040
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.3820420000001832,
+        "detectorMs": 1.0607499999996435,
+        "detectorPeakRssBytes": 47857664,
+        "status": "complete",
+        "treeRssBytes": 601079808
+      },
+      {
+        "lengthUtf16": 256,
+        "roundTripMs": 0.7136659999996482,
+        "detectorMs": 0.36241700000027777,
+        "detectorPeakRssBytes": 47874048,
+        "status": "complete",
+        "treeRssBytes": 601079808
+      },
+      {
+        "lengthUtf16": 2048,
+        "roundTripMs": 0.9022499999991851,
+        "detectorMs": 0.5589589999999589,
+        "detectorPeakRssBytes": 47874048,
+        "status": "complete",
+        "treeRssBytes": 601079808
+      },
+      {
+        "lengthUtf16": 6800,
+        "roundTripMs": 1.395208000000821,
+        "detectorMs": 1.1124170000002778,
+        "detectorPeakRssBytes": 50200576,
+        "status": "complete",
+        "treeRssBytes": 605306880
+      }
+    ],
+    "limitations": [
+      "one matched synthetic workload, not representative of legal traffic",
+      "cold means fresh process, not OS cache purge",
+      "RSS sampling may miss peaks and double-count shared pages",
+      "no semantic entity/context model or real inference",
+      "24 GiB does not validate a physical 8 GB machine; native Tauri pending"
+    ],
+    "sourceRevision": "7658d930f30d204827055693d5061311439ac473",
+    "candidateSourceHashes": {
+      "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+      "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+      "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+      "scripts/privacy-candidate-worker.mjs": "03e1e982eed7a495987a31736c837c4c95c43ecfe78e31240cd079fc69683bc5",
+      "scripts/run-privacy-detector.mjs": "4f385734d69908e83aae0687b8edf74972b41f0ac8cec1528246c0343011ec19",
+      "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f"
+    },
+    "serverSourcesSha256": "97156eb9201551f51ce915ff3331785f4803f677c32bdf54293cea8b4aa2317c",
+    "builtAssetsSha256": "db9b243f9dd69b0fc464bdaf530f1470e004a0a6a9e9756075d9e6f74205858b",
+    "measurementScriptSha256": "870cb698181b4c566c0ac805c796ce3e61c0659b1688b2c68fc4272afb085c49",
+    "browserVersion": "156.0.8078.4",
+    "sqliteBytes": 745472,
+    "peakObservedRssBytes": 605306880,
+    "detectorPeakRssBytes": 50200576,
+    "detectorLatencyMs": {
+      "p50": 0.5399579999999844,
+      "p95": 1.341457999999875
+    },
+    "byInputLength": {
+      "256": {
+        "n": 10,
+        "p50": 0.3539580000000342,
+        "p95": 0.45458300000018426
+      },
+      "2048": {
+        "n": 10,
+        "p50": 0.5399579999999844,
+        "p95": 1.1125829999999723
+      },
+      "6800": {
+        "n": 10,
+        "p50": 1.0607499999996435,
+        "p95": 1.4014159999999265
+      }
+    },
+    "status": "measured-not-product-validated",
+    "cleanup": {
+      "workerClosed": true,
+      "browserClosed": true,
+      "serverClosed": true,
+      "ownTemporaryDirectoryRemoved": true
+    }
+  },
+  "serverHashesMatch": true,
+  "assetHashesMatch": true,
+  "observedPeakDifferenceBytes": 47775744,
+  "differenceMeaning": "Two sampled process-tree peaks, not a guaranteed causal incremental bound; detector own high-water RSS reported separately.",
+  "physical8GBValidated": false,
+  "nativeTauriValidated": false
+}

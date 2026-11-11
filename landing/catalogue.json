@@ -1,22 +1,41 @@
 {
-  "schemaVersion": 2,
-  "product": "LEX AI",
-  "version": "0.4.3",
-  "releaseStatus": "experimental",
-  "platform": "macOS Apple Silicon (arm64)",
-  "requirements": {
-    "minimumMemoryGB": 8,
-    "minimumFreeDiskGB": 3,
-    "firstRunAssistantComponentsGB": 1.95
+  "schemaVersion": 3,
+  "product": "Rejon.AI",
+  "assistantName": "Rejon.AI",
+  "platforms": {
+    "mac-arm64": {
+      "version": "0.4.3",
+      "status": "experimental-local-legacy",
+      "downloadUrl": "https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v0.4.3/LEX-AI-0.4.3-arm64.dmg",
+      "bytes": 401541849,
+      "sha256": "85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4",
+      "requirements": {
+        "minimumMemoryGB": 8,
+        "minimumFreeDiskGB": 3,
+        "firstRunAssistantComponentsGB": 1.95,
+        "physical8GBValidated": false
+      }
+    },
+    "mac-x64": {
+      "version": null,
+      "status": "pending",
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "requirements": null
+    },
+    "windows-x64": {
+      "version": null,
+      "status": "pending",
+      "downloadUrl": null,
+      "bytes": null,
+      "sha256": null,
+      "requirements": null
+    }
   },
-  "notarized": false,
-  "downloadUrl": "https://github.com/santirosado21-spec/lex-ai-descargas/releases/download/v0.4.3/LEX-AI-0.4.3-arm64.dmg",
-  "bytes": 401541849,
-  "sha256": "85526589575ed0ba6e4a267523e06d52fa8edf2d48895fd728d7995a7d1734e4",
   "publicCorpus": {
     "snapshotDate": "2026-10-30",
     "exhaustive": false,
     "currentLawGuaranteed": false
-  },
-  "assistantName": "LEX AI"
+  }
 }

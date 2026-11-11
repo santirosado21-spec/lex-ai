@@ -1,5 +1,7 @@
 # Identidad del producto: LEX AI
 
+> Actualización 2026-11-09: el dueño solicita buscar otra identidad por coincidencia con LEX AI. [Investigación inicial y shortlist](../brand/naming-research-2026-11-09.md) en curso; sin finalista elegido o renombrado de UI/paquetes. El nombre actual permanece provisional hasta esa decisión.
+
 Decisión del dueño, 30 de octubre de 2026: la experiencia se presenta como LEX AI, cuyo comportamiento combina instrucciones de tarea, habilidades, fuentes recuperadas y contexto del asunto. No se muestra el nombre del modelo subyacente en el flujo ordinario.
 
 ## Implementación

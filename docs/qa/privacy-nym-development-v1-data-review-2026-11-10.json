@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:19:30.398665+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_PROPOSED_SILVER_DEV_ANNOTATIONS_WITH_LIMITS",
+  "scope": "Independent review of only the newly authored Nym DEV1 material and permitted protocol/schema/annotation guide; no comparison with prior corpora.",
+  "reviewedHashes": {
+    "eval/privacy-nym-development-v1/dev.jsonl": "a46d046b728d95ccda9967caae0366689c6c0453fab9bc4c36734b0862f06eaf",
+    "eval/privacy-nym-development-v1/manifest.json": "d3a7b341cbcc01e83af00b043ba46f395e5b10dcb6d08724b80b574bd2c0cca7",
+    "eval/privacy-nym-development-v1/README.md": "a2275987a217f074b2022d09f5c5b227f8bb9aa004806662f815a06ab0afa26a"
+  },
+  "checks": {
+    "cases": 60,
+    "uniqueIds": 60,
+    "uniqueStoryGroups": 60,
+    "segments": 64,
+    "entitySpans": 70,
+    "categories": 12,
+    "expectedComplete": 47,
+    "expectedBlocked": 13,
+    "cleanComplete": 5,
+    "blockedWithEntities": 10,
+    "preservationSpans": 15,
+    "exactCaseSegmentOperationalEntityPreserveSchema": true,
+    "originalUtf16RangesAndAllThreeSlicesDecode": true,
+    "surrogateSplitsRejected": true,
+    "duplicateSpanCheck": true,
+    "operationalReasonPriorityAndScopeStimuliConsistent": true,
+    "materializedManifestCountsAndSourceHashesConsistent": true,
+    "READMEHashConsistent": true
+  },
+  "annotationReview": {
+    "all60CasesRead": true,
+    "visibleEntityOccurrencesReviewed": true,
+    "obviousUnannotatedIdentifierFound": false,
+    "boundaries": "Maximal explicit identifiers/names/designators, nested person/relation spans, original accents/NFD/astrals/CRLF/NBSP and repeated occurrences consistent with guide.",
+    "unsupportedModelCoverage": "Context2/sensitive_relation5 and organization/address/typed-ID witnesses remain product-policy annotations, independent of native model mappings. No predictions used.",
+    "preservationScope": "15 proposed exact preservation spans reviewed as annotations, not proof of restoration or exhaustive annotation of every incidental date/year. Dates may overlap context under the guide.",
+    "structuralSurfaces": "Filename/path values, schema key email, metadata/history/tool/retrieved/derived/envelope and five-surface case060 remain inert represented text; not proof of complete request or structural rewriting safety."
+  },
+  "longCases": [
+    {
+      "id": "NYM-DEV1-058",
+      "textUtf8Bytes": 8754,
+      "envelopeUtf16": 8324,
+      "processorStatus": "failed",
+      "expectedReason": "detector_failure",
+      "tokenCount": null
+    },
+    {
+      "id": "NYM-DEV1-059",
+      "textUtf8Bytes": 20242,
+      "envelopeUtf16": 19867,
+      "processorStatus": "ok",
+      "expectedReason": "detector_failure",
+      "meaning": "Actual input limits exceeded despite otherwise supported complete known-origin extraction; not measured tokenizer overflow.",
+      "tokenCount": null
+    }
+  ],
+  "findings": [],
+  "execution": {
+    "rulesRun": false,
+    "modelsRun": false,
+    "tokenizersRun": false,
+    "scoringPerformed": false,
+    "networkRequests": 0,
+    "priorDevHeldoutGoldOrResultsRead": false,
+    "dataEdited": false,
+    "freezeCreated": false
+  },
+  "limits": [
+    "Proposed silver labels; not legal/privacy authority or validated model quality.",
+    "Freshness/independence attestations were not tested against unread corpora; distinct story IDs do not prove statistical independence.",
+    "Uneven small DEV corpus is not retained acceptance; no execution/training/egress/product/license or physical8GB authorization.",
+    "Expected complete means no authored input-policy block, not candidate completion or safe disclosure. Blocked visible entities retain misses."
+  ],
+  "executionAuthorized": false,
+  "privacyValidated": false,
+  "physical8GBValidated": false,
+  "productionEnabled": false
+}

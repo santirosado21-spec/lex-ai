@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-content-inventory-v1",
+  "status": "source-preparation-only-independent-review-pending",
+  "executionAuthorized": false,
+  "sourceTokenizer": {
+    "path": "artifacts/privacy/models/nym-int8-local-v2/int8/tokenizer.json",
+    "bytes": 12389891,
+    "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+    "revision": "4348999cd3c2e20c49615e9af7c6bbb45b64cd85"
+  },
+  "output": "artifacts/privacy/nym-content-inventory-v1",
+  "requiredFreeze": "docs/qa/privacy-nym-content-inventory-v1-freeze.json",
+  "limits": {"seconds": 30, "peakRssBytes": 402653184, "lineBytes": 4096, "inventoryBytes": 33554432, "rows": 198804, "addedEntries": 249},
+  "rowSchema": {
+    "id": "strict integer raw ID, sorted ascending, effective union 0..198803",
+    "token": "exact raw token content, no normalization/remapping",
+    "baseBpePresence": "strict boolean: ID/content exists in raw model.vocab",
+    "added": "null or exact five strict boolean flags: single_word,lstrip,rstrip,normalized,special"
+  },
+  "files": ["inventory.ndjson", "header.json", "receipt.json"],
+  "rawDataObservation": {
+    "method": "stdlib json read as data during design, not actual inventory preparation",
+    "baseBpeEntries": 198804,
+    "baseBpeUniqueIds": 198804,
+    "addedEntries": 249,
+    "unionRows": 198804,
+    "rawBaseIds139Through168": "present as U+2581 runs also listed in added_tokens; raw presence must not be confused with effective token_to_id lookup behavior"
+  },
+  "freezeContract": {
+    "fields": ["id", "status", "rootAuthorization", "independentReview", "sourceHashes", "tokenizerSha256", "limits"],
+    "status": "frozen-reviewed",
+    "rootAuthorization": "one-public-build-preparation",
+    "independentReview": "approved",
+    "sourceHashes": "exact SHA256 map of this protocol, generator, Node tests and architecture document; root creates only after independent review"
+  },
+  "measurement": "OS getrusage process-lifetime high-water RSS, platform-unit corrected; 30s absolute monotonic checkpoints after synchronous C JSON parse, each validation/output/read loop and before publish. No instantaneous interruption/20ms sampling guarantee.",
+  "lifecycle": "Default PLAN has no artifact access/write/network/load. --prepare requires exact fixed freeze; exclusive0700 new leaf,0400 files,partial retained on failure,no overwrite/resume. Pre/post source+freeze+tokenizer hashes; stream posthash output before exclusive final link. No merges/config duplication.",
+  "futureRuntime": {"loader": "not implemented here; must stream bounded lines from frozen derived hash-bound public asset", "sampleIntervalMs":20,"maximumGapMs":50,"combinedRssBytes":1073741824,"totalMs":60000,"limitsChanged":false},
+  "claims": {"inferencePerformed":false,"tokenizerExecuted":false,"networkPerformed":false,"productionEnabled":false,"privacyValidated":false,"physical8GBValidated":false,"redistributionApproved":false,"fullLicenseClearance":false}
+}

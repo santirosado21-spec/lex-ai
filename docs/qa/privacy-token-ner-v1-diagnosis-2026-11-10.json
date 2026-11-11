@@ -1,0 +1,3579 @@
+{
+  "version": 1,
+  "diagnosticOnly": true,
+  "inferenceExecuted": false,
+  "onnxImported": false,
+  "provenance": {
+    "dev": {
+      "path": "eval/privacy-development-v3/cases.jsonl",
+      "sha256": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d"
+    },
+    "predictions": {
+      "path": "artifacts/privacy/rampart-dev-v1-20261110-first/predictions.json",
+      "sha256": "9481e358a4306955f398fb4f4f8a9b7e62a3f9b7d9440ea0eb81f9f456d6cca8"
+    },
+    "score": {
+      "path": "artifacts/privacy/rampart-dev-v1-20261110-first/score.json",
+      "sha256": "8c1f657f14cd32a9e0f4514669708f3cf757627cf71ff38fec9c23668022bb23"
+    },
+    "execution": {
+      "path": "artifacts/privacy/rampart-dev-v1-20261110-first/execution.json",
+      "sha256": "33e473284e4bafa3126b6d31987bf4517954d1e48823da242c4d7a9b0441fb94"
+    },
+    "worker": {
+      "path": "scripts/privacy-token-ner-worker.py",
+      "sha256": "11ddcb4531a6692581ed8756f750973e2538b708b0318c085c0a848e0d42cb5d"
+    },
+    "driver": {
+      "path": "server/privacy/token-ner-candidate.mjs",
+      "sha256": "a6c1a04a52f4d2163619b7991d7dc8b6303e194d9597294b854c048706edf460"
+    },
+    "tokenizer": {
+      "path": "artifacts/privacy/candidate-discovery-20261110/rampart-pinned-tokenizer.json",
+      "sha256": "98ade711428b42a1b5343c403a73344535e92de8e19359cdb567ef34da210259"
+    }
+  },
+  "recordedExact": {
+    "tp": 13,
+    "fp": 41,
+    "fn": 35,
+    "precision": 0.24074074074074073,
+    "recall": 0.2708333333333333,
+    "precisionInsufficient": false,
+    "recallInsufficient": false,
+    "precisionWilson95": {
+      "lower": 0.14644291495284428,
+      "upper": 0.36947524183502795
+    },
+    "recallWilson95": {
+      "lower": 0.1656595762745644,
+      "upper": 0.40996964982240613
+    },
+    "zeroMissUpper95": null
+  },
+  "recordedMacroPrecision": {
+    "precision": 0.416017316017316,
+    "precisionCategories": 9,
+    "recall": 0.2708333333333333,
+    "recallCategories": 12,
+    "insufficient": true
+  },
+  "recordedStatuses": {
+    "complete": 30,
+    "blocked": 30,
+    "reasons": {
+      "detector_failure": 11,
+      "ambiguous_context": 17,
+      "unsupported_format": 1,
+      "partial_extraction": 1
+    }
+  },
+  "ruleOnlyExact": {
+    "tp": 30,
+    "fp": 14,
+    "fn": 18
+  },
+  "groups": {
+    "detector_failure": {
+      "total": 11,
+      "requiredBlocks": 1,
+      "unexpectedBlocks": 10,
+      "expectedComplete": 0,
+      "ruleTrueLost": 7,
+      "tokenizerWouldFail": 4,
+      "tokenizerPass": 6
+    },
+    "complete": {
+      "total": 30,
+      "requiredBlocks": 0,
+      "unexpectedBlocks": 0,
+      "expectedComplete": 30,
+      "ruleTrueLost": 0,
+      "tokenizerWouldFail": 0,
+      "tokenizerPass": 30
+    },
+    "ambiguous_context": {
+      "total": 17,
+      "requiredBlocks": 1,
+      "unexpectedBlocks": 16,
+      "expectedComplete": 0,
+      "ruleTrueLost": 10,
+      "tokenizerWouldFail": 0,
+      "tokenizerPass": 16
+    },
+    "unsupported_format": {
+      "total": 1,
+      "requiredBlocks": 1,
+      "unexpectedBlocks": 0,
+      "expectedComplete": 0,
+      "ruleTrueLost": 0,
+      "tokenizerWouldFail": 0,
+      "tokenizerPass": 0
+    },
+    "partial_extraction": {
+      "total": 1,
+      "requiredBlocks": 1,
+      "unexpectedBlocks": 0,
+      "expectedComplete": 0,
+      "ruleTrueLost": 0,
+      "tokenizerWouldFail": 0,
+      "tokenizerPass": 0
+    }
+  },
+  "lostExactRuleTrueByCategory": {
+    "person": 2,
+    "rfc": 3,
+    "curp": 4,
+    "clabe": 4,
+    "account": 1,
+    "phone": 1,
+    "address": 1,
+    "case_id": 1
+  },
+  "learnedOnly": {
+    "count": 34,
+    "tp": 0,
+    "fp": 34
+  },
+  "learnedOnlyCategories": {
+    "person": 26,
+    "phone": 6,
+    "address": 2
+  },
+  "recordedFpGeometry": {
+    "sameCategoryOverlap": 12,
+    "otherCategoryOverlap": 20,
+    "noGoldOverlap": 9
+  },
+  "categoryConfusions": {
+    "person->person": 6,
+    "organization->organization": 3,
+    "person->rfc": 9,
+    "phone->account": 7,
+    "person->email": 2,
+    "phone->phone": 1,
+    "address->case_id": 2,
+    "context->context": 1,
+    "sensitive_relation->sensitive_relation": 1
+  },
+  "clean": [
+    {
+      "id": "DEV3-049",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-050",
+      "status": "blocked",
+      "reason": "ambiguous_context",
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-051",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-052",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-053",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-054",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-055",
+      "status": "blocked",
+      "reason": "detector_failure",
+      "falsePositives": 0
+    },
+    {
+      "id": "DEV3-056",
+      "status": "complete",
+      "reason": null,
+      "falsePositives": 0
+    }
+  ],
+  "tokenizer": {
+    "maximumTokens": 62,
+    "failedCaseIds": [
+      "DEV3-001",
+      "DEV3-016",
+      "DEV3-032",
+      "DEV3-055"
+    ],
+    "failureKinds": [
+      "unknown_or_offset"
+    ]
+  },
+  "cases": [
+    {
+      "id": "DEV3-001",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "person"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "person"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 33,
+          "unknownTokens": 1,
+          "pureFailure": "unknown_or_offset"
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-002",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "person"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 1
+      },
+      "learnedOnlyCount": 3,
+      "fpGeometry": {
+        "sameCategoryOverlap": 3,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "person": 3
+      },
+      "categoryConfusions": {
+        "person->person": 3
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 25,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-003",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "person"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "person"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 33,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "text",
+          "tokens": 22,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-004",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "person"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 1
+      },
+      "learnedOnlyCount": 3,
+      "fpGeometry": {
+        "sameCategoryOverlap": 3,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "person": 3
+      },
+      "categoryConfusions": {
+        "person->person": 3
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 17,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-005",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "organization"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 38,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-006",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "organization"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {
+        "organization->organization": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-007",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "organization"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 2,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {
+        "organization->organization": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 32,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-008",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "organization"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {
+        "organization->organization": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 41,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-009",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "rfc"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "rfc"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 38,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-010",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "rfc"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "rfc"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-011",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "rfc"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "rfc"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 34,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "text",
+          "tokens": 21,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-012",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "rfc"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 16,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 16,
+        "fn": 1
+      },
+      "learnedOnlyCount": 16,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 9,
+        "noGoldOverlap": 7
+      },
+      "learnedOnlyCategories": {
+        "person": 16
+      },
+      "categoryConfusions": {
+        "person->rfc": 9
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 21,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-013",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "curp"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "curp"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 38,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-014",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "curp"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "curp"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 37,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-015",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "curp"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "curp"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 41,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-016",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "curp"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "curp"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 40,
+          "unknownTokens": 1,
+          "pureFailure": "unknown_or_offset"
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-017",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "clabe"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "clabe"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 29,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-018",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "clabe"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "clabe"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 34,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-019",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "clabe"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "clabe"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 37,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-020",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "clabe"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "clabe"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 38,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-021",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "account"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 4,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 1
+      },
+      "learnedOnlyCount": 3,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 4,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "phone": 3
+      },
+      "categoryConfusions": {
+        "phone->account": 4
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 33,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-022",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "account"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "learnedOnlyCount": 2,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 3,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "phone": 2
+      },
+      "categoryConfusions": {
+        "phone->account": 3
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 39,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-023",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "account"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "account"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 34,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-024",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "account"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 32,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-025",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "email"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 34,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-026",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "email"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 24,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-027",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "email"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "learnedOnlyCount": 2,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 2
+      },
+      "learnedOnlyCategories": {
+        "person": 2
+      },
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 31,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "text",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-028",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "email"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "learnedOnlyCount": 2,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 2,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "person": 2
+      },
+      "categoryConfusions": {
+        "person->email": 2
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 29,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-029",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "phone"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "learnedOnlyCount": 1,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "phone": 1
+      },
+      "categoryConfusions": {
+        "phone->phone": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-030",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "phone"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 29,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-031",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "phone"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-032",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "phone"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "phone"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 36,
+          "unknownTokens": 1,
+          "pureFailure": "unknown_or_offset"
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-033",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "address"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 51,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-034",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "address"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 46,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-035",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "address"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "address"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 49,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-036",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "address"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 36,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-037",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "case_id"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 34,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-038",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "case_id"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 1
+      },
+      "learnedOnlyCount": 2,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 2,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {
+        "address": 2
+      },
+      "categoryConfusions": {
+        "address->case_id": 2
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 40,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-039",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "case_id"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 24,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-040",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "case_id"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [
+        "case_id"
+      ],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-041",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "context"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 62,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-042",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "context"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 62,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "text",
+          "tokens": 23,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 1,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-043",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "context"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {
+        "context->context": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 56,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-044",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "context"
+      ],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 53,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-045",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "sensitive_relation"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 39,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-046",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "sensitive_relation"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 1,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 1,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {
+        "sensitive_relation->sensitive_relation": 1
+      },
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 40,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-047",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "sensitive_relation"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 41,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-048",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [
+        "sensitive_relation"
+      ],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 40,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-049",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 41,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-050",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 31,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-051",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 28,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-052",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 29,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-053",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 46,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-054",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 38,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-055",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 45,
+          "unknownTokens": 1,
+          "pureFailure": "unknown_or_offset"
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-056",
+      "expectedStatus": "complete",
+      "expectedReason": null,
+      "goldCategories": [],
+      "actualStatus": "complete",
+      "actualReason": null,
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "complete",
+      "ruleOnlyReason": null,
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": true,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 39,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 10,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-057",
+      "expectedStatus": "blocked",
+      "expectedReason": "unsupported_format",
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "unsupported_format",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "blocked",
+      "ruleOnlyReason": "unsupported_format",
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": false,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 27,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-058",
+      "expectedStatus": "blocked",
+      "expectedReason": "partial_extraction",
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "partial_extraction",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "blocked",
+      "ruleOnlyReason": "partial_extraction",
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": false,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 28,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 7,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-059",
+      "expectedStatus": "blocked",
+      "expectedReason": "ambiguous_context",
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "ambiguous_context",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "blocked",
+      "ruleOnlyReason": "ambiguous_context",
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": false,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 35,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 11,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    },
+    {
+      "id": "DEV3-060",
+      "expectedStatus": "blocked",
+      "expectedReason": "detector_failure",
+      "goldCategories": [],
+      "actualStatus": "blocked",
+      "actualReason": "detector_failure",
+      "actualExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "ruleOnlyStatus": "blocked",
+      "ruleOnlyReason": "detector_failure",
+      "ruleOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "wouldReachLearnedBackend": false,
+      "lostExactRuleTrueCategories": [],
+      "retainedRuleCompatible": 0,
+      "learnedOnlyExact": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "learnedOnlyCount": 0,
+      "fpGeometry": {
+        "sameCategoryOverlap": 0,
+        "otherCategoryOverlap": 0,
+        "noGoldOverlap": 0
+      },
+      "learnedOnlyCategories": {},
+      "categoryConfusions": {},
+      "tokenization": [
+        {
+          "index": 0,
+          "kind": "text",
+          "tokens": 23,
+          "unknownTokens": 0,
+          "pureFailure": null
+        },
+        {
+          "index": 0,
+          "kind": "path",
+          "tokens": 14,
+          "unknownTokens": 0,
+          "pureFailure": null
+        }
+      ]
+    }
+  ],
+  "unknown": [
+    "Recorded generic failures do not distinguish low confidence, invalid BIO, model output validation or other runtime failures.",
+    "Recorded ambiguous_context does not distinguish unsupported learned labels from path findings when rule replay reaches backend.",
+    "Rules-compatible detections may also coincide with learned output; origin cannot be uniquely attributed without per-source telemetry.",
+    "Tokenizer failure is a sufficient replay failure for that stream, not proof that the original run reached it before an earlier model failure."
+  ]
+}

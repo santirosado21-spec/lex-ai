@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "windows-owned-tree-bootstrap-diagnostic-source-review-v1",
+  "reviewedAt": "2026-11-10T20:58:17.583Z",
+  "reviewer": "independent Codex subagent build_corpus_registry; no external model call",
+  "verdict": "APPROVE",
+  "approvalScope": "Reviewed current source version for a single diagnostic-only Windows bootstrap, pending root-owned LF attributes/freeze and final CI source check. No performance or Windows execution acceptance.",
+  "blockingFindings": [],
+  "reviewedSources": {
+    "scripts/windows-owned-tree-bootstrap-diagnostic.mjs": {
+      "bytes": 8807,
+      "sha256": "627a8957f7805a974a453ee4d4737a8b3bf4773e3b0cf7564ddbf03bdd9a8516"
+    },
+    "tests/windows-owned-tree-bootstrap-diagnostic.test.mjs": {
+      "bytes": 5559,
+      "sha256": "f72a68a207a6a3b27dda288deb2e6c2841856f60cb35fd3cacca2660fee6290e"
+    },
+    "resources/windows-owned-tree-bootstrap-diagnostic-v1.json": {
+      "bytes": 2080,
+      "sha256": "e2e15492df3e62c0b2386d8f9f34c36cca4c957b9d787b0c318a23e139e6c044"
+    },
+    "docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md": {
+      "bytes": 4801,
+      "sha256": "436866c4e35d1d99a3d8c5eb4091af890bd91a8ecc14a55a3b9d98970c7cbd05"
+    },
+    ".github/workflows/windows-owned-tree-bootstrap-diagnostic.yml": {
+      "bytes": 1466,
+      "sha256": "670aca724318de18349d0f2d3cd07cfe4c5a42f652459285a5be8247e497e4be"
+    }
+  },
+  "baseline": {
+    "path": "docs/qa/windows-owned-tree-D1j-attempt3-freeze-2026-11-10.json",
+    "rawSha256": "d52dea6a270d4fa3df5d06d7e40b07932fd75a59f44c530702b4640e617bd08a",
+    "jsonStringifySha256": "4802d36039f87449d98f588d946e565e3216fc3e64f03a7b76d01941c65cbac3",
+    "sourceCount": 7,
+    "sources": {
+      "scripts/windows-owned-tree-smoke.mjs": {
+        "expectedSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "actualSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "unchanged": true
+      },
+      "tests/windows-owned-tree-smoke.test.mjs": {
+        "expectedSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "actualSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "unchanged": true
+      },
+      "docs/architecture/windows-owned-tree-smoke-v1.md": {
+        "expectedSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "actualSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "unchanged": true
+      },
+      "resources/windows-owned-tree-smoke-v1.json": {
+        "expectedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "actualSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "unchanged": true
+      },
+      ".github/workflows/windows-owned-tree-smoke.yml": {
+        "expectedSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+        "actualSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+        "unchanged": true
+      },
+      "server/windows-memory-monitor-v2.mjs": {
+        "expectedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "actualSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "unchanged": true
+      },
+      "server/windows-process-memory.mjs": {
+        "expectedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "actualSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "unchanged": true
+      }
+    }
+  },
+  "verification": {
+    "command": "node --test tests/windows-owned-tree-bootstrap-diagnostic.test.mjs tests/windows-memory-monitor-v2.test.mjs tests/windows-owned-tree-smoke.test.mjs",
+    "exitCode": 0,
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "reportedDurationMs": 128.004583,
+    "actualWindowsWmiRun": false,
+    "actualWindowsCiRun": false,
+    "nativeBuild": false,
+    "networkRequests": 0,
+    "newFreezeCreated": false,
+    "sourceEdits": false
+  },
+  "checks": [
+    {
+      "id": "D01",
+      "status": "pass",
+      "evidence": "Actual frozen createWindowsMemoryMonitorV2 is constructed inside diagnostic makeMonitor. Only platform and process dependencies are injected; actual inner.start/inner.close and original runOwnedTreeSmoke observer/cleanup hooks execute."
+    },
+    {
+      "id": "D02",
+      "status": "pass",
+      "evidence": "New synthetic integration runs the original whole smoke with actual monitor and fake collector, fragmented CRLF through both listeners, exact request IDs1..5 and five proofs. Foreign parent, missing role, extra descendant, zero RSS and unexpected fixture exit are tested."
+    },
+    {
+      "id": "D03",
+      "status": "pass",
+      "evidence": "Diagnostic readRss rejects locally before calling inner.readRss. If original bootstrap observer accepts, interception ends old measurement path; if it rejects, path ends earlier. Synthetic successful diagnostic asserts exactly one collector request and zero steady requests."
+    },
+    {
+      "id": "D04",
+      "status": "pass",
+      "evidence": "inspectBootstrapFrame uses strict frozen parser and fixed root/child/grandchild comparisons, closure=3, exclusion and sum agreement. Known role/closure proof rejection may produce DIAGNOSTIC_COMPLETE with proofCount0; it does not weaken measurement criteria or create a PASS."
+    },
+    {
+      "id": "D05",
+      "status": "pass",
+      "evidence": "Persisted report is assembled from fixed fields and finite categories: counters, ASCII/CRLF flags, role booleans, aggregate equality, lifecycle and timing. No numeric PID/PPID, raw frame, source code, environment, command line or arbitrary error text is copied to report."
+    },
+    {
+      "id": "D06",
+      "status": "pass",
+      "evidence": "Completion requires collector exit observed0, no killed/category/signal and fixture intentional shutdown/allThreeReaped/no force. Missing bootstrap/frame, monitor failure or unsafe lifecycle yields DIAGNOSTIC_INCOMPLETE and CLI nonzero. Synthetic late fixture-exit test covers a cleanup rejection."
+    },
+    {
+      "id": "D07",
+      "status": "pass",
+      "evidence": "Frozen readiness5s/bootstrap10s/collector cleanup3+3s/fixture shutdown3.5s/lifetime60s/frame4MiB/4096rows are retained, no retry/fallback/deadline increase. Diagnostic does not claim steady timing, overhead, physical8GB, inference or installer validation."
+    },
+    {
+      "id": "D08",
+      "status": "pass",
+      "evidence": "Default CLI emits PLAN. --run requires win32, a separate root-approved diagnostic freeze, exact12 source paths, canonical parsed attempt3-freeze digest, equality of original7 source hashes and strict current-byte hashes pre/post. No approved freeze or real run was created for review."
+    },
+    {
+      "id": "D09",
+      "status": "pass",
+      "evidence": "Workflow uses distinct prefix, public-repository and branch/path gates, pinned checkout34e114876b0b11c390a56381ad16ebd13914f8d5, read-only contents, persist-credentials=false, windows-2025,3minute timeout and explicit exit propagation. No secrets, upload/cache/release/deploy/schedule steps."
+    }
+  ],
+  "retainedHistoricalEvidence": {
+    "providedByCoordinator": true,
+    "attempt3BootstrapElapsedMs": 3170.0658,
+    "attempt3AggregateRssBytes": 146927616,
+    "attempt3AcceptedSteadySamples": 0,
+    "attempt3CollectorExitCode": 0,
+    "attempt3ThreeFixtureReapingReported": true,
+    "originalObserverFailureCause": "unknown; new synthetic passes do not establish liveness/wire/proof-count cause"
+  },
+  "limitations": [
+    {
+      "id": "L01",
+      "status": "not-run",
+      "detail": "No actual WMI/Windows diagnostic or CI executed. Timing/resource behavior and current runner Node remain for the single root-controlled diagnostic; synthetic fixtures do not infer the original Windows failure cause."
+    },
+    {
+      "id": "L02",
+      "status": "pending-root",
+      "detail": "Root will add exact LF attributes for the five new paths and create diagnostic freeze. Those future changes/new freeze were not reviewed or created here; final reviewed hashes must be rechecked before CI. Original seven source hashes are unchanged now."
+    },
+    {
+      "id": "L03",
+      "status": "coverage-note",
+      "detail": "New suite rejects an invalid freeze but does not exercise a root-created valid diagnostic freeze or pre/post source drift on Windows. Source logic was inspected; final actual freeze/source-byte review remains required."
+    },
+    {
+      "id": "L04",
+      "status": "scope-limit",
+      "detail": "DIAGNOSTIC_COMPLETE is a completed observation, including possible known proof rejection; it never means a performance pass. No fourth measurement attempt or full Windows/8GB product acceptance is authorized by this review."
+    }
+  ],
+  "productionEnabled": false,
+  "performanceValidated": false,
+  "physical8GBValidated": false,
+  "installerValidated": false,
+  "inferenceValidated": false,
+  "activationAddendum": {
+    "reviewedAt": "2026-11-10T21:02:48.691Z",
+    "verdict": "APPROVE",
+    "scope": "Final source activation check for one Windows bootstrap diagnostic only; no steady samples, performance acceptance or retries.",
+    "freeze": {
+      "path": "docs/qa/windows-owned-tree-bootstrap-diagnostic-freeze-2026-11-10.json",
+      "sha256": "d284bf2e0063e6ac50b0417f0000c2225bf6b79f28286b5a3a2a489df7f2c99c",
+      "exactTopLevelSchemaVerified": true,
+      "sourceCount": 12,
+      "attempt3FreezeCanonicalSha256": "4802d36039f87449d98f588d946e565e3216fc3e64f03a7b76d01941c65cbac3",
+      "canonicalBaselineMatchesOriginalReview": true,
+      "actualVerifyDiagnosticFreezePositivePassed": true
+    },
+    "attributes": {
+      "path": ".gitattributes",
+      "sha256": "528980e719f2fc2df5ad3ff9c979e19eb0af58e17f3b9d4a487d41933d27bc06",
+      "previousSevenExactAnchorsPreserved": true,
+      "addedOnlyFiveExactNewPaths": true,
+      "allTwelveTextEolLf": true,
+      "noWildcardOrGlobalRules": true,
+      "previousAttributesGitBlob": "b9830a9"
+    },
+    "checkoutSimulation": {
+      "independentlyRepeated": true,
+      "method": "git -c core.autocrlf=true -c core.eol=crlf checkout-index of staged .gitattributes and12source paths into owned temporary root",
+      "matchingRawSourceHashes": 12,
+      "matchingAttributesBytes": false,
+      "globalGitConfigChanged": false,
+      "workingSourcesChanged": false,
+      "temporaryRootRemoved": true,
+      "matchingAttributesLogicalLines": true,
+      "attributesFileItselfMayUseAutocrlf": ".gitattributes has no self LF rule; simulated checkout is CRLF, exact source rules remain equivalent and all12 source digests match",
+      "reviewCheckCorrection": "Initial reviewer assertion incorrectly required .gitattributes raw bytes to remain LF, although it is outside the12 frozen sources. Removed that extra requirement after inspecting all12 successful source digest comparisons; no source/config/attribute rules changed."
+    },
+    "authorization": {
+      "path": "docs/qa/windows-owned-tree-bootstrap-diagnostic-authorization-2026-11-10.json",
+      "sha256": "09b17cc04ec744206161e0c65c6fcda48710f8f455929c493ac8e90696cf4512",
+      "maximumActualWmiQueries": 1,
+      "steadySamplesAuthorized": 0,
+      "performanceValidationAuthorized": false,
+      "automaticRetry": false,
+      "originalAttempt3CauseKnown": false
+    },
+    "reviewedCodeFiveHashesUnchanged": true,
+    "sevenFrozenBaselineHashesUnchanged": true,
+    "limits": {
+      "readinessMs": 5000,
+      "bootstrapMs": 10000,
+      "collectorCleanupMs": 6000,
+      "fixtureCleanupMs": 3500,
+      "fixtureLifetimeMs": 60000,
+      "maximumFrameBytes": 4194304,
+      "maximumRows": 4096,
+      "workflowTimeoutMinutes": 3
+    },
+    "actualWmiRun": false,
+    "actualCiRun": false,
+    "networkRequests": 0,
+    "freezeOrSourceEdits": false,
+    "performanceValidated": false,
+    "physical8GBValidated": false,
+    "note": "This addendum closes original L02 pending-root source checks and L03 positive-freeze-path evidence locally. No actual Windows cause or performance result is inferred; the historical failed measurements remain frozen."
+  }
+}

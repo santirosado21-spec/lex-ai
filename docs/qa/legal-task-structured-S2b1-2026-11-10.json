@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "reportLocalDate": "2026-11-10",
+  "runLocalStartDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "status": "partial-stopped-preserved-no-retry",
+  "freeze": "legal-task-structured-S2b1-freeze-2026-11-09.json",
+  "planSha256": "79aee1554dc6c78b46e273e0f5a0ec76fee5119ac934ff0ec4f307df84540822",
+  "reportSha256": "78c28753c3c5458be7fd8280194c35bac37ed43f64bcd4f13d67d74be1474f27",
+  "replaySha256": "3d459e8e228f3796ba79486e8023476d0722efd0d4fc89f8b4cfdc74418342a6",
+  "planned": 8,
+  "attempted": 3,
+  "generationPosts": 3,
+  "httpRequests": 6,
+  "stopReason": "CONFIGURATION_ERROR",
+  "lastHttpStatus": 400,
+  "exactProvider400Cause": "unknown; response error body deliberately not persisted",
+  "observedModelResponses": 2,
+  "jsonValid": 2,
+  "strictContractPass": 1,
+  "completePairs": 0,
+  "elapsedMs": 66420,
+  "reportedTotalTokens": 7798,
+  "reportedUsageAttempts": 2,
+  "unreportedUsageAttempts": 1,
+  "unreportedIsZero": false,
+  "reasoningTokensReported": 929,
+  "reasoningIncludedInTotal": true,
+  "billedCostUsd": null,
+  "groups": [
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "prompt-only",
+      "planned": 2,
+      "attempted": 1,
+      "complete": 0,
+      "failed": 1,
+      "pending": 1,
+      "jsonValid": 1,
+      "contractValid": 0,
+      "citationsValid": 0,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 1,
+          "sum": 2826
+        },
+        "completion_tokens": {
+          "reportedAttempts": 1,
+          "sum": 526
+        },
+        "total_tokens": {
+          "reportedAttempts": 1,
+          "sum": 3352
+        }
+      },
+      "latencyMs": {
+        "samples": 1,
+        "mean": 951,
+        "p50": 951,
+        "p95": 951
+      },
+      "promptCharacters": {
+        "mean": 11824.5
+      }
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "native-json",
+      "planned": 2,
+      "attempted": 1,
+      "complete": 0,
+      "failed": 1,
+      "pending": 1,
+      "jsonValid": 0,
+      "contractValid": 0,
+      "citationsValid": 0,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        },
+        "completion_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        },
+        "total_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        }
+      },
+      "latencyMs": {
+        "samples": 1,
+        "mean": 925,
+        "p50": 925,
+        "p95": 925
+      },
+      "promptCharacters": {
+        "mean": 11824.5
+      }
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "prompt-only",
+      "planned": 2,
+      "attempted": 0,
+      "complete": 0,
+      "failed": 0,
+      "pending": 2,
+      "jsonValid": 0,
+      "contractValid": 0,
+      "citationsValid": 0,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        },
+        "completion_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        },
+        "total_tokens": {
+          "reportedAttempts": 0,
+          "sum": 0
+        }
+      },
+      "latencyMs": {
+        "samples": 0,
+        "mean": null,
+        "p50": null,
+        "p95": null
+      },
+      "promptCharacters": {
+        "mean": 11824.5
+      }
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "native-json",
+      "planned": 2,
+      "attempted": 1,
+      "complete": 1,
+      "failed": 0,
+      "pending": 1,
+      "jsonValid": 1,
+      "contractValid": 1,
+      "citationsValid": 1,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 1,
+          "sum": 3429
+        },
+        "completion_tokens": {
+          "reportedAttempts": 1,
+          "sum": 1017
+        },
+        "total_tokens": {
+          "reportedAttempts": 1,
+          "sum": 4446
+        }
+      },
+      "latencyMs": {
+        "samples": 1,
+        "mean": 2455,
+        "p50": 2455,
+        "p95": 2455
+      },
+      "promptCharacters": {
+        "mean": 11824.5
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "jobId": "job-01",
+      "requestedModel": "openai/gpt-oss-20b",
+      "observedModel": "openai/gpt-oss-20b",
+      "arm": "prompt-only",
+      "httpStatus": 200,
+      "finishReason": "stop",
+      "errorCode": null,
+      "outcome": "failed",
+      "usage": {
+        "prompt_tokens": 2826,
+        "completion_tokens": 526,
+        "total_tokens": 3352,
+        "completion_tokens_details": {
+          "reasoning_tokens": 290
+        }
+      },
+      "generationElapsedMs": 951
+    },
+    {
+      "jobId": "job-02",
+      "requestedModel": "openai/gpt-oss-120b",
+      "observedModel": "openai/gpt-oss-120b",
+      "arm": "native-json",
+      "httpStatus": 200,
+      "finishReason": "stop",
+      "errorCode": null,
+      "outcome": "complete",
+      "usage": {
+        "prompt_tokens": 3429,
+        "completion_tokens": 1017,
+        "total_tokens": 4446,
+        "completion_tokens_details": {
+          "reasoning_tokens": 639
+        }
+      },
+      "generationElapsedMs": 2455
+    },
+    {
+      "jobId": "job-03",
+      "requestedModel": "openai/gpt-oss-20b",
+      "observedModel": null,
+      "arm": "native-json",
+      "httpStatus": 400,
+      "finishReason": null,
+      "errorCode": "CONFIGURATION_ERROR",
+      "outcome": "failed",
+      "usage": {},
+      "generationElapsedMs": 925
+    }
+  ],
+  "reviews": {
+    "assignedModel": "gpt-6.1-sol",
+    "agent": "review_completion_phases",
+    "preLive": "APPROVE 27 mocked tests",
+    "postLive": "APPROVE offline replay/hash/usage audit",
+    "noNewNetwork": true
+  },
+  "scope": "two invented development inputs, fixedS1skill; JSON native vs promptonly, commonlowreasoning",
+  "productionEnabled": false,
+  "legalAccuracy": "not-evaluated",
+  "winner": null,
+  "limitations": [
+    "Incomplete diagnostic with zero completepairs; no advantage or model incapacity conclusion",
+    "One structural pass does not validate entailment/legalaccuracy",
+    "HTTP400 cause cannot be reconstructed from savedreceipt",
+    "Free attestation not invoice/quotaaudit",
+    "Loweffort differs from historicalS2a; not isolatedcomparison",
+    "Visibleanswers filtered for credential/thinkpatterns; not repaired forvalidity"
+  ]
+}

@@ -1,0 +1,704 @@
+{
+  "version": 1,
+  "purpose": "Research discovery map; not an activated crawler allowlist or national corpus",
+  "observedAt": "2026-11-09T23:14:19.792583+00:00",
+  "directory": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/gobiernos.htm",
+    "finalUrl": "https://www.diputados.gob.mx/LeyesBiblio/gobiernos.htm",
+    "httpStatus": 200,
+    "sha256": "8dae23487cd066293bc1e7bf5aa3488e78559b9d8f710afacc1707a71bfaa7b0",
+    "bytes": 131658,
+    "encoding": "windows-1252"
+  },
+  "stateEntitiesDiscovered": 32,
+  "linkedSitesProbed": 0,
+  "documentsAcquired": 0,
+  "coverageOrCurrentLawValidated": false,
+  "states": [
+    {
+      "directoryOrdinal": 1,
+      "entity": "Aguascalientes",
+      "legislation": [
+        {
+          "url": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://eservicios2.aguascalientes.gob.mx/periodicooficial/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 2,
+      "entity": "Baja California",
+      "legislation": [
+        {
+          "url": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://www.bajacalifornia.gob.mx/Gobierno/Periodico_Oficial",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 3,
+      "entity": "Baja California Sur",
+      "legislation": [
+        {
+          "url": "http://www.cbcs.gob.mx/index.php/trabajos-legislativos/leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://finanzas.bcs.gob.mx/boletines-oficiales/",
+          "text": "Boletín Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 4,
+      "entity": "Campeche",
+      "legislation": [
+        {
+          "url": "https://legislacion.congresocam.gob.mx/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodicooficial.campeche.gob.mx/sipoec/public/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 5,
+      "entity": "Chiapas",
+      "legislation": [
+        {
+          "url": "http://congresochiapas.gob.mx/legislaturalxvi/trabajo-legislativo/legislacion-vigente",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://www.sgg.chiapas.gob.mx/periodico/periodico1824",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 6,
+      "entity": "Chihuahua",
+      "legislation": [
+        {
+          "url": "http://www.congresochihuahua.gob.mx/biblioteca/constitucion/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://www.chihuahua.gob.mx/periodicooficial",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 7,
+      "entity": "Ciudad de México",
+      "legislation": [
+        {
+          "url": "https://www.congresocdmx.gob.mx/marco-legal-cdmx-107-2.html",
+          "text": "Leyes de la Ciudad de México"
+        },
+        {
+          "url": "https://data.consejeria.cdmx.gob.mx/index.php/leyes/constitucion",
+          "text": "Leyes de la Ciudad de México"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://data.consejeria.cdmx.gob.mx/index.php/gaceta",
+          "text": "Gaceta Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 8,
+      "entity": "Coahuila",
+      "legislation": [
+        {
+          "url": "https://congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://periodico.segobcoahuila.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 9,
+      "entity": "Colima",
+      "legislation": [
+        {
+          "url": "https://congresocol.gob.mx/web/www/leyes/index.php",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://periodicooficial.col.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 10,
+      "entity": "Durango",
+      "legislation": [
+        {
+          "url": "http://congresodurango.gob.mx/trabajo-legislativo/legislacion-estatal/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://periodicooficial.durango.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 11,
+      "entity": "Guanajuato",
+      "legislation": [
+        {
+          "url": "https://www.congresogto.gob.mx/legislacion",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodico.guanajuato.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 12,
+      "entity": "Guerrero",
+      "legislation": [
+        {
+          "url": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://periodicooficial.guerrero.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 13,
+      "entity": "Hidalgo",
+      "legislation": [
+        {
+          "url": "http://www.congreso-hidalgo.gob.mx/biblioteca_legislativa/LEYES_VIGENTES/leyes_vigentes-lxiv.html",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodico.hidalgo.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 14,
+      "entity": "Jalisco",
+      "legislation": [
+        {
+          "url": "http://congresoweb.congresojal.gob.mx/BibliotecaVirtual/LeyesEstatales.cfm",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodicooficial.jalisco.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 15,
+      "entity": "México",
+      "legislation": [
+        {
+          "url": "https://legislativoedomex.gob.mx/revista",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://legislacion.edomex.gob.mx/periodico",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 16,
+      "entity": "Michoacán",
+      "legislation": [
+        {
+          "url": "http://congresomich.gob.mx/trabajo-legislativo/marco-normativo/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://www.periodicooficial.michoacan.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 17,
+      "entity": "Morelos",
+      "legislation": [
+        {
+          "url": "http://marcojuridico.morelos.gob.mx/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodico.morelos.gob.mx",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 18,
+      "entity": "Nayarit",
+      "legislation": [
+        {
+          "url": "https://congresonayarit.gob.mx/legislacion-estatal/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodicooficial.nayarit.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 19,
+      "entity": "Nuevo León",
+      "legislation": [
+        {
+          "url": "http://www.hcnl.gob.mx/trabajo_legislativo/leyes/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://www.nl.gob.mx/aplicaciones/periodicooficialdelestado",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 20,
+      "entity": "Oaxaca",
+      "legislation": [
+        {
+          "url": "https://www.congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://www.periodicooficial.oaxaca.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 21,
+      "entity": "Puebla",
+      "legislation": [
+        {
+          "url": "http://www.congresopuebla.gob.mx/index.php?option=com_content&view=article&id=10857&Itemid=577",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodicooficial.puebla.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 22,
+      "entity": "Querétaro",
+      "legislation": [
+        {
+          "url": "http://legislaturaqueretaro.gob.mx/leyes/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://lasombradearteaga.segobqueretaro.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 23,
+      "entity": "Quintana Roo",
+      "legislation": [
+        {
+          "url": "http://www.congresoqroo.gob.mx/#leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://po.segob.qroo.gob.mx/sitiopo/MicroPO.php",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 24,
+      "entity": "San Luis Potosí",
+      "legislation": [
+        {
+          "url": "https://congresosanluis.gob.mx/legislacion/leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://periodicooficial.slp.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 25,
+      "entity": "Sinaloa",
+      "legislation": [
+        {
+          "url": "http://www.congresosinaloa.gob.mx/leyes-estatales/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://strc.transparenciasinaloa.gob.mx/poes/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 26,
+      "entity": "Sonora",
+      "legislation": [
+        {
+          "url": "http://www.congresoson.gob.mx/Transparencia/Leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://boletinoficial.sonora.gob.mx/",
+          "text": "Boletín Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 27,
+      "entity": "Tabasco",
+      "legislation": [
+        {
+          "url": "https://congresotabasco.gob.mx/leyes/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://tabasco.gob.mx/PeriodicoOficial",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 28,
+      "entity": "Tamaulipas",
+      "legislation": [
+        {
+          "url": "http://www.congresotamaulipas.gob.mx/LegislacionEstatal/LegislacionVigente/Vigente.asp?idtipoArchivo=1",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://po.tamaulipas.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 29,
+      "entity": "Tlaxcala",
+      "legislation": [
+        {
+          "url": "https://congresodetlaxcala.gob.mx/legislacion/",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodico.tlaxcala.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 30,
+      "entity": "Veracruz",
+      "legislation": [
+        {
+          "url": "https://www.legisver.gob.mx/Inicio.php?p=le",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "https://www.veracruz.gob.mx/gaceta-oficial/",
+          "text": "Gaceta Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 31,
+      "entity": "Yucatán",
+      "legislation": [
+        {
+          "url": "https://www.congresoyucatan.gob.mx/legislacion/leyes",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://www.yucatan.gob.mx/gobierno/diario_oficial.php",
+          "text": "Diario Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    },
+    {
+      "directoryOrdinal": 32,
+      "entity": "Zacatecas",
+      "legislation": [
+        {
+          "url": "https://www.congresozac.gob.mx/64/esen",
+          "text": "Leyes del Estado"
+        }
+      ],
+      "officialGazette": [
+        {
+          "url": "http://periodico.zacatecas.gob.mx/",
+          "text": "Periódico Oficial"
+        }
+      ],
+      "status": "discovered-in-official-directory-not-site-verified",
+      "policyReview": "pending",
+      "textAcquired": false
+    }
+  ],
+  "collections": [
+    {
+      "family": "federal-consolidated",
+      "publisher": "Cámara de Diputados",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+      "observed": "Public index with reforms/last-modification labels; no law text acquired this session",
+      "policyReview": "pending"
+    },
+    {
+      "family": "federal-official-publication",
+      "publisher": "DOF",
+      "url": "https://www.dof.gob.mx/",
+      "observed": "Web fetch timed out; not a finding that the service is down",
+      "policyReview": "pending"
+    },
+    {
+      "family": "national-legislation-catalog-and-history",
+      "publisher": "SCJN",
+      "url": "https://legislacion.scjn.gob.mx/buscador/paginas/buscar.aspx",
+      "observed": "Search form exposes jurisdiction/type/reform/date filters; no bulk interface tested",
+      "policyReview": "pending"
+    },
+    {
+      "family": "judicial-sjf",
+      "publisher": "SCJN",
+      "url": "https://sjf2.scjn.gob.mx/",
+      "observed": "Initial HTML requires JavaScript; no case/criteria texts acquired",
+      "policyReview": "pending"
+    },
+    {
+      "family": "judicial-weekly",
+      "publisher": "SCJN",
+      "url": "https://sjfsemanal.scjn.gob.mx/",
+      "observed": "Web tool returned403; stop, no bypass attempted",
+      "policyReview": "pending"
+    },
+    {
+      "family": "judicial-administrative",
+      "publisher": "TFJA",
+      "url": "https://www.tfja.gob.mx/cesmdfa/sctj/sctj-busqueda/",
+      "observed": "Public query form with epochs and status legend; no query/download performed",
+      "policyReview": "pending"
+    },
+    {
+      "family": "treaties",
+      "publisher": "SRE",
+      "url": "https://cja.sre.gob.mx/tratadosmexico/buscador",
+      "observed": "Public treaty directory; its own notice states informative status; no acquisition completeness inferred",
+      "policyReview": "pending"
+    },
+    {
+      "family": "auxiliary-discovery",
+      "publisher": "SEGOB Orden Jurídico Nacional",
+      "url": "https://ordenjuridico.gob.mx/mapa.php",
+      "observed": "National/state/municipal directories; official notice recommends publication organ for authoritative diffusion",
+      "policyReview": "pending"
+    },
+    {
+      "family": "federal-documented-open-services",
+      "publisher": "DOF SIDOF",
+      "url": "https://sidof.segob.gob.mx/datos_abiertos",
+      "observed": "Public page lists daily editions, documents and notes web services. Notes manual v1.0 Dec2018 retrieved; examples target sidofqa, so current production endpoints and use limits require verification. No API query performed.",
+      "manualUrl": "https://sidof.segob.gob.mx/datos_abiertos/getPDF/57",
+      "policyReview": "pending"
+    },
+    {
+      "family": "judicial-advertised-open-downloads",
+      "publisher": "SCJN Bicentenario",
+      "url": "https://bicentenario.scjn.gob.mx/manual-usuario-descarga",
+      "observed": "Official search result advertises SJF/SIJ open-format download guide; direct fetch returned403. Candidate acquisition channel only, not verified/downloaded corpus.",
+      "policyReview": "pending"
+    }
+  ]
+}

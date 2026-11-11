@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "scope": "partial actual CPU contract observations, original parent run failed",
+  "runState": "failed-retained-no-retry",
+  "failureCode": "PARENT_OR_IPC_FAILURE",
+  "originalExceptionTypeKnown": false,
+  "receiptSha256": "0d1d34d56892419970e96fe618dea5d33bf41027f7aa5583c9e78d710644e610",
+  "ledgerSha256": "ce4d46258c36333432a41abf00adb6fd41a922a099f67af4212bb627dde0d263",
+  "validLedgerEvents": [
+    {
+      "data": {
+        "networkDeniedEPERM": true,
+        "probeNonceSha256": "fef6b3505805c0f37ca59f60734d65d7925dad5d16ed55cb5da86b757d4a0f25"
+      },
+      "elapsedMs": 0.108,
+      "event": "sandbox",
+      "peakRssBytes": 26230784
+    },
+    {
+      "data": {
+        "numpy": "2.5.4",
+        "onnxruntime": "1.31.1",
+        "python": "3.12.13",
+        "tokenizers": "0.23.3"
+      },
+      "elapsedMs": 137.391,
+      "event": "versions",
+      "peakRssBytes": 60801024
+    },
+    {
+      "data": {
+        "graphOptimizations": "ORT_DISABLE_ALL",
+        "inputs": [
+          {
+            "name": "input_ids",
+            "shape": [
+              "batch_size",
+              "sequence_length"
+            ],
+            "type": "tensor(int64)"
+          },
+          {
+            "name": "attention_mask",
+            "shape": [
+              "batch_size",
+              "sequence_length"
+            ],
+            "type": "tensor(int64)"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "logits",
+            "shape": [
+              "batch_size",
+              "sequence_length",
+              81
+            ],
+            "type": "tensor(float)"
+          }
+        ],
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "threads": 1
+      },
+      "elapsedMs": 420.466,
+      "event": "graph",
+      "peakRssBytes": 519667712
+    },
+    {
+      "data": {
+        "fixtures": [
+          {
+            "attentionOnes": 10,
+            "attentionShape": [
+              10
+            ],
+            "codepointCompatible": true,
+            "coveredNonWhitespace": true,
+            "id": "spanish",
+            "ids": [
+              2,
+              86955,
+              187889,
+              11373,
+              872,
+              1735,
+              34630,
+              179081,
+              187885,
+              1
+            ],
+            "inputSha256": "8e98da9afd9fd6ac9bfa2a0eda6c8994d4a1f79cfd90144af81cf3384da2a0d8",
+            "nonmonotonicObserved": false,
+            "offsetUnitStatus": "compatibility-only-unverified-for-decoding",
+            "offsets": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                10
+              ],
+              [
+                10,
+                13
+              ],
+              [
+                13,
+                17
+              ],
+              [
+                17,
+                24
+              ],
+              [
+                24,
+                34
+              ],
+              [
+                34,
+                35
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "overlapObserved": false,
+            "specialMask": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "tokenCount": 10,
+            "unknownTokenCount": 0,
+            "utf8ByteCompatible": true,
+            "zeroLengthNonSpecialCount": 0
+          },
+          {
+            "attentionOnes": 12,
+            "attentionShape": [
+              12
+            ],
+            "codepointCompatible": true,
+            "coveredNonWhitespace": true,
+            "id": "emoji",
+            "ids": [
+              2,
+              120396,
+              187868,
+              457,
+              376,
+              369,
+              345,
+              581,
+              23284,
+              141780,
+              187885,
+              1
+            ],
+            "inputSha256": "e8f5d989a7863dbce018e896382338e24c8fe397d99557eb5c79f5cc9d900cbe",
+            "nonmonotonicObserved": false,
+            "offsetUnitStatus": "compatibility-only-unverified-for-decoding",
+            "offsets": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                11,
+                17
+              ],
+              [
+                17,
+                27
+              ],
+              [
+                27,
+                28
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "overlapObserved": true,
+            "specialMask": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "tokenCount": 12,
+            "unknownTokenCount": 0,
+            "utf8ByteCompatible": true,
+            "zeroLengthNonSpecialCount": 0
+          },
+          {
+            "attentionOnes": 9,
+            "attentionShape": [
+              9
+            ],
+            "codepointCompatible": true,
+            "coveredNonWhitespace": true,
+            "id": "nfd",
+            "ids": [
+              2,
+              8138,
+              189296,
+              101187,
+              1735,
+              27582,
+              179081,
+              187885,
+              1
+            ],
+            "inputSha256": "147b3226dd0e505a4d75624b9c399915e4241d6952d1a843e59dfba3e467c4fa",
+            "nonmonotonicObserved": false,
+            "offsetUnitStatus": "compatibility-only-unverified-for-decoding",
+            "offsets": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                13
+              ],
+              [
+                13,
+                17
+              ],
+              [
+                17,
+                22
+              ],
+              [
+                22,
+                32
+              ],
+              [
+                32,
+                33
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "overlapObserved": false,
+            "specialMask": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "tokenCount": 9,
+            "unknownTokenCount": 0,
+            "utf8ByteCompatible": true,
+            "zeroLengthNonSpecialCount": 0
+          },
+          {
+            "attentionOnes": 19,
+            "attentionShape": [
+              19
+            ],
+            "codepointCompatible": true,
+            "coveredNonWhitespace": true,
+            "id": "rfc-like",
+            "ids": [
+              2,
+              74653,
+              141780,
+              581,
+              34630,
+              187912,
+              154075,
+              8225,
+              187896,
+              187894,
+              187896,
+              187894,
+              187896,
+              187894,
+              187896,
+              187896,
+              187896,
+              187885,
+              1
+            ],
+            "inputSha256": "b30b039c14262ebd01f0e93ce142cb68bcc2dd0e9dcc2c1c3ed7078e94fe1117",
+            "nonmonotonicObserved": false,
+            "offsetUnitStatus": "compatibility-only-unverified-for-decoding",
+            "offsets": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                3,
+                13
+              ],
+              [
+                13,
+                16
+              ],
+              [
+                16,
+                23
+              ],
+              [
+                23,
+                24
+              ],
+              [
+                24,
+                27
+              ],
+              [
+                27,
+                29
+              ],
+              [
+                29,
+                30
+              ],
+              [
+                30,
+                31
+              ],
+              [
+                31,
+                32
+              ],
+              [
+                32,
+                33
+              ],
+              [
+                33,
+                34
+              ],
+              [
+                34,
+                35
+              ],
+              [
+                35,
+                36
+              ],
+              [
+                36,
+                37
+              ],
+              [
+                37,
+                38
+              ],
+              [
+                38,
+                39
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "overlapObserved": false,
+            "specialMask": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "tokenCount": 19,
+            "unknownTokenCount": 0,
+            "utf8ByteCompatible": true,
+            "zeroLengthNonSpecialCount": 0
+          }
+        ],
+        "maximumId": 198803,
+        "minimumId": 0,
+        "specialTokenIds": {
+          "<bos>": 2,
+          "<end_of_turn>": 107,
+          "<eos>": 1,
+          "<mask>": 4,
+          "<pad>": 0,
+          "<start_of_turn>": 106,
+          "<unk>": 3
+        },
+        "vocabUniqueIds": 198804,
+        "vocabWithAdded": 198804,
+        "vocabWithoutAdded": 198804
+      },
+      "elapsedMs": 716.114,
+      "event": "tokenizer",
+      "peakRssBytes": 782876672
+    },
+    {
+      "data": {
+        "nerPredictions": 0,
+        "qualityEvaluated": false,
+        "sessionRuns": 0
+      },
+      "elapsedMs": 774.234,
+      "event": "complete",
+      "peakRssBytes": 782876672
+    }
+  ],
+  "modelInitializationObserved": true,
+  "tokenizerInitializationObserved": true,
+  "nnForwards": 0,
+  "qualityEvaluated": false,
+  "runtimeEventPeakRssBytes": 782876672,
+  "sampledParentCombinedRssAvailable": false,
+  "retentionBugProvenByFakeCleanupFault": true,
+  "retentionBugProvesOriginalCause": false,
+  "pointInTimeOfflineAudit": "author_s2b2_acceptance_data: source/freeze/runtime unchanged,6cache byte hashes/modes verified,5event schemas and pure comparisons passed; not a retroactive original postflight",
+  "independentAuditPending": false,
+  "redistributionApproved": false,
+  "privacyValidated": false,
+  "physical8GBValidated": false,
+  "productionEnabled": false,
+  "independentAudit": {
+    "path": "docs/qa/privacy-nym-contract-probe-v1-independent-audit-2026-11-10.json",
+    "sha256": "0194b6a4325f0f86477ef8e5786015bde46750faed3fa6f1c1fac6f4886f21ab",
+    "verdict": "APPROVE_PARTIAL_METADATA_FACTS_ONLY",
+    "temporalScope": "Current point-in-time offline identity and saved metadata audit only; original run remains FAILED, original exception UNKNOWN, original postflight not established, combined RSS unavailable."
+  }
+}

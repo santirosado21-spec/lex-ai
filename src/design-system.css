@@ -1,5 +1,5 @@
 /*
-  LEX AI design system: final layer.
+  Rejon.AI design system: final layer.
   Canonical tokens and the product component vocabulary. Imported last so it
   resolves the earlier stacked layers (styles.css, macos.css).
   Direction: docs/design/direction-2026-11-02.md
@@ -334,3 +334,71 @@
 .app-shell.macos-workspace .thread-panel{overflow-x:hidden}
 .app-shell.macos-workspace .thread-panel li{min-width:0}
 @media (max-width:1100px){.app-shell.macos-workspace .thread-panel{overflow-x:auto}}
+
+/* ---------- Polish 2026-11-10 ----------
+   Fixes found in captures at 1440x900 and 390 px (light and dark).
+   References: Hallmark floor (tokens only, focus-visible, capped container,
+   no decorative texture), Apple HIG source lists. */
+
+/* Sidebar fits a 900 px window without scrolling: 14 destinations, 3 groups. */
+.app-shell.macos-workspace>.sidebar{gap:10px}
+.app-shell.macos-workspace .sidebar nav{gap:6px}
+.app-shell.macos-workspace .nav-group-toggle{min-height:28px!important}
+.app-shell.macos-workspace .nav-item{min-height:34px}
+.app-shell.macos-workspace :is(.appearance-quick-toggle,.runtime-status){min-height:34px}
+.app-shell.macos-workspace .firm-name{padding-top:10px}
+@media (pointer:coarse){
+  .app-shell.macos-workspace .nav-item,
+  .app-shell.macos-workspace :is(.appearance-quick-toggle,.runtime-status){min-height:var(--control-h)}
+}
+
+/* One content measure for every page, so the left edge does not jump between views. */
+.app-shell.macos-workspace .page:not(.assistant-home){max-width:1120px;margin-inline:auto}
+.app-shell.macos-workspace :is(.pending-page,.agent-actions-page,.conflict-check-page,.checklist-page,.local-email-page,.settings-page,.time-billing-page)>*{max-width:880px}
+.app-shell.macos-workspace :is(.settings-page,.time-billing-page)>*{max-width:none}
+.app-shell.macos-workspace .page.lex-dashboard{max-width:1120px;padding:32px 40px 56px}
+@media (max-width:767px){.app-shell.macos-workspace .page.lex-dashboard{padding:20px 16px 40px}}
+
+/* Panel: same heading as other pages; numbers in lining, tabular UI figures
+   (Newsreader old-style zero read as the letter O). */
+.app-shell.macos-workspace .lex-dashboard h1{font-family:var(--font-display)!important;font-size:28px;font-weight:500;line-height:1.15;letter-spacing:-.015em;margin:0 0 6px}
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-heading{margin-bottom:24px}
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-heading p{margin:2px 0;color:var(--ink-2)}
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-stats dd,
+.app-shell.macos-workspace :is(.metric-strip,.time-summary,.billing-summary) :is(dd,strong,b){font-family:var(--font-ui)!important;font-weight:600;font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.02em}
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-stats dd{font-size:28px;line-height:1.15}
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-stats,
+.app-shell.macos-workspace .lex-dashboard .lex-dashboard-panel{box-shadow:none;border-radius:var(--radius-l)}
+.app-shell.macos-workspace .lex-dashboard :is(select,button){border-radius:var(--radius-s)}
+.app-shell.macos-workspace .lex-dashboard button.lex-dashboard-primary{background:var(--seal);border-color:var(--seal);color:var(--on-seal)}
+.app-shell.macos-workspace .lex-dashboard button.lex-dashboard-primary:hover{background:var(--seal-hover);border-color:var(--seal-hover)}
+.app-shell.macos-workspace .lex-dashboard :is(button,select):focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* Biblioteca: one bordered field, not a box inside a box. */
+.app-shell.macos-workspace .library-search{min-height:var(--control-h);padding:0 12px;border:1px solid var(--rule-strong);border-radius:var(--radius-s);background:var(--surface);color:var(--ink-3)}
+.app-shell.macos-workspace .library-search:focus-within{border-color:var(--seal);box-shadow:0 0 0 3px var(--focus)}
+.app-shell.macos-workspace .library-search input{border:0!important;box-shadow:none!important;outline:0;background:transparent!important;min-height:0;height:auto;padding:10px 0}
+.app-shell.macos-workspace .public-library-search{align-items:flex-end}
+.app-shell.macos-workspace .public-library-search :is(select,button){height:var(--control-h)}
+
+/* Inicio: calm cards; no graph-paper texture or pointer glow. */
+.app-shell.macos-workspace .lex-bento .lex-bento-card::before,
+.app-shell.macos-workspace .lex-bento .lex-bento-card::after{display:none}
+.app-shell.macos-workspace .lex-bento .lex-bento-matter{background:var(--surface)}
+.app-shell.macos-workspace .lex-bento .lex-bento-card{box-shadow:none}
+
+/* Assistant on phones: composer and disclaimer fit above the fold. */
+@media (max-width:767px){
+  .app-shell.macos-workspace .composer-disclaimer{font-size:11px;padding-inline:16px}
+  .app-shell.macos-workspace .composer.lex-prompt-bar{border-radius:var(--radius-l)}
+}
+@media (max-width:1100px){
+  /* Chats strip sits above the conversation; together they fill one screen so the composer stays visible. */
+  .app-shell.macos-workspace .assistant-layout{display:flex;flex-direction:column;height:calc(100dvh - 56px);min-height:0}
+  .app-shell.macos-workspace .assistant-layout>.thread-panel{flex:none}
+  .app-shell.macos-workspace .assistant-layout>.workspace-grid{flex:1 1 auto;min-height:0;height:auto}
+}
+
+/* Inicio shares the page measure and left edge with the other views. */
+.app-shell.macos-workspace .page.assistant-home{max-width:1120px;margin-inline:auto}
+.app-shell.macos-workspace .assistant-home .home-welcome{margin-inline:0;text-align:left}

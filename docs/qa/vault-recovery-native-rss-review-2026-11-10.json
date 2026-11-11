@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "scope": "STATIC_NATIVE_OWNED_CHILD_RSS_DELTA",
+  "verdict": "APPROVE-for-new-root-freeze-and-separate-VM-decision",
+  "reviewer": "review_vault_reminders",
+  "sourceHashes": {
+    "crates/lex-vault/tests/recovery.rs": "545535f9c7cab86f08cce2e5fdbd0938c84e41b115826a3ab95ebb6304226851",
+    "crates/lex-vault/README.md": "5b292ffe1b04f4cbcf44d5357c3c2f1cf905329da15b30177c98c41245a19ec8"
+  },
+  "primaryLocalInputs": [
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/libproc.h",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/proc_info.h",
+    "artifacts/vault-recovery-deps-d0-lock-20261110-first/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.191/src/unix/bsd/apple/mod.rs"
+  ],
+  "findings": [],
+  "observed": {
+    "usesPinnedLibcTypesAndSignature": true,
+    "procPidTaskInfoFlavor": 4,
+    "residentSizeUnit": "bytes (SDK uint64_t / libc u64)",
+    "requiresExactReturnedStructSizeAndPositiveRss": true,
+    "unsafeRead": "MaybeUninit zeroed structure is consumed only after exact-size result; pinned binding supplies ABI.",
+    "ownedPidOnly": "Child registry index; child.try_wait first; mutex remains held through proc_pidinfo, preventing concurrent reaping/recycled PID query.",
+    "lockOrder": "Kernel metadata query only under registry mutex; failure returns before cleanup reacquires registry; shutdown waits/reaps outside lock.",
+    "queryFailure": "Recheck owned exact exit status; live/unobservable child fails via code72 cleanup; cleanup observation failure remains74.",
+    "newRegressionChecks": "Own sleep positive RSS, cached natural-exit result, invalid registry index, existing live/finished sample-failure cleanup.",
+    "caseBodyPhaseMarkersAssertionsCategoriesR23ByteIdentical": true,
+    "guardNextSites": 4,
+    "cryptoCargoLockBudgetsUnchanged": true,
+    "externalPsRemoved": true
+  },
+  "limitations": [
+    "Static ABI/source analysis only; no proc_pidinfo/native calls, codegen, tests, driver or network executed.",
+    "New query permission/runtime behavior and regression require clean-VM execution after a new freeze.",
+    "Kernel/scheduler stalls and actual sample gaps remain outside hard guarantees; no general process-inspection route is introduced.",
+    "Original attempt1 timeout cause remains unknown.",
+    "No recovery, cryptography/product, physical8GB or H5 acceptance."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:22:19.292942+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_SOURCE_FOR_SEPARATELY_FROZEN_PUBLIC_BUILD_PREPARATION",
+  "reviewedHashes": {
+    "scripts/prepare-nym-content-inventory.py": "c3aa09e0483e121097619dffb27564c3735bcb4b7c9e544fea4fe49a23acfbcf",
+    "tests/privacy-nym-inventory-preparation.test.mjs": "7805be2f9b7456b22e756805265b3fe2b09b4a7e011cae492d2c5a11bd5f7523",
+    "resources/privacy-nym-inventory-preparation-v1.json": "34a2bf1e84fa63dc546d20b435817454519d0cebb3f0d9de75a433f69aa1b521",
+    "docs/architecture/privacy-nym-inventory-preparation-v1.md": "8ba306c635c1feddd1e6262295d8b920d77b66062b35e960a436b24e12fd5bbb"
+  },
+  "tests": {
+    "command": "node --test tests/privacy-nym-inventory-preparation.test.mjs",
+    "nodeWrappersPassed": 1,
+    "pythonUnittestMethodsPassed": 14,
+    "failed": 0,
+    "durationMs": 155.108667,
+    "tinyInventedInputsOnly": true
+  },
+  "checked": [
+    "Pure default PLAN; exact fixed CLI freeze path and authorization/identity/limit schema; no runtime/tokenizer/model/network imports or execution.",
+    "Pinned source bytes/SHA; duplicate object keys/nonfinite constants rejected; strict integer IDs exclude bool; duplicate base/added IDs, ID/content collisions and incomplete union rejected; exact five strict boolean flags and raw base presence preserved.",
+    "Sorted canonical NDJSON preserves all union entries and raw content, row and total byte caps; provenance binds all four sources, protocol, revision and tokenizer identity.",
+    "NOFOLLOW directory/file traversal, regular source and per-read descriptor identity checks, exclusive0700 leaf and0400 files; existing leaf refuses overwrite/resume.",
+    "Posthash freeze/all four sources/tokenizer and complete partial output before final exclusive hard link; partial/evidence retained on failure. Failed receipt is authoritative if later publication or budget check fails.",
+    "Single monotonic30s/checkpointed process-lifetime getrusage384MiB budget; tests meaningfully exercise line/total caps, hash mismatch, mutation, deadline/RSS denial, symlink source, existing leaf, duplicate types/collisions, short writes and PLAN no I/O."
+  ],
+  "findings": [],
+  "limits": [
+    "No actual tokenizer-cache parse or preparation was performed during this review; no runtime/model/tokenizer import, inference, dataset/gold/heldout access, network or implementation changes.",
+    "Synchronous JSON parsing, filesystem/OS calls and final receipt publication are not hard-preempted; time/RSS are checkpointed observations, not instantaneous kill guarantees.",
+    "Fresh root freeze/authorization remains required before one actual preparation; runtime streaming loader is not implemented or validated by this approval.",
+    "Existing runtime50ms gap/1GiB/60s caps remain unchanged; actual preparation performance and runtime resource compliance are unmeasured.",
+    "Research-only derivative inventory is not privacy/model-quality/physical8GB acceptance or license/redistribution clearance."
+  ],
+  "auditExecution": {
+    "actualPreparation": false,
+    "actualCacheRead": false,
+    "networkRequests": 0,
+    "runtimeModelTokenizerLoads": 0,
+    "sourceEdits": false,
+    "freezeCreated": false
+  }
+}

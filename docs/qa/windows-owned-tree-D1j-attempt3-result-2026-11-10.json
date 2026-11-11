@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "scope": "D1j attempt3 source-author factual record and readonly diagnosis proposal; root/independent review pending",
+  "runId": 42898330080,
+  "commit": "e76ad56c5aedfc00f3bee1f34004f9c4259442cc",
+  "status": "FAIL",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-owned-tree-third.log",
+    "sha256": "2b9386a51ed17d9e986a80dfcb5f247e9584f2d4b23974b36cbeb2a13a28d6f2",
+    "bytes": 28225
+  },
+  "freeze": {
+    "copyPath": "docs/qa/windows-owned-tree-D1j-attempt3-freeze-2026-11-10.json",
+    "sha256": "d52dea6a270d4fa3df5d06d7e40b07932fd75a59f44c530702b4640e617bd08a",
+    "matchesCommittedFreeze": true,
+    "allSevenCommittedSourceHashes": {
+      "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+      "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+      "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+      "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+      ".github/workflows/windows-owned-tree-smoke.yml": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+      "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+      "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+    }
+  },
+  "observedReport": {
+    "protocol": "windows-owned-tree-smoke-v1",
+    "status": "FAIL",
+    "samples": [],
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false,
+    "collectorOverheadBytes": null,
+    "startup": {
+      "rssBytes": 146927616,
+      "elapsedMs": 3170.0658000000003
+    },
+    "category": "PROTOCOL_OR_MEASUREMENT_FAILURE",
+    "collectorCleanup": {
+      "exitObserved": true,
+      "category": null,
+      "killed": false,
+      "exitCode": 0,
+      "signal": null,
+      "phase": null,
+      "elapsedMs": null
+    },
+    "fixtureCleanup": {
+      "intentionalShutdown": true,
+      "allThreeReaped": true,
+      "forced": false
+    },
+    "phase": "run"
+  },
+  "sourceControlFlowFacts": {
+    "sourcePreflightPassed": true,
+    "outputInitializationPassed": true,
+    "measurementRunReached": true,
+    "monitorStartResolved": true,
+    "startupAggregateRssBytes": 146927616,
+    "startupElapsedMs": 3170.0658000000003,
+    "startupHasOwnedTreeProofFields": false,
+    "steadySamplesReported": 0,
+    "fixtureReadyRosterValidatedBeforeMonitor": true,
+    "fixtureLiveAtIntentionalCleanup": true,
+    "collectorExitObservedZeroWithoutKill": true,
+    "nestedGracefulReapingReported": true,
+    "postflightPassed": true,
+    "finalReceiptWriteCompletedBeforeConsole": true
+  },
+  "limits": {
+    "actualDynamicTreeClosureProven": false,
+    "individualOwnedRssProven": false,
+    "collectorOutsideExclusionProven": false,
+    "observerAcceptedProofCount": null,
+    "observerFrameCount": null,
+    "observerWireError": null,
+    "originalThrownErrorClass": null,
+    "originalThrownReason": null,
+    "knownFailureBoundary": "After monitor.start resolved but before startup proof enrichment or first steady request. Broad catch conceals whether fixture liveness, wireError or proof-count condition failed.",
+    "aggregateRssIsNotClosureProof": true,
+    "noAdditionalMeasurementRetriesAuthorized": true,
+    "performanceValidated": false,
+    "physical8GBValidated": false,
+    "installerValidated": false,
+    "inferenceValidated": false
+  },
+  "readonlySourceReview": {
+    "requestIdStartsAtOne": true,
+    "observerAndMonitorBothRemoveOptionalTerminalCR": true,
+    "monitorRequiresAsciiBuffer": true,
+    "observerAttachedBeforeMonitorDataListener": true,
+    "observerUsesIndependentBufferAndExistingParser": true,
+    "defectCauseEstablished": false,
+    "candidateClasses": [
+      "Observer frame receipt/chunk processing or parse failure",
+      "Owned roster versus WMI parent/RSS/closure mismatch",
+      "Unexpected extra descendant or excluded-process membership",
+      "Fixture liveness failure around startup; clean later liveness makes this less directly supported but original flags not logged"
+    ],
+    "notEstablished": [
+      "request ID bug",
+      "encoding/BOM cause",
+      "actual three-member closure from aggregate RSS",
+      "any particular PPID/RSS mismatch"
+    ]
+  },
+  "proposedNextDiagnosticOnly": {
+    "approvalRequired": true,
+    "noPerformancePass": true,
+    "precondition": "Independent integration test of runOwnedTreeSmoke with default actual createWindowsMemoryMonitorV2 and mocked collector stdin/stdout/exit; do not replace makeMonitor.",
+    "integrationCases": [
+      "Bootstrap plus four request IDs emitted through actual monitor stdin; complete tree frames fragmented across CRLF and ASCII chunks; assert exact five proofs and graceful collector+fixture cleanup.",
+      "Mutate a single PPID, missing role, extra descendant, zero RSS, collector descendant, outside descendant; observer rejects while applicable monitor aggregate parsing still resolves.",
+      "Malformed/chunk/trailing bytes, post-bootstrap fixture exit and delayed callbacks remain fail closed; proof count cannot be faked by mock makeMonitor."
+    ],
+    "finiteMetadataOnly": [
+      "observerPhase finite enum",
+      "observerErrorClass finite enum, never raw message",
+      "framesStarted/framesCompleted/proofsAccepted counts capped5",
+      "ASCII boolean and bounded chunk/byte counts, terminalCRLF boolean",
+      "ownedRolePresence booleans root/child/grandchild",
+      "ownedRoleParentMatch booleans",
+      "ownedRoleRssPositive booleans",
+      "subtreeClosureCount bounded4096",
+      "collectorExcluded/outsideExcluded booleans",
+      "fixtureLive boolean at acceptance boundary"
+    ],
+    "privacy": "No actual PID/PPID/raw frame/source/env/commandline persisted. Preserve exact3 closure, full parent chain and all five proof requirements.",
+    "runtime": "Separately frozen diagnostic-only invocation after root and independent review; not a fourth measurement retry, no auto run or budget change."
+  },
+  "auditExecution": {
+    "sourceEdits": 0,
+    "testsExecuted": 0,
+    "wmiRuns": 0,
+    "networkRequests": 0,
+    "ciRuns": 0,
+    "commits": 0
+  },
+  "independentReviewPending": true
+}

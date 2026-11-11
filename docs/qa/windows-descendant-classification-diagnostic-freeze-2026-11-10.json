@@ -1,0 +1,22 @@
+{
+  "scope": "windows-descendant-classification-diagnostic-v1",
+  "approvedForSingleDiagnosticRun": true,
+  "sourceHashes": {
+    "scripts/windows-descendant-classification-diagnostic.mjs": "0bbd0154faa8e7d1d4f82072a91d3b0c095e79d3cddb423ecc27082800acac2d",
+    "tests/windows-descendant-classification-diagnostic.test.mjs": "e1404bb9d933a559aa2dcddee9defbb1dfd4a0b6e7edab75db41c1c913a7d3f3",
+    "resources/windows-descendant-classification-diagnostic-v1.json": "1c37aaa4fa976bece446f51b8fa345d588401223f23ce7acf4303a61396f89c2",
+    "docs/architecture/windows-descendant-classification-diagnostic-v1.md": "71050e5886fed61fd80b6df676d4c0259a4fdc9da50819c957cb8873647e59b4",
+    ".github/workflows/windows-descendant-classification-diagnostic.yml": "f4aed9035bc4cde097943cf1f0f895e2c9b9cd51ba39fd758789bc591a85aec0",
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d"
+  },
+  "rootAuthorization": {
+    "scope": "one fixed query on fresh public standard Windows CI; diagnosis only",
+    "sourceReview": "docs/qa/windows-descendant-classification-diagnostic-review-2026-11-10.json",
+    "sourceReviewSha256": "72c15b78a3b99126b739e12ff45ea606c873f2c54c2c79c940bfa8649e820849",
+    "attributesSha256": "70419d7f3a952eff0bb6c84da2d1879b0aa6e9a0c62db2e46077d279e19a2e48",
+    "noPerformanceAcceptance": true,
+    "extraCleanupObserved": null
+  }
+}

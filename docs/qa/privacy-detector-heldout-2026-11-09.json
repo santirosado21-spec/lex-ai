@@ -1,0 +1,5952 @@
+{
+  "version": 1,
+  "status": "measured-failed-not-eligible",
+  "retiredForFutureTuning": true,
+  "score": {
+    "version": 1,
+    "candidateId": "local-rules-baseline-v1",
+    "protocolSha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935",
+    "corpusSha256": "a36158ff7592e716226caf35bf16e4454df569d899b63db8ea388008320633f7",
+    "split": "heldout",
+    "metrics": {
+      "exact": {
+        "perCategory": {
+          "person": {
+            "tp": 38,
+            "fp": 333,
+            "fn": 6,
+            "precision": 0.10242587601078167,
+            "recall": 0.8636363636363636,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.07553630174675921,
+              "upper": 0.13746430675553134
+            },
+            "recallWilson95": {
+              "lower": 0.7329054695148456,
+              "upper": 0.9359704550244412
+            },
+            "zeroMissUpper95": null
+          },
+          "organization": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 22,
+            "precision": null,
+            "recall": 0,
+            "precisionInsufficient": true,
+            "recallInsufficient": false,
+            "precisionWilson95": null,
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "rfc": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "curp": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "clabe": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "account": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 22,
+            "precision": null,
+            "recall": 0,
+            "precisionInsufficient": true,
+            "recallInsufficient": false,
+            "precisionWilson95": null,
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "email": {
+            "tp": 34,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8984854458466761,
+              "upper": 0.9999999999999999
+            },
+            "recallWilson95": {
+              "lower": 0.8984854458466761,
+              "upper": 0.9999999999999999
+            },
+            "zeroMissUpper95": 0.08433964335062538
+          },
+          "phone": {
+            "tp": 22,
+            "fp": 22,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.35831760539989393,
+              "upper": 0.641682394600106
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "address": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1,
+            "recall": 0.18181818181818182,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.5101091635454027,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.07306884583422052,
+              "upper": 0.38516607437126543
+            },
+            "zeroMissUpper95": null
+          },
+          "case_id": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1,
+            "recall": 0.18181818181818182,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.5101091635454027,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.07306884583422052,
+              "upper": 0.38516607437126543
+            },
+            "zeroMissUpper95": null
+          },
+          "context": {
+            "tp": 0,
+            "fp": 6,
+            "fn": 22,
+            "precision": 0,
+            "recall": 0,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.3903342879021653
+            },
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "sensitive_relation": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 22,
+            "precision": 0,
+            "recall": 0,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0,
+              "upper": 0.4898908364545973
+            },
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          }
+        },
+        "micro": {
+          "tp": 168,
+          "fp": 365,
+          "fn": 130,
+          "precision": 0.3151969981238274,
+          "recall": 0.5637583892617449,
+          "precisionInsufficient": false,
+          "recallInsufficient": false,
+          "precisionWilson95": {
+            "lower": 0.27719656786717434,
+            "upper": 0.3558422059399761
+          },
+          "recallWilson95": {
+            "lower": 0.5069951125293186,
+            "upper": 0.6188987926633855
+          },
+          "zeroMissUpper95": null
+        },
+        "macro": {
+          "precision": 0.6602425876010781,
+          "precisionCategories": 10,
+          "recall": 0.5189393939393939,
+          "recallCategories": 12,
+          "insufficient": true
+        }
+      },
+      "overlap": {
+        "perCategory": {
+          "person": {
+            "tp": 44,
+            "fp": 327,
+            "fn": 0,
+            "precision": 0.11859838274932614,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.08954416287250824,
+              "upper": 0.15546998019918065
+            },
+            "recallWilson95": {
+              "lower": 0.9197043962415192,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.06581877114493395
+          },
+          "organization": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 22,
+            "precision": null,
+            "recall": 0,
+            "precisionInsufficient": true,
+            "recallInsufficient": false,
+            "precisionWilson95": null,
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "rfc": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "curp": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "clabe": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "account": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 22,
+            "precision": null,
+            "recall": 0,
+            "precisionInsufficient": true,
+            "recallInsufficient": false,
+            "precisionWilson95": null,
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "email": {
+            "tp": 34,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.8984854458466761,
+              "upper": 0.9999999999999999
+            },
+            "recallWilson95": {
+              "lower": 0.8984854458466761,
+              "upper": 0.9999999999999999
+            },
+            "zeroMissUpper95": 0.08433964335062538
+          },
+          "phone": {
+            "tp": 22,
+            "fp": 22,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.35831760539989393,
+              "upper": 0.641682394600106
+            },
+            "recallWilson95": {
+              "lower": 0.8513451253913791,
+              "upper": 1
+            },
+            "zeroMissUpper95": 0.12730543165483876
+          },
+          "address": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1,
+            "recall": 0.18181818181818182,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.5101091635454027,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.07306884583422052,
+              "upper": 0.38516607437126543
+            },
+            "zeroMissUpper95": null
+          },
+          "case_id": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1,
+            "recall": 0.18181818181818182,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.5101091635454027,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.07306884583422052,
+              "upper": 0.38516607437126543
+            },
+            "zeroMissUpper95": null
+          },
+          "context": {
+            "tp": 0,
+            "fp": 6,
+            "fn": 22,
+            "precision": 0,
+            "recall": 0,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.3903342879021653
+            },
+            "recallWilson95": {
+              "lower": 0,
+              "upper": 0.14865487460862087
+            },
+            "zeroMissUpper95": null
+          },
+          "sensitive_relation": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1,
+            "recall": 0.18181818181818182,
+            "precisionInsufficient": false,
+            "recallInsufficient": false,
+            "precisionWilson95": {
+              "lower": 0.5101091635454027,
+              "upper": 1
+            },
+            "recallWilson95": {
+              "lower": 0.07306884583422052,
+              "upper": 0.38516607437126543
+            },
+            "zeroMissUpper95": null
+          }
+        },
+        "micro": {
+          "tp": 178,
+          "fp": 355,
+          "fn": 120,
+          "precision": 0.3339587242026266,
+          "recall": 0.5973154362416108,
+          "precisionInsufficient": false,
+          "recallInsufficient": false,
+          "precisionWilson95": {
+            "lower": 0.2952338444845388,
+            "upper": 0.37505987614422065
+          },
+          "recallWilson95": {
+            "lower": 0.5407353178803633,
+            "upper": 0.6514185374137642
+          },
+          "zeroMissUpper95": null
+        },
+        "macro": {
+          "precision": 0.7618598382749326,
+          "precisionCategories": 10,
+          "recall": 0.5454545454545454,
+          "recallCategories": 12,
+          "insufficient": true
+        }
+      }
+    },
+    "cleanComplete": {
+      "rate": 1,
+      "numerator": 36,
+      "denominator": 36,
+      "insufficient": false,
+      "wilson95": {
+        "lower": 0.9035813714055363,
+        "upper": 1
+      }
+    },
+    "blockedStatus": {
+      "rate": 0.3333333333333333,
+      "numerator": 8,
+      "denominator": 24,
+      "insufficient": false,
+      "wilson95": {
+        "lower": 0.1797219032729775,
+        "upper": 0.5329368316186824
+      },
+      "perReason": {
+        "scope_mismatch": {
+          "rate": 1,
+          "numerator": 4,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0.5101091635454027,
+            "upper": 1
+          }
+        },
+        "unknown_provenance": {
+          "rate": 1,
+          "numerator": 4,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0.5101091635454027,
+            "upper": 1
+          }
+        },
+        "unsupported_format": {
+          "rate": 0,
+          "numerator": 0,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0,
+            "upper": 0.4898908364545973
+          }
+        },
+        "partial_extraction": {
+          "rate": 0,
+          "numerator": 0,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0,
+            "upper": 0.4898908364545973
+          }
+        },
+        "ambiguous_context": {
+          "rate": 0,
+          "numerator": 0,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0,
+            "upper": 0.4898908364545973
+          }
+        },
+        "detector_failure": {
+          "rate": 0,
+          "numerator": 0,
+          "denominator": 4,
+          "insufficient": false,
+          "wilson95": {
+            "lower": 0,
+            "upper": 0.4898908364545973
+          }
+        }
+      }
+    },
+    "coverage": {
+      "cases": 300,
+      "entities": {
+        "person": 44,
+        "organization": 22,
+        "rfc": 22,
+        "curp": 22,
+        "clabe": 22,
+        "account": 22,
+        "email": 34,
+        "phone": 22,
+        "address": 22,
+        "case_id": 22,
+        "context": 22,
+        "sensitive_relation": 22
+      },
+      "cleanCases": 36,
+      "blocked": {
+        "scope_mismatch": 4,
+        "unknown_provenance": 4,
+        "unsupported_format": 4,
+        "partial_extraction": 4,
+        "ambiguous_context": 4,
+        "detector_failure": 4
+      }
+    },
+    "experimentalGate": {
+      "status": "failed",
+      "failures": [
+        "recall:person",
+        "precision:person",
+        "recall:organization",
+        "precision:organization",
+        "recall:account",
+        "precision:account",
+        "precision:phone",
+        "recall:address",
+        "recall:case_id",
+        "recall:context",
+        "precision:context",
+        "recall:sensitive_relation",
+        "precision:sensitive_relation",
+        "blockedStatusRate"
+      ],
+      "minimumFailures": [],
+      "minimumsApplied": true,
+      "meaning": "eligible-for-integration-evaluation only; never safe-egress or pilot-ready"
+    },
+    "routingSafety": "not-evaluated",
+    "preservation": "not-evaluated"
+  },
+  "execution": {
+    "candidateId": "local-rules-baseline-v1",
+    "split": "heldout",
+    "measuredAt": "2026-11-09T22:52:59.588Z",
+    "node": "v22.22.3",
+    "sourceHashes": {
+      "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+      "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+      "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+      "scripts/privacy-candidate-worker.mjs": "03e1e982eed7a495987a31736c837c4c95c43ecfe78e31240cd079fc69683bc5",
+      "scripts/run-privacy-detector.mjs": "4f385734d69908e83aae0687b8edf74972b41f0ac8cec1528246c0343011ec19",
+      "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f"
+    },
+    "candidateVersion": "local-rules-baseline-v1",
+    "cases": 300,
+    "candidateInputFields": [
+      "scope",
+      "segments.id",
+      "segments.path",
+      "segments.text",
+      "segments.originScope",
+      "segments.classification"
+    ],
+    "goldPassedToCandidate": false,
+    "operationalFlagsFromGold": false,
+    "latenciesMs": [
+      14.793375000000001,
+      0.5509170000000019,
+      0.3185000000000002,
+      0.34141699999999986,
+      0.20199999999999818,
+      0.1564160000000001,
+      0.45316600000000307,
+      0.07841699999999463,
+      0.16687499999999744,
+      0.1938340000000025,
+      0.13816700000000282,
+      0.13979199999999992,
+      0.15937500000000426,
+      0.15566600000000363,
+      0.14695799999999792,
+      0.09779199999999832,
+      0.5288339999999963,
+      0.2033749999999941,
+      0.16908299999999343,
+      0.06462499999999949,
+      0.17183299999999946,
+      0.1080830000000006,
+      0.096584,
+      0.13508300000000162,
+      0.1301249999999996,
+      0.21600000000000108,
+      0.3147909999999996,
+      0.08141700000000185,
+      0.1423330000000007,
+      0.06312499999999943,
+      0.1299590000000066,
+      0.15954199999999474,
+      0.1423330000000007,
+      0.12483300000000241,
+      0.1254160000000013,
+      0.18004200000000026,
+      0.20812500000000256,
+      0.125,
+      0.17191699999999344,
+      0.1614579999999961,
+      0.12462500000000176,
+      0.12575000000000358,
+      0.12495799999999946,
+      0.058292000000001565,
+      0.14829199999999787,
+      0.12145800000000406,
+      0.22970899999999972,
+      0.09258399999999511,
+      0.06112500000000409,
+      0.14912499999999795,
+      0.2021660000000054,
+      0.13570800000000105,
+      0.12991600000000147,
+      0.19899999999999807,
+      0.22470899999999716,
+      0.2015829999999994,
+      0.1489169999999973,
+      0.13108300000000384,
+      0.135583000000004,
+      0.09550000000000125,
+      0.1669170000000051,
+      0.13991699999999696,
+      0.130790999999995,
+      0.12395899999999926,
+      0.1769999999999996,
+      0.15287500000000165,
+      0.14383400000000535,
+      0.05879200000000395,
+      0.1352499999999992,
+      0.08054200000000122,
+      0.12045799999999929,
+      0.09620899999999466,
+      0.1267080000000007,
+      0.12749999999999773,
+      0.13233400000000017,
+      0.2622080000000011,
+      0.12204100000000295,
+      0.12029199999999918,
+      0.19487500000000324,
+      0.18608400000000103,
+      0.08174999999999955,
+      0.12054200000000037,
+      0.15608300000000241,
+      0.1163749999999979,
+      0.18712500000000176,
+      0.11570799999999792,
+      0.13216699999999548,
+      0.1288330000000002,
+      0.11820900000000023,
+      0.12420799999999588,
+      0.12458299999999412,
+      0.07558399999999921,
+      0.05841699999999861,
+      0.05695799999999451,
+      0.1424999999999983,
+      0.18941700000000594,
+      0.15162500000000279,
+      0.15570799999999707,
+      0.12537499999999824,
+      0.1482910000000004,
+      0.1233750000000029,
+      0.12595800000000423,
+      0.13262499999999733,
+      0.10333299999999923,
+      0.11766599999999983,
+      0.18741600000000602,
+      0.07087500000000091,
+      0.16091700000000486,
+      0.1804169999999985,
+      0.14054099999999892,
+      0.12616699999999526,
+      0.1199579999999969,
+      0.11591699999999605,
+      0.11749999999999972,
+      0.22420900000000188,
+      0.12937499999999602,
+      0.125,
+      0.15979099999999846,
+      0.11633400000000194,
+      0.11654100000000511,
+      0.14129199999999997,
+      0.13195799999999736,
+      0.11804200000000264,
+      0.11795800000000156,
+      0.1941670000000002,
+      0.18366600000000233,
+      0.11808300000000571,
+      0.05545800000000156,
+      0.12441700000000111,
+      0.12037500000000279,
+      0.050042000000004805,
+      0.13783300000000054,
+      0.12670899999999818,
+      0.052250000000000796,
+      0.21612499999999812,
+      0.12995800000000202,
+      0.13808300000000173,
+      0.12879200000000424,
+      0.278458999999998,
+      0.14504199999999656,
+      0.13341599999999687,
+      0.11899999999999977,
+      0.1438750000000013,
+      0.2299590000000009,
+      0.21395899999999557,
+      0.12416699999999992,
+      0.1246670000000023,
+      0.08691699999999969,
+      0.11854199999999793,
+      0.08462499999999551,
+      0.11891599999999869,
+      0.11816699999999969,
+      0.12237499999999812,
+      0.20324999999999704,
+      0.11783300000000452,
+      0.15491699999999753,
+      0.1407079999999965,
+      0.12333299999999525,
+      0.12062500000000398,
+      0.13779200000000458,
+      0.1423330000000007,
+      0.12062500000000398,
+      0.10870900000000461,
+      0.15587500000000176,
+      0.08412500000000023,
+      0.1186659999999975,
+      0.11587499999999551,
+      0.12283399999999745,
+      0.07279199999999975,
+      0.1144170000000031,
+      0.11929200000000151,
+      0.10683300000000173,
+      0.11737500000000267,
+      0.1636659999999992,
+      0.10875000000000057,
+      0.1042500000000004,
+      0.10295900000000557,
+      0.013500000000000512,
+      0.04966699999999946,
+      0.19225000000000136,
+      0.10379199999999855,
+      0.1280000000000001,
+      0.1058749999999975,
+      0.0670419999999936,
+      0.21775000000000233,
+      0.10683399999999921,
+      0.10474999999999568,
+      0.11320899999999767,
+      0.1090419999999952,
+      0.10370799999999747,
+      0.10416699999999679,
+      0.11054100000000489,
+      0.11187500000000483,
+      0.07754200000000111,
+      0.16199999999999903,
+      0.10645900000000097,
+      0.15316699999999628,
+      0.1164579999999944,
+      0.07737500000000352,
+      0.1735000000000042,
+      0.10883400000000165,
+      0.11004199999999997,
+      0.10645900000000097,
+      0.2237089999999995,
+      0.31408300000000366,
+      0.12191699999999628,
+      0.045583000000000595,
+      0.15295900000000273,
+      0.11141700000000299,
+      0.10533300000000168,
+      0.12195799999999934,
+      0.16754200000000452,
+      0.12100000000000222,
+      0.17391699999999588,
+      0.11062499999999886,
+      0.07449999999999335,
+      0.1045830000000052,
+      0.04454199999999986,
+      0.16466699999999435,
+      0.10504199999999742,
+      0.04975000000000307,
+      0.10974999999999824,
+      0.14708399999999955,
+      0.1753750000000025,
+      0.11787499999999795,
+      0.1075000000000017,
+      0.043874999999999886,
+      0.044457999999998776,
+      0.04279199999999861,
+      0.12654100000000312,
+      0.03545800000000554,
+      0.11737500000000267,
+      0.11162499999999653,
+      0.09045799999999815,
+      0.046040999999995336,
+      0.16770800000000463,
+      0.16654199999999975,
+      0.10604200000000219,
+      0.15237500000000637,
+      0.11558300000000088,
+      0.14558300000000202,
+      0.1701670000000064,
+      0.11599999999999966,
+      0.10929099999999892,
+      0.24783299999999997,
+      0.1189589999999896,
+      0.04554199999999753,
+      0.12908299999999429,
+      0.13187500000000796,
+      0.05112499999999898,
+      0.12908400000000597,
+      0.11079199999998934,
+      0.1220830000000035,
+      0.11120900000000233,
+      0.18983299999999304,
+      0.11091600000000312,
+      0.1633329999999944,
+      0.07854200000001299,
+      0.11424999999999841,
+      0.11566600000000449,
+      0.10687500000000227,
+      0.06474999999998943,
+      0.11537500000000023,
+      0.1220830000000035,
+      0.17533299999999485,
+      0.10733399999999449,
+      0.115791999999999,
+      0.10941700000000765,
+      0.045417000000000485,
+      0.10691599999999823,
+      0.1090420000000023,
+      0.11075000000001012,
+      0.11145900000001063,
+      0.13791700000000162,
+      0.22695799999999622,
+      0.14879200000000026,
+      0.1447909999999979,
+      0.08070800000000133,
+      0.12604100000000074,
+      0.015999999999991132,
+      0.11545800000000384,
+      0.0889580000000052,
+      0.118583000000001,
+      0.13133299999999792,
+      0.11858399999999847,
+      0.10816600000001131,
+      0.18454100000001006,
+      0.10925000000000296,
+      0.05029199999999889,
+      0.10316699999999912,
+      0.10504200000001163,
+      0.1061250000000058,
+      0.0816250000000025,
+      0.10429200000000094,
+      0.11104199999999764,
+      0.10920799999999531,
+      0.1772500000000008,
+      0.1041670000000039,
+      0.04537499999999284,
+      0.04783299999999713
+    ],
+    "peakRssBytes": 57475072,
+    "limitations": [
+      "Rules-only baseline, no entity/context model evaluated.",
+      "Corpus v1 lacks explicit format/extraction/ambiguity/failure stimuli; gold flags are not injected.",
+      "Trusted fixture registration is not production data-import integration.",
+      "Routing and restoration require separate integration tests; this score grants no egress."
+    ]
+  },
+  "predictions": {
+    "candidateId": "local-rules-baseline-v1",
+    "protocolSha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935",
+    "corpusSha256": "a36158ff7592e716226caf35bf16e4454df569d899b63db8ea388008320633f7",
+    "predictions": [
+      {
+        "id": "HOLD-BERYL-phone-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 67,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 58,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 49,
+            "category": "clabe"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 63,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 50,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 75,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-detector_failure-3",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-rfc-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 70,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 55,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 38,
+            "end": 80,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 52,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 56,
+            "end": 77,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 71,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 64,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-26",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 70,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 56,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-24",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 60,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-partial_extraction-2",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 54,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 85,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 49,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 47,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 49,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-6",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 57,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-4",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 64,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 74,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 43,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 44,
+            "end": 62,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 49,
+            "category": "clabe"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 71,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 49,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 85,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 70,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 0,
+            "end": 133,
+            "category": "sensitive_relation"
+          },
+          {
+            "segmentId": "focus",
+            "start": 69,
+            "end": 94,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 47,
+            "end": 75,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 98,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 44,
+            "end": 63,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-34",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 45,
+            "end": 88,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 136,
+            "category": "address"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 47,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 49,
+            "end": 67,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 81,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 54,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 53,
+            "category": "phone"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unsupported_format-2",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 64,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 71,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 53,
+            "end": 73,
+            "category": "case_id"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-ambiguous_context-2",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 77,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 54,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 61,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 65,
+            "end": 86,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 65,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 81,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-28",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 60,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 53,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 54,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-9",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-detector_failure-4",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 85,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 79,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 66,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 46,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-partial_extraction-4",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 28,
+            "end": 50,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 52,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 43,
+            "category": "phone"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 60,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 49,
+            "category": "curp"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 27,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 58,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 69,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 38,
+            "end": 77,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 53,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 55,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 59,
+            "end": 80,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 56,
+            "end": 69,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 73,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 68,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-scope_mismatch-3",
+        "status": "blocked",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-clean-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-3",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 52,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-8",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 77,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 61,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 66,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 45,
+            "end": 87,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 28,
+            "end": 44,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-ambiguous_context-4",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 64,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 82,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unknown_provenance-2",
+        "status": "blocked",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 136,
+            "category": "address"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 49,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 28,
+            "end": 46,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 70,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 53,
+            "end": 72,
+            "category": "case_id"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 44,
+            "category": "rfc"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 49,
+            "end": 70,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 61,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 101,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 77,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 52,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 70,
+            "end": 86,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 0,
+            "end": 130,
+            "category": "sensitive_relation"
+          },
+          {
+            "segmentId": "focus",
+            "start": 69,
+            "end": 91,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 44,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 49,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 56,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-21",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 74,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 70,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-22",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 136,
+            "category": "address"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unsupported_format-1",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-person-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 82,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 53,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 76,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 83,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 74,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 54,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 50,
+            "end": 89,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 44,
+            "end": 65,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 0,
+            "end": 128,
+            "category": "sensitive_relation"
+          },
+          {
+            "segmentId": "focus",
+            "start": 69,
+            "end": 89,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 82,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 73,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 62,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 47,
+            "category": "phone"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 101,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 27,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-30",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 67,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-31",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 68,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 55,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 71,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 69,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 72,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-09",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 44,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 49,
+            "end": 68,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 42,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 55,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-36",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-32",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 70,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 84,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 60,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-scope_mismatch-4",
+        "status": "blocked",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 53,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 27,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 75,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 50,
+            "end": 89,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 82,
+            "end": 103,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 70,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 75,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unknown_provenance-3",
+        "status": "blocked",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-clean-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 68,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 72,
+            "end": 93,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 75,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 54,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 69,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-scope_mismatch-2",
+        "status": "blocked",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 79,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 83,
+            "end": 104,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 50,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 54,
+            "end": 75,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 68,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 70,
+            "end": 86,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 65,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 63,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 44,
+            "end": 65,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 49,
+            "end": 70,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 68,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-35",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 68,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 25,
+            "end": 39,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 43,
+            "end": 71,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-29",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 33,
+            "end": 54,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 52,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 67,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 38,
+            "end": 80,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 70,
+            "end": 86,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 53,
+            "end": 74,
+            "category": "case_id"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 136,
+            "category": "address"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-ambiguous_context-1",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-phone-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 50,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 73,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 52,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 45,
+            "end": 85,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 71,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 51,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 80,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 0,
+            "end": 127,
+            "category": "sensitive_relation"
+          },
+          {
+            "segmentId": "focus",
+            "start": 69,
+            "end": 88,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 68,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-partial_extraction-3",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-case_id-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 38,
+            "end": 77,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-1",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 98,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 75,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 28,
+            "end": 44,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-detector_failure-1",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-clean-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-23",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 54,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-scope_mismatch-1",
+        "status": "blocked",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-address-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 27,
+            "end": 43,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 52,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-25",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-partial_extraction-1",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-rfc-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 52,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 44,
+            "category": "rfc"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 71,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 75,
+            "end": 96,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 82,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 57,
+            "end": 75,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 49,
+            "category": "curp"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 51,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 43,
+            "category": "phone"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-03",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 50,
+            "end": 92,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 73,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 75,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 58,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 64,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-ambiguous_context-3",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-clabe-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 40,
+            "end": 59,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 108,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-email-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 45,
+            "end": 85,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 48,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-11",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 61,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 32,
+            "end": 46,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-12",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 61,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          },
+          {
+            "segmentId": "repetition",
+            "start": 31,
+            "end": 52,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-33",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 102,
+            "end": 165,
+            "category": "context"
+          },
+          {
+            "segmentId": "clean",
+            "start": 175,
+            "end": 201,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-19",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 70,
+            "end": 86,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unknown_provenance-4",
+        "status": "blocked",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-account-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 39,
+            "end": 53,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 60,
+            "end": 84,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 56,
+            "end": 69,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 60,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unsupported_format-3",
+        "status": "complete",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-clabe-18",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 73,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 53,
+            "end": 72,
+            "category": "case_id"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 56,
+            "end": 71,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-08",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 55,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-sensitive_relation-04",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 66,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-address-05",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 54,
+            "end": 70,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-27",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 145,
+            "end": 171,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 37,
+            "end": 68,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-7",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 164,
+            "end": 190,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-16",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unknown_provenance-1",
+        "status": "blocked",
+        "detections": []
+      },
+      {
+        "id": "HOLD-BERYL-email-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 50,
+            "end": 92,
+            "category": "email"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-unsupported_format-4",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-02",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 61,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-01",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 63,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clabe-06",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 70,
+            "category": "clabe"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 58,
+            "end": 78,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-15",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 68,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-context-07",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-5",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-case_id-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-person-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 48,
+            "end": 68,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-14",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 55,
+            "end": 67,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-block-detector_failure-2",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "additional",
+            "start": 55,
+            "end": 84,
+            "category": "email"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-phone-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 51,
+            "end": 73,
+            "category": "phone"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-17",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 52,
+            "end": 70,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-organization-13",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 46,
+            "end": 60,
+            "category": "person"
+          },
+          {
+            "segmentId": "focus",
+            "start": 64,
+            "end": 85,
+            "category": "person"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-curp-10",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 42,
+            "end": 60,
+            "category": "curp"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-rfc-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "focus",
+            "start": 56,
+            "end": 69,
+            "category": "rfc"
+          },
+          {
+            "segmentId": "aside",
+            "start": 115,
+            "end": 134,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-20",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 140,
+            "end": 166,
+            "category": "person"
+          }
+        ]
+      },
+      {
+        "id": "HOLD-BERYL-clean-2",
+        "status": "complete",
+        "detections": [
+          {
+            "segmentId": "clean",
+            "start": 97,
+            "end": 123,
+            "category": "person"
+          }
+        ]
+      }
+    ]
+  }
+}

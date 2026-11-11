@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:42:11.189758+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_TARGETED_LF_CHECKOUT_CONTRACT",
+  "attributesSha256": "c48902f36fa25c81acc74cfe0d44346c8ae3163976d395942caf8a862db5c1cb",
+  "rules": [
+    "/scripts/windows-owned-tree-smoke.mjs text eol=lf",
+    "/tests/windows-owned-tree-smoke.test.mjs text eol=lf",
+    "/docs/architecture/windows-owned-tree-smoke-v1.md text eol=lf",
+    "/resources/windows-owned-tree-smoke-v1.json text eol=lf",
+    "/.github/workflows/windows-owned-tree-smoke.yml text eol=lf",
+    "/server/windows-memory-monitor-v2.mjs text eol=lf",
+    "/server/windows-process-memory.mjs text eol=lf"
+  ],
+  "ruleScope": "Exactly seven anchored paths, no wildcard/global config or source verifier changes.",
+  "independentValidation": {
+    "gitVersion": "git version 2.50.1 (Apple Git-155)",
+    "method": "Read staged attributes and seven index sources; git -c core.autocrlf=true -c core.eol=crlf checkout-index into owned temporary directory only.",
+    "files": [
+      {
+        "path": "scripts/windows-owned-tree-smoke.mjs",
+        "sha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "bytes": 11041,
+        "crlfCount": 0
+      },
+      {
+        "path": "tests/windows-owned-tree-smoke.test.mjs",
+        "sha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "bytes": 7860,
+        "crlfCount": 0
+      },
+      {
+        "path": "docs/architecture/windows-owned-tree-smoke-v1.md",
+        "sha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "bytes": 7480,
+        "crlfCount": 0
+      },
+      {
+        "path": "resources/windows-owned-tree-smoke-v1.json",
+        "sha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "bytes": 1456,
+        "crlfCount": 0
+      },
+      {
+        "path": ".github/workflows/windows-owned-tree-smoke.yml",
+        "sha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+        "bytes": 1255,
+        "crlfCount": 0
+      },
+      {
+        "path": "server/windows-memory-monitor-v2.mjs",
+        "sha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "bytes": 10439,
+        "crlfCount": 0
+      },
+      {
+        "path": "server/windows-process-memory.mjs",
+        "sha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "bytes": 3616,
+        "crlfCount": 0
+      }
+    ],
+    "allSevenExactlyMatchAttempt2Freeze": true,
+    "repositoryWorktreeOrIndexModifiedByReview": false,
+    "globalConfigWriteCommandExecuted": false,
+    "temporaryDirectoryRemoved": true
+  },
+  "historicalLimits": {
+    "previousFailedAttemptsUnchanged": true,
+    "actualWindowsRssValidated": false,
+    "osOrCoreAutocrlfConfigurationCauseClaimed": false
+  },
+  "nextGate": "Fresh root decision/authorization binds .gitattributes SHA before third measurement; exact seven source hashes may remain identical but old authorization is not silently reused.",
+  "auditExecution": {
+    "WmiRuns": 0,
+    "CIRuns": 0,
+    "networkRequests": 0,
+    "nativeOrModelCalls": 0,
+    "sourceContentEdits": 0,
+    "normalizationWritesToRepository": 0
+  },
+  "integrationAddendum": {
+    "recordedAt": "2026-11-10T20:44:04.857723+00:00",
+    "verdict": "APPROVE_SINGLE_TRIGGER_PATH_ADDITION",
+    "change": "Only .gitattributes added to push.paths so attribute-only commits can trigger the existing public-prefix job.",
+    "workflowPath": ".github/workflows/windows-owned-tree-smoke.yml",
+    "previousWorkflowSha256": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+    "finalWorkflowSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+    "singleLineChangeVerifiedAgainstAttempt2Blob": true,
+    "currentWorkflowLFOnly": true,
+    "otherSixSourceHashesUnchanged": true,
+    "attributesSha256Unchanged": true,
+    "priorCheckoutValidationScope": "Previous temporary checkout tested the prior workflow hash and old freeze; not a claim of a new freeze or Windows execution.",
+    "nextGate": "Root must bind the new workflow SHA and unchanged six others plus attributes authorization in a fresh freeze/decision.",
+    "sourceTestsRerun": false,
+    "WmiOrCIRun": false,
+    "networkRequests": 0
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "verdict": "REQUEST_CHANGES_BEFORE_REAL_V3_STRUCTURAL_RUN",
+  "reviewer": "Claude Code, observed claude-opus-5-5, independent static opinion with tools disabled; Codex verified concrete finding1",
+  "reviewedSourceHashes": {
+    "scripts/privacy-nym-int8-worker-v3.py": "820db1c7d35f2a9063b973b9780e91ee5c367d056ab051ba728556e47a31e560",
+    "server/privacy/nym-int8-decoder-v3.mjs": "beb5f0ada00d39a1a58f5da578ed89fcb5f748a8bf0bc1d4c438e3678323a34b",
+    "resources/privacy-nym-streaming-inventory-v3.json": "b4efa9c7099b52aee420d04c50809abb2f31ea002452cb4722a676e67634f498"
+  },
+  "findings": [
+    {
+      "id": "V3-R1",
+      "severity": "blocking",
+      "scope": "scripts/privacy-nym-int8-worker-v3.py content_witness; server/privacy/nym-int8-decoder-v3.mjs witnessContent",
+      "evidence": "Subsequent ordinary token offset is checked against token string but not previous token end; validate_encoding tolerates uncovered whitespace. Root synthetic ab cd with token spans 0:2 and 3:5 was accepted by Python validate_encoding and JS decodeNymNative native-complete; no model loaded. roundtripExact/tokenSlicesExact are reported but not an admission gate.",
+      "required": "Require contiguous original offsets for every non-special token including added and byte-fallback paths; add adversarial tests in both languages; update V3 protocol/source review without altering frozen V1/V2 evidence."
+    },
+    {
+      "id": "V3-R2",
+      "severity": "runtime-activation-blocking-pending-design",
+      "scope": "scripts/privacy-nym-int8-worker-v3.py identity/runtime",
+      "evidence": "Current code hashes ENV/lib, resolved venv Python binary and requirements lock; pyvenv.cfg and base interpreter stdlib/dynload are outside that hash. Root read pyvenv.cfg include-system-site-packages=false currently; isolated sys.path includes base_prefix stdlib and venv site-packages.",
+      "required": "Decide and document trusted platform boundary; at minimum pin and enforce pyvenv.cfg/system-site policy and bound base runtime identity before claiming full runtime binding, under same resource deadline."
+    }
+  ],
+  "rootReproduction": {
+    "input": "synthetic text ab cd; raw tokens ▁ab and cd; offsets 0:2,3:5",
+    "python": "validate_encoding accepted gapped whitespace",
+    "javascript": "decodeNymNative status native-complete, egressEligible false, offsetContractValidated false",
+    "modelImports": 0,
+    "neuralForwards": 0,
+    "networkRequests": 0,
+    "clientData": false
+  },
+  "reportedModelUsage": {
+    "model": "claude-opus-5-5",
+    "inputTokens": 2,
+    "cacheCreationInputTokens": 31247,
+    "cacheReadInputTokens": 649,
+    "outputTokens": 12114,
+    "thinkingTokens": 10123,
+    "listBasisCostUSD": 0.4923938,
+    "billingInterpretation": "CLI reports list-basis estimate; authenticated claude.ai Pro account, actual bill not verified"
+  },
+  "limitations": [
+    "Reviewer saw only three public development source/protocol files via prompt; no file tools, runtime, tests or assets.",
+    "Parent/child grant and resource claims in reviewer answer were not independently reproduced by Codex in this cut.",
+    "No V3 freeze, actual inventory stream load, tokenizer/model forward, DEV/heldout score or product activation.",
+    "V1/V2 frozen historical evidence unchanged."
+  ]
+}

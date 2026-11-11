@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "cut": "D1c",
+  "status": "first-windows-ci-failed-preserved",
+  "sources": {
+    "scripts/windows-memory-smoke.mjs": "8c22f7433eeba555c427787c772a3e9ba9c81fcd77bde4cb0f3d1bcd10a6ed3f",
+    "tests/windows-memory-smoke.test.mjs": "a1ed04eb51669ef0498ade3ab825bb57dba9fc9f18dec07749329eeb9aa3b82c",
+    ".github/workflows/windows-memory-smoke.yml": "fa6dd013d4b744f1386e375bf3a98cb46ef18c7ebbee0144f9ef1e3be922d2c8"
+  },
+  "builderTargetedTests": 19,
+  "independentTargetedTests": 15,
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol",
+  "verdict": "APPROVE",
+  "yamlParse": "PASS",
+  "githubRepositoryVerifiedPublic": true,
+  "standardRunner": "windows-2025",
+  "jobTimeoutMinutes": 5,
+  "workflowPublicOnlyBeforeRunnerAllocation": true,
+  "checkoutSha": "34e114876b0b11c390a56381ad16ebd13914f8d5",
+  "actualWindowsRun": {
+    "id": 42864129769,
+    "url": "https://github.com/santirosado21-spec/lex-ai/actions/runs/42864129769",
+    "commit": "b3fd3469b9081a64016ccb1fec37176bfeda8649",
+    "runner": "windows-2025",
+    "nodeVersion": "v22.23.4",
+    "contractStep": "PASS",
+    "smoke": "FAIL",
+    "successfulSamples": 0,
+    "failedSample": 1,
+    "failedSampleElapsedMs": 2020.85,
+    "requestTimeoutMs": 2000,
+    "cleanupExitObserved": true,
+    "cleanupForced": false,
+    "cause": "not established beyond measurement failure near deadline; safe diagnostic needed",
+    "log": "artifacts/phased-completion-20261110-batch2/windows-ci-first.log",
+    "logSha256": "5140b3f7d63bb5e21a251495dcfc3ab0113fa9e54dfb27ba499b677f6cc47adb"
+  },
+  "physical8GBValidation": false,
+  "installerValidation": false,
+  "inferenceValidation": false,
+  "paidServicesActivated": false,
+  "references": [
+    "https://docs.github.com/en/actions/concepts/billing-and-usage",
+    "https://docs.github.com/en/actions/reference/runners/github-hosted-runners"
+  ]
+}

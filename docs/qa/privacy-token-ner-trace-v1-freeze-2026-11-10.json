@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-10",
+  "approvedForDevelopmentRun": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: final APPROVE39/39 after exclusive failure evidence fix",
+  "scope": "one60case telemetry-only development diagnostic, exact invariance to baseline, no score or promotion",
+  "binding": {
+    "version": 1,
+    "candidateId": "rampart-q4-token-ner-trace-v1",
+    "identity": {
+      "sourceHashes": {
+        "resources/privacy-detector-candidate-v2.json": "659e1e3cdb2e118e32cdf263f16f5ceea3014ee456d7a8fe660fdd9f7c238bfd",
+        "resources/privacy-token-ner-candidate-v1.json": "cf499232e50ac08da274329cc8bfbbdf3318cf7d8cbd4e5f114b507ce0bbcab5",
+        "resources/privacy-token-ner-trace-protocol-v1.json": "0a7de5944d1afc8656c8abd1019ed968ad631ae8f817f5181da56456867d6d2c",
+        "resources/privacy-token-ner-trace-v1.json": "e61081e53867687ec6bdede70810bc3a6f8ef20967fd55a2837be910c04ee598",
+        "scripts/eval-privacy-v2.mjs": "7869b36f411deaf192b65faa8070696474437bdb9120edcaee81a08baf0436c6",
+        "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f",
+        "scripts/privacy-candidate-worker-v2.mjs": "d434dddd0e449d0e51ead6d8838035b72cbae2c953bdfcfcc9c8b47712794b62",
+        "scripts/privacy-onnx-worker.py": "bb9547e601e1f14f5bb5bc0d90ee51c10a056780869a1065efb11d323afb5837",
+        "scripts/privacy-token-ner-trace-worker.py": "9c3033a0fb2a149f70aa628535fd736958b3a68a0704f4d5f71c22d855cb49bd",
+        "scripts/privacy-token-ner-worker.py": "11ddcb4531a6692581ed8756f750973e2538b708b0318c085c0a848e0d42cb5d",
+        "scripts/run-privacy-ablation-v3.mjs": "72feb6d5963063cb6bc24948133531f29dbfc7b6f0b93e249cae391f455e2ccd",
+        "scripts/run-privacy-detector-v2.mjs": "9e525c1d5e1c422760b613972a65adf47bfa57a785dac6ca938c6f49683633c5",
+        "scripts/run-privacy-token-ner-trace-v1.mjs": "becc2c150c7bb0a6076c96f376119bb1d81afcab82d6a2c1dcb1cdc4ebd50721",
+        "scripts/run-privacy-token-ner-v1.mjs": "a22983d4c537a1f0bcf88874a4510eae26c51bdbd0b945ba643ecb6cf211c7b2",
+        "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+        "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+        "server/privacy/operational-v2.mjs": "864b71ca4d2488729d398bf4e5090186c17b20adc7866353aa0c0019e856b2c9",
+        "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+        "server/privacy/semantic-v2.mjs": "831b7b1b2089de04f9e40cb454c38cdc12ebeee00413cc47702861016e33ec64",
+        "server/privacy/token-ner-candidate.mjs": "a6c1a04a52f4d2163619b7991d7dc8b6303e194d9597294b854c048706edf460",
+        "server/privacy/token-ner-trace-candidate.mjs": "c850ed625ebdebf16cf79764bbbbdd677dbb071319459f7bcf7be7956fef60b0",
+        "tests/privacy-token-ner-runner.test.mjs": "4d4d95b73f03d6fe177727bde99edf862c6697fad89d7e05a88417291bf42ac0",
+        "tests/privacy-token-ner-trace.test.mjs": "9bd03d3f8cda94649d3376bfd3307a9b04ce2e13abe3c9f5a704aba4bf3f0062",
+        "tests/privacy-token-ner.test.mjs": "03c4f930ca2c65957631d773952822fdd19c3b02283169eefe633a38bce35ead"
+      },
+      "runtime": {
+        "runtimeTreeSha256": "d470ad37523ba7fead3f48e783784f710cd7f45002e2a1fc65d38189d388888b",
+        "node": "v22.22.3",
+        "platform": "darwin",
+        "arch": "arm64"
+      }
+    },
+    "modelManifestSha256": "e61081e53867687ec6bdede70810bc3a6f8ef20967fd55a2837be910c04ee598",
+    "protocolSha256": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "guideSha256": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "devSha256": "511f2da926df75a84a9624147d61bbff189bfa72cd5c931f71f437d41a83552d",
+    "baselinePredictionsSha256": "9481e358a4306955f398fb4f4f8a9b7e62a3f9b7d9440ea0eb81f9f456d6cca8",
+    "baselineModelSha256": "cf499232e50ac08da274329cc8bfbbdf3318cf7d8cbd4e5f114b507ce0bbcab5",
+    "traceProtocolSha256": "0a7de5944d1afc8656c8abd1019ed968ad631ae8f817f5181da56456867d6d2c",
+    "caseCount": 60,
+    "maximumRequests": 60,
+    "timeoutMs": 15000,
+    "rssLimitBytes": 1073741824,
+    "productionEnabled": false
+  }
+}

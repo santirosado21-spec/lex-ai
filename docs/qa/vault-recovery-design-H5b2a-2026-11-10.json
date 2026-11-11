@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T19:08:02.280837+00:00",
+  "scope": "H5b2a design and bounded public dependency preparation; no cryptographic run",
+  "sourceHashes": {
+    "docs/architecture/vault-recovery-synthetic-v1.md": "c9ea1a6240f2d28e4f52fb137401bb9f1ba635654cc0b41f62b21bee800812dd",
+    "resources/vault-recovery-synthetic-v1.json": "1b1125e92adb2e1360c67ca3dcaa1b86daa01e26591e7f6df496f7cd73195794",
+    "resources/vault-recovery-dependency-preparation-v2.json": "45e807634a7f982c25c1993a2bb5e2fe60b9f6a50225ff1040f260c77898181c"
+  },
+  "independentReviewer": "review_vault_reminders / gpt-6.1-sol: APPROVE18-case allocation includingR23a/b,typedSealFailure ownership,D0 archive/cache/features evidence; thirdparty codegen conditional on narrowed sandbox and observed denials",
+  "firstBatchInvocations": 18,
+  "fullMatrixCases": 24,
+  "originalSchema": 4,
+  "baselinePinsArePreImplementationHistorical": true,
+  "observedRegistryProbePackages": 149,
+  "activeMacProbePackages": 140,
+  "newArchiveGets": 107,
+  "priorMetadataGets": 140,
+  "priorFixedGets": 2,
+  "observedTotalHttpGets": 249,
+  "cacheArchivesIncludingNativeBaseline": 183,
+  "cacheArchiveBytes": 27829239,
+  "missingNotices": 6,
+  "legacySlashLicenseDeclarations": 10,
+  "releaseLicenseClearance": false,
+  "thirdpartyBuildExecuted": false,
+  "recoveryExecuted": false,
+  "custodyImplemented": false,
+  "activeStoreChanged": false,
+  "productionEnabled": false
+}

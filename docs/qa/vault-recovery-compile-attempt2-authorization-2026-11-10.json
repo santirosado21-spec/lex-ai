@@ -1,0 +1,9 @@
+{
+  "scope": "SECOND_EXPLICIT_COMPILATION_ONLY",
+  "reason": "One diagnosed E0308 fixed with &mut Command borrow, independently reviewed; preserved first failure and freeze",
+  "independentReviewer": "review_vault_reminders / gpt-6.1-sol: APPROVE",
+  "newFreezeSha256": "88c705dc951e1233d5468000b1cd26346c71c87157e430b8aba3ef69dbd2dff4",
+  "automaticRetry": false,
+  "cryptoTestsAuthorized": false,
+  "ownerMacCodegenAuthorized": false
+}

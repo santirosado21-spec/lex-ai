@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "scope": "NATIVE_RSS_RAPID_EXIT_DIAGNOSTIC_ONLY",
+  "approvedBy": "codex/root",
+  "approvedForOneSupervisorOnlyRun": true,
+  "reason": "After three retained crypto failures, exit72 requires localization using owned harmless processes only, before any fourth crypto batch.",
+  "independentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE static diagnostic delta",
+  "reviewPath": "docs/qa/vault-recovery-native-sampler-diagnostic-review-2026-11-10.json",
+  "newFreezeSha256": "ead4a885ad0bf963f25edfd2359e81567a19d20ad01b5dffbeff9df7389efdde",
+  "maximumFreshRapidExitFixtures": 24,
+  "maximumFreshTotalChildren": 31,
+  "maximumNewFixtureDispatchMs": 2000,
+  "cryptoTestsAuthorized": false,
+  "recoveryHelperAuthorized": false,
+  "automaticRetry": false,
+  "ownerMacNativeCodegenOrCallsAuthorized": false,
+  "diagnosticObservationsAreNotRecoveryAcceptance": true
+}

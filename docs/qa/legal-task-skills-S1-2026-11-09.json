@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "measuredAt": "2026-11-10T00:00:34.620Z",
+  "scope": "S1 offline task contracts/instructions and developer-authored synthetic fixtures; not S2 model evaluation",
+  "freeze": "legal-task-skills-S1-freeze-2026-11-09.json",
+  "checker": {
+    "status": "legal-task-skills-prepared-unmeasured",
+    "productionEnabled": false,
+    "authorizationGranted": false,
+    "remoteToolsEnabled": false,
+    "modelGenerations": 0,
+    "prepared": 11,
+    "rejected": 1,
+    "validationFixtures": 11,
+    "outputAccepted": 5,
+    "outputRejected": 6,
+    "outputsNotRun": 1,
+    "results": [
+      {
+        "id": "research-injection-data",
+        "preparation": "accept",
+        "output": "accept"
+      },
+      {
+        "id": "research-false-quote",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "research-false-version",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "research-wrong-jurisdiction",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "research-missing-scope-date",
+        "preparation": "accept",
+        "output": "accept"
+      },
+      {
+        "id": "research-no-sources",
+        "preparation": "accept",
+        "output": "accept"
+      },
+      {
+        "id": "contract-commercial-preference",
+        "preparation": "accept",
+        "output": "accept"
+      },
+      {
+        "id": "contract-false-coverage",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "contract-preference-as-law",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "contract-out-of-contract-field",
+        "preparation": "accept",
+        "output": "reject"
+      },
+      {
+        "id": "contract-missing-role",
+        "preparation": "accept",
+        "output": "accept"
+      },
+      {
+        "id": "contract-reject-provenance-labels",
+        "preparation": "reject",
+        "output": null
+      }
+    ]
+  },
+  "verification": {
+    "directedBuilder": 18,
+    "combinedBuilderWithPublicCandidates": 33,
+    "independentReviewerDirected": 18,
+    "independentAdditionalAdversarialProbes": 6,
+    "fullSuite": {
+      "passed": 605,
+      "total": 605,
+      "failed": 0
+    },
+    "build": "TypeScript and Vite passed",
+    "newDependencies": 0,
+    "modelGenerations": 0,
+    "productionEnabled": false,
+    "remoteToolsEnabled": false,
+    "authorizationGranted": false,
+    "modelGenerationScope": "Task executions against product candidates/paired skill evaluation; excludes the three SF model assignments used to author and review this implementation"
+  },
+  "packets": [
+    {
+      "caseId": "research-injection-data",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "ab4a8bccd4359515950f56f044b13294fbcc92363441a6183441b10405d1d611",
+      "requestSha256": "a50c46b3ce0175a1bd281a59eb2ddb8f0ada9175fcd416ff0e2f3d31dafe1b22",
+      "bytes": 9492,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "research-false-quote",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "5726c62df2f065a70ad34905c5479176f321a1e670ca64e1d4819f78f3990c12",
+      "requestSha256": "a8a32eab0496ea4bf96b2ca0b0b55a63591e82ba4fa390e5679a9bbd18ee474c",
+      "bytes": 9385,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "research-false-version",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "5726c62df2f065a70ad34905c5479176f321a1e670ca64e1d4819f78f3990c12",
+      "requestSha256": "a8a32eab0496ea4bf96b2ca0b0b55a63591e82ba4fa390e5679a9bbd18ee474c",
+      "bytes": 9385,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "research-wrong-jurisdiction",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "dcff53588719e81f2b07f2536ebe7addc42378aba01ef94cff64543b00153a51",
+      "requestSha256": "ecf20a1c32eee33d0de583e8c56a6e2bbddd86b41fdd72df8ae3c491723ac66e",
+      "bytes": 9392,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "research-missing-scope-date",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "1a14e993010ed74eb640bee1b8f562c1eab8ad1547c970050d337c230f7ad847",
+      "requestSha256": "9262bc055a374cd3d27bc6b6f304fc8df8d0d06f6415e82ee8e5ca1ce206b93b",
+      "bytes": 9373,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "research-no-sources",
+      "taskId": "investigacion-juridica-mx",
+      "packetSha256": "70ed39a83b157e2674daa9bb9e228f16314b024a70f7f20fad4ccf9c5f9367fb",
+      "requestSha256": "cdab47f22ad7243d11bdb168759318b20320f732b1773ed376249b171865652f",
+      "bytes": 9001,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "contract-commercial-preference",
+      "taskId": "revision-contratos-mx",
+      "packetSha256": "3eb727337b9e5c5281385db345ab222ce86b2fc4606754532360061504b33417",
+      "requestSha256": "3d39334513cc8a5e11e8f6b494d407672148ad11eb76a89ce571ef43bfb2d109",
+      "bytes": 10007,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "contract-false-coverage",
+      "taskId": "revision-contratos-mx",
+      "packetSha256": "3eb727337b9e5c5281385db345ab222ce86b2fc4606754532360061504b33417",
+      "requestSha256": "3d39334513cc8a5e11e8f6b494d407672148ad11eb76a89ce571ef43bfb2d109",
+      "bytes": 10007,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "contract-preference-as-law",
+      "taskId": "revision-contratos-mx",
+      "packetSha256": "3eb727337b9e5c5281385db345ab222ce86b2fc4606754532360061504b33417",
+      "requestSha256": "3d39334513cc8a5e11e8f6b494d407672148ad11eb76a89ce571ef43bfb2d109",
+      "bytes": 10007,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "contract-out-of-contract-field",
+      "taskId": "revision-contratos-mx",
+      "packetSha256": "3eb727337b9e5c5281385db345ab222ce86b2fc4606754532360061504b33417",
+      "requestSha256": "3d39334513cc8a5e11e8f6b494d407672148ad11eb76a89ce571ef43bfb2d109",
+      "bytes": 10007,
+      "authorizationGranted": false
+    },
+    {
+      "caseId": "contract-missing-role",
+      "taskId": "revision-contratos-mx",
+      "packetSha256": "2ad38427c4fc6716b2f834ad7290ee2a96816c9974559078cb97dc35fb1f1369",
+      "requestSha256": "86bf22eed58e6675e67fdea7df9258ba86c171b847e3e4b4b7a06646d8eb689d",
+      "bytes": 9622,
+      "authorizationGranted": false
+    }
+  ],
+  "semanticLimitProbe": {
+    "kind": "Deliberately unsupported inference in an otherwise matching synthetic output",
+    "structuralResult": "structurally-valid-unmeasured",
+    "entailment": "not-evaluated",
+    "legalAccuracy": "not-evaluated",
+    "interpretation": "Schema/span checks accept this synthetic text; semantic correctness must be evaluated separately in S2 and by a lawyer. Not a successful legal answer."
+  },
+  "sf": {
+    "coordinator": "Codex",
+    "implementation": {
+      "agent": "build_legal_task_contracts_s1",
+      "model": "gpt-6.1-sol"
+    },
+    "developmentAuthor": {
+      "agent": "author_legal_task_cases_s1",
+      "model": "gpt-6.1-sol"
+    },
+    "independentReview": {
+      "agent": "review_legal_task_skills_s1",
+      "model": "gpt-6.1-sol",
+      "verdict": "APPROVE offline S1 at matching frozen hashes",
+      "evidenceVerdict": "APPROVE final S1 evidence",
+      "evidenceChecks": [
+        "Nine frozen file hashes recomputed and matched",
+        "QA/checker counts, inactive packets and maximum packet bytes corroborated",
+        "Full-suite/build logs corroborated; reviewer did not repeat full suite",
+        "Semantic limit, M1 bounds and S2 pending scope correctly separated"
+      ]
+    },
+    "astraAssignments": 0,
+    "externalCollaboratorConsultations": 0,
+    "tokensAndQuota": "not exposed"
+  },
+  "limitations": [
+    "No model task executions or paired with/without-skill experiment; example outputs were authored as fixtures by a Sol SF agent.",
+    "Twelve visible development fixtures are not independent acceptance or the thirty proposed S2 cases.",
+    "No confidentiality classification, egress grant, injection-resistance proof or legal applicability/entailment test.",
+    "Input reviewState/dataClass and hash provenance are developer declarations and integrity checks, not authentication.",
+    "No provider selection, product registration, cloud deployment, confidential documents or source-corpus promotion."
+  ]
+}

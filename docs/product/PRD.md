@@ -1,4 +1,6 @@
-# LEX AI — MVP local
+# LEX AI — espacio jurídico híbrido
+
+> **Dirección vigente, 2026-11-09:** modelo pequeño local para detección y seudonimización, almacenamiento privado en la computadora y modelos remotos elegidos por tarea. Explorar OpenRouter como primera ruta, sin depender primero de acceso por suscripción ChatGPT. La [transición y plan de implementación](../architecture/hybrid-local-privacy-router-2026-11-09.md) fija almacenamiento, controles, evaluación y etapas. Los apartados del primer corte inferiores son históricos; esta dirección no declara anonimización, cifrado o integración remota implementados ni autoriza gasto o cargas generales de clientes.
 
 > **Dirección vigente, 2026-11-05:** el dueño acepta inferencia híbrida con prioridad en ChatGPT mediante integración oficial. Se conservan biblioteca jurídica, habilidades/recursos, expedientes, archivos y horas; equipos comunes de 8 GB siguen siendo el objetivo. La [propuesta de espacio híbrido privado](../architecture/hybrid-private-workspace-2026-11-05.md) prevalece sobre la exigencia histórica de inferencia exclusivamente local y uso remoto sin cuotas. Acceso comercial por suscripción, cifrado y adaptador remoto siguen pendientes; no se han autorizado cargas generales de expedientes ni gasto automático.
 

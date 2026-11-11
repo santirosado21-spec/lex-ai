@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "protocol": {
+    "file": "protocol.json",
+    "sha256": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf"
+  },
+  "annotationGuide": {
+    "file": "annotation-guide.md",
+    "sha256": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e"
+  },
+  "splits": {
+    "dev": {
+      "file": "dev.jsonl",
+      "sha256": "db6cda2f90935c81e2e1950136fc7dbdbc7150d267288670fba54472fe439325"
+    },
+    "heldout": {
+      "file": "heldout.jsonl",
+      "sha256": "870ddb91f37a864605b811a40189cef8747bb67a1c5f88969ef2fde0bc9bb30b"
+    }
+  }
+}

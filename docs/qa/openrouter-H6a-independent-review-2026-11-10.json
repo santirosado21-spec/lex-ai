@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "slice": "H6a isolated OpenRouter adapter",
+  "verdict": "APPROVE_STATIC_SLICE_ONLY_PRODUCT_ACCOUNT_NOT_CONNECTED",
+  "reviewer": "Claude Code CLI requested opus alias, tools disabled; effective model on this call not separately attested",
+  "reviewSequence": [
+    "initial REQUEST_CHANGES: mutable envelope, account check while disabled, price/endpoint/busy/error issues",
+    "revised source APPROVE_STATIC_SLICE: high findings closed; no tests executed by reviewer"
+  ],
+  "reviewedSourceHashes": {
+    "server/providers/openrouter.mjs": "416d4fb603d6be8b9fb89441b629f0901c3f3b3c299b0e3d554c5405eb16ba2e",
+    "tests/openrouter-provider.test.mjs": "462e7c8b496ea872643acea7bc44b3bd575b96681e5be213f964a4585576cbbc"
+  },
+  "rootVerification": {
+    "directedProviderTests": 8,
+    "fullLocalTests": 1098,
+    "fullLocalFailures": 0,
+    "build": "PASS",
+    "liveOpenRouterAccountChecks": 0,
+    "liveCompletions": 0,
+    "realClientData": false
+  },
+  "accountState": {
+    "psfDevelopmentCredentialPresent": true,
+    "psfFreeAttestationCurrent": false,
+    "productCredentialProvisioned": false,
+    "productRouteEnabled": false
+  },
+  "controls": [
+    "default off including checkAccount",
+    "snapshot and final body size before awaits",
+    "model and exact endpoint advertised zero price checked",
+    "zero max_price for prompt/completion/request/image",
+    "provider only, no fallbacks, ZDR and data_collection deny",
+    "bounded response/time, fixed errors, no tools",
+    "H2 synthetic scoped mock composition"
+  ],
+  "remaining": [
+    "Dedicated product credential must be created and stored in OS secure store; no PSF key reuse",
+    "Exact :free model/endpoint and observed provider need one authorized live synthetic smoke test",
+    "H4 detector, H5 vault and H7 every generation path remain open; no client egress",
+    "Provider/aggregator retention and total spend policy require separate review"
+  ],
+  "reportedReviewerUsage": [
+    {
+      "round": "initial",
+      "inputTokens": 2,
+      "cacheCreationInputTokens": 7738,
+      "cacheReadInputTokens": 1592,
+      "outputTokens": 6539,
+      "thinkingTokens": 3203
+    },
+    {
+      "round": "followup",
+      "inputTokens": 2,
+      "cacheCreationInputTokens": 9536,
+      "cacheReadInputTokens": 1592,
+      "outputTokens": 2919,
+      "thinkingTokens": 1480
+    }
+  ]
+}

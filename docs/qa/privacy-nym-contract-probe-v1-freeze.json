@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-contract-probe-v1",
+  "status": "frozen-reviewed",
+  "scope": "public-synthetic-contract-inspection-only",
+  "planSha256": "2627c83b431d448b462c915daaa4105b367497bfa943997e994d760c6daa7eed",
+  "sourceHashes": {
+    "docs/architecture/privacy-nym-contract-probe-v1.md": "519a5e0b368e2c1be48eebfc51cdddc377faf1ac615c961e1826eca84c768259",
+    "resources/privacy-nym-contract-probe-v1.json": "bdcbdb01c3c4c6fbb0628cab129776dd714dc2ded1961de06c8de71bb2e234d1",
+    "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+    "scripts/prepare-privacy-nym-research.py": "f7947e09e7b5087d68b9acdf12c281526d80cd99e46a84284d66781f2e69b535",
+    "scripts/probe-privacy-nym-contract.py": "4fdec8cb46798b220f7bc3af796ce80a2070a26e46d065ded6b463d18d57ec7b"
+  },
+  "runtimeIdentity": {
+    "algorithm": "relative-path-and-file-sha256-canonical-frames-v1",
+    "architecture": "arm64",
+    "expectedVersions": {
+      "numpy": "2.5.4",
+      "onnxruntime": "1.31.1",
+      "python": "3.12.13",
+      "tokenizers": "0.23.3"
+    },
+    "platform": "darwin",
+    "pythonBinarySha256": "a395f264e5612a2819662ed3e37fd30d39ed61179b98e5f86c3c783a008d8623",
+    "requirementsSha256": "80035e6aedaaca16ddc7fd9195642fbc3a292fb381b095281ad42b061a8bf9d8",
+    "runtimeRegularFileCount": 2396,
+    "runtimeTreeSha256": "b4617cbe5ebb453dd597460a816f1c67c44bf99cf702673758fb204f4a172b6c"
+  },
+  "cacheReceiptSha256": "cb287aa208c76d95d4da9138e7139cdc48c5f19999d8438a7ff22eab65477a78",
+  "limits": {
+    "cpuThreads": 1,
+    "maximumEvents": 6,
+    "maximumRssBytes": 1073741824,
+    "maximumSampleGapMs": 50,
+    "maximumTokensPerFixture": 512,
+    "maximumWorkerStdoutBytes": 32768,
+    "sampleIntervalMs": 20,
+    "totalSeconds": 60
+  },
+  "independentReview": {
+    "identity": "review_completion_phases / gpt-6.1-sol",
+    "reviewedAt": "2026-11-10T19:50:50.874146+00:00",
+    "verdict": "APPROVE",
+    "independentFromBuilder": true
+  },
+  "rootAuthorization": {
+    "by": "codex-root",
+    "authorizedAt": "2026-11-10T19:50:50.874146+00:00",
+    "scope": "contract-inspection-only-zero-forwards",
+    "status": "authorized",
+    "missingLicenseNoticeAcknowledged": true
+  }
+}

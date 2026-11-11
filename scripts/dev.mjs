@@ -7,5 +7,5 @@ if(!process.env.LEX_OLLAMA_BIN&&existsSync('/Applications/Ollama.app/Contents/Re
 if(!process.env.LEX_MODELS_DIR&&existsSync(path.join(os.homedir(),'.ollama/models')))process.env.LEX_MODELS_DIR=path.join(os.homedir(),'.ollama/models');
 const {startServer}=await import('../server/main.mjs');
 const app=await startServer({port:4318});
-console.log(`LEX AI: ${app.connection.url}/#token=${app.connection.token}`);
+console.log(`Rejon.AI: ${app.connection.url}/#token=${app.connection.token}`);
 for(const sig of ['SIGINT','SIGTERM'])process.on(sig,async()=>{await app.close();process.exit(0);});

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "date": "2026-11-09",
+  "dataClass": "public-development",
+  "productInferencePerformed": false,
+  "astraAssignments": 0,
+  "claude": {
+    "requestedModel": "claude-opus-5-5",
+    "observedModel": null,
+    "auth": "claude.ai subscription pro; API auth env absent",
+    "cliVersion": "2.1.316",
+    "attempts": 1,
+    "usableAnswers": 0,
+    "status": "timeout",
+    "elapsedMs": 180011,
+    "noRetry": true,
+    "tokens": null,
+    "toolsAuthorized": false
+  },
+  "gemini": {
+    "requestedModel": "gemini-3.8-flash-high",
+    "selectedModelVerifiedBy": "agy models before call; explicit --model argument",
+    "observedModel": null,
+    "attempts": 1,
+    "usableAnswers": 1,
+    "status": "answered",
+    "elapsedMs": 25672,
+    "usage": {
+      "input_tokens": 7849,
+      "output_tokens": 2486,
+      "thinking_tokens": 1445,
+      "cache_read_tokens": 0,
+      "total_tokens": 10335
+    },
+    "toolsAuthorized": false
+  },
+  "kimi": {
+    "requestedModel": "kimi-code/k3.1-pro",
+    "observedModel": null,
+    "attempts": 1,
+    "usableAnswers": 1,
+    "status": "answered",
+    "elapsedMs": 26913,
+    "tokens": null,
+    "transport": "psf panel via text-only Kimi profile",
+    "toolsAuthorized": false
+  },
+  "cursor": {
+    "selectedModelLabel": "Grok 4.7 High",
+    "modelVerification": "UI before and after assignment; not API/weight attestation",
+    "attempts": 1,
+    "usableAnswers": 1,
+    "status": "completed-observed",
+    "context": "No Repo / This Mac",
+    "reportedWorkedSeconds": 114,
+    "tokens": null,
+    "toolsAuthorized": false,
+    "browserFallbackIssue": "One screenshot-stream failure; accessibility read with emit:false succeeded"
+  },
+  "perplexity": {
+    "route": "OpenRouter Sonar catalog checked; no generation",
+    "attempts": 0,
+    "usableAnswers": 0,
+    "status": "blocked-no-eligible-free-route",
+    "credentialFreeAttestation": false,
+    "catalogModelsObserved": 5,
+    "freeModelsObserved": 0,
+    "browserFallback": "browser access host unavailable",
+    "tokens": 0
+  },
+  "codex": {
+    "coordinator": "Sol",
+    "researchWorkerModel": "gpt-6.1-sol",
+    "researchWorkers": 1,
+    "independentReviewers": 1,
+    "tokens": null,
+    "independentReviewStatus": "favorable-research-only; three clarifications integrated",
+    "independentReviewScope": "Documentary counts/hash/status/permission boundaries; no crawler execution or legal/8GB validation"
+  },
+  "meaning": "Advice on a reviewed public packet, not source browsing or tests by external seats. Codex independently checked primary sources/repositories. No whole-project or client data sent."
+}

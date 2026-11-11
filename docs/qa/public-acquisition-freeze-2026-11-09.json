@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-09T23:36:41.571Z",
+  "purpose": "Bounded public developer trial, no legal/product/cloud deployment authorization",
+  "independentReviewer": "review_public_factory",
+  "reviewerModel": "gpt-6.1-sol",
+  "review": "APPROVE C0 and C1 bounded public trial",
+  "sourceHashes": {
+    "server/corpus/source-registry.mjs": "4b0505b970be1ccd14c5d614f42fd4fe89c2ac59d3fe0bb96aa79c775065ee70",
+    "server/corpus/acquisition.mjs": "f1999bb574a97566ce4ba11853759885982764f486eff16f0938c226d40f7a4b",
+    "scripts/legal-acquisition.mjs": "efaeb72fe76d53b9ada58b19ebe513a6178e8aeeec869659fd31df18728e671b",
+    "resources/legal-acquisition-pilot.json": "bb5135acbcd4cac431b708fb5115a526f2acad3cc6f6324c0f192b8c2a3f1f08",
+    "server/legal-sync.mjs": "0849c1b5441166da56bf2e68cebfbb4b9781964dd581e2f7100dc41fbf722cb4",
+    "server/legal-library.mjs": "e7fb465ce1a8416cbe9ee2c2bff1cba6c0247323e1da30db33de4622f805d8c6",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "package-lock.json": "ad587cd4ee6435c211ac3f4f275834736e558000d16b006370bd08d0b5898e9d"
+  },
+  "node": "v22.22.3",
+  "pdfParse": "1.1.1",
+  "plannedSlots": 30,
+  "selectedConcrete": 10,
+  "pendingSlots": 20,
+  "productionEnabled": false
+}

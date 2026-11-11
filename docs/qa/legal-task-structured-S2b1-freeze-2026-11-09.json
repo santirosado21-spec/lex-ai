@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "frozenAtUtc": "2026-11-10T01:40:28.171162+00:00",
+  "protocol": "docs/architecture/legal-tasks/structured-development-probe-v1.md",
+  "protocolSha256": "150b4d82ab43dfe09a11f23620e9f4c8e251440af7253523d6c4ad7eff45efe3",
+  "planSha256": "79aee1554dc6c78b46e273e0f5a0ec76fee5119ac934ff0ec4f307df84540822",
+  "sources": {
+    "scripts/probe-legal-task-structured.mjs": "c0815361d4b5d02657bdbd54ae598702df67afe91933b87027e11237d2d48a55",
+    "tests/legal-task-structured-probe.test.mjs": "cafab3fa466052d725951eb06be0697495cd892dad28e0d0cf7939fa70c3853a",
+    "scripts/eval-legal-task-skills.mjs": "df12d2ed305e4fc1877342f0879f971d97d05fe5549a535ac0414761c4d1002f",
+    "docs/qa/legal-task-skills-S1-freeze-2026-11-09.json": "3e0bf3092a0c83e12ce9bfb19bce6f072d149da692d39f0a1e38465744cd645a",
+    "scripts/dsystem/remote.mjs": "fe8b3742de2de65600573025d836b751e44607da905eae4e4d8ee7251623a75c",
+    "server/legal-tasks/contracts.mjs": "340c0edb8262780f18c9f175af6b46738cc887577d9ebc25869080fa2822ce1f",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "resources/legal-task-skills/manifest.json": "ec4a065a034a4406d5e93d95bad2141a1b6af28e12a8650e6c5d3551898296d2",
+    "resources/legal-task-skills/investigacion-juridica-mx/SKILL.md": "1430f49206245983062088fcb57687115aa1011f9b08c4963871fa18d3c65eba",
+    "resources/legal-task-skills/revision-contratos-mx/SKILL.md": "78a6b4a41f7a2a43abdfc88b43770fe7f864b2177c76d2a1e13395727cb358ed"
+  },
+  "datasets": {
+    "eval/legal-tasks/s2b-dev/cases.jsonl": "7860441091bb0edb40d79608ffaaf63c49d4c3e6e9f54d5d329130258e88740a",
+    "eval/legal-tasks/s2b-dev/README.md": "6acb0ddb209678b4c5528c6183147551c8fb491c03158b43d23c82534c19cd3e"
+  },
+  "plannedGenerations": 8,
+  "maxGenerations": 8,
+  "httpBudget": 32,
+  "maxMinutes": 15,
+  "modelIds": [
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b"
+  ],
+  "provider": "groq",
+  "existingEffectiveKeyFreeAttestationObserved": true,
+  "authenticatedCatalogContainsBothObserved": true,
+  "accountInvoiceAudited": false,
+  "actualBilledCostUsd": null,
+  "review": {
+    "agent": "review_completion_phases",
+    "assignedModel": "gpt-6.1-sol",
+    "verdict": "APPROVE-before-live",
+    "mockedTests": 27
+  },
+  "dataReview": "two newly invented synthetic cases, fixed S1; no client data or real legal propositions",
+  "productionEnabled": false,
+  "paidFallbacksAllowed": false,
+  "retriesAllowed": false,
+  "scope": "development-format-diagnostic-not-legal-quality-selection"
+}

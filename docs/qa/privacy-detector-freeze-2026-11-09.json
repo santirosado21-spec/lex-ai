@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "candidateId": "local-rules-baseline-v1",
+  "candidateType": "rules-only",
+  "frozenAt": "2026-11-09T22:52:51.821Z",
+  "approvedForSingleHeldoutRun": true,
+  "productionEnabled": false,
+  "protocolSha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935",
+  "heldoutSha256": "a36158ff7592e716226caf35bf16e4454df569d899b63db8ea388008320633f7",
+  "sourceHashes": {
+    "server/privacy/detector.mjs": "c762d617c6a66ec13467c4f333223e8d2a02df72d77a236b478f8fb93f89f803",
+    "server/privacy/provenance.mjs": "75cba1a1fc62c834971c7a22382f0a710f8e1652f07aecb2a8f13d98907a37e1",
+    "server/canonical-json.mjs": "4885198851da40a793ec04584b497f0c3a87659c0607e9434f4ba43a4a499766",
+    "scripts/privacy-candidate-worker.mjs": "03e1e982eed7a495987a31736c837c4c95c43ecfe78e31240cd079fc69683bc5",
+    "scripts/run-privacy-detector.mjs": "4f385734d69908e83aae0687b8edf74972b41f0ac8cec1528246c0343011ec19",
+    "scripts/eval-privacy.mjs": "b4424f533cf3d73cb260f4d621d70dbfff87b76fe2f90a1eaa79a11555eaaa0f"
+  },
+  "independentReviewer": "review_detector_vault",
+  "configuredReviewerModel": "gpt-6.1-sol",
+  "review": "APPROVE FOR ONE FROZEN HELDOUT ASSESSMENT; 40 directed tests, no metric eligibility implied",
+  "candidateBuilderSawHeldout": false,
+  "goldInputsAllowed": false,
+  "operationalFlagsFromGold": false,
+  "operationalStimulusLimitation": "Corpus v1 has no explicit format/extraction/ambiguity/failure input flags. Never inject annotation blockReason into detector input.",
+  "heldoutDispositionAfterRun": "Single baseline assessment; retire from future tuning or candidate selection. Preserve original corpus/protocol/hash and this result."
+}

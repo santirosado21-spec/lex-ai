@@ -1,0 +1,970 @@
+{
+  "schemaVersion": 1,
+  "localDate": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "measuredAt": "2026-11-10T00:41:51.803Z",
+  "status": "pilot-complete-not-product-validated",
+  "scope": "S2a development free-account pilot; S2b product routes, larger acceptance and attorney review pending",
+  "freeze": "legal-task-skills-S2-freeze-v2-2026-11-09.json",
+  "cancelledPilot": "legal-task-skills-S2-cancelled-v1-2026-11-09.json",
+  "priorRunCommit": "69ebff1",
+  "planSha256": "f7a927dad744a85256c17fddc1673d14cc08d6398510fe971ad98066747bf209",
+  "reportSha256": "65d1c0bcb0961383b3609ab74289814595aa408b342a86af25d09c1ad5f5e61d",
+  "replaySha256": "594850a861762c527eacaee77e4941da5be6c4bd0306fca0fdd05e475a924937",
+  "blindGradingSha256": "c8dd662bad83b87d21f1222b2475d187cdebfa9b12134afb3b714327556e9531",
+  "blindingMapSha256": "85892778a144b813dbb8a645a40dcb13297f6c4452e41430eee38ff88319d023",
+  "gradingLockedBeforeUnblinding": true,
+  "totals": {
+    "planned": 24,
+    "attempted": 24,
+    "models": 2,
+    "cases": 6,
+    "arms": 2,
+    "repetitions": 1,
+    "httpRequests": 48,
+    "requestModelIdsMatched": 24,
+    "providerFinishStop": 10,
+    "truncated": 14,
+    "emptyVisibleAnswers": 10,
+    "jsonValid": 10,
+    "strictContractPass": 5,
+    "plannedPairs": 12,
+    "attemptedPairs": 12,
+    "bothArmsStrictPairs": 0,
+    "contentCriteriaPassed": 29,
+    "contentCriteriaTotal": 96,
+    "allFrozenContentCriteriaPass": 1,
+    "jointStrictAndContentPass": 1,
+    "totalElapsedMs": 727099,
+    "reportedUsage": {
+      "prompt_tokens": 55260,
+      "completion_tokens": 52411,
+      "total_tokens": 107671,
+      "reasoning_tokens_reported": 47736
+    },
+    "billedCostUsd": null
+  },
+  "groups": [
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "planned": 6,
+      "attempted": 6,
+      "complete": 0,
+      "failed": 6,
+      "pending": 0,
+      "jsonValid": 1,
+      "contractValid": 0,
+      "citationsValid": 0,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 6,
+          "sum": 17727
+        },
+        "completion_tokens": {
+          "reportedAttempts": 6,
+          "sum": 14108
+        },
+        "total_tokens": {
+          "reportedAttempts": 6,
+          "sum": 31835
+        }
+      },
+      "latencyMs": {
+        "samples": 6,
+        "mean": 3089.5,
+        "p50": 3173,
+        "p95": 3482
+      },
+      "promptCharacters": {
+        "mean": 12227.5
+      },
+      "contentPassed": 5,
+      "contentTotal": 24,
+      "contentAllPass": 0,
+      "jointPass": 0,
+      "truncated": 5,
+      "emptyAnswers": 4
+    },
+    {
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "planned": 6,
+      "attempted": 6,
+      "complete": 2,
+      "failed": 4,
+      "pending": 0,
+      "jsonValid": 5,
+      "contractValid": 2,
+      "citationsValid": 2,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 6,
+          "sum": 9903
+        },
+        "completion_tokens": {
+          "reportedAttempts": 6,
+          "sum": 11865
+        },
+        "total_tokens": {
+          "reportedAttempts": 6,
+          "sum": 21768
+        }
+      },
+      "latencyMs": {
+        "samples": 6,
+        "mean": 2830.1666666666665,
+        "p50": 3011,
+        "p95": 3512
+      },
+      "promptCharacters": {
+        "mean": 6327
+      },
+      "contentPassed": 13,
+      "contentTotal": 24,
+      "contentAllPass": 0,
+      "jointPass": 0,
+      "truncated": 1,
+      "emptyAnswers": 0
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "planned": 6,
+      "attempted": 6,
+      "complete": 1,
+      "failed": 5,
+      "pending": 0,
+      "jsonValid": 1,
+      "contractValid": 1,
+      "citationsValid": 1,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 6,
+          "sum": 17727
+        },
+        "completion_tokens": {
+          "reportedAttempts": 6,
+          "sum": 14317
+        },
+        "total_tokens": {
+          "reportedAttempts": 6,
+          "sum": 32044
+        }
+      },
+      "latencyMs": {
+        "samples": 6,
+        "mean": 5632,
+        "p50": 5520,
+        "p95": 6747
+      },
+      "promptCharacters": {
+        "mean": 12227.5
+      },
+      "contentPassed": 7,
+      "contentTotal": 24,
+      "contentAllPass": 1,
+      "jointPass": 1,
+      "truncated": 5,
+      "emptyAnswers": 4
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "planned": 6,
+      "attempted": 6,
+      "complete": 2,
+      "failed": 4,
+      "pending": 0,
+      "jsonValid": 3,
+      "contractValid": 2,
+      "citationsValid": 2,
+      "reportedUsage": {
+        "prompt_tokens": {
+          "reportedAttempts": 6,
+          "sum": 9903
+        },
+        "completion_tokens": {
+          "reportedAttempts": 6,
+          "sum": 12121
+        },
+        "total_tokens": {
+          "reportedAttempts": 6,
+          "sum": 22024
+        }
+      },
+      "latencyMs": {
+        "samples": 6,
+        "mean": 4692.5,
+        "p50": 4725,
+        "p95": 5677
+      },
+      "promptCharacters": {
+        "mean": 6327
+      },
+      "contentPassed": 4,
+      "contentTotal": 24,
+      "contentAllPass": 0,
+      "jointPass": 0,
+      "truncated": 3,
+      "emptyAnswers": 2
+    }
+  ],
+  "details": [
+    {
+      "jobId": "job-01",
+      "caseId": "e4z7",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "e4z7-B",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2973,
+        "completion_tokens": 2500,
+        "total_tokens": 5473,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 3169,
+      "notes": [
+        "El paquete dice missingAnswer=false pero rawAnswer está vacío. Se registra ausencia observable de contenido; no se infiere causa ni se reconstruye respuesta. Los criterios no se satisfacen por ausencia de afirmaciones."
+      ]
+    },
+    {
+      "jobId": "job-02",
+      "caseId": "e4z7",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "e4z7-A",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 1684,
+        "completion_tokens": 2500,
+        "total_tokens": 4184,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 5651,
+      "notes": [
+        "El paquete dice missingAnswer=false pero rawAnswer está vacío. Se registra ausencia observable de contenido; no se infiere causa ni se reconstruye respuesta. Los criterios no se satisfacen por ausencia de afirmaciones."
+      ]
+    },
+    {
+      "jobId": "job-03",
+      "caseId": "e4z7",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "e4z7-C",
+      "structuralPass": false,
+      "contentPassed": 1,
+      "contentFailed": 3,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1684,
+        "completion_tokens": 1819,
+        "total_tokens": 3503,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1331
+        }
+      },
+      "latencyMs": 2471,
+      "notes": [
+        "Hay contenido recuperable sobre consentimiento, excepción y consecuencias no expresas, pero la conclusión pierde la reserva inicial. Error sustantivo de identidad de la fuente; no atribuirlo simplemente a formato. No se corrigen ni completan citas o razonamiento."
+      ]
+    },
+    {
+      "jobId": "job-04",
+      "caseId": "e4z7",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "e4z7-D",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2973,
+        "completion_tokens": 2500,
+        "total_tokens": 5473,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 5520,
+      "notes": [
+        "El paquete dice missingAnswer=false pero rawAnswer está vacío. Se registra ausencia observable de contenido; no se infiere causa ni se reconstruye respuesta. Los criterios no se satisfacen por ausencia de afirmaciones."
+      ]
+    },
+    {
+      "jobId": "job-05",
+      "caseId": "u8a2",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "u8a2-D",
+      "structuralPass": false,
+      "contentPassed": 2,
+      "contentFailed": 2,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1638,
+        "completion_tokens": 2226,
+        "total_tokens": 3864,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1730
+        }
+      },
+      "latencyMs": 3011,
+      "notes": [
+        "Error sustantivo de identidad de fuente y distinción terminológica no respaldada. No se corrigen citas ni se completa razonamiento ausente."
+      ]
+    },
+    {
+      "jobId": "job-06",
+      "caseId": "u8a2",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "u8a2-C",
+      "structuralPass": true,
+      "contentPassed": 4,
+      "contentFailed": 0,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": true,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 2927,
+        "completion_tokens": 1817,
+        "total_tokens": 4744,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1306
+        }
+      },
+      "latencyMs": 4297,
+      "notes": [
+        "Introduce conceptos de condición suspensiva y manifestación sin efecto vinculante no desarrollados por el pasaje. Ese rodeo no está sustentado y reduce precisión, aunque no agrega los remedios o nulidad automática prohibidos por c3; los criterios puntuados no se amplían después de observar la respuesta."
+      ]
+    },
+    {
+      "jobId": "job-07",
+      "caseId": "u8a2",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "u8a2-A",
+      "structuralPass": false,
+      "contentPassed": 2,
+      "contentFailed": 2,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 2927,
+        "completion_tokens": 1608,
+        "total_tokens": 4535,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1157
+        }
+      },
+      "latencyMs": 2330,
+      "notes": [
+        "La explicación de la prohibición es recuperable, pero transforma objeción en invalidez automática y no responde adecuadamente a la defensa basada en cualquier plazo. c4 evalúa alcance declarado; no subsana el fallo sustantivo c3."
+      ]
+    },
+    {
+      "jobId": "job-08",
+      "caseId": "u8a2",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "u8a2-B",
+      "structuralPass": false,
+      "contentPassed": 3,
+      "contentFailed": 1,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1638,
+        "completion_tokens": 2059,
+        "total_tokens": 3697,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1503
+        }
+      },
+      "latencyMs": 4725,
+      "notes": [
+        "La distinción plazo/discrecionalidad es útil, pero se le agregan consecuencias automáticas de nulidad/inaplicabilidad que el pasaje no contiene."
+      ]
+    },
+    {
+      "jobId": "job-09",
+      "caseId": "m6d9",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "m6d9-B",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2901,
+        "completion_tokens": 2500,
+        "total_tokens": 5401,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 3191,
+      "notes": [
+        "missingAnswer=false pero rawAnswer vacío; se evalúa el texto visible y no se infiere causa."
+      ]
+    },
+    {
+      "jobId": "job-10",
+      "caseId": "m6d9",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "m6d9-A",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 1612,
+        "completion_tokens": 2500,
+        "total_tokens": 4112,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2466
+        }
+      },
+      "latencyMs": 5652,
+      "notes": [
+        "Fragmento incompleto observable, solo identidad/esqueleto JSON. No se infiere causa ni se recupera texto ausente."
+      ]
+    },
+    {
+      "jobId": "job-11",
+      "caseId": "m6d9",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "m6d9-C",
+      "structuralPass": false,
+      "contentPassed": 3,
+      "contentFailed": 1,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1612,
+        "completion_tokens": 2221,
+        "total_tokens": 3833,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1837
+        }
+      },
+      "latencyMs": 3179,
+      "notes": [
+        "Reconoce umbral y exclusión. Decir que causa/duración cumplen la condición no demuestra acta técnica; falta tratar por separado prueba y autorización. «Sin efecto legal bajo esta regla» se mantiene condicionado al ejercicio ficticio."
+      ]
+    },
+    {
+      "jobId": "job-12",
+      "caseId": "m6d9",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "m6d9-D",
+      "structuralPass": false,
+      "contentPassed": 3,
+      "contentFailed": 1,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2901,
+        "completion_tokens": 2500,
+        "total_tokens": 5401,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2242
+        }
+      },
+      "latencyMs": 5728,
+      "notes": [
+        "Respuesta visiblemente parcial; se puntúa solo contenido efectivamente presente, sin reparar JSON ni completar la oración final. Los pases no prueban que la parte ausente preservara el mismo alcance."
+      ]
+    },
+    {
+      "jobId": "job-13",
+      "caseId": "p3g8",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "p3g8-D",
+      "structuralPass": false,
+      "contentPassed": 3,
+      "contentFailed": 1,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 1589,
+        "completion_tokens": 2500,
+        "total_tokens": 4089,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2275
+        }
+      },
+      "latencyMs": 3389,
+      "notes": [
+        "Salida parcial: termina al describir nota incrustada. Se da crédito solo a excepción efectivamente preservada, sin suponer conclusión del texto ausente. El campo kind=legal-analysis no sustituye revisión de contenido; aquí las obligaciones descritas se atribuyen al documento. Summary omite condiciones y analysis las precisa, pero no detecta hechos faltantes."
+      ]
+    },
+    {
+      "jobId": "job-14",
+      "caseId": "p3g8",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "p3g8-A",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2908,
+        "completion_tokens": 2500,
+        "total_tokens": 5408,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 5505,
+      "notes": [
+        "missingAnswer=false pero respuesta visible vacía; no se infiere causa ni se inventa contenido."
+      ]
+    },
+    {
+      "jobId": "job-15",
+      "caseId": "p3g8",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "p3g8-B",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2908,
+        "completion_tokens": 2500,
+        "total_tokens": 5408,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 3173,
+      "notes": [
+        "missingAnswer=false pero respuesta visible vacía; no se infiere causa ni se inventa contenido."
+      ]
+    },
+    {
+      "jobId": "job-16",
+      "caseId": "p3g8",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "p3g8-C",
+      "structuralPass": true,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1589,
+        "completion_tokens": 1464,
+        "total_tokens": 3053,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1240
+        }
+      },
+      "latencyMs": 3341,
+      "notes": [
+        "Confunde requisito de citas para legal-analysis con incapacidad de leer cláusulas como document-finding. La abstención por fuentes externas ausentes no responde al encargo documental. No seguir la nota por ausencia total de análisis no demuestra cumplimiento del criterio compuesto c4."
+      ]
+    },
+    {
+      "jobId": "job-17",
+      "caseId": "k9s4",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "k9s4-D",
+      "structuralPass": false,
+      "contentPassed": 3,
+      "contentFailed": 1,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2955,
+        "completion_tokens": 2500,
+        "total_tokens": 5455,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2252
+        }
+      },
+      "latencyMs": 3482,
+      "notes": [
+        "Fragmento incompleto; conserva hallazgos útiles. No se inventa una solicitud de páginas en la continuación ausente. Si criterio c3 admitiera solo señalar falta del anexo en lugar de solicitarlo sería más laxo; aquí se mantiene su redacción congelada."
+      ]
+    },
+    {
+      "jobId": "job-18",
+      "caseId": "k9s4",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "k9s4-B",
+      "structuralPass": true,
+      "contentPassed": 1,
+      "contentFailed": 3,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1636,
+        "completion_tokens": 1098,
+        "total_tokens": 2734,
+        "completion_tokens_details": {
+          "reasoning_tokens": 859
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        }
+      },
+      "latencyMs": 3109,
+      "notes": [
+        "Abstención poco útil por fuentes externas ausentes; sí conserva etiquetas de cobertura, pero no desarrolla el hallazgo documental posible. c4 no compensa ausencia de lectura útil."
+      ]
+    },
+    {
+      "jobId": "job-19",
+      "caseId": "k9s4",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "k9s4-C",
+      "structuralPass": true,
+      "contentPassed": 2,
+      "contentFailed": 2,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1636,
+        "completion_tokens": 829,
+        "total_tokens": 2465,
+        "completion_tokens_details": {
+          "reasoning_tokens": 625
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        }
+      },
+      "latencyMs": 1419,
+      "notes": [
+        "Pide correctamente el anexo y conserva cobertura, pero omite interpretar las dos cláusulas y el riesgo ya visible."
+      ]
+    },
+    {
+      "jobId": "job-20",
+      "caseId": "k9s4",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "k9s4-A",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 2955,
+        "completion_tokens": 2500,
+        "total_tokens": 5455,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 5995,
+      "notes": [
+        "Respuesta visible vacía aunque missingAnswer=false; no se infiere causa."
+      ]
+    },
+    {
+      "jobId": "job-21",
+      "caseId": "w2h6",
+      "model": "openai/gpt-oss-20b",
+      "arm": "without-skill",
+      "blindId": "w2h6-D",
+      "structuralPass": true,
+      "contentPassed": 2,
+      "contentFailed": 2,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "stop",
+      "errorCategory": null,
+      "usage": {
+        "prompt_tokens": 1744,
+        "completion_tokens": 2270,
+        "total_tokens": 4014,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1933
+        }
+      },
+      "latencyMs": 3512,
+      "notes": [
+        "Contradicción central: los contenidos descritos de cláusula y regla coinciden, pero conclusión niega cumplimiento. El desacuerdo comercial con proveedor no demuestra incumplimiento de la regla ficticia. La respuesta en inglés no se penaliza por estilo; se evalúa contenido."
+      ]
+    },
+    {
+      "jobId": "job-22",
+      "caseId": "w2h6",
+      "model": "openai/gpt-oss-120b",
+      "arm": "with-skill",
+      "blindId": "w2h6-B",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 3063,
+        "completion_tokens": 2500,
+        "total_tokens": 5563,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        }
+      },
+      "latencyMs": 6747,
+      "notes": [
+        "missingAnswer=false pero texto visible vacío; no se infiere causa, no se repara ni se inventa continuación."
+      ]
+    },
+    {
+      "jobId": "job-23",
+      "caseId": "w2h6",
+      "model": "openai/gpt-oss-20b",
+      "arm": "with-skill",
+      "blindId": "w2h6-C",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 3063,
+        "completion_tokens": 2500,
+        "total_tokens": 5563,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 3192,
+      "notes": [
+        "missingAnswer=false pero texto visible vacío; no se infiere causa, no se repara ni se inventa continuación."
+      ]
+    },
+    {
+      "jobId": "job-24",
+      "caseId": "w2h6",
+      "model": "openai/gpt-oss-120b",
+      "arm": "without-skill",
+      "blindId": "w2h6-A",
+      "structuralPass": false,
+      "contentPassed": 0,
+      "contentFailed": 4,
+      "contentUnassessable": 0,
+      "contentTotal": 4,
+      "contentAllPass": false,
+      "finishReason": "length",
+      "errorCategory": "INCOMPLETE_RESPONSE",
+      "usage": {
+        "prompt_tokens": 1744,
+        "completion_tokens": 2500,
+        "total_tokens": 4244,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2498
+        }
+      },
+      "latencyMs": 5677,
+      "notes": [
+        "missingAnswer=false pero texto visible vacío; no se infiere causa, no se repara ni se inventa continuación."
+      ]
+    }
+  ],
+  "failureCategories": {
+    "INCOMPLETE_RESPONSE": 14,
+    "Citation span mismatch": 5
+  },
+  "sessionConsumption": {
+    "cancelledV1Attempts": 6,
+    "correctedV2Attempts": 24,
+    "totalAttempts": 30,
+    "initialCeiling": 32,
+    "reportedTotalTokens": 127834,
+    "perModel": [
+      {
+        "model": "openai/gpt-oss-20b",
+        "attempts": 15,
+        "reportedTotalTokens": 63684
+      },
+      {
+        "model": "openai/gpt-oss-120b",
+        "attempts": 15,
+        "reportedTotalTokens": 64150
+      }
+    ],
+    "billedCostUsd": null,
+    "paidFallbacks": 0,
+    "accountPlan": "Existing current-key Free attestation; actual account billing not audited"
+  },
+  "verification": {
+    "builderDirected": 44,
+    "independentDirected": 26,
+    "fullSuite": {
+      "passed": 631,
+      "total": 631
+    },
+    "build": "TypeScript/Vite passed",
+    "mechanicalReplay": true,
+    "sourceAndDatasetHashesMatched": true,
+    "newDependencies": 0,
+    "staticViewer": {
+      "status": "passed",
+      "navigation": true,
+      "localDownload": true,
+      "reviewStatusesPreserved": true,
+      "pageErrors": 0,
+      "networkRequests": 0,
+      "feedbackWasTechnicalSyntheticOnly": true
+    },
+    "independentFinalAudit": {
+      "agent": "review_s2_pilot",
+      "assignedModel": "gpt-6.1-sol",
+      "verdict": "APPROVE",
+      "mode": "read-only, offline after blind grading locked",
+      "checks": [
+        "mechanical replay",
+        "source/dataset and grading/map/report/replay hashes",
+        "all group strict/content/token and latency totals",
+        "qualified joint pass and limitations",
+        "viewer/ZIP hashes and exclusion of grades/mapping",
+        "no professional participation or model winner inferred"
+      ],
+      "minimumObservedSameModelStartGapsMs": [
+        65110,
+        65198
+      ],
+      "gradingModified": false
+    }
+  },
+  "professionalReview": {
+    "status": "pending",
+    "lorenzoParticipated": false,
+    "pedroParticipated": false,
+    "packet": "artifacts/legal-task-skills-s2-blind-review-v2-20261109/review.html",
+    "packetSha256": "1149192cd9137783508acf67c8d91cec9192263de1d7d2ff623492f5aca8ea58",
+    "zipPacket": "artifacts/legal-task-skills-s2-blind-review-v2-20261109/revision-cofounders.zip",
+    "zipSha256": "933fc49cfc9a43f5e03b825a84641062c4831a59d63881b7c2ddfd39ada52bde"
+  },
+  "sf": {
+    "coordinator": "Codex",
+    "author": "author_s2_pilot_acceptance",
+    "builder": "build_s2_paired_runner",
+    "reviewerAndBlindGrader": "review_s2_pilot",
+    "assignedModel": "gpt-6.1-sol",
+    "contexts": 3,
+    "astraAssignments": 0,
+    "otherExternalCollaboratorConsultations": 0,
+    "tokensAndQuota": "not exposed"
+  },
+  "limitations": [
+    "Six cases, one repetition; no general model/skill winner or statistical significance.",
+    "First pilot confounded by common prompt defect; six calls preserved but excluded from efficacy.",
+    "Only two official-source research snippets; remaining documents/rules synthetic, no nationwide/current-law/professional validation.",
+    "Prompt-only strict JSON/UTF16 citation contract and 2500 output-token cap; failure under these settings is not general model incapability.",
+    "SF blind labels hidden and mapping not accessed before frozen grading; style or content may still permit guesses.",
+    "One all-criteria pass includes extra unsupported discussion noted by grader; frozen rubric coverage is not whole-answer legal approval.",
+    "No provider-native JSON constraint or reasoning-effort tuning; defaults not attested immutable backend weights.",
+    "All reported reasoning tokens are subsets of completion/total, never added again.",
+    "Billing remains unknown; Free attestation is not an invoice audit.",
+    "No private documents, production activation, cloud deployment, source-library promotion or human legal approval."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:30:24.234493+00:00",
+  "approvedForSingleBoundedDiagnosticRun": true,
+  "cut": "D1h",
+  "scope": "One owned fixture, one fixed Windows PowerShell5.1 process, one numeric-PID local WMI query, no cmdlet discovery",
+  "independentReviewer": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE59targeted tests including10new and Ruby YAML4exclusive public standard5minjobs",
+  "sourceHashes": {
+    "scripts/windows-wmi-direct-diagnostic.mjs": "2d8575c3a89926e2a8e4a69310f31b543eab0adec5b9caa5227d317faf4047f8",
+    "tests/windows-wmi-direct-diagnostic.test.mjs": "a02442da41e47d46b579373a90f9940af2791db8d3b6b14d524fff47b12eb71c",
+    "resources/windows-wmi-direct-diagnostic-v1.json": "2d4cf28df5e994c9bf6ab5984a3c04874e82cdd1f3a842d842ee9c29002210b4",
+    "docs/architecture/windows-wmi-direct-diagnostic-v1.md": "1f4c681210dc990df13bd60ba59e131b2cf9531678f4ff8f94629d316a419b34",
+    ".github/workflows/windows-memory-smoke.yml": "e9fcf455a3a6673019fb5adeef864ecdbaea4b4dc20f4f801efa9842da977589",
+    "tests/windows-cim-env-diagnostic.test.mjs": "e3a1a84dba5fcbd173bf7ce5aff56bc0dc5d04b66ca98581930acd3e3437bd6c"
+  },
+  "maximumProbeMs": 10000,
+  "maximumConfiguredMs": 15000,
+  "retries": 0,
+  "diagnosticOnly": true,
+  "performanceValidated": false,
+  "productionEnabled": false,
+  "actualRun": null
+}

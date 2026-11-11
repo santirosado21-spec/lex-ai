@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "synthetic": true,
+  "measuredAt": "2026-11-09T22:08:56.755Z",
+  "node": "v22.22.3",
+  "platform": "darwin",
+  "arch": "arm64",
+  "hostMemoryBytes": 25769803776,
+  "runtime": {
+    "executableKind": "packaged-node",
+    "sources": "current checkout"
+  },
+  "ui": "headless Chromium, current built assets; NOT native Tauri/WKWebView",
+  "detector": "absent",
+  "inference": "mock; no initialization/download/model load",
+  "workload": {
+    "matters": 4,
+    "documents": 20,
+    "charactersPerDocument": 5000
+  },
+  "samples": [
+    {
+      "phase": "backend-idle",
+      "treeRssBytes": 150634496
+    },
+    {
+      "phase": "backend-indexed",
+      "treeRssBytes": 154468352
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 543588352
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 543653888
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 543670272
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 543703040
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544260096
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544342016
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544374784
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544456704
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544456704
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544473088
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 544522240
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545226752
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545226752
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545226752
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545226752
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545226752
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545243136
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545243136
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545243136
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545259520
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545275904
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545275904
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545439744
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545456128
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545472512
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545488896
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545505280
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545521664
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545538048
+    },
+    {
+      "phase": "backend-plus-web-ui",
+      "treeRssBytes": 545554432
+    }
+  ],
+  "limitations": [
+    "one synthetic run on stated hardware",
+    "RSS samples may miss transient peaks and double-count shared pages",
+    "no detector or real inference",
+    "native Tauri overhead not measured",
+    "does not validate a physical 8 GB computer"
+  ],
+  "sourceRevision": "ec72f0eed8d195a7471bbcad793e157e76ead073",
+  "serverSourcesSha256": "f5e7f157f9416b41f28bd334d5c80ab731c50f778e403c5b431f27b9b4f910ae",
+  "builtAssetsSha256": "c219073165ad868d6cdab76840aa5c11329662bc98c04bde8ca9a9551584277a",
+  "measurementScriptSha256": "e7de7ca64d6cd391d9f298d646fbfa8f91c223b31633b16f169f4cdbd062c914",
+  "browserVersion": "156.0.8078.4",
+  "sqliteBytes": 745472,
+  "peakObservedRssBytes": 545554432,
+  "status": "measured-baseline-only"
+}

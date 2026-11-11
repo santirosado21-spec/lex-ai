@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "id": "nym-original-content-witness-v2",
+  "status": "proposed-requires-independent-review",
+  "implementationAuthorized": false,
+  "executionAuthorized": false,
+  "productionEnabled": false,
+  "mappingApproved": false,
+  "egressEligible": false,
+  "preserveV1FalseProofAndZeroForwards": true,
+  "sourceHashes": {
+    "resources/privacy-nym-original-alignment-audit-v2a.json": "c0073f8100171af4bf78af61978579ab3ec1885b5a4303cfea4c1c157ddd7c7a",
+    "resources/privacy-nym-offset-proof-research-v2.json": "ded20f23244783731ddf7d0cf695001d2d24b1c5ae08755019dd1e097d4f649b",
+    "resources/privacy-nym-inference-development-v1.json": "5b3df7a6d443790edcdbac14d829745c090873f8440de98dc540ccf23137a2eb",
+    "resources/privacy-nym-structural-witnesses-v1.json": "8c266b1fb5d49dc0929af610dd2484783d3cd71bd856c34baeb908bb082a0b24"
+  },
+  "upstreamTokenizersCommit": "301277072263fb3830eb66eec7e47adadf76f1dc",
+  "tokenizerSha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+  "coordinateAuthority": "Pinned Python encode_char_offsets Original/Char API, additionally checked by independent original-content token witnesses; not inverse decoder equality alone",
+  "originalTextMutationAllowed": false,
+  "globalTrimOrOffsetSubtractionAllowed": false,
+  "byteFallbackGroupingAllowed": false,
+  "literalU2581Allowed": false,
+  "nonWhitespaceAddedTokensAllowed": false,
+  "whitespaceAddedTokenRequirements": {
+    "special": false,
+    "normalized": false,
+    "lstrip": false,
+    "rstrip": false,
+    "single_word": false,
+    "originalSliceExactlyEqualsPinnedContent": true
+  },
+  "contentWitness": {
+    "normalizationForProofOnly": "Replace original ASCII U+0020 by U+2581; preserve original source/bytes",
+    "pieceStart": "0 initially, then end of each admitted exact whitespace added token",
+    "ordinaryFirstPieceToken": "Require a==pieceStart. If original slice begins ASCII space, raw token equals proof-normalized original slice. Otherwise raw token must equal exactly one U+2581 plus proof-normalized original slice. Retain this complete token/logit, not a trimmed token.",
+    "ordinaryLaterToken": "Pinned raw token equals proof-normalized original slice, no virtual prefix exception",
+    "singleAsciiFallback": "Pinned fallback ID may contribute exactly one strict ASCII byte equal to the entire original slice, only after the first ordinary piece token. All multibyte/grouped/invalid fallback stays blocked.",
+    "allContributorsRetained": true,
+    "unaccountedTokensBlock": true,
+    "allNonWhitespaceScalarsCovered": true,
+    "whitespaceGaps": "Only exact original whitespace, independently checked; no gap may hide or discard an encoded token",
+    "offsets": "Strict integer positive ordered disjoint original codepoints, independently mapped via exact original UTF8 and UTF16 boundary tables"
+  },
+  "structuralRun": {
+    "sameEightWitnessesNotAcceptance": true,
+    "requiredContentWitnessIndices": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6
+    ],
+    "overlapAndLiteralControlWitnessesRetainedBlocked": [
+      2,
+      7
+    ],
+    "maximumForwards": 8,
+    "maximumTokensIncludingSpecials": 512,
+    "maximumUtf8Bytes": 16384,
+    "cpuThreads": 1,
+    "ortOptimization": "ORT_DISABLE_ALL",
+    "maximumCombinedRssBytes": 1073741824,
+    "totalMs": 60000,
+    "cleanupReserveMs": 1000,
+    "sampleTargetMs": 20,
+    "maximumAcceptedSampleGapMs": 50,
+    "retryCount": 0
+  },
+  "neuralPolicy": {
+    "nativeLabels": 81,
+    "confidenceFloorAllNonSpecialIncludingO": 0.4,
+    "strictBioAndUniqueArgmax": true,
+    "unknownOperationalControlGapProvenanceErrorsBlock": true,
+    "noSemanticMappingOrComposition": true
+  },
+  "trustLimitations": [
+    "Upstream source lookup is not a reproducible wheel-build attestation; exact deployed runtime/binary hashes and versions remain required.",
+    "Alignment API fallbacks are not certified absent; any wrong source assignment must additionally satisfy the exact pinned token-content/partition witness. This is a bounded contract, not a universal library correctness proof.",
+    "No privacy quality, full-request protection, legal validity, license clearance, model eligibility, real client authorization or 8GB acceptance follows."
+  ],
+  "baseSpaceRunBpePath": {
+    "status": "addendum-requires-independent-review",
+    "permittedInventoryIds": [
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168
+    ],
+    "requirements": [
+      "All five added-token flags false",
+      "ID also equals pinned base BPE vocabulary ID for exact raw marker-run string",
+      "Original input contains no literal U+2581",
+      "Original slice is exactly N ASCII spaces and raw token exactly N U+2581 markers, N in2..31",
+      "Source evidence confirms normalized:false entries cannot be extracted from this marker-free original, before normalization, and are excluded from normalized-added matching"
+    ],
+    "classification": "Ordinary base-BPE token; no added-whitespace piece reset; all original offsets/logits/contributors retained",
+    "allOtherNonWhitespaceAddedPathsBlocked": true
+  }
+}

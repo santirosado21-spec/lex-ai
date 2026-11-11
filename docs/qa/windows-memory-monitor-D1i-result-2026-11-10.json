@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "cut": "D1i",
+  "runId": 42878658531,
+  "commit": "467d7fd7ebcca6eb55ee42a0c9decbb82ee0bfc3",
+  "logPath": "artifacts/phased-completion-20261110-batch2/windows-wmi-monitor-first.log",
+  "logSha256": "3c5fb0aca1ebf5184d90f33d73f473ce1ebcbf2c7bedb39baafb2bb44aac6f02",
+  "independentReview": "author_privacy_development_v3 / gpt-6.1-sol: APPROVE7source+2baseline hashes,exactcommitbytes,actual protocol/sample/cleanup facts withoutrerun",
+  "observedReport": {
+    "protocol": 3,
+    "scope": "owned synthetic Node direct WMI collector only",
+    "platform": "win32",
+    "arch": "x64",
+    "nodeVersion": "v22.23.4",
+    "startupLimitMs": 10000,
+    "requestTimeoutMs": 2000,
+    "requestOutputLimitBytes": 4194304,
+    "syntheticLifetimeLimitMs": 60000,
+    "samples": [
+      {
+        "sample": 1,
+        "rssBytes": 48123904,
+        "elapsedMs": 237.2462999999998
+      },
+      {
+        "sample": 2,
+        "rssBytes": 48123904,
+        "elapsedMs": 242.5676000000003
+      },
+      {
+        "sample": 3,
+        "rssBytes": 48123904,
+        "elapsedMs": 240.32430000000022
+      },
+      {
+        "sample": 4,
+        "rssBytes": 48123904,
+        "elapsedMs": 247.99049999999988
+      }
+    ],
+    "physical8GBValidation": false,
+    "installerValidation": false,
+    "inferenceValidation": false,
+    "protocol1ColdStartBoundPassed": false,
+    "collectorMemoryOverheadBytes": null,
+    "stage": "complete",
+    "startup": {
+      "rssBytes": 48123904,
+      "elapsedMs": 3551.1045,
+      "includesFirstActualWmiSnapshot": true
+    },
+    "status": "PASS",
+    "collectorCleanup": {
+      "exitObserved": true,
+      "category": null,
+      "killed": false,
+      "exitCode": 0,
+      "signal": null,
+      "phase": null,
+      "elapsedMs": null
+    },
+    "diagnostic": {
+      "category": null,
+      "killed": false,
+      "exitCode": 0,
+      "signal": null,
+      "phase": null,
+      "elapsedMs": null,
+      "state": "closed",
+      "exitObserved": true
+    },
+    "cleanup": {
+      "exitObserved": true,
+      "forced": false,
+      "intentionalShutdown": true,
+      "expectedExitZero": true
+    },
+    "fixtureDiagnostic": {
+      "unexpectedError": false,
+      "unexpectedExit": false,
+      "exitCode": 0,
+      "signal": null
+    },
+    "collector": "direct-wmi-v2",
+    "collectorMeasurementBudgetMs": 18000,
+    "collectorCleanupLimitMs": 6000,
+    "fixtureReadinessLimitMs": 5000,
+    "fixtureCleanupLimitMs": 6000,
+    "configuredPhaseBudgetMs": 35000
+  },
+  "realFixtureProcessCount": 1,
+  "realMultilevelDescendantsValidated": false,
+  "collectorMemoryOverheadMeasured": false,
+  "physical8GBValidated": false,
+  "installerValidated": false,
+  "productionImported": false,
+  "repositoryCheckpoint": {
+    "nodeTestsPassed": 987,
+    "buildTypeScriptVite": "PASS",
+    "testLog": "artifacts/phased-completion-20261110-batch2/npm-test-checkpoint-wmi-v2.log",
+    "buildLog": "artifacts/phased-completion-20261110-batch2/build-checkpoint-wmi-v2.log"
+  }
+}

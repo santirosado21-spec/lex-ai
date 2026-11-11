@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:07:23.406157+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_SOURCE_COPY_FIX_ONLY",
+  "reviewedHashes": {
+    "scripts/privacy-nym-int8-worker-v2.py": "89aa18c196a6ecfda484233722af6f86c580e5a61ddc83c8f512b90fe4559394",
+    "server/privacy/nym-int8-decoder-v2.mjs": "c01d114afd3abb328fecccdb63d21e0ad05162f3783c5a4fe7c543520554864f",
+    "tests/privacy-nym-int8-decoder-v2.test.mjs": "98266bc97c32de7a7aa48d3c3a08e0f9f964f0b532f574ff02398aa8f91776de",
+    "docs/architecture/privacy-nym-int8-decoder-v2.md": "f16c47bc42a46cd7090611587e6879d3c7d1ccf439919bf8c8a08017f3cb96b5"
+  },
+  "tests": {
+    "command": "node --test tests/privacy-nym-int8-decoder-v2.test.mjs tests/privacy-nym-int8-decoder.test.mjs",
+    "passed": 36,
+    "failed": 0,
+    "reportedDurationMs": 874.59325,
+    "fakeRuntimeOnly": true,
+    "v2Tests": 17,
+    "v1Tests": 19
+  },
+  "findings": [
+    {
+      "id": "NYM-V2-P2-OUTPUT",
+      "severity": "P2",
+      "file": "scripts/privacy-nym-int8-worker-v2.py",
+      "line": 29,
+      "issue": "OUTPUT still points to artifacts/privacy/nym-int8-decoder-v1-first, which is the preserved existing v1 result directory.",
+      "impact": "An actual v2 run cannot reserve a fresh output and contradicts the separate versioned artifact contract; never reuse/remove old leaf to work around it.",
+      "requiredFix": "Literal new v2-first output path plus regression assertion of fresh versioned output and preservation of v1 artifacts.",
+      "status": "CLOSED_AFTER_LITERAL_FIX_AND_CONSTANTS_REGRESSION"
+    },
+    {
+      "id": "NYM-V2-P2-SOURCE-BINDING",
+      "severity": "P2",
+      "file": "scripts/privacy-nym-int8-worker-v2.py",
+      "line": 33,
+      "issue": "SOURCES binds server/privacy/nym-int8-decoder.mjs v1 and omits actual server/privacy/nym-int8-decoder-v2.mjs.",
+      "impact": "Freeze/identity does not cover all four new reviewed files and incorrectly declares v1 source as runtime identity dependency.",
+      "requiredFix": "Bind exact new v2 JS module instead; test exact source inventory contains all four new files and no mistaken v1 module.",
+      "status": "CLOSED_AFTER_LITERAL_FIX_AND_CONSTANTS_REGRESSION"
+    }
+  ],
+  "remainingGuardReview": {
+    "additionalCriticalWitnessAckTypedBoundsFindings": [],
+    "validatedSourcePatterns": [
+      "Parent and child independently load immutable exact-hash raw-token/added inventory; real loader not IPC tiny inventory.",
+      "Positive strict codepoint offsets, sourceUTF8/UTF16 tables, all-nonwhite coverage, all contributors/masks/sequence IDs, known piece prefix, exact61whitespace entries and narrow30base-space-run path; literalmarker/overlap/zero/UNK/control and otheradded paths block.",
+      "Strict finite81rows/unique argmax/.4floor includingO/minimum span confidence/BIO;40native labels remain unmapped.",
+      "Parent transactionally recomputes all encodings and six fixed required witness admissions before granting; blocked2/7 retained.",
+      "Bounded exact ACK binds nonce/freeze/identity/witness/fullencoding digest; EOF/absent/trailing/forged/late fails before NumPy/ORT import/model load/forwards.",
+      "Worker exact cache/runtime/source identities, pinned configuration/labels, byte-loaded external-data-guarded ONNX/CPUonly/thread1 and exact input/output metadata.",
+      "Finite strict IPC/result coordinate and contributing-token endpoint checks; PLAN no file/runtime loading; prefix preserved before cleanup, finite failures and owned-group kill/reap.",
+      "CPU1/512/16KiB/60s includingcleanup1s/1GiB sample20ms gap50/no retries remain; parent full JSON parse/inventory/deepcopy costs unmeasured and may fail closed."
+    ]
+  },
+  "auditExecution": {
+    "actualRuntimeModelTokenizerLoads": 0,
+    "actualWorkerRuns": 0,
+    "NNForwards": 0,
+    "networkRequests": 0,
+    "developmentGoldOrHeldoutRead": false,
+    "implementationEdits": false,
+    "freezeCreated": false
+  },
+  "limits": [
+    "Source approval closes the two recorded P2 copy findings; it does not authorize a freeze, real execution or model/tokenizer load.",
+    "Passing fake tests do not establish actual resource-gap compliance, memory, offsets library correctness, privacy quality, licenses or physical8GB acceptance."
+  ],
+  "reviewHistory": [
+    {
+      "verdict": "CHANGES_REQUIRED_BEFORE_FREEZE_OR_RUN",
+      "reviewedHashes": {
+        "scripts/privacy-nym-int8-worker-v2.py": "458ee34c42b9243ba8873dc573c046a0563bbeee5afcc704c592264c23c453f6",
+        "server/privacy/nym-int8-decoder-v2.mjs": "c01d114afd3abb328fecccdb63d21e0ad05162f3783c5a4fe7c543520554864f",
+        "tests/privacy-nym-int8-decoder-v2.test.mjs": "3a07525090a6dca5500820b0770bbbce9a7924f8439a66bd0d76dbe159b18c50",
+        "docs/architecture/privacy-nym-int8-decoder-v2.md": "0e58da95104ff69a56484ae443040dff976ef74db54808f08962ccbbe9b70353"
+      },
+      "tests": {
+        "command": "node --test tests/privacy-nym-int8-decoder-v2.test.mjs tests/privacy-nym-int8-decoder.test.mjs",
+        "passed": 35,
+        "failed": 0,
+        "reportedDurationMs": 937.694917,
+        "fakeRuntimeOnly": true
+      },
+      "findings": [
+        {
+          "id": "NYM-V2-P2-OUTPUT",
+          "severity": "P2",
+          "file": "scripts/privacy-nym-int8-worker-v2.py",
+          "line": 29,
+          "issue": "OUTPUT still points to artifacts/privacy/nym-int8-decoder-v1-first, which is the preserved existing v1 result directory.",
+          "impact": "An actual v2 run cannot reserve a fresh output and contradicts the separate versioned artifact contract; never reuse/remove old leaf to work around it.",
+          "requiredFix": "Literal new v2-first output path plus regression assertion of fresh versioned output and preservation of v1 artifacts.",
+          "status": "CLOSED_AFTER_LITERAL_FIX_AND_CONSTANTS_REGRESSION"
+        },
+        {
+          "id": "NYM-V2-P2-SOURCE-BINDING",
+          "severity": "P2",
+          "file": "scripts/privacy-nym-int8-worker-v2.py",
+          "line": 33,
+          "issue": "SOURCES binds server/privacy/nym-int8-decoder.mjs v1 and omits actual server/privacy/nym-int8-decoder-v2.mjs.",
+          "impact": "Freeze/identity does not cover all four new reviewed files and incorrectly declares v1 source as runtime identity dependency.",
+          "requiredFix": "Bind exact new v2 JS module instead; test exact source inventory contains all four new files and no mistaken v1 module.",
+          "status": "CLOSED_AFTER_LITERAL_FIX_AND_CONSTANTS_REGRESSION"
+        }
+      ]
+    }
+  ],
+  "closure": {
+    "recordedAt": "2026-11-10T21:11:51.247493+00:00",
+    "outputDirectory": "artifacts/privacy/nym-int8-decoder-v2-first",
+    "sourceBinding": "server/privacy/nym-int8-decoder-v2.mjs",
+    "allFourV2SourcesBound": true,
+    "additionalFindings": [],
+    "newRegression": "Inspects actual Python module constants and safe PLAN with file reads forbidden; requires v2 id/script/freeze/output/all four source paths and excludes historical v1 execution/source bindings.",
+    "v2JavaScriptUnchanged": true
+  }
+}

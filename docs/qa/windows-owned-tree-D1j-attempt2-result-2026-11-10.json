@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "scope": "D1j attempt2 source-author fact record; independent review pending",
+  "runId": 42895998118,
+  "commit": "25d3922f529d769111bb5c571e36847b02f2993a",
+  "status": "FAIL",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-owned-tree-second.log",
+    "sha256": "9a7af0f48fbe9b89499541bf81cbb42f3d9896bc443ad68bf476fb38017d8cf2",
+    "bytes": 27878
+  },
+  "freeze": {
+    "copyPath": "docs/qa/windows-owned-tree-D1j-attempt2-freeze-2026-11-10.json",
+    "sha256": "9c05df15075ad0c5826953cbdd1eccf4e62eae1741522177402ea34072f6944a",
+    "matchesCommittedFreeze": true,
+    "committedSourceHashesVerified": {
+      "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+      "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+      "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+      "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+      ".github/workflows/windows-owned-tree-smoke.yml": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2",
+      "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+      "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+    }
+  },
+  "observed": {
+    "nodeVersion": "v22.23.4",
+    "offlineTestsPassed": 15,
+    "offlineTestsFailed": 0,
+    "offlineTestsDurationMs": 1102.6217,
+    "report": {
+      "protocol": "windows-owned-tree-smoke-v1",
+      "status": "FAIL",
+      "phase": "source-preflight",
+      "category": "PREFLIGHT_OR_RUN",
+      "errorType": "Error",
+      "errorCode": "SOURCE_HASH_MISMATCH"
+    },
+    "exitCode": 1,
+    "wmiRunReached": false,
+    "outputInitializationReached": false,
+    "ownedSmokeFixtureStarted": false,
+    "smokeSamples": 0,
+    "smokeClosureProofs": 0,
+    "smokeCleanup": "not applicable; source-preflight rejected before fixture/monitor construction"
+  },
+  "uncertainties": {
+    "mismatchingFile": null,
+    "runnerWorkingTreeBytes": null,
+    "lineEndingCauseProven": false,
+    "candidateHypothesis": "checkout CRLF conversion plausible, not established; committed bytes match all seven expected hashes",
+    "attempt1OriginalCauseStillUnknown": true
+  },
+  "claims": {
+    "performanceValidated": false,
+    "multilevelRssValidated": false,
+    "physical8GBValidated": false,
+    "productionEnabled": false
+  },
+  "auditExecution": {
+    "networkRequests": 0,
+    "wmiRuns": 0,
+    "ciRuns": 0,
+    "sourceEdits": 0
+  },
+  "independentReviewPending": true
+}

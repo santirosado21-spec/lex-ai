@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "scope": "ONE_BOOTSTRAP_DIAGNOSTIC_ONLY",
+  "approvedBy": "codex/root",
+  "sourceReview": "build_corpus_registry / gpt-6.1-sol: APPROVE,34tests",
+  "sourceCount": 12,
+  "positivePreflightVerifiedLocally": true,
+  "attrsSha256": "528980e719f2fc2df5ad3ff9c979e19eb0af58e17f3b9d4a487d41933d27bc06",
+  "maximumActualWmiQueries": 1,
+  "steadySamplesAuthorized": 0,
+  "performanceValidationAuthorized": false,
+  "automaticRetry": false,
+  "originalAttempt3CauseKnown": false
+}

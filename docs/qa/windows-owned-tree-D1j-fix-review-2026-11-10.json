@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:25:27.818912+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_MINIMUM_OUTPUT_AND_DIAGNOSTIC_FIX_SOURCE_ONLY",
+  "scope": "D1j fresh-parent initialization and finite diagnostics; source review plus local synthetic tests, not real Windows WMI/CI.",
+  "reviewedHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "tests/windows-owned-tree-smoke.test.mjs": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+    "docs/architecture/windows-owned-tree-smoke-v1.md": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034"
+  },
+  "unchangedAgainstCommit": {
+    "commit": "b718dc5",
+    "hashes": {
+      "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+      "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+      "resources/windows-owned-tree-smoke-v1.json": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+      ".github/workflows/windows-owned-tree-smoke.yml": "2a71791efdef13b19e119b1ee120cdd69e398a9515778a689ee07094f56522a2"
+    }
+  },
+  "tests": {
+    "command": "node --test tests/windows-owned-tree-smoke.test.mjs tests/windows-memory-monitor-v2.test.mjs",
+    "passed": 27,
+    "failed": 0,
+    "reportedDurationMs": 122.095208,
+    "meaningfulNewCases": [
+      "Absent fixed parent creates fresh leaf and exclusive receipt with fake runner; existing leaf refuses without rerunning.",
+      "Existing actual directory accepted; file/symlink parents rejected.",
+      "Source-preflight/postflight/receipt failures report finite phases/types/codes; raw private sentinels omitted."
+    ],
+    "actualLocalFixture": "Owned standard-library three-Node readiness and child-first cleanup only; no WMI."
+  },
+  "findings": [],
+  "reviewedBehavior": [
+    "Nonrecursive creation of fixed parent; lstat directory/non-symlink check and device/inode recheck after exclusive leaf creation.",
+    "Original five-snapshot closure proof, lifecycle cleanup, failure rules and budgets unchanged.",
+    "Postflight/receipt failure cannot return PASS; measurementReportAvailable indicates returned report only, not retained complete evidence.",
+    "Default PLAN remains inert; CLI --run retains approved exact source freeze before/after."
+  ],
+  "historicalFailure": {
+    "preserved": true,
+    "originalExceptionOrStageKnown": false,
+    "freshCheckoutParentBlockerProvesOriginalCause": false,
+    "originalRunReclassified": false
+  },
+  "execution": {
+    "actualWmi": false,
+    "CI": false,
+    "networkRequests": 0,
+    "approvedFreezeCreated": false,
+    "implementationEdits": false
+  },
+  "limits": [
+    "Approval only for new root review/freeze and separately authorized fresh-VM attempt; original failure remains unknown.",
+    "No physical8GB, installer, inference or production acceptance.",
+    "Summed32.5s phase budget remains not hard global deadline; unknown forced descendant cleanup remains FAIL."
+  ]
+}

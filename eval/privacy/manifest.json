@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "protocol": {
+    "file": "protocol.json",
+    "sha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935"
+  },
+  "splits": {
+    "dev": {
+      "file": "dev.jsonl",
+      "sha256": "9fee55d7a8d202ddff654672c7ee2b09f49e8e95b75e6431b5c51f07b33cbc43"
+    },
+    "heldout": {
+      "file": "heldout.jsonl",
+      "sha256": "a36158ff7592e716226caf35bf16e4454df569d899b63db8ea388008320633f7"
+    }
+  },
+  "provenance": {
+    "protocolFrozenBeforeHeldout": true,
+    "syntheticOnly": true,
+    "candidateEvaluated": false,
+    "heldoutAuthor": "author_privacy_heldout",
+    "heldoutProvenance": {
+      "file": "heldout-provenance.json",
+      "sha256": "44c90a7e01ec40acda01d770865fce4784c0087836cf4cdd50cd174ce24eb4a4"
+    },
+    "annotationGuide": {
+      "file": "annotation-guide.md",
+      "sha256": "6665848a47549b53c51465eda132449f3810b016d0c04e638816a0bc77d52a2f"
+    }
+  }
+}

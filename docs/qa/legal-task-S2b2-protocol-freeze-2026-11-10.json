@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-10T18:09:44.642610+00:00",
+  "scope": "Protocol before fresh independent authorship; no generation or professional acceptance",
+  "approvedForIndependentAuthorship": true,
+  "independentReviewer": "review_completion_phases / gpt-6.1-sol: APPROVE after denominator correction",
+  "sourceHashes": {
+    "docs/architecture/legal-tasks/S2b2-acceptance-protocol-v1.md": "ddc1769f7f138aabe9aff32fb3c2957b9ba2b87a66a8d64a4a0360b2cae25ae2",
+    "eval/legal-tasks/s2b2/protocol.json": "d0d63102ad5ca31b24c2b8e14c515f58d26b0027f7dadd4996030ad7c34389d9",
+    "eval/legal-tasks/s2b2/annotation-guide.md": "a09f7645afc6fbca74675993bfdb551bf6f85842e95ec8e6f560c80f636b82fd"
+  },
+  "plannedCases": 30,
+  "counts": {
+    "research": 12,
+    "contract": 12,
+    "challenge": 6
+  },
+  "datasetCreated": false,
+  "modelsSelected": false,
+  "armsSelected": false,
+  "budgetOrAccessApproved": false,
+  "professionalReviewPerformed": false,
+  "productionEnabled": false
+}

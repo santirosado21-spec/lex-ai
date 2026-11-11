@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "scope": "SUPERVISOR_ONLY_RAPID_EXIT_DIAGNOSTIC",
+  "runId": 42897012527,
+  "commit": "ebd1975d0a7c561e3f2131bcac1ad488f832d525",
+  "verdict": "APPROVE-observed-harmless-diagnostic-facts-only",
+  "reviewer": "review_vault_reminders",
+  "log": "artifacts/phased-completion-20261110-batch2/vault-recovery-rapid-exit-diagnostic-first.log",
+  "logBytes": 146314,
+  "logSha256": "8a2f863897f52c6d4d339ab586c4e9bd8f16b5f987579e589e2f2fbad920321e",
+  "freezePath": "docs/qa/vault-recovery-supervisor-freeze-2026-11-10.json",
+  "freezeSha256": "ead4a885ad0bf963f25edfd2359e81567a19d20ad01b5dffbeff9df7389efdde",
+  "bindingsChecked": 16,
+  "currentAndCommitBindingsMatch": true,
+  "observedReceipt": {
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": null,
+    "compilationAttempted": true,
+    "cryptoTestsExecuted": false,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "recoveryHelperInvoked": false,
+    "result": "PASS",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "SUPERVISOR_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestOnly": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 902.603,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "nativeLibtest": {
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0,
+    "filteredOut": 1,
+    "reportedElapsedSeconds": 0.28
+  },
+  "rapidSummary": {
+    "elapsed_ms": 95,
+    "source": 8,
+    "dispatched": 24,
+    "rss_observed": 17,
+    "exit_observed": 7,
+    "sample_errors": 0,
+    "monitoring_failures": 0,
+    "reaped": 24,
+    "parent_checks": 24,
+    "parent_failures": 0,
+    "rapid_elapsed_ms": 80
+  },
+  "rapidIterationCount": 24,
+  "ownCleanupAndReapedMarkers": 24,
+  "rapidSampling": {
+    "full96BytePositiveRss": 17,
+    "prewaitExactSuccessfulExitWithoutQuery": 7,
+    "nonFullQueryCount": 0,
+    "zeroRssCount": 0,
+    "queryErrnoCapturedCount": 0,
+    "postqueryWaitNeededCount": 0,
+    "unresolvedMonitoringFailure": 0
+  },
+  "allNumericMarkers": {
+    "count": 83,
+    "limit": 192,
+    "sources": {
+      "2": 31,
+      "5": 2,
+      "1": 1,
+      "6": 24,
+      "7": 24,
+      "8": 1
+    },
+    "nonFullQueryRecords": []
+  },
+  "interpretation": [
+    "The actual new24 rapid probes did not reproduce a non-full native query, zero RSS or unavailable live/exiting-child sample.",
+    "Seventeen API reads returned exactly96bytes with positive RSS; seven children had already exited successfully at prewait and were not queried.",
+    "Preexisting deliberately injected resolution-failure tests remain distinct from a naturally reproduced query anomaly.",
+    "Parent checks24/failures0 belong to rapid summary; no broader original-run inference follows.",
+    "Third crypto R09/source72 cause remains unknown; successful harmless job does not establish recovery or retroactively validate prior cases."
+  ],
+  "recommendation": "Keep fail-closed monitoring and preserve original failures. Further scoped diagnosis is needed before claiming a cause. A separately reviewed bounded exit-only settlement contract could accept only an exact observed owned-child exit within existing case/batch deadlines, never zero/unavailable RSS as a measurement or an unmonitored live continuation; this evidence alone does not validate such a change or authorize a fourth crypto run.",
+  "auditExecution": {
+    "newNativeCalls": 0,
+    "newTests": 0,
+    "codegen": 0,
+    "network": 0,
+    "originalArtifactsChanged": false
+  },
+  "cryptoExecutionAuthorized": false,
+  "h5Complete": false,
+  "physical8GBValidated": false
+}

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "id": "privacy-nym-development-v1",
+  "createdDate": "2026-11-10",
+  "split": "dev",
+  "status": "proposed-silver-annotations-independent-review-pending",
+  "author": "Codex SF independent data author",
+  "syntheticOnly": true,
+  "language": "es-MX",
+  "corpus": {
+    "path": "dev.jsonl",
+    "sha256": "a46d046b728d95ccda9967caae0366689c6c0453fab9bc4c36734b0862f06eaf",
+    "bytes": 80082,
+    "cases": 60,
+    "segments": 64,
+    "entities": 70,
+    "entityTypes": 12,
+    "entitiesByCategory": {
+      "account": 5,
+      "address": 2,
+      "case_id": 8,
+      "clabe": 2,
+      "context": 2,
+      "curp": 3,
+      "email": 10,
+      "organization": 7,
+      "person": 20,
+      "phone": 3,
+      "rfc": 3,
+      "sensitive_relation": 5
+    },
+    "segmentsBySurface": {
+      "derived": 1,
+      "envelope": 3,
+      "extraction": 4,
+      "filename": 3,
+      "history": 7,
+      "metadata": 5,
+      "path": 2,
+      "retrieved": 1,
+      "schema": 2,
+      "text": 32,
+      "tool": 4
+    },
+    "casesByStatusOrBlockReason": {
+      "ambiguous_context": 2,
+      "complete": 47,
+      "detector_failure": 3,
+      "partial_extraction": 2,
+      "scope_mismatch": 2,
+      "unknown_provenance": 2,
+      "unsupported_format": 2
+    },
+    "preservationSpans": {
+      "amount": 8,
+      "citation": 1,
+      "date": 6
+    },
+    "cleanCompleteCases": 5,
+    "blockedCasesWithEntities": 10
+  },
+  "sourceDocuments": {
+    "eval/privacy-v2/protocol.json": "2940e0fece178ecc95ec928788b19e8a885de42730f8e43da0992886b07c5ebf",
+    "eval/privacy-v2/annotation-guide.md": "ca23b0746d7e5563757e4b6320475eeaf5d2d9acbe5ccfa97917081a3b4c011e",
+    "resources/privacy-token-ner-composition-v2-protocol.json": "647d72ac064107802abaf3d2e08f507a992c52569322fc3709ac286e0b7481ca",
+    "resources/privacy-nym-inference-development-v1.json": "5b3df7a6d443790edcdbac14d829745c090873f8440de98dc540ccf23137a2eb",
+    "docs/architecture/privacy-nym-inference-development-v1.md": "5c6741efb5f7f189cea6793f61282bfac234d6ec6912d74048e4efe27dae13fe"
+  },
+  "independence": {
+    "existingDevCasesRead": false,
+    "existingHeldoutCasesRead": false,
+    "priorGoldRead": false,
+    "modelPredictionsRead": false,
+    "detectorOrModelExecuted": false,
+    "nativeModelLabelsUsedAsGold": false,
+    "authoredBeforeNewPredictions": true,
+    "templateGroups": "60 newly authored story IDs; not evidence of population/template independence",
+    "externalSourcesUsed": false
+  },
+  "offsetUnit": "original UTF16 code units; half-open; no normalization",
+  "annotationAuthority": "Proposed author-selected silver spans; not lawyer/legal/privacy acceptance or independently validated ground truth",
+  "operationalNotes": {
+    "blockedStimuli": "Explicit v2 operational inputs; separate from entities/preserve and expected labels",
+    "pathSurfaces": "Filename/path values are segment text; segment.path names representation. Any later path handling remains an independent integration gate.",
+    "longCases": [
+      "NYM-DEV1-058",
+      "NYM-DEV1-059"
+    ],
+    "longCaseMeaning": "Case058 explicitly simulates processor failure; case059 has processorStatus=ok and otherwise known complete supported extraction, but exceeds both the 7000 UTF16 envelope and 16384 UTF8 per-fixture proposed Nym input limit. Expected detector_failure is input-admission refusal, not an extraction/processor failure. Token counts and 512-token overflow remain unmeasured.",
+    "unsupportedContext": "Ambiguity cases45/46 block without speculative context boundaries; relation/context cases26–30 and47–48 are proposed literal spans, independent of unsupported native mappings.",
+    "fidelity": "Preserve spans mark printed dates/amounts/citation only; no restoration executed or permission for egress.",
+    "longCaseBudgets": [
+      {
+        "id": "NYM-DEV1-058",
+        "textUtf8Bytes": 8754,
+        "envelopeUtf16": 8324,
+        "processorStatus": "failed",
+        "expectedReason": "detector_failure",
+        "tokenCount": null
+      },
+      {
+        "id": "NYM-DEV1-059",
+        "textUtf8Bytes": 20242,
+        "envelopeUtf16": 19867,
+        "processorStatus": "ok",
+        "expectedReason": "detector_failure",
+        "tokenCount": null
+      }
+    ]
+  },
+  "validation": {
+    "method": "Inline Python stdlib: exact case keys, category membership, one-to-one operational segments, nonempty bounded UTF16 ranges, all three slices decode without surrogate splits, duplicate span rejection, unique IDs and marker removal; materialized JSONL reparse and gate/budget checks follow",
+    "annotationReview": "pending root and separate reviewer; deterministic validity does not prove semantic completeness",
+    "modelScoringPerformed": false,
+    "materializedChecks": "PASS: 60 unique IDs/story groups, 64 distinct segment texts, exact keys and operational/scope reason priority, limit-derived refusal, category/range/UTF16/duplicate checks and manifest byte/hash/count agreement; no model/scorer invoked."
+  },
+  "restrictions": {
+    "executionAuthorized": false,
+    "trainingAuthorized": false,
+    "productionEnabled": false,
+    "egressEligible": false,
+    "freshAcceptance300": false,
+    "legalIdValidityClaim": false,
+    "privacyValidated": false,
+    "physical8GBValidated": false
+  },
+  "provenance": "All names, organizations, addresses, IDs, relationships and narratives freshly invented. Accidental resemblance possible; .invalid/.test email domains and explicitly synthetic legal/bank IDs do not assert registration/checksum or deliverability.",
+  "readme": {
+    "path": "README.md",
+    "sha256": "a2275987a217f074b2022d09f5c5b227f8bb9aa004806662f815a06ab0afa26a"
+  }
+}

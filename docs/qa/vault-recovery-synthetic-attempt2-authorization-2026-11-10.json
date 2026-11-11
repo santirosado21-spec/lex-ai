@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "scope": "SECOND_EXPLICIT_SYNTHETIC_RECOVERY_BATCH",
+  "approvedBy": "codex/root",
+  "reason": "First run demonstrated unoptimized+debuginfo test profile and watchdog exit71; precise original phase unknown. Optimize test profile and retain finite phase observations without changing guards or tests. Workload hypothesis is not proof of original cause.",
+  "previousRunId": 42891631285,
+  "previousResult": "PARTIAL_FAILURE",
+  "originalFreezeRetained": "docs/qa/vault-recovery-synthetic-attempt1-freeze-2026-11-10.json",
+  "previousFreezeSha256": "921533b26f884ac2f3a0d4f5d63b547f72bcc0ab36833e6301be847a9c8dc6c3",
+  "independentReview": "review_vault_reminders / gpt-6.1-sol: APPROVE static delta only",
+  "reviewPath": "docs/qa/vault-recovery-opt2-phases-review-2026-11-10.json",
+  "newFreezeSha256": "d4cc6077830768d68d21dee286d819ec14797c35b4563e3b3adaa792835e5d2b",
+  "unchangedBounds": {
+    "maxCaseMs": 60000,
+    "maxBatchMs": 300000,
+    "maxRssBytes": 805306368,
+    "rssIntervalMs": 50,
+    "caseInvocations": 18,
+    "r23Mandatory": true
+  },
+  "cryptographicSourceAndLockUnchanged": true,
+  "automaticRetry": false,
+  "ownerMacRustCodegenAuthorized": false,
+  "productionEnabled": false,
+  "h5Complete": false
+}

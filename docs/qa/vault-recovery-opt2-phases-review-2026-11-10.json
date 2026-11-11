@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "scope": "STATIC_OPT2_PHASE_MARKERS_ONLY",
+  "verdict": "APPROVE-for-new-root-freeze-decision",
+  "reviewer": "review_vault_reminders",
+  "sourceHashes": {
+    "crates/lex-vault/Cargo.toml": "eebc597782d1e3d4cbb969898c46be0b810cfd9e2248afc6b4f9fb2a01777886",
+    "crates/lex-vault/tests/recovery.rs": "973b1d010e86563b13ce9753d500f4b89079ccbcd1b0d4d5f452cd6cb2eae965",
+    "crates/lex-vault/README.md": "03c0f0d22df95cd5d569449e86e0f089fe71e8333f9c58b8342ecd8a4ec91c0b"
+  },
+  "observed": {
+    "testProfileChange": {
+      "opt-level": 2
+    },
+    "guardChildSupervisorByteIdentical": true,
+    "harmlessSupervisorRegressionByteIdentical": true,
+    "guardNextCallSites": 4,
+    "phaseVocabularyCount": 28,
+    "maximumPhaseMarkers": 56,
+    "markerData": "Allowlisted fixed phase and START/DONE plus elapsed milliseconds; flushed non-JSON stdout only.",
+    "caseOrderCategoriesAssertionsR23Unchanged": true,
+    "cryptoSourceAndLockUnchanged": true,
+    "workflowParserCompatible": "Fixed marker lines do not begin with JSON brace; existing parser still requires exactly one final receipt plus successful exact libtest and all frozen case/R23 assertions."
+  },
+  "historicalFailure": {
+    "attempt1Exit": 71,
+    "wrapperWallMs": 60265.317,
+    "actualTimedOutNativePhase": null,
+    "completedCaseCount": null,
+    "cause": "Unoptimized scrypt is a hypothesis only; no phase evidence from attempt1."
+  },
+  "limitsUnchanged": {
+    "stageMs": 60000,
+    "batchMs": 300000,
+    "rssThresholdBytes": 805306368,
+    "configuredSamplingMs": 50,
+    "caseInvocations": 18,
+    "preparation": "one base fixture, four negative-seal fixtures, one base export, two malformed authenticated envelopes"
+  },
+  "limitations": [
+    "No Rust compilation, native tests, KDF, recovery, driver or network executed in this review.",
+    "Optimization changes the next measured candidate; old compile/supervisor results do not validate this profile.",
+    "Markers describe completed local operations/assertions, not independent acceptance; R01 remains conditional on exact R23 and final receipt.",
+    "New root-approved freeze and explicit CI decision required; no retry or execution authorized by this file.",
+    "Hard peak RSS, actual maximum sample interval, cryptographic/product validation and H5 completion remain unestablished."
+  ]
+}

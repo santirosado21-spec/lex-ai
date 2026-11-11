@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "nym-int8-native-decoder-v1",
+  "status": "frozen-reviewed",
+  "rootAuthorization": "one-fixed-structural-run",
+  "independentReview": "approved",
+  "identity": {
+    "sourceHashes": {
+      "scripts/privacy-nym-int8-worker.py": "ddbc53a3061966f28595aa5c46ecff215b637487cab2f09810f73f4aceab89d7",
+      "server/privacy/nym-int8-decoder.mjs": "60157faeb51d1c93d2fcf48ca751eb82e774d089d4694a824371176f0651df5a",
+      "tests/privacy-nym-int8-decoder.test.mjs": "318a42c44d5ac470fde1cd710cd3a608c05209537a6586988508ee7a528228f8",
+      "docs/architecture/privacy-nym-int8-decoder-v1.md": "69237265226c3b9cb139fc87ea94db9002b25fe141725a6824a1ad4e21459561",
+      "resources/privacy-nym-inference-development-v1.json": "5b3df7a6d443790edcdbac14d829745c090873f8440de98dc540ccf23137a2eb",
+      "resources/privacy-nym-structural-witnesses-v1.json": "8c266b1fb5d49dc0929af610dd2484783d3cd71bd856c34baeb908bb082a0b24",
+      "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297"
+    },
+    "cacheFiles": [
+      {
+        "path": "README.md",
+        "bytes": 6717,
+        "sha256": "74c55f42afcad1e5c1ea9b059f37d9d48e5641e04628642a12444721c57f3d9e"
+      },
+      {
+        "path": "int8/config.json",
+        "bytes": 5688,
+        "sha256": "3f07065571e22bb73eba28ddb1fae4509c0cf703762e3bfa7a6ab2111cf7cb88"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 573,
+        "sha256": "02055b886266b1a475bc324da83e273fe96e4974002f9d970f26e94aa73e5885"
+      },
+      {
+        "path": ".gitattributes",
+        "bytes": 1687,
+        "sha256": "48030a73329817519a47704c56b3e891b4227a19742a138374b9f6ccde002004"
+      },
+      {
+        "path": "int8/model_int8.onnx",
+        "bytes": 138730982,
+        "sha256": "139006aea2cbd8e709d322f056232570de54661f624143be4893aaa387190286"
+      },
+      {
+        "path": "int8/tokenizer.json",
+        "bytes": 12389891,
+        "sha256": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de"
+      }
+    ],
+    "runtimeIdentity": {
+      "algorithm": "relative-path-and-file-sha256-canonical-frames-v1",
+      "runtimeTreeSha256": "b4617cbe5ebb453dd597460a816f1c67c44bf99cf702673758fb204f4a172b6c",
+      "runtimeRegularFileCount": 2396,
+      "pythonBinarySha256": "a395f264e5612a2819662ed3e37fd30d39ed61179b98e5f86c3c783a008d8623",
+      "requirementsSha256": "80035e6aedaaca16ddc7fd9195642fbc3a292fb381b095281ad42b061a8bf9d8",
+      "expectedVersions": {
+        "python": "3.12.13",
+        "numpy": "2.5.4",
+        "onnxruntime": "1.31.1",
+        "tokenizers": "0.23.3"
+      },
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "limits": {
+    "totalMs": 60000,
+    "cleanupMs": 1000,
+    "combinedRssBytes": 1073741824,
+    "sampleIntervalMs": 20,
+    "maximumGapMs": 50,
+    "stdoutBytes": 131072,
+    "tokens": 512,
+    "inputBytes": 16384,
+    "fixtures": 8,
+    "forwards": 8,
+    "threads": 1,
+    "retries": 0,
+    "graphOptimization": "ORT_DISABLE_ALL"
+  },
+  "witnessesSha256": "8c266b1fb5d49dc0929af610dd2484783d3cd71bd856c34baeb908bb082a0b24"
+}

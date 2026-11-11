@@ -1,0 +1,314 @@
+{
+  "version": 1,
+  "status": "candidates-only",
+  "checkedAt": "2026-11-09T22:22:13.413362+00:00",
+  "productionEnabled": false,
+  "routingIntegrated": false,
+  "allowedDataClasses": [
+    "public",
+    "synthetic"
+  ],
+  "remoteToolsEnabled": false,
+  "fallbacksEnabled": false,
+  "automaticUpgradeEnabled": false,
+  "candidates": [
+    {
+      "key": "luna6",
+      "modelId": "openai/gpt-6-luna",
+      "canonicalSlug": "openai/gpt-6-luna-20260922",
+      "proposedEndpointTag": "openai",
+      "providerName": "OpenAI",
+      "contextLength": 1050000,
+      "advertisedParameters": [
+        "reasoning",
+        "include_reasoning",
+        "seed",
+        "max_tokens",
+        "response_format",
+        "structured_outputs",
+        "tools",
+        "tool_choice",
+        "verbosity",
+        "reasoning_effort"
+      ],
+      "pricingUsdPerToken": {
+        "prompt": "0.0000001",
+        "completion": "0.0000005",
+        "web_search": "0.01",
+        "input_cache_read": "0.00000001",
+        "input_cache_write": "0.000000125",
+        "discount": 0,
+        "overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.00000075",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.00000025"
+          }
+        ]
+      },
+      "catalogPricingUsdPerToken": {
+        "prompt": "0.0000001",
+        "completion": "0.0000005",
+        "web_search": "0.01",
+        "input_cache_read": "0.00000001",
+        "input_cache_write": "0.000000125",
+        "overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.00000075",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.00000025"
+          }
+        ]
+      },
+      "evidence": {
+        "catalogUrl": "https://openrouter.ai/api/v1/models",
+        "catalogSha256": "28bab36d06b5f9789134de2948b02e496099c018eb371748e2accee7a0107c80",
+        "endpointUrl": "https://openrouter.ai/api/v1/models/openai/gpt-6-luna-20260922/endpoints",
+        "endpointSha256": "db5b530b7f00a1cd0d374097e17c5a136a001795e31cc695a1dfbe8b076c5ad4",
+        "modelPageUrl": "https://openrouter.ai/openai/gpt-6-luna"
+      },
+      "quality": "not-evaluated",
+      "commercialAccess": "not-authorized",
+      "endpointPinning": "not-verified-by-live-generation",
+      "retentionReview": "pending",
+      "productionEnabled": false
+    },
+    {
+      "key": "qwen38flash",
+      "modelId": "qwen/qwen3.8-flash",
+      "canonicalSlug": "qwen/qwen3.8-flash-20260826",
+      "proposedEndpointTag": "alibaba/us-east-1",
+      "providerName": "Alibaba",
+      "contextLength": 1000000,
+      "advertisedParameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "seed",
+        "presence_penalty",
+        "response_format",
+        "tools",
+        "structured_outputs",
+        "top_k",
+        "frequency_penalty",
+        "stop",
+        "logprobs",
+        "top_logprobs",
+        "tool_choice"
+      ],
+      "pricingUsdPerToken": {
+        "prompt": "0.00000015",
+        "completion": "0.00000047",
+        "input_cache_read": "0.000000016",
+        "discount": 0
+      },
+      "catalogPricingUsdPerToken": {
+        "prompt": "0.00000015",
+        "completion": "0.00000047",
+        "input_cache_read": "0.000000016"
+      },
+      "evidence": {
+        "catalogUrl": "https://openrouter.ai/api/v1/models",
+        "catalogSha256": "28bab36d06b5f9789134de2948b02e496099c018eb371748e2accee7a0107c80",
+        "endpointUrl": "https://openrouter.ai/api/v1/models/qwen/qwen3.8-flash-20260826/endpoints",
+        "endpointSha256": "dba31e99c5974df3032fb0239bee0f3032a288e30694a3c0f085729c0af6289c",
+        "modelPageUrl": "https://openrouter.ai/qwen/qwen3.8-flash"
+      },
+      "quality": "not-evaluated",
+      "commercialAccess": "not-authorized",
+      "endpointPinning": "not-verified-by-live-generation",
+      "retentionReview": "pending",
+      "productionEnabled": false
+    },
+    {
+      "key": "terra61",
+      "modelId": "openai/gpt-6.1-terra",
+      "canonicalSlug": "openai/gpt-6.1-terra-20261026",
+      "proposedEndpointTag": "openai",
+      "providerName": "OpenAI",
+      "contextLength": 1050000,
+      "advertisedParameters": [
+        "reasoning",
+        "include_reasoning",
+        "seed",
+        "max_tokens",
+        "response_format",
+        "structured_outputs",
+        "tools",
+        "tool_choice",
+        "verbosity",
+        "reasoning_effort"
+      ],
+      "pricingUsdPerToken": {
+        "prompt": "0.000001",
+        "completion": "0.000005",
+        "web_search": "0.01",
+        "input_cache_read": "0.00000005",
+        "input_cache_write": "0.00000125",
+        "discount": 0,
+        "overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ]
+      },
+      "catalogPricingUsdPerToken": {
+        "prompt": "0.000001",
+        "completion": "0.000005",
+        "web_search": "0.01",
+        "input_cache_read": "0.00000005",
+        "input_cache_write": "0.00000125",
+        "overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ]
+      },
+      "evidence": {
+        "catalogUrl": "https://openrouter.ai/api/v1/models",
+        "catalogSha256": "28bab36d06b5f9789134de2948b02e496099c018eb371748e2accee7a0107c80",
+        "endpointUrl": "https://openrouter.ai/api/v1/models/openai/gpt-6.1-terra-20261026/endpoints",
+        "endpointSha256": "d883906917eb6727ba3f58dc019c1c259f976f703af008b990c0106ea4146a4f",
+        "modelPageUrl": "https://openrouter.ai/openai/gpt-6.1-terra"
+      },
+      "quality": "not-evaluated",
+      "commercialAccess": "not-authorized",
+      "endpointPinning": "not-verified-by-live-generation",
+      "retentionReview": "pending",
+      "productionEnabled": false
+    },
+    {
+      "key": "gemini38flash",
+      "modelId": "google/gemini-3.8-flash",
+      "canonicalSlug": "google/gemini-3.8-flash-20260902",
+      "proposedEndpointTag": "google-ai-studio",
+      "providerName": "Google AI Studio",
+      "contextLength": 1048576,
+      "advertisedParameters": [
+        "reasoning",
+        "include_reasoning",
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "seed",
+        "response_format",
+        "structured_outputs",
+        "tool_choice",
+        "tools",
+        "reasoning_effort"
+      ],
+      "pricingUsdPerToken": {
+        "prompt": "0.00000075",
+        "completion": "0.00000375",
+        "image": "0.00000075",
+        "audio": "0.00000075",
+        "input_audio_cache": "0.000000075",
+        "web_search": "0.014",
+        "internal_reasoning": "0.00000375",
+        "input_cache_read": "0.000000075",
+        "input_cache_write": "0.0000000416666666666667",
+        "discount": 0.5
+      },
+      "catalogPricingUsdPerToken": {
+        "prompt": "0.000000825",
+        "completion": "0.000004125",
+        "image": "0.000000825",
+        "audio": "0.000000825",
+        "input_audio_cache": "0.0000000825",
+        "web_search": "0.014",
+        "internal_reasoning": "0.000004125",
+        "input_cache_read": "0.0000000825",
+        "input_cache_write": "0.0000000416666666666667"
+      },
+      "evidence": {
+        "catalogUrl": "https://openrouter.ai/api/v1/models",
+        "catalogSha256": "28bab36d06b5f9789134de2948b02e496099c018eb371748e2accee7a0107c80",
+        "endpointUrl": "https://openrouter.ai/api/v1/models/google/gemini-3.8-flash-20260902/endpoints",
+        "endpointSha256": "4f17597fc850940e94db36a7eaaa516970cb5e6ba39fc6b68029f65ea205959d",
+        "modelPageUrl": "https://openrouter.ai/google/gemini-3.8-flash"
+      },
+      "quality": "not-evaluated",
+      "commercialAccess": "not-authorized",
+      "endpointPinning": "not-verified-by-live-generation",
+      "retentionReview": "pending",
+      "productionEnabled": false
+    }
+  ],
+  "profiles": [
+    {
+      "id": "public-light",
+      "agentIds": [
+        "public-catalog-curator",
+        "public-explainer"
+      ],
+      "candidateKeys": [
+        "luna6",
+        "qwen38flash"
+      ],
+      "activeCandidateKey": null,
+      "maximumInputUtf16": 7000,
+      "maximumOutputTokens": 800,
+      "criteria": [
+        "exact-json",
+        "faithful-public-extraction",
+        "spanish-instruction-following",
+        "abstain-when-absent"
+      ]
+    },
+    {
+      "id": "public-evidence",
+      "agentIds": [
+        "public-legal-researcher"
+      ],
+      "candidateKeys": [
+        "terra61",
+        "gemini38flash"
+      ],
+      "activeCandidateKey": null,
+      "maximumInputUtf16": 7000,
+      "maximumOutputTokens": 1200,
+      "criteria": [
+        "official-source-ids",
+        "verbatim-quotes",
+        "jurisdiction-and-version",
+        "no-invented-authority",
+        "professional-review"
+      ]
+    }
+  ],
+  "currentSkillsExcluded": [
+    "legal-researcher",
+    "contract-reviewer",
+    "legal-drafter",
+    "document-analyzer",
+    "matter-assistant"
+  ],
+  "deterministicTasksWithoutLlm": [
+    "arithmetic",
+    "time-billing",
+    "source-hashes",
+    "access-control",
+    "exact-source-retrieval",
+    "export-validation"
+  ],
+  "implementationBoundary": "Static research configuration only. No content classifier, transport, scope grant or runtime integration is implemented. Existing skills retain matter access and cannot use this proposal merely by name.",
+  "catalogExcerpt": {
+    "file": "eval/public-agents/catalog-snapshot-2026-11-09.json",
+    "sha256": "8a1f84cefbd79744195f05bc100d32f998574a7255604878f6ab6112c8ba224c",
+    "scope": "Selected public catalog/model records and chosen endpoint only; not signed/authenticated or freshness guarantee"
+  }
+}

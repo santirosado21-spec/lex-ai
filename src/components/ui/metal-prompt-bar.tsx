@@ -26,7 +26,7 @@ export default function MetalPromptBar({workspaceReady=true,preparing=false,valu
  function submit(){if(!canSend||composing.current)return;captureSelection();onSubmit(value.trim());}
  const LIMIT=4000,length=value.length,over=length>LIMIT,near=!over&&length>=3200;
  const limitState=over?`La pregunta supera el límite de ${LIMIT} caracteres. Acórtala para poder enviarla.`:near?`Te acercas al límite de ${LIMIT} caracteres.`:'';
- const help=!workspaceReady?'Crea tu espacio de trabajo para empezar.':generating?'Procesando la consulta en este equipo. Puedes cancelar y conservar tu pregunta.':preparing?'Preparando LEX AI en este equipo…':!engineReady?'LEX AI aún no está listo.':busy?'Espera a que termine la operación en curso.':'';
+ const help=!workspaceReady?'Crea tu espacio de trabajo para empezar.':generating?'Procesando la consulta en este equipo. Puedes cancelar y conservar tu pregunta.':preparing?'Preparando Rejon.AI en este equipo…':!engineReady?'Rejon.AI aún no está listo.':busy?'Espera a que termine la operación en curso.':'';
  const send=<button type={generating?'button':'submit'} className={`lex-prompt-send${generating?' lex-prompt-cancel':''}`} aria-label={generating?'Cancelar':'Preguntar'} title={generating?'Cancelar consulta':'Preguntar · Enter'} disabled={!generating&&!canSend} onClick={generating?event=>{event.preventDefault();onCancel();}:undefined}>{generating?<Square size={17} aria-hidden="true"/>:<ArrowUp size={19} aria-hidden="true"/>}<span>{generating?'Cancelar':'Preguntar'}</span></button>;
  return <form ref={form} className="composer lex-prompt-bar" onSubmit={event=>{event.preventDefault();submit();}}>
   <label htmlFor="question" className="sr-only">Pregunta sobre el asunto</label>
@@ -39,7 +39,7 @@ export default function MetalPromptBar({workspaceReady=true,preparing=false,valu
   <div className="lex-prompt-footer" id="lex-prompt-scope"><span>{matter?`${matter.title} · ${documentCount} ${documentCount===1?"documento":"documentos"}`:'Conversación general del despacho'}</span><span className="lex-prompt-shortcut">↩ Preguntar · ⇧↩ Nueva línea</span></div>
   {(near||over)&&<p className={`lex-prompt-limit${over?' is-over':''}`} aria-hidden="true">{over?`Excede el límite por ${length-LIMIT} caracteres · `:''}{length.toLocaleString('es-MX')} / {LIMIT.toLocaleString('es-MX')}</p>}
   <p id="lex-prompt-limit" className="sr-only" role="status">{limitState}</p>
-  <p id="lex-prompt-help" className="lex-prompt-help" aria-live="polite">{notice||help}{workspaceReady&&!engineReady&&!preparing&&!generating&&<> <button type="button" onClick={onPrepare}>Preparar LEX AI</button></>}</p>
+  <p id="lex-prompt-help" className="lex-prompt-help" aria-live="polite">{notice||help}{workspaceReady&&!engineReady&&!preparing&&!generating&&<> <button type="button" onClick={onPrepare}>Preparar Rejon.AI</button></>}</p>
  </form>;
 }
 

@@ -61,7 +61,7 @@ export function proposeFollowUps({matter,documents,answers,items,now,timeZone='A
   const today=localDay(current,timeZone),threeDays=plusDays(today,3);
   for(const deadline of items.filter(item=>item?.kind==='deadline'&&item?.status==='approved'&&item.dueAt)) {
     let day;try{day=localDay(deadline.dueAt,timeZone);}catch{continue;}
-    if(day>=today&&day<=threeDays)add(`deadline-${deadline.id??deadline.title}`,'followup',`Confirmar plazo: ${deadline.title}`,'El plazo fue capturado manualmente por la persona usuaria. LEX AI no calcula términos legales; requiere revisión humana.');
+    if(day>=today&&day<=threeDays)add(`deadline-${deadline.id??deadline.title}`,'followup',`Confirmar plazo: ${deadline.title}`,'El plazo fue capturado manualmente por la persona usuaria. Rejon.AI no calcula términos legales; requiere revisión humana.');
   }
   const activity=[matter,...documents,...answers,...items].map(item=>item?.updatedAt??item?.createdAt).filter(Boolean).map(value=>new Date(value).getTime()).filter(Number.isFinite);
   const latest=activity.length?Math.max(...activity):NaN;

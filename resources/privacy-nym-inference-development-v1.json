@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "id": "privacy-nym-inference-development-v1",
+  "status": "proposed-inactive-root-and-independent-review-required",
+  "productionEnabled": false,
+  "egressEligible": false,
+  "executionAuthorized": false,
+  "modelLoadsAuthorizedNow": 0,
+  "sessionRunsAuthorizedNow": 0,
+  "scope": "opt-in synthetic structural inference/decoder development; not evaluation or product integration",
+  "sourceHashes": {
+    "resources/privacy-nym-int8-candidate-v1.json": "0cc0bdd5af9847ba8915917c715becbe66be5adfe7395efba01673571204f297",
+    "resources/privacy-token-ner-composition-v2-protocol.json": "647d72ac064107802abaf3d2e08f507a992c52569322fc3709ac286e0b7481ca",
+    "docs/qa/privacy-nym-contract-probe-v1-partial-2026-11-10.json": "323a8e272ecefdb455686393ecc7b497f5ed118fbeced946632e72ff6e035a0e",
+    "docs/qa/privacy-nym-contract-probe-v1-independent-audit-2026-11-10.json": "0194b6a4325f0f86477ef8e5786015bde46750faed3fa6f1c1fac6f4886f21ab"
+  },
+  "repository": "Wismut/nym-pii-multilingual-small",
+  "revision": "4348999cd3c2e20c49615e9af7c6bbb45b64cd85",
+  "selectedVariant": "int8/model_int8.onnx",
+  "historicalFailure": {
+    "state": "FAILED",
+    "category": "PARENT_OR_IPC_FAILURE",
+    "causeKnown": false,
+    "forwards": 0,
+    "originalPostflightEstablished": false,
+    "combinedRssAvailable": false,
+    "workerReportedPeakRssBytes": 782876672
+  },
+  "observedContract": {
+    "inputs": [
+      {
+        "name": "input_ids",
+        "type": "tensor(int64)",
+        "shape": [
+          "batch_size",
+          "sequence_length"
+        ]
+      },
+      {
+        "name": "attention_mask",
+        "type": "tensor(int64)",
+        "shape": [
+          "batch_size",
+          "sequence_length"
+        ]
+      }
+    ],
+    "output": {
+      "name": "logits",
+      "type": "tensor(float)",
+      "shape": [
+        "batch_size",
+        "sequence_length",
+        81
+      ]
+    },
+    "tokenizerUniqueIds": 198804,
+    "maximumTokenId": 198803,
+    "declaredConfigVocabSize": 256000,
+    "specialTokenIds": {
+      "<pad>": 0,
+      "<eos>": 1,
+      "<bos>": 2,
+      "<unk>": 3,
+      "<mask>": 4,
+      "<start_of_turn>": 106,
+      "<end_of_turn>": 107
+    },
+    "postprocessorValidated": false,
+    "observedBoundaryIds": [
+      2,
+      1
+    ],
+    "declaredClsId": 1,
+    "offsetUnitsValidated": false,
+    "emojiRepeatedRange": [
+      7,
+      8
+    ],
+    "emojiRepeatedRangeCount": 4
+  },
+  "proposedLimits": {
+    "provider": "CPUExecutionProvider",
+    "intraOpThreads": 1,
+    "interOpThreads": 1,
+    "concurrency": 1,
+    "graphOptimization": "ORT_DISABLE_ALL",
+    "maximumTokensIncludingSpecials": 512,
+    "maximumCombinedRssBytes": 1073741824,
+    "totalRunMs": 60000,
+    "rssSampleIntervalMs": 20,
+    "maximumAcceptedSampleGapMs": 50,
+    "maximumInputUtf8BytesPerFixture": 16384,
+    "maximumStructuralFixtures": 8,
+    "maximumSessionRunsAfterSeparateAuthorization": 8,
+    "maximumWorkerStdoutBytes": 131072,
+    "cleanupObserveMs": 1000,
+    "retryCount": 0,
+    "truncationAllowed": false,
+    "windowingAllowed": false,
+    "networkAllowed": false,
+    "customOpsAllowed": false,
+    "externalDataAllowed": false
+  },
+  "decoder": {
+    "confidenceFloor": 0.4,
+    "thresholdTuningAllowed": false,
+    "softmax": "stable finite 81-label rows; unique argmax; tie blocks",
+    "lowConfidence": "any attended non-special row including O below floor blocks",
+    "entityConfidence": "minimum contributing token confidence",
+    "bio": "strict; orphan I, kind-changing I and non-whitespace gaps block; no repair",
+    "nativeId2label": {
+      "0": "O",
+      "1": "B-ACCOUNT_NUMBER",
+      "2": "I-ACCOUNT_NUMBER",
+      "3": "B-AGE",
+      "4": "I-AGE",
+      "5": "B-API_KEY",
+      "6": "I-API_KEY",
+      "7": "B-BUILDING_NUMBER",
+      "8": "I-BUILDING_NUMBER",
+      "9": "B-CITY",
+      "10": "I-CITY",
+      "11": "B-COMPANY_NAME",
+      "12": "I-COMPANY_NAME",
+      "13": "B-COUNTRY",
+      "14": "I-COUNTRY",
+      "15": "B-CREDIT_DEBIT_CARD",
+      "16": "I-CREDIT_DEBIT_CARD",
+      "17": "B-CUSTOMER_ID",
+      "18": "I-CUSTOMER_ID",
+      "19": "B-CVV",
+      "20": "I-CVV",
+      "21": "B-DATE",
+      "22": "I-DATE",
+      "23": "B-DATE_OF_BIRTH",
+      "24": "I-DATE_OF_BIRTH",
+      "25": "B-DRIVERS_LICENSE",
+      "26": "I-DRIVERS_LICENSE",
+      "27": "B-EMAIL",
+      "28": "I-EMAIL",
+      "29": "B-EMPLOYEE_ID",
+      "30": "I-EMPLOYEE_ID",
+      "31": "B-FAX_NUMBER",
+      "32": "I-FAX_NUMBER",
+      "33": "B-GENDER",
+      "34": "I-GENDER",
+      "35": "B-GIVEN_NAME",
+      "36": "I-GIVEN_NAME",
+      "37": "B-GOVERNMENT_ID",
+      "38": "I-GOVERNMENT_ID",
+      "39": "B-IBAN",
+      "40": "I-IBAN",
+      "41": "B-LICENSE_PLATE",
+      "42": "I-LICENSE_PLATE",
+      "43": "B-MAC_ADDRESS",
+      "44": "I-MAC_ADDRESS",
+      "45": "B-MEDICAL_RECORD_NUMBER",
+      "46": "I-MEDICAL_RECORD_NUMBER",
+      "47": "B-PASSPORT",
+      "48": "I-PASSPORT",
+      "49": "B-PASSWORD",
+      "50": "I-PASSWORD",
+      "51": "B-PHONE",
+      "52": "I-PHONE",
+      "53": "B-PIN",
+      "54": "I-PIN",
+      "55": "B-ROUTING_NUMBER",
+      "56": "I-ROUTING_NUMBER",
+      "57": "B-SECONDARY_ADDRESS",
+      "58": "I-SECONDARY_ADDRESS",
+      "59": "B-SSN",
+      "60": "I-SSN",
+      "61": "B-STATE",
+      "62": "I-STATE",
+      "63": "B-STREET_ADDRESS",
+      "64": "I-STREET_ADDRESS",
+      "65": "B-STREET_NAME",
+      "66": "I-STREET_NAME",
+      "67": "B-SURNAME",
+      "68": "I-SURNAME",
+      "69": "B-SWIFT_BIC",
+      "70": "I-SWIFT_BIC",
+      "71": "B-TAX_ID",
+      "72": "I-TAX_ID",
+      "73": "B-TIME",
+      "74": "I-TIME",
+      "75": "B-URL",
+      "76": "I-URL",
+      "77": "B-USERNAME",
+      "78": "I-USERNAME",
+      "79": "B-ZIP_CODE",
+      "80": "I-ZIP_CODE"
+    },
+    "nativeMappingProposal": {
+      "ACCOUNT_NUMBER": null,
+      "AGE": null,
+      "API_KEY": null,
+      "BUILDING_NUMBER": "address",
+      "CITY": null,
+      "COMPANY_NAME": null,
+      "COUNTRY": null,
+      "CREDIT_DEBIT_CARD": null,
+      "CUSTOMER_ID": null,
+      "CVV": null,
+      "DATE": null,
+      "DATE_OF_BIRTH": null,
+      "DRIVERS_LICENSE": null,
+      "EMAIL": "email",
+      "EMPLOYEE_ID": null,
+      "FAX_NUMBER": null,
+      "GENDER": null,
+      "GIVEN_NAME": "person",
+      "GOVERNMENT_ID": null,
+      "IBAN": null,
+      "LICENSE_PLATE": null,
+      "MAC_ADDRESS": null,
+      "MEDICAL_RECORD_NUMBER": null,
+      "PASSPORT": null,
+      "PASSWORD": null,
+      "PHONE": "phone",
+      "PIN": null,
+      "ROUTING_NUMBER": null,
+      "SECONDARY_ADDRESS": "address",
+      "SSN": null,
+      "STATE": null,
+      "STREET_ADDRESS": null,
+      "STREET_NAME": "address",
+      "SURNAME": "person",
+      "SWIFT_BIC": null,
+      "TAX_ID": null,
+      "TIME": null,
+      "URL": null,
+      "USERNAME": null,
+      "ZIP_CODE": "address"
+    },
+    "mappingApproved": false,
+    "unsupportedTypesDropped": false,
+    "offsetPolicy": "No normalized source. Prove original codepoint to UTF8 and UTF16 boundaries. Positive-length non-special ranges; no gaps over non-whitespace. Repeated/overlapping non-special offsets block until a separately reviewed lossless byte-fallback grouping contract is proven; no dedup/union/repair by guess.",
+    "allSpanPolicy": "All segments and every native span complete before composition. One internally recomputed rule must fully contain each unmapped text span in same immutable source/scope/version/hash. No adjacent rule union. Paths always block. Cross-category overlap blocks.",
+    "unknownPolicy": "fail closed; generic TAX_ID never RFC, GOVERNMENT_ID/SSN never CURP, ACCOUNT_NUMBER/IBAN never CLABE"
+  },
+  "authorizationSequence": [
+    "Root reviews this plan and freezes source/runtime/cache/protocol identities; no execution implied.",
+    "Astra implements opt-in critical decoder and receipt retention only after root handoff; pure synthetic logits and tokenizer metadata tests first; separate independent review.",
+    "Prove tokenizer postprocessor/special masks, ID bounds and original Unicode offset conversion with fresh structural fixtures before any forward; unresolved offset fixtures block, never skip as pass.",
+    "Root separately authorizes one bounded inference run with frozen at-most-eight fresh synthetic fixtures, no gold or heldout; at most one forward per admitted fixture, no warmup/retry.",
+    "Independent audit of full receipt, immutable pre/post hashes, cleanup, resource samples and failures; no quality score or production promotion."
+  ],
+  "requestSurfaces": [
+    "current text",
+    "history",
+    "filenames and paths",
+    "document metadata",
+    "OCR/extraction output and confidence",
+    "retrieved context",
+    "tool results",
+    "derived context and relationship identifiers",
+    "provider envelope/configuration"
+  ],
+  "evaluationRestrictions": {
+    "heldoutAccess": false,
+    "existingDevGoldAccess": false,
+    "scoresAllowed": false,
+    "trainingAllowed": false,
+    "productionRouteChanges": false,
+    "freshIndependentDevelopmentLater": true
+  },
+  "claims": {
+    "licenseCleared": false,
+    "redistributionApproved": false,
+    "privacyValidated": false,
+    "spanishQualityValidated": false,
+    "physical8GBValidated": false,
+    "fullRequestProtectionValidated": false
+  },
+  "uncertainties": [
+    "Pruned tokenizer/config mismatch does not establish embedding capacity or inference compatibility; require exact graph/tokenizer binding and fail on runtime error, never pad/remap IDs.",
+    "Special descriptor CLS mismatch is not proof of tokenizer postprocessor error; inspect actual pinned postprocessor before deciding.",
+    "Overlapping emoji offsets are observed; byte-fallback interpretation and coordinate units are not yet validated.",
+    "Original parent failure remains unknown; fake cleanup fault proves a retention defect only.",
+    "A sampled 1GiB ceiling is not a hard peak-memory guarantee; parent plus worker and gaps must be recorded.",
+    "MIT declaration exists but authentic complete applicable notice/base attribution and rights chain unresolved."
+  ],
+  "prospectiveBatchOneExecutionContract": {
+    "observedAtRuntime": false,
+    "inputs": [
+      {
+        "name": "input_ids",
+        "dtype": "int64",
+        "shape": [
+          1,
+          "T"
+        ]
+      },
+      {
+        "name": "attention_mask",
+        "dtype": "int64",
+        "shape": [
+          1,
+          "T"
+        ]
+      }
+    ],
+    "output": {
+      "name": "logits",
+      "dtype": "float32",
+      "shape": [
+        1,
+        "T",
+        81
+      ]
+    },
+    "requiresSeparatelyAuthorizedForwardAndExactShapeValidation": true
+  }
+}

@@ -1,0 +1,11 @@
+# H4b.2b.4b — composición diagnóstica medida
+
+Astra implementó una versión nueva con los mismos pesos Q4, tokenizer, umbral0,4 y gates BIO/UNK/límites. Una clasificación no mapeada sólo puede quedar cubierta por una regla interna completa del mismo texto/ámbito/hash/versión; no se interpreta su tipo como identificador mexicano. Errores duros, rutas y conflictos siguen bloqueando. Nada se conecta a un proveedor.
+
+La revisión Sol independiente encontró y cerró tres defectos antes de ejecutar: deadline indefinido en IPC, validación paterna que no reconstruía completamente reglas/proofs y cancelación durante readiness. Las regresiones recorren el protocolo IPC con proceso simulado, incluyendo respuestas tardías y aborto antes del envío. Builder57/57 dirigidas; revisor18/18 nuevas y probes originales cerrados. No se ejecutó el candidato real durante esos fixes.
+
+Tras freeze de31 fuentes más runtime, una ejecución DEV60 completó38 casos del algoritmo y bloqueó22:13 detector_failure,7 ambiguous_context,1 unsupported_format,1 partial_extraction. Cambiaron19 salidas frente al baseline intacto. Todas las60 conservan diagnosticOnly:true/egressEligible:false. Hay76 pruebas literales de contención, todas en casos complete, no76 casos; cero proofs bloqueados observados. Las reglas diagnósticas son28 spans en complete y16 en blocked. Bajo bloqueo, detecciones puntuables vacías y plan null: no se suman esos16 diagnósticos como TP.
+
+Pico parcial161.660.928B, carga92,1727ms. Latencia del hijo por nearest rank p50 13,1957/p95 19,8912/máxima31,6326ms; excluye validación del padre, UI, almacén y recorrido conjunto. No valida un equipo8GB. No se calcularon scores de calidad, como se fijó antes del run. Más resultados complete no prueban menos omisiones, mejor utilidad o egreso seguro. Siguen las brechas de organización, expediente, contexto y relaciones.
+
+El mismo revisor contrastó bindings, hashes/runtime, baseline y proyecciones, y repitió las60 validaciones locales sin ONNX. APPROVE de evidencia técnica. Corpus retenido300 sin consumir; sin entrenamiento, downloads o llamadas a proveedores. H4 y la vertical H3V real permanecen abiertos, junto con H5/H6/H7. Recibos y freeze separados conservan la reproducción exacta sin sobrescribir v1/trace.
