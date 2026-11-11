@@ -7,7 +7,7 @@
 /* ---------- Tokens (same palette as the desktop app) ---------- */
 :root,:root[data-theme="light"]{
   --bg:#EEF1F4;--surface:#FFFFFF;--surface-2:#F5F7F9;
-  --ink:#0F1B2D;--ink-2:#4A5568;--ink-3:#6B7685;
+  --ink:#0F1B2D;--ink-2:#4A5568;--ink-3:#5A6472;
   --line:#D9DEE5;--rule-strong:#C7CED8;
   --seal:#8C1D2C;--seal-hover:#731724;--seal-soft:#F6E7EA;--seal-line:#E3BFC6;--on-seal:#FFFFFF;
   --ok:#2F7D6B;
@@ -41,9 +41,9 @@
 
 /* ---------- Base ---------- */
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:24px}
+html{scroll-behavior:smooth;scroll-padding-top:108px}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.58 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a,button{-webkit-tap-highlight-color:transparent}
+a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 a{color:inherit;text-underline-offset:4px}
 button{font:inherit;color:inherit}
 button:not(:disabled){cursor:pointer}
@@ -235,6 +235,7 @@ blockquote{margin:8px 0 0;font-family:var(--serif);font-size:1.12rem;line-height
   .section,.integrations{padding-block:88px}
 }
 @media (max-width:620px){
+  html{scroll-padding-top:92px}
   body{font-size:16px}
   .shell{width:calc(100% - 32px)}
   .site-header{min-height:68px;gap:12px}
@@ -304,6 +305,7 @@ blockquote{margin:8px 0 0;font-family:var(--serif);font-size:1.12rem;line-height
 .mock-label:first-child{margin-top:0}
 .mock-row,.mock-thread{margin:0;padding:7px 8px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mock-thread{display:grid;gap:1px}
+.mock-thread>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mock-thread small{color:var(--ink-3);font-size:.68rem}
 .is-active{background:var(--seal-soft);color:var(--seal);font-weight:600}
 .mock-new{margin:2px 0 4px;padding:6px 8px;border:1px solid var(--rule-strong);border-radius:6px;background:var(--surface);font-weight:500}
