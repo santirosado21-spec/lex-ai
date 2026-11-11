@@ -271,3 +271,7 @@ Verificado: monograma R creado en Figma con variantes clara/oscura; SVGs integra
 ## 2026-11-10 21:22 — codex — Aclaración: créditos OpenRouter, no dominio
 
 El dueño aclaró que su frase sobre algo en su cuenta se refería a los créditos existentes de OpenRouter. No afirmó poseer rejon.ai. Se corrigieron las notas de marca, coordinación y estado. Se mantiene el tope autorizado de USD 6 para pruebas ficticias; costo ya reportado USD 0.000008075. Sin compra ni conexión de dominio.
+
+## 2026-11-10 22:33 — codex — Paquete local para investigación pública con Instinct
+
+Se creó artifacts/Rejon-AI-Instinct-handoff-2026-11-10.zip, ignorado por Git: 9 archivos, 1.204.457 bytes, SHA-256 7845ef660c99d48015a474da1d84852c39a3f29e9f1732ef1a9677f61d5b628f. Incluye contexto, encargo de corpus oficial MX y GitHub, cuatro capturas UI de datos sintéticos, manifiesto. unzip -t pasó; hashes y rutas internas verificados; revisión básica de patrones de claves y rutas locales pasó. No se enviaron archivos a Instinct ni se evaluó su respuesta. No se incluyeron secretos ni documentos de clientes.

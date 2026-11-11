@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-10 21:22 por codex: Aclaración: créditos OpenRouter, no dominio
+**Última actualización:** 2026-11-10 22:33 por codex: Paquete local para investigación pública con Instinct
 
 ## Objetivo y autoridad vigentes
 
@@ -12,6 +12,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- **Paquete Instinct:** `artifacts/Rejon-AI-Instinct-handoff-2026-11-10.zip` (local, ignorado por Git) contiene contexto de conversación, encargo de investigación de fuentes jurídicas públicas, cuatro capturas de UI sintética y manifiesto SHA-256. ZIP9 archivos/1.204.457B; integridad y hashes verificados. No contiene claves ni documentos de clientes según revisión de contenido y patrones básicos; no se ha enviado a Instinct ni se ha validado su informe.
 - **Nombre público:** el dueño eligió **Rejon.AI** el 2026-11-10. App, landing, prompts activos y nombre visible Tauri actualizados en fuente. Monograma R editable en Figma, SVG en app/landing, favicon e iconos Tauri de escritorio regenerados e inspeccionados a 512/32 px; suite 1104/1104, build, UI smoke sintético y landing smoke pasaron. Identificadores de almacenamiento/Keychain/GitHub y DMG LEX AI 0.4.3 se mantienen por compatibilidad. No hay instalador nuevo: faltan variables del inventario de runtime aprobado para el build. `rejon.ai` no aparece en Vercel conectado, aunque disponibilidad consultada fue positiva; no se acreditó titularidad. DNS e IMPI pendientes. Ver `docs/brand/rejon-transition-2026-11-10.md`.
 - **OpenRouter pagado, pruebas ficticias:** el dueño autorizó hasta USD 6 de créditos existentes y aclaró que «eso en mi cuenta» se refería a estos créditos. Dos rutas pagadas exactas con ZDR y `data_collection:deny` completaron HTTP 200: GPT-OSS 120B/PrimeIntellect respondió `OK`; Gemma 4/PrimeIntellect extrajo obligaciones ficticias y jurisdicción faltante. Metadatos de generación confirmaron USD 0.000005785 + 0.000002290 = **USD 0.000008075** reportados. Sin documentos de cliente, compras, fallback ni herramientas. No es evaluación jurídica ni ruta activa de producto. `docs/qa/openrouter-paid-zdr-smoke-2026-11-10.md` contiene límites y preflight.
 - **Cuenta OpenRouter:** el dueño guardó una clave exclusiva en Keychain. Lectura real y `GET /api/v1/key` autenticaron (`isFreeTier:false`, límite configurado); no se registró la clave ni el importe. Catálogo gratuito: 12 modelos publicados con precios cero en esta consulta; `google/gemma-4-26b-a4b-it:free`/`google-ai-studio` tenía endpoint de precio cero. Generación ficticia con ZDR falló HTTP 404 por política de retención; una variante ficticia sin ZDR falló HTTP 429 del proveedor. Cero respuestas y ningún documento de cliente. El producto activo sigue local y el adaptador H6 apagado. Evidencia `docs/qa/openrouter-account-smoke-2026-11-10.md`.
@@ -37,6 +38,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+**Pendiente externo:** recibir el informe de Instinct sobre fuentes oficiales y herramientas GitHub. Comprobar cada enlace, permiso, versión y prioridad antes de incorporarlo al backlog; no asumir que su investigación ejecutó adquisición ni validación jurídica.
 
 0. H6b: rutas pagadas ZDR ya generaron con texto ficticio y recibos. Diseñar adaptador optativo de pago con tope acumulado USD 6 y revisión independiente; integración por tarea sólo después de H4/H5. No activar envíos de clientes antes de aprobarlos.
 1. Composición diagnóstica23d0662 medida y revisada; no demuestra privacidad suficiente. Determinar siguiente candidato/calidad antes de gastar el examen300, conservando umbrales/causas/resultados y brechas semánticas explícitas.
