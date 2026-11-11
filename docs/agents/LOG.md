@@ -267,3 +267,7 @@ Verificado: nombre visible Rejon.AI en fuente de app, landing, prompts activos, 
 ## 2026-11-10 20:38 — codex — Marca vectorial Rejon.AI integrada en fuente
 
 Verificado: monograma R creado en Figma con variantes clara/oscura; SVGs integrados en app y landing, favicon e iconos Tauri de escritorio regenerados. npm test 1104/1104, npm run build, npm run test:ui y landing-smoke pasaron con datos sintéticos; captura UI inspeccionada. No medido: binario nativo ni equipo 8 GB. El build nativo requiere LEX_RUNTIME_INVENTORY y LEX_RUNTIME_ARTIFACTS revisados, ausentes aquí. Cuenta Vercel conectada no lista rejon.ai; consulta de disponibilidad positiva no acredita propiedad. DMG 0.4.3 sigue LEX AI; no se cambiaron descargas.
+
+## 2026-11-10 21:22 — codex — Aclaración: créditos OpenRouter, no dominio
+
+El dueño aclaró que su frase sobre algo en su cuenta se refería a los créditos existentes de OpenRouter. No afirmó poseer rejon.ai. Se corrigieron las notas de marca, coordinación y estado. Se mantiene el tope autorizado de USD 6 para pruebas ficticias; costo ya reportado USD 0.000008075. Sin compra ni conexión de dominio.
