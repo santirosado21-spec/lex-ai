@@ -5,6 +5,8 @@ Fecha: 2026-11-09. H1, H2, H3, H3V, H4a, H5a, M1 y los cortes H4b.1/H5b.1a revis
 
 Plan de terminación vigente: [H3V–H9 con SF sin Claude](hybrid-completion-plan-2026-11-09.md), con [aportaciones, cantidades y límites reales](hybrid-completion-review-2026-11-09.md). Es planificación: no modifica los estados pendientes ni inicia ejecución. H3V fija también el contrato legacy y de versiones; H4b cerrará tras congelar inventario/contratos H5a.
 
+Entrega a cofundadores y promoción de `main` experimental: [plan de ejecución actualizado](main-cofounder-execution-plan-2026-11-10.md) y [guía](../qa/cofounder-main-handoff-2026-11-10.md). Fast-forward desde `68eb716`; CI de clon limpio42930797269 PASS build+83contratos portables, suite total local1088/1088 pero no reproducible en runner sin FTS5/activos. No equivale a release híbrido.
+
 Continuación actual tras S2a: [plan por fases F0–F8 y nombres N0–N2](product-completion-phases-2026-11-09.md). Conserva los IDs de este tablero y sus gates; no marca fases implementadas por redactarlas. Primeros cortes propuestos: F0/H4b.2a y primer dominio de paridad H5b.1b.1. Biblioteca y S2b pueden avanzar con público/sintético en paralelo.
 
 Estados: `todo`, `in-progress`, `review-pending`, `done`, `blocked`. Solo `done` desbloquea dependencias. Marcar revisión, commit y evidencia en cada tarea. Responsable y rama se reclaman antes de editar; las asignaciones y cierres efectivos figuran en la tabla.

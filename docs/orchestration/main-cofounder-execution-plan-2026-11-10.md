@@ -21,6 +21,8 @@ Primer CI de `main` (run 42930193693) ejecutó `npm ci` y luego la suite complet
 
 Segundo CI (run 42930477532) compiló y obtuvo 82/83 contratos verdes. El único fallo fue igualdad exacta de un score Python/JS con diferencia de aproximadamente `6e-15` en Linux. Se conserva el test V1 congelado y se agrega uno nuevo de paridad portable: 40 etiquetas, todos los campos y coordenadas exactos, score finito con diferencia menor a `1e-12`. El CI excluye por nombre sólo la comparación flotante histórica y lo anuncia en el log; no cambia el decoder ni el umbral de privacidad.
 
+Tercer CI (run [42930797269](https://github.com/santirosado21-spec/lex-ai/actions/runs/42930797269)) pasó en Ubuntu: `npm ci`, build y 83/83 contratos portables. La landing se desplegó automáticamente desde Git `main` en Vercel y el deployment de `117033d` quedó READY. Es una publicación de información pública, no el flujo de aplicación privada.
+
 ## Primeras asignaciones después de P0
 
 1. Revisar V3 Nym de forma independiente. La versión anterior falló por brecha real de muestreo de 143,671 ms antes de inferencia; 62 pruebas puras de V3 no resuelven esa medición. Congelar una sola prueba pública del lector y observarla sin usar el examen de 300 casos ni datos de clientes.

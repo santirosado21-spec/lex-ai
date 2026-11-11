@@ -223,3 +223,7 @@ Verified: public Mac CI42904113430 passed 18 bounded synthetic read-only recover
 ## 2026-11-10 18:10 — codex — Kimi source critique unavailable
 
 One independent Kimi CLI attempt for public Nym V3 streaming source used explicit requested model k3.1-pro in empty temporary directory. CLI exited 1 before generation: model not configured in config.toml. No source opinion or review result; no fallback model silently selected and no retry. V3 remains inactive/unreviewed and no real runtime load was authorized.
+
+## 2026-11-10 18:23 — codex — Main experimental para cofundadores con CI limpio
+
+El dueño autorizó main. Verificado: origin/main anterior 68eb716 era ancestro, push fast-forward sin divergencia; plan y guía para Lorenzo/Pedro en main. Local npm test 1088/1088 y build PASS. CI inicial42930193693 falló 173/1082 por FTS5/activos y otros; segundo42930477532 82/83 falló sólo score float Python/JS. Tercer CI42930797269 @117033d PASS npm ci, build y 83/83 contratos portables, con comparación histórica de float excluida explícitamente y nuevo test40etiquetas/tolerancia1e-12. Suite completa de clon limpio sigue pendiente. Vercel landing automática de117033d READY; producto híbrido privado, instaladores Intel/Windows, hardware8GB y prueba de abogados siguen pendientes. PSF: Gemma draft, Kimi opinión, Groq casos preliminares corregidos; Gemini sin cuota/no llamada.

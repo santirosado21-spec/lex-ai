@@ -97,3 +97,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 14:13 — codex — Ensayos criptográficos representativos sin ampliar límites
 
 **Por qué:** El primer harness age terminó por watchdog71 con perfiltest sin optimizar; la fase exacta se desconoce. Para el segundo experimento explícito se elige optimización2 del perfiltest y marcas finitas, revisadas independientemente, conservando60s/300s/768MiB,guardresets,18casos/R23 yalgoritmo. No rebajar workfactor18 ni aceptar roundtrip sin ambosEOF. Fallo/freeze anteriores inmutables; no ejecución nativa nueva en Mac dueño o retries automáticos.
+
+## 2026-11-10 18:20 — codex — Main es rama experimental de integración para cofundadores
+
+**Por qué:** El dueño autorizó push a main. Se verificó que main anterior 68eb716 era ancestro sin divergencia; la promoción por fast-forward conserva historia y permite colaborar. El producto activo aún usa SQLite sin cifrar y no tiene flujo híbrido validado, por lo que main no equivale a release ni habilita expedientes de clientes. CI de clon limpio tendrá un subconjunto explícito hasta resolver FTS5 y activos generados.
