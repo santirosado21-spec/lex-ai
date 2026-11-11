@@ -41,3 +41,7 @@ jobs:
         shell: bash
         run: |
           cargo test --locked --manifest-path crates/lex-vault/Cargo.toml --test pseudonym_maps -- --test-threads=1
+      - name: Run SQL-trigger and FK unit regressions (synthetic only)
+        shell: bash
+        run: |
+          cargo test --locked --manifest-path crates/lex-vault/Cargo.toml --lib pseudonym_maps::internal_schema_guards -- --test-threads=1
