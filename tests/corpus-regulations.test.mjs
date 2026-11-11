@@ -39,3 +39,11 @@ test('coverage classifies title keywords transparently and reports inaccessible 
   const report=await generateCoverage({lawsCatalogPath:lawsPath,regulationsCatalogPath:regsPath,lawsStatusPath:lawsStatus,regulationsStatusPath:path.join(dir,'missing.json'),frozenCorpusPath:frozenPath,outputPath:output,documentPath:document,generatedAt:'2026-11-02T00:00:00.000Z'});
   assert.equal(classifyTitle('Código Fiscal de la Federación').id,'fiscal-tributario');assert.equal(report.totals.catalogued,2);assert.equal(report.instruments.find(row=>row.id==='law-amparo').ingestion.status,'ingested-frozen-export');assert.equal(report.instruments.find(row=>row.id==='reg-lsalud').ingestion.status,'not-ingested-no-status');assert.equal(report.gaps.find(gap=>gap.id==='jurisprudence-tesis').accessStatus,'blocked');assert.match(await readFile(document,'utf8'),/cobertura medida sobre fuentes accesibles/i);
 });
+
+test('coverage fails closed without the frozen export evidence instead of overwriting the measured document',async t=>{
+  const dir=await temporary(t);const lawsPath=path.join(dir,'laws.json'),regsPath=path.join(dir,'regs.json'),output=path.join(dir,'coverage.json'),document=path.join(dir,'coverage.md');
+  const law={id:'law-amparo',lawId:'MX-FED-AMPARO',title:'LEY DE AMPARO',url:'https://www.diputados.gob.mx/LeyesBiblio/pdf/LAmp.pdf',jurisdiction:'MX-FED',publisherIndex:'fixture',indexSha256:'a'.repeat(64)};
+  await Promise.all([writeFile(lawsPath,JSON.stringify({source:'fixture-laws',sources:[law]})),writeFile(regsPath,JSON.stringify({source:'fixture-regs',sources:[]}))]);
+  await assert.rejects(generateCoverage({lawsCatalogPath:lawsPath,regulationsCatalogPath:regsPath,lawsStatusPath:path.join(dir,'missing-laws.json'),regulationsStatusPath:path.join(dir,'missing-regs.json'),frozenCorpusPath:path.join(dir,'absent-corpus.jsonl'),outputPath:output,documentPath:document,generatedAt:'2026-11-02T00:00:00.000Z'}),/frozen export/i);
+  await assert.rejects(readFile(document,'utf8'),{code:'ENOENT'});await assert.rejects(readFile(output,'utf8'),{code:'ENOENT'});
+});

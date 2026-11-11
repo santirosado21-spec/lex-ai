@@ -35,7 +35,6 @@ export function classifyTitle(title){
 }
 
 async function readJson(file,fallback){try{return JSON.parse(await readFile(file,'utf8'));}catch(error){if(error.code==='ENOENT')return fallback;throw error;}}
-async function frozenLawIds(file){try{const rows=(await readFile(file,'utf8')).split('\n').filter(Boolean).map(line=>JSON.parse(line));return new Set(rows.map(row=>row.lawId));}catch(error){if(error.code==='ENOENT')return new Set();throw error;}}
 function sourceState(source,statusById,frozen){
   const entry=statusById.get(source.id);if(frozen.has(source.lawId))return {status:'ingested-frozen-export',evidence:'exports-v2 corpus contains this lawId'};
   if(entry?.state==='extracted'||entry?.state==='quarantined')return {status:'extracted-pending-or-excluded-from-frozen-export',evidence:'ingest status: '+entry.state};
@@ -59,7 +58,11 @@ function stateLegislationSummary(catalog){
 }
 
 export async function generateCoverage({lawsCatalogPath=path.join(root,'resources/legal-library-catalog.json'),regulationsCatalogPath=path.join(root,'resources/legal-library-catalog-reglamentos.json'),ojnCatalogPath=path.join(root,'resources/legal-library-catalog-ojn-index.json'),lawsStatusPath=path.join(root,'artifacts/legal-library/status.json'),regulationsStatusPath=path.join(root,'artifacts/legal-library-reglamentos/status.json'),frozenCorpusPath=path.join(root,'artifacts/legal-library/exports-v2/corpus.jsonl'),outputPath=path.join(root,'artifacts/legal-library/coverage.json'),documentPath=path.join(root,'docs/legal-library-coverage.md'),generatedAt=new Date().toISOString()}={}){
-  const [laws,regulations,ojnCatalog,lawsStatus,regulationsStatus,frozen]=await Promise.all([readJson(lawsCatalogPath,null),readJson(regulationsCatalogPath,null),readJson(ojnCatalogPath,null),readJson(lawsStatusPath,{sources:[]}),readJson(regulationsStatusPath,{sources:[]}),frozenLawIds(frozenCorpusPath)]);
+  // Fail closed: without the frozen export artifact the measured document would silently flip
+  // its headline count to zero, overwriting real evidence with an environment artifact.
+  let frozenCorpusRaw;try{frozenCorpusRaw=await readFile(frozenCorpusPath,'utf8');}catch(error){if(error.code==='ENOENT')throw new Error(`Coverage evidence missing: frozen export not found at ${frozenCorpusPath}; refusing to generate measured coverage without the frozen export.`);throw error;}
+  const [laws,regulations,ojnCatalog,lawsStatus,regulationsStatus]=await Promise.all([readJson(lawsCatalogPath,null),readJson(regulationsCatalogPath,null),readJson(ojnCatalogPath,null),readJson(lawsStatusPath,{sources:[]}),readJson(regulationsStatusPath,{sources:[]})]);
+  const frozen=new Set(frozenCorpusRaw.split('\n').filter(Boolean).map(line=>JSON.parse(line)).map(row=>row.lawId));
   if(!laws?.sources)throw new Error('Law catalogue is required for coverage.');if(!regulations?.sources)throw new Error('Regulations catalogue is required for coverage.');
   const lawStatusById=new Map((lawsStatus.sources??[]).map(row=>[row.id,row]));const regulationStatusById=new Map((regulationsStatus.sources??[]).map(row=>[row.id,row]));
   const instruments=[...laws.sources.map(source=>({sourceType:'law',source,states:lawStatusById})),...regulations.sources.map(source=>({sourceType:'regulation',source,states:regulationStatusById}))].map(({sourceType,source,states})=>{const classification=classifyTitle(source.title);return {sourceType,id:source.id,lawId:source.lawId,title:source.title,url:source.url,jurisdiction:source.jurisdiction,publisherIndex:source.publisherIndex,indexSha256:source.indexSha256,area:classification.id,areaLabel:classification.label,matchedTitleKeywords:classification.matches,ingestion:sourceState(source,states,frozen)};}).sort((a,b)=>a.sourceType.localeCompare(b.sourceType)||a.id.localeCompare(b.id));
