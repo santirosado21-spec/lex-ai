@@ -19,6 +19,8 @@ P1, P2 y P3 avanzan en paralelo. P4–P7 conservan las dependencias anteriores: 
 
 Primer CI de `main` (run 42930193693) ejecutó `npm ci` y luego la suite completa en un clon Ubuntu limpio: 899/1082 pasaron, 173 fallaron y 10 se omitieron. La causa dominante fue FTS5 ausente en la compilación Node del runner; también faltan `resources/public-library.sqlite` y otros activos de investigación generados que Git no distribuye. No se atribuyen los 173 fallos a una sola causa ni se presenta la suite local como reproducible en ese runner. La corrección del CI separa build y contratos portables de la suite integral dependiente de activos; hacer reproducible esta última es un trabajo P0 posterior con fixtures/licencias y entorno fijados, sin descargar datos por sorpresa.
 
+Segundo CI (run 42930477532) compiló y obtuvo 82/83 contratos verdes. El único fallo fue igualdad exacta de un score Python/JS con diferencia de aproximadamente `6e-15` en Linux. Se conserva el test V1 congelado y se agrega uno nuevo de paridad portable: 40 etiquetas, todos los campos y coordenadas exactos, score finito con diferencia menor a `1e-12`. El CI excluye por nombre sólo la comparación flotante histórica y lo anuncia en el log; no cambia el decoder ni el umbral de privacidad.
+
 ## Primeras asignaciones después de P0
 
 1. Revisar V3 Nym de forma independiente. La versión anterior falló por brecha real de muestreo de 143,671 ms antes de inferencia; 62 pruebas puras de V3 no resuelven esa medición. Congelar una sola prueba pública del lector y observarla sin usar el examen de 300 casos ni datos de clientes.

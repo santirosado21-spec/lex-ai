@@ -28,9 +28,15 @@ jobs:
       # Node 22.13.1 on this runner also lacks FTS5. Keep this gate explicit.
       - name: Portable source contracts from a clean checkout
         run: |
-          node --test \
+          # The historical V1 byte-exact Python/JS score test is retained for
+          # its frozen macOS evidence; Linux libm differs by ~6e-15. Its new
+          # portable counterpart asserts all other fields exactly and bounds
+          # the score difference to 1e-12 across all 40 labels.
+          echo 'Excluding one frozen V1 exact-float comparison; running portable 40-label parity instead.'
+          node --test --test-skip-pattern='^Python pure decoder mirrors JS across all40 native labels and Unicode$' \
             tests/landing-downloads.test.mjs \
             tests/privacy-nym-int8-decoder.test.mjs \
+            tests/privacy-nym-float-parity-portable.test.mjs \
             tests/privacy-nym-int8-decoder-v2.test.mjs \
             tests/privacy-nym-int8-decoder-v3.test.mjs \
             tests/windows-descendant-classification-diagnostic.test.mjs \
