@@ -32,15 +32,28 @@ export function summarize(response) {
     answer};
 }
 
+export async function checkModelAccess(token, fetchImpl = fetch) {
+  const res = await fetchImpl(`https://api.openai.com/v1/models/${MODEL}`, {
+    method: 'GET', redirect: 'error', signal: AbortSignal.timeout(20000),
+    headers: {'Authorization': `Bearer ${token}`, 'Accept': 'application/json'},
+  });
+  if (!res.ok) throw Error(`GET HTTP ${res.status}; no se imprime el cuerpo remoto ni se reintenta.`);
+  const data = await res.json();
+  if (data?.id !== MODEL) throw Error('El catálogo no confirmó el modelo solicitado.');
+  return {authenticated: true, modelAvailable: true, model: MODEL};
+}
+
 async function main() {
   const flags = process.argv.slice(2);
-  if (flags.length !== 1 || !['--dry-run', '--live'].includes(flags[0])) throw Error('Usa --dry-run o --live.');
+  if (flags.length !== 1 || !['--dry-run', '--auth', '--live'].includes(flags[0])) throw Error('Usa --dry-run, --auth o --live.');
   const body = smokeRequest();
   if (flags[0] === '--dry-run') { console.log(JSON.stringify({sent: false, body}, null, 2)); return; }
   const found = spawnSync('security', ['find-generic-password', '-a', 'rejon-ai-development', '-s', KEYCHAIN_SERVICE, '-w'], {encoding: 'utf8', timeout: 10000});
   if (found.status !== 0 || !found.stdout?.trim()) throw Error('No se encontró la clave de desarrollo en Keychain.');
   const token = found.stdout.trim();
   if (!/^sk-[A-Za-z0-9_-]{20,}$/.test(token)) throw Error('Formato de clave inesperado.');
+  const access = await checkModelAccess(token);
+  if (flags[0] === '--auth') { console.log(JSON.stringify(access)); return; }
   const started = Date.now();
   const res = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST', redirect: 'error', signal: AbortSignal.timeout(45000),
@@ -55,7 +68,7 @@ async function main() {
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   main().catch(error => {
     const message = error instanceof Error ? error.message : '';
-    const safe = /^(No se encontró la clave de desarrollo en Keychain\.|Formato de clave inesperado\.|Modelo o estado inesperado\.|Falta ID de respuesta verificable\.|Falta usage verificable\.|Salida no textual o inesperada\.|La respuesta del chequeo no cumplió el formato\.|HTTP [0-9]{3}; no se imprime el cuerpo remoto ni se reintenta\.)$/.test(message);
+    const safe = /^(No se encontró la clave de desarrollo en Keychain\.|Formato de clave inesperado\.|Modelo o estado inesperado\.|Falta ID de respuesta verificable\.|Falta usage verificable\.|Salida no textual o inesperada\.|La respuesta del chequeo no cumplió el formato\.|El catálogo no confirmó el modelo solicitado\.|(?:GET )?HTTP [0-9]{3}; no se imprime el cuerpo remoto ni se reintenta\.)$/.test(message);
     console.error(safe ? message : 'El chequeo no se completó; no se muestran credenciales ni cuerpo remoto.');
     process.exitCode = 1;
   });

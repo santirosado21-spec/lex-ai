@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {MODEL, smokeRequest, summarize} from '../scripts/openai-dev/smoke.mjs';
+import {MODEL, smokeRequest, summarize, checkModelAccess} from '../scripts/openai-dev/smoke.mjs';
 
 test('el chequeo usa modelo exacto, texto inventado, sin herramientas ni almacenamiento', () => {
   const body = smokeRequest();
@@ -27,4 +27,19 @@ test('rechaza modelo distinto, salida de herramienta y usage ausente', () => {
   assert.throws(() => summarize({...base, id: undefined}));
   assert.throws(() => summarize({...base, usage: {input_tokens: -1, output_tokens: 20, total_tokens: 19}}));
   assert.throws(() => summarize({...base, usage: {input_tokens: 100, output_tokens: 20, total_tokens: 119}}));
+});
+
+test('la preflight exige catálogo exacto y no genera texto', async () => {
+  let calls = 0;
+  const fetchOk = async (url, options) => {
+    calls++;
+    assert.equal(url, `https://api.openai.com/v1/models/${MODEL}`);
+    assert.equal(options.method, 'GET');
+    assert.equal(options.headers.Authorization, 'Bearer sk-proj-synthetic-not-a-real-key');
+    return {ok: true, json: async () => ({id: MODEL})};
+  };
+  assert.deepEqual(await checkModelAccess('sk-proj-synthetic-not-a-real-key', fetchOk), {authenticated: true, modelAvailable: true, model: MODEL});
+  assert.equal(calls, 1);
+  await assert.rejects(checkModelAccess('synthetic', async () => ({ok: false, status: 401})), /GET HTTP 401/);
+  await assert.rejects(checkModelAccess('synthetic', async () => ({ok: true, json: async () => ({id: 'otro'})})), /catálogo/);
 });
