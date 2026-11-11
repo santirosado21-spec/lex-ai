@@ -6,15 +6,24 @@ import path from 'node:path';
 import { openPublicLibrary } from '../server/public-library.mjs';
 import { createService } from '../server/service.mjs';
 import { AREAS, ROOT, loadCases, instrumentInference, scoreRetrieval, scoreAnswer, evaluateCases, summarize, markdownReport, runEvaluation } from '../scripts/eval-areas.mjs';
+import { missingPrerequisite, fidelityGate } from './helpers/fidelity.mjs';
 
+const LIBRARY_PATH = path.join(ROOT, 'resources/public-library.sqlite');
+const libraryPrereq = await missingPrerequisite(LIBRARY_PATH, 'production public-library.sqlite unavailable');
 let library, dataset;
 before(async () => {
-  library = await openPublicLibrary(path.join(ROOT, 'resources/public-library.sqlite'));
+  if (libraryPrereq) return;
+  library = await openPublicLibrary(LIBRARY_PATH);
   dataset = await loadCases({ library });
 });
 after(() => library?.close());
 
-test('200 synthetic cases are pinned to real articles, fragments and whole-law exclusions', () => {
+const gated = (name, fn) => test(name, (t) => {
+  if (fidelityGate(t, libraryPrereq, 'corpus-fidelity assertion stays pending')) return;
+  return fn(t);
+});
+
+gated('200 synthetic cases are pinned to real articles, fragments and whole-law exclusions', () => {
   assert.equal(dataset.cases.length, 200);
   assert.equal(dataset.manifest.heldOutLaws.length, 10);
   for (const area of AREAS) {
@@ -36,7 +45,7 @@ test('200 synthetic cases are pinned to real articles, fragments and whole-law e
   assert.ok(dataset.cases.filter(c => c.expected.chatOnly).every(c => c.provenance.length === 0));
 });
 
-test('hit@3 requires the correct law/article pair, and fragment coverage is separate', () => {
+gated('hit@3 requires the correct law/article pair, and fragment coverage is separate', () => {
   const expected = dataset.cases[0].expected, target = expected.articles[0];
   const right = { law_id: target.law_id, article: target.article, text: target.expectedFragment };
   const wrong = { ...right, law_id: 'MX-FED-WRONG' };
@@ -55,7 +64,7 @@ function citationFixture() {
   return { expected: c.expected, evidence, answer, getSource: id => id === source.id ? source : null };
 }
 
-test('citation fidelity rejects fabricated quotes, unprovided sources and unmapped references', () => {
+gated('citation fidelity rejects fabricated quotes, unprovided sources and unmapped references', () => {
   const f = citationFixture();
   assert.equal(scoreAnswer(f).mustCite, true);
   assert.equal(scoreAnswer({ ...f, evidence: [] }).mustCite, false);
@@ -65,21 +74,21 @@ test('citation fidelity rejects fabricated quotes, unprovided sources and unmapp
   assert.equal(scoreAnswer({ ...f, answer: { ...f.answer, citations: [] } }).citationFidelity, null);
 });
 
-test('a literal citation to an unrelated law is not a correct expected answer', () => {
+gated('a literal citation to an unrelated law is not a correct expected answer', () => {
   const f = citationFixture();
   const score = scoreAnswer({ ...f, expected: dataset.cases[0].expected });
   assert.equal(score.citationFidelity, true);
   assert.equal(score.mustCite, false);
 });
 
-test('live aliases must map to the captured canonical source, not just a declared canonicalId', () => {
+gated('live aliases must map to the captured canonical source, not just a declared canonicalId', () => {
   const f = citationFixture(), original = f.answer.citations[0];
   const aliased = { ...f, evidence: [{ ...f.evidence[0], modelId: 'L1' }], answer: { ...f.answer, text: 'El pasaje describe un acuerdo. [L1]', citations: [{ ...original, id: 'L1', canonicalId: original.id }] } };
   assert.equal(scoreAnswer(aliased).mustCite, true);
   assert.equal(scoreAnswer({ ...aliased, evidence: [{ ...f.evidence[0], modelId: 'L2' }] }).mustCite, false);
 });
 
-test('retrieval simulator cites only source/quote pairs allowed by the actual output schema', async () => {
+gated('retrieval simulator cites only source/quote pairs allowed by the actual output schema', async () => {
   const inference = instrumentInference({ resolveSource: () => null, observe() {} });
   const quote = 'Este pasaje público tiene longitud suficiente para una cita.';
   const sources = [{ id: 'L1', text: 'Corto', allowedQuotes: ['Corto'] }, { id: 'L2', text: quote, allowedQuotes: [quote] }];
@@ -88,7 +97,7 @@ test('retrieval simulator cites only source/quote pairs allowed by the actual ou
   assert.deepEqual(JSON.parse(raw).paragraphs.map(p => p.sourceId), ['L2']);
 });
 
-test('abstention and state clarification require the requested behavior, not an exception or generic question', () => {
+gated('abstention and state clarification require the requested behavior, not an exception or generic question', () => {
   const expected = { laws: [], articles: [], mustAbstain: true };
   const answer = { kind: 'chat', text: 'No tengo fuentes locales de Oaxaca. Comparte la disposición y su fuente oficial.', citations: [], validation: { status: 'needs-jurisdiction-source' } };
   const input = { expected, answer, getSource: () => null };
@@ -101,13 +110,13 @@ test('abstention and state clarification require the requested behavior, not an 
   assert.equal(scoreAnswer({ ...jurisdiction, answer: { ...answer, text: '¿Quieres que te explique el estado del proceso?' } }).mustAskJurisdiction, false);
 });
 
-test('chat-only rejects inline citations and statutory references even with empty citation metadata', () => {
+gated('chat-only rejects inline citations and statutory references even with empty citation metadata', () => {
   const input = { expected: { laws: [], articles: [], chatOnly: true }, answer: { kind: 'chat', text: 'Hola, organicemos una agenda.', citations: [] }, getSource: () => null };
   assert.equal(scoreAnswer(input).chatOnly, true);
   for (const text of ['Según el artículo 17.', 'Hola [L1]', 'Consulta https://example.org']) assert.equal(scoreAnswer({ ...input, answer: { ...input.answer, text } }).chatOnly, false);
 });
 
-test('inference instrumentation forwards live messages/options unchanged and captures actual supplied passages', async () => {
+gated('inference instrumentation forwards live messages/options unchanged and captures actual supplied passages', async () => {
   const captured = [], seen = [];
   const messages = [{ role: 'user', content: JSON.stringify({ sources: [{ id: 'L1', title: 'Ley pública', article: '7', text: 'Pasaje auténtico entregado.', allowedQuotes: [] }] }) }];
   const options = { outputSchema: { type: 'object' } };
@@ -119,7 +128,7 @@ test('inference instrumentation forwards live messages/options unchanged and cap
   assert.equal(captured[0].sources[0].text, 'Pasaje auténtico entregado.');
 });
 
-test('conversation runner isolates threads, preserves turn order, and does not count errors as abstention', async () => {
+gated('conversation runner isolates threads, preserves turn order, and does not count errors as abstention', async () => {
   const calls = [];
   const cases = [{ ...dataset.cases[0], id: 'a', turns: [{ role: 'user', content: 'primero' }, { role: 'user', content: 'segundo' }] }, { ...dataset.cases[16], id: 'b' }];
   const service = { async analyze(p) { calls.push(p); if (p.threadId === 'b') throw Error('blocked'); return { text: 'Respuesta sin citas.', citations: [], kind: 'chat' }; } };
@@ -131,7 +140,7 @@ test('conversation runner isolates threads, preserves turn order, and does not c
   assert.equal(summary.mustAbstain.passed, 0); assert.equal(summary.errors, 1);
 });
 
-test('failed follow-up cannot reuse the first-turn hit or disappear from the denominator', async () => {
+gated('failed follow-up cannot reuse the first-turn hit or disappear from the denominator', async () => {
   const c = dataset.cases.find(c => c.type === 'follow-up');
   const t = c.expected.articles[0];
   let n = 0;
@@ -141,7 +150,7 @@ test('failed follow-up cannot reuse the first-turn hit or disappear from the den
   assert.equal(summary.citationFidelity, null); assert.equal(summary.mustAbstain, null);
 });
 
-test('real createService retrieval observes exact article and follow-up evidence without loopback or a model', async t => {
+gated('real createService retrieval observes exact article and follow-up evidence without loopback or a model', async t => {
   const dir = await mkdtemp(path.join(tmpdir(), 'lex-areas-test-'));
   let hydrated = [], observations = [];
   const wrappedLibrary = { ...library, getSource(id) { const s = library.getSource(id); if (s) hydrated.push(s); return s; } };
@@ -157,14 +166,14 @@ test('real createService retrieval observes exact article and follow-up evidence
   assert.equal((await service.dispatch('state')).documents.length, 0);
 });
 
-test('markdown distinguishes simulation and missing denominators from perfect scores', () => {
+gated('markdown distinguishes simulation and missing denominators from perfect scores', () => {
   const md = markdownReport({ mode: 'retrieval', status: 'completed', startedAt: 'synthetic', dataset: dataset.manifest, summary: [] });
   assert.match(md, /NO se califican/);
   assert.match(md, /prospectiva/);
   assert.doesNotMatch(md, /100\.0%/);
 });
 
-test('live without an explicit model store fails with reviewable JSON/Markdown and no fabricated metrics', async t => {
+gated('live without an explicit model store fails with reviewable JSON/Markdown and no fabricated metrics', async t => {
   const dir = await mkdtemp(path.join(tmpdir(), 'lex-areas-preflight-'));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const result = await runEvaluation({ mode: 'live', outputDir: dir });

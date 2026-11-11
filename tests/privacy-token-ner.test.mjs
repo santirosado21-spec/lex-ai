@@ -1,4 +1,6 @@
 import test from 'node:test';
+import {missingPrerequisite,fidelityGate} from './helpers/fidelity.mjs';
+const tokenizerPrereq=await missingPrerequisite('artifacts/privacy/candidate-discovery-20261110/rampart-pinned-tokenizer.json','pinned tokenizer artifact not provisioned');
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {readFile} from 'node:fs/promises';
@@ -41,7 +43,7 @@ check(lambda:m['validated_offsets']('x',[(0,0)]*513,[1]*513,[2]*513))
 check(lambda:m['utf16_offsets']('\\ud800'))
 `);
 });
-test('actual pinned tokenizer metadata preserves accents and rejects unknown emoji without ONNX load',()=>{
+test('actual pinned tokenizer metadata preserves accents and rejects unknown emoji without ONNX load',(t)=>{if(fidelityGate(t,tokenizerPrereq,'stays pending'))return;
  python(`from tokenizers import Tokenizer
 p='artifacts/privacy/candidate-discovery-20261110/rampart-pinned-tokenizer.json'
 t=Tokenizer.from_file(p);t.no_truncation();t.no_padding()
@@ -69,7 +71,7 @@ test('timeout closes signal, no auto retry, provenance failure precedes backend'
  const bad=input();bad.segments[0].originScope={...scope,matterId:'OTHER'};let invoked=false;
  const isolated=createTokenNerDetector({backend:{async detect(){invoked=true;return complete([]);}}});assert.equal((await isolated.detect(bad)).reasonCategory,'scope_mismatch');assert.equal(invoked,false);
 });
-test('pinned metadata hashes, bounded payload and absent review never start a worker',async()=>{
+test('pinned metadata hashes, bounded payload and absent review never start a worker',async(t)=>{if(fidelityGate(t,tokenizerPrereq,'hash verification stays pending'))return;
  const m=JSON.parse(await readFile('resources/privacy-token-ner-candidate-v1.json'));assert.equal(m.productionEnabled,false);assert.equal(m.automaticDownload,false);assert.ok(m.files.reduce((n,f)=>n+f.bytes,0)<175*1024*1024);
  for(const f of m.files.filter(f=>!f.path.endsWith('.onnx'))){const b=await readFile('artifacts/privacy/candidate-discovery-20261110/rampart-pinned-'+f.path);assert.equal(b.length,f.bytes);assert.equal(createHash('sha256').update(b).digest('hex'),f.sha256);}
  await assert.rejects(startTokenNerWorker());await assert.rejects(startTokenNerWorker({reviewedManifestSha256:'0'.repeat(64)}));

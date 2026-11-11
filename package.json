@@ -18,7 +18,8 @@
     "watch:start": "node scripts/night-watch-control.mjs start",
     "watch:status": "node scripts/night-watch-control.mjs status",
     "watch:stop": "node scripts/night-watch-control.mjs stop",
-    "watch:unload": "node scripts/night-watch-control.mjs unload"
+    "watch:unload": "node scripts/night-watch-control.mjs unload",
+    "test:fidelity": "LEX_REQUIRE_FIDELITY=1 node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

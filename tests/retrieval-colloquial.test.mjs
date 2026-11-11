@@ -1,4 +1,6 @@
 import test from 'node:test';
+import {missingPrerequisite,fidelityGate} from './helpers/fidelity.mjs';
+const pinnedLibraryPrereq=await missingPrerequisite('resources/public-library.sqlite','pinned public library not built');
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {mkdtemp,rm,readFile} from 'node:fs/promises';
@@ -38,7 +40,7 @@ test('synthetic colloquial probes expand across ten areas, with strict anchor ju
  assert.ok(!expandQuery('La pensión de vejez del IMSS').concepts.some(c=>c.area==='familiar'));
 });
 
-test('every vocabulary term and provenance excerpt is grounded in the pinned public source',()=>{
+test('every vocabulary term and provenance excerpt is grounded in the pinned public source',(t)=>{if(fidelityGate(t,pinnedLibraryPrereq,'vocabulary grounding stays pending'))return;
  const db=new DatabaseSync('resources/public-library.sqlite',{readOnly:true});
  try{for(const entry of thesaurus.entries){
   const sources=entry.provenance.map(p=>{
