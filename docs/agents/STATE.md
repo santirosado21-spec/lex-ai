@@ -1,6 +1,6 @@
 # Estado compartido — LEX AI
 
-**Última actualización:** 2026-11-10 18:56 por codex: decisión — Credencial OpenRouter de producto separada de PSF
+**Última actualización:** 2026-11-10 18:59 por codex: H6b.1 lector Keychain optativo
 
 ## Objetivo y autoridad vigentes
 
@@ -13,6 +13,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 ## Ahora
 
 - **OpenRouter H6a:** `1704658` añadió adaptador optativo, apagado y separado del flujo activo, con límite de precio cero y modelo `:free`; 8 pruebas dirigidas, suite local 1098/1098 y build pasaron. Claude revisó la pieza estática de forma independiente tras correcciones; no hizo prueba de red. No hay clave de producto, verificación de cuenta real, generación remota ni egreso privado. H6 completo sigue bloqueado por H4/H5. La clave PSF de desarrollo no se reutiliza. La reserva de archivos y tareas para Lorenzo y Pedro está en `docs/notes/cofounder-workboard-2026-11-10.md`; hay copia en Notas del dueño, sin confirmar que se haya compartido.
+- **OpenRouter H6b.1:** Astra implementó lector optativo de credencial de producto en Keychain, con identificadores fijos y sin fallback a PSF. 6/6 pruebas simuladas y build pasaron; Sol aprobó revisión estática acotada. No se ejecutó Keychain real, no hay provisión/revocación ni cuenta conectada. Cadenas JavaScript no se borran de memoria con garantía. No importar en el producto activo.
 - **Producto activo:** motor local y SQLite sin cifrado. Los componentes H1–H5 son optativos; no están conectados al flujo comercial ni se permiten documentos reales en nube. No confundir pruebas de módulos con producto integrado.
 - **Plan:** `docs/orchestration/main-cofounder-execution-plan-2026-11-10.md` actualiza la entrega a main; plan extenso `product-completion-phases-2026-11-09.md` y backlog `hybrid-development-backlog.md`. F0/ADR0004 decide navegador servido por Node local del usuario. Guard Host/Origin probado; web alojada + companion no implementados. Seleccionar archivo en una web remota no debe subir originales para protegerlos después.
 - **Privacidad:** GLiNER82,7 MB de pesos falló. En60dev, cinco etiquetas33TP/228FP/15FN; tres32/113/16; ambas bloquearon60/60. Ablation preservada7bdc217, QA privacy-ablation-v3. No bajar gates ni usar el examen retenido para elegir modelo.

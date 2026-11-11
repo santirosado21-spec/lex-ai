@@ -32,6 +32,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H5b.1a | Viabilidad nativa y contrato de dominio parcial | H5a | done | Worker Astra `build_vault_h5b1`, revisor Sol / PR #1, `c0f3733`; paridad false |
 | M1 | Candidatos LLM para tareas estrictamente públicas y protocolo de selección | H3V, H4a | done | Codex/Sol y worker Sol `public_candidates_tools` / PR #1, `b482f13`; preparación de H6/H8, sin desbloquearlos |
 | H6a | Adaptador OpenRouter aislado y gratuito, sin activación | H2, H3V, M1 | done | `1704658`; 8 pruebas dirigidas/1098 suite local+build, revisión estática independiente APPROVE sólo pieza; sin credencial producto, red real ni egreso privado |
+| H6b.1 | Lector local Keychain de credencial OpenRouter exclusiva | H6a | done | 6 pruebas simuladas, build y revisión estática independiente APPROVE sólo pieza; apagado, sin provisión/revocación, lectura real, cuenta conectada ni egreso |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |

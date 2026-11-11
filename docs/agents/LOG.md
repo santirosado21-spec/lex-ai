@@ -239,3 +239,7 @@ Contigüidad completa de offsets originales en Python y JS, con casos positivos/
 ## 2026-11-10 18:56 — codex — H6a OpenRouter aislado y nota para cofundadores
 
 Verificado: adaptador optativo 1704658, 8 pruebas dirigidas, suite local 1098/1098 y build; revisión estática independiente aprobó sólo la pieza. Notas para Lorenzo y Pedro en docs/notes/cofounder-workboard-2026-11-10.md y copia privada en Notas. No medido: conexión real a cuenta, generación remota, 8 GB y seguridad del flujo H4/H5. Próximo: H6b clave exclusiva de producto y almacén seguro; mantener ruta apagada.
+
+## 2026-11-10 18:59 — codex — H6b.1 lector Keychain optativo
+
+Verificado: Astra implementó lector de Keychain de producto, 6/6 pruebas simuladas, 8/8 transporte y build; Sol aprobó revisión estática sólo de la pieza. No medido: lectura Keychain real, ACL, conexión a cuenta OpenRouter, generación, egreso privado u 8 GB. Sin provisión ni revocación; ruta activa no cambia. Evidencia docs/qa/openrouter-H6b1-keychain-review-2026-11-10.md.

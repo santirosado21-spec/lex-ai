@@ -40,5 +40,6 @@ jobs:
             tests/privacy-nym-int8-decoder-v2.test.mjs \
             tests/privacy-nym-int8-decoder-v3.test.mjs \
             tests/openrouter-provider.test.mjs \
+            tests/openrouter-keychain.test.mjs \
             tests/windows-descendant-classification-diagnostic.test.mjs \
             tests/windows-owned-tree-bootstrap-diagnostic.test.mjs
