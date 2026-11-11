@@ -275,3 +275,7 @@ El dueño aclaró que su frase sobre algo en su cuenta se refería a los crédit
 ## 2026-11-10 22:33 — codex — Paquete local para investigación pública con Instinct
 
 Se creó artifacts/Rejon-AI-Instinct-handoff-2026-11-10.zip, ignorado por Git: 9 archivos, 1.204.457 bytes, SHA-256 7845ef660c99d48015a474da1d84852c39a3f29e9f1732ef1a9677f61d5b628f. Incluye contexto, encargo de corpus oficial MX y GitHub, cuatro capturas UI de datos sintéticos, manifiesto. unzip -t pasó; hashes y rutas internas verificados; revisión básica de patrones de claves y rutas locales pasó. No se enviaron archivos a Instinct ni se evaluó su respuesta. No se incluyeron secretos ni documentos de clientes.
+
+## 2026-11-10 23:32 — codex — OpenAI API: chequeo sintético bloqueado por HTTP 401
+
+Dueño informó USD20 de créditos hasta 16nov y USD100/mes después; saldo no auditado. Se preparó chequeo de desarrollo Luna en scripts/openai-dev/smoke.mjs con texto inventado, store:false, sin herramientas, salida64. Dry-run, 3 pruebas, suite1107/1107, build y revisión independiente Sol aprobaron tras corregir ID/usage. Keychain presente y formato de clave plausible; dos solicitudes POST a Responses devolvieron HTTP401, cero generaciones/usage/recibos. No se imprimió clave ni cuerpo remoto y no se reintentará con esa clave. Se pidió clave nueva del proyecto Rejon.AI. Credenciales de desarrollo separadas del producto.
