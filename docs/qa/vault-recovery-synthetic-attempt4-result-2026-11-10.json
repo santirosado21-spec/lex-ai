@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "reviewer": "review_vault_reminders / Sol",
+  "verdict": "APPROVE_BOUNDED_SYNTHETIC_READONLY_PROTOTYPE_FIRST_SUBSET",
+  "runId": 42904113430,
+  "commit": "b447ac4763ae37f34f4f1be34b0aaa258504a88e",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/vault-recovery-synthetic-fourth.log",
+    "sha256": "bf2b2ab239e19f77da4789c5aaed6d5e47538bb99d2a2cea107a29c061720cb5",
+    "bytes": 195911
+  },
+  "freeze": {
+    "sha256": "718d4307d991ffbe2069a27403c63340ecbadfd75bb5dbc5bc87de46f25adb8e",
+    "currentAndCommitMatch": true,
+    "sourceBindings": 15,
+    "workflowBindings": 1,
+    "protocolBindings": 1,
+    "hashes": {
+      "crates/lex-vault/Cargo.toml": "eebc597782d1e3d4cbb969898c46be0b810cfd9e2248afc6b4f9fb2a01777886",
+      "crates/lex-vault/Cargo.lock": "f5ad6d515a05cf1b8306b10116862631728fa2d20175f1afe745c072a13d99fa",
+      "crates/lex-vault/README.md": "a3df89bd884710f3955004d45f094c4b490e96cd000a8c10b29cebb7ef441ced",
+      "crates/lex-vault/src/lib.rs": "5f9ce836e47731906349b606e43d6edd145342da3f0c2b4cb6a5a99450e9edf0",
+      "crates/lex-vault/src/recovery.rs": "e8d85ca29bda9ea53ce81459e64b70fd3ebd9a6b5284089f1218b772c05e733d",
+      "crates/lex-vault/tests/recovery.rs": "3198bb3327e1076e857d56e875d92355542e7e9fac41b9fff081b70720ce0a18",
+      "crates/lex-vault/tests/recovery_process.rs": "cd7ce44167bb6f28143594358956bbb0e062cccedf72046966e891f0b1469b04",
+      "crates/lex-vault/tests/support/recovery_fixture.rs": "faac4c6c63fb113b0480496ffee8d1738527d5a01849344a42a4d597ff10c4ba",
+      "crates/lex-vault/src/proposals.rs": "66200d330579c01b6822f8d5e65c8fa0187727e2d8e3fcb4e33ab0b93dd36301",
+      "crates/lex-vault/src/reminders.rs": "e583680ba229f4dd3491fb482d1a8ed2233d2536bf3abd43b1cea84725a2dc1b",
+      "crates/lex-vault/src/time_billing.rs": "30ecc4c42e7d0b6971cf7feac85618312b69fbea1d629d58433cc67093aa1b82",
+      "crates/lex-vault/tests/proposals.rs": "21585731d755207f92090b83bac3a0d29cc2fdac0d08ffb60e192f653657cee1",
+      "crates/lex-vault/tests/reminders.rs": "6fc57916503ae276b406dac3060968758c46c364049885fd78049c3c378c8b7a",
+      "crates/lex-vault/tests/time_billing.rs": "f1f81c255c29dc4482278b582b39ac4576dc5109425fed8fbf08b33852969874",
+      "crates/lex-vault/tests/viability.rs": "3c99c0c452593f40389451f5dc1ebf456501e564016da0bcd4f78980696e3fc7",
+      ".github/workflows/vault-recovery-synthetic.yml": "0a4cccb85fa6ff18c47fa3b6c193c605b59b238a854f9093a8510706fc932716",
+      "resources/vault-recovery-synthetic-v1.json": "1b1125e92adb2e1360c67ca3dcaa1b86daa01e26591e7f6df496f7cd73195794"
+    }
+  },
+  "observedReport": {
+    "actualMaximumSamplingGapMs": null,
+    "cargoVersion": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "category": null,
+    "compilationAttempted": true,
+    "configuredBatchMs": 300000,
+    "configuredCaseMs": 60000,
+    "configuredRssThresholdBytes": 805306368,
+    "configuredSamplingIntervalMs": 50,
+    "cryptoBatchCommandRequested": true,
+    "cryptoBatchWallMs": 11415.773,
+    "cryptoTestsExecuted": true,
+    "cryptographyValidated": false,
+    "feature": "synthetic-recovery",
+    "h5Complete": false,
+    "hardPeakRssGuaranteed": false,
+    "kdfInvocationCount": null,
+    "lockedRegistryPackages": 179,
+    "physical8GBValidated": false,
+    "receipt": {
+      "caseMatrixRows": 24,
+      "cases": [
+        {
+          "categoryCode": 0,
+          "id": "R01",
+          "published": true
+        },
+        {
+          "categoryCode": 3,
+          "id": "R03-wrong",
+          "published": false
+        },
+        {
+          "categoryCode": 2,
+          "id": "R03-missing",
+          "published": false
+        },
+        {
+          "categoryCode": "MissingCredential",
+          "id": "R04-missing",
+          "published": false
+        },
+        {
+          "categoryCode": "SourceIntegrity",
+          "id": "R04-wrong",
+          "published": false
+        },
+        {
+          "categoryCode": "SourceNotQuiescent",
+          "id": "R05-live",
+          "published": false
+        },
+        {
+          "categoryCode": "SourceNotQuiescent",
+          "id": "R05-retained-closed",
+          "published": false
+        },
+        {
+          "categoryCode": 3,
+          "id": "R06-final-truncate",
+          "published": false
+        },
+        {
+          "categoryCode": 3,
+          "id": "R07-body-flip",
+          "published": false
+        },
+        {
+          "categoryCode": 5,
+          "id": "R09-foreign",
+          "published": false
+        },
+        {
+          "categoryCode": 11,
+          "id": "R13-staging-collision",
+          "published": false
+        },
+        {
+          "categoryCode": 9,
+          "id": "R17-cipher-size",
+          "published": false
+        },
+        {
+          "categoryCode": 9,
+          "id": "R17-header",
+          "published": false
+        },
+        {
+          "categoryCode": 9,
+          "id": "R17-plain-size",
+          "published": false
+        },
+        {
+          "categoryCode": 9,
+          "id": "R17-log19",
+          "published": false
+        },
+        {
+          "categoryCode": 4,
+          "id": "R23a-internal-append",
+          "published": false
+        },
+        {
+          "categoryCode": 3,
+          "id": "R23b-external-append",
+          "published": false
+        },
+        {
+          "encryptedNegative": true,
+          "id": "R18-scanner",
+          "positiveControl": true
+        }
+      ],
+      "elapsedMs": 11268,
+      "eofChecksPassed": true,
+      "firstBatchOnly": true,
+      "h5Complete": false,
+      "invocations": 18,
+      "peakParentRssBytes": 296222720,
+      "peakSampledChildRssBytes": 291110912,
+      "preparation": {
+        "authenticatedNegativeEnvelopes": 2,
+        "baseExports": 1,
+        "baseFixture": 1,
+        "negativeSealFixtures": 4
+      },
+      "productionEnabled": false,
+      "protocol": "vault-recovery-synthetic-v1",
+      "roundtripProvisional": false
+    },
+    "receiptValidated": true,
+    "recoveryHelperDirectlyInvoked": false,
+    "recoveryPrototypeReadonlyValidated": true,
+    "result": "PASS",
+    "rustcVersion": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "sourceFreezePost": true,
+    "sourceFreezePre": true,
+    "status": "FIRST_BATCH_ONLY",
+    "supervisorTestInvoked": true,
+    "supervisorTestResult": "PASS",
+    "supervisorWallMs": 603.174,
+    "technicalPass": true,
+    "testsExecuted": true,
+    "thirdPartyBuildCodeMayExecute": true
+  },
+  "execution": {
+    "compileElapsedReported": "3m 21s",
+    "profile": "optimized + debuginfo",
+    "exactSupervisorPassed": 1,
+    "exactFirstBatchPassed": 1,
+    "eachFailed": 0,
+    "eachIgnored": 0,
+    "eachFilteredOut": 1,
+    "supervisorLibtestSeconds": 0.22,
+    "batchLibtestSeconds": 11.28,
+    "order": "Frozen driver executes harmless supervisor before first_batch_18; captured batch output is printed first in finally.",
+    "selectors": "--test recovery NAME -- --ignored --exact --nocapture --test-threads=1"
+  },
+  "acceptance": {
+    "exact13FieldNativeReceiptEqualsWrapper": true,
+    "exact18OrderedCategories": true,
+    "R23a4AndR23b3BothUnpublished": true,
+    "EOFTrue": true,
+    "roundtripProvisionalFalse": true,
+    "phaseMarkers": 56,
+    "preparationPairs": 10,
+    "casePairs": 18,
+    "preparationSeparate": {
+      "authenticatedNegativeEnvelopes": 2,
+      "baseExports": 1,
+      "baseFixture": 1,
+      "negativeSealFixtures": 4
+    },
+    "maximumCaseMarkerMs": 947
+  },
+  "monitoring": {
+    "cryptoBatchFinalRegistryRecord": [
+      "elapsed_ms=0 source=2 pre=1 post=0 pre_errno=0 post_errno=0 query=1 returned=96 expected=96 errno_captured=0 errno=0 rss=2 result=1 exit=0 calls=77 queries=77 positive=77 zero=0 short_or_failed=0 exited=0 errors=0"
+    ],
+    "cryptoBatchSource5SettlementTriggered": false,
+    "supervisorSource5Records": [
+      "elapsed_ms=53 source=5 wait=1 errno=0 polls=10 settlement_us=52613 outcome=2",
+      "elapsed_ms=60 source=5 wait=2 errno=0 polls=1 settlement_us=0 outcome=1"
+    ],
+    "originalR09CauseKnown": false,
+    "sampledPeakSumBytes": 587333632,
+    "sumOfSeparatePeaksNotNecessarilySimultaneous": true,
+    "actualMaximumSamplingGapMs": null,
+    "hardPeakGuaranteed": false,
+    "kdfCountUnknown": true
+  },
+  "limits": [
+    "Only first synthetic read-only prototype subset accepted; not all24 matrix rows or variants.",
+    "No H5 completion, parity, custody, H3 identity maps, migration, physical8GB or general cryptographic validation.",
+    "Earlier three failed attempts remain evidence; original R09 cause unknown.",
+    "Configured50ms sampling is not a measured hard maximum gap or peak guarantee.",
+    "No additional execution or retry authorized by this audit.",
+    "Reviewer performed no native calls, codegen, tests, crypto or network."
+  ]
+}

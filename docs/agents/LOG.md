@@ -215,3 +215,7 @@ Fix8a04105 perfiltest opt2+56marcas finitas revisado independientemente; guard60
 ## 2026-11-10 14:24 — codex — Diagnóstico concreto H5 y DEV de privacidad independiente
 
 SegundoCI42892963286 concluyó4.51snativas/4746.919mswrapper:9preparacionesDONE4461ms,R01STARTsinDONE,spawn/bin/psEPERM;0casosaceptados, sinrecibo/RSS/KDF. Fallo/freezepreservados5704b31yrevisados. Fix451f294 usa libcproc_pidinfoownedchildbajomutex, review/freezepropios ytercerCI42894691715 en curso sinliberarpermisos/topes. DEV5704b31 deautor/revisordistintos60casos70entidades anotacionespropuestas silver,0scores/examen300intacto. D1j CI42894576266fallóPREFLIGHT_OR_RUNsinmedir;folderparentfaltanteesdefectoestático, excepciónactualdesconocida, fixSolenpreparación.
+
+## 2026-11-10 18:08 — codex — H5 synthetic subset, Nym inventory and Windows classification
+
+Verified: public Mac CI42904113430 passed 18 bounded synthetic read-only recovery invocations with independent Sol audit; parent and sampled child RSS peaks are separate. Nym inventory build produced 198804 audited rows; V2 real run failed 143.671 ms sampling gap before any NN. Windows public CI42928786842 classified three extra closure members by exact system-directory conhost.exe path; independent reaping/authenticity/performance remain unproven. Nym V3 source has pure mocks only; attempted independent delegate review failed due Codex collaborator usage limit. No private cloud route, real client docs, Intel/Windows installers or 8 GB physical acceptance.

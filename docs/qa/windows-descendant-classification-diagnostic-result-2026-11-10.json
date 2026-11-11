@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "runId": 42928786842,
+  "headCommit": "67aec9f",
+  "workflowConclusion": "success",
+  "diagnosticStatus": "DIAGNOSTIC_COMPLETE",
+  "log": {
+    "path": "artifacts/phased-completion-20261110-batch2/windows-descendant-classification-first.log",
+    "sha256": "2864f435e13a5a749e7352fcc683892f56491d60d689507aaf385e445ecbdcb5",
+    "bytes": 30440
+  },
+  "freezeSha256": "521014e0980d1cc29369a89e1a8976a18bc568c7cb5c08a8a6da61065f51cd36",
+  "sourceReview": "docs/qa/windows-descendant-classification-diagnostic-review-2026-11-10.json",
+  "observed": {
+    "protocol": "windows-descendant-classification-diagnostic-v1",
+    "status": "DIAGNOSTIC_COMPLETE",
+    "diagnosticOnly": true,
+    "performanceValidated": false,
+    "classificationAllowsExtras": false,
+    "physical8GBValidated": false,
+    "extraCleanupObserved": null,
+    "cleanupScope": "collector-and-three-known-node-roles-only",
+    "bootstrapElapsedMs": 3752.3513000000003,
+    "roles": [
+      {
+        "role": "root",
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      },
+      {
+        "role": "child",
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      },
+      {
+        "role": "grandchild",
+        "present": true,
+        "parentMatches": true,
+        "rssPositive": true
+      }
+    ],
+    "closureCount": 6,
+    "ownedClosureCount": 3,
+    "extraCount": 3,
+    "classificationCounts": {
+      "systemConsoleHost": 3,
+      "systemOpenConsole": 0,
+      "unknown": 0
+    },
+    "collectorExcluded": true,
+    "outsideExcluded": true,
+    "collectorCleanup": {
+      "closeObserved": true,
+      "exitObservedZero": true,
+      "forced": false
+    },
+    "fixtureCleanup": {
+      "allThreeGracefullyReaped": true,
+      "forced": false
+    },
+    "finalStreamValidated": true
+  },
+  "conclusion": "The three extra closure members are classified by exact system-directory path as conhost.exe; identity/signature and independent extra-member reaping are not established. Earlier D1k extra identities were unknown. This new diagnostic does not revise the old performance smoke, strict closure-three acceptance or its three failures.",
+  "limits": [
+    "classification source reviewed independently before activation; final activation addendum delegate was unavailable due model quota, while root verified exact eight-source freeze, checkout LF hashes and 17 targeted tests",
+    "system-path metadata is not process authenticity or signed binary proof",
+    "extraCleanupObserved null; cleanup scope collector plus three known Node roles only; no orphan-free claim",
+    "one query only; no four-sample performance result, no physical 8 GB or installer validation",
+    "no client data or production inference"
+  ]
+}

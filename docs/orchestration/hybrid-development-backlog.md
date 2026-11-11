@@ -33,7 +33,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
 | H9 | Respaldo externo y colaboración | Piloto y decisión de almacenamiento compartido | todo | Sin asignar |
-| B0 | Prueba interna de cofounders: evidencia pública temprana y beta híbrida posterior | Acceso/presupuesto y paquete acordes a cada alcance | todo | Guion preparado; RAM mínima 8 GB declarada, sistemas pendientes; sin ejecución |
+| B0 | Prueba interna cofounders y beta híbrida | Gates H3-H7 y paquetes por OS | todo | Landing tres tarjetas; sólo ARM0.4.3 anterior real; Intel/Windows sinURL, sin prueba Lorenzo/Pedro |
 | C-R0 | Investigación SF de adquisición jurídica nacional para demo web | Dirección del dueño, fuentes públicas | done | `67e3d3b`; investigador/revisor Sol, tres respuestas SF; límites/precisiones integrados |
 | C0 | Registro y planes cerrados de adquisición pública | C-R0 revisada | done | `9ac5bd8`; 15 tests, revisión independiente; 10 URLs aprobadas y 20 plazas pendientes |
 | C1 | Piloto público de 30 plazas | C0 y política/rutas por fuente | in-progress | C1a federal completada; faltan 16 documentos estatales y 4 judiciales concretos |
@@ -80,12 +80,21 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | D1i | Colector de árbol WMI sin cmdlets | D1h | done | 467d7fd/e8e63ba;CI42878658531:arranque3551ms/4muestras237–248ms,una raíz48,1MB;73dirigidas/988global+build,reviewAPPROVE; no instaladores/8GB |
 | C1b.5 | Doce plazas aún no investigadas | C1b.1 | done | 867d88b;8URLs/4sinselección,28operaciones declaradas;review documental,8llamadas reconstruidas/noatestadas,0adquisición |
 | H5b.2a | Diseño de recuperación sintética cifrada | H5a/H5b.1 | done | 44b387a;18casos/R23,propiedad retenida en fallo,D0verificado;revisiónSol; no recuperación probada |
-| H5b.2b | Recuperación nativa sintética de lectura | H5b.2a | in-progress | 58f0c77;compile/supervisorPASS;primer18CI42891631285exit71~60.265s/sinrecibo,freeze/fallo preservados/revisados;fix8a04105opt2+fasesrevisado sin subir topes;segundoCIpreps9DONE/R01psEPERM/0casosDONE;fix451f294libcRSSreview/freeze;tercerCI42894691715encurso;H5abierto |
+| H5b.2b | Recuperación nativa sintética de lectura | H5b.2a | in-progress | Primera subserie18 CI42904113430 PASS/review independiente; matriz24 y H5 completos abiertos |
 | H4b.2b.5 | Preparación Nym multilingüe | H4b.2b.4b/diagnóstico | done | 20a8aa2;6files151MB/4HTTP verificadas,sin runtime;53Python/review;licenciarelease pendiente |
 | H4b.2b.5a | Contrato runtime/tokenizer Nym | H4b.2b.5 | in-progress | f22b8a8/87172ea;5eventos reales/4tokenizaciones/0forwards, padreFAILEDcausaUNKNOWN;auditoríaofflinemetadatosparcialesAPPROVE,no postflight/RSScombinado;fix3d3d588/12tests+review;planinferencia622f08erevisado,sinautorizaciónejecución |
 | H4b.2b.5b | Protocolo de inferencia Nym y testigos estructurales | H4b.2b.5a/auditoría parcial | done | 622f08e/04d5264;plan revisado y8testigos sintéticos sin gold/outputs;0forwards, no autorización de ejecución |
-| H4b.2b.5c | Decoder nativo estricto Nym optativo | H4b.2b.5b | in-progress | Astra implementa fuente crítica/mocks;0cargas/forwards nuevos, mapping/egreso/producto inactivos |
+| H4b.2b.5c | Decoder nativo estricto Nym optativo | H4b.2b.5b | in-progress | a501868/19mocks+review;fuenteV1inactiva,8testigosactuales0NN/globalproofFALSE;mapping/egreso/producto inactivos |
 | H4b.2b.5d | DEV Nym nuevo independiente | H4b.2b.5b | done | 5704b31;60casos/70entidades/revisiónsilver/0scores; examen300 intacto, sin autorización de ejecutar |
+| H4b.2b.5e | Estructura Nym v1 medida | H4b.2b.5c | done | ebd1975;8testigos/1admitidoestructural/8bloqueadosNN/0forwards;440565760B tokenizer-only,review; no calidad |
+| H4b.2b.5f | Prueba de contenido original v2 | H4b.2b.5e/fuentes fijadas | done-with-failure | 36mocks PASS; ejecución real FAIL SAMPLE_GAP143.671ms durante inventario/0testigos/0NN; evidencia preservada, no calidad |
+| H5b.2b.1 | Primer subconjunto recuperación sintética de lectura | H5b.2b/diagnóstico aislado | done | CI42904113430:18/18 invocaciones,11.268s,R23a4/R23b3,reviewSol; picos separados padre296222720B/hijo291110912B; no matriz24/H5 completo |
+| H5b.2c | Mapas H3 seudonimizados tipados/versionados | H5b.2b.1 y contrato H3 | todo | Contrato y límites en vault-next-native-slices; código/VM/review pendientes |
+| H5b.2d | Aprobación atómica de propuesta de recordatorio | H5b.1b.2 y H5b.2c | todo | Una transacción/CAS/idempotencia; revisión/VM pendientes |
+| H4b.2b.5g | Inventario preparado Nym separado | H4b.2b.5f | done | 198804filas/13.533.851B, auditoría independiente total; asset de construcción, no inferencia ni20ms runtime |
+| H4b.2b.5h | Decoder V3 streaming | H4b.2b.5g | in-progress | Astra fuente+26mocks; revisión independiente agotó cuota, sin carga real/forward/score/activación |
+| D1k | Diagnóstico bootstrap/identidad de descendientes | D1j tres fallos | done-with-gap | CI42901408180 cierre6/3extras desconocidos; cleanup sólo3conocidos; sin aceptación rendimiento |
+| D1l | Clasificación acotada de extras Windows | D1k | done-with-gap | CI42928786842: cierre6/3extras con ruta exacta sistema conhost.exe; identidad/cleanup extra sin probar, rendimiento/instalador bloqueados; reviewfuente+17tests |
 | D2 | Verificar/publicar activos y activar enlaces por plataforma | D1, evidencias de distribución/alcance | todo | Versiones/hashes/bytes/URLs reales; no presentar release anterior como híbrida |
 | N0 | Investigación y shortlist de nombre alternativo | Pedido del dueño | in-progress | Cribado web inicial; Folimbra/Cautria/Citeroa candidatos sin disponibilidad comprobada |
 | N1 | Validación del finalista y decisión de nombre | N0, evidencia IMPI/fonética/dominios y elección del dueño | todo | Sin búsquedas por candidato en bases oficiales, registro o compra todavía |

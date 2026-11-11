@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:28:05.971723+00:00",
+  "reviewer": "review_completion_phases / gpt-6.1-sol",
+  "verdict": "APPROVE_PUBLIC_BUILD_ASSET_DATA_AND_PROVENANCE_ONLY",
+  "artifactHashes": {
+    "docs/qa/privacy-nym-content-inventory-v1-freeze.json": "004dfa83672b8031f8dc2d437878ad166e24b0a0df914c4a5e93e4c8e4eefe8c",
+    "artifacts/privacy/models/nym-int8-local-v2/int8/tokenizer.json": "c299144e68dfec1dc536204a7ae3712710c5c6cade9269a83f5042250d47d8de",
+    "artifacts/privacy/nym-content-inventory-v1/header.json": "770f416ebb51f76d4a15599fd69d245311c6febc10bf19b7825fc85fa546b18e",
+    "artifacts/privacy/nym-content-inventory-v1/inventory.ndjson": "34ec3e534699ab59b4a25a040c3a536aa54ef057056948d785f4260a3bbc9f5d",
+    "artifacts/privacy/nym-content-inventory-v1/receipt.json": "be571ca87a2641a7f2fd3425d49b4f386949b6b9290ea63eb031ecb26618a8b6"
+  },
+  "sourceHashes": {
+    "scripts/prepare-nym-content-inventory.py": "c3aa09e0483e121097619dffb27564c3735bcb4b7c9e544fea4fe49a23acfbcf",
+    "tests/privacy-nym-inventory-preparation.test.mjs": "7805be2f9b7456b22e756805265b3fe2b09b4a7e011cae492d2c5a11bd5f7523",
+    "resources/privacy-nym-inventory-preparation-v1.json": "34a2bf1e84fa63dc546d20b435817454519d0cebb3f0d9de75a433f69aa1b521",
+    "docs/architecture/privacy-nym-inventory-preparation-v1.md": "8ba306c635c1feddd1e6262295d8b920d77b66062b35e960a436b24e12fd5bbb"
+  },
+  "checks": {
+    "allRowsIndependentlyComparedToRawJson": 198804,
+    "addedEntriesCompared": 249,
+    "baseEntries": 198804,
+    "addedOnlyRows": 0,
+    "ids139Through168BasePresentExactSpaceRunAndFlags": true,
+    "inventoryBytes": 13533851,
+    "inventorySha256": "34ec3e534699ab59b4a25a040c3a536aa54ef057056948d785f4260a3bbc9f5d",
+    "maximumLineBytes": 233,
+    "allRowsCanonicalStrictSchemaAndTypes": true,
+    "outputRegular0400SingleLink": true,
+    "exclusiveLeaf0700NoPartial": true,
+    "headerReceiptFreezeBindingsMatch": true,
+    "currentSourcesMatchFrozenHashes": true,
+    "auditPrePostHashesUnchanged": true
+  },
+  "reportedBuildResources": {
+    "elapsedMs": 1116.488,
+    "processPeakRssBytes": 282034176,
+    "scope": "OS process lifetime getrusage high-water, checkpointed after C parse/every loop/before publication; not instantaneous kill or sampled runtime guarantee"
+  },
+  "limits": [
+    "Original success receipt is consistent with reviewed generator input/output postchecks and current independent byte checks; no atomic historical filesystem snapshot or post-publication identity guarantee is implied.",
+    "Build time/RSS are reported process-lifetime getrusage/checkpoint measurements, not independently reproduced timing or hard-preemption guarantees; final receipt publication occurs after the final success budget check.",
+    "No runtime20ms/50ms sampling compliance, actual inference peak, physical8GB/privacy/quality or redistribution/license approval follows.",
+    "Future streaming runtime loader is not implemented or validated here; original failed structural experiment remains failed."
+  ],
+  "auditExecution": {
+    "generatorReplay": false,
+    "tokenizerRuntimeModelImports": 0,
+    "neuralForwards": 0,
+    "networkRequests": 0,
+    "goldOrHeldoutRead": false,
+    "implementationEdits": false
+  },
+  "findings": []
+}
