@@ -1,0 +1,52 @@
+{
+  "id": "privacy-development-v4",
+  "authoredAt": "2026-11-11",
+  "purpose": "Synthetic development only: exercises the frozen v2 (privacy-eval-v2-annotation-2) optional segment states extractionStatus/assessment through the adapted, not-activated local rules candidate. Not blinded validation, not heldout, not legal acceptance.",
+  "author": "Instinct task agent (candidate constructor). Development material only; the v2 heldout requires a fresh independent author per frozen governance.",
+  "counts": {
+    "cases": 16,
+    "blockedOperational": 12,
+    "blockedWithEntities": 2,
+    "clean": 4,
+    "entities": 2
+  },
+  "blockedByReason": {
+    "unsupported_format": 3,
+    "partial_extraction": 3,
+    "ambiguous_context": 3,
+    "detector_failure": 3
+  },
+  "entitiesByCategory": {
+    "person": 1,
+    "email": 1
+  },
+  "casesSha256": "9fe2ecd990f8da6e6741710f39c674aae0455a4a94f7f6cd692f06eda294286c",
+  "validationProtocolSha256": "5076f724fc19a73260b0afef548bc7986ef7646f96b7e471393cb5125831e935",
+  "frozenV2ProtocolSha256": "d0381fcbccd30ab4a6c9475f8f54619d2a19a4c7130d757b3976a1ab311f6af8",
+  "frozenV2AnnotationGuideSha256": "cc26b2457e78fc34713d7f2d9b62f981c385b736eeca5e9497f05f825ba31e31",
+  "readInputs": [
+    "PROTOCOLO-V2-CONGELADO attachment (frozen contract, not in repo)",
+    "guia-anotacion-v2-CONGELADA attachment (frozen guide, not in repo)",
+    "eval/privacy/protocol.json",
+    "scripts/eval-privacy.mjs",
+    "scripts/run-privacy-detector.mjs",
+    "scripts/privacy-candidate-worker.mjs",
+    "server/privacy/detector.mjs",
+    "server/privacy/provenance.mjs",
+    "eval/privacy/dev.jsonl (entity format reference; DEV4 texts are new material)"
+  ],
+  "excludedInputs": "No heldout material read (eval/privacy heldout and eval/privacy-v2 heldout remain sealed). No gold operational flags injected; states are declared synthetic local stimuli on segments, never derived from expectedStatus/blockReason/entities.",
+  "authoring": "Original Spanish examples authored by the generator; offsets calculated programmatically in JS UTF-16 code units; no astral characters. One blockReason per case; assessment 'failed' unused (reserved by the frozen v2 contract); complete cases carry default states only (no optional fields).",
+  "validation": {
+    "canonicalValidateCases": "PASS: validateCases(cases,{protocol v1,split:dev}) with additive v2 segment fields, 16/16",
+    "realCandidatePath": "16/16 expected status and blockReason via projectPrivacyCase + privacy-candidate-worker (adapted, not activated)",
+    "detectionsUnderBlock": "2/2 mixed cases keep detections at exact gold spans (person 52-66, email 67-91)",
+    "v1Regression": "run-privacy-detector --split dev after adaptation: predictions.json and score.json byte-identical to artifacts/privacy/dev-rules-baseline-v4-2026-11-11"
+  },
+  "limitations": [
+    "Synthetic invented content; no real client data, registry validity or contactability claimed.",
+    "Development evidence only: does not measure production extraction failures, restoration, routing or transport safety.",
+    "The frozen v2 contract is not loaded by this validator (validateProtocol requires version 1); v2 loading remains not-activated pending coordination approval.",
+    "DEV3 (eval/privacy-development-v3) predates the freeze and uses a case-level 'operational' field that does not conform to the frozen v2 case contract; left untouched as historical material."
+  ]
+}

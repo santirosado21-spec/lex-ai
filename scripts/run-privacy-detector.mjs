@@ -14,9 +14,18 @@ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 // Deliberate whitelist: never derive operational flags from expectedStatus/blockReason/entities.
 export function projectPrivacyCase(row) {
   const scope=value=>value===null?null:{workspaceId:value.workspaceId,matterId:value.matterId,threadId:value.threadId};
+  // Frozen v2 (privacy-eval-v2-annotation-2) optional segment states pass through
+  // ONLY with their contract enum values. They describe synthetic local stimuli,
+  // never gold annotations; any other value (e.g. a gold-injected flag) is dropped
+  // here as an adversarial extra field. v1 material has neither field and projects
+  // byte-identical to before.
+  const STATES={extractionStatus:['complete','partial','unsupported','failed'],assessment:['known','ambiguous','failed']};
+  const state=(segment,field)=>STATES[field].includes(segment[field])?{[field]:segment[field]}:{};
   return {scope:scope(row.scope),segments:row.segments.map(segment=>({
     id:segment.id,path:segment.path,text:segment.text,
     originScope:scope(segment.originScope),classification:segment.classification,
+    ...state(segment,'extractionStatus'),
+    ...state(segment,'assessment'),
   }))};
 }
 
@@ -99,7 +108,7 @@ export async function main(args=process.argv.slice(2)) {
   if(JSON.stringify(sourceHashes)!==JSON.stringify(await candidateSourceHashes()))throw Error('candidate_changed_during_run');
   const report=scorePredictions({protocol,cases:rows,split,artifact,protocolSha256:artifact.protocolSha256,corpusSha256:artifact.corpusSha256});
   const execution={candidateId:CANDIDATE_ID,split,measuredAt:new Date().toISOString(),node:process.version,sourceHashes,
-    candidateVersion:batch.version,cases:rows.length,candidateInputFields:['scope','segments.id','segments.path','segments.text','segments.originScope','segments.classification'],
+    candidateVersion:batch.version,cases:rows.length,candidateInputFields:['scope','segments.id','segments.path','segments.text','segments.originScope','segments.classification','segments.extractionStatus?','segments.assessment?'],
     goldPassedToCandidate:false,operationalFlagsFromGold:false,latenciesMs:batch.latenciesMs,peakRssBytes:batch.peakRssBytes,
     limitations:['Rules-only baseline, no entity/context model evaluated.','Corpus v1 lacks explicit format/extraction/ambiguity/failure stimuli; gold flags are not injected.','Trusted fixture registration is not production data-import integration.','Routing and restoration require separate integration tests; this score grants no egress.']};
   await writeFile(path.join(out,'predictions.json'),JSON.stringify(artifact,null,2)+'\n',{flag:'wx'});

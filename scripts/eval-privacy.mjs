@@ -18,6 +18,16 @@ const sameScope=(a,b)=>SCOPE_FIELDS.every(field=>a[field]===b[field]);
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
 const scope=value=>{exact(value,SCOPE_FIELDS,'scope');if(SCOPE_FIELDS.some(field=>!opaque(value[field])||value[field].length>80))fail('Invalid scope identifiers.');};
 const list=(value,label)=>{if(!Array.isArray(value))fail(`Invalid ${label} list.`);return value;};
+// Frozen v2 (privacy-eval-v2-annotation-2) adds two OPTIONAL structured segment
+// fields. They are intrinsic operational states of the synthetic case, never
+// derived from gold/candidates. V1 material carries neither and validates unchanged.
+const S_OPTIONAL=['extractionStatus','assessment'];
+const S_ENUM={extractionStatus:['complete','partial','unsupported','failed'],assessment:['known','ambiguous','failed']};
+const segmentFields=segment=>{
+ const required=['id','path','text','originScope','classification'];
+ if(!object(segment)||required.some(field=>!Object.hasOwn(segment,field))||Object.keys(segment).some(field=>!required.includes(field)&&!S_OPTIONAL.includes(field)))fail('Invalid segment fields.');
+ for(const field of S_OPTIONAL)if(Object.hasOwn(segment,field)&&!S_ENUM[field].includes(segment[field]))fail(`Invalid segment ${field}.`);
+};
 
 export function validateProtocol(protocol) {
  if(!object(protocol)||protocol.version!==1||!opaque(protocol.id)||!hash(protocol.annotationGuideSha256))fail('Unsupported protocol/annotation guide.');
@@ -63,7 +73,7 @@ export function validateCases(cases,{protocol,split}) {
   if(!Array.isArray(row.segments)||!row.segments.length||!unique(row.segments.map(segment=>segment?.id)))fail('Invalid segments.');
   let length=0,scopeMismatch=false,unknown=false;
   for(const segment of row.segments) {
-   exact(segment,['id','path','text','originScope','classification'],'segment');
+   segmentFields(segment);
    if(segment.originScope===null) {
     if(segment.classification!=='unknown'||row.expectedStatus!=='blocked'||row.blockReason!=='unknown_provenance')fail('Null origin requires blocked unknown provenance.');
    } else scope(segment.originScope);

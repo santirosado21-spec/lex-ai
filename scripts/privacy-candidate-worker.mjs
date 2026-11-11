@@ -9,8 +9,10 @@ export async function detectFixtureInput(input) {
     if(segment.originScope===null)return {id:segment.id,path:segment.path,text:segment.text};
     return registry.registerSource({objectId:`fixture-${index}`,version:'v1',scope:segment.originScope,
       classification:segment.classification,
-      extraction:{status:'complete',extractorVersion:'plain-fixture-v1',originalSha256:privacyTextHash(segment.text)},
-      segments:[{id:segment.id,path:segment.path,text:segment.text}],assessment:'known'}).segments[0];
+      // Frozen v2 segment states arrive from the case when authored; defaults
+      // keep v1 material byte-identical. States are synthetic stimuli, never gold.
+      extraction:{status:segment.extractionStatus??'complete',extractorVersion:'plain-fixture-v1',originalSha256:privacyTextHash(segment.text)},
+      segments:[{id:segment.id,path:segment.path,text:segment.text}],assessment:segment.assessment??'known'}).segments[0];
   });
   return createLocalPrivacyDetector({provenanceRegistry:registry}).detect({scope:input.scope,segments});
 }
