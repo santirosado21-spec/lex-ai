@@ -105,3 +105,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 18:29 — codex — V3 Nym no ejecuta modelo hasta cerrar V3-R1 y V3-R2
 
 **Por qué:** Revisión independiente Claude Opus5.5 de fuente pública encontró que content_witness en Python y JS admite huecos de whitespace entre offsets; Codex lo reprodujo con fixture sintético, aunque egreso sigue false. La identidad de venv no cubre pyvenv.cfg/base stdlib. Corregir y revisar ambas condiciones sin modificar evidencia V1/V2, luego congelar nueva ejecución con límites intactos. Cero forwards autorizados en este estado.
+
+## 2026-11-10 18:56 — codex — Credencial OpenRouter de producto separada de PSF
+
+**Por qué:** La cuenta de desarrollo PSF no autoriza el egreso de documentos ni garantiza límites o custodia de producto. H6a exige una credencial exclusiva, almacenada localmente, verificada y sin activar envíos privados hasta superar H4/H5.

@@ -31,6 +31,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H5b.1 | Spike SQLCipher nativo y contrato/paridad DAO | H5a | in-progress | Viabilidad H5b.1a revisada; paridad completa pendiente (gate false) |
 | H5b.1a | Viabilidad nativa y contrato de dominio parcial | H5a | done | Worker Astra `build_vault_h5b1`, revisor Sol / PR #1, `c0f3733`; paridad false |
 | M1 | Candidatos LLM para tareas estrictamente públicas y protocolo de selección | H3V, H4a | done | Codex/Sol y worker Sol `public_candidates_tools` / PR #1, `b482f13`; preparación de H6/H8, sin desbloquearlos |
+| H6a | Adaptador OpenRouter aislado y gratuito, sin activación | H2, H3V, M1 | done | `1704658`; 8 pruebas dirigidas/1098 suite local+build, revisión estática independiente APPROVE sólo pieza; sin credencial producto, red real ni egreso privado |
 | H6 | Adaptador OpenRouter apagado y selección por tarea | H4, H5 | todo | Sin asignar |
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
@@ -176,6 +177,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 
 ## H6 — Adaptador y selección por tarea
 
+- H6a cerró sólo el transporte aislado y la prueba H2 con ámbito sintético (`1704658`, [QA](../qa/openrouter-H6a-independent-review-2026-11-10.json)). Cuenta real, Keychain/almacén seguro, modelo de pago, presupuesto total, selección por tarea e integración H7 no están implementados; H6 permanece `todo` por H4/H5. La clave PSF no se reutiliza. El dueño pidió OpenRouter para nube; falta una clave exclusiva de producto y una prueba pública/sintética autorizada antes de poder afirmar conexión a su cuenta.
 - Archivos propuestos: `server/providers/openrouter.mjs`, `server/providers/task-router.mjs`, `tests/openrouter-provider.test.mjs`, `tests/task-router.test.mjs`.
 - Aceptación offline: transporte inyectable, ruta remota apagada por defecto, modelo y endpoint permitidos explícitos, sin fallbacks silenciosos, credencial fuera de la UI. Verificar contrato con documentación oficial vigente al implementar.
 - Simular errores de cuota, timeout, fallo de privacidad y cancelación. La lista permitida y límites se comprueban antes de enviar. Separar tarifa máxima por token de presupuesto total; los reintentos consumen presupuesto y requieren la misma política.
