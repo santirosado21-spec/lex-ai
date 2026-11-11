@@ -24,7 +24,7 @@ npm run build
 npm run dev
 ```
 
-El último comando muestra un enlace de sesión local. No compartirlo. Para desarrollo se detecta la instalación existente de Ollama en este Mac y se reutilizan sus pesos; el paquete de escritorio incluye su propio runtime. Datos de desarrollo en `.data/`. No introducir clientes reales durante estas pruebas.
+El último comando muestra un enlace de sesión local. No compartirlo. La app no está publicada en internet (Vercel sólo sirve la landing); cada persona la abre en su equipo. Detalles, convenciones de interfaz y qué no está medido: [guía para abrir la app](docs/qa/run-app-locally-2026-11-10.md). Para desarrollo se detecta la instalación existente de Ollama en este Mac y se reutilizan sus pesos; el paquete de escritorio incluye su propio runtime. Datos de desarrollo en `.data/`. No introducir clientes reales durante estas pruebas.
 
 ```bash
 npm test
