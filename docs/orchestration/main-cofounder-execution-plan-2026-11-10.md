@@ -6,7 +6,7 @@ El recorrido objetivo sigue siendo: original en el equipo → extracción y dete
 
 | Corte | Entrega comprobable | Gate antes de avanzar | Responsable PSF |
 | --- | --- | --- | --- |
-| P0. Integración de colaboradores | `main` avanza sin divergencia; README y guía con estado honesto; Node test/build en CI de `main` | Suite completa, build, hashes/estado y push verificados; ninguna URL de descarga inventada | Codex integra; Gemma redacta borrador; Kimi critica el riesgo; Groq propone casos sencillos |
+| P0. Integración de colaboradores | `main` avanza sin divergencia; README y guía con estado honesto; build y contratos portables en CI de `main` | Suite completa local y build comprobados; CI de clon limpio cubre su subconjunto explícito; ninguna URL de descarga inventada | Codex integra; Gemma redacta borrador; Kimi critica el riesgo; Groq propone casos sencillos |
 | P1. Protección local H4 | V3 Nym revisado, inventario por flujo medido; comparación de reglas+candidato sobre DEV, examen retenido sólo tras freeze | Revisión independiente, tiempos/RAM de proceso completo, identificación/omisión por categoría y bloqueo; sin bajar umbrales | Revisor distinto del autor; Astra sólo código de privacidad crítico |
 | P2. Bóveda H5 | Mapas H3 tipados y versionados; custodia local; aprobación atómica; restauración y migración sintéticas | CAS/aislamiento despacho-asunto, cifrado y manejo de claves, recuperación de fallos, matriz24 y paridad; nueva ejecución nativa sólo en VM limpia | Astra para criptografía e integración difícil; Sol para tests/contratos |
 | P3. Calidad y corpus, en paralelo | S2b.2 con 30 casos y juicio de abogados; subconjunto de leyes mexicanas con texto/versiones/citas aprobados | Sobre y presupuesto congelados; cada fuente oficial comparada con original y estado jurídico explícito; corpus en cuarentena hasta aprobación | Sol/herramientas públicas; abogados para juicio legal; Gemma sólo clasificación de anomalías verificables |
@@ -16,6 +16,8 @@ El recorrido objetivo sigue siendo: original en el equipo → extracción y dete
 | P7. Piloto H8b y expansión | Tratamiento privado y proveedor delimitados, respaldo/restauración, cobertura ampliada | Autoridad específica para datos reales, revisión de privacidad/jurídica, costes y rollback; permisos y vigencia por cada lote corpus | Dueño y responsables de producto/jurídico |
 
 P1, P2 y P3 avanzan en paralelo. P4–P7 conservan las dependencias anteriores: subir código a `main` no las cierra. Los commits de prototipos inactivos son revisables por los cofundadores, pero no se presentan como función de producto. La landing muestra tres canales y sólo enlaza el DMG ARM 0.4.3 anterior; Intel y Windows permanecen sin enlace. Ningún paquete actual demuestra el objetivo híbrido o físico de 8 GB.
+
+Primer CI de `main` (run 42930193693) ejecutó `npm ci` y luego la suite completa en un clon Ubuntu limpio: 899/1082 pasaron, 173 fallaron y 10 se omitieron. La causa dominante fue FTS5 ausente en la compilación Node del runner; también faltan `resources/public-library.sqlite` y otros activos de investigación generados que Git no distribuye. No se atribuyen los 173 fallos a una sola causa ni se presenta la suite local como reproducible en ese runner. La corrección del CI separa build y contratos portables de la suite integral dependiente de activos; hacer reproducible esta última es un trabajo P0 posterior con fixtures/licencias y entorno fijados, sin descargar datos por sorpresa.
 
 ## Primeras asignaciones después de P0
 

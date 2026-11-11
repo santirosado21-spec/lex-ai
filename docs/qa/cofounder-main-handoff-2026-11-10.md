@@ -6,7 +6,7 @@ El repositorio en `main` es el **código experimental de integración**. Permite
 
 1. Clonar `main` y anotar el SHA con `git rev-parse HEAD`. Crear una rama corta desde ese punto para cada cambio; subir un PR con archivos y pruebas acotados. No editar o sustituir las evidencias históricas de experimentos fallidos.
 2. Usar sólo datos inventados o fuentes públicas. No importar documentos de clientes, credenciales, mapas de identidad reales ni fotos/capturas privadas en issues o PRs.
-3. Con Node compatible con `package.json`, ejecutar `npm ci`, `npm test` y `npm run build`. `npm run dev` sirve para inspeccionar la aplicación local. `npm run test:e2e` usa inferencia real y requiere un modelo configurado; no es el primer paso en un clon limpio.
+3. Con Node compatible con `package.json`, ejecutar `npm ci` y `npm run build`. El CI de `main` ejecuta seis archivos de contratos portables; `npm test` completo requiere FTS5 y activos generados (entre ellos `resources/public-library.sqlite`) que no vienen en un clon limpio, por lo que su fallo por esos prerequisitos no significa que la prueba jurídica se haya ejecutado. `npm run dev` sirve para inspeccionar la aplicación local. `npm run test:e2e` usa inferencia real y requiere un modelo configurado; no es el primer paso en un clon limpio.
 4. Para revisar experiencia jurídica, usar el [guion sintético](cofounder-hybrid-beta-2026-11-09.md). Guardar por caso la respuesta completa, fuente/versiones, resultado esperado, utilidad sin/con corrección e incidencia concreta. La revisión de un abogado no valida por sí sola el límite de privacidad.
 
 ## Canales y decisiones de prueba
