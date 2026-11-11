@@ -109,3 +109,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 18:56 — codex — Credencial OpenRouter de producto separada de PSF
 
 **Por qué:** La cuenta de desarrollo PSF no autoriza el egreso de documentos ni garantiza límites o custodia de producto. H6a exige una credencial exclusiva, almacenada localmente, verificada y sin activar envíos privados hasta superar H4/H5.
+
+## 2026-11-10 20:17 — codex — No relajar ZDR para documentos privados por fallo de ruta gratuita
+
+**Por qué:** La cuenta autenticó, pero el endpoint gratuito rechazó Zero data retention con 404; quitar esa restricción para una prueba ficticia tampoco produjo respuesta (429). H4/H5 siguen pendientes y la autorización sólo cubre datos públicos/sintéticos. Mantener el adaptador de producto apagado y separar diagnóstico sintético de política de egreso privado.

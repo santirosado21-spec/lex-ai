@@ -1,6 +1,6 @@
 # Estado compartido — LEX AI
 
-**Última actualización:** 2026-11-10 19:10 por claude: Pulido UI de la app (solo interfaz)
+**Última actualización:** 2026-11-10 20:17 por codex: decisión — No relajar ZDR para documentos privados por fallo de ruta gratuita
 
 ## Objetivo y autoridad vigentes
 
@@ -12,6 +12,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- **Cuenta OpenRouter:** el dueño guardó una clave exclusiva en Keychain. Lectura real y `GET /api/v1/key` autenticaron (`isFreeTier:false`, límite configurado); no se registró la clave ni el importe. Catálogo gratuito: 12 modelos publicados con precios cero en esta consulta; `google/gemma-4-26b-a4b-it:free`/`google-ai-studio` tenía endpoint de precio cero. Generación ficticia con ZDR falló HTTP 404 por política de retención; una variante ficticia sin ZDR falló HTTP 429 del proveedor. Cero respuestas y ningún documento de cliente. El producto activo sigue local y el adaptador H6 apagado. Evidencia `docs/qa/openrouter-account-smoke-2026-11-10.md`.
 - **OpenRouter H6a:** `1704658` añadió adaptador optativo, apagado y separado del flujo activo, con límite de precio cero y modelo `:free`; 8 pruebas dirigidas, suite local 1098/1098 y build pasaron. Claude revisó la pieza estática de forma independiente tras correcciones; no hizo prueba de red. No hay clave de producto, verificación de cuenta real, generación remota ni egreso privado. H6 completo sigue bloqueado por H4/H5. La clave PSF de desarrollo no se reutiliza. La reserva de archivos y tareas para Lorenzo y Pedro está en `docs/notes/cofounder-workboard-2026-11-10.md`; hay copia en Notas del dueño, sin confirmar que se haya compartido.
 - **OpenRouter H6b.1:** Astra implementó lector optativo de credencial de producto en Keychain, con identificadores fijos y sin fallback a PSF. 6/6 pruebas simuladas y build pasaron; Sol aprobó revisión estática acotada. No se ejecutó Keychain real, no hay provisión/revocación ni cuenta conectada. Cadenas JavaScript no se borran de memoria con garantía. No importar en el producto activo.
 - **Producto activo:** motor local y SQLite sin cifrado. Los componentes H1–H5 son optativos; no están conectados al flujo comercial ni se permiten documentos reales en nube. No confundir pruebas de módulos con producto integrado.
@@ -35,7 +36,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-0. H6b: preparar almacén local seguro para una clave OpenRouter exclusiva del producto, comprobar cuenta con el dueño y una prueba sintética sin documentos de cliente; preservar H4/H5 y no activar el proveedor en el flujo comercial antes de aprobarlos.
+0. H6b: cuenta autenticada; diagnosticar ruta gratuita ZDR/429 sin reintentos automáticos, obtener una generación sintética con política permitida y recibo verificable, y diseñar integración por tarea sólo después de H4/H5. No activar envíos de clientes antes de aprobarlos.
 1. Composición diagnóstica23d0662 medida y revisada; no demuestra privacidad suficiente. Determinar siguiente candidato/calidad antes de gastar el examen300, conservando umbrales/causas/resultados y brechas semánticas explícitas.
 2. D1i cerrado técnicamente para una raíz real/cuatro muestras. Faltan descendientes reales, overhead y empaquetado Intel/Windows. No confundir RAM del fixture con app/8GB.
 3. C2a/C2b cerrados técnicamente:619 páginas y muestra24. Conservar discrepancias, revisar selección/versiones/derechos y C1b.5 antes de otra adquisición; no tocar piloto o índice activo.

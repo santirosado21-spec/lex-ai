@@ -251,3 +251,7 @@ Verificado: npm run test:ui PASS con inferencia simulada y datos sintéticos; cu
 ## 2026-11-10 19:10 — claude — Pulido UI de la app (solo interfaz)
 
 Capa 'Polish 2026-11-10' al final de src/design-system.css y copia 'dashboard'->'panel'. Medido en capturas 1440x900 claro/oscuro y 390px con datos sintéticos e inferencia simulada: barra lateral cabe sin scroll, cifras del Panel en numerales lineales, botón primario del Panel legible en oscuro, buscador de Biblioteca sin doble borde, Inicio sin textura de cuadrícula, borde izquierdo común (1120px), compositor visible en móvil. npm test 1104/1104, ui-smoke y ui-dashboard-smoke PASS. Sin commit. No medido: WKWebView/Tauri real ni equipo 8GB.
+
+## 2026-11-10 20:17 — codex — Cuenta OpenRouter autenticada, generación aún fallida
+
+Verificado con clave de producto Keychain: GET /api/v1/key conectado, cuenta no free-tier y con límite configurado; sin mostrar clave. Catálogo público 12 modelos free de precio cero; endpoint google-ai-studio de Gemma-4-26b-a4b-it free en cero. Dos pruebas ficticias: con ZDR HTTP404 por política, sin ZDR HTTP429 del proveedor; cero generaciones/recibos y ningún documento de cliente. Producto activo sigue local. Evidencia docs/qa/openrouter-account-smoke-2026-11-10.md.
