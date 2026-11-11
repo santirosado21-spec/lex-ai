@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "windows-descendant-classification-diagnostic-source-review-v1",
+  "reviewedAt": "2026-11-10T21:31:36.298835Z",
+  "reviewer": "independent Codex subagent build_corpus_registry; source inspection and local synthetic tests only",
+  "verdict": "APPROVE",
+  "approvalScope": "Corrected source version approved for one classification-only clean-public-Windows-VM diagnostic, pending root-owned exact5new LF attributes,8source freeze and positive preflight/source review. This is not Windows execution or performance acceptance.",
+  "reviewedSources": {
+    "scripts/windows-descendant-classification-diagnostic.mjs": {
+      "bytes": 12473,
+      "sha256": "0bbd0154faa8e7d1d4f82072a91d3b0c095e79d3cddb423ecc27082800acac2d",
+      "matchesAssignedVersion": true
+    },
+    "tests/windows-descendant-classification-diagnostic.test.mjs": {
+      "bytes": 6753,
+      "sha256": "e1404bb9d933a559aa2dcddee9defbb1dfd4a0b6e7edab75db41c1c913a7d3f3",
+      "matchesAssignedVersion": true
+    },
+    "resources/windows-descendant-classification-diagnostic-v1.json": {
+      "bytes": 2179,
+      "sha256": "1c37aaa4fa976bece446f51b8fa345d588401223f23ce7acf4303a61396f89c2",
+      "matchesAssignedVersion": true
+    },
+    "docs/architecture/windows-descendant-classification-diagnostic-v1.md": {
+      "bytes": 6811,
+      "sha256": "71050e5886fed61fd80b6df676d4c0259a4fdc9da50819c957cb8873647e59b4",
+      "matchesAssignedVersion": true
+    },
+    ".github/workflows/windows-descendant-classification-diagnostic.yml": {
+      "bytes": 1516,
+      "sha256": "f4aed9035bc4cde097943cf1f0f895e2c9b9cd51ba39fd758789bc591a85aec0",
+      "matchesAssignedVersion": true
+    }
+  },
+  "baseline": {
+    "path": "docs/qa/windows-owned-tree-D1j-attempt3-freeze-2026-11-10.json",
+    "rawSha256": "d52dea6a270d4fa3df5d06d7e40b07932fd75a59f44c530702b4640e617bd08a",
+    "sourceCount": 7,
+    "sources": {
+      "scripts/windows-owned-tree-smoke.mjs": {
+        "expectedSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "actualSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+        "unchanged": true
+      },
+      "tests/windows-owned-tree-smoke.test.mjs": {
+        "expectedSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "actualSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+        "unchanged": true
+      },
+      "docs/architecture/windows-owned-tree-smoke-v1.md": {
+        "expectedSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "actualSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+        "unchanged": true
+      },
+      "resources/windows-owned-tree-smoke-v1.json": {
+        "expectedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "actualSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+        "unchanged": true
+      },
+      ".github/workflows/windows-owned-tree-smoke.yml": {
+        "expectedSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+        "actualSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+        "unchanged": true
+      },
+      "server/windows-memory-monitor-v2.mjs": {
+        "expectedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "actualSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+        "unchanged": true
+      },
+      "server/windows-process-memory.mjs": {
+        "expectedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "actualSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+        "unchanged": true
+      }
+    }
+  },
+  "blockingFindings": [],
+  "verification": {
+    "command": "node --test tests/windows-descendant-classification-diagnostic.test.mjs tests/windows-owned-tree-bootstrap-diagnostic.test.mjs",
+    "exitCode": 0,
+    "tests": 17,
+    "passed": 17,
+    "failed": 0,
+    "reportedDurationMs": 3067.468792,
+    "missingCloseSyntheticTestDurationMs": 3001.389125,
+    "supplementarySyntheticRuns": 1,
+    "supplementaryRunResult": "Original independent R1 exit-before-close reproduction now returns incomplete, records trailing output and observed close, and detached returned receipt does not mutate under subsequent fake stream events.",
+    "actualWindowsWmiRun": false,
+    "actualWindowsCiRun": false,
+    "nativeBuild": false,
+    "networkRequests": 0,
+    "modelCalls": 0,
+    "newFreezeCreated": false,
+    "sourceEdits": false
+  },
+  "checks": [
+    {
+      "id": "C01",
+      "status": "pass-source-inspection",
+      "evidence": "Exactly one fixed local root\\cimv2 SELECT requests ProcessId,ParentProcessId,WorkingSetSize,ExecutablePath. Input contains three typed positive uint32 PID/PPID pairs with fixed parent-chain validation. No arbitrary WQL, filename, commands or paths are accepted."
+    },
+    {
+      "id": "C02",
+      "status": "pass-source-inspection",
+      "evidence": "Expected paths derive from Environment.SystemDirectory plus two fixed filenames; exact StringComparison.OrdinalIgnoreCase only. Null, empty or any nonmatching path maps to unknown. No bare-name, substring, alternate-directory or signature/authenticity inference."
+    },
+    {
+      "id": "C03",
+      "status": "pass-source-inspection",
+      "evidence": "Typed uint32 IDs, uint64 safe RSS, duplicate/self-parent rejection, max4096rows and null/string max32768characters per path. Each current WMI item, result collection and searcher has nested finally disposal before successful output; exceptions suppress raw stderr and exit22."
+    },
+    {
+      "id": "C04",
+      "status": "pass-source-inspection",
+      "evidence": "Closure and classifications are computed in the transient PowerShell process. Only canonical CLASS1 integer masks/counts cross stdout; max256bytes, ASCII check, strict count partition/owned-closure bounds, CRLF or LF. Fixed public report has no saved PIDs, names, executable paths, rows, environment, source, command lines or raw errors."
+    },
+    {
+      "id": "C05",
+      "status": "pass-source-inspection",
+      "evidence": "Diagnostic completion is observation-only and permits unknown extras; performanceValidated/classificationAllowsExtras remain false. No old exact-three acceptance criterion or production monitor filtering is changed."
+    },
+    {
+      "id": "C06",
+      "status": "pass-source-and-synthetic",
+      "evidence": "Actual collector close is latched at spawn; no exitCode shortcut remains. Bounded close0/no signal plus no trailing stdout/errors required before completion; forced or missing close remains incomplete. Tests cover exit0 before delayed trailing data/error/nonzero close, immediate/delayed normal close and missing close. Known3fixture reaping and explicit null extra-descendant cleanup scope are unchanged."
+    },
+    {
+      "id": "C07",
+      "status": "pass-source-inspection",
+      "evidence": "Readiness5s, query10s absolute acceptance, collector3+3s, fixture3.5s, fixture60s lifetime,4096rows/32768pathcharacters/256wirebytes, one collector launch, zero retries. Timeout/force/error cannot claim known fixture cleanup. No extra descendant process kill by guess."
+    },
+    {
+      "id": "C08",
+      "status": "pass-source-inspection",
+      "evidence": "Default PLAN launches no fixture or WMI. --run gated to Windows and requires a separate approved root-owned freeze with exact8source paths and matching strict raw byte hashes pre/post. New5sources and3unmodified baseline dependencies listed; no approved freeze was created by reviewer."
+    },
+    {
+      "id": "C09",
+      "status": "pass-source-inspection",
+      "evidence": "Workflow public-repository/prefix/branch/path gate, windows-2025,3minute timeout, contentsread only, pinned checkout34e114876b0b11c390a56381ad16ebd13914f8d5 and persistcredentialsfalse; no artifact upload/cache/release/deploy/schedule, model or install steps."
+    }
+  ],
+  "limitations": [
+    "PowerShell source syntax/types/path classification were inspected only; no PowerShell parser or actual Windows/WMI execution occurred. Synthetic tests are not runtime validation.",
+    "Root-created exact5new LF attributes, approved8source freeze and positive actual freeze preflight remain separate final activation checks. No freeze or attributes were edited or created by this reviewer.",
+    "Query includes unrelated clean-public-VM process executable paths transiently; nothing authorizes running on client or owner workloads.",
+    "System-path classification is metadata only; it establishes neither signed-binary authenticity nor actual extra-process identity or independent reaping.",
+    "Cleanup scope remains collector-and-three-known-node-roles-only with extraCleanupObserved null. No no-orphan guarantee for extras is made.",
+    "No causal conclusion about D1k extras or earlier retained failures, no performance/8GB/installer/inference acceptance, and no extras allowance is established."
+  ],
+  "productionEnabled": false,
+  "performanceValidated": false,
+  "classificationAllowsExtras": false,
+  "physical8GBValidated": false,
+  "extraCleanupObserved": null,
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "priority": "P2",
+      "status": "resolved-in-reviewed-source",
+      "originalTitle": "Already-exited collector can complete before stdout closes and late output is checked",
+      "historyPreservedAt": "initialReview.report.blockingFindings[0]",
+      "resolution": "Close listener is installed immediately after collector spawn and latched independently of exitCode. Completion awaits actual observed close0/no signal, no trailing output or process/stream/input errors and clean known3fixture shutdown. Missing close forces bounded cleanup and remains incomplete; already-closed nonzero is not forced. structuredClone detaches returned receipt from remaining listeners.",
+      "independentOriginalReproductionRerun": {
+        "status": "DIAGNOSTIC_INCOMPLETE",
+        "extraOutput": true,
+        "finalStreamValidated": false,
+        "closeObserved": true,
+        "receiptDetachedUnderSubsequentSyntheticEvents": true
+      }
+    }
+  ],
+  "initialReview": {
+    "retainedWithoutRewritingOriginalFindings": true,
+    "originalReviewFileSha256": "bb71a46807ddfe861ddb03c037264026d4fcaa3836f882812ff9927e8db05619",
+    "report": {
+      "schemaVersion": 1,
+      "reviewId": "windows-descendant-classification-diagnostic-source-review-v1",
+      "reviewedAt": "2026-11-10T21:22:32.861908Z",
+      "reviewer": "independent Codex subagent build_corpus_registry; source inspection and local synthetic tests only",
+      "verdict": "REQUEST_CHANGES",
+      "approvalScope": "No live activation approval. One collector pipe-close ordering defect must be corrected and independently rechecked before root LF attributes/freeze/CI activation.",
+      "reviewedSources": {
+        "scripts/windows-descendant-classification-diagnostic.mjs": {
+          "bytes": 11809,
+          "sha256": "11d992a3b3d4663bc7b830e576bdaa258a5763a9969a6168a6dbff22d29f5f37",
+          "matchesAssignedVersion": true
+        },
+        "tests/windows-descendant-classification-diagnostic.test.mjs": {
+          "bytes": 4965,
+          "sha256": "29fad4f862e10a9af8b52afdd204015e312ab0a13df7efc74189de55792ebb36",
+          "matchesAssignedVersion": true
+        },
+        "resources/windows-descendant-classification-diagnostic-v1.json": {
+          "bytes": 1972,
+          "sha256": "e3a078a6212bdbf7c0e36804175c4894476dfe3173864f5b4fb9ba1ea5e92f4b",
+          "matchesAssignedVersion": true
+        },
+        "docs/architecture/windows-descendant-classification-diagnostic-v1.md": {
+          "bytes": 5759,
+          "sha256": "52259f6cff6b78c1b98457aee788770f378284e7bfa81bde5c83a22576f4eac3",
+          "matchesAssignedVersion": true
+        },
+        ".github/workflows/windows-descendant-classification-diagnostic.yml": {
+          "bytes": 1516,
+          "sha256": "f4aed9035bc4cde097943cf1f0f895e2c9b9cd51ba39fd758789bc591a85aec0",
+          "matchesAssignedVersion": true
+        }
+      },
+      "baseline": {
+        "path": "docs/qa/windows-owned-tree-D1j-attempt3-freeze-2026-11-10.json",
+        "rawSha256": "d52dea6a270d4fa3df5d06d7e40b07932fd75a59f44c530702b4640e617bd08a",
+        "sourceCount": 7,
+        "sources": {
+          "scripts/windows-owned-tree-smoke.mjs": {
+            "expectedSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+            "actualSha256": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+            "unchanged": true
+          },
+          "tests/windows-owned-tree-smoke.test.mjs": {
+            "expectedSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+            "actualSha256": "b7302eb1618db39685dcaaa1a526f3784038dfe75756ca7021eb264b24887722",
+            "unchanged": true
+          },
+          "docs/architecture/windows-owned-tree-smoke-v1.md": {
+            "expectedSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+            "actualSha256": "48779ffcc34e669504ee769817ddd77906aa0378d8cfbae3a2c8833938462034",
+            "unchanged": true
+          },
+          "resources/windows-owned-tree-smoke-v1.json": {
+            "expectedSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+            "actualSha256": "698c195b10b3b21930e064d4265819a965021c4536375f8d8dcf0af3f7fd7781",
+            "unchanged": true
+          },
+          ".github/workflows/windows-owned-tree-smoke.yml": {
+            "expectedSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+            "actualSha256": "9bc332df07f0336b1c42b59b1b41c09523cd11a5c76360865077eab19a4e5f96",
+            "unchanged": true
+          },
+          "server/windows-memory-monitor-v2.mjs": {
+            "expectedSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+            "actualSha256": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+            "unchanged": true
+          },
+          "server/windows-process-memory.mjs": {
+            "expectedSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+            "actualSha256": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f",
+            "unchanged": true
+          }
+        }
+      },
+      "blockingFindings": [
+        {
+          "id": "R1",
+          "priority": "P2",
+          "status": "open",
+          "path": "scripts/windows-descendant-classification-diagnostic.mjs",
+          "line": 44,
+          "title": "Already-exited collector can complete before stdout closes and late output is checked",
+          "evidence": "exitWait returns true immediately when child.exitCode===0, without observing close. Node child exit and pipe close are distinct lifecycle events; data may arrive after exit. The report status is computed before such data and is not downgraded by the stdout listener later.",
+          "syntheticReproduction": {
+            "actualWmiUsed": false,
+            "fixtureInjected": true,
+            "collectorInjected": true,
+            "ordering": [
+              "emit one valid ASCII CLASS1 frame with CRLF",
+              "set collector.exitCode=0 and emit exit(0,null)",
+              "schedule additional stdout bytes and close(0,null) with setImmediate",
+              "known fixture cleanup emits roles[2,1] and root exit0"
+            ],
+            "atReturn": {
+              "status": "DIAGNOSTIC_COMPLETE",
+              "extraOutput": false,
+              "collectorCleanup": {
+                "exitObservedZero": true,
+                "forced": false
+              }
+            },
+            "afterPipeClose": {
+              "status": "DIAGNOSTIC_COMPLETE",
+              "extraOutput": true,
+              "collectorCleanup": {
+                "exitObservedZero": true,
+                "forced": false
+              }
+            }
+          },
+          "impact": "Violates the documented unexpected-output fail-closed rule and permits a completed diagnostic receipt before the collector stream lifecycle is settled. This is not evidence that real CI or WMI produced late bytes.",
+          "requestedChange": "Track actual collector close from launch, require bounded observed close with exit0 and no signal/error, and validate no trailing output only after pipe drain. Avoid exitCode-only success. Add an independent delayed trailing-output/exit-before-close adversarial test and repeat the requested suites. No old frozen source change is needed."
+        }
+      ],
+      "verification": {
+        "command": "node --test tests/windows-descendant-classification-diagnostic.test.mjs tests/windows-owned-tree-bootstrap-diagnostic.test.mjs",
+        "exitCode": 0,
+        "tests": 14,
+        "passed": 14,
+        "failed": 0,
+        "reportedDurationMs": 69.241042,
+        "supplementarySyntheticRuns": 1,
+        "supplementaryRunResult": "R1 reproduced with injected EventEmitter child lifecycles only",
+        "actualWindowsWmiRun": false,
+        "actualWindowsCiRun": false,
+        "nativeBuild": false,
+        "networkRequests": 0,
+        "modelCalls": 0,
+        "newFreezeCreated": false,
+        "sourceEdits": false
+      },
+      "checks": [
+        {
+          "id": "C01",
+          "status": "pass-source-inspection",
+          "evidence": "Exactly one fixed local root\\cimv2 SELECT requests ProcessId,ParentProcessId,WorkingSetSize,ExecutablePath. Input contains three typed positive uint32 PID/PPID pairs with fixed parent-chain validation. No arbitrary WQL, filename, commands or paths are accepted."
+        },
+        {
+          "id": "C02",
+          "status": "pass-source-inspection",
+          "evidence": "Expected paths derive from Environment.SystemDirectory plus two fixed filenames; exact StringComparison.OrdinalIgnoreCase only. Null, empty or any nonmatching path maps to unknown. No bare-name, substring, alternate-directory or signature/authenticity inference."
+        },
+        {
+          "id": "C03",
+          "status": "pass-source-inspection",
+          "evidence": "Typed uint32 IDs, uint64 safe RSS, duplicate/self-parent rejection, max4096rows and null/string max32768characters per path. Each current WMI item, result collection and searcher has nested finally disposal before successful output; exceptions suppress raw stderr and exit22."
+        },
+        {
+          "id": "C04",
+          "status": "pass-source-inspection",
+          "evidence": "Closure and classifications are computed in the transient PowerShell process. Only canonical CLASS1 integer masks/counts cross stdout; max256bytes, ASCII check, strict count partition/owned-closure bounds, CRLF or LF. Fixed public report has no saved PIDs, names, executable paths, rows, environment, source, command lines or raw errors."
+        },
+        {
+          "id": "C05",
+          "status": "pass-source-inspection",
+          "evidence": "Diagnostic completion is observation-only and permits unknown extras; performanceValidated/classificationAllowsExtras remain false. No old exact-three acceptance criterion or production monitor filtering is changed."
+        },
+        {
+          "id": "C06",
+          "status": "blocked-by-R1",
+          "evidence": "Known fixture role cleanup requires nested roles2,1 plus root0 and intentional liveness; collector normally requires0/no force but exitWait shortcuts pipe-close observation. ExtraCleanupObserved remains null and cleanup scope explicitly excludes independent extra-descendant reaping."
+        },
+        {
+          "id": "C07",
+          "status": "pass-source-inspection",
+          "evidence": "Readiness5s, query10s absolute acceptance, collector3+3s, fixture3.5s, fixture60s lifetime,4096rows/32768pathcharacters/256wirebytes, one collector launch, zero retries. Timeout/force/error cannot claim known fixture cleanup. No extra descendant process kill by guess."
+        },
+        {
+          "id": "C08",
+          "status": "pass-source-inspection",
+          "evidence": "Default PLAN launches no fixture or WMI. --run gated to Windows and requires a separate approved root-owned freeze with exact8source paths and matching strict raw byte hashes pre/post. New5sources and3unmodified baseline dependencies listed; no approved freeze was created by reviewer."
+        },
+        {
+          "id": "C09",
+          "status": "pass-source-inspection",
+          "evidence": "Workflow public-repository/prefix/branch/path gate, windows-2025,3minute timeout, contentsread only, pinned checkout34e114876b0b11c390a56381ad16ebd13914f8d5 and persistcredentialsfalse; no artifact upload/cache/release/deploy/schedule, model or install steps."
+        }
+      ],
+      "limitations": [
+        "PowerShell source syntax/types/path classification were inspected only; no PowerShell parser or actual Windows/WMI execution occurred. Synthetic source-token tests are not runtime validation.",
+        "Requested14tests pass but do not cover the R1 exit-before-stdout-close ordering. The independent reproduction demonstrates a missing adversarial lifecycle case.",
+        "No root-created exact LF attributes, approved new freeze or positive new freeze execution was reviewed in this batch. They remain separate activation checks after corrections.",
+        "Query includes unrelated public clean-VM process executable paths transiently; nothing in this review authorizes running on client or owner workloads.",
+        "System-path classification is metadata only and establishes neither signed-binary authenticity nor identities/reaping of extras until an actual reviewed run.",
+        "No causal conclusion about D1k extras or earlier retained failures, no performance/8GB/installer/inference acceptance, and no extras allowance is established."
+      ],
+      "productionEnabled": false,
+      "performanceValidated": false,
+      "classificationAllowsExtras": false,
+      "physical8GBValidated": false,
+      "extraCleanupObserved": null
+    }
+  }
+}

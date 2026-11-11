@@ -13,3 +13,10 @@
 /resources/windows-owned-tree-bootstrap-diagnostic-v1.json text eol=lf
 /docs/architecture/windows-owned-tree-bootstrap-diagnostic-v1.md text eol=lf
 /.github/workflows/windows-owned-tree-bootstrap-diagnostic.yml text eol=lf
+
+# Exact sources for the one-query extra-descendant classification.
+/scripts/windows-descendant-classification-diagnostic.mjs text eol=lf
+/tests/windows-descendant-classification-diagnostic.test.mjs text eol=lf
+/resources/windows-descendant-classification-diagnostic-v1.json text eol=lf
+/docs/architecture/windows-descendant-classification-diagnostic-v1.md text eol=lf
+/.github/workflows/windows-descendant-classification-diagnostic.yml text eol=lf

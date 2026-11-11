@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "windows-descendant-classification-diagnostic-v1",
+  "status": "implemented-not-Windows-executed",
+  "diagnosticOnly": true,
+  "performanceValidated": false,
+  "classificationAllowsExtras": false,
+  "productionEnabled": false,
+  "fixedQuery": "SELECT ProcessId,ParentProcessId,WorkingSetSize,ExecutablePath FROM Win32_Process",
+  "queryCount": 1,
+  "expectedOwnedRoles": 3,
+  "limits": {
+    "readinessMs": 5000,
+    "queryMs": 10000,
+    "collectorCleanupMs": 6000,
+    "fixtureCleanupMs": 3500,
+    "maximumRows": 4096,
+    "maximumTransientExecutablePathCharactersPerRow": 32768,
+    "maximumOutputBytes": 256,
+    "fixtureLifetimeMs": 60000,
+    "retries": 0
+  },
+  "pathAuthority": "Environment.SystemDirectory; exact OrdinalIgnoreCase comparison to two fixed system paths; no bare-name match",
+  "publicClassificationKeys": [
+    "systemConsoleHost",
+    "systemOpenConsole",
+    "unknown"
+  ],
+  "baselineSourceHashes": {
+    "scripts/windows-owned-tree-smoke.mjs": "d2db6e9c417b28af253490750565fa0dc3a1706ce96e54d575c474612aaa210a",
+    "server/windows-memory-monitor-v2.mjs": "908a7b499c2e7a153f3edfe49f9586fce0acaecce03df04caa3d2a21dd8e7c8d",
+    "server/windows-process-memory.mjs": "a8b1389758ce235fc5ec9709f8e297c4fc9a8d18ee1970a1e6ee88f5e838342f"
+  },
+  "unknowns": [
+    "Actual extra descendant identities remain unknown until separately reviewed execution.",
+    "No Windows PowerShell syntax/type/query/path-classification execution occurred locally.",
+    "An exact executable path match is metadata classification, not signature/process authenticity validation.",
+    "Failed readiness or forced cleanup cannot establish descendant reaping; never DIAGNOSTIC_COMPLETE.",
+    "Extra descendants lack independent owned handles; reaping remains unknown even for an exact system-path match."
+  ],
+  "executionAuthorized": false,
+  "extraCleanupObserved": null,
+  "cleanupScope": "collector-and-three-known-node-roles-only",
+  "collectorAcceptance": "Actual close event latched from spawn; code0/no signal, valid drained single frame/no trailing output/no errors, never exitCode-only shortcut. Forced or missing close incomplete."
+}
