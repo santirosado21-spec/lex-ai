@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=11;
+export const EXTRACTOR_VERSION=12;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -116,17 +116,19 @@ export async function discoverRegulationsLibrary({outputDir,catalogPath,indexFil
 }
 
 export function splitForLaw(lawId){const bucket=parseInt(digest('lex-law-split-v1:'+lawId).slice(0,8),16)%100;return bucket<80?'train':bucket<90?'validation':'test';}
-const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:[oº°](?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*[.\-–:]/i;
+const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:[oº°](?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.\-–:]|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
 const amendment=/^(?:Art[íi]culo|P[áa]rrafo|Fracci[óo]n|Inciso|Numeral|Apartado|Cap[íi]tulo|Secci[óo]n|Denominaci[óo]n|T[íi]tulo)\b.*\b(?:reformad[oa]|adicionad[oa]|derogad[oa]|recorrid[oa])\b.*\bDOF\b/i;
 const section=/^(?:LIBRO|T[IÍ]TULO|CAP[IÍ]TULO|SECCI[ÓO]N|SUBSECCI[ÓO]N)\s+(?:[IVXLCDM]+|\d+|PRIMER[OA]|SEGUND[OA]|TERCER[OA]?|CUART[OA]|QUINT[OA]|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO|[ÚU]NIC[OA])\b/i;
 const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;
 const editorialLine=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con art[íi]culo transitorio|[A-Za-zÁÉÍÓÚáéíóúñÑ ]+ (?:reformado|adicionado|derogado) DOF)\b/i;
 const reformNote=/^\((?:REFORMADO|ADICIONADO|DEROGADO)/i;
 const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
-function midSentenceFragment(lines,i){
+const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?=[A-ZÁÉÍÓÚÑ])/;
+function midSentenceFragment(lines,i,checkNext=true){
   let j=i-1;
   while(j>=0&&(amendment.test(lines[j].text)||editorialLine.test(lines[j].text)||reformNote.test(lines[j].text)||section.test(lines[j].text)))j--;
   if(j>=0&&!/[.…:;!?"'»)\]]\s*$/.test(lines[j].text))return true;
+  if(!checkNext)return false;
   const next=lines[i+1];
   return Boolean(next&&headingPre.test(next.text)&&ARTICLE.test(next.text));
 }
@@ -151,10 +153,18 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
     if(match){
       const rest=line.text.slice(match[0].length);
-      if(rest.trim()===''&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
+      if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
       finish();started=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
+    if(!match&&current){
+      const loose=noTerm.exec(line.text);
+      if(loose&&Number(loose[1])===Number(current.articleId.split('-')[0])+1&&!midSentenceFragment(lines,li,false)){
+        finish();pendingSection=false;const looseId=loose[1];
+        if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
+        current={articleId:looseId,lines:[line],editorial:[]};continue;
+      }
+    }
     if(!started||!current)continue;
     if(amendment.test(line.text)||editorialLine.test(line.text)){coverage.removedEditorialLines++;current.editorial.push(line.text);continue;}
     if(section.test(line.text)){pendingSection=true;continue;}
