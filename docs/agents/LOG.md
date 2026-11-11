@@ -243,3 +243,7 @@ Verificado: adaptador optativo 1704658, 8 pruebas dirigidas, suite local 1098/10
 ## 2026-11-10 18:59 — codex — H6b.1 lector Keychain optativo
 
 Verificado: Astra implementó lector de Keychain de producto, 6/6 pruebas simuladas, 8/8 transporte y build; Sol aprobó revisión estática sólo de la pieza. No medido: lectura Keychain real, ACL, conexión a cuenta OpenRouter, generación, egreso privado u 8 GB. Sin provisión ni revocación; ruta activa no cambia. Evidencia docs/qa/openrouter-H6b1-keychain-review-2026-11-10.md.
+
+## 2026-11-10 19:04 — codex — Prueba visual UI local para revisión
+
+Verificado: npm run test:ui PASS con inferencia simulada y datos sintéticos; cubre onboarding, asuntos, importación TXT, chats, fuentes, DOCX, feedback, biblioteca y 700 px sin desbordamiento. Capturas en artifacts/ui-app-cover.png, ui-workspace.png y ui-responsive.png. Se abrió una instancia local limpia en el navegador del dueño. OpenRouter no está conectado al producto; no hay credencial exclusiva ni egreso. Esta prueba no valida calidad jurídica ni 8 GB.
