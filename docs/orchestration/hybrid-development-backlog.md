@@ -39,6 +39,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H7 | Integración de todas las rutas de generación y UI | H6 | todo | Sin asignar |
 | H8 | Comparación ciega pública/sintética | H7, acceso y presupuesto autorizados | todo | Sin asignar |
 | H9 | Respaldo externo y colaboración | Piloto y decisión de almacenamiento compartido | todo | Sin asignar |
+| B0-demo-Pedro | Pantalla local de revisión/corrección pre-egreso con dos asuntos ficticios | Prototipo B0, sin H4/H5/H6 integrados | review-pending | **Pedro/ChatGPT** `pedro/pre-egress-review-demo-20261111`: HTML autónomo sin red/almacenamiento, checklist por detección, metadata/historial, validación canarios y 9 checks Node preparados; CI y revisión visual/humana pendientes. No demuestra flujo cifrado integrado ni salida segura real. |
 | B0 | Prueba interna cofounders y beta híbrida | Gates H3-H7 y paquetes por OS | todo | Landing tres tarjetas; sólo ARM0.4.3 anterior real; Intel/Windows sinURL, sin prueba Lorenzo/Pedro |
 | C-R0 | Investigación SF de adquisición jurídica nacional para demo web | Dirección del dueño, fuentes públicas | done | `67e3d3b`; investigador/revisor Sol, tres respuestas SF; límites/precisiones integrados |
 | C0 | Registro y planes cerrados de adquisición pública | C-R0 revisada | done | `9ac5bd8`; 15 tests, revisión independiente; 10 URLs aprobadas y 20 plazas pendientes |
