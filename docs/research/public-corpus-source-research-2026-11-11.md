@@ -17,9 +17,17 @@
 
 **Advertencia de vigencia (material):** la muestra del Código Civil del Estado de México es la versión con reforma al 30-may-2017; el OJN se actualiza con rezago frente a las fuentes oficiales estatales (la fuente viva de NL declara reformas de 2026). Para un producto legal esto limita al OJN a canal SECUNDARIO: cada documento requeriría verificación de vigencia contra la fuente oficial estatal viva (donde exista), con `declaredAmendedAt` tomado del documento y `currentness: unverified` hasta esa comprobación.
 
-**Descubrimiento:** requiere mapear los formularios JS/frames (o navegador real) para listar documentos por estado; los PDF se sirven directo una vez conocido el id. Patrón: `/Documentos/Estatal/{Estado}/{id}.pdf`.
+**Descubrimiento (mapeado el 2026-11-11, solo GET, sin navegador):**
 
-**Valor:** un solo canal para los 32 estados; candidato a ruta parcial para Jalisco (cuyo canal oficial propio está bloqueado por robots 301→error) SOLO con la advertencia de vigencia anterior y sin declararlo sustituto de la fuente oficial. La decisión de política de robots de Jalisco sigue abierta por separado.
+1. `ambest.php` → `estatal.php?liberado=no&edo=N` (N = id alfabético de estado; NL = 19).
+2. Esa página carga el frame `http://compilacion.ordenjuridico.gob.mx/poderes2.php?edo=N` (conteos por tipo: NL muestra 8 códigos, 1 constitución, 15 decretos legislativos...).
+3. `busqueda.php?frase={texto}&edo={N}` (GET, codificación latin-1; "Civil" en NL → 68 ordenamientos) lista resultados con paginación JS; cada fila abre la ficha.
+4. `fichaOrdenamiento2.php?idArchivo={id}` — ficha técnica: fecha de publicación, ámbito, estatus ("Vigente"), tipo. **La ficha NO declara fecha de última reforma.**
+5. `obtenerdoc.php?path=/Documentos/ESTADO/{ESTADO}/{id}.{ext}` — descarga directa verificada (HTTP 200, Content-Disposition attachment). **El formato varía: NL sirve .doc (application/msword); Estado de México sirve .pdf por la ruta `/Documentos/Estatal/{Estado}/{id}.pdf`.** El pipeline actual solo ingiere PDF; los .doc requerirían conversión (nuevo paso, nueva superficie de fidelidad) o quedar fuera.
+
+**Dato de vigencia decisivo:** la ficha del Código Civil de NL (idArchivo=6152) declara solo "Fecha de publicación: 06 de Julio de 1935" y estatus "Vigente", sin fecha de reforma; la fuente viva del congreso estatal declara reforma al 26-jun-2026. La muestra de Edomex (wo31246.pdf) tiene Last-Modified 2017-07-20. Conclusión: el OJN no puede servir como fuente de vigencia; cada documento requeriría descarga + datación propia + contraste contra la fuente oficial estatal viva, y varios llegan con años de rezago.
+
+**Valor:** un solo canal para los 32 estados, útil como base histórica/datada y para estados sin portal propio navegable; NO como fuente vigente. Para Jalisco podría aportar versiones base con fecha declarada visible, pero mezclar texto rezagado en un producto legal es una decisión de producto — no se da por resuelta aquí, y la decisión de política de robots del canal oficial de Jalisco sigue abierta por separado.
 
 ## 2. Diario Oficial de la Federación — dof.gob.mx
 
@@ -41,6 +49,6 @@
 
 ## 4. Siguiente paso técnico propuesto (sin autorización implícita)
 
-1. OJN: mapeo de descubrimiento (frames/formularios) con revisión de vigencia por documento contra fuente estatal viva; empezar por completar Jalisco base con fecha declarada visible, sin mezclar con la decisión de robots del canal oficial.
+1. OJN: la cadena de descubrimiento ya está mapeada (arriba). Antes de cualquier binding: decidir si el formato .doc entra al alcance (conversión) y si las versiones con rezago tienen uso declarado en el producto; sin esa decisión, los bindings de OJN se limitan a estados con PDF directo y verificación de vigencia contra fuente viva.
 2. DOF: sondeo de rutas de archivo histórico permitidas por robots (sin tocar endpoints prohibidos); si no existen, acotar a ediciones recientes.
 3. Ambos: si el proyecto decide avanzar, el manifiesto DRAFT obtiene una sección por fuente con bindings, evidencia y límites antes de cualquier descarga.
