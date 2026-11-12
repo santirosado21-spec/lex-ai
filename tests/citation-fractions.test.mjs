@@ -156,3 +156,17 @@ test('12. sin etiqueta, referencias incidentales no acreditan otro artículo',()
  assert(!reporteCitaEstructural('Artículo 14, fracción X',multi).ok);
  assert(reporteCitaEstructural('Art. 144-A, fracción II',{label:'',text:'Art. 144-A. II. Apartado ficticio.'}).ok);
 });
+
+test('13. único escáner: pares emitidos en orden, único artículo libre y varios estrictos',()=>{
+ assert.deepEqual(paresDeCita('artículo 14, fracción X, y artículo 16, fracción I'),[
+  {articulo:'14',fraccion:null},
+  {articulo:'14',fraccion:'10'},
+  {articulo:'16',fraccion:null},
+  {articulo:'16',fraccion:'1'}
+ ]);
+ assert.deepEqual(paresDeCita('fracción II del artículo 14'),[
+  {articulo:'14',fraccion:'2'},
+  {articulo:'14',fraccion:null}
+ ]);
+ assert.throws(()=>paresDeCita('fracción I del artículo 14 y artículo 16'),{reason:'orphan_fraction'});
+});
