@@ -157,3 +157,28 @@ test('v21 inline-glued trailing rúbricas are cut at sentence boundary; all-caps
   assert.equal(r.coverage.removedTrailingRubrics,3);
   assert.ok(r.records[1].editorialNotes.includes('Generalidades'));
 });
+test('v23 spelled-ordinal headings segment sequentially and ranges collapse with anomaly',()=>{
+  const text=['ARTICULO PRIMERO.- Texto sintético del artículo primero con contenido propio verificable y suficiente longitud documental.','ARTICULO SEGUNDO.- Texto sintético del artículo segundo con contenido propio verificable y suficiente longitud documental.','ARTICULO TERCERO.- Texto sintético del artículo tercero que menciona el artículo primero de esta ley sin abrir disposición nueva y con longitud suficiente.','TRANSITORIOS'].join('\n');
+  const result=extractArticles([{number:1,text}],source,meta);
+  assert.deepEqual(result.records.map(r=>r.articleId),['1','2','3']);
+  assert.deepEqual(result.documentAnomalies,[]);
+  assert.match(result.records[2].text,/el artículo primero de esta ley/);
+  const ranged=['ARTICULOS PRIMERO A OCTAVO.- Texto sintético del rango primero a octavo con contenido propio verificable y suficiente longitud documental.','ARTICULO NOVENO.- Texto sintético del artículo noveno con contenido propio verificable y suficiente longitud documental.','TRANSITORIOS'].join('\n');
+  const rr=extractArticles([{number:1,text:ranged}],source,meta);
+  assert.deepEqual(rr.records.map(r=>r.articleId),['1-8','9']);
+  assert.ok(rr.documentAnomalies.includes('ordinal-range-heading-single-record'));
+});
+test('v23 ordinal headings fail closed: out-of-sequence, lowercase references and post-numeric ordinals never open',()=>{
+  const gap=['ARTICULO TERCERO.- Texto sintético que empieza en tres y nunca debe abrir registro alguno por secuencia rota.','TRANSITORIOS'].join('\n');
+  const g=extractArticles([{number:1,text:gap}],source,meta);
+  assert.equal(g.records.length,0);
+  assert.ok(g.documentAnomalies.includes('no-numeric-article-headings'));
+  const lower=['ARTICULO PRIMERO.- Texto sintético del artículo primero con contenido propio verificable y suficiente longitud documental.','Se interpreta conforme al artículo primero de esta ley y al Artículo segundo citado en minúsculas o capitalizados.','ARTICULO SEGUNDO.- Texto sintético del artículo segundo con contenido propio verificable y suficiente longitud documental.','TRANSITORIOS'].join('\n');
+  const l=extractArticles([{number:1,text:lower}],source,meta);
+  assert.deepEqual(l.records.map(r=>r.articleId),['1','2']);
+  assert.match(l.records[0].text,/artículo primero de esta ley/);
+  const mixed=[article,'ARTICULO SEGUNDO.- Esta línea ordinal en mayúsculas después de un artículo numérico permanece como cuerpo y nunca abre disposición propia.','TRANSITORIOS'].join('\n');
+  const m=extractArticles([{number:1,text:mixed}],source,meta);
+  assert.deepEqual(m.records.map(r=>r.articleId),['1']);
+  assert.match(m.records[0].text,/ARTICULO SEGUNDO/);
+});

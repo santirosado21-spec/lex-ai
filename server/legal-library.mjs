@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=22;
+export const EXTRACTOR_VERSION=24;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -123,6 +123,13 @@ const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;
 const editorialLine=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con art[íi]culo transitorio|[A-Za-zÁÉÍÓÚáéíóúñÑ ]+ (?:reformado|adicionado|derogado) DOF)\b/i;
 const reformNote=/^\((?:REFORMADO|ADICIONADO|DEROGADO)/i;
 const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
+// Spelled-out ordinal headings in older official PDFs ("ARTICULO PRIMERO.-", "ARTICULOS PRIMERO A OCTAVO.-"). Fail-closed: all-caps ARTICULO(S) only (body references like "el artículo primero de esta ley" never match), a strict terminator, only while no numeric article has opened, and strictly sequential from the previous ordinal. Unknown ordinal words never match.
+const ordWord='(?:PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[EÉ]PTIMO|OCTAVO|NOVENO|D[EÉ]CIMO|UND[EÉ]CIMO|DUOD[EÉ]CIMO|VIG[EÉ]SIMO|TRIG[EÉ]SIMO)';
+const ordinalHeading=new RegExp(`^ART[ÍI]CULO ((?:${ordWord})(?: ${ordWord})?|UNICO)[ \\t]*[.:\\-]`);
+const ordinalRange=new RegExp(`^ART[ÍI]CULOS (${ordWord}) A (${ordWord})[ \\t]*[.:\\-]`);
+const ORD_UNIT={PRIMERO:1,SEGUNDO:2,TERCERO:3,CUARTO:4,QUINTO:5,SEXTO:6,SEPTIMO:7,OCTAVO:8,NOVENO:9};
+const ORD_BASE={DECIMO:10,UNDECIMO:11,DUODECIMO:12,VIGESIMO:20,TRIGESIMO:30};
+function ordinalValue(phrase){const p=phrase.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();if(p==='UNICO')return 1;if(ORD_UNIT[p])return ORD_UNIT[p];if(ORD_BASE[p])return ORD_BASE[p];const m=/^(DECIMO|VIGESIMO|TRIGESIMO) (PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|SEPTIMO|OCTAVO|NOVENO)$/.exec(p);return m?ORD_BASE[m[1]]+ORD_UNIT[m[2]]:null;}
 // Loose heading without terminator: number followed by an uppercase word. A suffix word after the number blocks this route (it is handled by noTermSuffix/bareSuffix) so "Artículo 21 Bis ..." can never open a plain article 21.
 const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?!(?:Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)\b)(?=[A-ZÁÉÍÓÚÑ])/i;
 // Loose suffixed heading glued to body text ("Artículo 21 Bis 1. ..."): after the suffix there must be EOL, a terminator, a numeric list marker or an uppercase word; "Artículo 21 Bis de la ley" (lowercase tail) stays body text.
@@ -177,7 +184,9 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const value=normalize(line);if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
-  const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0;const seen=new Set();
+  const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0,numericStarted=false,lastOrd=0;const seen=new Set();
+  // Two-pass mode gate: any strict numeric heading anywhere in the document selects numeric mode (byte-identical to v22); the ordinal path below only runs for documents with NO numeric headings at all, so preambles of modern laws ("ARTÍCULO PRIMERO.- Se expide…") can never poison numeric extraction.
+  const ordinalEnabled=!lines.some(l=>headingPre.test(l.text)&&(ARTICLE.test(l.text)||bare.test(l.text)));
   const sampleDiscard=(rule,line)=>{if(coverage.discardedSamples.length<50)coverage.discardedSamples.push({rule,page:line.page,line:line.text.slice(0,200)});};
   function finish(){if(!current)return;const anomalies=[...(current.anomalies??[])];let rubricPops=0;while(current.lines.length&&rubricPops<2&&trailingRubric(current.lines.at(-1).text)&&prevLineClosed(current.lines,current.lines.length-1)){const removed=current.lines.pop();current.editorial.push(removed.text);coverage.removedTrailingRubrics++;rubricPops++;sampleDiscard('trailing-rubric',removed);}
     const body=current.lines.map(x=>x.text);let text=normalize(body.join(' '));
@@ -195,7 +204,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(match){
       const rest=line.text.slice(match[0].length);
       if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
-      finish();started=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
+      finish();started=true;numericStarted=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
     if(!match&&current){
@@ -203,7 +212,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(looseS){
         const base=Number(current.articleId.split('-')[0]);
         if(Number(looseS[1])===base&&!midSentenceFragment(lines,li,false)){
-          finish();pendingSection=false;sectionDiscard=0;const looseId=looseS[1]+'-'+suffixId(looseS[2])+(looseS[3]?'-'+looseS[3].toUpperCase():'');
+          finish();pendingSection=false;sectionDiscard=0;numericStarted=true;const looseId=looseS[1]+'-'+suffixId(looseS[2])+(looseS[3]?'-'+looseS[3].toUpperCase():'');
           if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
           current={articleId:looseId,lines:[line],editorial:[]};continue;
         }
@@ -211,7 +220,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       }
       const loose=noTerm.exec(line.text);
       if(loose&&Number(loose[1])===Number(current.articleId.split('-')[0])+1&&!midSentenceFragment(lines,li,false)){
-        finish();pendingSection=false;sectionDiscard=0;const looseId=loose[1];
+        finish();pendingSection=false;sectionDiscard=0;numericStarted=true;const looseId=loose[1];
         if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
         current={articleId:looseId,lines:[line],editorial:[]};continue;
       }
@@ -222,7 +231,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
         const bareNumber=Number(bareMatch[1]);
         const currentNumber=current?Number(current.articleId.split('-')[0]):null;
         if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)){
-          finish();started=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
+          finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
           if(seen.has(bareId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:bareId};ended=true;break;}
           current={articleId:bareId,lines:[line],editorial:[]};continue;
         }
@@ -231,11 +240,33 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(bareSuf){
         const base=current?Number(current.articleId.split('-')[0]):null;
         if(started&&current&&Number(bareSuf[1])===base){
-          finish();pendingSection=false;sectionDiscard=0;const sufId=bareSuf[1]+'-'+suffixId(bareSuf[2])+(bareSuf[3]?'-'+bareSuf[3].toUpperCase():'');
+          finish();pendingSection=false;sectionDiscard=0;numericStarted=true;const sufId=bareSuf[1]+'-'+suffixId(bareSuf[2])+(bareSuf[3]?'-'+bareSuf[3].toUpperCase():'');
           if(seen.has(sufId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:sufId};ended=true;break;}
           current={articleId:sufId,lines:[line],editorial:[]};continue;
         }
         if(!documentAnomalies.includes('unmatched-suffixed-heading-in-body'))documentAnomalies.push('unmatched-suffixed-heading-in-body');
+      }
+    }
+    if(!match&&ordinalEnabled&&!numericStarted){
+      const range=ordinalRange.exec(line.text);
+      if(range){
+        const n1=ordinalValue(range[1]),n2=ordinalValue(range[2]);
+        if(n1&&n2&&n2>n1&&n1===lastOrd+1){
+          finish();started=true;pendingSection=false;sectionDiscard=0;const rangeId=n1+'-'+n2;
+          if(seen.has(rangeId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:rangeId};ended=true;break;}
+          if(!documentAnomalies.includes('ordinal-range-heading-single-record'))documentAnomalies.push('ordinal-range-heading-single-record');
+          current={articleId:rangeId,lines:[line],editorial:[]};lastOrd=n2;continue;
+        }
+      }else{
+        const ordM=ordinalHeading.exec(line.text);
+        if(ordM){
+          const n=ordinalValue(ordM[1]);
+          if(n&&n===lastOrd+1){
+            finish();started=true;pendingSection=false;sectionDiscard=0;const ordId=String(n);
+            if(seen.has(ordId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:ordId};ended=true;break;}
+            current={articleId:ordId,lines:[line],editorial:[]};lastOrd=n;continue;
+          }
+        }
       }
     }
     if(!started||!current)continue;
