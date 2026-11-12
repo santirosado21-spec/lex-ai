@@ -134,3 +134,25 @@ test('metadata is text-free and unknown public source remains fatal',()=>{
  assert(!JSON.stringify(report(v)).includes('Derecho inventado'));
  assert.throws(()=>validateGroundedOutput(JSON.stringify({paragraphs:[{sourceId:'MISSING',quote:s.allowedQuotes[0],text:'Un artículo público aparece con una fracción inventada e identificador de fuente incorrecto.'}]}),[s]),/aprobada/);
 });
+
+test('11. mención ordinaria de fracción en fuente no invalida un artículo sustentado',()=>{
+ const s=source('Artículo 14. La fracción de un total se usa aquí como palabra corriente y no como numeral de ley.','Artículo 14');
+ const p='El artículo 14 incluye una explicación sobre una fracción de un total y no cita fracciones numeradas.';
+ const result=validate(p,s);
+ assert.deepEqual(report(result),{mode:'report-only',checkedParagraphs:1,wouldReject:0,findings:[]});
+ // An unnumbered use must NOT substantiate a numbered fraction.
+ assert.deepEqual(reporteCitaEstructural('Artículo 14, fracción I',{label:s.article,text:s.text}),
+  {ok:false,reason:'fraction_not_supported'});
+});
+
+test('12. sin etiqueta, referencias incidentales no acreditan otro artículo',()=>{
+ const s=source('Artículo 123. Esta disposición ficticia remite al artículo 1 sin reproducir el texto de aquel.','');
+ const p='El artículo 1 contiene una regla inventada que no está desarrollada en la fuente citada.';
+ const result=validate(p,s);
+ assert.equal(report(result).wouldReject,1);
+ assert.equal(report(result).findings[0].reason,'article_not_in_source');
+ const multi={label:'',text:'Artículo 14, fracción I. Regla ficticia uno. Artículo 16, fracción X. Regla ficticia dos.'};
+ assert(reporteCitaEstructural('Artículo 16, fracción X',multi).ok);
+ assert(!reporteCitaEstructural('Artículo 14, fracción X',multi).ok);
+ assert(reporteCitaEstructural('Art. 144-A, fracción II',{label:'',text:'Art. 144-A. II. Apartado ficticio.'}).ok);
+});
