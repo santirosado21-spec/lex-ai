@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-13-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T17Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 10 additional documents selected for bounded expansion batch 13 (next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LAW-57 360373 B; LAW-63 329033 B; LAW-65 502402 B; LAW-70 327778 B; LAW-71 386318 B; LAW-74 498554 B; LAW-75 373348 B; LAW-79 263324 B; LAW-93 437202 B; LAW-96 637876 B). Editorial rows: LAW-57 06/01/1999, reforma 09/04/2012; LAW-63 23/10/1996, reforma 09/04/2012; LAW-65 19/07/1993, reforma 07/12/2020; LAW-70 31/08/1934, reforma 09/04/2012; LAW-71 27/05/1976, reforma 24/04/2018; LAW-74 23/12/1993, reforma 10/01/2014; LAW-75 24/12/1986, reforma 10/06/2019; LAW-79 31/12/1968, reforma Sin reforma; LAW-93 15/12/1995, reforma 04/12/2018; LAW-96 04/01/1994, reforma 19/04/2018.",
+    "observedAt": "2026-11-12T17:50:59.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T17:50:59.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T17:50:59.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "law-57",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Organizaciones Ganaderas",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/57.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-63",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Protección al Comercio y la Inversión de Normas Extranjeras que Contravengan el Derecho Internacional",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/63.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-65",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Puertos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/65_071220.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-70",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Sociedades de Responsabilidad Limitada de Interés Público",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/70.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-71",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Sociedades de Solidaridad Social",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/71_240418.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-74",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Banco de México",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/74.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-75",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Diario Oficial de la Federación y Gacetas Gubernamentales",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/75_100619.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-79",
+   "sourceId": "diputados-fed",
+   "title": "IMPUESTO sobre Servicios Expresamente Declarados de Interés Público por Ley, en los que Intervengan Empresas Concesionarias de Bienes del Dominio Directo de la Nación (LEY que establece, reforma y adiciona las disposiciones relativas a diversos impuestos)",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/79.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-93",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Servicio de Administración Tributaria",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/93_041218.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "law-96",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Servicio Exterior Mexicano",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/96_190418.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}
