@@ -5,6 +5,7 @@ const ARTICLE_RE = /\b(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a
 // One ordered citation scan; source interpretation uses separate helpers.
 const MENTION_RE = /\b(?:(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])|fracci[oó]n(?:es)?\b)/giu;
 const FRACTION_WORD_RE = /\bfracci[oó]n(?:es)?\b/giu;
+const EXPLICIT_FRACTION_OWNER_RE = /^\s*del\s+(?:art[ií]culo|art\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
 const FRAC_LIST_PREFIX = /^(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}])(?:(?:\s*(?:,\s*(?:y|e)?|[-–—]|\b(?:y|e|al|a|hasta)\b)\s*)(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}]))*/iu;
 const ROMAN_RE = /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
 const ORDINARY_TOKEN_RE = /^(?:\d+|[IVXLCDM]+)/i;
@@ -118,7 +119,15 @@ export function paresDeCita(texto) {
    events.push({type:'article',articulo:lastArticle});
   } else {
    const parsed=fractionAt(texto,m.index,m.index+m[0].length,true);
-   if(parsed) events.push({type:'fraction',articulo:lastArticle,values:parsed.values});
+   if (parsed) {
+    // An explicit trailing owner supersedes a preceding article. E.g.
+    // "artículo 14 y fracción I del artículo 16" must NEVER bind I to 14.
+    // Keep initial multi-article fractions orphaned until a named article
+    // has appeared, preserving the conservative existing contract.
+    const following=EXPLICIT_FRACTION_OWNER_RE.exec(texto.slice(parsed.end));
+    const owner=lastArticle===null ? null : (following?articuloCanon(following[1]):lastArticle);
+    events.push({type:'fraction',articulo:owner,values:parsed.values});
+   }
   }
  }
  const onlyArticle=articleIds.size===1?[...articleIds][0]:null;
