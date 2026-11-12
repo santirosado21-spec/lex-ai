@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-6-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 31457280,
+  "maxDocumentBytes": 5242880,
+  "maxDurationMs": 900000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T17:37Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca identical to batches 1-5 snapshots (no drift); 10 additional documents selected for bounded expansion batch 6 (general-regime set, next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LFPCA 867009 B; LFCE 894149 B; LGA 591615 B; LGAHOTDU 653615 B; LGCC 698437 B; LAN 1352482 B; LGVS 772548 B; LGEEPA 1357460 B; LGSC 643242 B; LCPAF 588718 B). Editorial rows: LFPCA 01/12/2005, reforma 09/06/2026; LFCE 23/05/2014, reforma 14/11/2025; LGA 15/06/2018, reforma 14/11/2025; LGAHOTDU 28/11/2016, reforma 01/04/2024; LGCC 06/06/2012, reforma 01/04/2024; LAN 01/12/1992, reforma 11/12/2025; LGVS 03/07/2000, reforma 16/07/2025; LGEEPA 28/01/1988, reforma 19/01/2026; LGSC 03/08/1994, reforma 16/04/2025; LCPAF 22/12/1993, reforma 14/11/2025.",
+    "observedAt": "2026-11-12T17:38:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T17:38:00.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T17:38:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "lfpca",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Procedimiento Contencioso Administrativo",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPCA.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfce",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Competencia Económica",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFCE.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lga",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Archivos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGA.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgahotdu",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Asentamientos Humanos, Ordenamiento Territorial y Desarrollo Urbano",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGAHOTDU.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgcc",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Cambio Climático",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGCC.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lan",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Aguas Nacionales",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAN.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgvs",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Vida Silvestre",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGVS.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgeepa",
+   "sourceId": "diputados-fed",
+   "title": "LEY General del Equilibrio Ecológico y la Protección al Ambiente",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGEEPA.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgsc",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Sociedades Cooperativas",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSC.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lcpaf",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Caminos, Puentes y Autotransporte Federal",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LCPAF.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}
