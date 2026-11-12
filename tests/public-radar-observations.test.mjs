@@ -28,7 +28,7 @@ test('02. no client/matter/payload/verified fields allowed',()=>{
 });
 test('03. configured official hosts only, no subdomains by suffix trick',()=>{
  assert.equal(check({...base(),source:'sjf',sourceUrl:'https://sjf2.scjn.gob.mx/tesis/123'}).source,'sjf');
- for(const sourceUrl of ['http://dof.gob.mx/nota','https://dof.gob.mx.evil.example/nota',
+ for(const sourceUrl of ['https://dof.gob.mx/','http://dof.gob.mx/nota','https://dof.gob.mx.evil.example/nota',
   'https://evil.example/nota','https://user:pass@dof.gob.mx/nota',
   'https://dof.gob.mx/nota#fragment','https://dof.gob.mx/nota?q=cliente',
   'file:///tmp/secreto','https://localhost/nota','https://dof.gob.mx/%41']){
@@ -45,7 +45,7 @@ test('05. invalid publication dates and future publication fail closed',()=>{
  }
 });
 test('06. clock and observedAt require UTC and no future observations',()=>{
- for(const timestamp of ['2026-11-11','2026-11-11T23:40:00-06:00','2026-11-12T04:00:00Z','bad']){
+ for(const timestamp of ['2026-11-11','2026-11-11T23:40:00-06:00','2026-11-12T04:00:00Z','2026-11-11T23:40:00.5Z','bad']){
   assert.throws(()=>check({...base(),observedAt:timestamp}),undefined,timestamp);
  }
  assert.throws(()=>normalize(base(),{now:NaN}),{code:'INVALID_CLOCK'});
@@ -59,7 +59,7 @@ test('07. revision and digest cannot be unvalidated user text',()=>{
  }
 });
 test('08. visible title controls and bounds are enforced',()=>{
- for(const title of ['corto','   ','X'.repeat(241),'Texto\nsecreto']){
+ for(const title of ['corto','   ',' '.repeat(25),'X'.repeat(241),'Texto\nsecreto']){
   assert.throws(()=>check({...base(),title}),undefined,title);
  }
 });
