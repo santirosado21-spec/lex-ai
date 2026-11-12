@@ -206,3 +206,19 @@ test('15. artículos plurales enumerados no omiten el segundo ni apropian su fra
  assert.equal(report(integrated).findings[0].reason,'orphan_fraction');
  assert.equal(integrated.paragraphs.length,1);
 });
+
+test('16. rangos plurales de artículos se expanden sin perder sus extremos',()=>{
+ const passage='Artículo 14. Texto ficticio sin los artículos que le siguen.';
+ const support={label:'Artículo 14',text:passage};
+ for(const expression of ['Los artículos 14 a 16','Los artículos 14 al 16','Los artículos 14-16','Los artículos 14 hasta 16']) {
+  assert.deepEqual(paresDeCita(expression).filter(x=>x.fraccion===null).map(x=>x.articulo),['14','15','16']);
+  assert.deepEqual(reporteCitaEstructural(expression,support),{ok:false,reason:'article_not_in_source'});
+ }
+ assert.deepEqual(paresDeCita('Los artículos 14, 16 y 20').map(x=>x.articulo),['14','16','20']);
+ assert.deepEqual(paresDeCita('Artículo 144-A').map(x=>x.articulo),['144-a']);
+ for(const invalid of ['Los artículos 16 al 14','Los artículos 1 al 9999']) {
+  assert.equal(reporteCitaEstructural(invalid,support).reason,'invalid_article_range');
+ }
+ assert(reporteCitaEstructural('Los artículos 14 al 16',{label:'Artículos 14 al 16',text:'Artículos 14 al 16. Compilación enteramente sintética.'}).ok);
+ assert.throws(()=>paresDeCita('Los artículos 14 a 16, fracción I'),{reason:'orphan_fraction'});
+});
