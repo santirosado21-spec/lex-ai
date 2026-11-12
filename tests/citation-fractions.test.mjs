@@ -198,7 +198,7 @@ test('15. artículos plurales enumerados no omiten el segundo ni apropian su fra
  assert.deepEqual(reporteCitaEstructural(group,one),{ok:false,reason:'article_not_in_source'});
  assert.deepEqual(reporteCitaEstructural(three,one),{ok:false,reason:'article_not_in_source'});
  assert.throws(()=>paresDeCita('Los artículos 14 y 16, fracción I, describen algo.'),{reason:'orphan_fraction'});
- const both=source('Artículo 14. I. Regla inventada A. Artículo 16. II. Regla inventada B.','');
+ const both=source('Artículo 14. I. Regla inventada A. Artículo 16. II. Regla inventada B. Los artículos 14 y 16 son mencionados explícitamente en esta fuente sintética.','');
  assert.deepEqual(reporteCitaEstructural('Los artículos 14 y 16, fracción I, describen algo.',{label:'',text:both.text}),{ok:false,reason:'orphan_fraction'});
  assert(reporteCitaEstructural('Los artículos 14 y 16 y la fracción II del artículo 16.',{label:'',text:both.text}).ok);
  const integrated=validate('Los artículos 14 y 16, fracción I, se refieren a reglas imaginarias.',both);
