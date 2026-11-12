@@ -5,7 +5,7 @@ const ARTICLE_RE = /\b(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a
 // One ordered citation scan; source interpretation uses separate helpers.
 const MENTION_RE = /\b(?:(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])|fracci[oó]n(?:es)?\b)/giu;
 const FRACTION_WORD_RE = /\bfracci[oó]n(?:es)?\b/giu;
-const ARTICLE_LIST_NEXT_RE = /^\s*(?:,|\b(?:y|e)\b)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
+const ARTICLE_LIST_NEXT_RE = /^\s*(,|\b(?:y|e|a|al|hasta)\b|[-–—])\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
 const EXPLICIT_FRACTION_OWNER_RE = /^\s*del\s+(?:art[ií]culo|art\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
 const FRAC_LIST_PREFIX = /^(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}])(?:(?:\s*(?:,\s*(?:y|e)?|[-–—]|\b(?:y|e|al|a|hasta)\b)\s*)(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}]))*/iu;
 const ROMAN_RE = /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
@@ -80,8 +80,16 @@ function expandArticleMention(text,m) {
  if (/^art[ií]culos\b/iu.test(m[0])) {
   let next;
   while ((next=ARTICLE_LIST_NEXT_RE.exec(text.slice(end)))) {
-   if (articles.length>=32) throw malformed('invalid_article_list');
-   articles.push(articuloCanon(next[1]));
+   const target=articuloCanon(next[2]), previous=articles.at(-1);
+   const range=/^(?:a|al|hasta|[-–—])$/iu.test(next[1]);
+   if(range) {
+    // Only a pure numeric interval has a deterministic finite expansion.
+    if(!/^\d+$/u.test(previous)||!/^\d+$/u.test(target)||Number(target)<=Number(previous)||Number(target)-Number(previous)>256) {
+     throw malformed('invalid_article_range');
+    }
+    for(let n=Number(previous)+1;n<=Number(target);n++) articles.push(String(n));
+   } else articles.push(target);
+   if(articles.length>256)throw malformed('invalid_article_list');
    end+=next[0].length;
   }
  }
