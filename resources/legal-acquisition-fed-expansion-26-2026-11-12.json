@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-26-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T18Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 10 additional documents selected for bounded expansion batch 26 (next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LICAL 680036 B; LIE 728116 B; LIF-2026 756083 B; LIFNCT 333202 B; LIFNVT 1024529 B; LIGIE-2022 19158939 B; LIH 614236 B; LIISPCEN 387514 B; LIMJ 399140 B; LINPI 423906 B). Editorial rows: LICAL 01/07/2020, reforma Sin reforma; LIE 27/12/1993, reforma 27/05/2024; LIF-2026 07/11/2025, reforma Sin reforma; LIFNCT 24/04/2006, reforma 03/01/2024; LIFNVT 24/04/1972, reforma 21/02/2025; LIGIE-2022 07/06/2022 Nueva modificación, reforma 13/10/2026; LIH 11/08/2014, reforma 28/12/2025; LIISPCEN 06/05/2015, reforma 17/04/2024; LIMJ 06/01/1999, reforma 01/04/2024; LINPI 04/12/2018, reforma 29/12/2023.",
+    "observedAt": "2026-11-12T18:23:24.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T18:23:24.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T18:23:24.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "lical",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Infraestructura de la Calidad",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LICal_010720.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lie",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Inversión Extranjera",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIE.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lif-2026",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Ingresos de la Federación para el Ejercicio Fiscal de 2026",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIF_2026.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lifnct",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto del Fondo Nacional para el Consumo de los Trabajadores",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIFNCT.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lifnvt",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto del Fondo Nacional de la Vivienda para los Trabajadores",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIFNVT.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "ligie-2022",
+   "sourceId": "diputados-fed",
+   "title": "LEY de los Impuestos Generales de Importación y de Exportación",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIGIE_2022.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lih",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Ingresos sobre Hidrocarburos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIH.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "liispcen",
+   "sourceId": "diputados-fed",
+   "title": "LEY para Impulsar el Incremento Sostenido de la Productividad y la Competitividad de la Economía Nacional",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIISPCEN.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "limj",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto Mexicano de la Juventud",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIMJ.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "linpi",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto Nacional de los Pueblos Indígenas",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LINPI.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}

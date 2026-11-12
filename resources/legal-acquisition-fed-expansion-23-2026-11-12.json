@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-23-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T18Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 10 additional documents selected for bounded expansion batch 23 (next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LGES 445712 B; LGIPD 522121 B; LGIPE 2962213 B; LGISMH 614121 B; LGMASC 574435 B; LGMDE 413922 B; LGMDFP 891501 B; LGMHCTI 660681 B; LGMIME 650032 B; LGMSV 639876 B). Editorial rows: LGES 20/04/2021, reforma Sin reforma; LGIPD 30/05/2011, reforma 14/06/2024; LGIPE 23/05/2014, reforma 02/06/2026; LGISMH 02/08/2006, reforma 15/01/2026; LGMASC 26/01/2024, reforma Sin reforma; LGMDE 23/05/2014, reforma 20/05/2021; LGMDFP 17/11/2017, reforma 16/07/2025; LGMHCTI 08/05/2023, reforma Sin reforma; LGMIME 24/11/2023 ), reforma 24/11/2023 Sentencia SCJN; LGMSV 17/05/2022, reforma 29/12/2023.",
+    "observedAt": "2026-11-12T18:20:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T18:20:00.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T18:20:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "lges",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Educación Superior",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGES_200421.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgipd",
+   "sourceId": "diputados-fed",
+   "title": "LEY General para la Inclusión de las Personas con Discapacidad",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGIPD.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgipe",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Instituciones y Procedimientos Electorales",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGIPE.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgismh",
+   "sourceId": "diputados-fed",
+   "title": "LEY General para la Igualdad Sustantiva entre Mujeres y Hombres",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGISMH.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmasc",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Mecanismos Alternativos de Solución de Controversias",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMASC.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmde",
+   "sourceId": "diputados-fed",
+   "title": "LEY General en Materia de Delitos Electorales",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMDE_200521.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmdfp",
+   "sourceId": "diputados-fed",
+   "title": "LEY General en Materia de Desaparición Forzada de Personas, Desaparición Cometida por Particulares y del Sistema Nacional de Búsqueda de Personas",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMDFP.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmhcti",
+   "sourceId": "diputados-fed",
+   "title": "LEY General en materia de Humanidades, Ciencias, Tecnologías e Innovación",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMHCTI.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmime",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de los Medios de Impugnación en Materia Electoral",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMIME.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lgmsv",
+   "sourceId": "diputados-fed",
+   "title": "LEY General de Movilidad y Seguridad Vial",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGMSV.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}

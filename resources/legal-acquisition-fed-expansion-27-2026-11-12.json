@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-27-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T18Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 10 additional documents selected for bounded expansion batch 27 (next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LINS 565527 B; LISSFAM 1040647 B; LISSSTE 1205559 B; LMEUM 648894 B; LMIGRA 781391 B; LMIN 647752 B; LMTR 904920 B; LNCM 946507 B; LNED 1056771 B; LNEP 934359 B). Editorial rows: LINS 26/05/2000, reforma 11/05/2022; LISSFAM 09/07/2003, reforma Notificación 15/01/2026 Sentencia SCJN; LISSSTE 31/03/2007, reforma 15/01/2026; LMEUM 27/07/1931, reforma 19/01/2026; LMIGRA 25/05/2011, reforma 15/01/2026; LMIN 26/06/1992, reforma 08/05/2023; LMTR 16/07/2025, reforma Sin reforma; LNCM 01/06/2006, reforma 14/11/2025; LNED 09/08/2019, reforma 28/11/2025; LNEP 16/06/2016, reforma 01/04/2024.",
+    "observedAt": "2026-11-12T18:24:33.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T18:24:33.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T18:24:33.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "lins",
+   "sourceId": "diputados-fed",
+   "title": "LEY de los Institutos Nacionales de Salud",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LINS.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lissfam",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto de Seguridad Social para las Fuerzas Armadas Mexicanas",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISSFAM.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lissste",
+   "sourceId": "diputados-fed",
+   "title": "LEY del Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISSSTE.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lmeum",
+   "sourceId": "diputados-fed",
+   "title": "LEY Monetaria de los Estados Unidos Mexicanos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMEUM.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lmigra",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Migración",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMigra.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lmin",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Minería",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMin.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lmtr",
+   "sourceId": "diputados-fed",
+   "title": "LEY en Materia de Telecomunicaciones y Radiodifusión",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMTR.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lncm",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Navegación y Comercio Marítimos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LNCM.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lned",
+   "sourceId": "diputados-fed",
+   "title": "LEY Nacional de Extinción de Dominio",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LNED.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lnep",
+   "sourceId": "diputados-fed",
+   "title": "LEY Nacional de Ejecución Penal",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LNEP.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}

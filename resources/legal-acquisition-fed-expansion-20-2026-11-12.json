@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-fed-expansion-20-2026-11-12",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "diputados-fed",
+   "title": "Cámara de Diputados del H. Congreso de la Unión",
+   "jurisdiction": "MX-FED",
+   "collection": "federal-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "evidence": "Live official index re-fetched 2026-11-12T18Z; SHA256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca; 10 additional documents selected for bounded expansion batch 20 (next by priority order); each candidate PDF verified live HEAD HTTP200 application/pdf (LFPSDMH 394014 B; LFRA 450385 B; LFRCF 657518 B; LFREMSP 253995 B; LFRM 608253 B; LFRPE 391126 B; LFRSP 545975 B; LFSA 802286 B; LFSP 365989 B; LFSV 635629 B). Editorial rows: LFPSDMH 12/01/2016, reforma 12/11/2021; LFRA 07/06/2013, reforma 14/11/2025; LFRCF 18/07/2016, reforma 15/05/2026; LFREMSP 19/05/2021, reforma Sin reforma; LFRM 14/09/2021, reforma 26/09/2022 Sentencia SCJN; LFRPE 31/12/2004, reforma 29/12/2023; LFRSP 31/12/1982, reforma 01/04/2024; LFSA 25/07/2007, reforma 21/05/2024; LFSP 06/07/2006, reforma 17/10/2011; LFSV 05/01/1994, reforma 11/05/2022.",
+    "observedAt": "2026-11-12T18:16:35.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-12T18:16:35.000Z",
+    "basis": "Technical channel/rights review under owner instruction 2026-11-12 to prioritize finishing Rejon scraping, relayed through Instinct task delegation (operational scope, not legal-rights authorization). Same official Chamber of Deputies channel and LFDA art. 14 frac. VIII basis as the pilot and expansion batches 1-5 registries; preserve exact originals and provenance. Editorial additions, commercial redistribution, legal accuracy and current applicability remain unreviewed. Runtime must recheck robots/TLS/destination/budgets fail-closed. No competitor content.",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "diputados-index-20261112",
+    "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+    "observedAt": "2026-11-12T18:16:35.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "lfpsdmh",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal para Prevenir y Sancionar los Delitos Cometidos en Materia de Hidrocarburos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPSDMH.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfra",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Responsabilidad Ambiental",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRA.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfrcf",
+   "sourceId": "diputados-fed",
+   "title": "LEY de Fiscalización y Rendición de Cuentas de la Federación",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRCF.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfremsp",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Remuneraciones de los Servidores Públicos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRemSP_190521.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfrm",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Revocación de Mandato",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRM.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfrpe",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Responsabilidad Patrimonial del Estado",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRPE.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfrsp",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Responsabilidades de los Servidores Públicos",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFRSP.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfsa",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Sanidad Animal",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFSA.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfsp",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Seguridad Privada",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFSP.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  },
+  {
+   "id": "lfsv",
+   "sourceId": "diputados-fed",
+   "title": "LEY Federal de Sanidad Vegetal",
+   "jurisdiction": "MX-FED",
+   "status": "approved",
+   "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFSV.pdf",
+   "versionId": "diputados-index-20261112",
+   "evidenceUrl": "https://www.diputados.gob.mx/LeyesBiblio/index.htm"
+  }
+ ]
+}
