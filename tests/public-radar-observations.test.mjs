@@ -108,3 +108,11 @@ test('16. module imports crypto only and performs no network, shell or file read
  assert(!/(^|\n)\s*import .*?from ['"](?:node:(?:fs|http|https|net|child_process)|axios|undici)/.test(contents));
  assert(!/\b(?:fetch|spawn|execFile|execSync|eval|Function)\s*\(/.test(contents));
 });
+
+test('17. every public ingestion entry point rejects invalid time references',()=>{
+ const envelope=base();
+ const health={source:'dof',state:'failed',observedAt:envelope.observedAt};
+ assert.throws(()=>normalize(envelope,{now:NaN}),{code:'INVALID_CLOCK'});
+ assert.throws(()=>aggregate([],{now:NaN}),{code:'INVALID_CLOCK'});
+ assert.throws(()=>signal(health,{now:NaN}),{code:'INVALID_CLOCK'});
+});
