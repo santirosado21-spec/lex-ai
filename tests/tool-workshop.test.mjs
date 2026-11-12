@@ -138,7 +138,9 @@ test('read-only catalogue lookup and no modifications to arguments',()=>{
 
 test('isolated UI has no API import, fake execution or external workflow binding',()=>{
  const view=readFileSync(new URL('../src/ToolWorkshopView.tsx',import.meta.url),'utf8');
- assert(!/from ['"]\.\/api['"]/.test(view));
- assert(!/fetch\s*\(|XMLHttpRequest|WebSocket|localStorage|sessionStorage|window\.open\s*\(/.test(view));
+ // Comments document forbidden capabilities; scan executable text, not commentary.
+ const executable=view.replace(/^\s*\/\/.*$/gm,'');
+ assert(!/from ['"]\.\/api['"]/.test(executable));
+ assert(!/fetch\s*\(|XMLHttpRequest|WebSocket|localStorage|sessionStorage|window\.open\s*\(/.test(executable));
  assert(view.includes('Simulación aislada'));
 });
