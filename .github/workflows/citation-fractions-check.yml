@@ -48,5 +48,5 @@ jobs:
         run: |
           printf 'HEAD=%s\n' "$(git rev-parse HEAD)"
           node --version
-      - name: Verify article-fraction report-only, plural articles and grounded regressions
+      - name: Verify article-fraction report-only, article ranges and grounded regressions
         run: node --test tests/citation-fractions.test.mjs tests/grounded-output.test.mjs
