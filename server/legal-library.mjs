@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=17;
+export const EXTRACTOR_VERSION=22;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -123,27 +123,66 @@ const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;
 const editorialLine=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con art[íi]culo transitorio|[A-Za-zÁÉÍÓÚáéíóúñÑ ]+ (?:reformado|adicionado|derogado) DOF)\b/i;
 const reformNote=/^\((?:REFORMADO|ADICIONADO|DEROGADO)/i;
 const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
-const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?=[A-ZÁÉÍÓÚÑ])/;
+// Loose heading without terminator: number followed by an uppercase word. A suffix word after the number blocks this route (it is handled by noTermSuffix/bareSuffix) so "Artículo 21 Bis ..." can never open a plain article 21.
+const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?!(?:Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)\b)(?=[A-ZÁÉÍÓÚÑ])/i;
+// Loose suffixed heading glued to body text ("Artículo 21 Bis 1. ..."): after the suffix there must be EOL, a terminator, a numeric list marker or an uppercase word; "Artículo 21 Bis de la ley" (lowercase tail) stays body text.
+const noTermSuffix=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)(?![a-záéíóúñ])(?:[ \t]+([IVXL]+)(?=[ \t]*[.,\-]))?(?=[ \t]*[.:]|[ \t]+\d+[.)]|[ \t]+[A-ZÁÉÍÓÚÑ(]|[ \t]*,[ \t]*\((?:DEROGADO|Derogado)|[ \t]*$)/i;
 // Official period-less heading variant: the whole line is exactly "Artículo N" (seen in LGSMIME and Reg_Senado official PDFs). Accepted fail-closed: it can only open the body at article 1 or continue it strictly sequentially; anything else stays body text.
 const bare=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]*$/;
+// Official period-less SUFFIXED heading variant: the whole line is exactly "Artículo N Sufijo" (seen in LGSMIME and Reg_Senado official PDFs). Accepted fail-closed: only right after its numeric base article; anything else stays body text and flags the document.
+const bareSuffix=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]+(Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)(?:[ \t]+([IVXL]+|\d+))?[ \t]*$/i;
+const suffixId=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+const sentenceClosed=/[.…:;!?"'»)\]]\s*$|(?:\bDerogad[oa])\.?\s*$/;
 function midSentenceFragment(lines,i,checkNext=true){
   let j=i-1;
-  while(j>=0&&(amendment.test(lines[j].text)||editorialLine.test(lines[j].text)||reformNote.test(lines[j].text)||section.test(lines[j].text)))j--;
-  if(j>=0&&!/[.…:;!?"'»)\]]\s*$/.test(lines[j].text))return true;
+  while(j>=0&&(amendment.test(lines[j].text)||editorialLine.test(lines[j].text)||reformNote.test(lines[j].text)||section.test(lines[j].text)||lines[j].secSkip))j--;
+  if(j>=0&&!sentenceClosed.test(lines[j].text))return true;
   if(!checkNext)return false;
   const next=lines[i+1];
   return Boolean(next&&headingPre.test(next.text)&&ARTICLE.test(next.text));
 }
+// True when the previous significant line closed its sentence (or nothing precedes), so a LIBRO/TÍTULO/CAPÍTULO/SECCIÓN line can be a real heading rather than a wrapped body line.
+function prevClosed(lines,i){
+  let j=i-1;
+  while(j>=0&&(amendment.test(lines[j].text)||editorialLine.test(lines[j].text)||reformNote.test(lines[j].text)||section.test(lines[j].text)||lines[j].secSkip))j--;
+  return j<0||sentenceClosed.test(lines[j].text);
+}
+// Trailing editorial headings that belong to the NEXT section but landed at the end of an article: title-case subtitles without final punctuation ("De las Licencias"), short ALL-CAPS headings, service/corps subtitles ("Servicio de Ingenieros"), single title-case words ("Generalidades"), and headings glued to their DOF amendment note. A trailing line WITH sentence-final punctuation is never trimmed.
+const rubricTitle=/^(?:De (?:la|las|los|del)|Del) [A-ZÁÉÍÓÚÑ][^.:;!?"'»)\]]{0,59}$/;
+const rubricAllCaps=/^(?=[A-ZÁÉÍÓÚÑ ,.'-]{8,90}$)(?!.*\.$)(?!(?:[^ ]* ){8})[A-ZÁÉÍÓÚÑ]+(?: [A-ZÁÉÍÓÚÑ0-9.'-]+)+$/;
+const prevLineClosed=(lines,idx)=>idx<=0||/[.!?)]$/ .test(lines[idx-1].text.trim());
+const rubricService=/^(?:Servicio|Cuerpo|Departamento|Direcci[óo]n|Subdirecci[óo]n|Jefatura|Unidad) (?:(?:de|del|de la|de las|de los) )?[A-ZÁÉÍÓÚÑ][^.:;!?"'»)\]]{0,55}$/;
+const rubricSingleWord=/^(?:Generalidades|Disposiciones)$/;
+const rubricGluedNote=/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ,.'-]{6,90}(?:Secci[óo]n|Subsecci[óo]n|Cap[íi]tulo|T[íi]tulo|Apartado|Numeral|Inciso|Denominaci[óo]n) (?:adicionad[oa]|reformad[oa]|derogad[oa]|recorrid[oa]) DOF \d{2}-\d{2}-\d{4}$/;
+const trailingRubric=line=>rubricTitle.test(line)||rubricAllCaps.test(line)||rubricService.test(line)||rubricSingleWord.test(line)||rubricGluedNote.test(line)||/^(?:DE LA CAPACIDAD|DE LOS COMERCIANTES|DE LA FORMA)$/i.test(line);
+// Same rúbricas when the PDF text layer glues them onto the end of the last body line. Only cut at a sentence-close boundary (keeping the period); the ALL-CAPS variant requires lowercase in the preceding text so wrapped body sentences in all-caps documents are never cut.
+const inlineRubricSuffix=line=>{
+  let m=/\s([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ,.'()-]{6,89}(?:Secci[óo]n|Subsecci[óo]n|Cap[íi]tulo|T[íi]tulo|Apartado|Numeral|Inciso|Denominaci[óo]n) (?:adicionad[oa]|reformad[oa]|derogad[oa]|recorrid[oa]) DOF \d{2}-\d{2}-\d{4})$/.exec(line);
+  if(m)return m;
+  m=/ (Generalidades|Disposiciones)$/.exec(line);
+  if(m&&/DOF \d{2}-\d{2}-\d{4}$/.test(line.slice(0,m.index)))return m;
+  m=/[.!?] ((?:De (?:la|las|los|del)|Del) [A-ZÁÉÍÓÚÑ][^.:;!?"'»)\]]{2,59})$/.exec(line);
+  if(m)return m;
+  m=/[.!?] ((?:Servicio|Cuerpo|Departamento|Direcci[óo]n|Subdirecci[óo]n|Jefatura|Unidad) (?:(?:de|del|de la|de las|de los) )?[A-ZÁÉÍÓÚÑ][^.:;!?"'»)\]]{1,45})$/.exec(line);
+  if(m)return m;
+  m=/[.!?] ([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ,.'()-]{7,89})$/.exec(line);
+  if(m&&!m[1].endsWith('.')&&m[1].includes(' ')&&(m[1].match(/ /g)||[]).length<=10&&/[a-záéíóúñ]/.test(line.slice(0,m.index)))return m;
+  return null;
+};
 
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
-  const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
+  const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
   const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+DOF)?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const value=normalize(line);if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
-    if(upper===titleFold||/^CÁMARA DE DIPUTADOS|^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
-  const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false;const seen=new Set();
-  function finish(){if(!current)return;const anomalies=[...(current.anomalies??[])];const body=current.lines.map(x=>x.text);while(body.length&&/^(?:DE LA CAPACIDAD|DE LOS COMERCIANTES|DE LA FORMA)$/i.test(body.at(-1)))body.pop();const text=normalize(body.join(' '));
+    if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
+  const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0;const seen=new Set();
+  const sampleDiscard=(rule,line)=>{if(coverage.discardedSamples.length<50)coverage.discardedSamples.push({rule,page:line.page,line:line.text.slice(0,200)});};
+  function finish(){if(!current)return;const anomalies=[...(current.anomalies??[])];let rubricPops=0;while(current.lines.length&&rubricPops<2&&trailingRubric(current.lines.at(-1).text)&&prevLineClosed(current.lines,current.lines.length-1)){const removed=current.lines.pop();current.editorial.push(removed.text);coverage.removedTrailingRubrics++;rubricPops++;sampleDiscard('trailing-rubric',removed);}
+    const body=current.lines.map(x=>x.text);let text=normalize(body.join(' '));
+    let inlinePops=0;while(inlinePops<2){const m=inlineRubricSuffix(text);if(!m)break;const cut=/^[.!?]/.test(m[0])?m.index+1:m.index;const note=text.slice(cut).trim();text=text.slice(0,cut).trimEnd();current.editorial.push(note);coverage.removedTrailingRubrics++;inlinePops++;sampleDiscard('trailing-rubric-inline',{page:current.lines.at(-1)?.page??null,text:note});}
+    const gluedDerogated=/\s+(Derogad[oa]\.?)\s+((?:De (?:la|las|los|del)|Del) [A-ZÁÉÍÓÚÑ][^.:;!?"'»)\]]{0,59}|Generalidades)$/.exec(text);if(gluedDerogated){text=text.slice(0,gluedDerogated.index)+' '+gluedDerogated[1];current.editorial.push(gluedDerogated[2]);coverage.removedTrailingRubrics++;coverage.discardedSamples.push({rule:'trailing-rubric',page:current.lines.at(-1)?.page??null,line:gluedDerogated[2].slice(0,200)});}
     if(text.length<60)anomalies.push('too-short-for-structural-export');if(/\uFFFD|Secretaría General|CÁMARA DE DIPUTADOS/.test(text))anomalies.push('extraction-artifact');if(text.length>60000)anomalies.push('article-exceeds-60000-characters');if(/(?:\bSe deroga\b|\bDerogado\b)/i.test(text)&&text.length<140)anomalies.push('repealed-marker-not-training-example');
     if(seen.has(current.articleId))anomalies.push('duplicate-article-identifier');seen.add(current.articleId);
     const content=text.replace(ARTICLE,'').trim();
@@ -160,9 +199,19 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
     if(!match&&current){
+      const looseS=noTermSuffix.exec(line.text);
+      if(looseS){
+        const base=Number(current.articleId.split('-')[0]);
+        if(Number(looseS[1])===base&&!midSentenceFragment(lines,li,false)){
+          finish();pendingSection=false;sectionDiscard=0;const looseId=looseS[1]+'-'+suffixId(looseS[2])+(looseS[3]?'-'+looseS[3].toUpperCase():'');
+          if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
+          current={articleId:looseId,lines:[line],editorial:[]};continue;
+        }
+        if(!midSentenceFragment(lines,li,false)&&!documentAnomalies.includes('unmatched-suffixed-heading-in-body'))documentAnomalies.push('unmatched-suffixed-heading-in-body');
+      }
       const loose=noTerm.exec(line.text);
       if(loose&&Number(loose[1])===Number(current.articleId.split('-')[0])+1&&!midSentenceFragment(lines,li,false)){
-        finish();pendingSection=false;const looseId=loose[1];
+        finish();pendingSection=false;sectionDiscard=0;const looseId=loose[1];
         if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
         current={articleId:looseId,lines:[line],editorial:[]};continue;
       }
@@ -173,16 +222,36 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
         const bareNumber=Number(bareMatch[1]);
         const currentNumber=current?Number(current.articleId.split('-')[0]):null;
         if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)){
-          finish();started=true;pendingSection=false;const bareId=bareMatch[1];
+          finish();started=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
           if(seen.has(bareId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:bareId};ended=true;break;}
           current={articleId:bareId,lines:[line],editorial:[]};continue;
         }
       }
+      const bareSuf=bareSuffix.exec(line.text);
+      if(bareSuf){
+        const base=current?Number(current.articleId.split('-')[0]):null;
+        if(started&&current&&Number(bareSuf[1])===base){
+          finish();pendingSection=false;sectionDiscard=0;const sufId=bareSuf[1]+'-'+suffixId(bareSuf[2])+(bareSuf[3]?'-'+bareSuf[3].toUpperCase():'');
+          if(seen.has(sufId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:sufId};ended=true;break;}
+          current={articleId:sufId,lines:[line],editorial:[]};continue;
+        }
+        if(!documentAnomalies.includes('unmatched-suffixed-heading-in-body'))documentAnomalies.push('unmatched-suffixed-heading-in-body');
+      }
     }
     if(!started||!current)continue;
     if(amendment.test(line.text)||editorialLine.test(line.text)){coverage.removedEditorialLines++;current.editorial.push(line.text);continue;}
-    if(section.test(line.text)){pendingSection=true;continue;}
-    if(pendingSection)continue;
+    if(section.test(line.text)){
+      if(prevClosed(lines,li)||!/[a-záéíóúñ]/.test(line.text)){coverage.removedSectionLines++;sampleDiscard('section-heading',line);pendingSection=true;sectionDiscard=0;continue;}
+      coverage.keptAmbiguousStructuralLines++;sampleDiscard('ambiguous-structural-kept-as-body',line);
+      if(!documentAnomalies.includes('mid-sentence-structural-line-kept-as-body'))documentAnomalies.push('mid-sentence-structural-line-kept-as-body');
+      current.lines.push(line);continue;
+    }
+    if(pendingSection){
+      sectionDiscard++;
+      if(sectionDiscard<=2){coverage.removedSubtitleLines++;sampleDiscard('section-subtitle',line);line.secSkip=true;continue;}
+      if(!documentAnomalies.includes('section-discard-exceeded-2-lines'))documentAnomalies.push('section-discard-exceeded-2-lines');
+      pendingSection=false;current.lines.push(line);continue;
+    }
     if(reformNote.test(line.text)){coverage.removedEditorialLines++;continue;}
     current.lines.push(line);
   }

@@ -53,3 +53,107 @@ test('v17 OCR-degraded slash ordinals anchor headings and bis variants',()=>{
   assert.deepEqual(result.records.map(r=>r.articleId),['1','1-BIS','2']);
   assert.deepEqual(result.documentAnomalies,[]);
 });
+const body18='Texto sintético con contenido propio verificable y longitud documental suficiente para la prueba.';
+test('v19 period-less suffixed heading opens its own record only right after its base',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 21.- '+body18,'Artículo 21 Bis',body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['21','21-BIS']);
+  assert.deepEqual(r.documentAnomalies,[]);
+});
+test('v19 bare suffixed heading with wrong base stays body and quarantines the document',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 19.- '+body18,'Artículo 21 Bis',body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['19']);
+  assert.match(r.records[0].text,/Artículo 21 Bis/);
+  assert.ok(r.documentAnomalies.includes('unmatched-suffixed-heading-in-body'));
+  assert.ok(r.records.every(x=>x.quality.status==='quarantined'));
+});
+test('v19 noTerm route never captures a suffixed heading as its plain number',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 20.- '+body18,'Artículo 21 Bis',body18,'Artículo 21.- '+body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['20','21']);
+  assert.match(r.records[0].text,/Artículo 21 Bis/);
+  assert.ok(r.documentAnomalies.includes('unmatched-suffixed-heading-in-body'));
+});
+test('v19 glued suffixed heading without terminator opens; lowercase citation tail stays body',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 43.- '+body18,'Artículo 43 Ter Se resolverá el recurso sintético con contenido propio verificable.','Artículo 44.- El texto cita al Artículo 43 Ter de la presente ley sin abrir encabezado alguno.','TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['43','43-TER','44']);
+  assert.match(r.records[2].text,/Artículo 43 Ter de la presente ley/);
+  assert.deepEqual(r.documentAnomalies,[]);
+});
+test('v19 mid-sentence structural line is kept as body with explicit quarantine',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 37.- Las reglas de trámite a que se refiere el Capítulo VIII del Título Segundo del','Libro Primero del presente ordenamiento, se aplicarán las reglas siguientes con texto verificable.','TRANSITORIOS'].join('\n')}],source,meta);
+  assert.match(r.records[0].text,/Libro Primero del presente ordenamiento/);
+  assert.ok(r.documentAnomalies.includes('mid-sentence-structural-line-kept-as-body'));
+  assert.equal(r.coverage.keptAmbiguousStructuralLines,1);
+});
+test('v19 ALL-CAPS section heading after derogated article still consumed',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 135.- '+body18,'ARTICULO 136. Derogado','CAPITULO II','De las cosas sintéticas','Artículo 137.- '+body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['135','136','137']);
+  assert.ok(!r.records.some(x=>/De las cosas sintéticas/.test(x.text)));
+  assert.deepEqual(r.documentAnomalies,[]);
+});
+test('v19 two-line subtitle plus bare suffixed heading opens its record (265 Bis case)',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 265.- '+body18,'SECCIÓN DÉCIMA','DE LAS COMPARECENCIAS A','SOLICITUD DE LA COMISIÓN','Artículo 265 Bis',body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['265','265-BIS']);
+  assert.equal(r.coverage.removedSubtitleLines,2);
+});
+test('v19 bounded pendingSection returns third line to body with anomaly',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 1.- '+body18,'CAPITULO I','Subtítulo línea uno','Subtítulo línea dos','Resto del cuerpo que no debe perderse jamás en silencio.','Artículo 2.- '+body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.match(r.records[0].text,/Resto del cuerpo que no debe perderse/);
+  assert.ok(r.documentAnomalies.includes('section-discard-exceeded-2-lines'));
+});
+test('v19 body line starting Cámara de Diputados is kept; ALL-CAPS page header removed',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 221.- De aprobarse las observaciones realizadas por la','Cámara de Diputados, se procede conforme lo establece el artículo 72 de la Constitución.','CÁMARA DE DIPUTADOS DEL H. CONGRESO DE LA UNIÓN','Artículo 222.- '+body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.match(r.records[0].text,/Cámara de Diputados, se procede/);
+  assert.ok(!/CONGRESO DE LA UNIÓN/.test(r.records[0].text));
+  assert.deepEqual(r.documentAnomalies,[]);
+});
+test('v19 exact suffixed citation in transitory material never opens',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 5.- '+body18,'TRANSITORIOS','Artículo 5 Bis','Artículo 5.- '+body18].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['5']);
+});
+test('v19 trailing editorial headings are trimmed with traceable discards',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 75.- '+body18,'Servicio de Ingenieros','Artículo 170.- '+body18,'De las Licencias','ARTICULO 171.- '+body18.toUpperCase(),'ESTADO MAYOR CONJUNTO DE LA DEFENSA NACIONAL','Artículo 172.- '+body18,'Generalidades','Artículo 32.- '+body18,'EL CENTRO NACIONAL DE VIGILANCIA Y PROTECCIÓN DEL ESPACIO AÉREO Subsección adicionada DOF 03-05-2023','ARTICULO 156. Derogado Del Adiestramiento','TRANSITORIOS'].join('\n')}],source,meta);
+  const byId=Object.fromEntries(r.records.map(x=>[x.articleId,x]));
+  assert.ok(!/Servicio de Ingenieros/.test(byId['75'].text));
+  assert.ok(!/De las Licencias/.test(byId['170'].text));
+  assert.ok(!/ESTADO MAYOR CONJUNTO/.test(byId['171'].text));
+  assert.ok(!/Generalidades/.test(byId['172'].text));
+  assert.ok(!/CENTRO NACIONAL DE VIGILANCIA/.test(byId['32'].text));
+  assert.equal(byId['156'].text,'ARTICULO 156. Derogado');
+  assert.equal(r.coverage.removedTrailingRubrics,6);
+  assert.deepEqual(r.documentAnomalies,[]);
+  assert.ok(byId['75'].editorialNotes.includes('Servicio de Ingenieros'));
+  assert.ok(byId['32'].editorialNotes.some(x=>/Subsección adicionada DOF 03-05-2023/.test(x)));
+});
+test('v19 trailing lines with sentence punctuation or table markers are never trimmed',()=>{
+  const r=extractArticles([{number:1,text:['Artículo 130.- La equivalencia jerárquica sintética es la siguiente con contenido verificable:','B. Soldado Marinero','Artículo 131.- '+body18,'TRANSITORIOS'].join('\n')}],source,meta);
+  assert.match(r.records[0].text,/B\. Soldado Marinero$/);
+  assert.equal(r.coverage.removedTrailingRubrics,0);
+});
+test('v19 duplicate-proof: roman suffixed derogated headings keep distinct ids (real Código Penal NL 208 Bis I/II)',()=>{
+  const r=extractArticles([{number:1,text:['ARTÍCULO 208.- COMETE EL DELITO SINTÉTICO CON CONTENIDO PROPIO VERIFICABLE PARA SEGMENTACIÓN DEL EXTRACTOR.','ARTICULO 208 BIS I, (DEROGADO, P.O. 24 DE ENERO DE 1997)','ARTICULO 208 BIS II, (DEROGADO, P.O. 24 DE ENERO DE 1997)','ARTÍCULO 209.- TEXTO SINTÉTICO POSTERIOR CON CONTENIDO PROPIO VERIFICABLE PARA SEGMENTACIÓN.','TRANSITORIOS'].join('\n')}],source,meta);
+  assert.deepEqual(r.records.map(x=>x.articleId),['208','208-BIS-I','208-BIS-II','209']);
+  assert.ok(!r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+  assert.match(r.records[1].text,/DEROGADO/);
+});
+test('v19 trailing trim never eats all-caps body lines (Código Penal NL negative)',()=>{
+  const r=extractArticles([{number:1,text:['ARTÍCULO 5.- LAS DISPOSICIONES DE ESTE CÓDIGO SE APLICARÁN EN TODO EL ESTADO Y TAMBIÉN A','LOS DELITOS COMETIDOS EN EL EXTRANJERO CUANDO PRODUZCAN O SE PRETENDA QUE PRODUZCAN','MISMO O CAUSEN SUS EFECTOS EN EL.','ARTÍCULO 6.- TEXTO SINTÉTICO POSTERIOR CON CONTENIDO PROPIO VERIFICABLE PARA SEGMENTACIÓN FINAL.','TRANSITORIOS'].join('\n')}],source,meta);
+  assert.match(r.records[0].text,/MISMO O CAUSEN SUS EFECTOS EN EL\.$/);
+  assert.equal(r.coverage.removedTrailingRubrics,0);
+});
+test('v21 inline-glued trailing rúbricas are cut at sentence boundary; all-caps body and table rows kept',()=>{
+  const r=extractArticles([{number:1,text:[
+    'Artículo 77.- El texto sintético termina con cierre propio. Servicio Cartográfico',
+    'Artículo 138.- Fracción declarada inválida por sentencia sintética publicada DOF 20-09-2023 Generalidades',
+    'Artículo 32.- Texto sintético conforme al Reglamento Interior de la Secretaría. EL CENTRO NACIONAL DE VIGILANCIA Y PROTECCIÓN DEL ESPACIO AÉREO Subsección adicionada DOF 03-05-2023',
+    'ARTÍCULO 9.- TEXTO UNO CERRADO. FRASE FINAL CORTA',
+    'Artículo 130.- La equivalencia sintética es: B. Soldado Marinero',
+    'TRANSITORIOS'].join('\n')}],source,meta);
+  const byId=Object.fromEntries(r.records.map(x=>[x.articleId,x]));
+  assert.match(byId['77'].text,/cierre propio\.$/);
+  assert.match(byId['138'].text,/DOF 20-09-2023$/);
+  assert.match(byId['32'].text,/Secretaría\.$/);
+  assert.match(byId['9'].text,/FRASE FINAL CORTA$/);
+  assert.match(byId['130'].text,/B\. Soldado Marinero$/);
+  assert.equal(r.coverage.removedTrailingRubrics,3);
+  assert.ok(r.records[1].editorialNotes.includes('Generalidades'));
+});
