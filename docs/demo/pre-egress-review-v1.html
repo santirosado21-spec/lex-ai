@@ -260,7 +260,7 @@ function renderRows() {
     const input=document.createElement('input');input.type='text';input.value=row.text;input.maxLength=1024;input.autocomplete='off';
     input.setAttribute('aria-label','Texto de detección '+(i+1));
     input.addEventListener('input',()=>{
-      row.text=input.value;row.reviewed=false;indicator.textContent='Sin revisar';changed();
+      row.text=input.value;row.reviewed=false;check.checked=false;indicator.textContent='Sin revisar';changed();
     });
     literal.append(input);controls.append(literal);
     const action=document.createElement('label');action.textContent='Tratamiento';
@@ -269,7 +269,7 @@ function renderRows() {
     const omit=document.createElement('option');omit.value='omit';omit.textContent='Excluir';
     select.append(replace,omit);select.value=row.mode;
     select.addEventListener('change',()=>{
-      row.mode=select.value;row.reviewed=false;indicator.textContent='Sin revisar';changed();
+      row.mode=select.value;row.reviewed=false;check.checked=false;indicator.textContent='Sin revisar';changed();
     });
     action.append(select);controls.append(action);box.append(controls);
     const marker=document.createElement('div');marker.className='marker';
