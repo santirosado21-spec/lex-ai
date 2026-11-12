@@ -162,3 +162,44 @@ test('second matter cannot approve only a surname in place of its known person c
   assert.equal(s.get('result').classList.contains('hidden'),true);
   assert.match(s.get('notice').textContent,/íntegramente/);
 });
+
+test('editing reviewed text unticks checkbox and requires fresh explicit approval',()=>{
+  const s=session();
+  s.evaluate('rows.forEach(row=>row.reviewed=true);renderRows();');
+  const box=s.get('entries').children[0];
+  const input=box.children[1].children[0].children[0];
+  const checkbox=box.children[3].children[0];
+  assert.equal(checkbox.checked,true);
+  assert.equal(s.get('approve').disabled,false);
+  input.value='Solís';
+  input.listeners.input();
+  assert.equal(checkbox.checked,false,'visual check must reflect invalidated internal review');
+  assert.equal(s.evaluate('rows[0].reviewed'),false);
+  assert.equal(s.get('approve').disabled,true);
+  assert.equal(s.get('result').classList.contains('hidden'),true);
+  input.value='Marina Solís';
+  input.listeners.input();
+  assert.equal(checkbox.checked,false,'correcting again does not silently reapprove');
+  checkbox.checked=true;
+  checkbox.listeners.change();
+  assert.equal(s.get('approve').disabled,false);
+});
+
+test('changing treatment unticks checkbox and revokes prior preview',()=>{
+  const s=session();
+  s.evaluate('rows.forEach(row=>row.reviewed=true);renderRows();previewProtected();');
+  assert.equal(s.get('result').classList.contains('hidden'),false);
+  const box=s.get('entries').children[0];
+  const select=box.children[1].children[1].children[0];
+  const checkbox=box.children[3].children[0];
+  assert.equal(checkbox.checked,true);
+  select.value='omit';
+  select.listeners.change();
+  assert.equal(checkbox.checked,false);
+  assert.equal(s.evaluate('rows[0].reviewed'),false);
+  assert.equal(s.get('approve').disabled,true);
+  assert.equal(s.get('result').classList.contains('hidden'),true);
+  assert.equal(s.get('preview').textContent,'');
+  assert.equal(s.get('safe-file').textContent,'');
+  assert.equal(s.get('safe-history').textContent,'');
+});
