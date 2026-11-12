@@ -1,0 +1,572 @@
+{
+ "totals": {
+  "documents": 325,
+  "records": 47799,
+  "ok": 47719,
+  "oversizeText": 6,
+  "oversizeLine": 1,
+  "badArticleId": 74,
+  "badUrl": 0,
+  "badHash": 0,
+  "badVersion": 0
+ },
+ "problemDocs": [
+  {
+   "documentId": "ccf",
+   "records": 3085,
+   "ok": 3084,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "cff",
+   "records": 421,
+   "ok": 420,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "cjm",
+   "records": 953,
+   "ok": 950,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 3,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "cpf",
+   "records": 553,
+   "ok": 541,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 12,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "law-218",
+   "records": 1000,
+   "ok": 998,
+   "oversizeText": 2,
+   "oversizeLine": 0,
+   "badArticleId": 0,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "law-96",
+   "records": 86,
+   "ok": 84,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lcndh",
+   "records": 86,
+   "ok": 84,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "ldefagn",
+   "records": 57,
+   "ok": 54,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 3,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lebhn",
+   "records": 70,
+   "ok": 69,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfaebsp",
+   "records": 100,
+   "ok": 99,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfafe",
+   "records": 125,
+   "ok": 123,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfcdo",
+   "records": 57,
+   "ok": 55,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfce",
+   "records": 153,
+   "ok": 152,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfd",
+   "records": 782,
+   "ok": 779,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 3,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfda",
+   "records": 258,
+   "ok": 256,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfmzaah",
+   "records": 62,
+   "ok": 61,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfpc",
+   "records": 190,
+   "ok": 189,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfped",
+   "records": 107,
+   "ok": 104,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 3,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lfpiorpi",
+   "records": 73,
+   "ok": 72,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lft",
+   "records": 1266,
+   "ok": 1263,
+   "oversizeText": 1,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgamvlv",
+   "records": 98,
+   "ok": 94,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 4,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgbn",
+   "records": 158,
+   "ok": 157,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgdnna",
+   "records": 181,
+   "ok": 180,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgipe",
+   "records": 387,
+   "ok": 386,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgismh",
+   "records": 52,
+   "ok": 51,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgra",
+   "records": 235,
+   "ok": 234,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgs",
+   "records": 721,
+   "ok": 720,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lgv",
+   "records": 202,
+   "ok": 200,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lic",
+   "records": 486,
+   "ok": 485,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lifnvt",
+   "records": 95,
+   "ok": 93,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "ligie-2022",
+   "records": 2,
+   "ok": 1,
+   "oversizeText": 1,
+   "oversizeLine": 1,
+   "badArticleId": 0,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lisr",
+   "records": 236,
+   "ok": 234,
+   "oversizeText": 1,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "liva",
+   "records": 80,
+   "ok": 79,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "loapf",
+   "records": 72,
+   "ok": 70,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "locgeum",
+   "records": 150,
+   "ok": 149,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lopsrm",
+   "records": 133,
+   "ok": 131,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "loshf",
+   "records": 38,
+   "ok": 37,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lpdusf",
+   "records": 129,
+   "ok": 128,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lrsf",
+   "records": 69,
+   "ok": 68,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 1,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  },
+  {
+   "documentId": "lsar",
+   "records": 145,
+   "ok": 143,
+   "oversizeText": 0,
+   "oversizeLine": 0,
+   "badArticleId": 2,
+   "badUrl": 0,
+   "badHash": 0,
+   "badVersion": 0
+  }
+ ],
+ "problemDocCount": 43,
+ "badArticleIdShapes": [
+  [
+   "N-QUÁTER",
+   72
+  ],
+  [
+   "N-H-QUÁTER",
+   1
+  ],
+  [
+   "N-B-QUÁTER",
+   1
+  ]
+ ],
+ "badArticleIdSamples": [
+  {
+   "documentId": "law-96",
+   "articleId": "26-QUÁTER"
+  },
+  {
+   "documentId": "law-96",
+   "articleId": "27-QUÁTER"
+  },
+  {
+   "documentId": "lcndh",
+   "articleId": "24-QUÁTER"
+  },
+  {
+   "documentId": "lcndh",
+   "articleId": "72-QUÁTER"
+  },
+  {
+   "documentId": "ldefagn",
+   "articleId": "24-QUÁTER"
+  },
+  {
+   "documentId": "ldefagn",
+   "articleId": "33-QUÁTER"
+  },
+  {
+   "documentId": "ldefagn",
+   "articleId": "36-QUÁTER"
+  },
+  {
+   "documentId": "lebhn",
+   "articleId": "56-QUÁTER"
+  },
+  {
+   "documentId": "lfaebsp",
+   "articleId": "6-QUÁTER"
+  },
+  {
+   "documentId": "lfafe",
+   "articleId": "83-QUÁTER"
+  },
+  {
+   "documentId": "lfafe",
+   "articleId": "87-QUÁTER"
+  },
+  {
+   "documentId": "lfmzaah",
+   "articleId": "5-QUÁTER"
+  },
+  {
+   "documentId": "lfped",
+   "articleId": "15-QUÁTER"
+  },
+  {
+   "documentId": "lfped",
+   "articleId": "63-QUÁTER"
+  },
+  {
+   "documentId": "lfped",
+   "articleId": "77-QUÁTER"
+  },
+  {
+   "documentId": "lfpiorpi",
+   "articleId": "33-QUÁTER"
+  },
+  {
+   "documentId": "lic",
+   "articleId": "112-QUÁTER"
+  },
+  {
+   "documentId": "lisr",
+   "articleId": "82-QUÁTER"
+  },
+  {
+   "documentId": "liva",
+   "articleId": "18-H-QUÁTER"
+  },
+  {
+   "documentId": "lgbn",
+   "articleId": "54-QUÁTER"
+  },
+  {
+   "documentId": "lgdnna",
+   "articleId": "135-QUÁTER"
+  },
+  {
+   "documentId": "lgipe",
+   "articleId": "200-QUÁTER"
+  },
+  {
+   "documentId": "lgismh",
+   "articleId": "24-QUÁTER"
+  },
+  {
+   "documentId": "lgv",
+   "articleId": "84-QUÁTER"
+  },
+  {
+   "documentId": "lgv",
+   "articleId": "157-QUÁTER"
+  }
+ ]
+}
