@@ -5,6 +5,7 @@ const ARTICLE_RE = /\b(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a
 // One ordered citation scan; source interpretation uses separate helpers.
 const MENTION_RE = /\b(?:(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])|fracci[oó]n(?:es)?\b)/giu;
 const FRACTION_WORD_RE = /\bfracci[oó]n(?:es)?\b/giu;
+const ARTICLE_LIST_NEXT_RE = /^\s*(?:,|\b(?:y|e)\b)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
 const EXPLICIT_FRACTION_OWNER_RE = /^\s*del\s+(?:art[ií]culo|art\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/iu;
 const FRAC_LIST_PREFIX = /^(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}])(?:(?:\s*(?:,\s*(?:y|e)?|[-–—]|\b(?:y|e|al|a|hasta)\b)\s*)(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}]))*/iu;
 const ROMAN_RE = /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
@@ -73,9 +74,22 @@ export function fraccionesDeLista(text) {
  }
  return [...new Set(list)];
 }
+function expandArticleMention(text,m) {
+ const first=articuloCanon(m[1]), articles=[first];
+ let end=m.index+m[0].length;
+ if (/^art[ií]culos\b/iu.test(m[0])) {
+  let next;
+  while ((next=ARTICLE_LIST_NEXT_RE.exec(text.slice(end)))) {
+   if (articles.length>=32) throw malformed('invalid_article_list');
+   articles.push(articuloCanon(next[1]));
+   end+=next[0].length;
+  }
+ }
+ return articles.map(article=>({start:m.index,end,article,ambiguous:articles.length>1}));
+}
 function articulos(text) {
  const found=[];
- for (const m of text.matchAll(ARTICLE_RE)) found.push({start:m.index,end:m.index+m[0].length,article:articuloCanon(m[1])});
+ for(const m of text.matchAll(ARTICLE_RE)) found.push(...expandArticleMention(text,m));
  return found;
 }
 function fractionAt(text, start, wordEnd, strict=true) {
@@ -111,12 +125,16 @@ function fracciones(text,strict=true) {
 export function paresDeCita(texto) {
  if(typeof texto!=='string'||texto.length>16000)throw malformed('invalid_text');
  const events=[],articleIds=new Set();
- let lastArticle=null;
+ let lastArticle=null,seenArticle=false;
  for(const m of texto.matchAll(MENTION_RE)) {
   if(m[1]!==undefined) {
-   lastArticle=articuloCanon(m[1]);
-   articleIds.add(lastArticle);
-   events.push({type:'article',articulo:lastArticle});
+   const entries=expandArticleMention(texto,m);
+   for(const entry of entries) {
+    articleIds.add(entry.article);
+    events.push({type:'article',articulo:entry.article});
+   }
+   seenArticle=true;
+   lastArticle=entries.length>1?null:entries[0].article;
   } else {
    const parsed=fractionAt(texto,m.index,m.index+m[0].length,true);
    if (parsed) {
@@ -125,7 +143,7 @@ export function paresDeCita(texto) {
     // Keep initial multi-article fractions orphaned until a named article
     // has appeared, preserving the conservative existing contract.
     const following=EXPLICIT_FRACTION_OWNER_RE.exec(texto.slice(parsed.end));
-    const owner=lastArticle===null ? null : (following?articuloCanon(following[1]):lastArticle);
+    const owner=!seenArticle ? null : (following?articuloCanon(following[1]):lastArticle);
     events.push({type:'fraction',articulo:owner,values:parsed.values});
    }
   }
@@ -167,7 +185,10 @@ function soportePorArticulo({label='',text=''}) {
   if (pair.fraccion!==null) put(pair.articulo,[pair.fraccion]);
  }
  const bodyArticles=articulos(text);
- const closest=position=>bodyArticles.filter(a=>a.start<position).at(-1)?.article;
+ const closest=position=>{
+  const heading=bodyArticles.filter(a=>a.start<position).at(-1);
+  return heading&&!heading.ambiguous?heading.article:null;
+ };
  // The passage's list bullets substantiate only the enclosing article.
  // Single-letter C. does not open an enumeration (e.g. "C. Ciudadano").
  for (const match of text.matchAll(ENUM_RE)) {
