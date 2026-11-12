@@ -184,3 +184,25 @@ test('14. mención fracción I del artículo posterior no hereda artículo previ
  assert.deepEqual(report(result).findings,[{sourceId:'L1',reason:'fraction_not_supported'}]);
  assert.equal(result.paragraphs.length,1,'report-only never rejects a paragraph by itself');
 });
+
+test('15. artículos plurales enumerados no omiten el segundo ni apropian su fracción',()=>{
+ const one={label:'Artículo 14',text:'Artículo 14. I. Norma enteramente ficticia.'};
+ const group='Los artículos 14 y 16 describen derechos imaginarios.';
+ const three='Según los artículos 14, 16 y 20, existiría una norma inventada.';
+ assert.deepEqual(paresDeCita(group),[
+  {articulo:'14',fraccion:null},{articulo:'16',fraccion:null}
+ ]);
+ assert.deepEqual(paresDeCita(three),[
+  {articulo:'14',fraccion:null},{articulo:'16',fraccion:null},{articulo:'20',fraccion:null}
+ ]);
+ assert.deepEqual(reporteCitaEstructural(group,one),{ok:false,reason:'article_not_in_source'});
+ assert.deepEqual(reporteCitaEstructural(three,one),{ok:false,reason:'article_not_in_source'});
+ assert.throws(()=>paresDeCita('Los artículos 14 y 16, fracción I, describen algo.'),{reason:'orphan_fraction'});
+ const both=source('Artículo 14. I. Regla inventada A. Artículo 16. II. Regla inventada B.','');
+ assert.deepEqual(reporteCitaEstructural('Los artículos 14 y 16, fracción I, describen algo.',{label:'',text:both.text}),{ok:false,reason:'orphan_fraction'});
+ assert(reporteCitaEstructural('Los artículos 14 y 16 y la fracción II del artículo 16.',{label:'',text:both.text}).ok);
+ const integrated=validate('Los artículos 14 y 16, fracción I, se refieren a reglas imaginarias.',both);
+ assert.equal(report(integrated).wouldReject,1);
+ assert.equal(report(integrated).findings[0].reason,'orphan_fraction');
+ assert.equal(integrated.paragraphs.length,1);
+});
