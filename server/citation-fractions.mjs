@@ -79,6 +79,10 @@ function fracciones(text, strict=true) {
  const found=[];
  for (const m of text.matchAll(FRACTION_WORD_RE)) {
   const tail=text.slice(m.index+m[0].length);
+  // Narrow ordinary-language uses are not article subdivisions. Do not
+  // let them become phantom fraction claims or evidence. Unknown legal-looking
+  // tokens remain fail-closed when strict=true.
+  if (/^\s*(?:de\s+un\s+total|de\s+una\s+cantidad|numeradas?)\b/iu.test(tail)) continue;
   const startSpace=/^\s*/u.exec(tail)[0].length;
   const parsed=FRAC_LIST_PREFIX.exec(tail.slice(startSpace));
   // A source may mention a non-enumerated ordinary word ("fracción de un total").
