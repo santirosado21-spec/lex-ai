@@ -18,6 +18,7 @@ import DocumentLibrary from './DocumentLibrary';
 import MatterOverview from './MatterOverview';
 import PendingView from './PendingView';
 import AgentActionsView from './AgentActionsView';
+import ToolWorkshopView from './ToolWorkshopView';
 import ConflictCheckView from './ConflictCheckView';
 import ChecklistView from './ChecklistView';
 import TimeBillingView from './TimeBillingView';
@@ -31,7 +32,7 @@ import { analyze, api, downloadFile, emptyState, fileBase64, type DocumentRecord
 
 const Dashboard = lazy(()=>import('./components/ui/app-1'));
 
-type Page = 'time-billing' | 'email' | 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library' | 'pending' | 'agent-actions' | 'conflicts' | 'checklist';
+type Page = 'tool-workshop' | 'time-billing' | 'email' | 'drafts' | 'dashboard' | 'home' | 'workspace' | 'matters' | 'documents' | 'research' | 'skills' | 'knowledge' | 'settings' | 'sources' | 'dossier' | 'training' | 'library' | 'pending' | 'agent-actions' | 'conflicts' | 'checklist';
 type Appearance = 'auto' | 'light' | 'dark';
 const appearanceLabels: Record<Appearance,string> = {auto:'Automático',light:'Claro',dark:'Oscuro'};
 function readAppearance(): Appearance {
@@ -44,13 +45,13 @@ function applyAppearance(value: Appearance) {
 }
 const pages: {id: Page; label: string; icon: typeof Home}[] = [
   {id:'email',label:'Correo y seguimiento',icon:Mail},{id:'workspace',label:'Asistente',icon:MessageSquare},{id:'matters',label:'Asuntos',icon:FolderOpen},{id:'drafts',label:'Escritos',icon:FileText},
-  {id:'time-billing',label:'Tiempo y honorarios',icon:Timer},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'conflicts',label:'Conflictos',icon:ShieldCheck},{id:'checklist',label:'Checklist',icon:ClipboardList},{id:'pending',label:'Pendientes',icon:CalendarDays},{id:'agent-actions',label:'Acciones propuestas',icon:ShieldCheck},
+  {id:'time-billing',label:'Tiempo y honorarios',icon:Timer},{id:'tool-workshop',label:'Taller de herramientas',icon:LayoutDashboard},{id:'library',label:'Biblioteca federal',icon:BookOpen},{id:'conflicts',label:'Conflictos',icon:ShieldCheck},{id:'checklist',label:'Checklist',icon:ClipboardList},{id:'pending',label:'Pendientes',icon:CalendarDays},{id:'agent-actions',label:'Acciones propuestas',icon:ShieldCheck},
   {id:'dashboard',label:'Panel',icon:LayoutDashboard},{id:'home',label:'Inicio',icon:Home},{id:'training',label:'Calidad del asistente',icon:Sparkles},{id:'settings',label:'Configuración',icon:Settings},
   {id:'documents',label:'Documentos',icon:FileText},{id:'research',label:'Investigación',icon:Search},{id:'skills',label:'Habilidades',icon:Sparkles},{id:'sources',label:'Fuentes públicas',icon:BookOpen},{id:'knowledge',label:'Conocimiento',icon:Library}
 ];
 const navigationGroups: {label: string; ids: Page[]}[] = [
   {label:'Trabajo',ids:['workspace','matters','drafts','email']},
-  {label:'Herramientas jurídicas',ids:['library','conflicts','checklist','pending','agent-actions','time-billing']},
+  {label:'Herramientas jurídicas',ids:['tool-workshop','library','conflicts','checklist','pending','agent-actions','time-billing']},
   {label:'Sistema',ids:['dashboard','home','training','settings']}
 ];
 const practiceOptions = ['Civil','Mercantil','Corporativo','Laboral','Fiscal','Administrativo','Constitucional','Litigio','Penal','Familiar','Agrario','Ambiental','Inmobiliario','Migratorio','Seguridad social','Comercio internacional','Propiedad intelectual','Cumplimiento'];
@@ -242,6 +243,7 @@ export default function App() {
           {page==='documents' && (matter?<DocumentLibrary key={matter.id} matter={matter} documents={documents} importControl={importControl} onOpenOriginal={doc=>void openOriginal(doc)} onOpen={doc=>void openDocument(doc)} onAsk={askAboutDocument}/>:<section className="page"><h1>Documentos</h1><Empty title="Selecciona o crea un asunto" action={newMatterButton}>Los documentos se organizan dentro de un asunto.</Empty></section>)}
           {page==='pending' && (matter?<PendingView key={matter.id} matter={matter}/>:<section className="page"><h1>Pendientes</h1><Empty icon={CalendarDays} title="Selecciona o crea un asunto" action={newMatterButton}>Los pendientes se organizan dentro de un asunto.</Empty></section>)}
           {page==='agent-actions' && <AgentActionsView matter={matter} onRefresh={refresh}/>}
+          {page==='tool-workshop' && <ToolWorkshopView/>}
           {page==='conflicts' && <ConflictCheckView matter={matter} onRefresh={refresh}/>}
           {page==='checklist' && <ChecklistView matter={matter}/>}
           {page==='time-billing'&&<TimeBillingView matter={matter} matters={data.matters}/>}
