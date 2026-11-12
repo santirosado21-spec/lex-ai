@@ -46,6 +46,12 @@ Rejon.AI no debería limitarse a una ventana de chat jurídico: puede ser un **e
 - Los documentos legales exigen vigencia, procedencia y revisión profesional; gráficos vistosos no equivalen a veracidad ni calidad.
 - UI ligera para equipos de 8 GB, reducción de movimiento y navegación accesible por teclado; medir rendimiento real antes de declarar compatibilidad.
 
+## Extensión solicitada por Pedro: Taller de aplicaciones, n8n y herramientas herméticas
+
+**Dirección actualizada (11-nov):** Rejon.AI no se limita a estas seis ideas visuales. Pedro propone una **aplicación configuradora por despacho** donde se carguen herramientas jurídicas herméticas y se ordenen según el trabajo de cada firma, con biblioteca modular, plantillas especializadas, radares públicos, recetas n8n, versiones y previsualización, todo bajo autorización.
+
+El diseño ampliado está en **[Taller Rejon.AI — n8n, radares y herramientas jurídicas](taller-despachos-cordelius-n8n-radares-v1.md)**. Esa propuesta contiene catálogo inicial, contrato de módulos, reglas de privacidad, arquitectura y cuatro cortes de construcción. Ninguna integración n8n o ejecución sobre expedientes está autorizada por añadir esta documentación.
+
 ## Decisiones pendientes de Pedro y cofundadores
 
 1. Elegir **dos experiencias iniciales** para maqueta: sugerencia `Hoy jurídico` + `Por aprobar`; memoria con fuente como siguiente.
