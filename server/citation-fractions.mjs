@@ -75,19 +75,26 @@ function articulos(text) {
  for (const m of text.matchAll(ARTICLE_RE)) found.push({start:m.index,end:m.index+m[0].length,article:articuloCanon(m[1])});
  return found;
 }
-function fracciones(text) {
+function fracciones(text, strict=true) {
  const found=[];
  for (const m of text.matchAll(FRACTION_WORD_RE)) {
   const tail=text.slice(m.index+m[0].length);
   const startSpace=/^\s*/u.exec(tail)[0].length;
   const parsed=FRAC_LIST_PREFIX.exec(tail.slice(startSpace));
-  if (!parsed) throw malformed('invalid_fraction_list');
+  // A source may mention a non-enumerated ordinary word ("fracción de un total").
+  // Ignore it as *evidence*, but never ignore malformed claims in model prose.
+  if (!parsed) { if (strict) throw malformed('invalid_fraction_list'); else continue; }
   const value=parsed[0];
   // Avoid silently accepting malformed inline suffixes (e.g. fracción IXX or IVQ).
-  if (/^[\p{L}\p{N}]/u.test(tail.slice(startSpace+value.length))) throw malformed('invalid_fraction_list');
+  if (/^[\p{L}\p{N}]/u.test(tail.slice(startSpace+value.length))) {
+   if (strict) throw malformed('invalid_fraction_list'); else continue;
+  }
+  let values;
+  try { values=fraccionesDeLista(value); }
+  catch (error) { if (strict) throw error; else continue; }
   found.push({
    start:m.index,end:m.index+m[0].length+startSpace+value.length,
-   values:fraccionesDeLista(value)
+   values
   });
  }
  return found;
@@ -110,8 +117,16 @@ export function paresDeCita(texto) {
 // A source can substantiate its own article, not other articles it merely cites.
 function articleSet({label,text}) {
  const fromLabel=articulos(label);
- const chosen=fromLabel.length?fromLabel:articulos(text);
- return new Set(chosen.map(a=>a.article));
+ if (fromLabel.length) return new Set(fromLabel.map(a=>a.article));
+ // When metadata has no article, only heading-like source spans establish
+ // ownership. Bare references within prose must not authorize cited articles.
+ const headings=articulos(text).filter(a=>{
+  const prefix=text.slice(Math.max(0,a.start-64),a.start);
+  const atBoundary=a.start===0 || /(?:[.!?]\s+|[\r\n]\s*)$/u.test(prefix);
+  const upper=/^(?:Art[ií]culo|ART[IÍ]CULO|Art\.)\b/u.test(text.slice(a.start,a.end));
+  return atBoundary && upper;
+ });
+ return new Set(headings.map(a=>a.article));
 }
 function soportePorArticulo({label='',text=''}) {
  if (typeof label!=='string'||typeof text!=='string') throw malformed('invalid_source');
@@ -136,7 +151,7 @@ function soportePorArticulo({label='',text=''}) {
   if (!owner) continue;
   try { put(owner,[String(romanoAEntero(roman))]); } catch { /* lexical noise */ }
  }
- for (const f of fracciones(text)) {
+ for (const f of fracciones(text, false)) {
   const after=text.slice(f.end,f.end+90);
   const explicitAfter=/^\s*(?:de este art[ií]culo\b|del art[ií]culo\s+(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?))/iu.exec(after);
   let owner;
