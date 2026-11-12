@@ -117,3 +117,48 @@ test('addition rejects an unrelated term without changing the reviewed set',()=>
   assert.equal(s.evaluate('rows.length'),4);
   assert.match(s.get('notice').textContent,/No añadida/);
 });
+
+test('partial identifier correction cannot silently release the remaining person's name',()=>{
+  const s=session();
+  // Before this guard, replacing only "Solís" removed the full canary,
+  // yet the resulting preview still displayed "Marina".
+  s.evaluate("rows[0].text='Solís';rows.forEach(r=>r.reviewed=true);refreshApprove();");
+  assert.equal(s.get('approve').disabled,true);
+  s.evaluate('previewProtected();');
+  assert.equal(s.get('result').classList.contains('hidden'),true);
+  assert.equal(s.get('preview').textContent,'');
+  assert.match(s.get('notice').textContent,/íntegramente/);
+  // Correcting back to the complete known identifier unblocks the demo.
+  s.evaluate("rows[0].text='Marina Solís';refreshApprove();previewProtected();");
+  assert.equal(s.get('result').classList.contains('hidden'),false);
+});
+
+test('switching matters erases old derived payload from hidden DOM before next approval',()=>{
+  const s=session();
+  s.evaluate('rows.forEach(r=>r.reviewed=true);refreshApprove();previewProtected();');
+  assert.match(s.get('preview').textContent,/\[\[LEX_aaaaaaaa/);
+  assert.notEqual(s.get('safe-file').textContent,'');
+  assert.notEqual(s.get('safe-history').textContent,'');
+  s.get('case-b').click();
+  assert.equal(s.get('result').classList.contains('hidden'),true);
+  assert.equal(s.get('approve').disabled,true);
+  assert.equal(s.get('preview').textContent,'');
+  assert.equal(s.get('safe-file').textContent,'');
+  assert.equal(s.get('safe-history').textContent,'');
+  s.evaluate('rows.forEach(r=>r.reviewed=true);refreshApprove();previewProtected();');
+  assert.match(s.get('preview').textContent,/\[\[LEX_bbbbbbbb/);
+  s.evaluate('rows[0].reviewed=false;changed();');
+  assert.equal(s.get('preview').textContent,'');
+  assert.equal(s.get('safe-file').textContent,'');
+  assert.equal(s.get('safe-history').textContent,'');
+});
+
+test('second matter cannot approve only a surname in place of its known person canary',()=>{
+  const s=session();
+  s.get('case-b').click();
+  s.evaluate("rows[0].text='Vega';rows.forEach(r=>r.reviewed=true);refreshApprove();");
+  assert.equal(s.get('approve').disabled,true);
+  s.evaluate('previewProtected();');
+  assert.equal(s.get('result').classList.contains('hidden'),true);
+  assert.match(s.get('notice').textContent,/íntegramente/);
+});
