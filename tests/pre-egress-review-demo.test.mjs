@@ -129,14 +129,14 @@ test('partial identifier correction cannot silently release the remaining person
   assert.equal(s.get('preview').textContent,'');
   assert.match(s.get('notice').textContent,/íntegramente/);
   // Correcting back to the complete known identifier unblocks the demo.
-  s.evaluate("rows[0].text='Marina Solís';refreshApprove();previewProtected();");
+  s.evaluate("rows[0].text='Marina Solís';rows[0].reviewed=true;refreshApprove();previewProtected();");
   assert.equal(s.get('result').classList.contains('hidden'),false);
 });
 
 test('switching matters erases old derived payload from hidden DOM before next approval',()=>{
   const s=session();
   s.evaluate('rows.forEach(r=>r.reviewed=true);refreshApprove();previewProtected();');
-  assert.match(s.get('preview').textContent,/\[\[LEX_aaaaaaaa/);
+  assert.equal(s.get('preview').textContent.includes('[[LEX_aaaaaaaa'),true);
   assert.notEqual(s.get('safe-file').textContent,'');
   assert.notEqual(s.get('safe-history').textContent,'');
   s.get('case-b').click();
@@ -146,7 +146,7 @@ test('switching matters erases old derived payload from hidden DOM before next a
   assert.equal(s.get('safe-file').textContent,'');
   assert.equal(s.get('safe-history').textContent,'');
   s.evaluate('rows.forEach(r=>r.reviewed=true);refreshApprove();previewProtected();');
-  assert.match(s.get('preview').textContent,/\[\[LEX_bbbbbbbb/);
+  assert.equal(s.get('preview').textContent.includes('[[LEX_bbbbbbbb'),true);
   s.evaluate('rows[0].reviewed=false;changed();');
   assert.equal(s.get('preview').textContent,'');
   assert.equal(s.get('safe-file').textContent,'');
