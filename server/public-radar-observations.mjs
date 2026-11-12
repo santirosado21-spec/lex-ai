@@ -10,7 +10,7 @@ const OBS_KEYS=Object.freeze(['source','sourceUrl','title','publishedDate','obse
 const SIGNAL_KEYS=Object.freeze(['source','state','observedAt']);
 const ID_RE=/^[a-f0-9]{64}$/;
 const DATE_RE=/^\d{4}-\d{2}-\d{2}$/;
-const TIMESTAMP_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/;
+const TIMESTAMP_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
 const normal=value=>value.normalize('NFC').trim();
 const plain=value=>value!==null&&typeof value==='object'&&!Array.isArray(value)&&Object.getPrototypeOf(value)===Object.prototype;
 const err=code=>{const x=Error('La observación pública no cumple el contrato del radar.');x.code=code;return x;};
@@ -39,12 +39,14 @@ function safeSourceUrl(value,source){
     !SOURCES[source].includes(parsed.hostname.toLowerCase()))throw err('UNAPPROVED_SOURCE_HOST');
  // V0 intentionally forbids query strings, until per-source legal IDs and redirect
  // semantics are reviewed. In particular, arbitrary URL parameters cannot carry firm data.
- if(parsed.search||/[%\x00-\x1f]/.test(parsed.pathname)||parsed.pathname.length>210)throw err('UNAPPROVED_SOURCE_PATH');
+ if(parsed.search||parsed.pathname==='/'||/[%\x00-\x1f]/.test(parsed.pathname)||parsed.pathname.length>210)throw err('UNAPPROVED_SOURCE_PATH');
  return parsed.href;
 }
 function safeTitle(value){
- if(typeof value!=='string'||value.length<8||value.length>240||/[\x00-\x1f\x7f]/.test(value))throw err('INVALID_PUBLIC_TITLE');
- return normal(value);
+ if(typeof value!=='string'||value.length>240||/[\x00-\x1f\x7f]/.test(value))throw err('INVALID_PUBLIC_TITLE');
+ const title=normal(value);
+ if(title.length<8)throw err('INVALID_PUBLIC_TITLE');
+ return title;
 }
 export function normalizePublicRadarObservation(value,{now=Date.now()}={}){
  if(!exact(value,OBS_KEYS))throw err('INVALID_PUBLIC_ENVELOPE');
