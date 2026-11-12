@@ -25,6 +25,7 @@ function utcDate(value){
  return value;
 }
 function utcStamp(value,now){
+ if(!Number.isFinite(now))throw err('INVALID_CLOCK');
  if(typeof value!=='string'||!TIMESTAMP_RE.test(value)||Number.isNaN(Date.parse(value))||
     new Date(value).toISOString().replace('.000Z','Z')!==value.replace('.000Z','Z'))throw err('INVALID_OBSERVATION_TIME');
  const ms=Date.parse(value);
@@ -62,6 +63,7 @@ export function normalizePublicRadarObservation(value,{now=Date.now()}={}){
   verification:'unverified',legalAccuracy:'not-evaluated',scope:'public-only'};
 }
 export function aggregatePublicRadarObservations(raw,{seen=[],now=Date.now()}={}){
+ if(!Number.isFinite(now))throw err('INVALID_CLOCK');
  if(!Array.isArray(raw)||raw.length>200||!Array.isArray(seen)||seen.length>5_000)throw err('RADAR_BATCH_LIMIT');
  if(!seen.every(x=>typeof x==='string'&&ID_RE.test(x)))throw err('INVALID_SEEN_ID');
  const already=new Set(seen),fresh=[],duplicates=[];
