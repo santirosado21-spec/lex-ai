@@ -170,3 +170,17 @@ test('13. único escáner: pares emitidos en orden, único artículo libre y var
  ]);
  assert.throws(()=>paresDeCita('fracción I del artículo 14 y artículo 16'),{reason:'orphan_fraction'});
 });
+
+test('14. mención fracción I del artículo posterior no hereda artículo previo',()=>{
+ const s=source('Artículo 14. I. Regla sintética de catorce. Artículo 16. II. Regla sintética de dieciséis.','');
+ const bad='El artículo 14 remite a la fracción I del artículo 16 en esta hipótesis sintética.';
+ const good='El artículo 14 remite a la fracción II del artículo 16 en esta hipótesis sintética.';
+ assert.deepEqual(paresDeCita(bad).filter(p=>p.fraccion),[{articulo:'16',fraccion:'1'}]);
+ assert.deepEqual(paresDeCita('El artículo 14 remite a la fracción I del art. 16.').filter(p=>p.fraccion),[{articulo:'16',fraccion:'1'}]);
+ assert.deepEqual(reporteCitaEstructural(bad,{label:'',text:s.text}),{ok:false,reason:'fraction_not_supported'});
+ assert(reporteCitaEstructural(good,{label:'',text:s.text}).ok);
+ const result=validate(bad,s);
+ assert.equal(report(result).mode,'report-only');
+ assert.deepEqual(report(result).findings,[{sourceId:'L1',reason:'fraction_not_supported'}]);
+ assert.equal(result.paragraphs.length,1,'report-only never rejects a paragraph by itself');
+});
