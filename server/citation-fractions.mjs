@@ -2,6 +2,8 @@
 // This is a syntactic proof-of-support, NOT a legal-validity or effective-law check.
 // Existing private D* evidence is never sent through these functions.
 const ARTICLE_RE = /\b(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])/giu;
+// One ordered citation scan; source interpretation uses separate helpers.
+const MENTION_RE = /\b(?:(?:art[ií]culos?|arts?\.)\s*(\d{1,5}(?:o|º)?(?:\s*-\s*[a-z]{1,3}|\s+(?:bis|ter|qu[aá]ter))?)(?![\p{L}\p{N}])|fracci[oó]n(?:es)?\b)/giu;
 const FRACTION_WORD_RE = /\bfracci[oó]n(?:es)?\b/giu;
 const FRAC_LIST_PREFIX = /^(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}])(?:(?:\s*(?:,\s*(?:y|e)?|[-–—]|\b(?:y|e|al|a|hasta)\b)\s*)(?:[IVXLCDM]+|\d+)(?![\p{L}\p{N}]))*/iu;
 const ROMAN_RE = /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
@@ -75,46 +77,57 @@ function articulos(text) {
  for (const m of text.matchAll(ARTICLE_RE)) found.push({start:m.index,end:m.index+m[0].length,article:articuloCanon(m[1])});
  return found;
 }
-function fracciones(text, strict=true) {
+function fractionAt(text, start, wordEnd, strict=true) {
+ const tail=text.slice(wordEnd);
+ // Narrow ordinary-language uses are not article subdivisions. Do not
+ // let them become phantom fraction claims or evidence. Unknown legal-looking
+ // tokens remain fail-closed when strict=true.
+ if (/^\s*(?:de\s+un\s+total|de\s+una\s+cantidad|numeradas?)\b/iu.test(tail)) return null;
+ const startSpace=/^\s*/u.exec(tail)[0].length;
+ const parsed=FRAC_LIST_PREFIX.exec(tail.slice(startSpace));
+ if (!parsed) { if (strict) throw malformed('invalid_fraction_list'); return null; }
+ const value=parsed[0];
+ if (/^[\p{L}\p{N}]/u.test(tail.slice(startSpace+value.length))) {
+  if (strict) throw malformed('invalid_fraction_list');
+  return null;
+ }
+ let values;
+ try {values=fraccionesDeLista(value);}
+ catch (error) {if (strict) throw error; return null;}
+ return {start,end:wordEnd+startSpace+value.length,values};
+}
+function fracciones(text,strict=true) {
  const found=[];
- for (const m of text.matchAll(FRACTION_WORD_RE)) {
-  const tail=text.slice(m.index+m[0].length);
-  // Narrow ordinary-language uses are not article subdivisions. Do not
-  // let them become phantom fraction claims or evidence. Unknown legal-looking
-  // tokens remain fail-closed when strict=true.
-  if (/^\s*(?:de\s+un\s+total|de\s+una\s+cantidad|numeradas?)\b/iu.test(tail)) continue;
-  const startSpace=/^\s*/u.exec(tail)[0].length;
-  const parsed=FRAC_LIST_PREFIX.exec(tail.slice(startSpace));
-  // A source may mention a non-enumerated ordinary word ("fracción de un total").
-  // Ignore it as *evidence*, but never ignore malformed claims in model prose.
-  if (!parsed) { if (strict) throw malformed('invalid_fraction_list'); else continue; }
-  const value=parsed[0];
-  // Avoid silently accepting malformed inline suffixes (e.g. fracción IXX or IVQ).
-  if (/^[\p{L}\p{N}]/u.test(tail.slice(startSpace+value.length))) {
-   if (strict) throw malformed('invalid_fraction_list'); else continue;
-  }
-  let values;
-  try { values=fraccionesDeLista(value); }
-  catch (error) { if (strict) throw error; else continue; }
-  found.push({
-   start:m.index,end:m.index+m[0].length+startSpace+value.length,
-   values
-  });
+ for(const m of text.matchAll(FRACTION_WORD_RE)) {
+  const parsed=fractionAt(text,m.index,m.index+m[0].length,strict);
+  if(parsed)found.push(parsed);
  }
  return found;
 }
-// One ordered scan. A sole named article permits fraction-before-article;
-// for multiple named articles, a fraction without a preceding article is orphaned.
+// One ordered scanner over articles + fractions. With a single distinct named
+// article, a preceding fraction can bind to it; with multiple article IDs,
+// a fraction preceding the first named article is orphaned (fail-closed).
 export function paresDeCita(texto) {
- if (typeof texto!=='string'||texto.length>16000) throw malformed('invalid_text');
- const articles=articulos(texto), fractions=fracciones(texto);
- if (!articles.length && fractions.length) throw malformed('orphan_fraction');
- const pairs=articles.map(a=>({articulo:a.article,fraccion:null}));
- for (const f of fractions) {
-  const prior=articles.filter(a=>a.start<f.start);
-  const owner=prior.at(-1) ?? (articles.length===1?articles[0]:null);
-  if (!owner) throw malformed('orphan_fraction');
-  for (const fraccion of f.values) pairs.push({articulo:owner.article,fraccion});
+ if(typeof texto!=='string'||texto.length>16000)throw malformed('invalid_text');
+ const events=[],articleIds=new Set();
+ let lastArticle=null;
+ for(const m of texto.matchAll(MENTION_RE)) {
+  if(m[1]!==undefined) {
+   lastArticle=articuloCanon(m[1]);
+   articleIds.add(lastArticle);
+   events.push({type:'article',articulo:lastArticle});
+  } else {
+   const parsed=fractionAt(texto,m.index,m.index+m[0].length,true);
+   if(parsed) events.push({type:'fraction',articulo:lastArticle,values:parsed.values});
+  }
+ }
+ const onlyArticle=articleIds.size===1?[...articleIds][0]:null;
+ const pairs=[];
+ for(const event of events) {
+  if(event.type==='article') {pairs.push({articulo:event.articulo,fraccion:null});continue;}
+  const bound=event.articulo??onlyArticle;
+  if(!bound)throw malformed('orphan_fraction');
+  for(const fraccion of event.values)pairs.push({articulo:bound,fraccion});
  }
  return pairs;
 }
