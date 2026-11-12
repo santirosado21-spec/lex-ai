@@ -44,7 +44,9 @@ Corrección de los defectos confirmados por la revisión independiente sobre v17
 
 ## Anomalías documentales en v22 (esperadas, fail-closed)
 
-- LGSMIME y REG_SENADO (y otros 15 documentos): mid-sentence-structural-line-kept-as-body y/o section-discard-exceeded-2-lines — líneas estructurales ambiguas conservadas como cuerpo y contabilizadas en lugar de descartadas en silencio. Estos documentos NO deben tratarse como limpios; quedan en cuarentena con anomalía.
+- 36 de 46 documentos (28 federales, 8 de NL) llevan al menos una de las dos anomalías documentales nuevas de v22: mid-sentence-structural-line-kept-as-body (28 docs) y/o section-discard-exceeded-2-lines (25 docs); 17 docs llevan ambas (la versión inicial de este QA reportaba 17 como si fuera el total: era solo la intersección; cifras corregidas derivadas de los artefactos de extracción, no de conteo manual). Son líneas estructurales ambiguas conservadas como cuerpo y contabilizadas en lugar de descartadas en silencio. Estos documentos NO deben tratarse como limpios; quedan en cuarentena con anomalía.
+- Efecto colateral: la anomalía preexistente article-exceeds-60000-characters se activa en 2 documentos adicionales porque los artículos recuperados crecieron; es marcador de tamaño, no pérdida.
+- Contexto: 42/46 documentos llevan alguna anomalía en v22; 32/46 ya llevaban anomalías preexistentes en v17 (mismas clases, sin cambio).
 - LOEFAM: sin anomalías; 39 recortes trazables + art 130 conservado como caso ambiguo documentado.
 - nuevo-leon-pending-03 mantiene operative-numbering-restarts-before-transitory-boundary (preexistente en todas las generaciones: la fuente reinicia numeración en "1"; el paro fail-closed es el comportamiento diseñado).
 
