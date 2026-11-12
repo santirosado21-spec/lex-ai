@@ -230,7 +230,7 @@ function validate() {
   // must never count as protection of "Marina Solís", even if the complete
   // canary no longer occurs after replacing only a substring.
   if (cases[selected].canaries.some(term=>!rows.some(row=>row.reviewed && row.text===term))) {
-    return 'Falta proteger íntegramente un identificador conocido del ejemplo ficticio.';
+    return 'Bloqueado: falta proteger íntegramente un identificador conocido del ejemplo ficticio.';
   }
   return '';
 }
