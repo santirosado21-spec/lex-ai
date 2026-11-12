@@ -123,7 +123,7 @@ function articleSet({label,text}) {
  const headings=articulos(text).filter(a=>{
   const prefix=text.slice(Math.max(0,a.start-64),a.start);
   const atBoundary=a.start===0 || /(?:[.!?]\s+|[\r\n]\s*)$/u.test(prefix);
-  const upper=/^(?:Art[ií]culo|ART[IÍ]CULO|Art\.)\b/u.test(text.slice(a.start,a.end));
+  const upper=/^(?:Art[ií]culo\b|ART[IÍ]CULO\b|Art\.)/u.test(text.slice(a.start,a.end));
   return atBoundary && upper;
  });
  return new Set(headings.map(a=>a.article));
