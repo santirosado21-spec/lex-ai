@@ -4,6 +4,7 @@ import {readFile,writeFile,mkdir,rename,unlink,stat,open} from 'node:fs/promises
 import {createHash,randomUUID} from 'node:crypto';
 import {createInterface} from 'node:readline';
 import path from 'node:path';
+import {ARTICLE_ID_PATTERN,articleCanonical} from './article-id.mjs';
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const SHA=/^[a-f0-9]{64}$/;
 const STATUS='structurally-verified-currentness-unverified';
@@ -14,6 +15,7 @@ export function publicSource(row){
   if(['matterId','matter_id','firmId','workspaceId','documentId','client'].some(k=>k in row))throw new Error('Private record fields are forbidden in public library');
   const lawId=string(row.lawId,'lawId',100);if(!/^MX-FED-[A-Z0-9_-]+$/.test(lawId)||row.jurisdiction!=='MX-FED')throw new Error('Unsupported public jurisdiction or law');
   const article=string(row.articleId,'articleId',80),version=string(row.versionId,'versionId',200),originalId=string(row.id,'id',300);
+  if(!ARTICLE_ID_PATTERN.test(article))throw new Error('Invalid public article reference');
   const text=string(row.text,'text',60000);if(text.length<60||!SHA.test(row.textSha256)||hash(text)!==row.textSha256||!SHA.test(row.pdfSha256))throw new Error('Public article text/hash mismatch');
   if(row.quality?.status!=='structurally-verified'||row.quality?.currentness!=='unverified'||row.effectiveAt!==null)throw new Error('Public article lacks accepted structural quality metadata');
   if(!version.startsWith(lawId+'@')||originalId!==`${version}:art:${article}`||!version.endsWith('+'+row.pdfSha256.slice(0,16)))throw new Error('Public article identity mismatch');
@@ -22,7 +24,7 @@ export function publicSource(row){
   if(!['train','validation','test'].includes(row.split)||row.splitGroup!==lawId)throw new Error('Invalid law partition');
   const retrievedAt=string(row.retrievedAt,'retrievedAt',40);if(!Number.isFinite(Date.parse(retrievedAt)))throw new Error('Invalid retrieval date');
   const title=string(row.lawTitle,'title',1000),authority=string(row.publisher,'publisher',300);
-  return {id:'PUB-'+hash(originalId),sourceId:'PUB-'+hash(originalId),originalId,title,law:lawId,lawId,article,url:url.href,jurisdiction:row.jurisdiction,text,retrievedAt,version,pages:[...new Set(row.sourcePages)],status:STATUS,authority,category:'official-public-legislation',pdfSha256:row.pdfSha256,textSha256:row.textSha256,amendedAt:row.declaredAmendedAt??null,effectiveAt:null,split:row.split};
+  return {id:'PUB-'+hash(originalId),sourceId:'PUB-'+hash(originalId),originalId,title,law:lawId,lawId,article,articleCanonical:articleCanonical(article),url:url.href,jurisdiction:row.jurisdiction,text,retrievedAt,version,pages:[...new Set(row.sourcePages)],status:STATUS,authority,category:'official-public-legislation',pdfSha256:row.pdfSha256,textSha256:row.textSha256,amendedAt:row.declaredAmendedAt??null,effectiveAt:null,split:row.split};
 }
 
 export async function buildPublicLibrary({inputDir,outputFile,maxBytes=256*1024*1024}={}){
@@ -60,9 +62,11 @@ export async function openPublicLibrary(file){
       const rows=db.prepare(`SELECT a.payload,snippet(articles_fts,3,'','','…',32) AS excerpt FROM articles_fts JOIN articles a ON a.id=articles_fts.id WHERE articles_fts MATCH ? AND a.jurisdiction=? AND (? IS NULL OR a.law_id=?) ORDER BY bm25(articles_fts),a.id LIMIT ? OFFSET ?`).all(match,jurisdiction,lawId??null,lawId??null,limit+1,offset);
       return {query,corpusSha256:metadata.corpusSha256,offset,limit,hasMore:rows.length>limit,sources:rows.slice(0,limit).map(row=>{const source=JSON.parse(row.payload);return {...source,text:source.text.slice(0,12000),textLength:source.text.length,truncated:source.text.length>12000,excerpt:row.excerpt};})};
     },lookupArticle({lawId,articleId}={}){
-      if(typeof lawId!=='string'||!/^MX-FED-[A-Z0-9_-]{1,90}$/.test(lawId)||typeof articleId!=='string'||articleId.length>80||!/^\d{1,6}(?:-[A-Z0-9Ñ]{1,16}){0,4}$/.test(articleId))throw new Error('Invalid exact article reference');
+      if(typeof lawId!=='string'||!/^MX-FED-[A-Z0-9_-]{1,90}$/.test(lawId)||typeof articleId!=='string'||articleId.length>80||!ARTICLE_ID_PATTERN.test(articleId))throw new Error('Invalid exact article reference');
       // Existing by_law index bounds the lookup to one instrument; no index mutation required.
-      const row=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND json_extract(payload,'$.article')=? ORDER BY json_extract(payload,'$.retrievedAt') DESC,id LIMIT 1").get(lawId,articleId);
+      // Canonical comparison folds diacritics ("26-QUATER" resolves stored "26-QUÁTER").
+      // COALESCE keeps indexes built before articleCanonical existed readable for unaccented ids.
+      const row=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND COALESCE(json_extract(payload,'$.articleCanonical'),json_extract(payload,'$.article'))=? ORDER BY json_extract(payload,'$.retrievedAt') DESC,id LIMIT 1").get(lawId,articleCanonical(articleId));
       return row?JSON.parse(row.payload):null;
     },getSource(id){if(typeof id!=='string'||!/^PUB-[a-f0-9]{64}$/.test(id))throw new Error('Invalid public source ID');const row=db.prepare('SELECT payload FROM articles WHERE id=?').get(id);return row?JSON.parse(row.payload):null;},close(){db.close();}};
   }catch(e){db.close();throw e;}

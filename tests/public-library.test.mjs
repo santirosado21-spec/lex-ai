@@ -10,3 +10,19 @@ test('all versions of a law must remain in one partition',async t=>{const opts=a
 test('failed rebuild leaves existing index bytes and manifest intact',async t=>{const opts=await setup(t);await buildPublicLibrary(opts);const before=await readFile(opts.outputFile),manifest=await readFile(opts.outputFile+'.manifest.json');await writeFile(path.join(opts.inputDir,'corpus.jsonl'),'tampered');await assert.rejects(buildPublicLibrary(opts),/hash|audit/);assert.deepEqual(await readFile(opts.outputFile),before);assert.deepEqual(await readFile(opts.outputFile+'.manifest.json'),manifest);});
 test('long articles preview explicitly while exact full source remains retrievable',async t=>{const text='Artículo 1.- '+('Contenido sintético sobre contratos. '.repeat(500));const opts=await setup(t,[fixture(1,{text,textSha256:hash(text)})]);await buildPublicLibrary(opts);const lib=await openPublicLibrary(opts.outputFile);t.after(()=>lib.close());const source=lib.search({query:'contratos'}).sources[0];assert.equal(source.truncated,true);assert.equal(source.text.length,12000);assert.equal(source.textLength,text.length);assert.equal(lib.getSource(source.id).text,text);assert.throws(()=>publicSource(fixture(1,{text:'a'.repeat(60001),textSha256:hash('a'.repeat(60001))})),/text/);});
 test('changed SQLite bytes are refused by read-only opener',async t=>{const opts=await setup(t);await buildPublicLibrary(opts);await writeFile(opts.outputFile,'corrupted');await assert.rejects(openPublicLibrary(opts.outputFile),/integrity/);});
+test('accented article designators (Quáter) are stored with canonical form and resolve accent-free lookups',async t=>{
+ const row=fixture('26',{articleId:'26-QUÁTER',id:undefined});
+ row.id=row.versionId+':art:26-QUÁTER';
+ const source=publicSource(row);
+ assert.equal(source.article,'26-QUÁTER');
+ assert.equal(source.articleCanonical,'26-QUATER');
+ const opts=await setup(t,[row]);await buildPublicLibrary(opts);
+ const lib=await openPublicLibrary(opts.outputFile);t.after(()=>lib.close());
+ for(const ref of ['26-QUATER','26-QUÁTER'])assert.equal(lib.lookupArticle({lawId:'MX-FED-SYNTHETIC',articleId:ref})?.article,'26-QUÁTER');
+ // Negative classes keep failing closed: injection, malformed and overlong references.
+ for(const bad of ['26-QUATER OR 1=1','26 QUÁTER','26-QU@TER','26-QUÁTERXSUFFIXEXCEDE','1234567','1-','-1','26-'])assert.throws(()=>lib.lookupArticle({lawId:'MX-FED-SYNTHETIC',articleId:bad}));
+ assert.equal(lib.lookupArticle({lawId:'MX-FED-SYNTHETIC',articleId:'26-QUINQUIES'}),null);
+});
+test('publicSource rejects article ids outside the shared bounded grammar',()=>{
+ for(const bad of ['26-quáter','ABC','26-QUÁTER-1-2-3-4','26-ESTESUFIJOESDEMASIADOLARGO',''])assert.throws(()=>publicSource(fixture(1,{articleId:bad,id:'x'})),/article|Invalid/);
+});

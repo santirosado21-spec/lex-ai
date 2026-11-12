@@ -1,6 +1,7 @@
 import {readFileSync,statSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import catalog from '../resources/state-library-catalog.json' with {type:'json'};
+import {ARTICLE_ID_PATTERN,articleCanonical} from './article-id.mjs';
 const CORPUS_SHA='448e7f1e180e4fd56cedab1608bb7fc82dc3c6fc340a6f8e81a41f19f1fbd001';
 const hash=x=>createHash('sha256').update(x).digest('hex');
 const key=x=>String(x).normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
@@ -15,7 +16,7 @@ export function createStateLibrary({corpusPath=new URL('../resources/state-libra
   for(const line of bytes.toString('utf8').split('\n').filter(Boolean)){
    const row=JSON.parse(line),law=catalog.laws.find(s=>s.lawId===row.lawId);
    if(!law||row.sourceUrl!==law.sourceUrl||row.pdfSha256!==law.pdfSha256||row.jurisdiction!==law.jurisdiction||row.lawTitle!==law.title||row.quality?.status!=='structurally-verified'||row.quality?.currentness!=='unverified'||row.quality.anomalies.length||row.effectiveAt!==null||hash(row.text)!==row.textSha256||row.split!==law.split||!row.sourcePages.length||!row.sourcePages.every(p=>Number.isInteger(p)&&p>0&&p<=law.pages))throw Error('Invalid state library provenance');
-   const id=row.lawId+':'+row.articleId;if(next.has(id))throw Error('Duplicate state article');
+   const id=row.lawId+':'+articleCanonical(row.articleId);if(next.has(id))throw Error('Duplicate state article');
    next.set(id,{id:`STATE-${row.lawId}-${row.articleId}`,originalId:row.id,title:row.lawTitle,law:row.lawId,lawId:row.lawId,article:row.articleId,url:row.sourceUrl,jurisdiction:row.jurisdiction,text:row.text,retrievedAt:row.retrievedAt,version:row.versionId,pages:row.sourcePages,status:'structurally-verified-currentness-unverified',authority:row.publisher,category:'official-public-legislation',pdfSha256:row.pdfSha256,textSha256:row.textSha256,amendedAt:row.declaredAmendedAt,effectiveAt:null,coverage:'partial-audited-articles-only',corpusSha256:CORPUS_SHA});
    counts.set(row.lawId,(counts.get(row.lawId)||0)+1);
   }
@@ -33,8 +34,8 @@ export function createStateLibrary({corpusPath=new URL('../resources/state-libra
    return {lawId:laws[0].lawId,jurisdiction:laws[0].jurisdiction,articleId,state:true};
   },
   lookupArticle({lawId,articleId}={}){
-   if(!catalog.laws.some(law=>law.lawId===lawId)||typeof articleId!=='string'||!/^\d{1,6}(?:-[A-Z0-9Ñ]{1,16}){0,4}$/.test(articleId))return null;
-   load();const source=articles.get(lawId+':'+articleId);return source?structuredClone(source):null;
+   if(!catalog.laws.some(law=>law.lawId===lawId)||typeof articleId!=='string'||!ARTICLE_ID_PATTERN.test(articleId))return null;
+   load();const source=articles.get(lawId+':'+articleCanonical(articleId));return source?structuredClone(source):null;
   }
  };
 }

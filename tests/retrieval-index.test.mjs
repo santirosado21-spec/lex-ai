@@ -103,3 +103,12 @@ test('accented article suffixes and latest stored versions remain distinguishabl
   assert.equal(hits.length, 5);
   assert.ok(hits.every(hit => hit.article === '47-QUÁTER' && hit.articleSourceId === current.id));
 });
+test('fragment index accepts accented designators and rejects out-of-grammar article ids', async t => {
+  const ok = await setup(t, [fixture('26-QUÁTER')]);
+  const manifest = await buildFragmentIndex(ok);
+  assert.equal(manifest.articles, 1);
+  for (const bad of ['26-QUÁTER-1-2-3-4', '26-ESTESUFIJOESDEMASIADOLARGO', '26-quáter', '1234567']) {
+    const options = await setup(t, [fixture(bad)]);
+    await assert.rejects(buildFragmentIndex(options), /Invalid public article/);
+  }
+});

@@ -32,3 +32,12 @@ test('missing, excluded, ambiguous and broad state requests abstain before infer
  for(const question of ['Explica el artículo 999999 del Código Civil del Estado de Jalisco.','Explica el artículo 477 del Código Civil del Estado de Jalisco.','Explica el artículo 1 del Código Penal para el Estado Libre y Soberano de Jalisco.','Explica el artículo 1 del Código de Procedimientos Civiles del Estado de Nuevo León.','Explica el artículo 1 y artículo 2 del Código Civil del Estado de Jalisco.','¿Cómo puedo tramitar mi divorcio en Jalisco?','Busca el Código Civil del Estado de Jalisco.']){const reply=await service.analyze({mode:'auto',question});assert.equal(reply.citations.length,0);assert.ok(['needs-jurisdiction-source','abstained-no-relevant-sources'].includes(reply.validation.status));}
  assert.equal(calls.length,0);
 });
+test('state Quáter articles resolve by canonical (accent-free) reference and keep original form',()=>{
+ const library=createStateLibrary();
+ for(const ref of ['455-QUATER','455-QUÁTER']){const found=library.lookupArticle({lawId:'MX-JAL-CC',articleId:ref});assert.equal(found?.article,'455-QUÁTER');assert.equal(found?.lawId,'MX-JAL-CC');}
+ assert.equal(library.lookupArticle({lawId:'MX-JAL-CC',articleId:'653-QUATER'})?.article,'653-QUÁTER');
+ assert.equal(library.lookupArticle({lawId:'MX-JAL-CC',articleId:'455-QUATE'}),null);
+ assert.equal(library.lookupArticle({lawId:'MX-JAL-CC',articleId:'455-QUATER OR 1=1'}),null);
+ const ref=library.reference('Explica el artículo 455 Quáter del Código Civil del Estado de Jalisco.');
+ assert.equal(ref?.articleId,'455-QUATER');assert.equal(library.lookupArticle(ref)?.article,'455-QUÁTER');
+});

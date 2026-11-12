@@ -5,6 +5,7 @@ import {createHash, randomUUID} from 'node:crypto';
 import path from 'node:path';
 import {LAW_AREAS, AREAS, classifyLaw} from './areas.mjs';
 import {FRAGMENT_VERSION, sha256, splitArticle} from './fragments.mjs';
+import {ARTICLE_ID_PATTERN} from '../article-id.mjs';
 
 export const INDEX_APPLICATION_ID = 1279613017;
 export const DEFAULT_INPUT = new URL('../../resources/public-library.sqlite', import.meta.url);
@@ -20,7 +21,7 @@ function validateArticle(row, source) {
   if (source.id !== row.id || source.lawId !== row.law_id || source.jurisdiction !== row.jurisdiction
       || !/^MX-[A-Z]{2,3}$/.test(source.jurisdiction) || !source.lawId.startsWith(source.jurisdiction + '-')
       || typeof source.text !== 'string' || source.text.length > 60000 || sha256(source.text) !== source.textSha256
-      || typeof source.article !== 'string' || !/^\d{1,6}(?:-[A-Z0-9ÁÉÍÓÚÑ]+)*$/.test(source.article)
+      || typeof source.article !== 'string' || !ARTICLE_ID_PATTERN.test(source.article)
       || source.category !== 'official-public-legislation' || source.status !== 'structurally-verified-currentness-unverified'
       || !/^[a-f0-9]{64}$/.test(source.pdfSha256) || !source.version?.startsWith(source.lawId + '@')
       || !Array.isArray(source.pages) || !source.pages.length || !source.pages.every(p => Number.isInteger(p) && p > 0)
