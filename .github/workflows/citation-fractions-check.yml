@@ -1,0 +1,52 @@
+name: Citation fractions deterministic contracts
+
+on:
+  pull_request:
+    branches:
+      - main
+      - codex/citation-fractions-v1
+    paths:
+      - server/citation-fractions.mjs
+      - server/grounded-output.mjs
+      - tests/citation-fractions.test.mjs
+      - tests/grounded-output.test.mjs
+      - resources/legal-corpus.json
+      - .github/workflows/citation-fractions-check.yml
+  push:
+    branches: [main]
+    paths:
+      - server/citation-fractions.mjs
+      - server/grounded-output.mjs
+      - tests/citation-fractions.test.mjs
+      - tests/grounded-output.test.mjs
+      - resources/legal-corpus.json
+      - .github/workflows/citation-fractions-check.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: citation-fractions-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-citation-contracts:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout public code without persisting credentials
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Configure pinned Node runtime
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record immutable tested checkout
+        run: |
+          printf 'HEAD=%s\n' "$(git rev-parse HEAD)"
+          node --version
+      - name: Verify article-fraction report-only, article ranges and grounded regressions
+        run: node --test tests/citation-fractions.test.mjs tests/grounded-output.test.mjs
