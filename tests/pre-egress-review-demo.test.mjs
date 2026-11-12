@@ -118,7 +118,7 @@ test('addition rejects an unrelated term without changing the reviewed set',()=>
   assert.match(s.get('notice').textContent,/No añadida/);
 });
 
-test('partial identifier correction cannot silently release the remaining person's name',()=>{
+test('partial identifier correction cannot silently release the remaining name',()=>{
   const s=session();
   // Before this guard, replacing only "Solís" removed the full canary,
   // yet the resulting preview still displayed "Marina".
