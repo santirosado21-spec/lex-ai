@@ -186,6 +186,11 @@ function cleanNotice(message, success) {
   $('notice').className = 'notice' + (success ? ' success' : '');
 }
 function hidePreview(){
+  // Hiding a panel does not remove the previous matter from the DOM.
+  // Always clear the full derived view before changing matters or reviews.
+  $('preview').textContent='';
+  $('safe-file').textContent='';
+  $('safe-history').textContent='';
   $('result').classList.add('hidden');
   $('step-2').classList.remove('active');
   $('step-3').classList.remove('active');
@@ -221,6 +226,12 @@ function validate() {
     texts.add(row.text);
   }
   if (!rows.length || rows.some(r=>!r.reviewed)) return 'Faltan detecciones por revisar explícitamente.';
+  // Synthetic known-canary guard: a partial correction such as "Solís"
+  // must never count as protection of "Marina Solís", even if the complete
+  // canary no longer occurs after replacing only a substring.
+  if (cases[selected].canaries.some(term=>!rows.some(row=>row.reviewed && row.text===term))) {
+    return 'Falta proteger íntegramente un identificador conocido del ejemplo ficticio.';
+  }
   return '';
 }
 function refreshApprove() {
