@@ -33,3 +33,23 @@ test('changed catalog URL cannot relabel older snapshot when no replacement was 
   assert.equal(changed.summary.failedLaws,1);assert.equal(changed.export.articles,0);
   assert.equal(await readFile(path.join(dir,'acquisitions/manifest.json'),'utf8'),manifestBefore);
 });
+test('v17 period-less official headings open only at article 1 and continue strictly sequentially',()=>{
+  const text=['TITULO PRIMERO','Artículo 5','Esta línea previa con número distinto de uno nunca abre el cuerpo operativo.','Artículo 1','1. Texto sintético del artículo primero con contenido propio verificable y suficiente longitud documental.','Artículo 2','1. Texto sintético del artículo segundo con contenido propio verificable y suficiente longitud documental.','Artículo 9','Esta línea no secuencial permanece como texto del artículo segundo y no abre disposición.','Artículo 3','1. Texto sintético del artículo tercero con contenido propio verificable y suficiente longitud documental.','TRANSITORIOS'].join('\n');
+  const result=extractArticles([{number:1,text}],source,meta);
+  assert.deepEqual(result.records.map(r=>r.articleId),['1','2','3']);
+  assert.deepEqual(result.documentAnomalies,[]);
+  assert.match(result.records[1].text,/Artículo 9/);
+  assert.ok(!result.records.some(r=>/nunca abre el cuerpo/.test(r.text)));
+});
+test('v17 period-less lines with trailing text or mid-body citations never open headings',()=>{
+  const text=['Artículo 1','1. Texto sintético que cita el Artículo 105 de la Constitución en una línea con texto adicional.','Artículo 105 de la Constitución Política es una cita, nunca un encabezado propio.','Artículo 2','1. Texto sintético del artículo segundo con contenido propio verificable y suficiente longitud documental.','TRANSITORIOS'].join('\n');
+  const result=extractArticles([{number:1,text}],source,meta);
+  assert.deepEqual(result.records.map(r=>r.articleId),['1','2']);
+  assert.match(result.records[0].text,/Artículo 105 de la Constitución/);
+});
+test('v17 OCR-degraded slash ordinals anchor headings and bis variants',()=>{
+  const text=['ARTICULO 1/o. Texto sintético del artículo primero con contenido propio verificable y suficiente longitud documental.','ARTICULO 1/o BIS. Texto sintético del artículo bis con contenido propio verificable y suficiente longitud documental adicional.','ARTICULO 2/o. Texto sintético del artículo segundo con contenido propio verificable y suficiente longitud documental.','TRANSITORIOS'].join('\n');
+  const result=extractArticles([{number:1,text}],source,meta);
+  assert.deepEqual(result.records.map(r=>r.articleId),['1','1-BIS','2']);
+  assert.deepEqual(result.documentAnomalies,[]);
+});

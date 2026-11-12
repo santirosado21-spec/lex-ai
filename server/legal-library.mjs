@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=16;
+export const EXTRACTOR_VERSION=17;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -116,7 +116,7 @@ export async function discoverRegulationsLibrary({outputDir,catalogPath,indexFil
 }
 
 export function splitForLaw(lawId){const bucket=parseInt(digest('lex-law-split-v1:'+lawId).slice(0,8),16)%100;return bucket<80?'train':bucket<90?'validation':'test';}
-const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:[oº°](?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)(?:[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS))?[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.:]|[-–](?![A-Za-zÑñ\d])|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
+const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:(?:[oº°]|\/o)(?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)(?:[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS))?[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.:]|[-–](?![A-Za-zÑñ\d])|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
 const amendment=/^(?:Art[íi]culo|P[áa]rrafo|Fracci[óo]n|Inciso|Numeral|Apartado|Cap[íi]tulo|Secci[óo]n|Denominaci[óo]n|T[íi]tulo)\b.*\b(?:reformad[oa]|adicionad[oa]|derogad[oa]|recorrid[oa])\b.*\bDOF\b/i;
 const section=/^(?:LIBRO|T[IÍ]TULO|CAP[IÍ]TULO|SECCI[ÓO]N|SUBSECCI[ÓO]N)\s+(?:[IVXLCDM]+|\d+|PRIMER[OA]|SEGUND[OA]|TERCER[OA]?|CUART[OA]|QUINT[OA]|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO|[ÚU]NIC[OA])\b/i;
 const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;
@@ -124,6 +124,8 @@ const editorialLine=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con ar
 const reformNote=/^\((?:REFORMADO|ADICIONADO|DEROGADO)/i;
 const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
 const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?=[A-ZÁÉÍÓÚÑ])/;
+// Official period-less heading variant: the whole line is exactly "Artículo N" (seen in LGSMIME and Reg_Senado official PDFs). Accepted fail-closed: it can only open the body at article 1 or continue it strictly sequentially; anything else stays body text.
+const bare=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]*$/;
 function midSentenceFragment(lines,i,checkNext=true){
   let j=i-1;
   while(j>=0&&(amendment.test(lines[j].text)||editorialLine.test(lines[j].text)||reformNote.test(lines[j].text)||section.test(lines[j].text)))j--;
@@ -163,6 +165,18 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
         finish();pendingSection=false;const looseId=loose[1];
         if(seen.has(looseId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:looseId};ended=true;break;}
         current={articleId:looseId,lines:[line],editorial:[]};continue;
+      }
+    }
+    if(!match){
+      const bareMatch=bare.exec(line.text);
+      if(bareMatch){
+        const bareNumber=Number(bareMatch[1]);
+        const currentNumber=current?Number(current.articleId.split('-')[0]):null;
+        if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)){
+          finish();started=true;pendingSection=false;const bareId=bareMatch[1];
+          if(seen.has(bareId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:bareId};ended=true;break;}
+          current={articleId:bareId,lines:[line],editorial:[]};continue;
+        }
       }
     }
     if(!started||!current)continue;
