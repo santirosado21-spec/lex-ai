@@ -26,3 +26,24 @@ test('accented article designators (Quáter) are stored with canonical form and 
 test('publicSource rejects article ids outside the shared bounded grammar',()=>{
  for(const bad of ['26-quáter','ABC','26-QUÁTER-1-2-3-4','26-ESTESUFIJOESDEMASIADOLARGO',''])assert.throws(()=>publicSource(fixture(1,{articleId:bad,id:'x'})),/article|Invalid/);
 });
+test('legacy index with accented original (no articleCanonical) resolves canonical lookups',async t=>{
+ // Índice construido a mano al formato del builder, con payload SIN articleCanonical
+ // (forma de los índices anteriores a la reconciliación). Integridad preservada: el
+ // manifiesto se calcula sobre los bytes reales, como exige openPublicLibrary.
+ const dir=await mkdtemp(path.join(tmpdir(),'lex-public-legacy-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const file=path.join(dir,'public.sqlite');
+ const {DatabaseSync}=await import('node:sqlite');
+ const db=new DatabaseSync(file);
+ const corpusSha256='d'.repeat(64);
+ db.exec(`PRAGMA application_id=1279613016; PRAGMA user_version=1; CREATE TABLE metadata(key TEXT PRIMARY KEY,value TEXT NOT NULL); CREATE TABLE articles(id TEXT PRIMARY KEY,law_id TEXT NOT NULL,jurisdiction TEXT NOT NULL,payload TEXT NOT NULL); CREATE INDEX by_law ON articles(law_id);`);
+ db.prepare('INSERT INTO metadata VALUES(?,?)').run('library',JSON.stringify({schemaVersion:1,kind:'public-legal-library',corpusSha256,privateDocumentsIncluded:false}));
+ const legacy={id:'PUB-'+'e'.repeat(64),lawId:'MX-FED-SYN',jurisdiction:'MX-FED',article:'26-QUÁTER',retrievedAt:'2026-10-30T00:00:00Z',text:'legacy acentuado'};
+ db.prepare('INSERT INTO articles VALUES(?,?,?,?)').run(legacy.id,legacy.lawId,legacy.jurisdiction,JSON.stringify(legacy));
+ db.exec('PRAGMA integrity_check');db.close();
+ const indexSha256=hash(await readFile(file));
+ await writeFile(file+'.manifest.json',JSON.stringify({schemaVersion:1,kind:'public-legal-library',corpusSha256,indexSha256,bytes:(await readFile(file)).length}));
+ const lib=await openPublicLibrary(file);t.after(()=>lib.close());
+ for(const ref of ['26-QUATER','26-QUÁTER'])assert.equal(lib.lookupArticle({lawId:'MX-FED-SYN',articleId:ref})?.article,'26-QUÁTER');
+ assert.equal(lib.lookupArticle({lawId:'MX-FED-SYN',articleId:'26-QUATE'}),null);
+ assert.equal(lib.lookupArticle({lawId:'MX-FED-SYN',articleId:'999999'}),null);
+});

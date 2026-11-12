@@ -66,8 +66,15 @@ export async function openPublicLibrary(file){
       // Existing by_law index bounds the lookup to one instrument; no index mutation required.
       // Canonical comparison folds diacritics ("26-QUATER" resolves stored "26-QUÁTER").
       // COALESCE keeps indexes built before articleCanonical existed readable for unaccented ids.
-      const row=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND COALESCE(json_extract(payload,'$.articleCanonical'),json_extract(payload,'$.article'))=? ORDER BY json_extract(payload,'$.retrievedAt') DESC,id LIMIT 1").get(lawId,articleCanonical(articleId));
-      return row?JSON.parse(row.payload):null;
+      const canonical=articleCanonical(articleId);
+      const row=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND COALESCE(json_extract(payload,'$.articleCanonical'),json_extract(payload,'$.article'))=? ORDER BY json_extract(payload,'$.retrievedAt') DESC,id LIMIT 1").get(lawId,canonical);
+      if(row)return JSON.parse(row.payload);
+      // Legacy indexes (payloads built before articleCanonical existed) can hold accented
+      // originals that SQL canonical comparison cannot reach (SQLite folds no diacritics).
+      // Bounded fallback: only that law's legacy rows, canonical comparison in JS, same ordering.
+      const legacyRows=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND json_extract(payload,'$.articleCanonical') IS NULL ORDER BY json_extract(payload,'$.retrievedAt') DESC,id").all(lawId);
+      for(const legacy of legacyRows){const payload=JSON.parse(legacy.payload);if(typeof payload.article==='string'&&articleCanonical(payload.article)===canonical)return payload;}
+      return null;
     },getSource(id){if(typeof id!=='string'||!/^PUB-[a-f0-9]{64}$/.test(id))throw new Error('Invalid public source ID');const row=db.prepare('SELECT payload FROM articles WHERE id=?').get(id);return row?JSON.parse(row.payload):null;},close(){db.close();}};
   }catch(e){db.close();throw e;}
 }

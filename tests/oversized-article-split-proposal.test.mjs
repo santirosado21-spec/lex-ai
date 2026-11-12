@@ -11,7 +11,15 @@ const sha = s => createHash('sha256').update(s).digest('hex');
 const MAX = 60000; // cota vigente de publicSource/validateArticle
 
 // Referencia: divide en el límite de párrafo más cercano sin exceder MAX; nunca parte párrafo.
-function splitOversizedArticle(parent) {
+function splitOversizedArticle(parent, opts = {}) {
+  // opts.existingIds: Set de articleId ya presentes en la ley; una colisión PART-NNNN
+  // con un artículo real existente es fail-closed (jamás sobrescribe ni se funde con él).
+  // opts.pageOffsets: [{page, start, end}] offsets de carácter por página del texto unido
+  // (los persiste el extractor v25+; el corpus v24 NO los conserva — verificado 2026-11-12:
+  // ni records ni versions/ guardan offsets por página). Con offsets, sourcePages por parte
+  // es exacto (solape de intervalos); sin ellos se hereda el intervalo del padre marcado
+  // sourcePagesInherited: true. Nunca un subconjunto plausible presentado como exacto.
+  const {existingIds = new Set(), pageOffsets = null} = opts;
   const text = parent.text;
   if (text.length <= MAX) throw new Error('split no aplica: artículo dentro de la cota');
   if (!/^\d{1,6}(?:-[A-Z0-9ÁÉÍÓÚÑ]{1,16}){0,2}$/.test(parent.articleId)) throw new Error('split rechaza padre con más de 2 sufijos (fail-closed)');
@@ -35,6 +43,14 @@ function splitOversizedArticle(parent) {
   }
   if (buf) parts.push(buf);
   if (parts.length < 2) throw new Error('split improductivo');
+  for (let idx = 1; idx <= parts.length; idx++) {
+    if (existingIds.has(`${parent.articleId}-PART-${String(idx).padStart(4, '0')}`)) throw new Error('colisión PART-NNNN con artículo real existente: fail-closed');
+  }
+  const pageSpan = (start, end) => {
+    if (!Array.isArray(pageOffsets)) return null;
+    const hit = pageOffsets.filter(pg => start < pg.end && end > pg.start).map(pg => pg.page);
+    return hit.length ? [Math.min(...hit), Math.max(...hit)] : null;
+  };
   const parentSha = sha(text);
   let cursor = 0;
   const children = parts.map((partText, i) => {
@@ -49,7 +65,9 @@ function splitOversizedArticle(parent) {
       parentTextSha256: parentSha,
       versionId: parent.versionId,
       pdfSha256: parent.pdfSha256,
-      sourcePages: parent.sourcePages, // subconjunto exacto por página: fuera de esta referencia
+      ...(pageSpan(cursor, cursor + partText.length)
+        ? {sourcePages: pageSpan(cursor, cursor + partText.length)}
+        : {sourcePages: parent.sourcePages, sourcePagesInherited: true}),
     };
     cursor += partText.length;
     return child;
@@ -136,4 +154,47 @@ test('nivel oración: párrafo único sobredimensionado (forma real del corpus) 
   assert.ok(children.length >= 2);
   for (const c of children) assert.ok(c.text.length <= MAX && ARTICLE_ID_PATTERN.test(c.articleId));
   assert.equal(recompose(children), oneParagraph);
+});
+
+test('abreviaturas jurídicas: recomposición exacta aunque el corte caiga tras una abreviatura', () => {
+  // "art. 5", "Fracc. II", "num. 3": el segmentador de oraciones corta tras el punto.
+  // Es un corte no silábico subóptimo para contexto de recuperación, pero SIN pérdida:
+  // join('') sigue siendo byte-exacto. Una lista curada de abreviaturas es refinamiento
+  // opcional en adopción, nunca requisito de integridad.
+  const text = ('Cláusula general conforme al art. 5 constitucional y a la Fracc. II del art. 123, apartado A, este supuesto no procede; véase el num. 3 del Anexo. ').repeat(900);
+  assert.ok(text.length > MAX);
+  const children = splitOversizedArticle({...parent, text});
+  assert.ok(children.length >= 2);
+  assert.equal(recompose(children), text);
+});
+
+test('unicode: recomposición byte-exacta con formas NFD, acentos y ñ', () => {
+  const nfd = 'Artículo vigésimo sexto Quáter. La información pública estará disponible para toda persona. ';
+  const text = nfd.repeat(1200);
+  assert.ok(text.length > MAX);
+  const children = splitOversizedArticle({...parent, text});
+  assert.equal(recompose(children), text);
+  assert.equal(Buffer.compare(Buffer.from(recompose(children), 'utf8'), Buffer.from(text, 'utf8')), 0);
+  for (const c of children) assert.equal(sha(c.text), createHash('sha256').update(c.text).digest('hex'));
+});
+
+test('colisiones PART: fail-closed si un id hijo coincide con un artículo real existente', () => {
+  const children = splitOversizedArticle(parent);
+  const someChildId = children[0].articleId;
+  assert.throws(() => splitOversizedArticle(parent, {existingIds: new Set([someChildId])}), /colisión/);
+  assert.doesNotThrow(() => splitOversizedArticle(parent, {existingIds: new Set(['1-PART-9999'])}));
+});
+
+test('sourcePages: exacto por solape con offsets v25; heredado y marcado sin ellos (corpus v24)', () => {
+  // Offsets coherentes con la longitud del padre grande; el solape de intervalos decide.
+  const big = splitOversizedArticle(parent, {pageOffsets: [{page: 1, start: 0, end: parentText.length / 2}, {page: 2, start: parentText.length / 2, end: parentText.length}]});
+  for (const c of big) {
+    assert.deepEqual(c.sourcePages, c.charStart < parentText.length / 2 && c.charEnd > parentText.length / 2 ? [1, 2] : c.charEnd <= parentText.length / 2 ? [1, 1] : [2, 2]);
+    assert.equal(c.sourcePagesInherited, undefined);
+  }
+  const legacy = splitOversizedArticle(parent);
+  for (const c of legacy) {
+    assert.deepEqual(c.sourcePages, parent.sourcePages);
+    assert.equal(c.sourcePagesInherited, true);
+  }
 });
