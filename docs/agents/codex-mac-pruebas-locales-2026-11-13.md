@@ -29,14 +29,14 @@ sin ejecutar el detector ni ninguna evaluación. Nada más.
 6. Suite completa: `npm test 2>&1 | tail -40`. Anotar conteos generales.
 7. Ambiente (una línea cada uno): `which pdftotext`, `python3 --version`, `sw_vers`.
 
-Contexto para interpretar: en un ambiente Linux limpio, 6 casos de
-`tests/nuevo-leon-extraction.test.mjs` fallan (estado `partial-quarantine` donde se
-espera `complete-quarantine`, y ENOENT de fixtures de extracción). Hipótesis: diferencia
-de ambiente (parser/Poppler). En la Mac, donde el extractor se construyó y corrió el
-piloto NL, deberían pasar. Este paso CONFIRMA la hipótesis, no la asume:
-- Si pasan y la suite queda completa: hipótesis confirmada, causa = ambiente Linux.
-- Si fallan en Mac: defecto real del extractor o del fixture. Reportar el error exacto
-  y parar. NO arreglar.
+Contexto para interpretar: esos 6 casos fallaban por una divergencia de contrato YA
+CORREGIDA en main (los fixtures del test no emulaban el parser pineado v22 al que la
+herramienta NL está congelada en producción; el bump federal a v24 los rompió).
+En main la suite quedó verde: 1159 pass / 0 fail.
+- Si en la Mac la suite queda verde: confirmación cruzada en la máquina donde vive el
+  corpus. Listo.
+- Si algo falla en la Mac: reportar el error exacto y parar. NO arreglar ni modificar
+  código o pruebas.
 
 ## Parte 2 — Diagnóstico read-only del detector de privacidad (sin ejecutarlo)
 

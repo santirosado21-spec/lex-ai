@@ -11,7 +11,14 @@ import {CAPTURE_ROOT,DOCUMENTS,FROZEN_HASHES,extractionPlan,runResearchExtractio
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const date='2026-11-10T17:51:42.589Z';
 const article='ARTÍCULO 1.- Este texto totalmente sintético prueba referencias de página y procedencia sin reproducir datos de personas o asuntos.';
-const fake=async(_file,source,metadata)=>extractArticles([{number:1,text:article+'\nTRANSITORIOS'}],source,metadata);
+// La herramienta NL está CONGELADA en producción al parser pineado
+// (FROZEN_HASHES: server/legal-library.mjs@84d8eb4d, EXTRACTOR_VERSION=22).
+// Este fixture emula ESE parser pineado: parsea con el código vigente y
+// re-sella extractorVersion al contrato pineado (22), que es lo que
+// quarantineExtraction exige. Sin el re-sello, cualquier bump de
+// EXTRACTOR_VERSION (p. ej. v24 federal) rompe estos tests aunque la
+// herramienta de producción siga correctamente cerrada por source-drift.
+const fake=async(_file,source,metadata)=>({...await extractArticles([{number:1,text:article+'\nTRANSITORIOS'}],source,metadata),extractorVersion:22});
 
 async function setup(t){
   const root=await realpath(await mkdtemp(path.join(tmpdir(),'lex-nl-offline-')));t.after(()=>rm(root,{recursive:true,force:true}));
@@ -74,14 +81,14 @@ test('offline extraction preserves exact source/hash/pages, quarantines every re
 
 test('abbreviated Civil headings are recognized and preserved in quarantine with provenance',async t=>{
   const {options,root}=await setup(t);
-  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>extractArticles([{number:1,text:'Art. 1o.- Texto sintético con encabezado abreviado y contenido propio verificable para segmentación.\nTRANSITORIOS'}],source,meta)});
+  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>({...await extractArticles([{number:1,text:'Art. 1o.- Texto sintético con encabezado abreviado y contenido propio verificable para segmentación.\nTRANSITORIOS'}],source,meta),extractorVersion:22})});
   assert.equal(report.state,'complete-quarantine');assert.equal(report.documents.length,2);
   for(const d of report.documents){const saved=await read(root,report.artifactDirectory+'/'+d.extractionPath);assert.equal(saved.records.length,1);assert.equal(saved.records[0].articleId,'1');assert.equal(saved.records[0].status,'quarantined');assert.equal(saved.records[0].trainingExported,false);assert.equal(saved.coverage.pages,1);}
 });
 
 test('declared reform is recognized only from parser text; query dates never supply it',async t=>{
   const {options,root}=await setup(t);
-  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>extractArticles([{number:1,text:'Última Reforma 02/01/2025\n'+article+'\nTRANSITORIOS'}],source,meta)});
+  const report=await runResearchExtraction({...options,extractor:async(_file,source,meta)=>({...await extractArticles([{number:1,text:'Última Reforma 02/01/2025\n'+article+'\nTRANSITORIOS'}],source,meta),extractorVersion:22})});
   const saved=await read(root,report.artifactDirectory+'/nl-civil.extraction.json');
   assert.equal(saved.declaredAmendedAt,'2025-01-02');assert.equal(saved.parserTechnicalVersionDate,'2025-01-02');
   assert.equal(saved.effectiveAt,null);assert.equal(saved.legalDateBasis,'unverified-publisher-declaration');
