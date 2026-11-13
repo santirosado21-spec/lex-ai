@@ -181,3 +181,16 @@ test('fixture pins cannot select other files/URLs or enable actual parser',async
   await assert.rejects(runResearchExtraction({...options,fixturePins:changed}),error=>error.code==='source-drift');
   await assert.rejects(verifyInputs({repositoryRoot:root,fixturePins:changed,extractor:fake}),error=>error.code==='source-drift');
 });
+
+test('parser vigente SIN el sello del parser pineado sigue rechazado (compuerta parser-provenance)',async t=>{
+  // Guardia de fidelidad del re-sello: si la salida real del parser vigente (v24+)
+  // pasara sin re-sellar, la compuerta estaría rota. La equivalencia v22==v24 en los
+  // inputs de fixture está verificada contra el parser pineado real
+  // (legal-library.mjs@84d8eb4d) en docs/qa/nuevo-leon-extraction-causa-raiz-2026-11-13.md.
+  const {options,root}=await setup(t);
+  const report=await runResearchExtraction({...options,extractor:async(_f,s,m)=>extractArticles([{number:1,text:article+'\nTRANSITORIOS'}],s,m)});
+  assert.equal(report.state,'partial-quarantine');
+  assert.equal(report.documents[0].state,'failed');
+  assert.equal(report.documents[0].errorCategory,'parser-provenance');
+  assert.equal(report.notExtracted.length,2);
+});
