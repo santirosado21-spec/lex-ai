@@ -1,6 +1,6 @@
 # F1 corregido (contrato de referencia exacta reconciliado) + F2 diseño de división (propuesta no adoptada)
 
-2026-11-12. Agente Instinct (canal corpus). Sin revisión independiente todavía. Cero índices construidos fuera de pruebas, cero activación de corpus, cero nube/gasto. Corpus vigente y archivos de extracción intactos.
+2026-11-12. Ejecutado en el ambiente de desarrollo remoto. Sin revisión independiente todavía. Cero índices construidos fuera de pruebas, cero activación de corpus, cero nube/gasto. Corpus vigente y archivos de extracción intactos.
 
 ## F1 — corrección verificada
 
@@ -15,7 +15,7 @@ Corrección (commit en esta rama):
 Verificación:
 - Compatibilidad total con el corpus vigente, derivada de archivos: 47,799/47,799 registros locales (325 docs) y 3,229/3,229 ids estatales pasan la gramática unificada (los 74 QUÁTER fallaban solo la regex vieja).
 - Compatibilidad hacia atrás verificada de verdad (no asumida): índice construido con el código ANTERIOR (payload sin articleCanonical, /tmp/legacy) se abre con el código nuevo y `lookupArticle('MX-FED-CCF','1797')` resuelve por COALESCE. La apertura con integridad intacta confirma que no se mutó el índice.
-- Tests: 23/23 en los tres archivos de contrato + 4/4 nuevos de la propuesta F2. Clases negativas: inyección (`26-QUATER OR 1=1`), espacios, minúsculas, 7 dígitos, sufijo >16, >4 sufijos, guiones huérfanos. Suite completa: 1143 pass, 6 fail PREEXISTENTES en nuevo-leon-extraction (esperan `complete-quarantine`, obtienen `partial-quarantine`; fallan igual en HEAD sin mis cambios — dependencia de entorno Linux de este sandbox, no regresión).
+- Tests: 23/23 en los tres archivos de contrato + 4/4 nuevos de la propuesta F2. Clases negativas: inyección (`26-QUATER OR 1=1`), espacios, minúsculas, 7 dígitos, sufijo >16, >4 sufijos, guiones huérfanos. Suite completa: 1143 pass, 6 fail PREEXISTENTES en nuevo-leon-extraction (esperan `complete-quarantine`, obtienen `partial-quarantine`; fallan igual en HEAD sin mis cambios — dependencia del ambiente Linux de desarrollo remoto, no regresión).
 - Lookup real end-to-end: state `455-QUATER` y `455-QUÁTER` resuelven el artículo fuente `455-QUÁTER` (MX-JAL-CC).
 - Alcance no verificado aquí: rebuild de exports-v1/v2 con publicSource estricto (insumos del dueño pendientes); si una fila vieja violara la gramática, el build falla cerrado y visible — nunca silencioso.
 

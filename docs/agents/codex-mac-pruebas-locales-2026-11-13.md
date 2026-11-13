@@ -1,73 +1,84 @@
-# Puente Codex (Mac) ↔ Instinct — pruebas locales pendientes — 2026-11-13
+# Tareas locales en la Mac — pruebas pendientes y diagnóstico de archivos — 2026-11-13
 
-Instrucciones para Codex en la Mac de Santiago. Alcance: "pasarle las pruebas locales
-pendientes y revisar sus resultados", confirmado por Santiago con "Si" en WhatsApp
-2026-11-13 10:34 CST (mensaje wamid.HBgNNTIxNTU0ODU1ODk4MBUCABIYFDNBNUMwMzVEQzBDRDBFMzIzREYxAA==,
-respuesta a la propuesta de usar GitHub como puente, sin acceso directo a la Mac).
-Nada más. Este documento no crea ni amplía permisos: solo los describe.
+Instrucciones para Codex en la Mac de Santiago. Alcance: dos partes. (1) Correr las
+pruebas locales pendientes del repo lex-ai y devolver los resultados. (2) Un diagnóstico
+de existencia e integridad de archivos del detector local de privacidad, SOLO LECTURA,
+sin ejecutar el detector ni ninguna evaluación. Nada más.
 
-## QUÉ SÍ
+## Límites
 
-- Leer el repo, actualizarlo y ejecutar las pruebas indicadas.
-- Escribir el resumen de resultados donde se indica y devolverlo.
+- NO instalar nada sin preguntar antes a Santiago. Si falta `node_modules`, pedirle
+  permiso explícito para `npm ci` (instala solo lo del lockfile, sin paquetes nuevos).
+- NO modificar código ni pruebas para que pasen. Si algo falla, se reporta el error
+  exacto y se para; la corrección corresponde al carril de desarrollo.
+- NO abrir ni copiar `eval/privacy-v2/heldout.jsonl` (examen reservado).
+- NO usar claves, tokens ni secretos. NO llamadas de red salvo `git` contra GitHub.
+- El corpus legal sigue en cuarentena: estas pruebas corren offline con fixtures
+  sintéticos, sin extractores ni red.
 
-## QUÉ NO
+## Parte 1 — Pruebas
 
-- NO instalar nada sin preguntar antes a Santiago (si falta `node_modules`, pedir
-  permiso explícito para `npm ci`, que solo instala lo del lockfile, sin paquetes nuevos).
-- NO modificar código ni pruebas para que pasen. Si algo falla en Mac, se reporta el
-  error exacto; la corrección la decide el carril de desarrollo.
-- NO tocar `eval/privacy-v2/heldout.jsonl` ni nada del examen reservado.
-- NO usar claves, tokens ni secretos; NO llamadas de red salvo `git` contra GitHub.
-- NO ejecutar extractores contra la red ni activar corpus: todo el corpus sigue en
-  cuarentena; estas pruebas corren offline sobre fixtures sintéticos.
-
-## Pasos
-
-1. `cd` al clone local de lex-ai. Si no existe: avisar a Santiago y clonar
+1. `cd` al clone local de lex-ai. Si no existe, avisar a Santiago y clonar
    `https://github.com/santirosado21-spec/lex-ai.git`.
-2. `git fetch origin && git switch main && git pull --ff-only`
-   Verificar: `git log --oneline -1` debe empezar con `3c89129`.
+2. `git fetch origin && git switch main && git pull --ff-only`.
 3. `node --version` — debe ser >= 22.13. Si no, reportar y parar.
 4. Si no existe `node_modules/`: preguntar a Santiago antes de `npm ci`.
-5. Prueba focal (los 6 fallos pendientes de confirmar en Mac):
+5. Prueba focal:
    `node --test tests/nuevo-leon-extraction.test.mjs 2>&1 | tee /tmp/nl-mac-2026-11-13.log`
    Anotar conteos `# pass` / `# fail` y, si hay fallos, el primer bloque `error:` completo.
-6. Suite completa: `npm test 2>&1 | tail -40` — anotar conteos generales.
-7. Diagnóstico de ambiente (una línea cada uno):
-   `which pdftotext`, `python3 --version`, `sw_vers`, `node --version`.
+6. Suite completa: `npm test 2>&1 | tail -40`. Anotar conteos generales.
+7. Ambiente (una línea cada uno): `which pdftotext`, `python3 --version`, `sw_vers`.
 
-## Contexto para interpretar
-
-En el sandbox Linux de Instinct estos 6 casos de `tests/nuevo-leon-extraction.test.mjs`
-fallan (estado `partial-quarantine` donde se espera `complete-quarantine`, y ENOENT de
-fixtures de extracción). Hipótesis: diferencia de ambiente (parser/Poppler). En la Mac,
-donde el extractor se construyó y corrió el piloto NL, deberían pasar. Este encargo
-CONFIRMA esa hipótesis; no la asume.
-
-- Si en Mac pasan los 6 y la suite queda 1159/1159: hipótesis confirmada, ambiente Linux
-  documentado como causa.
-- Si en Mac fallan: es defecto real del extractor o del fixture; reportar el error exacto
+Contexto para interpretar: en un ambiente Linux limpio, 6 casos de
+`tests/nuevo-leon-extraction.test.mjs` fallan (estado `partial-quarantine` donde se
+espera `complete-quarantine`, y ENOENT de fixtures de extracción). Hipótesis: diferencia
+de ambiente (parser/Poppler). En la Mac, donde el extractor se construyó y corrió el
+piloto NL, deberían pasar. Este paso CONFIRMA la hipótesis, no la asume:
+- Si pasan y la suite queda completa: hipótesis confirmada, causa = ambiente Linux.
+- Si fallan en Mac: defecto real del extractor o del fixture. Reportar el error exacto
   y parar. NO arreglar.
 
-## Formato de devolución
+## Parte 2 — Diagnóstico read-only del detector de privacidad (sin ejecutarlo)
 
-Opción A (preferida): crear `docs/qa/nuevo-leon-extraction-mac-run-2026-11-13.md` con:
+Solo listar archivos y calcular hashes. No cargar el modelo, no correr scripts del
+detector, no evaluaciones.
+
+1. `ls -la artifacts/privacy/models/rampart-q4-token-ner-v1/ artifacts/privacy/models/rampart-q4-token-ner-v1/onnx/`
+   Se esperan 6 archivos: README.md, LICENSE, config.json, tokenizer.json,
+   tokenizer_config.json, onnx/model_q4.onnx. Reportar cuáles existen y cuáles faltan.
+2. `shasum -a 256` de cada archivo existente de ese directorio (reportar hash + nombre).
+3. `shasum -a 256 artifacts/privacy/rampart-dev-v1-20261110-first/predictions.json`
+   (reportar hash, o "no existe").
+4. `shasum -a 256 eval/privacy-v2/dev.jsonl` y `wc -l eval/privacy-v2/dev.jsonl`
+   (reportar hash y número de líneas).
+
+La comparación de hashes contra los valores esperados la hace el carril de desarrollo
+al recibir el reporte; Codex solo reporta lo observado.
+
+## Entrega de resultados
+
+Opción A (preferida): crear `docs/qa/nuevo-leon-extraction-mac-run-2026-11-13.md`:
 
 ```
-# Corrida Mac 2026-11-13 — nuevo-leon-extraction + suite
+# Corrida Mac 2026-11-13
 - HEAD: <hash corto>
 - node: <versión>  macOS: <versión>  python3: <versión>  pdftotext: <ruta o "no encontrado">
 - tests/nuevo-leon-extraction.test.mjs: pass X / fail Y
 - npm test: pass X / fail Y
 - Si fail>0: primer error completo (pegado)
+## Diagnóstico privacidad (read-only)
+- modelos: <archivos presentes/faltantes>
+- sha256 por archivo: <lista>
+- predictions.json: <sha256 o "no existe">
+- dev.jsonl: <sha256>, <líneas> líneas
 ```
 
-Commit y push a `main` con mensaje `qa: corrida Mac nuevo-leon-extraction 2026-11-13`.
+Commit y push a `main` con mensaje `qa: corrida Mac 2026-11-13`.
 
-Opción B: devolver el mismo resumen a Santiago para pegarlo por WhatsApp.
+Opción B: devolver el mismo resumen a Santiago para enviarlo por mensaje.
 
-## Límites de claims (permanentes)
+## Nota permanente
 
-Corpus en cuarentena; la única revisión independiente de contenido es extractor v22
-sobre 5 PDFs. Ningún resultado de estas pruebas valida contenido ni procedencia.
+Ningún resultado de estas tareas valida contenido ni procedencia del corpus: sigue en
+cuarentena y la única revisión independiente de contenido existente cubre el extractor
+v22 sobre 5 PDFs.

@@ -64,7 +64,7 @@ corpus pineado, no de un índice preconstruido.
 ## 3. Suite
 
 `npm test`: 1153 pass / 6 fail. Los 6 fallos son los PREEXISTENTES de
-`nuevo-leon-extraction.test.mjs` (fallan igual en HEAD, entorno Linux sandbox): tests
+`nuevo-leon-extraction.test.mjs` (fallan igual en HEAD, ambiente Linux de desarrollo remoto): tests
 503, 504, 505, 509, 512 y 513. Sin fallos nuevos. Suite NO verde por esos 6, se mantienen
 visibles.
 

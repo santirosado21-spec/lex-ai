@@ -1,6 +1,6 @@
 # Cloud knowledge/retrieval — separación arquitectónica 13:46 y auditoría de preparación de ingestion
 
-2026-11-12. Auditoría read-only ejecutada por el agente Instinct (canal corpus). Sin revisión independiente todavía. No se construyó índice, no se publicó/indexó contenido, no hubo llamadas de red a proveedores, gasto ni entrenamiento. El corpus sigue en CUARENTENA (textReview/legalReview pending); esta auditoría lee archivos locales y solo produce conteos derivados.
+2026-11-12. Auditoría read-only ejecutada en el ambiente de desarrollo remoto. Sin revisión independiente todavía. No se construyó índice, no se publicó/indexó contenido, no hubo llamadas de red a proveedores, gasto ni entrenamiento. El corpus sigue en CUARENTENA (textReview/legalReview pending); esta auditoría lee archivos locales y solo produce conteos derivados.
 
 ## Aclaración arquitectónica del dueño (nota de voz 2026-11-12 13:46, vía main)
 
