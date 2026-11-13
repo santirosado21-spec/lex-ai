@@ -1,0 +1,40 @@
+name: Rejon public radar synthetic contracts
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - server/public-radar-observations.mjs
+      - tests/public-radar-observations.test.mjs
+      - docs/product/radar-publico-eventos-v0-2026-11-11.md
+      - .github/workflows/public-radar-contracts.yml
+  push:
+    branches: [main]
+    paths:
+      - server/public-radar-observations.mjs
+      - tests/public-radar-observations.test.mjs
+      - docs/product/radar-publico-eventos-v0-2026-11-11.md
+      - .github/workflows/public-radar-contracts.yml
+permissions:
+  contents: read
+concurrency:
+  group: radar-public-v0-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  public-observations:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Recorded checkout and runtime
+        run: |
+          printf 'HEAD=%s\n' "$(git rev-parse HEAD)"
+          node --version
+      - name: Validate public radar events without network or providers
+        run: node --test tests/public-radar-observations.test.mjs
