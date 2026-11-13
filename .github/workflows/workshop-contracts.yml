@@ -1,0 +1,48 @@
+name: Rejon tool-workshop synthetic contracts
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - src/tool-workshop-model.js
+      - src/tool-workshop-model.d.ts
+      - src/ToolWorkshopView.tsx
+      - src/tool-workshop.css
+      - src/App.tsx
+      - tests/tool-workshop.test.mjs
+      - .github/workflows/workshop-contracts.yml
+  push:
+    branches: [main]
+    paths:
+      - src/tool-workshop-model.js
+      - src/tool-workshop-model.d.ts
+      - src/ToolWorkshopView.tsx
+      - src/tool-workshop.css
+      - src/App.tsx
+      - tests/tool-workshop.test.mjs
+      - .github/workflows/workshop-contracts.yml
+permissions:
+  contents: read
+concurrency:
+  group: workshop-synthetic-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  blueprint-contracts:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout public sources, without storing credentials
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Pinned Node 22
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Show source SHA and runtime
+        run: |
+          printf 'HEAD=%s\n' "$(git rev-parse HEAD)"
+          node --version
+      - name: Run synthetic allowlist and blueprint tests (no providers)
+        run: node --test tests/tool-workshop.test.mjs
