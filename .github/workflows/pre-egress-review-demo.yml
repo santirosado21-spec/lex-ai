@@ -1,0 +1,30 @@
+name: B0 offline pre-egress demo checks
+on:
+  push:
+    branches: [pedro/pre-egress-review-demo-20261111]
+    paths:
+      - docs/demo/pre-egress-review-v1.html
+      - tests/pre-egress-review-demo.test.mjs
+      - .github/workflows/pre-egress-review-demo.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - docs/demo/pre-egress-review-v1.html
+      - tests/pre-egress-review-demo.test.mjs
+      - .github/workflows/pre-egress-review-demo.yml
+permissions:
+  contents: read
+jobs:
+  offline-contract:
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - run: node --test tests/pre-egress-review-demo.test.mjs

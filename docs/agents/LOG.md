@@ -295,3 +295,11 @@ El dueño indicó que la fila de API Platform termina en OAwA. Una comparación 
 ## 2026-11-11 07:31 — codex — OpenAI API de desarrollo conectada
 
 El dueño entregó la clave completa mediante TXT temporal fuera del repo. GET de gpt-6-luna HTTP200 y una generación sintética store:false completada: 40 tokens entrada, 6 salida, 2056 ms, costo estimado USD0,000007; cargo y saldo no auditados. La importación de 164 caracteres por stdin a security -w se truncó a 128 en esta máquina. La clave completa quedó verificada en Keychain, el TXT y el ítem duplicado se eliminaron, y --auth pasó. Pendiente lote S2b público/sintético y verificación de facturación.
+
+## 2026-11-11 — ChatGPT (Pedro) — Demo B0 pre-egreso ficticia, aislada
+
+Se reservó el frente en el workboard antes del primer archivo. En `pedro/pre-egress-review-demo-20261111` se agregó `docs/demo/pre-egress-review-v1.html` (dos asuntos inventados; revisión de términos con corrección/omisión, aceptación explícita por fila, vista protegida sólo local; archivo e historial también sanitizados y escaneo de canarios). CSP prohíbe conexiones, formularios y recursos externos; no se usa red, servidor o almacenamiento. `tests/pre-egress-review-demo.test.mjs` define 9 pruebas Node con VM y mock DOM; workflow público Ubuntu dedicado. Pendientes resultado CI, QA visual en navegador real y revisión independiente; no habilita H4/H5/H6 y no valida anonimización ni privacidad para clientes.
+
+## 2026-11-11 — ChatGPT (Pedro) — CI B0 demo verde, alcance sólo técnico
+
+GitHub Actions run 43117500598, job offline-contract 130849159258, en checkout de HEAD `f8cb115d7766974fa1420e003fc6ff14aee6d4ec`: **9/9 tests Node PASS**, 0 fallos. CI principal de integración en ese HEAD también SUCCESS. Verifica VM con DOM falso, CSP/no APIs de red, doble asunto, reinicio, revisión explícita, canarios en texto/archivo/historial, fail closed tras corrección. No se ejecutó navegador real ni se revisó por abogado, por especialista de privacidad o por persona distinta del autor. No se integra ni activa egreso.

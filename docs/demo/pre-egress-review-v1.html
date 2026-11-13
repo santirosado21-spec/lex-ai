@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; img-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Rejon.AI · Revisión local de sustituciones (demo)</title>
+<style>
+:root { color-scheme: dark; --bg:#0c111a; --panel:#141d2a; --card:#1b2635; --line:#344354; --ink:#f6f9fc; --muted:#b5c5d4; --cyan:#86e6e0; --warn:#ffd08a; --green:#aaf0c8; --radius:18px; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+* { box-sizing:border-box; }
+body { margin:0; background:radial-gradient(ellipse at 50% -20%,#21384c,#0c111a 60%); color:var(--ink); min-height:100vh; }
+button,input,select { font:inherit; }
+button:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid var(--cyan); outline-offset:3px; }
+button { border:1px solid var(--line); color:var(--ink); background:var(--card); padding:12px 16px; min-height:44px; border-radius:12px; cursor:pointer; }
+button:hover:not(:disabled) { border-color:var(--cyan); }
+button:disabled { cursor:not-allowed; opacity:.45; }
+a { color:var(--cyan); }
+header { padding:22px clamp(16px,3vw,50px); border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; }
+.brand { display:flex; gap:12px; align-items:center; font-weight:720; letter-spacing:.02em; }
+.monogram { display:grid; place-items:center; border-radius:14px; width:44px; height:44px; background:#173c46; color:var(--cyan); font-size:25px; font-weight:800; }
+.top-note { color:var(--muted); font-size:13px; max-width:600px; line-height:1.5; }
+main { max-width:1520px; margin:auto; padding:24px clamp(16px,3vw,48px) 60px; }
+h1 { font-size:clamp(26px,3vw,40px); line-height:1.14; margin:0 0 8px; letter-spacing:-.03em; }
+h2 { font-size:20px; margin:0 0 6px; }
+h3 { font-size:16px; margin:0 0 10px; }
+p { color:var(--muted); line-height:1.5; }
+.sub { margin:0 0 26px; max-width:790px; }
+.pill { border:1px solid #456870; border-radius:99px; font-size:12px; display:inline-block; padding:6px 10px; color:var(--cyan); }
+.layout { display:grid; grid-template-columns:minmax(190px,250px) minmax(0,1fr); gap:20px; align-items:start; }
+aside,.panel { border:1px solid var(--line); background:var(--panel); border-radius:var(--radius); padding:20px; }
+aside h2 { font-size:15px; color:var(--muted); margin-bottom:14px; }
+.matter { text-align:left; width:100%; display:block; margin:0 0 10px; background:transparent; }
+.matter[aria-pressed="true"] { border-color:var(--cyan); background:#183540; }
+.matter strong,.matter small { display:block; }
+.matter small { margin-top:5px; color:var(--muted); }
+.workspace { display:grid; gap:18px; min-width:0; }
+.head-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+.steps { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.step { font-size:13px; padding:7px 10px; border-radius:99px; border:1px solid var(--line); color:var(--muted); }
+.step.active { color:var(--cyan); border-color:var(--cyan); }
+.columns { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:16px; }
+section { min-width:0; }
+pre { white-space:pre-wrap; overflow-wrap:anywhere; font:14px/1.65 ui-monospace,Consolas,monospace; margin:10px 0 0; padding:16px; border:1px solid var(--line); border-radius:12px; background:#111a25; color:var(--ink); }
+.muted { font-size:13px; color:var(--muted); }
+.meta { display:grid; gap:8px; }
+.meta p { margin:0; overflow-wrap:anywhere; }
+code { font:12px/1.6 ui-monospace,monospace; color:#c7e9e8; }
+.rows { display:grid; gap:12px; margin-top:14px; }
+.entry { background:var(--card); border:1px solid var(--line); padding:15px; border-radius:14px; }
+.entry-top { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.entry label { color:var(--muted); display:block; font-size:13px; }
+.entry input[type="text"],.entry select, #new-term { background:#111a25; color:var(--ink); border:1px solid #687e91; border-radius:10px; padding:10px 12px; width:100%; min-height:44px; margin-top:6px; }
+.entry select { width:auto; max-width:100%; }
+.entry-controls { display:grid; grid-template-columns:1fr auto; gap:12px; align-items:end; }
+.review-check { display:flex!important; align-items:center; gap:10px; color:var(--ink)!important; cursor:pointer; }
+.review-check input { min-width:19px; min-height:19px; accent-color:var(--cyan); }
+.review-check span { line-height:1.35; }
+.marker { font-size:12px; overflow-wrap:anywhere; padding:8px 10px; background:#111a25; border-radius:8px; margin-top:10px; color:var(--cyan); }
+.add-row { margin-top:16px; display:flex; align-items:flex-end; gap:10px; flex-wrap:wrap; }
+.add-row label { flex:1; min-width:190px; font-size:13px; color:var(--muted); }
+.actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:20px; }
+.primary { background:#91ece5; border-color:#91ece5; color:#0b1b22; font-weight:760; }
+.primary:hover:not(:disabled) { background:#d4fff8; border-color:#d4fff8; }
+.notice { border-left:3px solid var(--warn); background:#322716; padding:12px 15px; border-radius:0 10px 10px 0; color:#ffe0ad; margin-top:14px; }
+.notice.success { border-color:var(--green); background:#163328; color:#bdf5d5; }
+.hidden { display:none!important; }
+.help { font-size:12px; margin:8px 0; }
+#preview { border:1px solid var(--cyan); }
+.footer { color:var(--muted); font-size:12px; padding-top:16px; }
+@media(max-width:1020px) {.layout {grid-template-columns:1fr;} aside {display:flex; flex-wrap:wrap; gap:12px; align-items:center;} aside h2 {width:100%;margin:0;} .matter {width:min(100%,300px);margin:0;flex:1;}}
+@media(max-width:780px) {.columns {grid-template-columns:1fr;} .entry-controls {grid-template-columns:1fr;} .entry select {width:100%;} .panel {padding:16px;} }
+@media(prefers-reduced-motion:no-preference){ button { transition:background .13s,border-color .13s; }}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="monogram" aria-hidden="true">R</span><span>Rejon.AI <span class="pill">Demo local · no conectado</span></span></div>
+  <div class="top-note">Sólo información inventada. No hay importación, sincronización, servidor, cuenta, llamadas de red ni salida hacia modelos. Esta pantalla no es la barrera H4/H5 aprobada.</div>
+</header>
+<main>
+  <h1>Revisa antes de sustituir</h1>
+  <p class="sub">El abogado confirma o corrige las detecciones en el documento, nombre de archivo e historial. La vista protegida permanece bloqueada hasta revisar cada elemento y superar las comprobaciones locales.</p>
+  <div class="layout">
+    <aside aria-label="Asuntos ficticios">
+      <h2>Asuntos ficticios independientes</h2>
+      <button class="matter" id="case-a" aria-pressed="true" type="button"><strong>Arrendamiento</strong><small>AUR-2026-001 · Ficticio</small></button>
+      <button class="matter" id="case-b" aria-pressed="false" type="button"><strong>Relación laboral</strong><small>BOS-2026-002 · Ficticio</small></button>
+    </aside>
+    <div class="workspace">
+      <section class="panel" aria-labelledby="matter-title">
+        <div class="head-row">
+          <div>
+            <h2 id="matter-title"></h2>
+            <p class="muted" id="matter-desc"></p>
+          </div>
+          <span class="pill">Sin salida remota</span>
+        </div>
+        <div class="steps" aria-label="Estado de la revisión">
+          <span class="step active" id="step-1">1 · Revisar</span>
+          <span class="step" id="step-2">2 · Aprobar</span>
+          <span class="step" id="step-3">3 · Vista protegida local</span>
+        </div>
+      </section>
+      <div class="columns">
+        <section class="panel" aria-labelledby="original-title">
+          <h2 id="original-title">Original ficticio</h2>
+          <p class="help">Visible sólo en esta maqueta local. Nunca se copia ni se transmite.</p>
+          <pre id="source"></pre>
+          <h3 style="margin-top:22px">Metadatos e historial del ejemplo</h3>
+          <div class="meta">
+            <p><strong>Archivo:</strong> <span id="filename"></span></p>
+            <p><strong>Historial:</strong> <span id="history"></span></p>
+          </div>
+        </section>
+        <section class="panel" aria-labelledby="review-title">
+          <h2 id="review-title">Sustituciones propuestas</h2>
+          <p class="help">Puedes corregir el texto detectado o elegir sustituirlo por un marcador o excluirlo por completo. Cada cambio exige una nueva revisión explícita.</p>
+          <div id="entries" class="rows" aria-live="polite"></div>
+          <div class="add-row">
+            <label for="new-term">Dato omitido que debe protegerse
+              <input type="text" id="new-term" maxlength="1024" autocomplete="off" placeholder="Texto exacto del original ficticio">
+            </label>
+            <button id="add" type="button">Añadir detección</button>
+          </div>
+          <p class="help">Los valores se procesan sólo en memoria durante esta sesión. No se guardan ni se envían.</p>
+          <div class="actions">
+            <button class="primary" id="approve" type="button" disabled>Aprobar y preparar vista protegida</button>
+            <button id="reset" type="button">Reiniciar revisión</button>
+            <span class="muted" id="progress" aria-live="polite"></span>
+          </div>
+          <div role="status" aria-live="polite" id="notice" class="notice">Pendiente: revisar todas las detecciones.</div>
+        </section>
+      </div>
+      <section class="panel hidden" id="result" aria-labelledby="result-title">
+        <div class="head-row">
+          <div><h2 id="result-title">Vista protegida local</h2><p class="muted">Se muestra sólo tras aprobar y comprobar los canarios. NO se envía a ningún proveedor.</p></div>
+          <span class="pill">Previsualización, no egreso</span>
+        </div>
+        <pre id="preview"></pre>
+        <div class="meta" style="margin-top:14px">
+          <p><strong>Archivo protegido:</strong> <span id="safe-file"></span></p>
+          <p><strong>Historial protegido:</strong> <span id="safe-history"></span></p>
+        </div>
+      </section>
+      <p class="footer">Demo B0 / revisión local previa a salida · sin H4 detector real, custodia H5, broker, autorización de cuenta ni validación jurídica. Nunca pruebes aquí documentos de clientes.</p>
+    </div>
+  </div>
+</main>
+<script>
+'use strict';
+// Synthetic-only fixture. No persistence, network API, provider, or original uploads.
+const cases = [
+  {
+    id:'AUR-2026-001', title:'Arrendamiento comercial', desc:'Dos particulares ficticios · asunto A',
+    namespace:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    text:'CONTRATO FICTICIO\nMarina Solís entrega el local a Esteban Prado.\nDomicilio ficticio: Calle Cometa 123, Ciudad Ejemplo.\nContacto: marina@ejemplo.invalid.',
+    filename:'Contrato Marina Solís - Calle Cometa 123.txt',
+    history:'La persona Marina Solís pidió revisar el domicilio Calle Cometa 123.',
+    canaries:['Marina Solís','Esteban Prado','Calle Cometa 123','marina@ejemplo.invalid'],
+    entries:[
+      {text:'Marina Solís',mode:'replace',token:'11111111111111111111111111111111'},
+      {text:'Esteban Prado',mode:'replace',token:'22222222222222222222222222222222'},
+      {text:'Calle Cometa 123',mode:'replace',token:'33333333333333333333333333333333'},
+      {text:'marina@ejemplo.invalid',mode:'replace',token:'44444444444444444444444444444444'}
+    ]
+  },
+  {
+    id:'BOS-2026-002', title:'Relación laboral', desc:'Datos inventados · asunto B, aislado del A',
+    namespace:'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    text:'NOTA LABORAL FICTICIA\nDamián Vega solicita asesoría frente a Taller Nébula S.A.\nFolio simulado: EXP-SIM-2026-004.\nTeléfono ficticio: 55 0000 1111.',
+    filename:'Consulta Damián Vega - EXP-SIM-2026-004.txt',
+    history:'Taller Nébula S.A. aparece en el folio EXP-SIM-2026-004.',
+    canaries:['Damián Vega','Taller Nébula S.A.','EXP-SIM-2026-004','55 0000 1111'],
+    entries:[
+      {text:'Damián Vega',mode:'replace',token:'11111111111111111111111111111111'},
+      {text:'Taller Nébula S.A.',mode:'replace',token:'22222222222222222222222222222222'},
+      {text:'EXP-SIM-2026-004',mode:'replace',token:'33333333333333333333333333333333'},
+      {text:'55 0000 1111',mode:'replace',token:'44444444444444444444444444444444'}
+    ]
+  }
+];
+const $ = id => document.getElementById(id);
+let selected = 0, rows = [];
+function cleanNotice(message, success) {
+  $('notice').textContent = message;
+  $('notice').className = 'notice' + (success ? ' success' : '');
+}
+function hidePreview(){
+  // Hiding a panel does not remove the previous matter from the DOM.
+  // Always clear the full derived view before changing matters or reviews.
+  $('preview').textContent='';
+  $('safe-file').textContent='';
+  $('safe-history').textContent='';
+  $('result').classList.add('hidden');
+  $('step-2').classList.remove('active');
+  $('step-3').classList.remove('active');
+}
+function resetRows() {
+  rows=cases[selected].entries.map(r=>({text:r.text,mode:r.mode,token:r.token,reviewed:false}));
+  hidePreview(); renderRows();
+  cleanNotice('Pendiente: revisa cada sustitución antes de aprobar.',false);
+}
+function choose(i) {
+  selected=i;
+  $('case-a').setAttribute('aria-pressed',String(i===0));
+  $('case-b').setAttribute('aria-pressed',String(i===1));
+  const data=cases[i];
+  $('matter-title').textContent=data.title;
+  $('matter-desc').textContent=data.id+' · '+data.desc;
+  $('source').textContent=data.text;
+  $('filename').textContent=data.filename;
+  $('history').textContent=data.history;
+  $('new-term').value='';
+  resetRows();
+}
+function sourceContains(text) {
+  const data=cases[selected];
+  return [data.text,data.filename,data.history].some(s=>s.includes(text));
+}
+function validate() {
+  const texts=new Set();
+  for (const row of rows) {
+    if (!row.text || row.text.length>1024 || row.text.includes('[[LEX_') || !sourceContains(row.text) || texts.has(row.text)) {
+      return 'Hay una detección vacía, repetida, inválida o ausente del original.';
+    }
+    texts.add(row.text);
+  }
+  if (!rows.length || rows.some(r=>!r.reviewed)) return 'Faltan detecciones por revisar explícitamente.';
+  // Synthetic known-canary guard: a partial correction such as "Solís"
+  // must never count as protection of "Marina Solís", even if the complete
+  // canary no longer occurs after replacing only a substring.
+  if (cases[selected].canaries.some(term=>!rows.some(row=>row.reviewed && row.text===term))) {
+    return 'Bloqueado: falta proteger íntegramente un identificador conocido del ejemplo ficticio.';
+  }
+  return '';
+}
+function refreshApprove() {
+  const reviewed=rows.filter(r=>r.reviewed).length;
+  $('progress').textContent=reviewed+' de '+rows.length+' revisadas';
+  $('approve').disabled=Boolean(validate());
+}
+function changed() {
+  hidePreview();
+  cleanNotice('Revisión modificada. Vuelve a aprobar antes de preparar cualquier vista.',false);
+  refreshApprove();
+}
+function renderRows() {
+  $('entries').replaceChildren();
+  rows.forEach((row,i)=>{
+    const box=document.createElement('div');
+    box.className='entry';
+    const top=document.createElement('div');top.className='entry-top';
+    const strong=document.createElement('strong');strong.textContent='Detección '+(i+1);top.append(strong);
+    const indicator=document.createElement('span');indicator.className='muted';
+    indicator.textContent=row.reviewed?'Revisada':'Sin revisar';top.append(indicator);
+    box.append(top);
+    const controls=document.createElement('div');controls.className='entry-controls';
+    const literal=document.createElement('label');
+    literal.textContent='Texto exacto detectado';
+    const input=document.createElement('input');input.type='text';input.value=row.text;input.maxLength=1024;input.autocomplete='off';
+    input.setAttribute('aria-label','Texto de detección '+(i+1));
+    input.addEventListener('input',()=>{
+      row.text=input.value;row.reviewed=false;check.checked=false;indicator.textContent='Sin revisar';changed();
+    });
+    literal.append(input);controls.append(literal);
+    const action=document.createElement('label');action.textContent='Tratamiento';
+    const select=document.createElement('select');select.setAttribute('aria-label','Tratamiento '+(i+1));
+    const replace=document.createElement('option');replace.value='replace';replace.textContent='Sustituir';
+    const omit=document.createElement('option');omit.value='omit';omit.textContent='Excluir';
+    select.append(replace,omit);select.value=row.mode;
+    select.addEventListener('change',()=>{
+      row.mode=select.value;row.reviewed=false;check.checked=false;indicator.textContent='Sin revisar';changed();
+    });
+    action.append(select);controls.append(action);box.append(controls);
+    const marker=document.createElement('div');marker.className='marker';
+    marker.textContent='Marcador local: '+tokenFor(row);
+    box.append(marker);
+    const label=document.createElement('label');label.className='review-check';label.style.marginTop='12px';
+    const check=document.createElement('input');check.type='checkbox';check.checked=row.reviewed;
+    check.setAttribute('aria-label','Confirmar detección '+(i+1));
+    check.addEventListener('change',()=>{
+      row.reviewed=check.checked;indicator.textContent=row.reviewed?'Revisada':'Sin revisar';changed();
+    });
+    const caption=document.createElement('span');caption.textContent='Confirmo que revisé esta detección';
+    label.append(check,caption);box.append(label);
+    $('entries').append(box);
+  });
+  refreshApprove();
+}
+function tokenFor(row) {
+  return '[[LEX_'+cases[selected].namespace+'_'+row.token+']]';
+}
+function protectOne(s) {
+  let output=s;
+  const sorted=[...rows].sort((a,b)=>b.text.length-a.text.length);
+  for (const row of sorted) output=output.split(row.text).join(row.mode==='replace'?tokenFor(row):'[EXCLUIDO]');
+  return output;
+}
+function previewProtected(){
+  const problem=validate();
+  if (problem) {hidePreview();cleanNotice(problem,false);return;}
+  const data=cases[selected];
+  const protectedText=protectOne(data.text);
+  const protectedFile=protectOne(data.filename);
+  const protectedHistory=protectOne(data.history);
+  const combined=[protectedText,protectedFile,protectedHistory].join('\n');
+  if (data.canaries.some(term=>combined.includes(term)) || rows.some(row=>combined.includes(row.text))) {
+    hidePreview();
+    cleanNotice('Bloqueado: quedan datos identificables en el texto, nombre de archivo o historial.',false);
+    return;
+  }
+  $('preview').textContent=protectedText;
+  $('safe-file').textContent=protectedFile;
+  $('safe-history').textContent=protectedHistory;
+  $('result').classList.remove('hidden');
+  $('step-2').classList.add('active');
+  $('step-3').classList.add('active');
+  cleanNotice('Revisión aprobada. Se creó únicamente una vista local; no existe botón de envío.',true);
+}
+$('case-a').addEventListener('click',()=>choose(0));
+$('case-b').addEventListener('click',()=>choose(1));
+$('reset').addEventListener('click',resetRows);
+$('approve').addEventListener('click',previewProtected);
+$('add').addEventListener('click',()=>{
+  const term=$('new-term').value.trim();
+  if (!term || term.length>1024 || term.includes('[[LEX_') || !sourceContains(term) || rows.some(r=>r.text===term) || rows.length>=256) {
+    cleanNotice('No añadida: debe existir en el original, no estar repetida y respetar los límites.',false);return;
+  }
+  const taken=new Set(rows.map(r=>r.token));
+  let n=rows.length+1,token;
+  do {token=n.toString(16).padStart(32,'0');n++;} while(taken.has(token));
+  rows.push({text:term,mode:'replace',token,reviewed:false});
+  $('new-term').value='';hidePreview();renderRows();
+  cleanNotice('Dato añadido: revísalo antes de aprobar.',false);
+});
+choose(0);
+</script>
+</body>
+</html>
