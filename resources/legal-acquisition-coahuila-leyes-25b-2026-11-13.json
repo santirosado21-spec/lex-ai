@@ -1,0 +1,83 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-coahuila-leyes-25b-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 3,
+  "maxRequests": 10,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 20971520,
+  "maxDurationMs": 600000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-coahuila",
+   "title": "Congreso del Estado de Coahuila de Zaragoza",
+   "jurisdiction": "MX-COA",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+    "evidence": "Live official catalog Leyes Estatales Vigentes fetched 2026-11-13; SHA256 b13020ae4035481193a3c8e1d420953e678b123644737a38d1b5da3fdc5233d7; 265 table rows parsed; coah-coa299 excluded (source link 404 for both PDF and DOC, verified 2026-11-13, recorded in exclusion list); 264 planned, each with PDF (and WORD sibling, not acquired). Batch 25/27: coah-coa237, coah-coa92, coah-pre-ejercicio-fiscal-2018, coah-pre-ejercicio-fiscal-2019, coah-pre-ejercicio-fiscal-2020, coah-pre-ejercicio-fiscal-2021, coah-pre-ejercicio-fiscal-2022, coah-pre-ejercicio-fiscal-2023, coah-pre-ejercicio-fiscal-2024, coah-pre-ejercicio-fiscal-2025. Live HEAD verified HTTP200 application/pdf for all documents in batch. Batch 25b: 3 large annual fiscal-law PDFs, HEAD 200 application/pdf verified 2026-11-13.",
+    "observedAt": "2026-11-13T23:19:29.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-13T23:19:29.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed federal programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: no robots.txt on the host (404), no terms-of-use page located on home or catalog, no anti-automation or anti-AI signal found (contrast with Campeche/Chihuahua, held pending-permission for explicit UA blocks); the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. Batch 25b: documented exception for 3 oversized annual Ley de Ingresos/Presupuesto PDFs (10791532, 12174978, 7555282 bytes; HEAD 200 application/pdf verified 2026-11-13). maxDocumentBytes is an internal conservative resource budget, NOT an owner/terms restriction; per-registry cap raised only here to 20971520 (hard ACQUISITION_LIMITS ceiling), same precedent as ligie-2022 and fed-reglamentos-10b. Other registries unchanged.",
+    "evidenceUrl": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresocoahuila-leyes-20261113",
+    "evidenceUrl": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+    "observedAt": "2026-11-13T23:16:57.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "coah-pre-ejercicio-fiscal-2020",
+   "sourceId": "congreso-coahuila",
+   "title": "Presupuesto de Egresos del Estado de Coahuila de Zaragoza, para el Ejercicio Fiscal 2020 PDF",
+   "jurisdiction": "MX-COA",
+   "status": "approved",
+   "url": "https://www.congresocoahuila.gob.mx/transparencia/03/Leyes_Coahuila/pre_ejercicio_fiscal_2020.pdf",
+   "versionId": "congresocoahuila-leyes-20261113",
+   "evidenceUrl": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/"
+  },
+  {
+   "id": "coah-pre-ejercicio-fiscal-2023",
+   "sourceId": "congreso-coahuila",
+   "title": "Presupuesto de Egresos del Estado de Coahuila de Zaragoza, para el Ejercicio Fiscal 2023 PDF",
+   "jurisdiction": "MX-COA",
+   "status": "approved",
+   "url": "https://www.congresocoahuila.gob.mx/transparencia/03/Leyes_Coahuila/pre_ejercicio_fiscal_2023.pdf",
+   "versionId": "congresocoahuila-leyes-20261113",
+   "evidenceUrl": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/"
+  },
+  {
+   "id": "coah-pre-ejercicio-fiscal-2025",
+   "sourceId": "congreso-coahuila",
+   "title": "Presupuesto de Egresos del Estado de Coahuila de Zaragoza, para el Ejercicio Fiscal 2025 PDF",
+   "jurisdiction": "MX-COA",
+   "status": "approved",
+   "url": "https://www.congresocoahuila.gob.mx/transparencia/03/Leyes_Coahuila/pre_ejercicio_fiscal_2025.pdf",
+   "versionId": "congresocoahuila-leyes-20261113",
+   "evidenceUrl": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/"
+  }
+ ]
+}
