@@ -37,7 +37,9 @@ try {
   await expect(page.getByRole('radio',{name:'Oscuro',exact:true})).toBeChecked();
   await page.getByRole('radio',{name:'Claro',exact:true}).check();
   await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.theme)).toBe('light');
-  await expect(page.locator('.brand .theme-mark-light')).toBeVisible();
+  // The sidebar rail stays dark in light appearance (commit 3884148), so the rail brand keeps the dark-theme mark.
+  await expect(page.locator('.brand .theme-mark-dark')).toBeVisible();
+  await expect(page.locator('.brand .theme-mark-light')).toBeHidden();
   await page.getByRole('radio',{name:'Automático',exact:true}).check();
   await expect.poll(()=>page.evaluate(()=>document.documentElement.hasAttribute('data-theme'))).toBe(false);
   for(const theme of ['light','dark']) {
@@ -49,7 +51,7 @@ try {
     }
   }
   assert.deepEqual(errors,[]);assert.deepEqual(remote,[]);
-  report.checks.push('manual dark and light set data-theme and update the two-image mark','preference persists across reload','Automatic removes data-theme and returns control to the OS','settings has no horizontal overflow at 1440/768/390 in either explicit theme','no browser exceptions, remote requests, or inference');report.status='PASS';
+  report.checks.push('manual dark and light set data-theme and update the two-image mark (dark rail keeps dark-theme mark in both explicit themes)','preference persists across reload','Automatic removes data-theme and returns control to the OS','settings has no horizontal overflow at 1440/768/390 in either explicit theme','no browser exceptions, remote requests, or inference');report.status='PASS';
 } catch(error) {
   report.status='FAIL';report.error=error.stack;process.exitCode=1;
 } finally {
