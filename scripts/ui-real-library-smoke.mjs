@@ -4,7 +4,13 @@ import {startServer} from '../server/main.mjs';
 import {mkdtemp,mkdir,access,writeFile} from 'node:fs/promises';
 import path from 'node:path';import os from 'node:os';import assert from 'node:assert/strict';
 const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-real-library-ui-'));
-const app=await startServer({dataDir,monitorDir:path.join(dataDir,'monitor'),libraryPath:path.resolve('resources/public-library.sqlite'),inference:{async stop(){},async status(){return {state:'stopped',model:'Not initialized — public-library test only'};},async initialize(){throw Error('Model initialization forbidden in this test');},async *generate(){throw Error('Inference forbidden in this test');}}});
+const libraryPath=path.resolve('resources/public-library.sqlite');
+// Environment-conditioned skip: the frozen production index is gitignored and
+// only exists on the user's machine; it is NEVER rebuilt from quarantined
+// corpus. Absent index => explicit SKIP (not a product failure). When the
+// file exists this smoke still runs hard against 35,452 articles / 303 laws.
+try{await access(libraryPath);}catch{console.log(JSON.stringify({status:'SKIP',reason:'frozen production index resources/public-library.sqlite absent in this environment (gitignored, blocked-by-design; never rebuilt from quarantine)',checks:[]}));process.exit(0);}
+const app=await startServer({dataDir,monitorDir:path.join(dataDir,'monitor'),libraryPath,inference:{async stop(){},async status(){return {state:'stopped',model:'Not initialized — public-library test only'};},async initialize(){throw Error('Model initialization forbidden in this test');},async *generate(){throw Error('Inference forbidden in this test');}}});
 const report={mode:'Real public library, synthetic workspace, no model execution',startedAt:new Date().toISOString(),checks:[]};let browser;
 try{
  await mkdir('artifacts',{recursive:true});const api=async(action,payload={})=>{const response=await fetch(app.connection.url+'/api',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${app.connection.token}`},body:JSON.stringify({action,payload})});assert.equal(response.status,200);return response.json();};
