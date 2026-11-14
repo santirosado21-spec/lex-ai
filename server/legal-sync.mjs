@@ -3,7 +3,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
 
 export const LEGAL_SYNC_AGENT='LexAI-LegalSync/0.1';
-export const ALLOWED_HOSTS=Object.freeze(['www.diputados.gob.mx','diputados.gob.mx','www.congresocdmx.gob.mx','congresocdmx.gob.mx','www.hcnl.gob.mx','hcnl.gob.mx','congresoweb.congresojal.gob.mx','congresocoahuila.gob.mx','www.congresocoahuila.gob.mx','www.congresobc.gob.mx','congresobc.gob.mx']);
+export const ALLOWED_HOSTS=Object.freeze(['www.diputados.gob.mx','diputados.gob.mx','www.congresocdmx.gob.mx','congresocdmx.gob.mx','www.hcnl.gob.mx','hcnl.gob.mx','congresoweb.congresojal.gob.mx','congresocoahuila.gob.mx','www.congresocoahuila.gob.mx','www.congresobc.gob.mx','congresobc.gob.mx','congresoags.gob.mx','www.congresoags.gob.mx']);
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const transient=status=>[408,425,429,500,502,503,504].includes(status);

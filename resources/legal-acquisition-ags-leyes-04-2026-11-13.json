@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-ags-leyes-04-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-ags",
+   "title": "Congreso del Estado de Aguascalientes",
+   "jurisdiction": "MX-AGU",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+    "evidence": "Live official catalog Leyes Estatales Vigentes fetched 2026-11-13; SHA256 16c36976ba534e051e84a080e98a5ab7ceee586b2b8438ea8edbd7258d5ef57d; 179 download endpoints /agenda_legislativa/leyes/descargarPdf/<id> parsed with titles; full HEAD sweep of all 179 on 2026-11-13: 179x HTTP 200 application/pdf, 0 broken links. Batch 4/18: ags-ley-228, ags-ley-230, ags-ley-233, ags-ley-238, ags-ley-240, ags-ley-241, ags-ley-242, ags-ley-248, ags-ley-250, ags-ley-251. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-14T00:11:19.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T00:11:19.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed federal programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: no robots.txt on the host (404), no terms-of-use page located on home or catalog, no anti-automation or anti-AI signal found (contrast with Campeche/Chihuahua, held pending-permission for explicit UA blocks); the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresoags-leyes-20261113",
+    "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+    "observedAt": "2026-11-14T00:11:19.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "ags-ley-228",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE LA JUVENTUD DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/228",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-230",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE LA UNIVERSIDAD POLITÉCNICA DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/230",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-233",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE MEDIACIÓN Y CONCILIACIÓN DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/233",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-238",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE PRESTACIÓN DE SERVICIOS PARA LA ATENCIÓN, CUIDADO Y DESARROLLO INTEGRAL INFANTIL PARA EL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/238",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-240",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE PREVENCIÓN SOCIAL DE LA  VIOLENCIA Y LA DELINCUENCIA CON PARTICIPACIÓN CIUDADANA DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/240",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-241",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE PROFESIONES DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/241",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-242",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE BIBLIOTECAS PÚBLICAS Y DE FOMENTO A LA LECTURA DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/242",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-248",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE PROTECCIÓN Y FOMENTO DEL PATRIMONIO CULTURAL DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/248",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-250",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE REMUNERACIONES DE LOS SERVIDORES PUBLICOS DEL ESTADO DE AGUASCALIENTES Y SUS MUNICIPIOS",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/250",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  },
+  {
+   "id": "ags-ley-251",
+   "sourceId": "congreso-ags",
+   "title": "LEY DE RESPONSABILIDAD PATRIMONIAL DEL ESTADO DE AGUASCALIENTES",
+   "jurisdiction": "MX-AGU",
+   "status": "approved",
+   "url": "https://congresoags.gob.mx/agenda_legislativa/leyes/descargarPdf/251",
+   "versionId": "congresoags-leyes-20261113",
+   "evidenceUrl": "https://congresoags.gob.mx/agenda_legislativa/leyes"
+  }
+ ]
+}
