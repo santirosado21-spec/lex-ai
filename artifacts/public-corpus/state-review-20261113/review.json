@@ -248,7 +248,7 @@
   },
   "Edomex": {
    "status": "closed",
-   "note": "261 catalogados (const 1, cod 8, leyes 245, regl 7; 220 .doc + 35 .docx + 6 .pdf). 259/260 cuarentenados, 13,764 registros; mex-ley-209 bloqueado (duplicado de catalogo); mex-ley-222 fallido (document-xml-budget, document.xml 314MB). QA: docs/qa/edomex-acquisition-2026-11-14.md",
+   "note": "261 catalogados (const 1, cod 8, leyes 245, regl 7; 220 .doc + 35 .docx + 6 .pdf). 260/260 aprobados cuarentenados, 13,848 registros (mex-ley-222 recuperado 2026-11-14 via extractor v28 streaming, clase document-xml-budget CERRADA); mex-ley-209 bloqueado (duplicado de catalogo). QA: docs/qa/edomex-acquisition-2026-11-14.md (+Correccion mismo dia)",
    "date": "2026-11-14"
   },
   "Sinaloa": {

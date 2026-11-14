@@ -17,8 +17,8 @@ Corte canonico (ultimo report.json por id + PDF en disco), derivado una sola
 vez del inventario, sin sumar sobre reportes anteriores:
 
 - ids registrados: 2,845. Documentos presentes (snapshots; antes "PDFs
-  presentes": las fuentes Word oficiales v27 ya son parte del corpus): 2,839.
-  Extracciones validas: 2,828. Registros: 260,627. Todo cuarentenado (extraccion estructural; SIN revision
+  presentes": las fuentes Word oficiales v27/v28 ya son parte del corpus):
+  2,840. Extracciones validas: 2,829. Registros: 260,711. Todo cuarentenado (extraccion estructural; SIN revision
   independiente de contenido, no publicado, no indexado).
 - Fallidos por clase: 0 invalid-pdf (serie fiscal Nayarit 2026 reparada
   2026-11-14: defecto del servidor que anteponia 921 bytes HTML al payload;
@@ -38,8 +38,8 @@ vez del inventario, sin sumar sobre reportes anteriores:
   Yucatan re-corrido con extractor v25: 386/389, 38,105 (Correccion en su QA);
   Colima 169 catalogados, 167/167 adquiridos, 16,777 (QA
   docs/qa/colima-acquisition-2026-11-14.md); Edomex 261 catalogados, 259/260
-  adquiridos (1 duplicado de catalogo bloqueado), 13,764 (QA
-  docs/qa/edomex-acquisition-2026-11-14.md).
+  adquiridos (1 duplicado de catalogo bloqueado), 13,848 (QA
+  docs/qa/edomex-acquisition-2026-11-14.md con Correccion mismo dia).
 
 ## Lo verificado en Rejon al 2026-11-13 20:34 CST (corte previo, conservado)
 

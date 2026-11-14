@@ -1,11 +1,13 @@
 import {readFile,writeFile,mkdir,rename,open,unlink,statfs} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import {spawn} from 'node:child_process';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=27;
+export const EXTRACTOR_VERSION=28;
 // Maximum PDF pages the worker will parse. Raised 1200 -> 2000 in v26 after verifying the largest observed official document (nay-ley-148, Presupuesto de Egresos Nayarit 2026: 1,376 pages, 20.3 MB) parses in ~12 s and ~77 MB heap, well inside the worker's 120 s timeout and 768 MB old-generation limit. Documents above the cap still fail closed as 'PDF page coverage incomplete'.
 export const EXTRACTOR_MAX_PAGES=2000;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
@@ -16,15 +18,76 @@ const digest=value=>createHash('sha256').update(value).digest('hex');
 // Extraction is isolated and read-only: .docx reads only word/document.xml from the ZIP (string-based, no XML parser,
 // macros and active content are never touched); .doc goes through antiword, a static read-only text extractor that
 // cannot execute macros. Nothing else about the pipeline changes; PDF path is byte-identical to v26.
+// v28: document.xml is read as a STREAM (yauzl lazy entry + incremental w:t scan) instead of JSZip whole-string, so
+// memory stays bounded regardless of XML size. Same paragraph semantics as v27 (split on </w:p[ >], join w:t runs,
+// then unescape), verified byte-identical against the v27 string parser on fixtures. Hard caps (fail closed):
+// document.xml uncompressed <= 1 GiB, compression ratio <= 200, no encrypted entries, single text run <= 4 MiB,
+// single paragraph <= 8 MiB, total extracted text <= 64 MiB, unclosed-tag carry <= 1 MiB. Closes the
+// document-xml-budget gap class (real case: mex-ley-222, document.xml of 314 MB inside a 6.9 MB docx).
 export {detectDocumentFormat};
 const xmlUnescape=value=>value.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&');
-async function docxPages(bytes){
-  const {default:JSZip}=await import('jszip');
-  const zip=await JSZip.loadAsync(bytes);
-  const entry=zip.file('word/document.xml');if(!entry)throw new Error('DOCX without word/document.xml');
-  const xml=await entry.async('string');if(xml.length>200*1024*1024)throw new Error('DOCX document.xml exceeds safety cap');
-  const paragraphs=xml.split(/<\/w:p[ >]/).map(segment=>[...segment.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map(match=>match[1]).join(''));
-  return [{number:1,text:paragraphs.map(xmlUnescape).join('\n')}];
+// Incremental scan of an XML byte stream: emits the text of each <w:t> run and splits paragraphs at </w:p[ >],
+// byte-identical to the v27 expression xml.split(/<\/w:p[ >]/).map(seg => join of seg's <w:t> contents).
+// Unclosed trailing tags at EOF are dropped, exactly like the v27 regexes (which require closing tags).
+export async function docxParagraphsFromXmlStream(stream){
+  const decoder=new TextDecoder('utf-8',{stream:true});
+  let pending='',current='';const paragraphs=[];let totalText=0,mode='gap';
+  const appendText=text=>{current+=text;totalText+=text.length;
+    if(current.length>8*1024*1024)throw new Error('DOCX paragraph exceeds safety cap');
+    if(totalText>64*1024*1024)throw new Error('DOCX text exceeds safety cap');};
+  const consume=final=>{
+    for(;;){
+      if(mode==='gap'){
+        const startIdx=pending.search(/<w:t[\s>]/),paraIdx=pending.search(/<\/w:p[ >]/);
+        if(startIdx===-1&&paraIdx===-1){
+          if(final){pending='';return;}
+          const cut=pending.lastIndexOf('<');pending=cut===-1?'':pending.slice(cut);
+          if(pending.length>1024*1024)throw new Error('DOCX unclosed tag run exceeds safety cap');
+          return;
+        }
+        if(paraIdx!==-1&&(startIdx===-1||paraIdx<startIdx)){paragraphs.push(current);current='';pending=pending.slice(paraIdx+6);continue;}
+        const gt=pending.indexOf('>',startIdx);
+        if(gt===-1){if(final){pending='';return;}if(pending.length>1024*1024)throw new Error('DOCX unclosed tag run exceeds safety cap');return;}
+        pending=pending.slice(gt+1);mode='text';continue;
+      }
+      const close=pending.indexOf('</w:t>');
+      if(close===-1){
+        if(pending.length>4*1024*1024)throw new Error('DOCX text run exceeds safety cap');
+        if(final)pending=''; // unclosed w:t at EOF: dropped, same as the v27 regex
+        return;
+      }
+      appendText(xmlUnescape(pending.slice(0,close)));pending=pending.slice(close+6);mode='gap';
+    }
+  };
+  for await(const chunk of stream){pending+=decoder.decode(chunk,{stream:true});consume(false);}
+  pending+=decoder.decode();consume(true);
+  paragraphs.push(current); // trailing segment after the last </w:p>, as produced by v27's split
+  return paragraphs;
+}
+function docxPages(bytes){
+  const yauzl=require('yauzl');
+  return new Promise((resolve,reject)=>{
+    yauzl.fromBuffer(bytes,{lazyEntries:true,validateEntrySizes:true},(error,zip)=>{
+      if(error)return reject(new Error('DOCX inválido.'));
+      let found=false,settled=false;
+      const fail=cause=>{if(settled)return;settled=true;zip.close();reject(cause);};
+      zip.on('error',()=>fail(new Error('DOCX inválido.')));
+      zip.on('entry',entry=>{
+        if(entry.fileName!=='word/document.xml')return zip.readEntry();
+        found=true;
+        if(entry.generalPurposeBitFlag&1)return fail(new Error('DOCX encrypted entries are not supported'));
+        if(entry.uncompressedSize>1024*1024*1024)return fail(new Error('DOCX document.xml exceeds safety cap'));
+        if(entry.compressedSize>0&&entry.uncompressedSize/entry.compressedSize>200)return fail(new Error('DOCX compression ratio exceeds safety cap'));
+        zip.openReadStream(entry,(streamError,stream)=>{
+          if(streamError)return fail(new Error('DOCX document.xml unreadable'));
+          stream.on('error',()=>fail(new Error('DOCX document.xml unreadable')));
+          docxParagraphsFromXmlStream(stream).then(paragraphs=>{if(settled)return;settled=true;zip.close();resolve([{number:1,text:paragraphs.join('\n')}]);},fail);
+        });
+      });
+      zip.on('end',()=>{if(!found)fail(new Error('DOCX without word/document.xml'));});
+      zip.readEntry();
+    });
+  });
 }
 function docPages(file){
   return new Promise((resolve,reject)=>{

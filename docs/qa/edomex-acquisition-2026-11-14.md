@@ -19,3 +19,6 @@
 - registros: 260,627 (246,863 + 13,764)
 - fallidos por clase: 11 extraction-invalid (6 cola OCR + 5 estructura), 2 document-byte-budget (ags-ley-2529, bc-presupuestoestado2026), 2 catalog-link-broken (col-ley-104, col-reg-023), 1 document-xml-budget (mex-ley-222).
 - Nota de nomenclatura: la metrica historica "PDFs presentes" pasa a "documentos presentes" porque las fuentes Word oficiales (v27) ya son parte del corpus cuarentenado.
+
+## Correccion (mismo dia, 2026-11-14 05:34 CST)
+mex-ley-222 YA NO es fallido: el extractor v28 (lectura streaming de document.xml, QA extractor-v28-docx-streaming-2026-11-14.md) lo reproceso --offline desde su snapshot ya capturado (sin nueva descarga): 84 registros, 4,849,547 caracteres, estado quarantined. Totales corregidos de Edomex: 260/260 documentos aprobados cuarentenados, 13,848 registros (13,764 + 84). Fallidos por clase: la clase document-xml-budget queda cerrada con 0 casos abiertos. mex-ley-209 sigue bloqueado (duplicado de catalogo), no adquirido. Corte canonico global corregido: 2,845 ids / 2,840 documentos presentes / 2,829 extracciones validas / 260,711 registros.
