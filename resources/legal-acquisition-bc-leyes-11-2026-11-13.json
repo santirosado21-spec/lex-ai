@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-bc-leyes-11-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-bc",
+   "title": "Congreso del Estado de Baja California",
+   "jurisdiction": "MX-BCN",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+    "evidence": "Live official catalog Trabajo Legislativo / Leyes fetched 2026-11-13; SHA256 35502054726998e4b38934b3ea1842ffeea95849ff0b1e45b61efa0dc3d1b423; 166 table rows parsed, each with PDF (WORD sibling not acquired). Full HEAD sweep of all 166 links on 2026-11-13: 166x HTTP 200. Batch 11/17: bc-leyfonau-15feb2013, bc-leyinre, bc-leyissstecali, bc-leymuromujeres, bc-leynotariado, bc-leyperio, bc-leyactosadmon-20nov2015, bc-leyregimenmpal, bc-leyregpub-30dic2016, bc-leyserci. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-13T23:53:24.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-13T23:53:24.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed federal and Coahuila programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: no robots.txt on the host (404), no terms-of-use page located on home or catalog, no anti-automation or anti-AI signal found; the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresobc-leyes-20261113",
+    "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+    "observedAt": "2026-11-13T23:53:24.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "bc-leyfonau-15feb2013",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL FONDO AUXILIAR PARA LA ADMINISTRACIÓN DE JUSTICIA DEL ESTADO DE BAJA CALIFORNIA 2013/02/15 VIGENTE TOMO_V",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_V/LEYFONAU_15FEB2013.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyinre",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL INDULTO PARA LOS REOS DEL FUERO COMUN DEL ESTADO LIBRE Y SOBERANO DE BAJA CALIFORNIA 1960/08/31 VIGENTE TOMO_V",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_V/LEYINRE.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyissstecali",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL INSTITUTO DE SEGURIDAD Y SERVICIOS SOCIALES DE LOS TRABAJADORES DEL GOBIERNO Y MUNICIPIOS DEL ESTADO DE BAJA CALIFORNIA 2023/07/14 VIGENTE TOMO_VI",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_VI/20230714_LEYISSSTECALI.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leymuromujeres",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL MURO EN HONOR A LAS MUJERES DESTACADAS EN EL ESTADO DE BAJA CALIFORNIA 2026/03/13 VIGENTE TOMO_VI",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_VI/20260313_LEYMUROMUJERES.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leynotariado",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL NOTARIADO PARA EL ESTADO DE BAJA CALIFORNIA 2026/09/04 VIGENTE TOMO_IV",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_IV/20260904_LEYNOTARIADO.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyperio",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL PERIÓDICO OFICIAL DEL ESTADO DE BAJA CALIFORNIA 2026/10/09 VIGENTE TOMO_IV",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_IV/20261009_LEYPERIO.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyactosadmon-20nov2015",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL PROCEDIMIENTO PARA LOS ACTOS DE LA ADMINISTRACIÓN PÚBLICA DEL ESTADO DE BAJA CALIFORNIA 2015/11/20 VIGENTE TOMO_I",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_I/LEYACTOSADMON_20NOV2015.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyregimenmpal",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL RÉGIMEN MUNICIPAL PARA EL ESTADO DE BAJA CALIFORNIA 2026/02/27 VIGENTE TOMO_I",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_I/20260227_LEYREGIMENMPAL.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyregpub-30dic2016",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL REGISTRO PÚBLICO DE LA PROPIEDAD Y DE COMERCIO PARA EL ESTADO DE BAJA CALIFORNIA 2016/12/30 VIGENTE TOMO_IV",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_IV/LEYREGPUB_30DIC2016.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  },
+  {
+   "id": "bc-leyserci",
+   "sourceId": "congreso-bc",
+   "title": "LEY DEL SERVICIO CIVIL DE LOS TRABAJADORES AL SERVICIO DE LOS PODERES DEL ESTADO Y MUNICIPIOS DE BAJA CALIFORNIA 2026/08/31 VIGENTE TOMO_I",
+   "jurisdiction": "MX-BCN",
+   "status": "approved",
+   "url": "https://www.congresobc.gob.mx/Documentos/ProcesoParlamentario/Leyes/TOMO_I/20260831_LEYSERCI.PDF",
+   "versionId": "congresobc-leyes-20261113",
+   "evidenceUrl": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes"
+  }
+ ]
+}
