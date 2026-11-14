@@ -4,7 +4,7 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=24;
+export const EXTRACTOR_VERSION=25;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -127,6 +127,13 @@ const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
 const ordWord='(?:PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[EÉ]PTIMO|OCTAVO|NOVENO|D[EÉ]CIMO|UND[EÉ]CIMO|DUOD[EÉ]CIMO|VIG[EÉ]SIMO|TRIG[EÉ]SIMO)';
 const ordinalHeading=new RegExp(`^ART[ÍI]CULO ((?:${ordWord})(?: ${ordWord})?|UNICO)[ \\t]*[.:\\-]`);
 const ordinalRange=new RegExp(`^ART[ÍI]CULOS (${ordWord}) A (${ordWord})[ \\t]*[.:\\-]`);
+// Title-case spelled-ordinal heading variant ("Artículo Primero.-", seen in older Yucatán official PDFs). Fail-closed like the all-caps path: the strict terminator immediately after the ordinal word is required, so body references like "el artículo primero de esta ley" never match; it runs only inside the ordinal gate (no spaced numeric heading anywhere) and must continue strictly sequentially.
+const ordWordTC='(?:Primero|Segundo|Tercero|Cuarto|Quinto|Sexto|S[eé]ptimo|Octavo|Noveno|D[eé]cimo|Und[eé]cimo|Duod[eé]cimo|Vig[eé]simo|Trig[eé]simo)';
+const ordinalHeadingTC=new RegExp(`^Art[íi]culo ((?:${ordWordTC})(?: ${ordWordTC})?|Único|[ÚU]NICO)[ \\t]*[.:\\-]`);
+// No-space numeric heading variant from PDFs whose text items omit space glyphs ("Artículo1.-Se crea…", "Artículo1o.-…", seen in Yucatán official PDFs). Fail-closed: strict ".-" terminator (wrapped body references like "Artículo65 del Código" never carry it), ordinal gate only, strictly sequential, and the document is flagged.
+const nospaceHeading=/^Art[íi]culo(\d+)[oº°]?[.][-–]/;
+// Reversed ordinal variant ("Artículo.-1o.Constituyen…", seen in Yucatán official PDFs): the word takes its terminator first, then the ordinal number. Fail-closed: exact rigid shape with the ordinal number carrying its own terminator; ordinal gate only, strictly sequential, document flagged.
+const reversedOrdinal=/^Art[íi]culo[ \t]*[.:][ \t]*-[ \t]*(\d+)[oº°]?(?=[ \t]*[.:])/;
 const ORD_UNIT={PRIMERO:1,SEGUNDO:2,TERCERO:3,CUARTO:4,QUINTO:5,SEXTO:6,SEPTIMO:7,OCTAVO:8,NOVENO:9};
 const ORD_BASE={DECIMO:10,UNDECIMO:11,DUODECIMO:12,VIGESIMO:20,TRIGESIMO:30};
 function ordinalValue(phrase){const p=phrase.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();if(p==='UNICO')return 1;if(ORD_UNIT[p])return ORD_UNIT[p];if(ORD_BASE[p])return ORD_BASE[p];const m=/^(DECIMO|VIGESIMO|TRIGESIMO) (PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|SEPTIMO|OCTAVO|NOVENO)$/.exec(p);return m?ORD_BASE[m[1]]+ORD_UNIT[m[2]]:null;}
@@ -179,10 +186,10 @@ const inlineRubricSuffix=line=>{
 
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
-  const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
+  const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,removedBulletGlyphs:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
   const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+DOF)?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
-  for(const p of pages){for(const line of p.text.split('\n')){const value=normalize(line);if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
+  for(const p of pages){for(const line of p.text.split('\n')){const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
   const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0,numericStarted=false,lastOrd=0;const seen=new Set();
   // Two-pass mode gate: any strict numeric heading anywhere in the document selects numeric mode (byte-identical to v22); the ordinal path below only runs for documents with NO numeric headings at all, so preambles of modern laws ("ARTÍCULO PRIMERO.- Se expide…") can never poison numeric extraction.
@@ -258,13 +265,34 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
           current={articleId:rangeId,lines:[line],editorial:[]};lastOrd=n2;continue;
         }
       }else{
-        const ordM=ordinalHeading.exec(line.text);
+        const ordM=ordinalHeading.exec(line.text)||ordinalHeadingTC.exec(line.text);
         if(ordM){
           const n=ordinalValue(ordM[1]);
           if(n&&n===lastOrd+1){
             finish();started=true;pendingSection=false;sectionDiscard=0;const ordId=String(n);
             if(seen.has(ordId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:ordId};ended=true;break;}
+            if(ordinalHeadingTC.test(line.text)&&!documentAnomalies.includes('titlecase-ordinal-heading-mode'))documentAnomalies.push('titlecase-ordinal-heading-mode');
             current={articleId:ordId,lines:[line],editorial:[]};lastOrd=n;continue;
+          }
+        }
+        const revM=reversedOrdinal.exec(line.text);
+        if(revM){
+          const n=Number(revM[1]);
+          if(n===lastOrd+1){
+            finish();started=true;pendingSection=false;sectionDiscard=0;const revId=String(n);
+            if(seen.has(revId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:revId};ended=true;break;}
+            if(!documentAnomalies.includes('reversed-ordinal-heading-mode'))documentAnomalies.push('reversed-ordinal-heading-mode');
+            current={articleId:revId,lines:[line],editorial:[]};lastOrd=n;continue;
+          }
+        }
+        const nsM=nospaceHeading.exec(line.text);
+        if(nsM){
+          const n=Number(nsM[1]);
+          if(n===lastOrd+1){
+            finish();started=true;pendingSection=false;sectionDiscard=0;const nsId=String(n);
+            if(seen.has(nsId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:nsId};ended=true;break;}
+            if(!documentAnomalies.includes('nospace-heading-mode'))documentAnomalies.push('nospace-heading-mode');
+            current={articleId:nsId,lines:[line],editorial:[]};lastOrd=n;continue;
           }
         }
       }
