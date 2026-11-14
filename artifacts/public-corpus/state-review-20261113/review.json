@@ -212,7 +212,12 @@
  },
  "Oaxaca": {
   "status": "acquired",
-  "note": "224/225 catalogo (1x404), 222/224 extraidos (2 escaneados sin texto), 18290 registros, cuarentena",
+  "note": "222/224 extraidos cuarentena, 18290 registros; 1x404; pendientes OCR: oax-ley-219/222",
+  "date": "2026-11-13"
+ },
+ "Yucatan": {
+  "status": "acquired",
+  "note": "386/389 extraidos cuarentena, 38105 registros (extractor v25 cerro 12); pendientes OCR: yuc-ley-011/012/015; 2 sobre techo duro (exclusion fail-closed)",
   "date": "2026-11-13"
  }
 }

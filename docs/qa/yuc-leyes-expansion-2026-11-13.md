@@ -98,3 +98,29 @@ aparte (1,009 presentes + 8 documentados = 1,017 previos conocidos).
 Programa cerrado: 374/389 en cuarentena, 2 exclusiones por techo duro,
 3 escaneados, 12 pendientes de extractor. Activacion en producto prohibida;
 cualquier uso posterior requiere revision de contenido independiente.
+
+## Correccion (2026-11-13, mismo dia, posterior al cierre)
+
+1. Extractor v25 (commit 9fa49cc, QA docs/qa/extractor-v25-format-repair-2026-11-13.md):
+   los 12 extraction-invalid del punto 3 estaban causados por CINCO variantes de
+   formato (no solo el ordinal invertido «Articulo.- 1o.» ahi supuesto): numerica
+   sin espacios «Articulo1.-» (022, 047, 098), sin espacios con sufijo
+   «Articulo1o.-» (117), vineta U+00AC «¬Articulo 1.-¬» (039, 043, 101),
+   vineta+ordinal mayusculas (097), ordinal capitalizado «Articulo Primero.-»
+   (029, 032, 040, 045) e invertido «Articulo.-1o.» (029 art. 1). Reparados con
+   fixtures y regresion (suite 1170 pass / 0 fail). Lotes 03, 04, 05, 10, 11 y 12
+   re-corridos con v25 sobre los snapshots ya adquiridos (sin re-descarga):
+   los 12 documentos cierran en cuarentena. ags-ley-160 NO era parser-gap: su
+   documento no tiene estructura de articulos (Codigo de Etica con preambulo y
+   principios); queda brecha documentada de estructura.
+2. Cifras corregidas del programa: 386/389 adquiribles extraidos en cuarentena,
+   38,105 registros (sustituyen 374/389 y 37,914). Pendientes: yuc-ley-011,
+   yuc-ley-012, yuc-ley-015 (escaneados sin capa de texto) — reclasificados por
+   instruccion del coordinador como PENDIENTES DE OCR (PDFs conservados en
+   snapshots, cola OCR explicita; el pipeline actual no tiene OCR), no exclusion
+   permanente. Las 2 exclusiones sobre techo duro (punto 1 de Incidentes) se
+   mantienen fail-closed.
+3. Contabilidad por id: el inventario por id no resta duplicados; el duplicado de
+   contenido conocido (CPEUM Coahuila) es un hallazgo del plano de contenido y no
+   reduce el conteo por id. La unicidad global de contenido NO se afirma (dedup
+   por id+titulo unicamente).
