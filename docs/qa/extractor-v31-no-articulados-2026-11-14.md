@@ -82,3 +82,24 @@ Verificado contra los snapshots locales (pdftotext/OCR, no contra memoria):
   legal del documento (p.ej. anexos o secciones sin numerar quedan fuera).
 - mor-cod-069 y reg-lfgfaga-fe-16may55 siguen sin representacion estructural:
   es el estado honesto, no un hueco silencioso.
+
+## Correccion (mismo dia, extractor v32: force-OCR por documento)
+- mor-cod-045 NO era no-articulado: su capa digital estaba rota (fuente del
+  cuerpo sin mapa Unicode). v32 anade document.forceOcr (opt-in, solo true) en
+  el registry; el flag solo AMPLIA el disparador OCR (el piso de caracteres
+  sigue y la comparacion fail-safe tambien: el texto OCR reemplaza al digital
+  solo si recupera estrictamente mas caracteres). Records siempre quarantined
+  con anomalias ocr-derived-text-layer + registry-forced-ocr.
+- Validacion de registry: forceOcr es campo opcional unico permitido fuera del
+  conjunto exacto de campos del documento.
+- Resultado real: mor-cod-045 -> 22 articulos secuenciales 1-22 (OCR spa,
+  21 paginas, cache reanudable: el presupuesto de 45s por documento aborto las
+  primeras corridas y la cache atomica las reanudo hasta completar).
+- Verificacion: suite 1,193/0 (2 fixtures nuevos: flag forzado en PDF
+  imagen; disparador ampliado en PDF digital hecho a mano con xref valido);
+  equivalencia byte a byte ags-ley-179 v31->v32 (textos identicos).
+- Registry nuevo: legal-acquisition-ocr-reprocess-mor-leyes-05-forceocr-2026-11-14.json
+  (solo mor-cod-045, forceOcr:true; registry original 2026-11-13 intacto).
+- Corte canonico derivado tras v32: 2,878 / 2,874 / 2,872 / 270,734.
+  Presentes sin extraccion: 2 (mor-cod-069, reg-lfgfaga-fe-16may55), ambos
+  documentados como clase sin gramatica fiel; NO se forzaran.

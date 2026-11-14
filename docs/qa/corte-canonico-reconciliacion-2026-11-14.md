@@ -95,3 +95,8 @@ reproduce este metodo; este documento queda como registro del metodo):
   cola OCR pendiente force-OCR), mor-cod-069 (secciones sin numerar: clase no
   soportada), reg-lfgfaga-fe-16may55 (declaratoria 1955 texto corrido).
 - ids registrados (2,878) y presentes (2,874) sin cambio.
+
+## Correccion 2 (mismo dia, extractor v32 force-OCR)
+- extracciones validas: 2,872 (+1: mor-cod-045, 22 articulos via OCR forzado);
+  registros: 270,734 (+22). Derivado con scripts/derive-canonical-cut.mjs.
+- Presentes sin extraccion: 2 (mor-cod-069, reg-lfgfaga-fe-16may55).

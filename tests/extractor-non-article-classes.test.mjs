@@ -95,5 +95,5 @@ test('ordinary article documents are unaffected by the non-article path',()=>{
 });
 
 test('extractor version bumped to 31 for non-article classes',()=>{
-  assert.equal(EXTRACTOR_VERSION,31);
+  assert.ok(EXTRACTOR_VERSION>=31);
 });

@@ -70,3 +70,46 @@ test('scanned PDF without text layer falls back to local OCR and stays quarantin
 test('OCR page cap constant stays bounded',()=>{
   assert.ok(OCR_PAGE_CAP<=200,'OCR work stays bounded per document');
 });
+
+test('registry forceOcr flag widens the OCR trigger (digital layer above char floor still OCRs)',{timeout:240000,skip:!(await available())&&'requires tesseract+pdftoppm+python3-PIL'},async()=>{
+  const dir=await mkdtemp(path.join(os.tmpdir(),'lex-ocr-force-'));
+  const fixture=path.join(dir,'scanned-law.pdf');
+  const maker=path.join(dir,'make-fixture.py');
+  await writeFile(maker,MAKER);
+  await execFile('python3',[maker,fixture,FONT],{timeout:60000});
+  const result=await parsePdfInWorker(fixture,{lawId:'synthetic-ocr-law',forceOcr:true,url:'https://example.invalid/synthetic',title:'LEY SINTETICA DE PRUEBA OCR FORZADA'},{pdfSha256:'1'.repeat(64),retrievedAt:'2026-11-14T00:00:00Z'});
+  assert.equal(result.coverage.ocr?.forced,true,'OCR diagnostics mark the run as registry-forced');
+  assert.ok(result.documentAnomalies.includes('registry-forced-ocr'));
+  assert.ok(result.documentAnomalies.includes('ocr-derived-text-layer'));
+  for(const record of result.records){
+    assert.equal(record.quality.status,'quarantined','forced-OCR records never reach structurally-verified');
+  }
+});
+
+// Minimal one-page digital-text PDF builder (raw PDF with correct xref), used
+// to prove the forceOcr flag widens the trigger when the text layer EXISTS.
+function digitalPdfBytes(line){
+  const content=`BT /F1 18 Tf 72 720 Td (${line}) Tj ET`;
+  const objs=[
+    '<</Type/Catalog/Pages 2 0 R>>',
+    '<</Type/Pages/Kids[3 0 R]/Count 1>>',
+    '<</Type/Page/Parent 2 0 R/MediaBox[0 0 612 792]/Resources<</Font<</F1 4 0 R>>>>/Contents 5 0 R>>',
+    '<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>',
+    `<</Length ${content.length}>>\nstream\n${content}\nendstream`,
+  ];
+  let pdf='%PDF-1.4\n';const offsets=[];
+  objs.forEach((body,i)=>{offsets.push(pdf.length);pdf+=`${i+1} 0 obj\n${body}\nendobj\n`;});
+  const xref=pdf.length;
+  pdf+=`xref\n0 ${objs.length+1}\n0000000000 65535 f \n`+offsets.map(o=>String(o).padStart(10,'0')+' 00000 n \n').join('');
+  pdf+=`trailer\n<</Size ${objs.length+1}/Root 1 0 R>>\nstartxref\n${xref}\n%%EOF\n`;
+  return new Uint8Array(Buffer.from(pdf,'latin1'));
+}
+
+test('forceOcr runs OCR even when the digital text layer is above the char floor',{timeout:240000,skip:!(await available())&&'requires tesseract+pdftoppm+python3-PIL'},async()=>{
+  const dir=await mkdtemp(path.join(os.tmpdir(),'lex-ocr-force-digital-'));
+  const fixture=path.join(dir,'digital.pdf');
+  await writeFile(fixture,digitalPdfBytes('Encabezado digital de prueba con suficiente texto para superar el piso'));
+  const result=await parsePdfInWorker(fixture,{lawId:'synthetic-force-digital',forceOcr:true,url:'https://example.invalid/digital',title:'FIXTURE DIGITAL FORCE OCR'},{pdfSha256:'2'.repeat(64),retrievedAt:'2026-11-14T00:00:00Z'});
+  assert.ok(result.coverage.ocr,'OCR ran despite the digital layer being above the floor');
+  assert.equal(result.coverage.ocr.forced,true);
+});

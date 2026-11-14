@@ -97,7 +97,9 @@ export function validateAcquisitionRegistry(input){
   }
   const documentIds=new Set(),destinations=new Set();
   for(const document of registry.documents){
-    fields(document,['id','sourceId','title','jurisdiction','status','url','versionId','evidenceUrl'],'document');
+    const {forceOcr,...documentCore}=document;
+    fields(documentCore,['id','sourceId','title','jurisdiction','status','url','versionId','evidenceUrl'],'document');
+    if(forceOcr!==undefined&&forceOcr!==true)fail('document.forceOcr, when present, must be true (opt-in only).');
     identifier(document.id,'document.id');identifier(document.sourceId,'document.sourceId');identifier(document.versionId,'document.versionId');
     if(documentIds.has(document.id))fail('Duplicate document.id.');documentIds.add(document.id);
     const source=sources.get(document.sourceId);if(!source)fail('Unknown document.sourceId.');

@@ -9,7 +9,13 @@ import os from 'node:os';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=31;
+export const EXTRACTOR_VERSION=32;
+// v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
+// digital text layer exists but is unusable (e.g. body font without a Unicode
+// map: only repeated headers extract). The flag only WIDENS the OCR trigger;
+// the fail-safe comparison stays: OCR text replaces the digital layer only
+// when it recovers strictly more characters, and every record stays
+// quarantined with ocr-derived-text-layer + registry-forced-ocr anomalies.
 // v31: non-article document classes, only when ZERO article headings parse.
 // 'principios' (numbered named values, e.g. ethics codes: "1.- Integridad."),
 // 'capitulos-numerados' (all-caps numbered chapters: "1. DISPOSICIONES")
@@ -608,7 +614,8 @@ if(!isMainThread&&workerData?.kind==='extract-legal-library'){
     if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);
     let ocr=null;
     const digitalChars=pages.reduce((total,page)=>total+page.text.trim().length,0);
-    if(digitalChars<pages.length*OCR_MIN_PAGE_CHARS){
+    const forceOcr=workerData.source?.forceOcr===true;
+    if(forceOcr||digitalChars<pages.length*OCR_MIN_PAGE_CHARS){
       const tools=detectOcrTools();
       if(!tools.available)ocr={skipped:'ocr-tools-unavailable'};
       else if(pages.length>OCR_PAGE_CAP)ocr={skipped:'ocr-page-cap-exceeded',pages:pages.length,cap:OCR_PAGE_CAP};
@@ -617,13 +624,13 @@ if(!isMainThread&&workerData?.kind==='extract-legal-library'){
         const sha=workerData.metadata?.pdfSha256;
         const ocrPages=await ocrPdfPages(workerData.file,pages.length,tools,{cacheKey:/^[a-f0-9]{64}$/.test(sha??'')?sha:null});
         const ocrChars=ocrPages.reduce((total,page)=>total+page.text.trim().length,0);
-        ocr={engine:'tesseract',engineVersion:tools.engineVersion,lang:tools.lang,dpi:OCR_DPI,pages:ocrPages.length};
+        ocr={engine:'tesseract',engineVersion:tools.engineVersion,lang:tools.lang,dpi:OCR_DPI,pages:ocrPages.length};if(forceOcr)ocr.forced=true;
         if(ocrChars>digitalChars){pages.length=0;pages.push(...ocrPages);const fixes=repairOcrArticleHeadings(pages);ocr.repairedHeadings=fixes.repaired;if(fixes.commaRepaired)ocr.commaTerminatorRepaired=fixes.commaRepaired;}
         else ocr.outcome='no-text-recovered-digital-kept';
       }
     }
     const parsed=extractArticles(pages,workerData.source,workerData.metadata);
-    if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');if(ocr.commaTerminatorRepaired)parsed.documentAnomalies.push('ocr-comma-terminator-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
+    if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.forced)parsed.documentAnomalies.push('registry-forced-ocr');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');if(ocr.commaTerminatorRepaired)parsed.documentAnomalies.push('ocr-comma-terminator-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
     parentPort.postMessage({result:parsed});
   }catch(e){parentPort.postMessage({error:e.message});}
 }
