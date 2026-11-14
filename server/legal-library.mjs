@@ -9,7 +9,11 @@ import os from 'node:os';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=29;
+export const EXTRACTOR_VERSION=30;
+// v30: OCR path additionally repairs an OCR-comma heading terminator
+// ("Artículo 3," when the scan prints "Artículo 3.") — only when the number is
+// the strictly expected next article AND a sentence-case capital follows, so a
+// body reference like "Artículo 3, fracción..." never misfires. Anomaly-flagged.
 // v29: OCR fallback for image-only (scanned) PDFs. When the digital text layer
 // is absent (average extracted text below OCR_MIN_PAGE_CHARS per page), the
 // worker rasterizes pages locally with pdftoppm and OCRs them locally with
@@ -460,25 +464,29 @@ async function ocrPdfPages(file,pageCount,tools,{cacheKey=null}={}){
   if(cacheDir)await mkdir(cacheDir,{recursive:true,mode:0o700});
   try{
     const capped=Math.min(pageCount,OCR_PAGE_CAP);
-    await execFileAsync('pdftoppm',['-r',String(OCR_DPI),'-gray','-png','-f','1','-l',String(capped),file,path.join(dir,'page')],{timeout:Math.max(60000,capped*3000),maxBuffer:1<<20});
-    const images=(await readdir(dir)).filter(name=>name.endsWith('.png')).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-    if(images.length!==capped)throw new Error(`OCR render coverage incomplete: ${images.length}/${capped} pages`);
-    const pages=[];
-    for(const image of images){
-      const number=Number(image.match(/(\d+)\.png$/)[1]);
+    // Render and OCR page by page, only for pages not already cached: an attempt
+    // killed by the acquisition time budget still leaves every finished page in
+    // the cache (atomic tmp+rename), so retries resume instead of restarting.
+    const one=async number=>{
       const cacheFile=cacheDir?path.join(cacheDir,`p${number}-${OCR_DPI}-${tools.lang}.txt`):null;
-      let text;
-      if(cacheFile)text=await readFile(cacheFile,'utf8').catch(()=>undefined);
-      if(text===undefined){
-        const base=path.join(dir,'ocr-'+number);
-        await execFileAsync('tesseract',[path.join(dir,image),base,'-l',tools.lang,'--dpi',String(OCR_DPI)],{timeout:OCR_PAGE_TIMEOUT_MS,maxBuffer:1<<22});
-        text=await readFile(base+'.txt','utf8');
-        if(cacheFile)await writeFile(cacheFile,text,{mode:0o600});
-        await unlink(base+'.txt').catch(()=>{});
+      if(cacheFile){
+        const cached=await readFile(cacheFile,'utf8').catch(()=>undefined);
+        if(cached!==undefined)return{number,text:cached};
       }
-      pages.push({number,text});
-      await unlink(path.join(dir,image)).catch(()=>{});
-    }
+      const image=path.join(dir,`page-${number}`);
+      await execFileAsync('pdftoppm',['-r',String(OCR_DPI),'-gray','-png','-f',String(number),'-l',String(number),file,image],{timeout:30000,maxBuffer:1<<20});
+      const rendered=(await readdir(dir)).find(name=>name.startsWith(`page-${number}-`)&&name.endsWith('.png'));
+      if(!rendered)throw new Error(`OCR render coverage incomplete at page ${number}`);
+      const base=path.join(dir,'ocr-'+number);
+      await execFileAsync('tesseract',[path.join(dir,rendered),base,'-l',tools.lang,'--dpi',String(OCR_DPI)],{timeout:OCR_PAGE_TIMEOUT_MS,maxBuffer:1<<22});
+      const text=await readFile(base+'.txt','utf8');
+      if(cacheFile){const tmp=cacheFile+'.tmp-'+randomUUID();await writeFile(tmp,text,{mode:0o600});await rename(tmp,cacheFile);}
+      await unlink(path.join(dir,rendered)).catch(()=>{});await unlink(base+'.txt').catch(()=>{});
+      return{number,text};
+    };
+    const pages=[];let next=1;
+    const workers=Array.from({length:3},async()=>{while(next<=capped){const number=next++;pages.push(await one(number));}});
+    await Promise.all(workers);
     pages.sort((a,b)=>a.number-b.number);
     return pages;
   }finally{await rm(dir,{recursive:true,force:true}).catch(()=>{});}
@@ -490,20 +498,24 @@ async function ocrPdfPages(file,pageCount,tools,{cacheKey=null}={}){
 // rewrite it to the expected number. Mid-line references never match (^ anchor).
 // Every repair is recorded as a document anomaly and records stay quarantined.
 function repairOcrArticleHeadings(pages){
-  let expected=1,repaired=0;
+  let expected=1,repaired=0,commaRepaired=0;
   const heading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o)?([\.\-].*)$/i;
+  const commaHeading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o)?(, )([A-ZÁÉÍÓÚÑ].*)$/i;
   for(const page of pages){
     page.text=page.text.split('\n').map(line=>{
       const match=heading.exec(line);
-      if(!match)return line;
-      const n=Number(match[2]);
-      if(n===expected){expected=n+1;return line;}
-      if(!match[3]&&n===expected*10){expected++;repaired++;return `${match[1]}${expected-1}o${match[4]}`;}
+      if(match){
+        const n=Number(match[2]);
+        if(n===expected){expected=n+1;return line;}
+        if(!match[3]&&n===expected*10){expected++;repaired++;return `${match[1]}${expected-1}o${match[4]}`;}
+        return line;
+      }
+      const comma=commaHeading.exec(line);
+      if(comma&&Number(comma[2])===expected){expected++;commaRepaired++;return `${comma[1]}${comma[2]}${comma[3]??''}. ${comma[5]}`;}
       return line;
     }).join('\n');
   }
-  return repaired;
-}
+  return {repaired,commaRepaired};}
 
 export async function parsePdfInWorker(file,source,metadata){
   return new Promise((resolve,reject)=>{const worker=new Worker(new URL(import.meta.url),{execArgv:[],workerData:{kind:'extract-legal-library',file,source,metadata},resourceLimits:{maxOldGenerationSizeMb:768}});let settled=false;let timer;
@@ -563,12 +575,12 @@ if(!isMainThread&&workerData?.kind==='extract-legal-library'){
         const ocrPages=await ocrPdfPages(workerData.file,pages.length,tools,{cacheKey:/^[a-f0-9]{64}$/.test(sha??'')?sha:null});
         const ocrChars=ocrPages.reduce((total,page)=>total+page.text.trim().length,0);
         ocr={engine:'tesseract',engineVersion:tools.engineVersion,lang:tools.lang,dpi:OCR_DPI,pages:ocrPages.length};
-        if(ocrChars>digitalChars){pages.length=0;pages.push(...ocrPages);ocr.repairedHeadings=repairOcrArticleHeadings(pages);}
+        if(ocrChars>digitalChars){pages.length=0;pages.push(...ocrPages);const fixes=repairOcrArticleHeadings(pages);ocr.repairedHeadings=fixes.repaired;if(fixes.commaRepaired)ocr.commaTerminatorRepaired=fixes.commaRepaired;}
         else ocr.outcome='no-text-recovered-digital-kept';
       }
     }
     const parsed=extractArticles(pages,workerData.source,workerData.metadata);
-    if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
+    if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');if(ocr.commaTerminatorRepaired)parsed.documentAnomalies.push('ocr-comma-terminator-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
     parentPort.postMessage({result:parsed});
   }catch(e){parentPort.postMessage({error:e.message});}
 }

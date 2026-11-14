@@ -29,6 +29,8 @@ p1=page([
  ('para verificar la ruta de OCR del extractor.',small),
  ('Articulo 2o.- Ningun texto de esta pagina proviene de un',small),
  ('documento oficial real ni valida cobertura juridica.',small),
+ ('Articulo 3, Todo encabezado con coma atipica se repara',small),
+ ('solo cuando el numero es el esperado en secuencia.',small),
 ])
 p2=page([
  ('TRANSITORIOS',font),
@@ -56,7 +58,9 @@ test('scanned PDF without text layer falls back to local OCR and stays quarantin
   assert.ok(result.coverage.ocr&&result.coverage.ocr.engine==='tesseract',`OCR diagnostics present: ${JSON.stringify(result.coverage.ocr)}`);
   assert.ok(['spa','eng'].includes(result.coverage.ocr.lang));
   assert.ok(result.documentAnomalies.includes('ocr-derived-text-layer'));
-  assert.deepEqual(result.records.map(r=>r.articleId),['1','2'],`articles recovered from OCR text: ${JSON.stringify(result.records.map(r=>r.articleId))}`);
+  assert.ok(result.documentAnomalies.includes('ocr-ordinal-suffix-fused-heading-repaired'));
+  assert.ok(result.documentAnomalies.includes('ocr-comma-terminator-heading-repaired'));
+  assert.deepEqual(result.records.map(r=>r.articleId),['1','2','3'],`articles recovered from OCR text: ${JSON.stringify(result.records.map(r=>r.articleId))}`);
   for(const record of result.records){
     assert.equal(record.quality.status,'quarantined','OCR-derived records never reach structurally-verified');
     assert.ok(record.quality.anomalies.includes('ocr-derived-text-layer'));

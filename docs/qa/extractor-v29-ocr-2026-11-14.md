@@ -80,3 +80,22 @@ ags-ley-160, mor-cod-031/045/069/090; 2 no articulados confirmados) +
 - extraction-invalid (no articulados, OCR verificado): reg-lfgfaga-fe-16may55,
   oax-ley-222.
 - Clase OCR como tal: CERRADA (0 pendientes de OCR en el corpus).
+
+## Correccion (mismo-dia, extractor v30): oax-ley-219 articulo 3
+
+Verificacion contra la fuente: el escaneado IMPRIME "Articulo 3." (punto,
+pagina 7); la coma era artefacto OCR. v30 anade reparacion acotada en la ruta
+OCR: encabezado al inicio de linea "ARTICULO <n>," con terminador coma se
+normaliza a punto SOLO cuando n es el siguiente articulo esperado en secuencia
+estricta Y sigue una mayuscula de inicio de oracion (una referencia en cuerpo
+como "Articulo 3, fraccion..." nunca dispara). Anomalia
+ocr-comma-terminator-heading-repaired. EXTRACTOR_VERSION=30.
+
+Resultado: oax-ley-219 pasa de 37 a 92 registros, secuencia 1-92 COMPLETA (la
+corrida v29 se habia detenido en el reinicio de numeracion que causo el
+encabezado no reconocido); 5 encabezados con coma reparados, 0 fusiones de
+ordinal en esta corrida. yuc-ley-011/012/015 re-extraidos con v30: registros
+BYTE A BYTE identicos a v29 (115/78/50). Historial OCR intacto: las
+extracciones v29 quedan preservadas en el arbol; la vigente por id es v30.
+Corte: 2,878 / 2,874 / 2,867 / 270,689. Suite 1181/0 (prueba ampliada con
+encabezado de coma). Verificacion visual del escaneado adjunta al reporte.

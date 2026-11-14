@@ -218,7 +218,7 @@
     },
     "Oaxaca": {
       "status": "acquired",
-      "note": "223/224 extraidos cuarentena (extractor v29 OCR cerro oax-ley-219 [37 reg, 3 encabezados reparados, articulo 3 absorbido por terminador atipico '3,'] el 2026-11-14); oax-ley-222 confirmado sin estructura de articulos (decreto con resolutivos 'Primero./Segundo.'); 1x404",
+      "note": "223/224 extraidos cuarentena (extractor v30 cerro oax-ley-219 el 2026-11-14: 92 registros secuenciales 1-92, articulo 3 recuperado tras verificar en el escaneado que el encabezado impreso es 'Articulo 3.' y la coma era artefacto OCR; 5 reparaciones de terminador coma, anomaliadas); oax-ley-222 confirmado sin estructura de articulos (decreto con resolutivos); 1x404",
       "date": "2026-11-14"
     },
     "Durango": {
@@ -288,7 +288,7 @@
     "idsRegistrados": 2878,
     "documentosPresentes": 2874,
     "extraccionesValidas": 2867,
-    "registros": 270634,
-    "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado. Correccion mismo-dia 2026-11-14: extractor v29 (OCR local fail-closed) recupero 4 leyes escaneadas (+280 registros: yuc-ley-011/012/015, oax-ley-219); reg-lfgfaga-fe-16may55 (declaratoria 1955) y oax-ley-222 (decreto con resolutivos) confirmados SIN estructura de articulos: quedan extraction-invalid con OCR verificado. Fallidos vigentes extraction-invalid: 7 (5 estructura ags-ley-160, mor-cod-031/045/069/090 + 2 no articulados) + 2 document-byte-budget + 1 catalog-link-broken + 1 catalog-duplicate."
+    "registros": 270689,
+    "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado. Correccion mismo-dia 2026-11-14: extractor v29 (OCR local fail-closed) recupero 4 leyes escaneadas (+280 registros: yuc-ley-011/012/015, oax-ley-219); reg-lfgfaga-fe-16may55 (declaratoria 1955) y oax-ley-222 (decreto con resolutivos) confirmados SIN estructura de articulos: quedan extraction-invalid con OCR verificado. Fallidos vigentes extraction-invalid: 7 (5 estructura ags-ley-160, mor-cod-031/045/069/090 + 2 no articulados) + 2 document-byte-budget + 1 catalog-link-broken + 1 catalog-duplicate. Correccion v30 mismo-dia: oax-ley-219 pasa de 37 a 92 registros (secuencia 1-92 completa; la corrida v29 se habia detenido en el reinicio de numeracion causado por el encabezado 3 no reconocido). Extracciones historicas v29 preservadas en el arbol."
   }
 }
