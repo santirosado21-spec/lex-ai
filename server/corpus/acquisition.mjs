@@ -6,7 +6,7 @@ import {performance} from 'node:perf_hooks';
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,robotsPolicy} from '../legal-sync.mjs';
-import {parsePdfInWorker,EXTRACTOR_VERSION} from '../legal-library.mjs';
+import {parsePdfInWorker,parseWordInWorker,detectDocumentFormat,EXTRACTOR_VERSION} from '../legal-library.mjs';
 import {verifyAcquisitionPlan} from './source-registry.mjs';
 
 export const ACQUISITION_POLICY_VERSION='public-quarantine-v1';
@@ -102,7 +102,7 @@ function runController(limits,signal,sleep){
         // HTTP does not grant new destinations, even on an approved host.
         if(!location||destination!==url)throw fail('redirect-denied');
       }else if(!isRobots&&![200,304].includes(response.status))throw fail('http-error');
-      if(!isRobots&&response.status===200&&!bytes.subarray(0,5).equals(Buffer.from('%PDF-')))throw fail('invalid-pdf');
+      if(!isRobots&&response.status===200&&!detectDocumentFormat(bytes))throw fail('invalid-pdf');
       const headers=new Headers(response.headers);headers.delete('content-encoding');headers.delete('content-length');
       return new Response([204,205,304].includes(response.status)?null:bytes,{status:response.status,headers});
     };
@@ -139,12 +139,12 @@ async function verifyLedger(root,ledger,documents,check){
   if(manifest&&!ledger.files['acquisitions/manifest.json'])throw fail('integrity-error');
   if(manifest)for(const [id,source] of Object.entries(manifest.sources??{})){
     if(!ID.test(id)||!ledger.documents[id]||source.url!==ledger.documents[id].url||!Array.isArray(source.versions))throw fail('integrity-error');
-    for(const version of source.versions){const relative=`acquisitions/snapshots/${id}/${version.sha256}.pdf`;if(!HASH.test(version.sha256)||version.snapshotPath!==`snapshots/${id}/${version.sha256}.pdf`||version.url!==source.url||version.finalUrl!==source.url||ledger.files[relative]!==version.sha256)throw fail('integrity-error');}
+    for(const version of source.versions){const relative=`acquisitions/${version.snapshotPath}`;if(!HASH.test(version.sha256)||!/^snapshots\/[^/]+\/[a-f0-9]{64}\.(pdf|docx|doc)$/.test(version.snapshotPath)||version.url!==source.url||version.finalUrl!==source.url||ledger.files[relative]!==version.sha256)throw fail('integrity-error');}
   }
 }
 async function captureSync(root,ledger){
   const manifest=await readJson(root,'acquisitions/manifest.json',null);if(!manifest)return;
-  for(const [id,source] of Object.entries(manifest.sources))for(const version of source.versions){const relative=`acquisitions/snapshots/${id}/${version.sha256}.pdf`;if(!HASH.test(version.sha256)||version.snapshotPath!==`snapshots/${id}/${version.sha256}.pdf`||version.url!==ledger.documents[id]?.url||version.finalUrl!==version.url||hash(await readSafe(root,relative))!==version.sha256)throw fail('integrity-error');ledger.files[relative]=version.sha256;}
+  for(const [id,source] of Object.entries(manifest.sources))for(const version of source.versions){const relative=`acquisitions/${version.snapshotPath}`;if(!HASH.test(version.sha256)||!/^snapshots\/[^/]+\/[a-f0-9]{64}\.(pdf|docx|doc)$/.test(version.snapshotPath)||version.url!==ledger.documents[id]?.url||version.finalUrl!==version.url||hash(await readSafe(root,relative))!==version.sha256)throw fail('integrity-error');ledger.files[relative]=version.sha256;}
   ledger.files['acquisitions/manifest.json']=hash(await readSafe(root,'acquisitions/manifest.json'));await atomic(root,'integrity.json',ledger);
 }
 
@@ -181,7 +181,7 @@ export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchI
         }
         budget.check();const manifest=await readJson(root,'acquisitions/manifest.json',null);const stored=manifest?.sources?.[document.id];const version=stored?.versions?.find(value=>value.sha256===stored.latestSha256);
         if(!version||stored.url!==document.url)throw fail('snapshot-unavailable');
-        const relative=`acquisitions/snapshots/${document.id}/${version.sha256}.pdf`;if(hash(await readSafe(root,relative))!==version.sha256)throw fail('integrity-error');
+        const relative=`acquisitions/${version.snapshotPath}`;if(hash(await readSafe(root,relative))!==version.sha256)throw fail('integrity-error');
         entry.versionId=`${document.id}@sha256:${version.sha256}`;entry.pdfSha256=version.sha256;entry.capturedAt=version.retrievedAt;
         const versionEvidencePath=`versions/${document.id}/${version.sha256}.json`;
         if(!ledger.files[versionEvidencePath]){
@@ -207,5 +207,5 @@ export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchI
 }
 
 if(!isMainThread&&workerData?.kind==='public-acquisition-extract'){
-  try{parentPort.postMessage({ok:true,result:await parsePdfInWorker(workerData.file,workerData.source,workerData.metadata)});}catch{parentPort.postMessage({ok:false});}
+  try{const head=await readFile(workerData.file);const format=detectDocumentFormat(head);const result=format==='pdf'?await parsePdfInWorker(workerData.file,workerData.source,workerData.metadata):(format==='docx'||format==='doc')?await parseWordInWorker(workerData.file,workerData.source,workerData.metadata):null;if(!result)throw new Error('unsupported document format');parentPort.postMessage({ok:true,result});}catch{parentPort.postMessage({ok:false});}
 }

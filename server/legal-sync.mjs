@@ -5,6 +5,13 @@ import path from 'node:path';
 export const LEGAL_SYNC_AGENT='LexAI-LegalSync/0.1';
 export const ALLOWED_HOSTS=Object.freeze(['www.diputados.gob.mx','diputados.gob.mx','www.congresocdmx.gob.mx','congresocdmx.gob.mx','www.hcnl.gob.mx','hcnl.gob.mx','congresoweb.congresojal.gob.mx','congresocoahuila.gob.mx','www.congresocoahuila.gob.mx','www.congresobc.gob.mx','congresobc.gob.mx','congresoags.gob.mx','www.congresoags.gob.mx','congresoyucatan.gob.mx','www.congresoyucatan.gob.mx','congresonayarit.gob.mx','www.congresonayarit.gob.mx','congresotabasco.gob.mx','www.congresotabasco.gob.mx','congresooaxaca.gob.mx','www.congresooaxaca.gob.mx','congresodurango.gob.mx','www.congresodurango.gob.mx','marcojuridico.morelos.gob.mx','www.marcojuridico.morelos.gob.mx']);
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+// Supported official document formats, detected by magic bytes only: PDF, OOXML .docx (ZIP), legacy OLE .doc.
+export function detectDocumentFormat(bytes){
+  if(bytes.length>=5&&bytes.subarray(0,5).equals(Buffer.from('%PDF-')))return 'pdf';
+  if(bytes.length>=4&&bytes[0]===0x50&&bytes[1]===0x4B&&bytes[2]===0x03&&bytes[3]===0x04)return 'docx';
+  if(bytes.length>=8&&bytes.subarray(0,8).equals(Buffer.from([0xD0,0xCF,0x11,0xE0,0xA1,0xB1,0x1A,0xE1])))return 'doc';
+  return null;
+}
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const transient=status=>[408,425,429,500,502,503,504].includes(status);
 
@@ -62,7 +69,7 @@ export async function runLegalSync({sources,outputDir,fetchImpl=fetch,now=()=>ne
     if(manifest.schemaVersion!==1||!manifest.sources||typeof manifest.sources!=='object')throw new Error('Manifest de sincronización incompatible.');
     for(const [id,record] of Object.entries(manifest.sources)){
       if(!/^[a-z][a-z0-9-]{0,39}$/.test(id)||!Array.isArray(record.versions))throw new Error('Manifest de versiones inválido.');
-      for(const version of record.versions){if(!/^[a-f0-9]{64}$/.test(version.sha256)||version.snapshotPath!==`snapshots/${id}/${version.sha256}.pdf`)throw new Error('Ruta de snapshot no autorizada en manifest.');}
+      for(const version of record.versions){if(!/^[a-f0-9]{64}$/.test(version.sha256)||!/^snapshots\/[^/]+\/[a-f0-9]{64}\.(pdf|docx|doc)$/.test(version.snapshotPath))throw new Error('Ruta de snapshot no autorizada en manifest.');}
     }
     const previous=await readJson(statusFile,{sources:[]});
     status={schemaVersion:1,state:'running',startedAt:now().toISOString(),finishedAt:null,nextCheckAfter:null,summary:{total:sources.length,downloaded:0,unchanged:0,failed:0,quarantined:0},sources:[]};
@@ -147,12 +154,12 @@ export async function runLegalSync({sources,outputDir,fetchImpl=fetch,now=()=>ne
           entry.state='unchanged';
         }else{
           if(result.response.status!==200)throw new Error(`Descarga fallida (HTTP ${result.response.status}).`);
-          if(!result.bytes.subarray(0,5).equals(Buffer.from('%PDF-')))throw new Error('La respuesta no es un PDF; se conserva la versión previa.');
+          const format=detectDocumentFormat(result.bytes);if(!format)throw new Error('La respuesta no es un documento oficial soportado (PDF/DOCX/DOC); se conserva la versión previa.');
           const digest=hash(result.bytes);entry.sha256=digest;entry.bytes=result.bytes.length;entry.etag=result.response.headers.get('etag');entry.lastModified=result.response.headers.get('last-modified');
           const known=stored?.versions?.find(v=>v.sha256===digest);
           if(known){const existing=await readFile(path.join(outputDir,known.snapshotPath));if(hash(existing)!==digest)throw new Error('La copia histórica está dañada; requiere revisión.');entry.state='unchanged';entry.versionId=known.versionId;entry.snapshotPath=known.snapshotPath;}
           else{
-            const relative=`snapshots/${source.id}/${digest}.pdf`;await mkdir(path.dirname(path.join(outputDir,relative)),{recursive:true,mode:0o700});
+            const relative=`snapshots/${source.id}/${digest}.${format}`;await mkdir(path.dirname(path.join(outputDir,relative)),{recursive:true,mode:0o700});
             try{await writeFile(path.join(outputDir,relative),result.bytes,{flag:'wx',mode:0o600});}catch(e){if(e.code!=='EEXIST')throw e;if(hash(await readFile(path.join(outputDir,relative)))!==digest)throw new Error('Snapshot preexistente con integridad inválida.');}
             const version={versionId:`${source.id}-${digest.slice(0,16)}`,sha256:digest,bytes:entry.bytes,retrievedAt:entry.checkedAt,url:source.url,finalUrl:result.url,etag:entry.etag,lastModified:entry.lastModified,snapshotPath:relative,reviewStatus:'quarantined',legalValidity:'unknown',effectiveAt:null};
             const record=manifest.sources[source.id]??{id:source.id,title:source.title,url:source.url,versions:[]};record.url=source.url;record.versions.push(version);record.latestSha256=digest;record.lastCheckedAt=entry.checkedAt;manifest.sources[source.id]=record;

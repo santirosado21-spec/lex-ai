@@ -1,16 +1,48 @@
 import {readFile,writeFile,mkdir,rename,open,unlink,statfs} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
+import {spawn} from 'node:child_process';
 import path from 'node:path';
-import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
+import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=26;
+export const EXTRACTOR_VERSION=27;
 // Maximum PDF pages the worker will parse. Raised 1200 -> 2000 in v26 after verifying the largest observed official document (nay-ley-148, Presupuesto de Egresos Nayarit 2026: 1,376 pages, 20.3 MB) parses in ~12 s and ~77 MB heap, well inside the worker's 120 s timeout and 768 MB old-generation limit. Documents above the cap still fail closed as 'PDF page coverage incomplete'.
 export const EXTRACTOR_MAX_PAGES=2000;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
 const digest=value=>createHash('sha256').update(value).digest('hex');
+// v27: official Word formats (.docx OOXML, .doc legacy OLE) as acquisition input, detected by magic bytes.
+// Extraction is isolated and read-only: .docx reads only word/document.xml from the ZIP (string-based, no XML parser,
+// macros and active content are never touched); .doc goes through antiword, a static read-only text extractor that
+// cannot execute macros. Nothing else about the pipeline changes; PDF path is byte-identical to v26.
+export {detectDocumentFormat};
+const xmlUnescape=value=>value.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&');
+async function docxPages(bytes){
+  const {default:JSZip}=await import('jszip');
+  const zip=await JSZip.loadAsync(bytes);
+  const entry=zip.file('word/document.xml');if(!entry)throw new Error('DOCX without word/document.xml');
+  const xml=await entry.async('string');if(xml.length>200*1024*1024)throw new Error('DOCX document.xml exceeds safety cap');
+  const paragraphs=xml.split(/<\/w:p[ >]/).map(segment=>[...segment.matchAll(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g)].map(match=>match[1]).join(''));
+  return [{number:1,text:paragraphs.map(xmlUnescape).join('\n')}];
+}
+function docPages(file){
+  return new Promise((resolve,reject)=>{
+    const child=spawn('antiword',['-m','UTF-8.txt',file],{stdio:['ignore','pipe','ignore']});
+    const chunks=[];let size=0,settled=false;
+    const timer=setTimeout(()=>{if(!settled){settled=true;child.kill('SIGKILL');reject(new Error('antiword timeout after 60 seconds'));}},60000);
+    child.stdout.on('data',chunk=>{size+=chunk.length;if(size>64*1024*1024){settled=true;clearTimeout(timer);child.kill('SIGKILL');reject(new Error('antiword output exceeds cap'));}else chunks.push(chunk);});
+    child.on('error',error=>{if(!settled){settled=true;clearTimeout(timer);reject(error);}});
+    child.on('close',code=>{if(settled)return;settled=true;clearTimeout(timer);
+      if(code!==0&&!chunks.length)return reject(new Error(`antiword exited with code ${code}`));
+      const text=Buffer.concat(chunks).toString('utf8');
+      resolve(text.split('\f').map((pageText,index)=>({number:index+1,text:pageText})));
+    });
+  });
+}
+export async function parseWordInWorker(file,source,metadata){
+  return new Promise((resolve,reject)=>{const worker=new Worker(new URL(import.meta.url),{execArgv:[],workerData:{kind:'extract-word-library',file,source,metadata},resourceLimits:{maxOldGenerationSizeMb:768}});let settled=false;const finish=(error,value)=>{if(settled)return;settled=true;clearTimeout(timer);void worker.terminate();error?reject(error):resolve(value);};const timer=setTimeout(()=>finish(new Error('Word extraction timeout after 120 seconds')),120000);worker.on('message',m=>m.error?finish(new Error(m.error)):finish(null,m.result));worker.on('error',e=>finish(e));worker.on('exit',code=>{if(!settled)finish(new Error(`Extractor exited without result (${code})`));});});
+}
 const normalize=value=>value.normalize('NFC').replace(/\s+/g,' ').trim();
 const folded=value=>normalize(value).normalize('NFD').replace(/\p{M}/gu,'').toUpperCase();
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -364,5 +396,15 @@ if(!isMainThread&&workerData?.kind==='extract-legal-library'){
   try{const {default:pdf}=await import('pdf-parse/lib/pdf-parse.js');const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('PDF too large');const pages=[];
     const result=await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
     if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);parentPort.postMessage({result:extractArticles(pages,workerData.source,workerData.metadata)});
+  }catch(e){parentPort.postMessage({error:e.message});}
+}
+
+if(!isMainThread&&workerData?.kind==='extract-word-library'){
+  try{
+    const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('Word document too large');
+    const format=detectDocumentFormat(bytes);
+    if(format!=='docx'&&format!=='doc')throw new Error('not a supported Word document');
+    const pages=format==='docx'?await docxPages(bytes):await docPages(workerData.file);
+    parentPort.postMessage({result:extractArticles(pages,workerData.source,workerData.metadata)});
   }catch(e){parentPort.postMessage({error:e.message});}
 }
