@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-yuc-leyes-07-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-yuc",
+   "title": "Congreso del Estado de Yucatan",
+   "jurisdiction": "MX-YUC",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresoyucatan.gob.mx/legislacion/leyes",
+    "evidence": "Live official catalogs /legislacion/leyes|codigos|reglamentos|constitucion-politica fetched 2026-11-13; SHA256 leyes e3fb1494c752feec86b9f2bc7e0caf4733cde91651b00f093ec1f163f043dee7; codigos 31cb115f62a8d9460b8e543a27b5968e5f6bdbbc7653563ad5737d9849149f1a; reglamentos 1e7a01dc30288347a26777429a230076963a1ed09fa2769e979718c2c0899ee5; constitucion 0a71544f45e2d8f1bf93de9ddab45590f447d2c81516f71484b600091f4091b9; DataTable parsed: 1214 leyes con PDF (377 VIGENTE, 837 ABROGADA) + 9 codigos + 4 reglamentos + constitucion = 391 vigentes; full HEAD sweep of all 391 on 2026-11-13: 391x HTTP 200, 0 broken links; 2 excluded over hard byte ceiling 20971520 (Cod. Procedimientos Civiles 30414781, Cod. Procedimientos Familiares 39228085) = 389 adquiribles. Batch 7/39: yuc-ley-061, yuc-ley-062, yuc-ley-063, yuc-ley-064, yuc-ley-065, yuc-ley-066, yuc-ley-067, yuc-ley-068, yuc-ley-069, yuc-ley-070. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-14T01:54:12.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T01:54:12.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed federal/state programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt present with User-agent: * Disallow: (empty, no AI-agent blocks, no content-signals); no terms-of-use page located on home or catalog; the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresoyuc-leyes-20261113",
+    "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes",
+    "observedAt": "2026-11-14T01:54:12.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "yuc-ley-061",
+   "sourceId": "congreso-yuc",
+   "title": "LEY ORGÁNICA DEL PODER JUDICIAL DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/9b61e60c8013d660df1fc8ecd6a2d5a0_2025-09-25.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-062",
+   "sourceId": "congreso-yuc",
+   "title": "LEY DE DESARROLLOS INMOBILIARIOS DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/0edbdc2995f56d706cceba105c6bb391_2025-05-06.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-063",
+   "sourceId": "congreso-yuc",
+   "title": "LEY DEL PRESUPUESTO Y CONTABILIDAD GUBERNAMENTAL DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/70afed51bf882dd54bbcf79a3bf3cf0b_2024-08-06.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-064",
+   "sourceId": "congreso-yuc",
+   "title": "LEY DE TRÁNSITO Y VIALIDAD DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/9f814c_LEY%20DE%20TR%C3%81NSITO%20Y%20VIALIDAD%20DEL%20ESTADO%20DE%20YUCAT%C3%81N%20%28%C3%BAtlima%20ref%2013-12-19%29.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-065",
+   "sourceId": "congreso-yuc",
+   "title": "LEY DE FOMENTO AL DESARROLLO CIENTÍFICO, TECNOLÓGICO Y A LA INNOVACIÓN DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/82e58198519a8a017a1048101213dfc1.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-066",
+   "sourceId": "congreso-yuc",
+   "title": "LEY DE VIVIENDA DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/2ca397391a82626ee6b462b858c53e5a_2025-05-06.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-067",
+   "sourceId": "congreso-yuc",
+   "title": "LEY PARA LA GESTIÓN INTEGRAL DE LOS RESIDUOS EN EL ESTADO DE YUCATAN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/fe08b7baef794de33e9c6d782981d2c9_2022-05-09.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-068",
+   "sourceId": "congreso-yuc",
+   "title": "LEY PARA LA PROTECCIÓN DE LA FAUNA DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/35ee7aeef670ee37f65f0a11bef665c5_2021-09-03.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-069",
+   "sourceId": "congreso-yuc",
+   "title": "LEY PARA LA DONACIÓN Y TRASPLANTES DE ÓRGANOS, TEJIDOS Y CÉLULAS EN EL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/11e9683f615c0abaa436d40d81af0505_2022-06-10.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  },
+  {
+   "id": "yuc-ley-070",
+   "sourceId": "congreso-yuc",
+   "title": "LEY PARA LA PROTECCIÓN DE LOS DERECHOS DE LA COMUNIDAD MAYA DEL ESTADO DE YUCATÁN",
+   "jurisdiction": "MX-YUC",
+   "status": "approved",
+   "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/1653cb20740944b9a0326871a6ae809b_2022-05-09.pdf",
+   "versionId": "congresoyuc-leyes-20261113",
+   "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+  }
+ ]
+}

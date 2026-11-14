@@ -1,0 +1,213 @@
+{
+ "schemaVersion": 1,
+ "kind": "state-source-review",
+ "generatedAt": "2026-11-13T22:38:00Z",
+ "dataClass": "public-development",
+ "productionEnabled": false,
+ "scope": "revision por estado (patron NL): robots + catalogo + enlaces a documentos; sin adquisicion; una peticion por pagina, 2s entre hosts",
+ "states": [
+  {
+   "entity": "Campeche",
+   "verdict": "pendiente-permiso",
+   "robots": {
+    "status": 200,
+    "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
+    "notes": "BLOQUEA por UA a GPTBot/ChatGPT-User/OAI-SearchBot/meta-externalagent y scrapers comerciales (AhrefsBot, SemrushBot, etc.): senal explicita del titular contra adquisicion automatizada/IA. La regla generica * NO se interpreta como permiso. Sin descarga masiva; pendiente de autorizacion establecida (terminos o permiso expreso)."
+   },
+   "catalog": {
+    "url": "https://legislacion.congresocam.gob.mx/leyes-estatales/por-orden-alfabetico/",
+    "status": 200,
+    "sha256": "58aec5bba32f235d069d1f2a1f796ad8e384bf7c9dd0f7c6c3e3581204dece28",
+    "documentEndpoints": 538,
+    "pattern": "/~documents/<categoria>/<slug>/?layout=file (plugin docman)"
+   },
+   "downloadedSoFar": "SOLO paginas HTML publicas de catalogo (home + indice alfabetico) y robots.txt; 1 HEAD sin cuerpo a un endpoint de documento; 0 documentos descargados."
+  },
+  {
+   "entity": "Chihuahua",
+   "verdict": "pendiente-permiso",
+   "robots": {
+    "status": 200,
+    "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
+    "notes": "Mismo bloqueo por UA que Campeche en congresochihuahua.gob.mx; aunque el host de documentos congresochihuahua2.gob.mx tiene robots allow-all, la senal del titular en el sitio principal gobierna. Sin descarga masiva; pendiente de autorizacion."
+   },
+   "catalog": {
+    "url": "https://www.congresochihuahua.gob.mx/biblioteca/ (leyes/ y codigos/)",
+    "status": 200,
+    "sha256": "1e10ff6afb5c98fc22aefbfd6d332aa5e8b4039894308977f5ecd92b62b90954",
+    "documentEndpoints": "indices /biblioteca/leyes/ y /biblioteca/codigos/ con PDF/DOC/DOCX en host congresochihuahua2"
+   },
+   "downloadedSoFar": "SOLO paginas HTML publicas (biblioteca, codigos) y robots.txt de ambos hosts; 0 documentos descargados, 0 HEAD a documentos."
+  },
+  {
+   "entity": "Baja California",
+   "verdict": "sin-senal-restrictiva",
+   "robots": {
+    "status": 404,
+    "notes": "sin robots.txt (convencion: permitido)"
+   },
+   "catalog": {
+    "url": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+    "status": 200,
+    "sha256": "35502054726998e4b38934b3ea1842ffeea95849ff0b1e45b61efa0dc3d1b423",
+    "documentEndpoints": 333,
+    "pattern": "Documentos/ProcesoParlamentario/Leyes/TOMO_*/*.PDF|DOC"
+   },
+   "termsCheck": "Home + catalogo revisados 2026-11-13: sin pagina de terminos de uso localizada, sin prohibicion de acceso automatizado, sin \"derechos reservados\" restrictivo; congreso publica enlaces directos de descarga. Base documentada LFDA art. 14 frac. VIII (base documentada, no conclusion legal), misma que el programa federal.",
+   "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo Leyes) y robots.txt (404); 0 documentos descargados."
+  },
+  {
+   "entity": "Coahuila",
+   "verdict": "sin-senal-restrictiva",
+   "robots": {
+    "status": 404,
+    "notes": "sin robots.txt (convencion: permitido)"
+   },
+   "catalog": {
+    "url": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+    "status": 200,
+    "sha256": "b13020ae4035481193a3c8e1d420953e678b123644737a38d1b5da3fdc5233d7",
+    "documentEndpoints": 528,
+    "pattern": "wp-content/uploads/<yyyy>/<mm>/coaNNN.(pdf|doc|docx)"
+   },
+   "termsCheck": "Home + catalogo revisados 2026-11-13: sin terminos de uso localizados; solo aviso de copyright atribucion (c) 2021 Congreso del Estado de Coahuila; sin robots.txt; enlaces directos PDF/DOC/DOCX publicados por el congreso. Base documentada LFDA art. 14 frac. VIII, misma que el programa federal.",
+   "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo leyes-estatales-vigentes) y robots.txt (404); 0 documentos descargados."
+  },
+  {
+   "entity": "Aguascalientes",
+   "verdict": "pendiente-analisis-y-terminos",
+   "robots": {
+    "status": 404,
+    "notes": "sin robots.txt"
+   },
+   "catalog": {
+    "url": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+    "status": 200,
+    "sha256": "16c36976ba534e051e84a080e98a5ab7ceee586b2b8438ea8edbd7258d5ef57d",
+    "notes": "solo 2 enlaces directos; indice probablemente via endpoint dinamico Home/DownloadMiscelaneous?filename=; requiere analisis adicional"
+   }
+  },
+  {
+   "entity": "Chiapas",
+   "verdict": "bloqueado",
+   "robots": {
+    "status": 200,
+    "notes": "Joomla default; Disallow /media/ /images/ /components/ etc."
+   },
+   "catalog": {
+    "url": "http://congresochiapas.gob.mx/legislaturalxvi/trabajo-legislativo/legislacion-vigente",
+    "status": "403 en cuerpo (HTTP 200)",
+    "notes": "\"403: Access Forbidden. Malware detected.\" anti-bot; documentado, SIN reintento"
+   }
+  },
+  {
+   "entity": "Ciudad de México",
+   "verdict": "bloqueado",
+   "robots": {
+    "status": "redirect 302 www->apex",
+    "notes": "certificado TLS del apex sin SAN para el host (SSL verify falla); no se desactiva verificacion TLS (fail-closed)"
+   },
+   "catalog": {
+    "url": "https://www.congresocdmx.gob.mx/marco-legal-cdmx-107-2.html",
+    "notes": "misma falla TLS al seguir redirect"
+   }
+  },
+  {
+   "entity": "Baja California Sur",
+   "verdict": "bloqueado",
+   "robots": {
+    "status": "302->https",
+    "notes": "cadena de certificados rota en https://www.cbcs.gob.mx (unable to get local issuer); fail-closed, sin bypass"
+   }
+  }
+ ],
+ "classificationCorrectedAt": "2026-11-13T22:38:00Z",
+ "correctionNote": "Clasificacion corregida 2026-11-13 16:38 CST: la regla generica User-agent:* NO se trata como permiso cuando el titular excluye explicitamente agentes IA/scrapers comerciales por UA y la adquisicion es para corpus IA comercial; no se elige UA alternativo para eludir la senal. robots.txt ausente tampoco prueba permiso por si solo: se verificaron terminos/derechos aplicables en home y catalogo.",
+ "block2GeneratedAt": "2026-11-14T01:35:00Z",
+ "block2": {
+  "scope": "sondeo robots/home de 21 congresos estatales restantes (15s, 2s entre hosts, sin adquisicion); dominios candidatos por verificar marcados",
+  "viables_pendiente_terminos": [
+   {
+    "entity": "Durango",
+    "robots": "200, solo Disallow contraloria",
+    "home": 200
+   },
+   {
+    "entity": "Hidalgo",
+    "robots": "200, allow-all (Disallow vacio + _pda)",
+    "home": 200
+   },
+   {
+    "entity": "Morelos",
+    "robots": "200, solo wp-admin",
+    "home": 200
+   },
+   {
+    "entity": "Nayarit",
+    "robots": "200, solo wp-admin",
+    "home": 200
+   },
+   {
+    "entity": "Tabasco",
+    "robots": "200, solo wp-admin/podscache",
+    "home": 200
+   },
+   {
+    "entity": "Yucatán",
+    "robots": "200, allow-all",
+    "home": 200
+   },
+   {
+    "entity": "Tamaulipas",
+    "robots": "200 pero SOLO preambulo content-signals (1248 bytes, sin reglas User-agent ni senales); por su propia regla (c) no restringe; documentado",
+    "home": 200
+   },
+   {
+    "entity": "Colima",
+    "robots": "404 (sin archivo)",
+    "home": 200
+   },
+   {
+    "entity": "Estado de México",
+    "robots": "404",
+    "home": 200
+   },
+   {
+    "entity": "Oaxaca",
+    "robots": "404",
+    "home": 200
+   }
+  ],
+  "pendiente_permiso": [
+   {
+    "entity": "Puebla",
+    "evidence": "robots con Content-Signal search=yes,ai-train=no,use=reference + Disallow explicito GPTBot/ClaudeBot/CCBot/Google-Extended/etc (Cloudflare managed); home 403 anti-bot. Misma clase que Campeche/Chihuahua"
+   },
+   {
+    "entity": "Quintana Roo",
+    "evidence": "identico content-signal ai-train=no + bloqueos IA; home 403"
+   }
+  ],
+  "bloqueado": [
+   {
+    "entity": "Guerrero",
+    "evidence": "403 en robots y home (anti-bot), sin reintento"
+   }
+  ],
+  "dominio_por_verificar": [
+   "Guanajuato",
+   "Michoacán",
+   "Querétaro",
+   "San Luis Potosí",
+   "Sonora",
+   "Tlaxcala",
+   "Zacatecas"
+  ],
+  "redirect_por_seguir": [
+   {
+    "entity": "Sinaloa",
+    "evidence": "home 301, ver destino"
+   }
+  ]
+ }
+}
