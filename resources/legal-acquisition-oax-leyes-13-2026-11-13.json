@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-oax-leyes-13-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-oax",
+   "title": "Congreso del Estado de Oaxaca",
+   "jurisdiction": "MX-OAX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+    "evidence": "Live official catalog legislacion_estatal.html fetched 2026-11-13; 230 href matches, 225 unique PDFs (links resolve to https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/...); catalog sha256 bb6bd7b2342bd665684890453ac0be23cf0c92cf6bfdd122379fa818d8a10e2b. Full HEAD sweep of all 225 on 2026-11-13: 224x HTTP 200 application/pdf, 0 over hard byte ceiling 20971520, 1x HTTP 404 (oax-ley-010 Decreto bases/factores de distribucion, documented exclusion). Universe adquirible = 224. Batch 13/23: oax-ley-122, oax-ley-123, oax-ley-124, oax-ley-125, oax-ley-126, oax-ley-127, oax-ley-128, oax-ley-129, oax-ley-130, oax-ley-131. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-14T03:52:28.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T03:52:28.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (HTTP 404); no terms-of-use located on home or catalog (the only legal label, Aviso de Privacidad, resolves to HTTP 404 and no Aviso Legal page was located; per established rule a label with a 404 destination counts as NOT located); no content-signal or x-robots headers; the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts (constitucion, codigos, leyes, reglamentos, decretos normativos, series fiscales de ingresos/egresos); editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresooax-leyes-20261113",
+    "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+    "observedAt": "2026-11-14T03:52:28.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "oax-ley-122",
+   "sourceId": "congreso-oax",
+   "title": "Ley del Servicio Civil para los Empleados de los Ayuntamientos del Estado de Oaxaca de Juarez (Ref dto 1159 LXVI Legis 20 ene 2026 PO 13 12a secc 28 mzo 2026)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_del_Servicio_Civil_para_los_Empleados_de_los_Ayuntamientos_del_Estado_de_Oaxaca_de_Juarez_%28Ref_dto_1159_LXVI_Legis_20_ene_2026_PO_13_12a_secc_28_mzo_2026%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-123",
+   "sourceId": "congreso-oax",
+   "title": "Ley del Servicio Civil para los Empleados de Gobierno del Estado (Ref dto 1620 aprob LXVI Legis 14 julio 2026 PO 31 11a secc 1 agosto 2026)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_del_Servicio_Civil_para_los_Empleados_de_Gobierno_del_Estado_%28Ref_dto_1620_aprob_LXVI_Legis_14_julio_2026_PO_31_11a_secc_1_agosto_2026%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-124",
+   "sourceId": "congreso-oax",
+   "title": "Ley del Sistema de Medios de Impugnacion en materia electoral y de participacion ciudadana (Dto Ref 686 aprob LXV Legis 21 sep 2022 PO 42 3a. Secc 15 oct 2022)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_del_Sistema_de_Medios_de_Impugnacion_en_materia_electoral_y_de_participacion_ciudadana_%28Dto_Ref_686_aprob_LXV_Legis_21_sep_2022_PO_42_3a._Secc_15_oct_2022%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-125",
+   "sourceId": "congreso-oax",
+   "title": "Ley del Sistema Estatal de Combate a la Corrupcion (Ref dto 1475 aprob LXV Legis 12 julio 2023 PO 30 10a secc 29 julio 2023)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_del_Sistema_Estatal_de_Combate_a_la_Corrupcion_%28Ref_dto_1475_aprob_LXV_Legis_12_julio_2023_PO_30_10a_secc_29_julio_2023%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-126",
+   "sourceId": "congreso-oax",
+   "title": "Ley Sistema Estatal Seguridad Publica Oaxaca (Ref Dto 2399 aprob LXV Legis 28 ago 2024 PO 35 8a secc 31 ago 2024)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_Sistema_Estatal_Seguridad_Publica_Oaxaca_%28Ref_Dto_2399_aprob_LXV_Legis_28_ago_2024_PO_35_8a_secc_31_ago_2024%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-127",
+   "sourceId": "congreso-oax",
+   "title": "Ley del Sistema para el Desarrollo Integral de la Familia del Estado de Oaxaca Decreto (Dto ref 610 aprob LXV Legis 13 abr 2022 PO 20 4a secc 14 may 2022)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_del_Sistema_para_el_Desarrollo_Integral_de_la_Familia_del_Estado_de_Oaxaca_Decreto_%28Dto_ref_610_aprob_LXV_Legis_13_abr_2022_PO_20_4a_secc_14_may_2022%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-128",
+   "sourceId": "congreso-oax",
+   "title": "Ley en Materia de Desaparicion de Personas para el Estado de Oaxaca (dto ref 1403 aprob LXVI Legis 3 marzo 2026 PO 24 6a seccion 13 junio 2026)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_en_Materia_de_Desaparicion_de_Personas_para_el_Estado_de_Oaxaca_%28dto_ref_1403_aprob_LXVI_Legis_3_marzo_2026_PO_24_6a_seccion_13_junio_2026%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-129",
+   "sourceId": "congreso-oax",
+   "title": "Ley Estatal de Acceso de las Mujeres a una vida libre de Violencias (Ref Dto 1634 aprob LXVI Legis 28 julio 2026 PO 32 Decimo cuarta secc 8 agosto 2026)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_Estatal_de_Acceso_de_las_Mujeres_a_una_vida_libre_de_Violencias_%28Ref_Dto_1634_aprob_LXVI_Legis_28_julio_2026_PO_32_Decimo_cuarta_secc_8_agosto_2026%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-130",
+   "sourceId": "congreso-oax",
+   "title": "145",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/145.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  },
+  {
+   "id": "oax-ley-131",
+   "sourceId": "congreso-oax",
+   "title": "Ley Estatal de Austeridad Republicana (ref dto 2361 aprob LXV Legis 14 agosto 2024 PO 34 10a secc 24 agosto 2024)",
+   "jurisdiction": "MX-OAX",
+   "status": "approved",
+   "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Ley_Estatal_de_Austeridad_Republicana_%28ref_dto_2361_aprob_LXV_Legis_14_agosto_2024_PO_34_10a_secc_24_agosto_2024%29.pdf",
+   "versionId": "congresooax-leyes-20261113",
+   "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+  }
+ ]
+}

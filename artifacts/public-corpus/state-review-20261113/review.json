@@ -209,5 +209,10 @@
     "evidence": "home 301, ver destino"
    }
   ]
+ },
+ "Oaxaca": {
+  "status": "acquired",
+  "note": "224/225 catalogo (1x404), 222/224 extraidos (2 escaneados sin texto), 18290 registros, cuarentena",
+  "date": "2026-11-13"
  }
 }
