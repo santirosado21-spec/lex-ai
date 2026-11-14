@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-nay-leyes-06-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-nay",
+   "title": "Congreso del Estado de Nayarit",
+   "jurisdiction": "MX-NAY",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "evidence": "Live official catalog Legislacion Estatal fetched 2026-11-13; SHA256 14217c8cb99020f10a26a8462ad88d59b1e432930db25b8a6fbac70c0e5f089e; 199 accordion items parsed (title + PDF link): 164 VIGENTE (catalog declares itself the official source of ordenamientos vigentes; abrogados explicitly marked in title or /ordenamientos_abrogados/ path) + 35 ABROGADA. Full HEAD sweep of all 164 vigentes on 2026-11-13: 164x HTTP 200, 0 broken links, 0 over hard byte ceiling 20971520. Batch 6/17: nay-ley-051, nay-ley-052, nay-ley-053, nay-ley-054, nay-ley-055, nay-ley-056, nay-ley-057, nay-ley-058, nay-ley-059, nay-ley-060. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-14T02:51:55.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T02:51:55.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt standard WordPress (Disallow: /wp-admin/ only, no AI-agent blocks, no content-signals); no terms-of-use page located on home or catalog (only year copyright mark); the congress itself publishes direct download links and declares the catalog the official source of vigentes. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresonay-leyes-20261113",
+    "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "observedAt": "2026-11-14T02:51:55.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "nay-ley-051",
+   "sourceId": "congreso-nay",
+   "title": "46. División Territorial del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/division_territorial_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-052",
+   "sourceId": "congreso-nay",
+   "title": "47. Educación del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/educacion_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-053",
+   "sourceId": "congreso-nay",
+   "title": "48. Educación Superior del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/educacion_superior_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-054",
+   "sourceId": "congreso-nay",
+   "title": "49. Ejercicio de las Profesiones y Actividades Técnicas en el Estado de Nayarit (Ley para el).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/ejercicio_de_las_profesiones_y_actividades_tecnicas_en_el_estado_de_nayarit_ley_para_el.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-055",
+   "sourceId": "congreso-nay",
+   "title": "50. Electoral del Estado de Nayarit (Ley).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/electoral_del_estado_de_nayarit_ley.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-056",
+   "sourceId": "congreso-nay",
+   "title": "51. Empresas Públicas Descentralizadas del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/empresas_publicas_descentralizadas_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-057",
+   "sourceId": "congreso-nay",
+   "title": "52. Entrega Recepción de la Administración Pública del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/Entrega_Recepcion_de_la_Administracion_Publica_del_Estado_de_Nayarit_Ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-058",
+   "sourceId": "congreso-nay",
+   "title": "53. Equilibrio Ecológico y Protección al Ambiente del Estado de Nayarit (Ley Estatal del).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/equilibrio_ecologico_y_proteccion_al_ambiente_del_estado_de_nayarit_ley_estatal_del.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-059",
+   "sourceId": "congreso-nay",
+   "title": "54. Establece el Derecho de Vía y Su Aprovechamiento en las Vías de Comunicación Terrestre del Estado de Nayarit. (Ley que)",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/establece_el_derecho_de_via_y_su_aprovechamiento_en_las_vias_de_comunicacion_terrestre_ley_que.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-060",
+   "sourceId": "congreso-nay",
+   "title": "55. Establece las Bases y Lineamientos para la Delimitación Territorial del Estado de Nayarit y sus Municipios (Ley que).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/establece_las_bases_para_la_delimitacion_territorial_ley_que.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  }
+ ]
+}

@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-nay-leyes-09-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congreso-nay",
+   "title": "Congreso del Estado de Nayarit",
+   "jurisdiction": "MX-NAY",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "evidence": "Live official catalog Legislacion Estatal fetched 2026-11-13; SHA256 14217c8cb99020f10a26a8462ad88d59b1e432930db25b8a6fbac70c0e5f089e; 199 accordion items parsed (title + PDF link): 164 VIGENTE (catalog declares itself the official source of ordenamientos vigentes; abrogados explicitly marked in title or /ordenamientos_abrogados/ path) + 35 ABROGADA. Full HEAD sweep of all 164 vigentes on 2026-11-13: 164x HTTP 200, 0 broken links, 0 over hard byte ceiling 20971520. Batch 9/17: nay-ley-081, nay-ley-082, nay-ley-083, nay-ley-084, nay-ley-085, nay-ley-086, nay-ley-087, nay-ley-088, nay-ley-089, nay-ley-090. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+    "observedAt": "2026-11-14T02:55:04.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T02:55:04.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt standard WordPress (Disallow: /wp-admin/ only, no AI-agent blocks, no content-signals); no terms-of-use page located on home or catalog (only year copyright mark); the congress itself publishes direct download links and declares the catalog the official source of vigentes. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresonay-leyes-20261113",
+    "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/",
+    "observedAt": "2026-11-14T02:55:04.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "nay-ley-081",
+   "sourceId": "congreso-nay",
+   "title": "76. Mecanismos Alternativos de Solución de Controversias del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/mecanismos_alternativos_de_solucion_de_controversias_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-082",
+   "sourceId": "congreso-nay",
+   "title": "77. Movilidad del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/movilidad_del_estado_de_nayarit_ley_de-1.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-083",
+   "sourceId": "congreso-nay",
+   "title": "78. Notariado para el Estado de Nayarit (Ley del).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/notariado_para_el_estado_de_nayarit_ley_del.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-084",
+   "sourceId": "congreso-nay",
+   "title": "79. Obra Pública del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/obra_publica_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-085",
+   "sourceId": "congreso-nay",
+   "title": "80. Participación Ciudadana del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/participacion_ciudadana_estado_nayarit.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-086",
+   "sourceId": "congreso-nay",
+   "title": "81. Patronato para Administrar el Impuesto Especial Destinado a la Universidad Autónoma de Nayarit (Ley del).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/patronato_para_administrar_el_impuesto_especial_destinado_a_la_universidad_autonoma_de_nayarit_ley_del.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-087",
+   "sourceId": "congreso-nay",
+   "title": "82. Periódico Oficial del Estado de Nayarit (Ley del).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/periodico_oficial_del_estado_de_nayarit_ley_del.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-088",
+   "sourceId": "congreso-nay",
+   "title": "83. Pesca y Acuacultura Sustentables para el Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/pesca_y_acuacultura_sustentables_para_el_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-089",
+   "sourceId": "congreso-nay",
+   "title": "84. Planeación del Estado de Nayarit (Ley de). Vigente.",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/planeacion_del_estado_de_nayarit.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  },
+  {
+   "id": "nay-ley-090",
+   "sourceId": "congreso-nay",
+   "title": "85. Presupuestación, contabilidad y gasto publico de la Administración del Gobierno del Estado de Nayarit (Ley de).",
+   "jurisdiction": "MX-NAY",
+   "status": "approved",
+   "url": "https://congresonayarit.gob.mx/wp-content/uploads/QUE_HACEMOS/LEGISLACION_ESTATAL/leyes/presupuestacion_contabilidad_y_gasto_publico_de_la_administracion_del_gobierno_del_estado_de_nayarit_ley_de.pdf",
+   "versionId": "congresonay-leyes-20261113",
+   "evidenceUrl": "https://congresonayarit.gob.mx/legislacion-estatal/"
+  }
+ ]
+}
