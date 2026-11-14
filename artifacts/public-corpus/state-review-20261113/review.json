@@ -255,6 +255,31 @@
    "status": "blocked-tls",
    "note": "www.congresosinaloa.gob.mx OK (301 apex->www, robots WP limpio, catalogo enumerado) pero el acervo es iframe SPA en gaceta.congresosinaloa.gob.mx: certificado no verifica (cadena incompleta, clase Hidalgo/CDMX/BCS). Sin bypass, sin re-sondeo.",
    "date": "2026-11-14"
+  },
+  "Querétaro": {
+   "status": "pending-host-unreachable",
+   "note": "congresoqueretaro.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+   "date": "2026-11-14"
+  },
+  "San Luis Potosí": {
+   "status": "pending-host-unreachable",
+   "note": "congresoslp.gob.mx resuelve 148.235.65.20 pero TCP 80/443 falla (000), www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+   "date": "2026-11-14"
+  },
+  "Sonora": {
+   "status": "pending-host-unreachable",
+   "note": "congresosonora.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+   "date": "2026-11-14"
+  },
+  "Zacatecas": {
+   "status": "pending-host-unreachable",
+   "note": "congresozacatecas.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+   "date": "2026-11-14"
+  },
+  "Michoacán": {
+   "status": "pending-host-unreachable",
+   "note": "congresomichoacan.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+   "date": "2026-11-14"
   }
  }
 }
