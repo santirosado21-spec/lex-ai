@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mor-leyes-22-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "marcojuridico-mor",
+   "title": "Marco Juridico del Estado de Morelos (Gobierno de Morelos)",
+   "jurisdiction": "MX-MOR",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://marcojuridico.morelos.gob.mx/",
+    "evidence": "Live official state legal library marcojuridico.morelos.gob.mx (Laravel app, linked from congresomorelos.gob.mx Leyes y Codigos section) fetched 2026-11-13; home sha256 27fbb321df7055e8d2d29f26484554239b87ae0016fd1017afc9a2aacc770970. Categories enumerated via /categorias/{3,4,6}?page=N (server-rendered): Codigos 123, Constitucion 2, Leyes 136 = 261 unique document ids with /documentos/{id}/pdf routes. Site header advertises 125 codigos / 142 leyes; rendered listing shows 123/136 unique (delta documented, no more reachable entries across full pagination). Reglamentos category (1,516 docs) deferred to a later phase. Full HEAD sweep of all 261 on 2026-11-13: 261x HTTP 200 application/pdf, 0 over 10MB, 0 over hard byte ceiling 20971520. Batch 22/27: mor-ley-086, mor-ley-087, mor-ley-088, mor-ley-089, mor-ley-090, mor-ley-091, mor-ley-092, mor-ley-093, mor-ley-094, mor-ley-095.",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T05:19:54.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (404 HTML Not Found; absence of robots is NOT treated as permission by itself); no AI-agent or content-signal restrictions observed; no aviso legal, terms-of-use or reuse/IP prohibition located on home or category pages (absence of terms is NOT treated as express authorization by the owner); official state government library publishing direct PDF downloads (/documentos/{id}/pdf, inline); no blocks with default user agent. Scope limited to official normative texts (constitucion, codigos, leyes vigentes); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "marcojuridico-mor-20261113",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mor-ley-086",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE UNIFORMES GRATUITOS PARA LOS ESTUDIANTES DE EDUCACIÓN BÁSICA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2820/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-087",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY ORGÁNICA DE LA ADMINISTRACIÓN PÚBLICA PARA EL ESTADO LIBRE Y SOBERANO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2821/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-088",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY ORGÁNICA DEL TRIBUNAL DE JUSTICIA ADMINISTRATIVA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2822/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-089",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY GENERAL DE HACIENDA DEL ESTADO DE  MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2823/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-090",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE JUSTICIA ADMINISTRATIVA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2824/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-091",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE RESPONSABILIDADES ADMINISTRATIVAS PARA EL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2825/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-092",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY SOBRE ADQUISICIONES, ENAJENACIONES, ARRENDAMIENTOS Y PRESTACIÓN DE SERVICIOS DEL PODER EJECUTIVO DEL ESTADO LIBRE Y SOBERANO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2826/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-093",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE PROTECCIÓN DE DATOS PERSONALES EN POSESIÓN DE SUJETOS OBLIGADOS DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2827/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-094",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY ORGÁNICA DE LA FISCALÍA GENERAL DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2828/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-095",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY ESTATAL DE PROTECCIÓN CIVIL DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2829/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  }
+ ]
+}

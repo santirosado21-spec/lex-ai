@@ -109,3 +109,22 @@ test('manifest paths cannot escape the quarantine directory',async t=>{
   const opts=await setup(t);await writeFile(path.join(opts.outputDir,'manifest.json'),JSON.stringify({schemaVersion:1,sources:{ccf:{versions:[{sha256:'a'.repeat(64),snapshotPath:'../../private-file.pdf'}]}}}));
   await assert.rejects(runLegalSync({...opts,fetchImpl:async()=>{throw new Error('must not fetch')}}),/Ruta de snapshot/);
 });
+
+test('a download that stalls mid-body fails as network error within the inactivity bound instead of hanging',async t=>{
+  const opts=await setup(t);
+  // cancel() also hangs forever on a half-open socket: the watchdog must not await it.
+  const stalled=()=>new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('%PDF-1.4\npartial'));},cancel(){return new Promise(()=>{});}}),{status:200,headers:{'content-type':'application/pdf'}});
+  const started=Date.now();
+  const result=await runLegalSync({...opts,limits:{rateMs:0,downloadInactivityMs:150,timeoutMs:30_000},fetchImpl:async url=>url.endsWith('/robots.txt')?robots():stalled()});
+  assert.ok(Date.now()-started<10_000,'sync must not hang on a stalled body even when cancel() never settles');
+  assert.equal(result.summary.failed,1);
+  assert.equal(result.state,'failed');
+});
+
+test('a slow but progressing download inside the inactivity bound completes',async t=>{
+  const opts=await setup(t);
+  const slow=()=>new Response(new ReadableStream({async start(c){const e=new TextEncoder();c.enqueue(e.encode('%PDF-1.4\nchunk-one\n'));await new Promise(r=>setTimeout(r,80));c.enqueue(e.encode('chunk-two'));c.close();}}),{status:200,headers:{'content-type':'application/pdf'}});
+  const result=await runLegalSync({...opts,limits:{rateMs:0,downloadInactivityMs:500,timeoutMs:30_000},fetchImpl:async url=>url.endsWith('/robots.txt')?robots():slow()});
+  assert.equal(result.state,'complete');
+  assert.equal(result.summary.downloaded,1);
+});

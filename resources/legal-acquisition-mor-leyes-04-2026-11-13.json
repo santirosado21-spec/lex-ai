@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mor-leyes-04-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "marcojuridico-mor",
+   "title": "Marco Juridico del Estado de Morelos (Gobierno de Morelos)",
+   "jurisdiction": "MX-MOR",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://marcojuridico.morelos.gob.mx/",
+    "evidence": "Live official state legal library marcojuridico.morelos.gob.mx (Laravel app, linked from congresomorelos.gob.mx Leyes y Codigos section) fetched 2026-11-13; home sha256 27fbb321df7055e8d2d29f26484554239b87ae0016fd1017afc9a2aacc770970. Categories enumerated via /categorias/{3,4,6}?page=N (server-rendered): Codigos 123, Constitucion 2, Leyes 136 = 261 unique document ids with /documentos/{id}/pdf routes. Site header advertises 125 codigos / 142 leyes; rendered listing shows 123/136 unique (delta documented, no more reachable entries across full pagination). Reglamentos category (1,516 docs) deferred to a later phase. Full HEAD sweep of all 261 on 2026-11-13: 261x HTTP 200 application/pdf, 0 over 10MB, 0 over hard byte ceiling 20971520. Batch 4/27: mor-cod-031, mor-cod-032, mor-cod-033, mor-cod-034, mor-cod-035, mor-cod-036, mor-cod-037, mor-cod-038, mor-cod-039, mor-cod-040.",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T05:19:54.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (404 HTML Not Found; absence of robots is NOT treated as permission by itself); no AI-agent or content-signal restrictions observed; no aviso legal, terms-of-use or reuse/IP prohibition located on home or category pages (absence of terms is NOT treated as express authorization by the owner); official state government library publishing direct PDF downloads (/documentos/{id}/pdf, inline); no blocks with default user agent. Scope limited to official normative texts (constitucion, codigos, leyes vigentes); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "marcojuridico-mor-20261113",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mor-cod-031",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL RÉGIMEN ESTATAL DE PROTECCIÓN SOCIAL  EN SALUD DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1807/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-032",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DE LA COMISIÓN ESTATAL DE SEGURIDAD PÚBLICA",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1808/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-033",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL COLEGIO DE EDUCACIÓN PROFESIONAL TÉCNICA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1809/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-034",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DE LA SECRETARÍA DE HACIENDA",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1810/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-035",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL MUSEO  MORELENSE DE ARTE POPULAR",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1811/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-036",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL INSTITUTO DE LA DEFENSORÍA PÚBLICA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1812/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-037",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL HOSPITAL DEL NIÑO MORELENSE",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1813/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-038",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE ÉTICA Y REGLAS DE INTEGRIDAD DE LOS SERVIDORES PÚBLICOS QUE LABORAN EN EL DEL INSTITUTO ESTATAL DE INFRAESTRUCTURA EDUCATIVA",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1814/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-039",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO PENAL PARA EL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1815/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-040",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL SISTEMA PARA EL DESARROLLO INTEGRAL DE LA FAMILIA  DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1818/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  }
+ ]
+}

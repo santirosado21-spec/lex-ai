@@ -3,7 +3,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
 
 export const LEGAL_SYNC_AGENT='LexAI-LegalSync/0.1';
-export const ALLOWED_HOSTS=Object.freeze(['www.diputados.gob.mx','diputados.gob.mx','www.congresocdmx.gob.mx','congresocdmx.gob.mx','www.hcnl.gob.mx','hcnl.gob.mx','congresoweb.congresojal.gob.mx','congresocoahuila.gob.mx','www.congresocoahuila.gob.mx','www.congresobc.gob.mx','congresobc.gob.mx','congresoags.gob.mx','www.congresoags.gob.mx','congresoyucatan.gob.mx','www.congresoyucatan.gob.mx','congresonayarit.gob.mx','www.congresonayarit.gob.mx','congresotabasco.gob.mx','www.congresotabasco.gob.mx','congresooaxaca.gob.mx','www.congresooaxaca.gob.mx']);
+export const ALLOWED_HOSTS=Object.freeze(['www.diputados.gob.mx','diputados.gob.mx','www.congresocdmx.gob.mx','congresocdmx.gob.mx','www.hcnl.gob.mx','hcnl.gob.mx','congresoweb.congresojal.gob.mx','congresocoahuila.gob.mx','www.congresocoahuila.gob.mx','www.congresobc.gob.mx','congresobc.gob.mx','congresoags.gob.mx','www.congresoags.gob.mx','congresoyucatan.gob.mx','www.congresoyucatan.gob.mx','congresonayarit.gob.mx','www.congresonayarit.gob.mx','congresotabasco.gob.mx','www.congresotabasco.gob.mx','congresooaxaca.gob.mx','www.congresooaxaca.gob.mx','congresodurango.gob.mx','www.congresodurango.gob.mx','marcojuridico.morelos.gob.mx','www.marcojuridico.morelos.gob.mx']);
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const transient=status=>[408,425,429,500,502,503,504].includes(status);
@@ -53,7 +53,7 @@ async function lockRun(outputDir){
 export async function runLegalSync({sources,outputDir,fetchImpl=fetch,now=()=>new Date(),sleep=delay,limits={},signal}={}){
   if(!Array.isArray(sources)||!sources.length||sources.length>32)throw new Error('Lista de fuentes inválida.');
   const ids=new Set();for(const source of sources){if(!/^[a-z][a-z0-9-]{0,39}$/.test(source.id)||ids.has(source.id))throw new Error('Identificador de fuente inválido o repetido.');validateSourceUrl(source.url);ids.add(source.id);}
-  const config={maxBytes:20*1024*1024,timeoutMs:45_000,rateMs:2000,maxRetries:1,maxRedirects:3,checkIntervalMs:6*3600_000,...limits};
+  const config={maxBytes:20*1024*1024,timeoutMs:45_000,rateMs:2000,maxRetries:1,maxRedirects:3,checkIntervalMs:6*3600_000,downloadInactivityMs:60_000,...limits};
   await mkdir(outputDir,{recursive:true,mode:0o700});const unlock=await lockRun(outputDir);
   const statusFile=path.join(outputDir,'status.json'),manifestFile=path.join(outputDir,'manifest.json');
   let status;
@@ -72,7 +72,27 @@ export async function runLegalSync({sources,outputDir,fetchImpl=fetch,now=()=>ne
     async function boundedResponse(response,maxBytes,requestSignal){
       const declared=Number(response.headers.get('content-length')||0);if(declared>maxBytes){await response.body?.cancel();throw new Error('El documento supera el tamaño permitido.');}
       const chunks=[];let size=0;
-      if(response.body){for await(const chunk of response.body){if(requestSignal.aborted)throw new Error('Solicitud cancelada o tiempo agotado.');size+=chunk.length;if(size>maxBytes)throw new Error('El documento supera el tamaño permitido.');chunks.push(Buffer.from(chunk));}}
+      if(response.body){
+        const reader=response.body.getReader();
+        try{
+          for(;;){
+            let inactivityTimer,abortListener;
+            const inactivityLimit=new Promise((_,reject)=>{
+              inactivityTimer=setTimeout(()=>reject(new Error('network-error: descarga sin bytes por inactividad.')),config.downloadInactivityMs);
+              if(requestSignal){abortListener=()=>reject(new Error('Solicitud cancelada o tiempo agotado.'));if(requestSignal.aborted)abortListener();else requestSignal.addEventListener('abort',abortListener,{once:true});}
+            });
+            let chunk,done=false;
+            try{
+              const read=await Promise.race([reader.read(),inactivityLimit]);
+              done=read.done;if(!done)chunk=read.value;
+            }catch(e){clearTimeout(inactivityTimer);if(requestSignal&&abortListener)requestSignal.removeEventListener('abort',abortListener);if(/^network-error: /.test(e?.message)){void reader.cancel().catch(()=>{});}throw e;}
+            clearTimeout(inactivityTimer);if(requestSignal&&abortListener)requestSignal.removeEventListener('abort',abortListener);
+            if(done)break;
+            if(requestSignal.aborted)throw new Error('Solicitud cancelada o tiempo agotado.');
+            size+=chunk.length;if(size>maxBytes)throw new Error('El documento supera el tamaño permitido.');chunks.push(Buffer.from(chunk));
+          }
+        }finally{try{reader.releaseLock();}catch{}}
+      }
       return Buffer.concat(chunks);
     }
     async function request(url,headers={},isRobots=false){

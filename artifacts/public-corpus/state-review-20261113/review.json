@@ -225,6 +225,21 @@
    "status": "acquired",
    "note": "165/165 extraidos cuarentena, 19218 registros, 0 fallos; universo 259 hrefs - 93 dups catalogo - 1 abrogada",
    "date": "2026-11-13"
+  },
+  "Hidalgo": {
+   "status": "blocked-tls",
+   "note": "www.congreso-hidalgo.gob.mx sirve solo el certificado leaf (Sectigo DV R36 sin intermedio): unable to verify the first certificate; host sin guion 404 en rutas de PDF; sin bypass TLS (misma clase que CDMX/BCS). Catalogo explorado: /acervo_legislativo/leyes, 169 titulos unicos con PDF, pendiente si el sitio repara la cadena",
+   "date": "2026-11-13"
+  },
+  "Colima": {
+   "status": "parked-format",
+   "note": "Alcanzable via apex; catalogo sirve .doc/.docx (152 Word estatal vs 2 PDF). Ruta Word autorizada por main 23:11; pendiente implementacion",
+   "date": "2026-11-13"
+  },
+  "Morelos": {
+   "status": "closed",
+   "note": "261/261 ids, 261/261 PDFs, 257/261 extracciones validas, 14,711 registros (cuarentena). 4 extraction-invalid = brecha de estructura (codigos de conducta sin articulos numericos), PDFs conservados. 5 fallos de red recuperados por reintento idempotente. Watchdog inactividad 60s agregado a legal-sync. Reglamentos (1516) y Leyes de Ingresos diferidos. QA doc docs/qa/morelos-acquisition-2026-11-13.md",
+   "date": "2026-11-13"
   }
  }
 }

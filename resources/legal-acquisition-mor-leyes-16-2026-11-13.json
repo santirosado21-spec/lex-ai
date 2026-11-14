@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mor-leyes-16-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "marcojuridico-mor",
+   "title": "Marco Juridico del Estado de Morelos (Gobierno de Morelos)",
+   "jurisdiction": "MX-MOR",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://marcojuridico.morelos.gob.mx/",
+    "evidence": "Live official state legal library marcojuridico.morelos.gob.mx (Laravel app, linked from congresomorelos.gob.mx Leyes y Codigos section) fetched 2026-11-13; home sha256 27fbb321df7055e8d2d29f26484554239b87ae0016fd1017afc9a2aacc770970. Categories enumerated via /categorias/{3,4,6}?page=N (server-rendered): Codigos 123, Constitucion 2, Leyes 136 = 261 unique document ids with /documentos/{id}/pdf routes. Site header advertises 125 codigos / 142 leyes; rendered listing shows 123/136 unique (delta documented, no more reachable entries across full pagination). Reglamentos category (1,516 docs) deferred to a later phase. Full HEAD sweep of all 261 on 2026-11-13: 261x HTTP 200 application/pdf, 0 over 10MB, 0 over hard byte ceiling 20971520. Batch 16/27: mor-ley-026, mor-ley-027, mor-ley-028, mor-ley-029, mor-ley-030, mor-ley-031, mor-ley-032, mor-ley-033, mor-ley-034, mor-ley-035.",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T05:19:54.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (404 HTML Not Found; absence of robots is NOT treated as permission by itself); no AI-agent or content-signal restrictions observed; no aviso legal, terms-of-use or reuse/IP prohibition located on home or category pages (absence of terms is NOT treated as express authorization by the owner); official state government library publishing direct PDF downloads (/documentos/{id}/pdf, inline); no blocks with default user agent. Scope limited to official normative texts (constitucion, codigos, leyes vigentes); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "marcojuridico-mor-20261113",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mor-ley-026",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE COORDINACIÓN PARA EL DESARROLLO METROPOLITANO DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2758/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-027",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE RESIDUOS SÓLIDOS Y DE ECONOMÍA CIRCULAR  PARA EL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2759/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-028",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE CULTURA CÍVICA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2760/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-029",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE DESARROLLO FORESTAL SUSTENTABLE DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2761/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-030",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE JUSTICIA PARA ADOLESCENTES DEL ESTADO  DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2762/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-031",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE FOMENTO A LAS ACTIVIDADES DE LAS ORGANIZACIONES DE LA SOCIEDAD CIVIL DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2763/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-032",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE CONTRATOS DE COLABORACIÓN PÚBLICO PRIVADA PARA EL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2764/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-033",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY ORGÁNICA DEL TRIBUNAL UNITARIO DE JUSTICIA PENAL PARA ADOLESCENTES DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2765/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-034",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE DESARROLLO, PROTECCIÓN E INTEGRACIÓN DE LAS PERSONAS ADULTAS MAYORES PARA EL ESTADO LIBRE Y SOBERANO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2766/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-ley-035",
+   "sourceId": "marcojuridico-mor",
+   "title": "LEY DE EXPROPIACIÓN POR CAUSAS DE UTILIDAD PÚBLICA",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/2767/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  }
+ ]
+}

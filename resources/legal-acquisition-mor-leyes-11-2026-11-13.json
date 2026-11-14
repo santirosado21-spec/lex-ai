@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mor-leyes-11-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "marcojuridico-mor",
+   "title": "Marco Juridico del Estado de Morelos (Gobierno de Morelos)",
+   "jurisdiction": "MX-MOR",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://marcojuridico.morelos.gob.mx/",
+    "evidence": "Live official state legal library marcojuridico.morelos.gob.mx (Laravel app, linked from congresomorelos.gob.mx Leyes y Codigos section) fetched 2026-11-13; home sha256 27fbb321df7055e8d2d29f26484554239b87ae0016fd1017afc9a2aacc770970. Categories enumerated via /categorias/{3,4,6}?page=N (server-rendered): Codigos 123, Constitucion 2, Leyes 136 = 261 unique document ids with /documentos/{id}/pdf routes. Site header advertises 125 codigos / 142 leyes; rendered listing shows 123/136 unique (delta documented, no more reachable entries across full pagination). Reglamentos category (1,516 docs) deferred to a later phase. Full HEAD sweep of all 261 on 2026-11-13: 261x HTTP 200 application/pdf, 0 over 10MB, 0 over hard byte ceiling 20971520. Batch 11/27: mor-cod-101, mor-cod-102, mor-cod-103, mor-cod-104, mor-cod-105, mor-cod-106, mor-cod-107, mor-cod-108, mor-cod-109, mor-cod-110.",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T05:19:54.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (404 HTML Not Found; absence of robots is NOT treated as permission by itself); no AI-agent or content-signal restrictions observed; no aviso legal, terms-of-use or reuse/IP prohibition located on home or category pages (absence of terms is NOT treated as express authorization by the owner); official state government library publishing direct PDF downloads (/documentos/{id}/pdf, inline); no blocks with default user agent. Scope limited to official normative texts (constitucion, codigos, leyes vigentes); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "marcojuridico-mor-20261113",
+    "evidenceUrl": "https://marcojuridico.morelos.gob.mx/",
+    "observedAt": "2026-11-14T05:19:54.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mor-cod-101",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DE LOS SERVIDORES PÚBLICOS DEL SISTEMA DE CONSERVACIÓN, AGUA POTABLE Y SANEAMIENTO DE AGUA DE JIUTEPEC MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1881/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-102",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA PARA LOS SERVIDORES PÚBLICOS DEL H. AYUNTAMIENTO MUNICIPAL DE TEMOAC, MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1882/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-103",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL INSTITUTO MORELENSE DE RADIO Y TELEVISIÓN",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1883/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-104",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DEL CONSEJO DE CIENCIA Y TECNOLOGÍA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1884/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-105",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DE LA UNIVERSIDAD POLITÉCNICA DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1886/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-106",
+   "sourceId": "marcojuridico-mor",
+   "title": "ACUERDO POR EL QUE SE EXPIDE EL CÓDIGO DE ÉTICA DE LAS PERSONAS SERVIDORAS PÚBLICAS DE LA COMISIÓN DE DERECHOS HUMANOS DEL ESTADO DE MORELOS",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/1887/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-107",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA DE LA SECRETARÍA DE CULTURA DEL PODER EJECUTIVO ESTATAL",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/5452/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-108",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA PARA LAS PERSONAS SERVIDORAS PÚBLICAS DE LA SECRETARÍA DE TURISMO DEL PODER EJECUTIVO ESTATAL",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/5453/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-109",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA PARA EL PERSONAL QUE LABORA EN EL MUSEO MORELENSE DE ARTE POPULAR",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/5463/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  },
+  {
+   "id": "mor-cod-110",
+   "sourceId": "marcojuridico-mor",
+   "title": "CÓDIGO DE CONDUCTA PARA EL PERSONAL DE LA SECRETARÍA DE LAS MUJERES DEL PODER EJECUTIVO ESTATAL",
+   "jurisdiction": "MX-MOR",
+   "status": "approved",
+   "url": "https://marcojuridico.morelos.gob.mx/documentos/5480/pdf",
+   "versionId": "marcojuridico-mor-20261113",
+   "evidenceUrl": "https://marcojuridico.morelos.gob.mx/"
+  }
+ ]
+}
