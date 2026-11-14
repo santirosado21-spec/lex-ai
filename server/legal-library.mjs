@@ -1,13 +1,30 @@
-import {readFile,writeFile,mkdir,rename,open,unlink,statfs} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,rename,open,unlink,statfs,mkdtemp,readdir,rm} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
-import {spawn} from 'node:child_process';
+import {spawn,spawnSync,execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+import os from 'node:os';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=28;
+export const EXTRACTOR_VERSION=29;
+// v29: OCR fallback for image-only (scanned) PDFs. When the digital text layer
+// is absent (average extracted text below OCR_MIN_PAGE_CHARS per page), the
+// worker rasterizes pages locally with pdftoppm and OCRs them locally with
+// tesseract (offline, no network, no cost), then runs the SAME article parsing
+// on the OCR text. Provenance stays fail-closed: OCR-derived records are demoted
+// to 'quarantined' quality with the 'ocr-derived-text-layer' anomaly, so they
+// can never reach exportLibrary (structurally-verified only). Documents over
+// OCR_PAGE_CAP pages are never partially OCRed; they keep failing as
+// extraction-invalid with an 'ocr-page-cap-exceeded' coverage note.
+export const OCR_PAGE_CAP=160;
+export const OCR_DPI=300;
+const OCR_MIN_PAGE_CHARS=10;
+const OCR_PAGE_TIMEOUT_MS=30000;
+const OCR_MS_PER_PAGE=6000;
+const OCR_MAX_TOTAL_MS=1200000;
 // Maximum PDF pages the worker will parse. Raised 1200 -> 2000 in v26 after verifying the largest observed official document (nay-ley-148, Presupuesto de Egresos Nayarit 2026: 1,376 pages, 20.3 MB) parses in ~12 s and ~77 MB heap, well inside the worker's 120 s timeout and 768 MB old-generation limit. Documents above the cap still fail closed as 'PDF page coverage incomplete'.
 export const EXTRACTOR_MAX_PAGES=2000;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
@@ -418,8 +435,83 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records};
 }
 
+let ocrToolsCache;
+export function detectOcrTools(env=process.env){
+  if(env===process.env&&ocrToolsCache)return ocrToolsCache;
+  const probe=(command,args)=>{try{const result=spawnSync(command,args,{env,encoding:'utf8',timeout:10000});return{ok:!result.error,stdout:result.stdout??'',stderr:result.stderr??''};}catch{return{ok:false,stdout:'',stderr:''};}};
+  const render=probe('pdftoppm',['-v']);
+  const version=probe('tesseract',['--version']);
+  const languages=version.ok?probe('tesseract',['--list-langs']):{ok:false,stdout:''};
+  const languageList=languages.stdout.split('\n').map(line=>line.trim()).filter(line=>line&&!line.startsWith('List of'));
+  const lang=languageList.includes('spa')?'spa':(languageList.includes('eng')?'eng':null);
+  const tools={available:render.ok&&languages.ok&&!!lang,renderer:render.ok,engine:'tesseract',engineVersion:(version.stdout.split('\n')[0]||'unknown').trim(),languages:languageList,lang};
+  if(env===process.env)ocrToolsCache=tools;
+  return tools;
+}
+
+async function ocrPdfPages(file,pageCount,tools,{cacheKey=null}={}){
+  const execFileAsync=promisify(execFile);
+  const dir=await mkdtemp(path.join(os.tmpdir(),'lex-ocr-'));
+  // Page texts cache outside the temp dir when LEX_OCR_CACHE_DIR is set and the
+  // caller supplies a content key (the snapshot sha256): a killed attempt resumes
+  // instead of restarting, which keeps long scanned documents reachable in bounded
+  // runs. Cache entries are keyed by page, dpi and language.
+  const cacheDir=cacheKey&&process.env.LEX_OCR_CACHE_DIR?path.join(process.env.LEX_OCR_CACHE_DIR,cacheKey):null;
+  if(cacheDir)await mkdir(cacheDir,{recursive:true,mode:0o700});
+  try{
+    const capped=Math.min(pageCount,OCR_PAGE_CAP);
+    await execFileAsync('pdftoppm',['-r',String(OCR_DPI),'-gray','-png','-f','1','-l',String(capped),file,path.join(dir,'page')],{timeout:Math.max(60000,capped*3000),maxBuffer:1<<20});
+    const images=(await readdir(dir)).filter(name=>name.endsWith('.png')).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+    if(images.length!==capped)throw new Error(`OCR render coverage incomplete: ${images.length}/${capped} pages`);
+    const pages=[];
+    for(const image of images){
+      const number=Number(image.match(/(\d+)\.png$/)[1]);
+      const cacheFile=cacheDir?path.join(cacheDir,`p${number}-${OCR_DPI}-${tools.lang}.txt`):null;
+      let text;
+      if(cacheFile)text=await readFile(cacheFile,'utf8').catch(()=>undefined);
+      if(text===undefined){
+        const base=path.join(dir,'ocr-'+number);
+        await execFileAsync('tesseract',[path.join(dir,image),base,'-l',tools.lang,'--dpi',String(OCR_DPI)],{timeout:OCR_PAGE_TIMEOUT_MS,maxBuffer:1<<22});
+        text=await readFile(base+'.txt','utf8');
+        if(cacheFile)await writeFile(cacheFile,text,{mode:0o600});
+        await unlink(base+'.txt').catch(()=>{});
+      }
+      pages.push({number,text});
+      await unlink(path.join(dir,image)).catch(()=>{});
+    }
+    pages.sort((a,b)=>a.number-b.number);
+    return pages;
+  }finally{await rm(dir,{recursive:true,force:true}).catch(()=>{});}
+}
+
+// OCR-path-only repair: tesseract fuses the ordinal suffix in headings like
+// 'Artículo 2o.-' into 'Artículo 20.-'. When the running sequence expects n and a
+// line-start heading reads exactly n*10, the trailing zero is the fused suffix;
+// rewrite it to the expected number. Mid-line references never match (^ anchor).
+// Every repair is recorded as a document anomaly and records stay quarantined.
+function repairOcrArticleHeadings(pages){
+  let expected=1,repaired=0;
+  const heading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o)?([\.\-].*)$/i;
+  for(const page of pages){
+    page.text=page.text.split('\n').map(line=>{
+      const match=heading.exec(line);
+      if(!match)return line;
+      const n=Number(match[2]);
+      if(n===expected){expected=n+1;return line;}
+      if(!match[3]&&n===expected*10){expected++;repaired++;return `${match[1]}${expected-1}o${match[4]}`;}
+      return line;
+    }).join('\n');
+  }
+  return repaired;
+}
+
 export async function parsePdfInWorker(file,source,metadata){
-  return new Promise((resolve,reject)=>{const worker=new Worker(new URL(import.meta.url),{execArgv:[],workerData:{kind:'extract-legal-library',file,source,metadata},resourceLimits:{maxOldGenerationSizeMb:768}});let settled=false;const finish=(error,value)=>{if(settled)return;settled=true;clearTimeout(timer);void worker.terminate();error?reject(error):resolve(value);};const timer=setTimeout(()=>finish(new Error('PDF extraction timeout after 120 seconds')),120000);worker.on('message',m=>m.error?finish(new Error(m.error)):finish(null,m.result));worker.on('error',e=>finish(e));worker.on('exit',code=>{if(!settled)finish(new Error(`Extractor exited without result (${code})`));});});
+  return new Promise((resolve,reject)=>{const worker=new Worker(new URL(import.meta.url),{execArgv:[],workerData:{kind:'extract-legal-library',file,source,metadata},resourceLimits:{maxOldGenerationSizeMb:768}});let settled=false;let timer;
+    const finish=(error,value)=>{if(settled)return;settled=true;clearTimeout(timer);void worker.terminate();error?reject(error):resolve(value);};
+    const arm=ms=>{clearTimeout(timer);timer=setTimeout(()=>finish(new Error(`PDF extraction timeout after ${Math.round(ms/1000)} seconds`)),ms);};
+    arm(120000);
+    worker.on('message',m=>{if(m&&m.progress==='ocr'&&Number.isInteger(m.pages)){arm(Math.min(OCR_MAX_TOTAL_MS,120000+m.pages*OCR_MS_PER_PAGE));return;}m.error?finish(new Error(m.error)):finish(null,m.result);});
+    worker.on('error',e=>finish(e));worker.on('exit',code=>{if(!settled)finish(new Error(`Extractor exited without result (${code})`));});});
 }
 
 const PRIORITY=['cpeum','ccf','ccom','cff','cpf','cnpp','cnpcf','lamp','lft','lfpc','lfda','lfpa','lfpca','lfpdppp','lgsm','lgtoc','lic','liva','lisr','lss','linfonavit','lfce','lpi','lfpp','lgra','lga','lgtaip','lgps','lgahotdu','lgcc','lan','lgen','lgs','lgvs','lgeepa','la','laf','lgsc','lcpaf','lfd'];
@@ -458,7 +550,26 @@ export async function ingestLibrary({catalog,outputDir,limit=40,download=true,fe
 if(!isMainThread&&workerData?.kind==='extract-legal-library'){
   try{const {default:pdf}=await import('pdf-parse/lib/pdf-parse.js');const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('PDF too large');const pages=[];
     const result=await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
-    if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);parentPort.postMessage({result:extractArticles(pages,workerData.source,workerData.metadata)});
+    if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);
+    let ocr=null;
+    const digitalChars=pages.reduce((total,page)=>total+page.text.trim().length,0);
+    if(digitalChars<pages.length*OCR_MIN_PAGE_CHARS){
+      const tools=detectOcrTools();
+      if(!tools.available)ocr={skipped:'ocr-tools-unavailable'};
+      else if(pages.length>OCR_PAGE_CAP)ocr={skipped:'ocr-page-cap-exceeded',pages:pages.length,cap:OCR_PAGE_CAP};
+      else{
+        parentPort.postMessage({progress:'ocr',pages:pages.length});
+        const sha=workerData.metadata?.pdfSha256;
+        const ocrPages=await ocrPdfPages(workerData.file,pages.length,tools,{cacheKey:/^[a-f0-9]{64}$/.test(sha??'')?sha:null});
+        const ocrChars=ocrPages.reduce((total,page)=>total+page.text.trim().length,0);
+        ocr={engine:'tesseract',engineVersion:tools.engineVersion,lang:tools.lang,dpi:OCR_DPI,pages:ocrPages.length};
+        if(ocrChars>digitalChars){pages.length=0;pages.push(...ocrPages);ocr.repairedHeadings=repairOcrArticleHeadings(pages);}
+        else ocr.outcome='no-text-recovered-digital-kept';
+      }
+    }
+    const parsed=extractArticles(pages,workerData.source,workerData.metadata);
+    if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
+    parentPort.postMessage({result:parsed});
   }catch(e){parentPort.postMessage({error:e.message});}
 }
 

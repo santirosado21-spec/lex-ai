@@ -24,6 +24,9 @@ jobs:
           package-manager-cache: false
       - run: npm ci
       - run: npm run build
+      # Local OCR fallback (extractor v29): tesseract + poppler render scanned
+      # PDFs offline; Pillow builds the synthetic scanned fixture.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core
       # Fresh clones omit generated public-library.sqlite and model research assets;
       # Node 22.13.1 on this runner also lacks FTS5. Keep this gate explicit.
       - name: Portable source contracts from a clean checkout
@@ -42,4 +45,5 @@ jobs:
             tests/openrouter-provider.test.mjs \
             tests/openrouter-keychain.test.mjs \
             tests/windows-descendant-classification-diagnostic.test.mjs \
-            tests/windows-owned-tree-bootstrap-diagnostic.test.mjs
+            tests/windows-owned-tree-bootstrap-diagnostic.test.mjs \
+            tests/extractor-ocr-fallback.test.mjs
