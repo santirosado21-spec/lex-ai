@@ -13,19 +13,32 @@ Cifras declaradas por el sitio; no verificables de forma independiente.
 
 ## Lo verificado en Rejon al 2026-11-13 20:34 CST (todo en cuarentena)
 
-- 317 leyes federales (indice LeyesBiblio sha256
-  a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca).
-- 137 reglamentos federales vigentes (15,640 registros).
-- 8 documentos de Nuevo Leon.
+Cifras por id unico verificado contra report.json de cada artefacto
+(reconciliacion 2026-11-13; corrige la mezcla previa de conteos de indice con
+conteos adquiridos):
+
+- Leyes federales adquiridas: 278 ids unicos (incluye los 10 del piloto, que
+  fed-expansion-7 duplica y se cuentan una vez; el indice LeyesBiblio tiene
+  317 entradas, sha256 a23aa11556c3e0202192213df2dd1a5355d3522406f43b43a35817eb4a587bca:
+  indice != adquirido).
+- Reglamentos y reglamentos de camaras federales: 139 ids unicos
+  (137 reglamentos del programa + reg-senado + reg-diputados).
+- Nuevo Leon: 8 documentos documentados con freeze hashes; sus artefactos NO
+  estan presentes en el arbol actual, se contabilizan aparte.
 - Coahuila: 250 documentos, 21,708 registros.
 - Baja California: 165 documentos, 12,388 registros.
 - Aguascalientes: 177 documentos, 17,115 registros.
-- Yucatan: 374 documentos, 37,914 registros (programa cerrado 2026-11-13,
-  QA docs/qa/yuc-leyes-expansion-2026-11-13.md).
-- Total: 1,428 documentos adquiridos, 152,564 registros, todos cuarentenados
-  (extraccion estructural verificada, SIN revision independiente de contenido,
-  no publicados, no indexados). Textos unicos: 1,427 tras descontar el
-  duplicado CPEUM identificado en el catalogo de Coahuila.
+- Yucatan: 374 documentos, 37,914 registros (QA
+  docs/qa/yuc-leyes-expansion-2026-11-13.md).
+- Total presente en el arbol: 1,383 ids unicos, 136,539 registros, todo
+  cuarentenado (extraccion estructural verificada, SIN revision independiente
+  de contenido, no publicados, no indexados). Con los 8 de NL documentados:
+  1,391 documentos conocidos.
+- 1,382 = 1,383 ids unicos presentes menos 1 duplicado de contenido conocido
+  (CPEUM en el catalogo de Coahuila). Esta cifra NO es prueba de unicidad
+  global: la deduplicacion demostrada es por id y por titulo normalizado, no
+  por contenido; pueden existir duplicados con titulos distintos no
+  detectados.
 
 ## Brecha restante
 

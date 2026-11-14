@@ -38,13 +38,29 @@ estructural verificada, SIN revision independiente de contenido.
 - Universo vigente del catalogo: 391. Excluidos sobre techo duro: 2.
   Adquiribles: 389. Adquiridos (cuarentena): 374.
 - Textos unicos estatales: 374. Deduplicacion cruzada por titulo normalizado
-  ejecutada contra los 1,040 documentos de los programas previos (federales,
+  ejecutada contra los 1,009 documentos unicos adquiridos de los programas
+  previos presentes en el arbol de artefactos (federales incl. pilot,
   Coahuila, BC, AGS): 1 solape de titulo exacto (yuc-ley-006 LEY DE
   EXPROPIACION vs law-35 federal) verificado como HOMONIMO, no duplicado: el
   texto adquirido es la ley estatal de Yucatan (Decreto 91, ref. D.O. estatal
   02-agosto-1944, encabezado H. Congreso del Estado de Yucatan), ordenamiento
-  distinto de la Ley de Expropiacion federal. Sin duplicados nuevos detectados;
-  el unico duplicado cruzado conocido sigue siendo el CPEUM de Coahuila.
+  distinto de la Ley de Expropiacion federal. Sin duplicados nuevos detectados
+  por id ni por titulo; el unico duplicado cruzado conocido sigue siendo el
+  CPEUM de Coahuila. La dedup por titulo NO descarta duplicados de contenido
+  con titulos distintos.
+
+## Correccion 2026-11-13 (reconciliacion de base)
+
+La version inicial de esta seccion describio la base de comparacion como
+"1,040 documentos": esa cifra eran ids unicos de registries (incluia docs
+excluidos no adquiridos y omitia el registry pilot). La base correcta de
+documentos unicos adquiridos previos es 1,009 (verificada por id contra
+report.json de cada artefacto); el resultado del solape (1 homonimo) no
+cambia. Ademas: pilot y fed-expansion-7 contienen los mismos 10 documentos
+federales (cjm..lfd), contados una sola vez en esta reconciliacion; los 8
+documentos de Nuevo Leon estan documentados con freeze hashes pero sus
+artefactos no estan presentes en el arbol actual, por lo que se contabilizan
+aparte (1,009 presentes + 8 documentados = 1,017 previos conocidos).
 - Vigente != historico: las 837 leyes ABROGADA del catalogo NO se adquirieron
   (fuera del universo vigente del programa); contabilidad separada.
 
