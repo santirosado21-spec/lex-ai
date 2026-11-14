@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "ocr-reprocess-oax-leyes-22-2026-11-14",
+  "registryVersion": "v1-ocr1",
+  "dataClass": "public-legal",
+  "productionEnabled": false,
+  "policy": {
+    "approvalAuthority": "developer-reviewed",
+    "purpose": "bounded-public-acquisition",
+    "scope": "public-legal"
+  },
+  "limits": {
+    "maxDocuments": 1,
+    "maxRequests": 25,
+    "maxTotalBytes": 52428800,
+    "maxDocumentBytes": 10485760,
+    "maxDurationMs": 1200000,
+    "rateMs": 2000,
+    "concurrency": 1,
+    "timeoutMs": 45000,
+    "maxRetries": 0,
+    "maxRedirects": 3
+  },
+  "sources": [
+    {
+      "id": "congreso-oax",
+      "title": "Congreso del Estado de Oaxaca",
+      "jurisdiction": "MX-OAX",
+      "collection": "state-legislation",
+      "status": "approved",
+      "discovery": {
+        "url": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+        "evidence": "Live official catalog legislacion_estatal.html fetched 2026-11-13; 230 href matches, 225 unique PDFs (links resolve to https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/...); catalog sha256 bb6bd7b2342bd665684890453ac0be23cf0c92cf6bfdd122379fa818d8a10e2b. Full HEAD sweep of all 225 on 2026-11-13: 224x HTTP 200 application/pdf, 0 over hard byte ceiling 20971520, 1x HTTP 404 (oax-ley-010 Decreto bases/factores de distribucion, documented exclusion). Universe adquirible = 224. Batch 22/23: oax-ley-212, oax-ley-213, oax-ley-214, oax-ley-215, oax-ley-216, oax-ley-217, oax-ley-218, oax-ley-219, oax-ley-220, oax-ley-221. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+        "observedAt": "2026-11-14T04:01:59.000Z"
+      },
+      "rightsReview": {
+        "status": "approved",
+        "reviewedBy": "instinct-rejon-agent",
+        "reviewedAt": "2026-11-14T04:01:59.000Z",
+        "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt absent (HTTP 404); no terms-of-use located on home or catalog (the only legal label, Aviso de Privacidad, resolves to HTTP 404 and no Aviso Legal page was located; per established rule a label with a 404 destination counts as NOT located); no content-signal or x-robots headers; the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts (constitucion, codigos, leyes, reglamentos, decretos normativos, series fiscales de ingresos/egresos); editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+        "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+        "scope": "bounded-public-pilot"
+      },
+      "version": {
+        "id": "congresooax-leyes-20261113",
+        "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html",
+        "observedAt": "2026-11-14T04:01:59.000Z"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "oax-ley-219",
+      "sourceId": "congreso-oax",
+      "title": "Presupuesto+de+Egresos+del+Estado+de+Oaxaca+(Txt+orig+dto+1810+aprob+LXIV+Legis+10+dic+2020+PO+52+4a+secc+26+dic+2020) 2",
+      "jurisdiction": "MX-OAX",
+      "status": "approved",
+      "url": "https://congresooaxaca.gob.mx/docs66.congresooaxaca.gob.mx/legislacion_estatal/Presupuesto%2Bde%2BEgresos%2Bdel%2BEstado%2Bde%2BOaxaca%2B%28Txt%2Borig%2Bdto%2B1810%2Baprob%2BLXIV%2BLegis%2B10%2Bdic%2B2020%2BPO%2B52%2B4a%2Bsecc%2B26%2Bdic%2B2020%29_2.pdf",
+      "versionId": "congresooax-leyes-20261113",
+      "evidenceUrl": "https://congresooaxaca.gob.mx/legislaciones/legislacion_estatal.html"
+    }
+  ]
+}

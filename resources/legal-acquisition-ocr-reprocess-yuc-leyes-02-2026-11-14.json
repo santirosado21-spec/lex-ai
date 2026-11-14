@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "ocr-reprocess-yuc-leyes-02-2026-11-14",
+  "registryVersion": "v1-ocr1",
+  "dataClass": "public-legal",
+  "productionEnabled": false,
+  "policy": {
+    "approvalAuthority": "developer-reviewed",
+    "purpose": "bounded-public-acquisition",
+    "scope": "public-legal"
+  },
+  "limits": {
+    "maxDocuments": 2,
+    "maxRequests": 25,
+    "maxTotalBytes": 52428800,
+    "maxDocumentBytes": 10485760,
+    "maxDurationMs": 1200000,
+    "rateMs": 2000,
+    "concurrency": 1,
+    "timeoutMs": 45000,
+    "maxRetries": 0,
+    "maxRedirects": 3
+  },
+  "sources": [
+    {
+      "id": "congreso-yuc",
+      "title": "Congreso del Estado de Yucatan",
+      "jurisdiction": "MX-YUC",
+      "collection": "state-legislation",
+      "status": "approved",
+      "discovery": {
+        "url": "https://congresoyucatan.gob.mx/legislacion/leyes",
+        "evidence": "Live official catalogs /legislacion/leyes|codigos|reglamentos|constitucion-politica fetched 2026-11-13; SHA256 leyes e3fb1494c752feec86b9f2bc7e0caf4733cde91651b00f093ec1f163f043dee7; codigos 31cb115f62a8d9460b8e543a27b5968e5f6bdbbc7653563ad5737d9849149f1a; reglamentos 1e7a01dc30288347a26777429a230076963a1ed09fa2769e979718c2c0899ee5; constitucion 0a71544f45e2d8f1bf93de9ddab45590f447d2c81516f71484b600091f4091b9; DataTable parsed: 1214 leyes con PDF (377 VIGENTE, 837 ABROGADA) + 9 codigos + 4 reglamentos + constitucion = 391 vigentes; full HEAD sweep of all 391 on 2026-11-13: 391x HTTP 200, 0 broken links; 2 excluded over hard byte ceiling 20971520 (Cod. Procedimientos Civiles 30414781, Cod. Procedimientos Familiares 39228085) = 389 adquiribles. Batch 2/39: yuc-ley-011, yuc-ley-012, yuc-ley-013, yuc-ley-014, yuc-ley-015, yuc-ley-016, yuc-ley-017, yuc-ley-018, yuc-ley-019, yuc-ley-020. Live HEAD verified HTTP200 application/pdf for all documents in batch.",
+        "observedAt": "2026-11-14T01:46:42.000Z"
+      },
+      "rightsReview": {
+        "status": "approved",
+        "reviewedBy": "instinct-rejon-agent",
+        "reviewedAt": "2026-11-14T01:46:42.000Z",
+        "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed federal/state programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-13 before acquisition: robots.txt present with User-agent: * Disallow: (empty, no AI-agent blocks, no content-signals); no terms-of-use page located on home or catalog; the congress itself publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Scope limited to official normative texts; editorial/third-party content not covered by this basis is excluded. Quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+        "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes",
+        "scope": "bounded-public-pilot"
+      },
+      "version": {
+        "id": "congresoyuc-leyes-20261113",
+        "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes",
+        "observedAt": "2026-11-14T01:46:42.000Z"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "yuc-ley-012",
+      "sourceId": "congreso-yuc",
+      "title": "LEY DE PARTICIPACIÓN CIUDADANA QUE REGULA EL PLEBISCITO, REFERÉNDUM Y LA INICIATIVA POPULAR EN EL ESTADO DE YUCATÁN",
+      "jurisdiction": "MX-YUC",
+      "status": "approved",
+      "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/bf8d7d232d12d7c0d57cdec9268b77d6.pdf",
+      "versionId": "congresoyuc-leyes-20261113",
+      "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+    },
+    {
+      "id": "yuc-ley-015",
+      "sourceId": "congreso-yuc",
+      "title": "LEY DE PROFESIONES DEL ESTADO DE YUCATAN.",
+      "jurisdiction": "MX-YUC",
+      "status": "approved",
+      "url": "https://congresoyucatan.gob.mx/storage/legislacion/leyes/4f2530126748fb5f9f2634d38059f630.pdf",
+      "versionId": "congresoyuc-leyes-20261113",
+      "evidenceUrl": "https://congresoyucatan.gob.mx/legislacion/leyes"
+    }
+  ]
+}
