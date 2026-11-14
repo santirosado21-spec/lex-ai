@@ -243,7 +243,7 @@
   },
   "Nayarit": {
    "status": "closed",
-   "note": "Catalogo estatal cerrado en corridas previas; serie fiscal 2026 (nay-ley-124..147) recuperada 2026-11-14: defecto del servidor (prefijo HTML de 921B + cierre tras %%EOF en el payload) reparado por corte de bytes documentado y verificado (byte-identico entre ruta navegador y GET directo; sin elusion de UA). 24/24 cuarentenados, 1,337 registros. nay-ley-148 pendiente (document-byte-budget original; ultima corrida snapshot-unavailable). QA: docs/qa/nayarit-fiscal-repair-2026-11-14.md",
+   "note": "Catalogo estatal cerrado en corridas previas; serie fiscal 2026 (nay-ley-124..147) recuperada 2026-11-14: defecto del servidor (prefijo HTML de 921B + cierre tras %%EOF en el payload) reparado por corte de bytes documentado y verificado (byte-identico entre ruta navegador y GET directo; sin elusion de UA). 24/24 cuarentenados, 1,337 registros. nay-ley-148 recuperado 2026-11-13 en nay-leyes-15b (99 registros, sha e1f14694), verificado intacto. QA: docs/qa/nayarit-fiscal-repair-2026-11-14.md",
    "date": "2026-11-14"
   }
  }

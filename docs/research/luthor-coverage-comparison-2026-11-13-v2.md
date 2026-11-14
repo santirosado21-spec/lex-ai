@@ -21,7 +21,9 @@ vez del inventario, sin sumar sobre reportes anteriores:
   independiente de contenido, no publicado, no indexado).
 - Fallidos por clase: 0 invalid-pdf (serie fiscal Nayarit 2026 reparada
   2026-11-14: defecto del servidor que anteponia 921 bytes HTML al payload;
-  24/24 recuperados, QA docs/qa/nayarit-fiscal-repair-2026-11-14.md);
+  24/24 recuperados, QA docs/qa/nayarit-fiscal-repair-2026-11-14.md; la
+  recuperacion previa de nay-ley-148 (2026-11-13, nay-leyes-15b, 99 registros)
+  queda verificada intacta);
   11 extraction-invalid (5 escaneados cola OCR: yuc-011/012/015,
   oax-219/222; 1 federal escaneado cola OCR: reg-lfgfaga-fe-16may55; 5 brecha
   de estructura sin articulos numericos: ags-ley-160, mor-cod-031/045/069/090);
