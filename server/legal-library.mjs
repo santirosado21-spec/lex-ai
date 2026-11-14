@@ -9,7 +9,15 @@ import os from 'node:os';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=30;
+export const EXTRACTOR_VERSION=31;
+// v31: non-article document classes, only when ZERO article headings parse.
+// 'principios' (numbered named values, e.g. ethics codes: "1.- Integridad."),
+// 'capitulos-numerados' (all-caps numbered chapters: "1. DISPOSICIONES")
+// and 'resolutivos' (decree resolve points: "Primero.", "Segundo."). Strictly
+// sequential from the first word/number, minimum 3/2 headings, each record
+// >=60 chars. Records carry articleId:null + recordKind, are always
+// quality=quarantined (never exportable) and the class is anomaly-flagged.
+// Numbers are never invented: identifiers come only from the document text.
 // v30: OCR path additionally repairs an OCR-comma heading terminator
 // ("Artículo 3," when the scan prints "Artículo 3.") — only when the number is
 // the strictly expected next article AND a sentence-case capital follows, so a
@@ -302,6 +310,36 @@ const inlineRubricSuffix=line=>{
   return null;
 };
 
+const RESOLUTIVO_ORDINALS=['PRIMERO','SEGUNDO','TERCERO','CUARTO','QUINTO','SEXTO','SEPTIMO','OCTAVO','NOVENO','DECIMO'];
+function extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,declaredAmendedAt,retrievedAt,coverage,documentAnomalies}){
+  const build=(kind,heads)=>{
+    const recs=[];
+    for(let i=0;i<heads.length;i++){
+      const start=heads[i].index,end=i+1<heads.length?heads[i+1].index:lines.length;
+      const bodyLines=[];let transitoryCut=false;
+      for(const line of lines.slice(start,end)){if(transitory.test(line.text)){transitoryCut=true;break;}if(amendment.test(line.text)||editorialLine.test(line.text)){coverage.removedEditorialLines++;continue;}bodyLines.push(line);}
+      if(transitoryCut){coverage.nonArticleTransitoryOmitted=true;documentAnomalies.push('non-article-transitory-content-not-structured');}
+      let text=normalize(bodyLines.map(l=>l.text).join(' '));
+      let inlinePops=0;while(inlinePops<2){const m=inlineRubricSuffix(text);if(!m)break;const cut=/^[.!?]/.test(m[0])?m.index+1:m.index;text=text.slice(0,cut).trimEnd();inlinePops++;coverage.removedTrailingRubrics++;}
+      if(text.length<60)return null; // fail-closed: a thin section means the class guess was wrong
+      recs.push({id:`${versionId}:${kind}:${i+1}`,lawId:source.lawId,lawTitle:source.title,versionId,versionDate,articleId:null,recordKind:kind,ordinalLabel:heads[i].label??null,headingTitle:heads[i].title??null,text,sourceUrl:source.url,publisher:source.authority,jurisdiction:source.jurisdiction,language:'es',pdfSha256,textSha256:digest(text),contentSha256:digest(text),sourcePages:[...new Set(bodyLines.map(x=>x.page))],declaredAmendedAt,effectiveAt:null,retrievedAt,split:splitForLaw(source.lawId),splitGroup:source.lawId,quality:{status:'quarantined',anomalies:['non-article-'+kind+'-record'],legalAccuracy:'not-evaluated',currentness:'unverified',extraction:'deterministic-pdf-text-no-generated-content'},rights:source.reuseBasis,editorialNotes:[]});
+    }
+    return recs;
+  };
+  const principioHead=/^\s*(\d+)\.\-\s+([A-ZÁÉÍÓÚÑ][^.\n]{1,58}[A-Za-záéíóúñ\)])\.\s*$/;
+  const pHeads=[];for(let i=0;i<lines.length;i++){const m=principioHead.exec(lines[i].text);if(m&&Number(m[1])===pHeads.length+1)pHeads.push({index:i,title:m[2].trim(),label:m[1]});}
+  if(pHeads.length>=3){const recs=build('principio',pHeads);if(recs)return{kind:'principios',records:recs};}
+  // capitulos numerados: "1. TRÁMITES Y SERVICIOS" (all-caps chapter headings,
+  // no trailing period required). The all-caps gate excludes numbered
+  // enumerations ("1. Constitución Política...") which are lists, not chapters.
+  const capituloHead=/^\s*(\d+)\.\s+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ0-9 ,;()/\-]{3,70})\.?\s*$/;
+  const cHeads=[];for(let i=0;i<lines.length;i++){const m=capituloHead.exec(lines[i].text);if(m&&Number(m[1])===cHeads.length+1)cHeads.push({index:i,title:m[2].trim(),label:m[1]});}
+  if(cHeads.length>=3){const recs=build('capitulo',cHeads);if(recs)return{kind:'capitulos-numerados',records:recs};}
+  const rHeads=[];for(let i=0;i<lines.length;i++){const m=/^\s*([A-ZÁÉÍÓÚÑa-záéíóúñ]+)\.\-?\s*$/.exec(lines[i].text);if(m&&folded(m[1])===RESOLUTIVO_ORDINALS[rHeads.length])rHeads.push({index:i,label:m[1]});}
+  if(rHeads.length>=2){const recs=build('resolutivo',rHeads);if(recs)return{kind:'resolutivos',records:recs};}
+  return null;
+}
+
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
   const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,removedBulletGlyphs:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
@@ -433,7 +471,12 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     current.lines.push(line);
   }
   if(!ended){finish();documentAnomalies.push('no-explicit-transitory-boundary');}
-  coverage.operativeArticleCandidates=records.length;if(!records.length)documentAnomalies.push('no-numeric-article-headings');
+  coverage.operativeArticleCandidates=records.length;
+  if(!records.length){
+    const nonArticle=extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,declaredAmendedAt,retrievedAt,coverage,documentAnomalies});
+    if(nonArticle){records.push(...nonArticle.records);coverage.nonArticleClass=nonArticle.kind;documentAnomalies.push('non-article-document-class:'+nonArticle.kind);}
+    else documentAnomalies.push('no-numeric-article-headings');
+  }
   if(documentAnomalies.length)for(const record of records){record.quality.status='quarantined';record.quality.anomalies.push(...documentAnomalies);}
   coverage.exportableArticles=records.filter(r=>r.quality.status==='structurally-verified').length;
   return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records};

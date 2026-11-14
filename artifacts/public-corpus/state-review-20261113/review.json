@@ -287,8 +287,8 @@
     "method": "docs/qa/corte-canonico-reconciliacion-2026-11-14.md",
     "idsRegistrados": 2878,
     "documentosPresentes": 2874,
-    "extraccionesValidas": 2867,
-    "registros": 270689,
-    "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado. Correccion mismo-dia 2026-11-14: extractor v29 (OCR local fail-closed) recupero 4 leyes escaneadas (+280 registros: yuc-ley-011/012/015, oax-ley-219); reg-lfgfaga-fe-16may55 (declaratoria 1955) y oax-ley-222 (decreto con resolutivos) confirmados SIN estructura de articulos: quedan extraction-invalid con OCR verificado. Fallidos vigentes extraction-invalid: 7 (5 estructura ags-ley-160, mor-cod-031/045/069/090 + 2 no articulados) + 2 document-byte-budget + 1 catalog-link-broken + 1 catalog-duplicate. Correccion v30 mismo-dia: oax-ley-219 pasa de 37 a 92 registros (secuencia 1-92 completa; la corrida v29 se habia detenido en el reinicio de numeracion causado por el encabezado 3 no reconocido). Extracciones historicas v29 preservadas en el arbol."
+    "extraccionesValidas": 2871,
+    "registros": 270712,
+    "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado. Correccion mismo-dia 2026-11-14: extractor v29 (OCR local fail-closed) recupero 4 leyes escaneadas (+280 registros: yuc-ley-011/012/015, oax-ley-219); v30 corrigio oax-ley-219 a 92 registros (secuencia 1-92). v31 mismo-dia: soporte de documentos no articulados (esquema fiel, numeros SOLO del texto, articleId null, recordKind principio/capitulo/resolutivo, siempre quarantined): ags-ley-160 +10 principios, mor-cod-031 +6 capitulos, mor-cod-090 +5 capitulos, oax-ley-222 +2 resolutivos. Sin extraccion vigente: mor-cod-045 (fuente digital sin mapa Unicode: cuerpo no extraible por texto; requiere forzar OCR, cola OCR), mor-cod-069 (secciones tematicas sin numerar: clase no soportada, documentada), reg-lfgfaga-fe-16may55 (declaratoria 1955 texto corrido). Fallidos vigentes: 3 sin extraccion + 2 document-byte-budget + 1 catalog-link-broken + 1 catalog-duplicate. Extracciones historicas v29/v30 preservadas en el arbol. Derivado con scripts/derive-canonical-cut.mjs."
   }
 }

@@ -83,3 +83,15 @@ enlaces rotos; hoy solo queda 1.
 Todo corte futuro se deriva con este metodo (union de registries + arbol), nunca
 sumando sobre el corte anterior. El corte anterior queda en historia sin
 reescribir.
+
+## Correccion (mismo dia, extractor v31)
+Corte derivado de nuevo con scripts/derive-canonical-cut.mjs (script nuevo que
+reproduce este metodo; este documento queda como registro del metodo):
+- extracciones validas: 2,871 (+4); registros: 270,712 (+23).
+- Recuperados por v31 (docs/qa/extractor-v31-no-articulados-2026-11-14.md):
+  ags-ley-160 (10 principios), mor-cod-031 (6 capitulos), mor-cod-090 (5
+  capitulos), oax-ley-222 (2 resolutivos). Todo cuarentenado.
+- Presentes sin extraccion bajan a 3: mor-cod-045 (fuente sin mapa Unicode:
+  cola OCR pendiente force-OCR), mor-cod-069 (secciones sin numerar: clase no
+  soportada), reg-lfgfaga-fe-16may55 (declaratoria 1955 texto corrido).
+- ids registrados (2,878) y presentes (2,874) sin cambio.
