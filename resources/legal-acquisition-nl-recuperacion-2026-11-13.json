@@ -1,0 +1,133 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-nl-recuperacion-2026-11-13",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 8,
+  "maxRequests": 20,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 600000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "nuevo-leon",
+   "title": "Congreso del Estado de Nuevo Leon",
+   "jurisdiction": "MX-NLE",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes",
+    "evidence": "RE-ACQUISITION 2026-11-13 to restore absent artifacts of the 8 NL documents originally acquired 2026-11-11 (pilot-mx-nle-2026-11-11, absent from current artifact tree and from MANIFEST-RESPALDO; documented in docs/qa/public-corpus-extraction-audit-2026-11-11.md and freeze JSONs). Live HEAD of all 8 URLs on 2026-11-13: 8x HTTP 200 application/pdf, sizes 227221-1779177 bytes, all under limits. Post-acquisition: contrast sha256 with conserved freeze hashes where they exist (nl-civil, nl-penal); documents without conserved hash are reported as unverifiable-against-freeze.",
+    "observedAt": "2026-11-14T02:39:04.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T02:39:04.000Z",
+    "basis": "Same documented basis as the original 2026-11-11 NL acquisition: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Re-verified 2026-11-13: robots.txt User-agent: * Allow: /; the congress publishes direct download links. Absence of terms is NOT treated as express authorization by the owner. Quarantine only; no publication, no product activation.",
+    "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "hcnl-leyes-20261113",
+    "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes",
+    "observedAt": "2026-11-14T02:39:04.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "nuevo-leon-pending-01",
+   "sourceId": "nuevo-leon",
+   "title": "Código Civil para el Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20CIVIL%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON%20.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-02",
+   "sourceId": "nuevo-leon",
+   "title": "Código Penal para el Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20PENAL%20PARA%20EL%20ESTADO%20DE%20%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-03",
+   "sourceId": "nuevo-leon",
+   "title": "Código de Procedimientos Civiles del Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/CODIGO%20DE%20PROCEDIMIENTOS%20CIVILES%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-04",
+   "sourceId": "nuevo-leon",
+   "title": "Ley de los Derechos de Niñas, Niños y Adolescentes para el Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20LOS%20DERECHOS%20DE%20NINAS%20NINOS%20Y%20ADOLESCENTES%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-05",
+   "sourceId": "nuevo-leon",
+   "title": "Ley de Propiedad en Condominio de Inmuebles para el Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20PROPIEDAD%20EN%20CONDOMINIO%20DE%20INMUEBLES%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-06",
+   "sourceId": "nuevo-leon",
+   "title": "Ley de Mecanismos Alternativos para la Solución de Controversias para el Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20MECANISMOS%20ALTERNATIVOS%20PARA%20LA%20SOLUCION%20DE%20CONTROVERSIAS%20PARA%20EL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-07",
+   "sourceId": "nuevo-leon",
+   "title": "Ley de Responsabilidades Administrativas del Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20RESPONSABILIDADES%20ADMINISTRATIVAS%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  },
+  {
+   "id": "nuevo-leon-pending-08",
+   "sourceId": "nuevo-leon",
+   "title": "Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Nuevo León",
+   "jurisdiction": "MX-NLE",
+   "status": "approved",
+   "url": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20DE%20PROTECCION%20DE%20DATOS%20PERSONALES%20EN%20POSESION%20DE%20SUJETOS%20OBLIGADOS%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+   "versionId": "hcnl-leyes-20261113",
+   "evidenceUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes"
+  }
+ ]
+}

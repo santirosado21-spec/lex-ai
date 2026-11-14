@@ -23,18 +23,19 @@ conteos adquiridos):
   indice != adquirido).
 - Reglamentos y reglamentos de camaras federales: 139 ids unicos
   (137 reglamentos del programa + reg-senado + reg-diputados).
-- Nuevo Leon: 8 documentos documentados con freeze hashes; sus artefactos NO
-  estan presentes en el arbol actual, se contabilizan aparte.
+- Nuevo Leon: 8 documentos, 5,614 registros. Sus artefactos originales
+  estaban ausentes del arbol; re-adquiridos 2026-11-13 desde la fuente oficial
+  con contraste de hashes conservados (2/2 coinciden; QA
+  docs/qa/nl-recuperacion-artefactos-2026-11-13.md).
 - Coahuila: 250 documentos, 21,708 registros.
 - Baja California: 165 documentos, 12,388 registros.
 - Aguascalientes: 177 documentos, 17,115 registros.
 - Yucatan: 374 documentos, 37,914 registros (QA
   docs/qa/yuc-leyes-expansion-2026-11-13.md).
-- Total presente en el arbol: 1,383 ids unicos, 136,539 registros, todo
+- Total presente en el arbol: 1,391 ids unicos, 142,153 registros, todo
   cuarentenado (extraccion estructural verificada, SIN revision independiente
-  de contenido, no publicados, no indexados). Con los 8 de NL documentados:
-  1,391 documentos conocidos.
-- 1,382 = 1,383 ids unicos presentes menos 1 duplicado de contenido conocido
+  de contenido, no publicados, no indexados).
+- 1,390 = 1,391 ids unicos presentes menos 1 duplicado de contenido conocido
   (CPEUM en el catalogo de Coahuila). Esta cifra NO es prueba de unicidad
   global: la deduplicacion demostrada es por id y por titulo normalizado, no
   por contenido; pueden existir duplicados con titulos distintos no
