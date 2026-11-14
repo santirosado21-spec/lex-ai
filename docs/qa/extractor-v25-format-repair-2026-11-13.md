@@ -45,3 +45,7 @@ Extractor v25 sobre los snapshots ya adquiridos: 12/12 Yucatán extraen (022: 6 
 
 - Re-correr los lotes Yucatán afectados (03, 04, 05, 10, 11, 12) con v25 para cerrar los 12 documentos en los reportes de adquisición y actualizar la contabilidad con sección «Corrección» en el QA de Yucatán (mismo día).
 - ags-ley-160: reclasificar la causa en la próxima actualización de contabilidad (sin reescritura del doc histórico de AGS).
+
+## Addendum v26 (2026-11-13, mismo día): límite de páginas del worker
+
+Causa de nay-ley-148 (Presupuesto de Egresos Nayarit 2026, 1,376 páginas, 20,324,463 B bajo techo duro): cap de 1,200 páginas del worker (`PDF page coverage incomplete`). Verificado antes del cambio sobre el snapshot real: con cap 2,000 parsea 1,376/1,376 páginas en ~12 s y ~77 MB heap (límites worker 120 s / 768 MB). Cambio: `EXTRACTOR_MAX_PAGES=2000` exportado, `EXTRACTOR_VERSION=26`, test de contrato añadido. Sobre el cap se sigue fail-closed. Re-corrido nay-leyes-15b: nay-ley-148 cuarentenado con 99 registros. Suite completa: 1171 pass / 0 fail / 33 skipped. Sin gasto ni cambio de condiciones.

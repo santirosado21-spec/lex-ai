@@ -4,7 +4,9 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=25;
+export const EXTRACTOR_VERSION=26;
+// Maximum PDF pages the worker will parse. Raised 1200 -> 2000 in v26 after verifying the largest observed official document (nay-ley-148, Presupuesto de Egresos Nayarit 2026: 1,376 pages, 20.3 MB) parses in ~12 s and ~77 MB heap, well inside the worker's 120 s timeout and 768 MB old-generation limit. Documents above the cap still fail closed as 'PDF page coverage incomplete'.
+export const EXTRACTOR_MAX_PAGES=2000;
 export const INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/index.htm';
 export const REGLAMENTOS_INDEX_URL='https://www.diputados.gob.mx/LeyesBiblio/regla.htm';
 export const CANDIDATE_REPOSITORIES=['renich/LeyesMexicanas','rafael-afie/leyes-fiscales-mx','alfonsomp18/mx-law-code-v2'];
@@ -360,7 +362,7 @@ export async function ingestLibrary({catalog,outputDir,limit=40,download=true,fe
 
 if(!isMainThread&&workerData?.kind==='extract-legal-library'){
   try{const {default:pdf}=await import('pdf-parse/lib/pdf-parse.js');const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('PDF too large');const pages=[];
-    const result=await pdf(new Uint8Array(bytes),{max:1200,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
-    if(result.numpages>1200||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);parentPort.postMessage({result:extractArticles(pages,workerData.source,workerData.metadata)});
+    const result=await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
+    if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);parentPort.postMessage({result:extractArticles(pages,workerData.source,workerData.metadata)});
   }catch(e){parentPort.postMessage({error:e.message});}
 }

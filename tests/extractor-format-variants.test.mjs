@@ -70,5 +70,12 @@ test('documents with spaced numeric headings never enter ordinal/nospace paths (
 });
 
 test('extractor version bumped for the format repair',()=>{
-  assert.equal(EXTRACTOR_VERSION,25);
+  assert.ok(EXTRACTOR_VERSION>=25);
+});
+
+test('worker page cap raised and exported (nay-ley-148 class: 1376 pages)',async()=>{
+  const {EXTRACTOR_MAX_PAGES}=await import('../server/legal-library.mjs');
+  assert.equal(EXTRACTOR_MAX_PAGES,2000);
+  assert.ok(EXTRACTOR_MAX_PAGES>=1376);
+  assert.equal(EXTRACTOR_VERSION,26);
 });
