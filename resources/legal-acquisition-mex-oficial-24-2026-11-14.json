@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mex-oficial-24-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "legislacion-congresoedomex",
+   "title": "Congreso del Estado de Mexico - Legislacion vigente (portal oficial legislacion.congresoedomex.gob.mx)",
+   "jurisdiction": "MX-MEX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "evidence": "Live official State of Mexico congress legislation portal (catalog page with per-document download links, sections Constitucion/Ley/Codigo/Reglamento) fetched 2026-11-14; catalog sha256 b4ed2078cec812c0e664d3a9abbb9776f302a55f02405a037c44293609833c0b. 261 unique documents enumerated (constitucion 1, codigos 8, leyes 245, reglamentos 7): 220 .doc OLE, 35 .docx, 6 .pdf; no normalized-title duplicates. Host located via public web search after institutional site (congresoedomex.gob.mx, Next.js) showed no law links; guessed subdomains NOT probed beyond one DNS check each. Full HEAD sweep 2026-11-14: 261x HTTP 200, max 6,908,656 bytes, 0 over 10MB. Batch 24/27: mex-ley-230, mex-ley-231, mex-ley-232, mex-ley-233, mex-ley-234, mex-ley-235, mex-ley-236, mex-ley-237, mex-ley-238, mex-ley-239.",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T10:18:14.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt 200 allow-all (User-agent: * with empty Disallow; no AI-agent rules, no content-signals); aviso de privacidad page present, no terms-of-use or reuse/IP prohibition located (absence of terms is NOT treated as express authorization by the owner); official state congress portal publishing direct document downloads; no blocks with default user agent. Scope limited to official normative texts listed on the catalog; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "legislacion-congresoedomex-20261114",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mex-ley-230",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley del Centro de Conciliación Laboral del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/240-CONCILIACI%C3%93N%20LABORAL.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-231",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley por el que se crea el Organismo Público Descentralizado denominado “Instituto Municipal de Cultura Física y Deporte de Lerma\"",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/241-DEPORTE%20DE%20LERMA.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-232",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley por la que se crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Ecatepec de Morelos, México (IMCUFIDEEM)",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/242-DEPORTE%20DE%20ECATEPEC.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-233",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley del organismo público descentralizado de carácter estatal denominado Instituto de Políticas Pública del Estado de México y sus Municipios",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/243-POL%C3%8DTICAS%20P%C3%9ABLICAS.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-234",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Amnistía del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/244-AMNISTIA.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-235",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Turismo Sostenible y Desarrollo Artesanal del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/245-TURISMO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-236",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley para la Protección Integral de Periodistas y Personas Defensoras de los Derechos Humanos del Estado de México.",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/246-PERIODISTAS.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-237",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Tecámac",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/247-DEPORTE%20TECAMAC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-238",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de los Cuerpos de Bomberos del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/249-BOMBEROS.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-239",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Gobierno de Coalición, Reglamentaria de los artículos 61 fracción LI y 77 fracción XLVIII de la Constitución Política del Estado Libre y Soberano de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/251-COALICION.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  }
+ ]
+}

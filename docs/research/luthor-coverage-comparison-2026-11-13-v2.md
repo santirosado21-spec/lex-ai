@@ -11,13 +11,14 @@ historico. La v1 quedo desactualizada (decia 462 documentos pre-estatales).
 
 Cifras declaradas por el sitio; no verificables de forma independiente.
 
-## Lo verificado en Rejon al 2026-11-14 04:06 CST (todo en cuarentena)
+## Lo verificado en Rejon al 2026-11-14 05:00 CST (todo en cuarentena)
 
 Corte canonico (ultimo report.json por id + PDF en disco), derivado una sola
 vez del inventario, sin sumar sobre reportes anteriores:
 
-- ids registrados: 2,584. PDFs presentes: 2,580. Extracciones validas: 2,569.
-  Registros: 246,863. Todo cuarentenado (extraccion estructural; SIN revision
+- ids registrados: 2,845. Documentos presentes (snapshots; antes "PDFs
+  presentes": las fuentes Word oficiales v27 ya son parte del corpus): 2,839.
+  Extracciones validas: 2,828. Registros: 260,627. Todo cuarentenado (extraccion estructural; SIN revision
   independiente de contenido, no publicado, no indexado).
 - Fallidos por clase: 0 invalid-pdf (serie fiscal Nayarit 2026 reparada
   2026-11-14: defecto del servidor que anteponia 921 bytes HTML al payload;
@@ -36,7 +37,9 @@ vez del inventario, sin sumar sobre reportes anteriores:
   extracciones, 14,711 (QA docs/qa/morelos-acquisition-2026-11-13.md);
   Yucatan re-corrido con extractor v25: 386/389, 38,105 (Correccion en su QA);
   Colima 169 catalogados, 167/167 adquiridos, 16,777 (QA
-  docs/qa/colima-acquisition-2026-11-14.md).
+  docs/qa/colima-acquisition-2026-11-14.md); Edomex 261 catalogados, 259/260
+  adquiridos (1 duplicado de catalogo bloqueado), 13,764 (QA
+  docs/qa/edomex-acquisition-2026-11-14.md).
 
 ## Lo verificado en Rejon al 2026-11-13 20:34 CST (corte previo, conservado)
 
@@ -70,18 +73,27 @@ conteos adquiridos):
 
 ## Brecha restante
 
-1. Cobertura estatal: 8 de 32 entidades con barrido de adquisicion cerrado
-   dentro del alcance documentado (Coahuila, BC, AGS, Yucatan, Oaxaca,
-   Durango, Morelos, Colima). "Cerrado" describe solo el barrido del alcance
+1. Cobertura estatal: 11 de 32 entidades con al menos un programa de
+   adquisicion cerrado dentro del alcance documentado de su propio QA
+   (Coahuila, BC, AGS, Yucatan, Oaxaca, Durango, Morelos, Colima, Edomex,
+   Nayarit, Tabasco). Correccion de conteo: las listas previas (7, luego 8 y
+   9) omitian Nayarit (nay-leyes-expansion, cerrado 2026-11-13 + serie fiscal
+   reparada 2026-11-14) y Tabasco (tab-leyes-expansion, 191/191 cerrado
+   2026-11-13); ambos programas ya constaban como cerrados en sus QA. NL sigue
+   parcial (8 documentos). "Cerrado" describe solo el programa documentado en
+   cada QA (clases alli enumeradas); NO cobertura integral de la entidad. "Cerrado" describe solo el barrido del alcance
    documentado de cada entidad (clases enumeradas y excluidas en su QA);
    NO significa entidad integramente cubierta ni contenido validado
    (cuarentena, sin revision independiente).
    Revision por estado en artifacts/public-corpus/state-review-20261113:
-   candidatos viables restantes del bloque 2: Nayarit, Tabasco, Edomex,
-   Michoacan, Queretaro, SLP, Sonora, Zacatecas, Sinaloa. Pendiente-permiso: Campeche, Chihuahua,
+   candidatos viables restantes del bloque 2: Michoacan, Queretaro, SLP,
+   Sonora, Zacatecas. Pendiente-permiso: Campeche, Chihuahua,
    Puebla, Quintana Roo, Tamaulipas (robots con intencion de gestion IA).
    Bloqueados tecnicamente (sin reintento): Chiapas, CDMX, BCS, Guerrero,
-   Hidalgo (TLS). Guanajuato y Tlaxcala: pendientes sin mas sondeos
+   Hidalgo (TLS), Sinaloa (gaceta.congresosinaloa.gob.mx cert chain
+   incompleta 2026-11-14; www OK pero el acervo vive en ese host).
+   Conexion fallida al 2026-11-14 04:14 (no ausencia; reevaluar): hosts de
+   Zacatecas, SLP, Queretaro, Sonora y Michoacan. Guanajuato y Tlaxcala: pendientes sin mas sondeos
    (fallos de conexion repetidos al 2026-11-13) salvo nueva senal o ruta
    alternativa verificada.
 2. Tratados internacionales y acervo historico (el referente declara desde

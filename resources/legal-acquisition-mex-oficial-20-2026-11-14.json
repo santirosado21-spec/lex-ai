@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mex-oficial-20-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "legislacion-congresoedomex",
+   "title": "Congreso del Estado de Mexico - Legislacion vigente (portal oficial legislacion.congresoedomex.gob.mx)",
+   "jurisdiction": "MX-MEX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "evidence": "Live official State of Mexico congress legislation portal (catalog page with per-document download links, sections Constitucion/Ley/Codigo/Reglamento) fetched 2026-11-14; catalog sha256 b4ed2078cec812c0e664d3a9abbb9776f302a55f02405a037c44293609833c0b. 261 unique documents enumerated (constitucion 1, codigos 8, leyes 245, reglamentos 7): 220 .doc OLE, 35 .docx, 6 .pdf; no normalized-title duplicates. Host located via public web search after institutional site (congresoedomex.gob.mx, Next.js) showed no law links; guessed subdomains NOT probed beyond one DNS check each. Full HEAD sweep 2026-11-14: 261x HTTP 200, max 6,908,656 bytes, 0 over 10MB. Batch 20/27: mex-ley-190, mex-ley-191, mex-ley-192, mex-ley-193, mex-ley-194, mex-ley-195, mex-ley-196, mex-ley-197, mex-ley-198, mex-ley-199.",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T10:18:14.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt 200 allow-all (User-agent: * with empty Disallow; no AI-agent rules, no content-signals); aviso de privacidad page present, no terms-of-use or reuse/IP prohibition located (absence of terms is NOT treated as express authorization by the owner); official state congress portal publishing direct document downloads; no blocks with default user agent. Scope limited to official normative texts listed on the catalog; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "legislacion-congresoedomex-20261114",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mex-ley-190",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Valle de Chalco Solidaridad",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/200-DEPORTE-VALLE%20DE%20CHALCO%20SOLIDARIDAD.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-191",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Zumpango, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/201-DEPORTE-ZUMPANGO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-192",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Amecameca, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/202-DEPORTE-AMECAMECA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-193",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Tultepec, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/203-DEPORTE-TULTEPEC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-194",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Jaltenco, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/204-DEPORTE-JALTENCO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-195",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Ixtapan del Oro, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/205-DEPORTE-IXTAPAN%20DEL%20ORO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-196",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Metepec, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/206-DEPORTE-METEPEC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-197",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Tequixquiac, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/207-DEPORTE-TEQUIXQUIAC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-198",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de San José del Rincón, México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/208-DEPORTE-SANJOSEDELRINCON.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-199",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Naucalpan de Juárez",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/209-DEPORTE-NAUCALPAN.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  }
+ ]
+}

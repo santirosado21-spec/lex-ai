@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mex-oficial-12-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "legislacion-congresoedomex",
+   "title": "Congreso del Estado de Mexico - Legislacion vigente (portal oficial legislacion.congresoedomex.gob.mx)",
+   "jurisdiction": "MX-MEX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "evidence": "Live official State of Mexico congress legislation portal (catalog page with per-document download links, sections Constitucion/Ley/Codigo/Reglamento) fetched 2026-11-14; catalog sha256 b4ed2078cec812c0e664d3a9abbb9776f302a55f02405a037c44293609833c0b. 261 unique documents enumerated (constitucion 1, codigos 8, leyes 245, reglamentos 7): 220 .doc OLE, 35 .docx, 6 .pdf; no normalized-title duplicates. Host located via public web search after institutional site (congresoedomex.gob.mx, Next.js) showed no law links; guessed subdomains NOT probed beyond one DNS check each. Full HEAD sweep 2026-11-14: 261x HTTP 200, max 6,908,656 bytes, 0 over 10MB. Batch 12/27: mex-ley-110, mex-ley-111, mex-ley-112, mex-ley-113, mex-ley-114, mex-ley-115, mex-ley-116, mex-ley-117, mex-ley-118, mex-ley-119.",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T10:18:14.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt 200 allow-all (User-agent: * with empty Disallow; no AI-agent rules, no content-signals); aviso de privacidad page present, no terms-of-use or reuse/IP prohibition located (absence of terms is NOT treated as express authorization by the owner); official state congress portal publishing direct document downloads; no blocks with default user agent. Scope limited to official normative texts listed on the catalog; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "legislacion-congresoedomex-20261114",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mex-ley-110",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Axapusco",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/120-DEPORTE-AXAPUSCO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-111",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Calimaya",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/121-DEPORTE-CALIMAYA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-112",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado Denominado Instituto Municipal de Cultura Física y Deporte de Capulhuac",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/122-DEPORTE-CAPULHUAC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-113",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Isidro Fabela",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/123-DEPORTE-ISIDRO%20FABELA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-114",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Jilotzingo",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/124-DEPORTE-JILOTZINGO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-115",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado denominado Instituto Municipal de Cultura Física y Deporte de Malinalco",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/125-DEPORTE-MALINALCO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-116",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado Denominado Instituto Municipal de Cultura Física y Deporte de Ocoyoacac",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/126-DEPORTE-OCOYOACAC.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-117",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado Denominado Instituto Municipal de Cultura Física y Deporte de Ocuilan",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/127-DEPORTE-OCUILAN.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-118",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado Denominado Instituto Municipal de Cultura Física y Deporte de Otumba",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/128-DEPORTE-OTUMBA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-119",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley que crea el Organismo Público Descentralizado Denominado Instituto Municipal de Cultura Física y Deporte de Papalotla",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/129-DEPORTE-PAPALOTLA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  }
+ ]
+}

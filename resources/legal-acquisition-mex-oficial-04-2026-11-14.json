@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mex-oficial-04-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "legislacion-congresoedomex",
+   "title": "Congreso del Estado de Mexico - Legislacion vigente (portal oficial legislacion.congresoedomex.gob.mx)",
+   "jurisdiction": "MX-MEX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "evidence": "Live official State of Mexico congress legislation portal (catalog page with per-document download links, sections Constitucion/Ley/Codigo/Reglamento) fetched 2026-11-14; catalog sha256 b4ed2078cec812c0e664d3a9abbb9776f302a55f02405a037c44293609833c0b. 261 unique documents enumerated (constitucion 1, codigos 8, leyes 245, reglamentos 7): 220 .doc OLE, 35 .docx, 6 .pdf; no normalized-title duplicates. Host located via public web search after institutional site (congresoedomex.gob.mx, Next.js) showed no law links; guessed subdomains NOT probed beyond one DNS check each. Full HEAD sweep 2026-11-14: 261x HTTP 200, max 6,908,656 bytes, 0 over 10MB. Batch 4/27: mex-ley-030, mex-ley-031, mex-ley-032, mex-ley-033, mex-ley-034, mex-ley-035, mex-ley-036, mex-ley-037, mex-ley-038, mex-ley-039.",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T10:18:14.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt 200 allow-all (User-agent: * with empty Disallow; no AI-agent rules, no content-signals); aviso de privacidad page present, no terms-of-use or reuse/IP prohibition located (absence of terms is NOT treated as express authorization by the owner); official state congress portal publishing direct document downloads; no blocks with default user agent. Scope limited to official normative texts listed on the catalog; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "legislacion-congresoedomex-20261114",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mex-ley-030",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Instituciones de Asistencia Privada del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/39-INSTITUCIONES%20DE%20ASISTENCIA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-031",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley para la Declaración Especial de Ausencia por Desaparición de Personas del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/40-DECLARACI%C3%93N%20ESPECIAL.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-032",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de la Comisión de Derechos Humanos del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/41-COMISI%C3%93N%20DE%20DERECHOS%20H.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-033",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de la Juventud del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/42-JUVENTUD.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-034",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de la Universidad Autónoma del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/43-UNIVERSIDAD%20AUT%C3%93NOMA.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-035",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de los Derechos de Niñas, Niños y Adolescentes del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/44-DERECHOS%20DE%20NI%C3%91AS.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-036",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Mediación, Conciliación y Promoción de la Paz Social para el Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/45-MEDIACI%C3%93N.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-037",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Movilidad y Seguridad Vial del Estado de México y sus Municipios",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/46-MOVILIDAD-.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-038",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Planeación del Estado de México y Municipios",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/47-PLANEACION.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-039",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Prestación de Servicios para la Atención, Cuidado y Desarrollo Integral Infantil en el Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/48-PRESTACI%C3%93N%20DE%20SERVICIOS.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  }
+ ]
+}

@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-mex-oficial-25-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "legislacion-congresoedomex",
+   "title": "Congreso del Estado de Mexico - Legislacion vigente (portal oficial legislacion.congresoedomex.gob.mx)",
+   "jurisdiction": "MX-MEX",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "evidence": "Live official State of Mexico congress legislation portal (catalog page with per-document download links, sections Constitucion/Ley/Codigo/Reglamento) fetched 2026-11-14; catalog sha256 b4ed2078cec812c0e664d3a9abbb9776f302a55f02405a037c44293609833c0b. 261 unique documents enumerated (constitucion 1, codigos 8, leyes 245, reglamentos 7): 220 .doc OLE, 35 .docx, 6 .pdf; no normalized-title duplicates. Host located via public web search after institutional site (congresoedomex.gob.mx, Next.js) showed no law links; guessed subdomains NOT probed beyond one DNS check each. Full HEAD sweep 2026-11-14: 261x HTTP 200, max 6,908,656 bytes, 0 over 10MB. Batch 25/27: mex-ley-240, mex-ley-241, mex-ley-242, mex-ley-243, mex-ley-244, mex-ley-245, mex-cod-001, mex-cod-002, mex-cod-003, mex-cod-004.",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T10:18:14.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt 200 allow-all (User-agent: * with empty Disallow; no AI-agent rules, no content-signals); aviso de privacidad page present, no terms-of-use or reuse/IP prohibition located (absence of terms is NOT treated as express authorization by the owner); official state congress portal publishing direct document downloads; no blocks with default user agent. Scope limited to official normative texts listed on the catalog; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "legislacion-congresoedomex-20261114",
+    "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion",
+    "observedAt": "2026-11-14T10:18:14.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "mex-ley-240",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Fomento y Protección del Maíz Nativo como Patrimonio Biocultural y Alimentario del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/76-MAIZ.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-241",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley para la Implementación de Energías Limpias y Renovables en los Edificios Públicos del Estado de México y Municipios",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/250-ENERGIAS.docx",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-242",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Fomento para la Lectura y el Libro del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/252-LECTURA.pdf",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-243",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley para Prevenir, Atender y Combatir los Delitos en materia de Extorsión y Delitos Vinculados del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/74-EXTORSION.pdf",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-244",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Salud del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/253-SALUD.pdf",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-ley-245",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Ley de Protección, Cuidado y Bienestar Animal del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/254-ANIMAL.pdf",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-cod-001",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Código Administrativo del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/2-C%C3%93DIGO%20ADMINISTRATIVO.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-cod-002",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Código Civil del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/3-CODIGO%20CIVIL.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-cod-003",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Código de Procedimientos Administrativos del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/4-C%C3%93DIGO%20DE%20PROCEDIMIENTOS%20ADMINISTRATIVOS.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  },
+  {
+   "id": "mex-cod-004",
+   "sourceId": "legislacion-congresoedomex",
+   "title": "Código de Procedimientos Civiles del Estado de México",
+   "jurisdiction": "MX-MEX",
+   "status": "approved",
+   "url": "https://legislacion.congresoedomex.gob.mx/storage/documentos/legislacion/5-C%C3%93DIGO%20DE%20PROCEDIMIENTOS%20CIVILES.doc",
+   "versionId": "legislacion-congresoedomex-20261114",
+   "evidenceUrl": "https://legislacion.congresoedomex.gob.mx/legislacion"
+  }
+ ]
+}
