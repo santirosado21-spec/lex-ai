@@ -1,294 +1,294 @@
 {
- "schemaVersion": 1,
- "kind": "state-source-review",
- "generatedAt": "2026-11-13T22:38:00Z",
- "dataClass": "public-development",
- "productionEnabled": false,
- "scope": "revision por estado (patron NL): robots + catalogo + enlaces a documentos; sin adquisicion; una peticion por pagina, 2s entre hosts",
- "states": [
-  {
-   "entity": "Campeche",
-   "verdict": "pendiente-permiso",
-   "robots": {
-    "status": 200,
-    "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
-    "notes": "BLOQUEA por UA a GPTBot/ChatGPT-User/OAI-SearchBot/meta-externalagent y scrapers comerciales (AhrefsBot, SemrushBot, etc.): senal explicita del titular contra adquisicion automatizada/IA. La regla generica * NO se interpreta como permiso. Sin descarga masiva; pendiente de autorizacion establecida (terminos o permiso expreso)."
-   },
-   "catalog": {
-    "url": "https://legislacion.congresocam.gob.mx/leyes-estatales/por-orden-alfabetico/",
-    "status": 200,
-    "sha256": "58aec5bba32f235d069d1f2a1f796ad8e384bf7c9dd0f7c6c3e3581204dece28",
-    "documentEndpoints": 538,
-    "pattern": "/~documents/<categoria>/<slug>/?layout=file (plugin docman)"
-   },
-   "downloadedSoFar": "SOLO paginas HTML publicas de catalogo (home + indice alfabetico) y robots.txt; 1 HEAD sin cuerpo a un endpoint de documento; 0 documentos descargados."
+  "schemaVersion": 1,
+  "kind": "state-source-review",
+  "generatedAt": "2026-11-13T22:38:00Z",
+  "dataClass": "public-development",
+  "productionEnabled": false,
+  "scope": "revision por estado (patron NL): robots + catalogo + enlaces a documentos; sin adquisicion; una peticion por pagina, 2s entre hosts",
+  "states": [
+    {
+      "entity": "Campeche",
+      "verdict": "pendiente-permiso",
+      "robots": {
+        "status": 200,
+        "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
+        "notes": "BLOQUEA por UA a GPTBot/ChatGPT-User/OAI-SearchBot/meta-externalagent y scrapers comerciales (AhrefsBot, SemrushBot, etc.): senal explicita del titular contra adquisicion automatizada/IA. La regla generica * NO se interpreta como permiso. Sin descarga masiva; pendiente de autorizacion establecida (terminos o permiso expreso)."
+      },
+      "catalog": {
+        "url": "https://legislacion.congresocam.gob.mx/leyes-estatales/por-orden-alfabetico/",
+        "status": 200,
+        "sha256": "58aec5bba32f235d069d1f2a1f796ad8e384bf7c9dd0f7c6c3e3581204dece28",
+        "documentEndpoints": 538,
+        "pattern": "/~documents/<categoria>/<slug>/?layout=file (plugin docman)"
+      },
+      "downloadedSoFar": "SOLO paginas HTML publicas de catalogo (home + indice alfabetico) y robots.txt; 1 HEAD sin cuerpo a un endpoint de documento; 0 documentos descargados."
+    },
+    {
+      "entity": "Chihuahua",
+      "verdict": "pendiente-permiso",
+      "robots": {
+        "status": 200,
+        "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
+        "notes": "Mismo bloqueo por UA que Campeche en congresochihuahua.gob.mx; aunque el host de documentos congresochihuahua2.gob.mx tiene robots allow-all, la senal del titular en el sitio principal gobierna. Sin descarga masiva; pendiente de autorizacion."
+      },
+      "catalog": {
+        "url": "https://www.congresochihuahua.gob.mx/biblioteca/ (leyes/ y codigos/)",
+        "status": 200,
+        "sha256": "1e10ff6afb5c98fc22aefbfd6d332aa5e8b4039894308977f5ecd92b62b90954",
+        "documentEndpoints": "indices /biblioteca/leyes/ y /biblioteca/codigos/ con PDF/DOC/DOCX en host congresochihuahua2"
+      },
+      "downloadedSoFar": "SOLO paginas HTML publicas (biblioteca, codigos) y robots.txt de ambos hosts; 0 documentos descargados, 0 HEAD a documentos."
+    },
+    {
+      "entity": "Baja California",
+      "verdict": "sin-senal-restrictiva",
+      "robots": {
+        "status": 404,
+        "notes": "sin robots.txt (convencion: permitido)"
+      },
+      "catalog": {
+        "url": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
+        "status": 200,
+        "sha256": "35502054726998e4b38934b3ea1842ffeea95849ff0b1e45b61efa0dc3d1b423",
+        "documentEndpoints": 333,
+        "pattern": "Documentos/ProcesoParlamentario/Leyes/TOMO_*/*.PDF|DOC"
+      },
+      "termsCheck": "Home + catalogo revisados 2026-11-13: sin pagina de terminos de uso localizada, sin prohibicion de acceso automatizado, sin \"derechos reservados\" restrictivo; congreso publica enlaces directos de descarga. Base documentada LFDA art. 14 frac. VIII (base documentada, no conclusion legal), misma que el programa federal.",
+      "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo Leyes) y robots.txt (404); 0 documentos descargados."
+    },
+    {
+      "entity": "Coahuila",
+      "verdict": "sin-senal-restrictiva",
+      "robots": {
+        "status": 404,
+        "notes": "sin robots.txt (convencion: permitido)"
+      },
+      "catalog": {
+        "url": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
+        "status": 200,
+        "sha256": "b13020ae4035481193a3c8e1d420953e678b123644737a38d1b5da3fdc5233d7",
+        "documentEndpoints": 528,
+        "pattern": "wp-content/uploads/<yyyy>/<mm>/coaNNN.(pdf|doc|docx)"
+      },
+      "termsCheck": "Home + catalogo revisados 2026-11-13: sin terminos de uso localizados; solo aviso de copyright atribucion (c) 2021 Congreso del Estado de Coahuila; sin robots.txt; enlaces directos PDF/DOC/DOCX publicados por el congreso. Base documentada LFDA art. 14 frac. VIII, misma que el programa federal.",
+      "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo leyes-estatales-vigentes) y robots.txt (404); 0 documentos descargados."
+    },
+    {
+      "entity": "Aguascalientes",
+      "verdict": "pendiente-analisis-y-terminos",
+      "robots": {
+        "status": 404,
+        "notes": "sin robots.txt"
+      },
+      "catalog": {
+        "url": "https://congresoags.gob.mx/agenda_legislativa/leyes",
+        "status": 200,
+        "sha256": "16c36976ba534e051e84a080e98a5ab7ceee586b2b8438ea8edbd7258d5ef57d",
+        "notes": "solo 2 enlaces directos; indice probablemente via endpoint dinamico Home/DownloadMiscelaneous?filename=; requiere analisis adicional"
+      }
+    },
+    {
+      "entity": "Chiapas",
+      "verdict": "bloqueado",
+      "robots": {
+        "status": 200,
+        "notes": "Joomla default; Disallow /media/ /images/ /components/ etc."
+      },
+      "catalog": {
+        "url": "http://congresochiapas.gob.mx/legislaturalxvi/trabajo-legislativo/legislacion-vigente",
+        "status": "403 en cuerpo (HTTP 200)",
+        "notes": "\"403: Access Forbidden. Malware detected.\" anti-bot; documentado, SIN reintento"
+      }
+    },
+    {
+      "entity": "Ciudad de México",
+      "verdict": "bloqueado",
+      "robots": {
+        "status": "redirect 302 www->apex",
+        "notes": "certificado TLS del apex sin SAN para el host (SSL verify falla); no se desactiva verificacion TLS (fail-closed)"
+      },
+      "catalog": {
+        "url": "https://www.congresocdmx.gob.mx/marco-legal-cdmx-107-2.html",
+        "notes": "misma falla TLS al seguir redirect"
+      }
+    },
+    {
+      "entity": "Baja California Sur",
+      "verdict": "bloqueado",
+      "robots": {
+        "status": "302->https",
+        "notes": "cadena de certificados rota en https://www.cbcs.gob.mx (unable to get local issuer); fail-closed, sin bypass"
+      }
+    }
+  ],
+  "classificationCorrectedAt": "2026-11-14T09:11:21Z",
+  "correctionNote": "Clasificacion corregida 2026-11-13 16:38 CST: la regla generica User-agent:* NO se trata como permiso cuando el titular excluye explicitamente agentes IA/scrapers comerciales por UA y la adquisicion es para corpus IA comercial; no se elige UA alternativo para eludir la senal. robots.txt ausente tampoco prueba permiso por si solo: se verificaron terminos/derechos aplicables en home y catalogo.",
+  "block2GeneratedAt": "2026-11-14T01:35:00Z",
+  "block2": {
+    "scope": "sondeo robots/home de 21 congresos estatales restantes (15s, 2s entre hosts, sin adquisicion); dominios candidatos por verificar marcados",
+    "viables_pendiente_terminos": [
+      {
+        "entity": "Durango",
+        "robots": "200, solo Disallow contraloria",
+        "home": 200
+      },
+      {
+        "entity": "Hidalgo",
+        "robots": "200, allow-all (Disallow vacio + _pda)",
+        "home": 200
+      },
+      {
+        "entity": "Morelos",
+        "robots": "200, solo wp-admin",
+        "home": 200
+      },
+      {
+        "entity": "Nayarit",
+        "robots": "200, solo wp-admin",
+        "home": 200
+      },
+      {
+        "entity": "Tabasco",
+        "robots": "200, solo wp-admin/podscache",
+        "home": 200
+      },
+      {
+        "entity": "Yucatán",
+        "robots": "200, allow-all",
+        "home": 200
+      },
+      {
+        "entity": "Tamaulipas",
+        "robots": "200 pero SOLO preambulo content-signals (1248 bytes, sin reglas User-agent ni senales); por su propia regla (c) no restringe; documentado",
+        "home": 200
+      },
+      {
+        "entity": "Colima",
+        "robots": "404 (sin archivo)",
+        "home": 200
+      },
+      {
+        "entity": "Estado de México",
+        "robots": "404",
+        "home": 200
+      },
+      {
+        "entity": "Oaxaca",
+        "robots": "404",
+        "home": 200
+      }
+    ],
+    "pendiente_permiso": [
+      {
+        "entity": "Puebla",
+        "evidence": "robots con Content-Signal search=yes,ai-train=no,use=reference + Disallow explicito GPTBot/ClaudeBot/CCBot/Google-Extended/etc (Cloudflare managed); home 403 anti-bot. Misma clase que Campeche/Chihuahua"
+      },
+      {
+        "entity": "Quintana Roo",
+        "evidence": "identico content-signal ai-train=no + bloqueos IA; home 403"
+      }
+    ],
+    "bloqueado": [
+      {
+        "entity": "Guerrero",
+        "evidence": "403 en robots y home (anti-bot), sin reintento"
+      }
+    ],
+    "dominio_por_verificar": [
+      "Guanajuato",
+      "Michoacán",
+      "Querétaro",
+      "San Luis Potosí",
+      "Sonora",
+      "Tlaxcala",
+      "Zacatecas"
+    ],
+    "redirect_por_seguir": [
+      {
+        "entity": "Sinaloa",
+        "evidence": "home 301, ver destino"
+      }
+    ]
   },
-  {
-   "entity": "Chihuahua",
-   "verdict": "pendiente-permiso",
-   "robots": {
-    "status": 200,
-    "sha256": "6dab9c87a5c57a2ca79079dbcd0e2bbe15e98a0eabce3ac59944121e1d686ea0",
-    "notes": "Mismo bloqueo por UA que Campeche en congresochihuahua.gob.mx; aunque el host de documentos congresochihuahua2.gob.mx tiene robots allow-all, la senal del titular en el sitio principal gobierna. Sin descarga masiva; pendiente de autorizacion."
-   },
-   "catalog": {
-    "url": "https://www.congresochihuahua.gob.mx/biblioteca/ (leyes/ y codigos/)",
-    "status": 200,
-    "sha256": "1e10ff6afb5c98fc22aefbfd6d332aa5e8b4039894308977f5ecd92b62b90954",
-    "documentEndpoints": "indices /biblioteca/leyes/ y /biblioteca/codigos/ con PDF/DOC/DOCX en host congresochihuahua2"
-   },
-   "downloadedSoFar": "SOLO paginas HTML publicas (biblioteca, codigos) y robots.txt de ambos hosts; 0 documentos descargados, 0 HEAD a documentos."
+  "acquisitions": {
+    "Yucatan": {
+      "status": "acquired",
+      "note": "389/389 extraidos cuarentena (extractor v29 OCR cerro yuc-ley-011 [115 reg], yuc-ley-012 [78], yuc-ley-015 [50] el 2026-11-14); 2 sobre techo duro (exclusion fail-closed)",
+      "date": "2026-11-14"
+    },
+    "Oaxaca": {
+      "status": "acquired",
+      "note": "223/224 extraidos cuarentena (extractor v29 OCR cerro oax-ley-219 [37 reg, 3 encabezados reparados, articulo 3 absorbido por terminador atipico '3,'] el 2026-11-14); oax-ley-222 confirmado sin estructura de articulos (decreto con resolutivos 'Primero./Segundo.'); 1x404",
+      "date": "2026-11-14"
+    },
+    "Durango": {
+      "status": "acquired",
+      "note": "165/165 extraidos cuarentena, 19218 registros, 0 fallos; universo 259 hrefs - 93 dups catalogo - 1 abrogada",
+      "date": "2026-11-13"
+    },
+    "Hidalgo": {
+      "status": "blocked-tls",
+      "note": "www.congreso-hidalgo.gob.mx sirve solo el certificado leaf (Sectigo DV R36 sin intermedio): unable to verify the first certificate; host sin guion 404 en rutas de PDF; sin bypass TLS (misma clase que CDMX/BCS). Catalogo explorado: /acervo_legislativo/leyes, 169 titulos unicos con PDF, pendiente si el sitio repara la cadena",
+      "date": "2026-11-13"
+    },
+    "Colima": {
+      "status": "closed",
+      "note": "169 catalogados; 168/169 adquiridos: col-ley-104 RECUPERADO en col-oficial-11-2026-11-14 (snapshot+extraccion); solo col-reg-023 sigue catalog-link-broken. QA: docs/qa/colima-acquisition-2026-11-14.md + reconciliacion 2026-11-14",
+      "date": "2026-11-14"
+    },
+    "Morelos": {
+      "status": "closed",
+      "note": "261/261 ids, 261/261 PDFs, 257/261 extracciones validas, 14,711 registros (cuarentena). 4 extraction-invalid = brecha de estructura (codigos de conducta sin articulos numericos), PDFs conservados. 5 fallos de red recuperados por reintento idempotente. Watchdog inactividad 60s agregado a legal-sync. Reglamentos (1516) y Leyes de Ingresos diferidos. QA doc docs/qa/morelos-acquisition-2026-11-13.md",
+      "date": "2026-11-13"
+    },
+    "Nayarit": {
+      "status": "closed",
+      "note": "Catalogo estatal cerrado en corridas previas; serie fiscal 2026 (nay-ley-124..147) recuperada 2026-11-14: defecto del servidor (prefijo HTML de 921B + cierre tras %%EOF en el payload) reparado por corte de bytes documentado y verificado (byte-identico entre ruta navegador y GET directo; sin elusion de UA). 24/24 cuarentenados, 1,337 registros. nay-ley-148 recuperado 2026-11-13 en nay-leyes-15b (99 registros, sha e1f14694), verificado intacto. QA: docs/qa/nayarit-fiscal-repair-2026-11-14.md",
+      "date": "2026-11-14"
+    },
+    "Edomex": {
+      "status": "closed",
+      "note": "261 catalogados (const 1, cod 8, leyes 245, regl 7; 220 .doc + 35 .docx + 6 .pdf). 260/260 aprobados cuarentenados, 13,848 registros (mex-ley-222 recuperado 2026-11-14 via extractor v28 streaming, clase document-xml-budget CERRADA); mex-ley-209 bloqueado (duplicado de catalogo). QA: docs/qa/edomex-acquisition-2026-11-14.md (+Correccion mismo dia)",
+      "date": "2026-11-14"
+    },
+    "Sinaloa": {
+      "status": "blocked-tls",
+      "note": "www.congresosinaloa.gob.mx OK (301 apex->www, robots WP limpio, catalogo enumerado) pero el acervo es iframe SPA en gaceta.congresosinaloa.gob.mx: certificado no verifica (cadena incompleta, clase Hidalgo/CDMX/BCS). Sin bypass, sin re-sondeo.",
+      "date": "2026-11-14"
+    },
+    "Querétaro": {
+      "status": "pending-host-unreachable",
+      "note": "congresoqueretaro.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+      "date": "2026-11-14"
+    },
+    "San Luis Potosí": {
+      "status": "pending-host-unreachable",
+      "note": "congresoslp.gob.mx resuelve 148.235.65.20 pero TCP 80/443 falla (000), www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+      "date": "2026-11-14"
+    },
+    "Sonora": {
+      "status": "pending-host-unreachable",
+      "note": "congresosonora.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+      "date": "2026-11-14"
+    },
+    "Zacatecas": {
+      "status": "pending-host-unreachable",
+      "note": "congresozacatecas.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+      "date": "2026-11-14"
+    },
+    "Michoacán": {
+      "status": "pending-host-unreachable",
+      "note": "congresomichoacan.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
+      "date": "2026-11-14"
+    }
   },
-  {
-   "entity": "Baja California",
-   "verdict": "sin-senal-restrictiva",
-   "robots": {
-    "status": 404,
-    "notes": "sin robots.txt (convencion: permitido)"
-   },
-   "catalog": {
-    "url": "https://www.congresobc.gob.mx/TrabajoLegislativo/Leyes",
-    "status": 200,
-    "sha256": "35502054726998e4b38934b3ea1842ffeea95849ff0b1e45b61efa0dc3d1b423",
-    "documentEndpoints": 333,
-    "pattern": "Documentos/ProcesoParlamentario/Leyes/TOMO_*/*.PDF|DOC"
-   },
-   "termsCheck": "Home + catalogo revisados 2026-11-13: sin pagina de terminos de uso localizada, sin prohibicion de acceso automatizado, sin \"derechos reservados\" restrictivo; congreso publica enlaces directos de descarga. Base documentada LFDA art. 14 frac. VIII (base documentada, no conclusion legal), misma que el programa federal.",
-   "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo Leyes) y robots.txt (404); 0 documentos descargados."
-  },
-  {
-   "entity": "Coahuila",
-   "verdict": "sin-senal-restrictiva",
-   "robots": {
-    "status": 404,
-    "notes": "sin robots.txt (convencion: permitido)"
-   },
-   "catalog": {
-    "url": "https://www.congresocoahuila.gob.mx/portal/leyes-estatales-vigentes/",
-    "status": 200,
-    "sha256": "b13020ae4035481193a3c8e1d420953e678b123644737a38d1b5da3fdc5233d7",
-    "documentEndpoints": 528,
-    "pattern": "wp-content/uploads/<yyyy>/<mm>/coaNNN.(pdf|doc|docx)"
-   },
-   "termsCheck": "Home + catalogo revisados 2026-11-13: sin terminos de uso localizados; solo aviso de copyright atribucion (c) 2021 Congreso del Estado de Coahuila; sin robots.txt; enlaces directos PDF/DOC/DOCX publicados por el congreso. Base documentada LFDA art. 14 frac. VIII, misma que el programa federal.",
-   "downloadedSoFar": "SOLO paginas HTML publicas (home, catalogo leyes-estatales-vigentes) y robots.txt (404); 0 documentos descargados."
-  },
-  {
-   "entity": "Aguascalientes",
-   "verdict": "pendiente-analisis-y-terminos",
-   "robots": {
-    "status": 404,
-    "notes": "sin robots.txt"
-   },
-   "catalog": {
-    "url": "https://congresoags.gob.mx/agenda_legislativa/leyes",
-    "status": 200,
-    "sha256": "16c36976ba534e051e84a080e98a5ab7ceee586b2b8438ea8edbd7258d5ef57d",
-    "notes": "solo 2 enlaces directos; indice probablemente via endpoint dinamico Home/DownloadMiscelaneous?filename=; requiere analisis adicional"
-   }
-  },
-  {
-   "entity": "Chiapas",
-   "verdict": "bloqueado",
-   "robots": {
-    "status": 200,
-    "notes": "Joomla default; Disallow /media/ /images/ /components/ etc."
-   },
-   "catalog": {
-    "url": "http://congresochiapas.gob.mx/legislaturalxvi/trabajo-legislativo/legislacion-vigente",
-    "status": "403 en cuerpo (HTTP 200)",
-    "notes": "\"403: Access Forbidden. Malware detected.\" anti-bot; documentado, SIN reintento"
-   }
-  },
-  {
-   "entity": "Ciudad de México",
-   "verdict": "bloqueado",
-   "robots": {
-    "status": "redirect 302 www->apex",
-    "notes": "certificado TLS del apex sin SAN para el host (SSL verify falla); no se desactiva verificacion TLS (fail-closed)"
-   },
-   "catalog": {
-    "url": "https://www.congresocdmx.gob.mx/marco-legal-cdmx-107-2.html",
-    "notes": "misma falla TLS al seguir redirect"
-   }
-  },
-  {
-   "entity": "Baja California Sur",
-   "verdict": "bloqueado",
-   "robots": {
-    "status": "302->https",
-    "notes": "cadena de certificados rota en https://www.cbcs.gob.mx (unable to get local issuer); fail-closed, sin bypass"
-   }
+  "canonicalCut": {
+    "date": "2026-11-14",
+    "method": "docs/qa/corte-canonico-reconciliacion-2026-11-14.md",
+    "idsRegistrados": 2878,
+    "documentosPresentes": 2874,
+    "extraccionesValidas": 2867,
+    "registros": 270634,
+    "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado. Correccion mismo-dia 2026-11-14: extractor v29 (OCR local fail-closed) recupero 4 leyes escaneadas (+280 registros: yuc-ley-011/012/015, oax-ley-219); reg-lfgfaga-fe-16may55 (declaratoria 1955) y oax-ley-222 (decreto con resolutivos) confirmados SIN estructura de articulos: quedan extraction-invalid con OCR verificado. Fallidos vigentes extraction-invalid: 7 (5 estructura ags-ley-160, mor-cod-031/045/069/090 + 2 no articulados) + 2 document-byte-budget + 1 catalog-link-broken + 1 catalog-duplicate."
   }
- ],
- "classificationCorrectedAt": "2026-11-14T09:11:21Z",
- "correctionNote": "Clasificacion corregida 2026-11-13 16:38 CST: la regla generica User-agent:* NO se trata como permiso cuando el titular excluye explicitamente agentes IA/scrapers comerciales por UA y la adquisicion es para corpus IA comercial; no se elige UA alternativo para eludir la senal. robots.txt ausente tampoco prueba permiso por si solo: se verificaron terminos/derechos aplicables en home y catalogo.",
- "block2GeneratedAt": "2026-11-14T01:35:00Z",
- "block2": {
-  "scope": "sondeo robots/home de 21 congresos estatales restantes (15s, 2s entre hosts, sin adquisicion); dominios candidatos por verificar marcados",
-  "viables_pendiente_terminos": [
-   {
-    "entity": "Durango",
-    "robots": "200, solo Disallow contraloria",
-    "home": 200
-   },
-   {
-    "entity": "Hidalgo",
-    "robots": "200, allow-all (Disallow vacio + _pda)",
-    "home": 200
-   },
-   {
-    "entity": "Morelos",
-    "robots": "200, solo wp-admin",
-    "home": 200
-   },
-   {
-    "entity": "Nayarit",
-    "robots": "200, solo wp-admin",
-    "home": 200
-   },
-   {
-    "entity": "Tabasco",
-    "robots": "200, solo wp-admin/podscache",
-    "home": 200
-   },
-   {
-    "entity": "Yucatán",
-    "robots": "200, allow-all",
-    "home": 200
-   },
-   {
-    "entity": "Tamaulipas",
-    "robots": "200 pero SOLO preambulo content-signals (1248 bytes, sin reglas User-agent ni senales); por su propia regla (c) no restringe; documentado",
-    "home": 200
-   },
-   {
-    "entity": "Colima",
-    "robots": "404 (sin archivo)",
-    "home": 200
-   },
-   {
-    "entity": "Estado de México",
-    "robots": "404",
-    "home": 200
-   },
-   {
-    "entity": "Oaxaca",
-    "robots": "404",
-    "home": 200
-   }
-  ],
-  "pendiente_permiso": [
-   {
-    "entity": "Puebla",
-    "evidence": "robots con Content-Signal search=yes,ai-train=no,use=reference + Disallow explicito GPTBot/ClaudeBot/CCBot/Google-Extended/etc (Cloudflare managed); home 403 anti-bot. Misma clase que Campeche/Chihuahua"
-   },
-   {
-    "entity": "Quintana Roo",
-    "evidence": "identico content-signal ai-train=no + bloqueos IA; home 403"
-   }
-  ],
-  "bloqueado": [
-   {
-    "entity": "Guerrero",
-    "evidence": "403 en robots y home (anti-bot), sin reintento"
-   }
-  ],
-  "dominio_por_verificar": [
-   "Guanajuato",
-   "Michoacán",
-   "Querétaro",
-   "San Luis Potosí",
-   "Sonora",
-   "Tlaxcala",
-   "Zacatecas"
-  ],
-  "redirect_por_seguir": [
-   {
-    "entity": "Sinaloa",
-    "evidence": "home 301, ver destino"
-   }
-  ]
- },
- "acquisitions": {
-  "Yucatan": {
-   "status": "acquired",
-   "note": "386/389 extraidos cuarentena, 38105 registros (extractor v25 cerro 12); pendientes OCR: yuc-ley-011/012/015; 2 sobre techo duro (exclusion fail-closed)",
-   "date": "2026-11-13"
-  },
-  "Oaxaca": {
-   "status": "acquired",
-   "note": "222/224 extraidos cuarentena, 18290 registros; 1x404; pendientes OCR: oax-ley-219/222",
-   "date": "2026-11-13"
-  },
-  "Durango": {
-   "status": "acquired",
-   "note": "165/165 extraidos cuarentena, 19218 registros, 0 fallos; universo 259 hrefs - 93 dups catalogo - 1 abrogada",
-   "date": "2026-11-13"
-  },
-  "Hidalgo": {
-   "status": "blocked-tls",
-   "note": "www.congreso-hidalgo.gob.mx sirve solo el certificado leaf (Sectigo DV R36 sin intermedio): unable to verify the first certificate; host sin guion 404 en rutas de PDF; sin bypass TLS (misma clase que CDMX/BCS). Catalogo explorado: /acervo_legislativo/leyes, 169 titulos unicos con PDF, pendiente si el sitio repara la cadena",
-   "date": "2026-11-13"
-  },
-  "Colima": {
-   "status": "closed",
-   "note": "169 catalogados; 168/169 adquiridos: col-ley-104 RECUPERADO en col-oficial-11-2026-11-14 (snapshot+extraccion); solo col-reg-023 sigue catalog-link-broken. QA: docs/qa/colima-acquisition-2026-11-14.md + reconciliacion 2026-11-14",
-   "date": "2026-11-14"
-  },
-  "Morelos": {
-   "status": "closed",
-   "note": "261/261 ids, 261/261 PDFs, 257/261 extracciones validas, 14,711 registros (cuarentena). 4 extraction-invalid = brecha de estructura (codigos de conducta sin articulos numericos), PDFs conservados. 5 fallos de red recuperados por reintento idempotente. Watchdog inactividad 60s agregado a legal-sync. Reglamentos (1516) y Leyes de Ingresos diferidos. QA doc docs/qa/morelos-acquisition-2026-11-13.md",
-   "date": "2026-11-13"
-  },
-  "Nayarit": {
-   "status": "closed",
-   "note": "Catalogo estatal cerrado en corridas previas; serie fiscal 2026 (nay-ley-124..147) recuperada 2026-11-14: defecto del servidor (prefijo HTML de 921B + cierre tras %%EOF en el payload) reparado por corte de bytes documentado y verificado (byte-identico entre ruta navegador y GET directo; sin elusion de UA). 24/24 cuarentenados, 1,337 registros. nay-ley-148 recuperado 2026-11-13 en nay-leyes-15b (99 registros, sha e1f14694), verificado intacto. QA: docs/qa/nayarit-fiscal-repair-2026-11-14.md",
-   "date": "2026-11-14"
-  },
-  "Edomex": {
-   "status": "closed",
-   "note": "261 catalogados (const 1, cod 8, leyes 245, regl 7; 220 .doc + 35 .docx + 6 .pdf). 260/260 aprobados cuarentenados, 13,848 registros (mex-ley-222 recuperado 2026-11-14 via extractor v28 streaming, clase document-xml-budget CERRADA); mex-ley-209 bloqueado (duplicado de catalogo). QA: docs/qa/edomex-acquisition-2026-11-14.md (+Correccion mismo dia)",
-   "date": "2026-11-14"
-  },
-  "Sinaloa": {
-   "status": "blocked-tls",
-   "note": "www.congresosinaloa.gob.mx OK (301 apex->www, robots WP limpio, catalogo enumerado) pero el acervo es iframe SPA en gaceta.congresosinaloa.gob.mx: certificado no verifica (cadena incompleta, clase Hidalgo/CDMX/BCS). Sin bypass, sin re-sondeo.",
-   "date": "2026-11-14"
-  },
-  "Querétaro": {
-   "status": "pending-host-unreachable",
-   "note": "congresoqueretaro.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
-   "date": "2026-11-14"
-  },
-  "San Luis Potosí": {
-   "status": "pending-host-unreachable",
-   "note": "congresoslp.gob.mx resuelve 148.235.65.20 pero TCP 80/443 falla (000), www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
-   "date": "2026-11-14"
-  },
-  "Sonora": {
-   "status": "pending-host-unreachable",
-   "note": "congresosonora.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
-   "date": "2026-11-14"
-  },
-  "Zacatecas": {
-   "status": "pending-host-unreachable",
-   "note": "congresozacatecas.gob.mx apex+www NXDOMAIN (tambien via 8.8.8.8). Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
-   "date": "2026-11-14"
-  },
-  "Michoacán": {
-   "status": "pending-host-unreachable",
-   "note": "congresomichoacan.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
-   "date": "2026-11-14"
-  }
- },
- "canonicalCut": {
-  "date": "2026-11-14",
-  "method": "docs/qa/corte-canonico-reconciliacion-2026-11-14.md",
-  "idsRegistrados": 2878,
-  "documentosPresentes": 2874,
-  "extraccionesValidas": 2863,
-  "registros": 270354,
-  "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado."
- }
 }
