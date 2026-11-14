@@ -66,14 +66,20 @@ conteos adquiridos):
 
 ## Brecha restante
 
-1. Cobertura estatal: 8 de 32 entidades cerradas (Coahuila, BC, AGS, Yucatan,
-   Oaxaca, Durango, Morelos, Colima).
+1. Cobertura estatal: 8 de 32 entidades con barrido de adquisicion cerrado
+   dentro del alcance documentado (Coahuila, BC, AGS, Yucatan, Oaxaca,
+   Durango, Morelos, Colima). "Cerrado" describe solo el barrido del alcance
+   documentado de cada entidad (clases enumeradas y excluidas en su QA);
+   NO significa entidad integramente cubierta ni contenido validado
+   (cuarentena, sin revision independiente).
    Revision por estado en artifacts/public-corpus/state-review-20261113:
    candidatos viables restantes del bloque 2: Nayarit, Tabasco, Edomex,
    Michoacan, Queretaro, SLP, Sonora, Zacatecas, Sinaloa. Pendiente-permiso: Campeche, Chihuahua,
    Puebla, Quintana Roo, Tamaulipas (robots con intencion de gestion IA).
    Bloqueados tecnicamente (sin reintento): Chiapas, CDMX, BCS, Guerrero,
-   Hidalgo (TLS). Por reintentar conexion: Guanajuato, Tlaxcala.
+   Hidalgo (TLS). Guanajuato y Tlaxcala: pendientes sin mas sondeos
+   (fallos de conexion repetidos al 2026-11-13) salvo nueva senal o ruta
+   alternativa verificada.
 2. Tratados internacionales y acervo historico (el referente declara desde
    1814). Nota: Yucatan ya aporta textos vigentes desde 1917; las 837 leyes
    abrogadas de su catalogo no se adquirieron (vigente != historico).
