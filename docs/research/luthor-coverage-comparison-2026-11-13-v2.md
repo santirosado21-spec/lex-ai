@@ -11,16 +11,18 @@ historico. La v1 quedo desactualizada (decia 462 documentos pre-estatales).
 
 Cifras declaradas por el sitio; no verificables de forma independiente.
 
-## Lo verificado en Rejon al 2026-11-14 03:10 CST (todo en cuarentena)
+## Lo verificado en Rejon al 2026-11-14 04:06 CST (todo en cuarentena)
 
 Corte canonico (ultimo report.json por id + PDF en disco), derivado una sola
 vez del inventario, sin sumar sobre reportes anteriores:
 
-- ids registrados: 2,584. PDFs presentes: 2,556. Extracciones validas: 2,545.
-  Registros: 245,526. Todo cuarentenado (extraccion estructural; SIN revision
+- ids registrados: 2,584. PDFs presentes: 2,580. Extracciones validas: 2,569.
+  Registros: 246,863. Todo cuarentenado (extraccion estructural; SIN revision
   independiente de contenido, no publicado, no indexado).
-- Fallidos por clase: 24 invalid-pdf (serie fiscal Nayarit 2026, ruta browser
-  pendiente); 11 extraction-invalid (5 escaneados cola OCR: yuc-011/012/015,
+- Fallidos por clase: 0 invalid-pdf (serie fiscal Nayarit 2026 reparada
+  2026-11-14: defecto del servidor que anteponia 921 bytes HTML al payload;
+  24/24 recuperados, QA docs/qa/nayarit-fiscal-repair-2026-11-14.md);
+  11 extraction-invalid (5 escaneados cola OCR: yuc-011/012/015,
   oax-219/222; 1 federal escaneado cola OCR: reg-lfgfaga-fe-16may55; 5 brecha
   de estructura sin articulos numericos: ags-ley-160, mor-cod-031/045/069/090);
   2 document-byte-budget sobre techo duro (ags-ley-2529,

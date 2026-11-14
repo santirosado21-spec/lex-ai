@@ -240,6 +240,11 @@
    "status": "closed",
    "note": "261/261 ids, 261/261 PDFs, 257/261 extracciones validas, 14,711 registros (cuarentena). 4 extraction-invalid = brecha de estructura (codigos de conducta sin articulos numericos), PDFs conservados. 5 fallos de red recuperados por reintento idempotente. Watchdog inactividad 60s agregado a legal-sync. Reglamentos (1516) y Leyes de Ingresos diferidos. QA doc docs/qa/morelos-acquisition-2026-11-13.md",
    "date": "2026-11-13"
+  },
+  "Nayarit": {
+   "status": "closed",
+   "note": "Catalogo estatal cerrado en corridas previas; serie fiscal 2026 (nay-ley-124..147) recuperada 2026-11-14: defecto del servidor (prefijo HTML de 921B + cierre tras %%EOF en el payload) reparado por corte de bytes documentado y verificado (byte-identico entre ruta navegador y GET directo; sin elusion de UA). 24/24 cuarentenados, 1,337 registros. nay-ley-148 pendiente (document-byte-budget original; ultima corrida snapshot-unavailable). QA: docs/qa/nayarit-fiscal-repair-2026-11-14.md",
+   "date": "2026-11-14"
   }
  }
 }
