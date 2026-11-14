@@ -233,7 +233,7 @@
   },
   "Colima": {
    "status": "closed",
-   "note": "169 documentos catalogados (constitucion 1, codigos 6, leyes 154, reglamentos 8; cada doc con gemelo Word+PDF, PDF canonico). 167/167 adquiridos y cuarentenados, 16,777 registros, 0 fallos de ejecucion. 2 catalog-link-broken genuinos (col-ley-104 Casas de Empeno, col-reg-023 sin titulo): 404 del servidor en todas las codificaciones, sin mas sondeos. Municipales diferidas (fiscales anuales); estatutos y abrogados excluidos por clase. QA: docs/qa/colima-acquisition-2026-11-14.md",
+   "note": "169 catalogados; 168/169 adquiridos: col-ley-104 RECUPERADO en col-oficial-11-2026-11-14 (snapshot+extraccion); solo col-reg-023 sigue catalog-link-broken. QA: docs/qa/colima-acquisition-2026-11-14.md + reconciliacion 2026-11-14",
    "date": "2026-11-14"
   },
   "Morelos": {
@@ -281,5 +281,14 @@
    "note": "congresomichoacan.gob.mx apex+www NXDOMAIN. Reevaluacion unica 2026-11-14 05:06 CST: robots archivados de 2026-11-13 19:35 (contenido OK entonces); ahora conexion fallida con controles OK (edomex 404 esperado, github resuelve). NO repetir en proximas corridas salvo senal nueva o alternativa verificada (main 05:05).",
    "date": "2026-11-14"
   }
+ },
+ "canonicalCut": {
+  "date": "2026-11-14",
+  "method": "docs/qa/corte-canonico-reconciliacion-2026-11-14.md",
+  "idsRegistrados": 2878,
+  "documentosPresentes": 2874,
+  "extraccionesValidas": 2863,
+  "registros": 270354,
+  "note": "Sustituye al corte acumulado 2,845/2,840/2,829/260,711 (no reconstruible id-por-id; doble conteo nay-ley-148 y lotes federales tempranos no plegados). Todo cuarentenado."
  }
 }

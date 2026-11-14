@@ -11,22 +11,22 @@ historico. La v1 quedo desactualizada (decia 462 documentos pre-estatales).
 
 Cifras declaradas por el sitio; no verificables de forma independiente.
 
-## Lo verificado en Rejon al 2026-11-14 05:00 CST (todo en cuarentena)
+## Lo verificado en Rejon al 2026-11-14 06:23 CST (todo en cuarentena)
 
-Corte canonico (ultimo report.json por id + PDF en disco), derivado una sola
-vez del inventario, sin sumar sobre reportes anteriores:
-
-- ids registrados: 2,845. Documentos presentes (snapshots; antes "PDFs
-  presentes": las fuentes Word oficiales v27/v28 ya son parte del corpus):
-  2,840. Extracciones validas: 2,829. Registros: 260,711.
-  Definicion (main 2026-11-14): "documentos presentes" = snapshots presentes
-  sin importar exito de extraccion.
-  RECONCILIACION ABIERTA (2026-11-14 05:43): derivacion independiente desde
-  registries canonicos (sin pilot/fed-diagnostic) + arbol de artefactos da
-  2,867 ids registrados / 2,864 presentes (3 en registry sin snapshot:
-  ags-ley-2529, bc-presupuestoestado2026, mex-ley-209). Brecha de 22/24
-  contra el corte acumulado por QA: reconciliar antes del proximo cierre de
-  entidad; el corte de arriba se mantiene hasta cerrarla. Todo cuarentenado (extraccion estructural; SIN revision
+Corte canonico RECONCILIADO 2026-11-14 (derivado id-por-id desde registries
+canonicos + arbol de artefactos; metodo y tabla por programa en
+docs/qa/corte-canonico-reconciliacion-2026-11-14.md; sustituye al corte
+acumulado por sumas de QA, que no era reconstruible id-por-id):
+- ids registrados: 2,878. Documentos presentes (snapshots, sin importar exito
+  de extraccion): 2,874. Extracciones validas: 2,863. Registros: 270,354.
+- Sin snapshot (registrados): 4 = 2 document-byte-budget (ags-ley-2529,
+  bc-presupuestoestado2026) + 1 catalog-link-broken (col-reg-023) + 1 duplicado
+  de catalogo bloqueado (mex-ley-209).
+- Presentes sin extraccion: 11 = 6 cola OCR (yuc-ley-011/012/015, oax-ley-219/
+  222, reg-lfgfaga-fe-16may55) + 5 brecha de estructura (ags-ley-160,
+  mor-cod-031/045/069/090).
+- Clases cerradas: document-xml-budget (v28, mex-ley-222) y catalog-link-broken
+  de col-ley-104 (recuperado en col-oficial-11-2026-11-14). Todo cuarentenado (extraccion estructural; SIN revision
   independiente de contenido, no publicado, no indexado).
 - Fallidos por clase: 0 invalid-pdf (serie fiscal Nayarit 2026 reparada
   2026-11-14: defecto del servidor que anteponia 921 bytes HTML al payload;
