@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-col-oficial-11-2026-11-14",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresocol-oficial",
+   "title": "Congreso del Estado de Colima - Legislacion Estatal (biblioteca oficial)",
+   "jurisdiction": "MX-COL",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresocol.gob.mx/web/www/leyes/index.php",
+    "evidence": "Live official Colima state congress legal library congresocol.gob.mx (Leyes section, server-rendered rows with DOC and PDF download links per document) fetched 2026-11-14; index sha256 dff58d629df83f2ba2ca452adcc8013882ae9d2d69d6868b1075ee78c66a086a. Classes enumerated via POST /web/www/leyes/plantilla_datos.php (site own listing endpoint, wildcard lc=%): Constitucion 1, Codigos 6, Leyes Estatales 154, Reglamentos 8 = 169 catalogued documents; each document offers a Word file and a PDF twin, PDF preferred as canonical (2 entries have broken catalog links in every encoding tested: Ley de Casas de Empeno, one untitled Reglamento row - documented as catalog-link-broken, not retried further). Leyes Municipales class deferred (annual fiscal ordinances, out of current scope); Estatutos and Abrogados classes excluded by class. Full HEAD sweep of all 169 canonical PDFs on 2026-11-14: 167x HTTP 200, 0 over 10MB. Batch 11/17: col-ley-101, col-ley-102, col-ley-103, col-ley-104, col-ley-105, col-ley-106, col-ley-107, col-ley-108, col-ley-109, col-ley-110.",
+    "observedAt": "2026-11-14T08:53:29.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-14T08:53:29.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-14 before acquisition: robots.txt absent (404; absence of robots is NOT treated as permission by itself); no AI-agent or content-signal restrictions observed; no aviso legal, terms-of-use or reuse/IP prohibition located on the congress site (absence of terms is NOT treated as express authorization by the owner); official state congress library publishing direct document downloads (Word + PDF twins, public catalog listing endpoint used by the site own pages); no blocks with default user agent. Scope limited to official normative texts (constitucion, codigos, leyes, reglamentos); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears.",
+    "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresocol-oficial-20261114",
+    "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php",
+    "observedAt": "2026-11-14T08:53:29.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "col-ley-101",
+   "sourceId": "congresocol-oficial",
+   "title": "Regula la Video Vigilancia en el Estado de Colima, Ley que",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/regula_videovigilancia_22NOV2016.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-102",
+   "sourceId": "congresocol-oficial",
+   "title": "Instituto Colimense de la Infraestructura Física Educativa, Ley del",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/instituto_colimense_infraestructura_fisica_13ago2016.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-103",
+   "sourceId": "congresocol-oficial",
+   "title": "Medios Electrónicos y Firma Electrónica para el Estado de Colima, Ley sobre el uso de",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/medios_electronicos_30may2009.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-104",
+   "sourceId": "congresocol-oficial",
+   "title": "Fomento y Rescate Artesanal del Estado de Colima, Ley de",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/fomento_rescate_artesanal_27ago2016.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-105",
+   "sourceId": "congresocol-oficial",
+   "title": "Igualdad entre Mujeres y Hombres, Ley para la",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/igualdad_mujeres_hombres_26nov22.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-106",
+   "sourceId": "congresocol-oficial",
+   "title": "Arancelaria de los Abogados en el Estado de Colima, Ley",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/arancelaria_abogados_20dic2008.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-107",
+   "sourceId": "congresocol-oficial",
+   "title": "Acceso de las Mujeres a una Vida Libre de Violencia para el Estado de Colima, Ley de",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/Acceso_Mujeres_13_SEPTIEMBRE_2025.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-108",
+   "sourceId": "congresocol-oficial",
+   "title": "Pesca y Acuacultura Sustentables para el Estado de Colima, Ley de",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/pesca_acuacultura_12oct2013.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-109",
+   "sourceId": "congresocol-oficial",
+   "title": "Ley de Profesiones del Estado de Colima",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/Ley_Profesiones_22agosto2026.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  },
+  {
+   "id": "col-ley-110",
+   "sourceId": "congresocol-oficial",
+   "title": "Desarrollo Social del Estado de Colima, Ley de",
+   "jurisdiction": "MX-COL",
+   "status": "approved",
+   "url": "https://congresocol.gob.mx/web/Sistema/uploads/LegislacionEstatal/LeyesEstatales/desarrollo_social_02nov2019.pdf",
+   "versionId": "congresocol-oficial-20261114",
+   "evidenceUrl": "https://congresocol.gob.mx/web/www/leyes/index.php"
+  }
+ ]
+}

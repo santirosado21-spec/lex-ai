@@ -11,25 +11,28 @@ historico. La v1 quedo desactualizada (decia 462 documentos pre-estatales).
 
 Cifras declaradas por el sitio; no verificables de forma independiente.
 
-## Lo verificado en Rejon al 2026-11-14 01:45 CST (todo en cuarentena)
+## Lo verificado en Rejon al 2026-11-14 03:10 CST (todo en cuarentena)
 
 Corte canonico (ultimo report.json por id + PDF en disco), derivado una sola
 vez del inventario, sin sumar sobre reportes anteriores:
 
-- ids registrados: 2,415. PDFs presentes: 2,389. Extracciones validas: 2,378.
-  Registros: 228,749. Todo cuarentenado (extraccion estructural; SIN revision
+- ids registrados: 2,584. PDFs presentes: 2,556. Extracciones validas: 2,545.
+  Registros: 245,526. Todo cuarentenado (extraccion estructural; SIN revision
   independiente de contenido, no publicado, no indexado).
 - Fallidos por clase: 24 invalid-pdf (serie fiscal Nayarit 2026, ruta browser
   pendiente); 11 extraction-invalid (5 escaneados cola OCR: yuc-011/012/015,
   oax-219/222; 1 federal escaneado cola OCR: reg-lfgfaga-fe-16may55; 5 brecha
   de estructura sin articulos numericos: ags-ley-160, mor-cod-031/045/069/090);
   2 document-byte-budget sobre techo duro (ags-ley-2529,
-  bc-presupuestoestado2026).
+  bc-presupuestoestado2026); 2 catalog-link-broken genuinos (col-ley-104,
+  col-reg-023; 404 del servidor, sin mas sondeos).
 - Cierres del dia: Oaxaca 222/224 ids, 18,290 registros (QA
   docs/qa/oaxaca-acquisition-2026-11-13.md); Durango 165/165, 19,218 (QA
   docs/qa/durango-acquisition-2026-11-13.md); Morelos 261/261 ids, 257/261
   extracciones, 14,711 (QA docs/qa/morelos-acquisition-2026-11-13.md);
-  Yucatan re-corrido con extractor v25: 386/389, 38,105 (Correccion en su QA).
+  Yucatan re-corrido con extractor v25: 386/389, 38,105 (Correccion en su QA);
+  Colima 169 catalogados, 167/167 adquiridos, 16,777 (QA
+  docs/qa/colima-acquisition-2026-11-14.md).
 
 ## Lo verificado en Rejon al 2026-11-13 20:34 CST (corte previo, conservado)
 
@@ -63,12 +66,11 @@ conteos adquiridos):
 
 ## Brecha restante
 
-1. Cobertura estatal: 7 de 32 entidades cerradas (Coahuila, BC, AGS, Yucatan,
-   Oaxaca, Durango, Morelos).
+1. Cobertura estatal: 8 de 32 entidades cerradas (Coahuila, BC, AGS, Yucatan,
+   Oaxaca, Durango, Morelos, Colima).
    Revision por estado en artifacts/public-corpus/state-review-20261113:
-   candidatos viables restantes del bloque 2: Nayarit, Tabasco, Colima
-   (formato Word, ruta autorizada), Edomex, Michoacan, Queretaro, SLP,
-   Sonora, Zacatecas, Sinaloa. Pendiente-permiso: Campeche, Chihuahua,
+   candidatos viables restantes del bloque 2: Nayarit, Tabasco, Edomex,
+   Michoacan, Queretaro, SLP, Sonora, Zacatecas, Sinaloa. Pendiente-permiso: Campeche, Chihuahua,
    Puebla, Quintana Roo, Tamaulipas (robots con intencion de gestion IA).
    Bloqueados tecnicamente (sin reintento): Chiapas, CDMX, BCS, Guerrero,
    Hidalgo (TLS). Por reintentar conexion: Guanajuato, Tlaxcala.

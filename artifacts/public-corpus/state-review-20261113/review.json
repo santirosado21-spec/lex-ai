@@ -121,7 +121,7 @@
    }
   }
  ],
- "classificationCorrectedAt": "2026-11-13T22:38:00Z",
+ "classificationCorrectedAt": "2026-11-14T09:11:21Z",
  "correctionNote": "Clasificacion corregida 2026-11-13 16:38 CST: la regla generica User-agent:* NO se trata como permiso cuando el titular excluye explicitamente agentes IA/scrapers comerciales por UA y la adquisicion es para corpus IA comercial; no se elige UA alternativo para eludir la senal. robots.txt ausente tampoco prueba permiso por si solo: se verificaron terminos/derechos aplicables en home y catalogo.",
  "block2GeneratedAt": "2026-11-14T01:35:00Z",
  "block2": {
@@ -232,9 +232,9 @@
    "date": "2026-11-13"
   },
   "Colima": {
-   "status": "parked-format",
-   "note": "Alcanzable via apex; catalogo sirve .doc/.docx (152 Word estatal vs 2 PDF). Ruta Word autorizada por main 23:11; pendiente implementacion",
-   "date": "2026-11-13"
+   "status": "closed",
+   "note": "169 documentos catalogados (constitucion 1, codigos 6, leyes 154, reglamentos 8; cada doc con gemelo Word+PDF, PDF canonico). 167/167 adquiridos y cuarentenados, 16,777 registros, 0 fallos de ejecucion. 2 catalog-link-broken genuinos (col-ley-104 Casas de Empeno, col-reg-023 sin titulo): 404 del servidor en todas las codificaciones, sin mas sondeos. Municipales diferidas (fiscales anuales); estatutos y abrogados excluidos por clase. QA: docs/qa/colima-acquisition-2026-11-14.md",
+   "date": "2026-11-14"
   },
   "Morelos": {
    "status": "closed",
