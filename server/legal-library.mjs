@@ -31,7 +31,12 @@ import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocum
 // conformidad...") still opens; no local signal distinguishes it from a real
 // heading (frozen case "ARTICULO 136. Derogado" has the same shape).
 // Numbers are never invented; references keep their original text verbatim.
-export const EXTRACTOR_VERSION=36;
+// v37 (Guerrero cotejo contra PDF, 17 nov): (1) a numbering restart before any article 1 was captured used to END the document
+// (gro-ley-132: 285 real headings, 41 extracted) when a dictamen/initiative preamble quoted articles 2..n and the real law starts at a LATER
+// 'ARTICULO 1' followed by 'ARTICULO 2'; now the quoted candidates are preserved as prefaceRecords ('restart-before-art1') and extraction resumes
+// at that later article 1 (same lookahead shape as the v35 decree-transitory skip). (2) three strictly sequential, fail-closed heading variants
+// seen in Guerrero PDFs: 'Articulo7.-' (no space, numeric mode), 'Articulo. 5.' (period after the word), 'Articulo 1° La ...' (ordinal mark + uppercase word).
+export const EXTRACTOR_VERSION=37;
 // v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
 // digital text layer exists but is unusable (e.g. body font without a Unicode
 // map: only repeated headers extract). The flag only WIDENS the OCR trigger;
@@ -289,6 +294,11 @@ const nospaceHeading=/^Art[íi]culo(\d+)[oº°]?[.][-–]/;
 // Reversed ordinal variant ("Artículo.-1o.Constituyen…", seen in Yucatán official PDFs): the word takes its terminator first, then the ordinal number. Fail-closed: exact rigid shape with the ordinal number carrying its own terminator; ordinal gate only, strictly sequential, document flagged.
 const reversedOrdinal=/^Art[íi]culo[ \t]*[.:][ \t]*-[ \t]*(\d+)[oº°]?(?=[ \t]*[.:])/;
 // No-space numeric heading with simple period terminator ('Artículo18. Para...', seen in Zacatecas official PDFs), inside numeric mode. Fail-closed: ^-anchored whole-heading start, only continues strictly sequentially in numeric mode, and the document is flagged. A wrapped body reference is never strictly sequential by construction of the gate.
+// v37: a citation wrapped so that the word TRANSITORIO(S) lands alone on a line ('... PUBLICADO EN SU ARTICULO QUINTO / TRANSITORIO.') is body text, not the transitory boundary.
+const wrappedTransitoryRefV37=/\bART[IÍ]CULO\s+(?:PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[EÉ]PTIMO|OCTAVO|NOVENO|D[EÉ]CIMO|UND[EÉ]CIMO|DUOD[EÉ]CIMO|VIG[EÉ]SIMO|[ÚU]NICO)\s*$/i;
+const nospaceDashV37=/^Art[íi]culo(\d+)[oº°]?\.[-–]/;
+const periodAfterWordV37=/^Art[íi]culo\.[ \t]+(\d+)[oº°]?\.(?=[ \t])/;
+const ordinalMarkV37=/^Art[íi]culo[ \t]+(\d+)[oº°](?=[ \t]+[A-ZÁÉÍÓÚÑ])/;
 const nospaceNumeric=/^Art[íi]culo(\d+)[oº°]?\.(?=[ \t]|$)/;
 const ORD_UNIT={PRIMERO:1,SEGUNDO:2,TERCERO:3,CUARTO:4,QUINTO:5,SEXTO:6,SEPTIMO:7,OCTAVO:8,NOVENO:9};
 const ORD_BASE={DECIMO:10,UNDECIMO:11,DUODECIMO:12,VIGESIMO:20,TRIGESIMO:30};
@@ -396,7 +406,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     const content=text.replace(ARTICLE,'').trim();
     records.push({id:`${versionId}:art:${current.articleId}`,lawId:source.lawId,lawTitle:source.title,versionId,versionDate,articleId:current.articleId,text,sourceUrl:source.url,publisher:source.authority,jurisdiction:source.jurisdiction,language:'es',pdfSha256,textSha256:digest(text),contentSha256:digest(content),sourcePages:[...new Set(current.lines.map(x=>x.page))],declaredAmendedAt,effectiveAt:null,retrievedAt,split:splitForLaw(source.lawId),splitGroup:source.lawId,quality:{status:anomalies.length?'quarantined':'structurally-verified',anomalies,legalAccuracy:'not-evaluated',currentness:'unverified',extraction:'deterministic-pdf-text-no-generated-content'},rights:source.reuseBasis,editorialNotes:current.editorial});current=null;}
   for(let li=0;li<lines.length;li++){const line=lines[li];
-    if(started&&transitory.test(line.text)){
+    if(started&&transitory.test(line.text)&&!(li>0&&wrappedTransitoryRefV37.test(lines[li-1].text))){
       // v35: a TRANSITORIOS block that precedes a later restart of operative numbering at article 1 belongs to the promulgation decree, not the law body.
       const laterOne=lines.slice(li+1).findIndex(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s*1\s*(?:[oº°])?\s*(?:\.-|[.\-])?\s*$/.test(l.text)||/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text));
       if(laterOne>=0&&seen.has(String(1))===false&&!lines.slice(li+1,li+1+laterOne).some(l=>transitory.test(l.text)&&false)){
@@ -431,8 +441,17 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       const continuation=rest.trimStart();
       if(forwardGap&&continuation&&/^[a-záéíóúñ]/.test(continuation)){if(current)current.lines.push(line);continue;}
       finish();started=true;numericStarted=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
+      if(seen.has(articleId)&&!seen.has('1')){
+        const j=lines.slice(li+1).findIndex(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text));
+        if(j>=0&&lines.slice(li+1+j+1,li+1+j+601).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*\.-/.test(l.text))){
+          current=null;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'restart-before-art1'})));seen.clear();started=false;numericStarted=false;lastOrd=0;
+          documentAnomalies.push('preface-operative-candidates-dropped-restart-before-art1');coverage.restartBeforeArt1Page=line.page;li=li+j;continue;}}
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
+    if(!match&&!current&&!seen.has('1')&&ordinalMarkV37.test(line.text)&&Number(ordinalMarkV37.exec(line.text)[1])===1){
+      // v37: the very first article may use the ordinal-mark variant ('Articulo 1° La ...'); current is null here so the in-body variants below cannot open it.
+      started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;if(!documentAnomalies.includes('v37-heading-variant'))documentAnomalies.push('v37-heading-variant');
+      current={articleId:'1',lines:[line],editorial:[]};continue;}
     if(!match&&current){
       const looseS=noTermSuffix.exec(line.text);
       if(looseS){
@@ -486,6 +505,21 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
           if(seen.has(nsnId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:nsnId};ended=true;break;}
           if(!documentAnomalies.includes('nospace-numeric-heading'))documentAnomalies.push('nospace-numeric-heading');
           current={articleId:nsnId,lines:[line],editorial:[]};continue;
+        }
+      }
+      const v37M=(ordinalEnabled?null:nospaceDashV37.exec(line.text))||periodAfterWordV37.exec(line.text)||ordinalMarkV37.exec(line.text); // documents in ordinal mode keep the v36 nospace path unchanged
+      if(v37M){
+        const v37Number=Number(v37M[1]);
+        const currentNumberV37=current?Number(current.articleId.split('-')[0]):null;
+        if(started&&current&&v37Number===1&&!seen.has('1')&&Number(current.articleId.split('-')[0])>1&&lines.slice(li+1,li+81).some(l=>/^Art[íi]culo[ \t.]*2\b/.test(l.text))){
+          finish();const droppedV37=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'art1-restart-v37'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
+          documentAnomalies.push('preface-operative-candidates-dropped:'+droppedV37);
+          started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;documentAnomalies.push('v37-heading-variant');current={articleId:'1',lines:[line],editorial:[]};continue;}
+        if(((!started&&v37Number===1)||(current&&v37Number===currentNumberV37+1))&&!midSentenceFragment(lines,li,false)){
+          finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const v37Id=v37M[1];
+          if(seen.has(v37Id)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:v37Id};ended=true;break;}
+          if(!documentAnomalies.includes('v37-heading-variant'))documentAnomalies.push('v37-heading-variant');
+          current={articleId:v37Id,lines:[line],editorial:[]};continue;
         }
       }
       const bareSuf=bareSuffix.exec(line.text);

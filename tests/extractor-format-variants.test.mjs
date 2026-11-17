@@ -77,7 +77,7 @@ test('worker page cap raised and exported (nay-ley-148 class: 1376 pages)',async
   const {EXTRACTOR_MAX_PAGES}=await import('../server/legal-library.mjs');
   assert.equal(EXTRACTOR_MAX_PAGES,2000);
   assert.ok(EXTRACTOR_MAX_PAGES>=1376);
-  assert.equal(EXTRACTOR_VERSION,36);
+  assert.equal(EXTRACTOR_VERSION,37);
 });
 
 test('v36 captures transitory provisions as separate records with provenance and keeps them out of operative articles', async () => {
