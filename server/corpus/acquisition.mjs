@@ -123,7 +123,9 @@ function defaultExtractor(file,source,metadata,{signal}){
 function quarantine(result,document,version,configHash){
   if(result?.pdfSha256!==version.sha256||result?.sourceUrl!==document.url||!Array.isArray(result.records)||!result.records.length)throw fail('extraction-invalid');
   const versionId=`${document.id}@sha256:${version.sha256}`;
-  const records=result.records.map((record,index)=>{
+  // v36: transitory provisions travel as separate records (recordKind 'transitorio'); operative articles keep recordKind 'articulo'.
+  const extractedRecords=[...result.records,...(Array.isArray(result.transitories)?result.transitories.map(t=>({...t,articleId:null,ordinalLabel:t.ordinal,headingTitle:t.group,recordKind:'transitorio'})):[])];
+  const records=extractedRecords.map((record,index)=>{
     if(typeof record.text!=='string'||!record.text.trim()||hash(record.text)!==record.textSha256||!Array.isArray(record.sourcePages)||!record.sourcePages.length||record.sourcePages.some(page=>!Number.isInteger(page)||page<1))throw fail('extraction-invalid');
     return {id:`${versionId}:record:${index+1}`,sourceId:document.sourceId,documentId:document.id,versionId,pdfSha256:version.sha256,sourceUrl:document.url,finalUrl:version.finalUrl,articleId:record.articleId??null,recordKind:record.recordKind??'articulo',ordinalLabel:record.ordinalLabel??null,headingTitle:record.headingTitle??null,text:record.text,textSha256:hash(record.text),sourcePages:record.sourcePages,pageReferencesSha256:hash(JSON.stringify(record.sourcePages)),declaredAmendedAt:record.declaredAmendedAt??null,effectiveAt:null,capturedAt:version.retrievedAt,extractionDiagnostics:{parserStatus:record.quality?.status??'unknown',anomalies:record.quality?.anomalies??[],editorialNotes:record.editorialNotes??[]},textReview:'pending',legalReview:'pending',status:'quarantined',published:false,indexed:false};
   });

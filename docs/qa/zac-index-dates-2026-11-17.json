@@ -1,0 +1,728 @@
+{
+ "source": "https://www.congresozac.gob.mx/65/leyes",
+ "indexSha256": "7ad9f7c8911b8e84fbaf442917dd54105b5f779beaf2dbf54582e94d50ca4a76",
+ "capturedAt": "2026-11-17",
+ "dateColumnLabel": "Fecha de publicación (índice oficial); no es fecha de última reforma ni vigencia",
+ "documents": {
+  "zac-ley-038": {
+   "officialDate": "1989-12-30",
+   "indexTitle": "Arancel de Honorarios de los Notarios en el Estado",
+   "indexRow": 1
+  },
+  "zac-ley-372": {
+   "officialDate": "2024-05-15",
+   "indexTitle": "Ley Antiquebranto para una Gestin Responsable y Sostenible de las Finanzas Pblicas del Estado de Zacatecas",
+   "indexRow": 2
+  },
+  "zac-ley-142": {
+   "officialDate": "2009-01-18",
+   "indexTitle": "Ley de Acceso de las Mujeres a Una Vida Libre de Violencias para el Estado de Zacatecas",
+   "indexRow": 3
+  },
+  "zac-ley-233": {
+   "officialDate": "2019-07-03",
+   "indexTitle": "Ley de Adquisiciones, Arrendamientos y Servicios del Estado de Zacatecas y Sus Municipios",
+   "indexRow": 4
+  },
+  "zac-ley-036": {
+   "officialDate": "1989-03-01",
+   "indexTitle": "Ley de Arancel",
+   "indexRow": 5
+  },
+  "zac-ley-227": {
+   "officialDate": "2021-07-03",
+   "indexTitle": "Ley de Archivos para el Estado de Zacatecas y sus Municipios",
+   "indexRow": 6
+  },
+  "zac-ley-120": {
+   "officialDate": "2007-04-05",
+   "indexTitle": "Ley de Asistencia Social del Estado de Zacatecas",
+   "indexRow": 7
+  },
+  "zac-ley-213": {
+   "officialDate": "2018-01-07",
+   "indexTitle": "Ley de Asociaciones Pblico Privadas del Estado de Zacatecas",
+   "indexRow": 8
+  },
+  "zac-ley-196": {
+   "officialDate": "2015-12-14",
+   "indexTitle": "Ley de Atencin a Vctimas del Estado de Zacatecas",
+   "indexRow": 9
+  },
+  "zac-ley-068": {
+   "officialDate": "2021-12-29",
+   "indexTitle": "Ley de Austeridad, Disciplina y Responsabilidad Financiera del Estado de Zacatecas y Sus Municipios",
+   "indexRow": 10
+  },
+  "zac-ley-152": {
+   "officialDate": "2010-02-04",
+   "indexTitle": "Ley de Becas, Estmulos Educativos y Apoyos Financieros del Estado de Zacatecas",
+   "indexRow": 11
+  },
+  "zac-ley-096": {
+   "officialDate": "2006-03-12",
+   "indexTitle": "Ley de Bibliotecas Pblicas del Estado de Zacatecas",
+   "indexRow": 12
+  },
+  "zac-ley-324": {
+   "officialDate": "2019-12-28",
+   "indexTitle": "Ley de Bienes del Estado de Zacatecas y sus Municipios",
+   "indexRow": 13
+  },
+  "zac-ley-028": {
+   "officialDate": "1987-09-10",
+   "indexTitle": "Ley de Cajas Populares del Estado de Zacatecas",
+   "indexRow": 14
+  },
+  "zac-ley-030": {
+   "officialDate": "1988-01-07",
+   "indexTitle": "Ley de Catastro del Estado de Zacatecas",
+   "indexRow": 15
+  },
+  "zac-ley-109": {
+   "officialDate": "2006-05-14",
+   "indexTitle": "Ley de Ciencia, Tecnologa E Innovacin del Estado de Zacatecas",
+   "indexRow": 16
+  },
+  "zac-ley-202": {
+   "officialDate": "2016-06-01",
+   "indexTitle": "Ley de Construccin para el Estado y Municipios de Zacatecas",
+   "indexRow": 17
+  },
+  "zac-ley-380": {
+   "officialDate": "2026-09-17",
+   "indexTitle": "Ley de Coordinacin para la Sanidad Vegetal e Inocuidad Agrcola del Estado de Zacatecas.",
+   "indexRow": 18
+  },
+  "zac-ley-090": {
+   "officialDate": "2016-12-31",
+   "indexTitle": "Ley de Coordinacin y Colaboracin Financiera para el Estado de Zacatecas y Sus Municipios",
+   "indexRow": 19
+  },
+  "zac-ley-077": {
+   "officialDate": "2021-09-08",
+   "indexTitle": "Ley de Cultura del Estado de Zacatecas y sus Municipios",
+   "indexRow": 20
+  },
+  "zac-ley-147": {
+   "officialDate": "2015-06-17",
+   "indexTitle": "Ley de Cultura Fsica y Deporte del Estado de Zacatecas",
+   "indexRow": 21
+  },
+  "zac-ley-125": {
+   "officialDate": "2006-10-28",
+   "indexTitle": "Ley de Desarrollo Forestal Sustentable del Estado de Zacatecas",
+   "indexRow": 22
+  },
+  "zac-ley-158": {
+   "officialDate": "2010-12-04",
+   "indexTitle": "Ley de Desarrollo Metropolitano del Estado de Zacatecas",
+   "indexRow": 23
+  },
+  "zac-ley-143": {
+   "officialDate": "2009-01-17",
+   "indexTitle": "Ley de Desarrollo Social para el Estado y Municipios de Zacatecas",
+   "indexRow": 24
+  },
+  "zac-ley-332": {
+   "officialDate": "2020-08-29",
+   "indexTitle": "Ley de Desarrollo, Proteccin y Difusin de las Actividades Artesanales del Estado de Zacatecas y sus Municipios",
+   "indexRow": 25
+  },
+  "zac-ley-180": {
+   "officialDate": "2020-06-17",
+   "indexTitle": "Ley de Educacin del Estado de Zacatecas",
+   "indexRow": 26
+  },
+  "zac-ley-194": {
+   "officialDate": "1993-07-10",
+   "indexTitle": "Ley de Ejecucin de Sanciones Privativas y Restrictivas de la Libertad del Estado de Zacatecas",
+   "indexRow": 27
+  },
+  "zac-ley-220": {
+   "officialDate": "2018-06-16",
+   "indexTitle": "Ley de Entrega-recepcin del Estado de Zacatecas",
+   "indexRow": 28
+  },
+  "zac-ley-204": {
+   "officialDate": "2015-12-26",
+   "indexTitle": "Ley de Estacionamientos Pblicos para el Estado de Zacatecas",
+   "indexRow": 29
+  },
+  "zac-ley-014": {
+   "officialDate": "1955-02-19",
+   "indexTitle": "Ley de Estmulos y Recompensas a los Funcionarios y Empleados del Estado",
+   "indexRow": 30
+  },
+  "zac-ley-013": {
+   "officialDate": "1944-09-23",
+   "indexTitle": "Ley de Expropiacin para el Estado de Zacatecas",
+   "indexRow": 31
+  },
+  "zac-ley-159": {
+   "officialDate": "2011-03-02",
+   "indexTitle": "Ley de Extincin de Dominio del Estado de Zacatecas",
+   "indexRow": 32
+  },
+  "zac-ley-371": {
+   "officialDate": "2024-05-15",
+   "indexTitle": "Ley de Financiamientos, Obligaciones, Emprstitos y Deuda Pblica del Estado de Zacatecas y sus Municipios",
+   "indexRow": 33
+  },
+  "zac-ley-184": {
+   "officialDate": "2013-12-25",
+   "indexTitle": "Ley de Firma Electrnica del Estado de Zacatecas",
+   "indexRow": 34
+  },
+  "zac-ley-053": {
+   "officialDate": "2000-03-30",
+   "indexTitle": "Ley de Fiscalizacin Superior del Estado de Zacatecas",
+   "indexRow": 35
+  },
+  "zac-ley-212": {
+   "officialDate": "2017-07-15",
+   "indexTitle": "Ley de Fiscalizacin y Rendicin de Cuentas del Estado de Zacatecas",
+   "indexRow": 36
+  },
+  "zac-ley-108": {
+   "officialDate": "2006-04-29",
+   "indexTitle": "Ley de Fomento a la Ganadera del Estado de Zacatecas",
+   "indexRow": 37
+  },
+  "zac-ley-087": {
+   "officialDate": "2004-07-14",
+   "indexTitle": "Ley de Fomento a las Actividades Realizadas Por Organizaciones de la Sociedad Civil en el Estado de Zacatecas",
+   "indexRow": 38
+  },
+  "zac-ley-076": {
+   "officialDate": "2003-08-16",
+   "indexTitle": "Ley de Fomento para el Desarrollo Econmico del Estado de Zacatecas",
+   "indexRow": 39
+  },
+  "zac-ley-146": {
+   "officialDate": "2009-06-13",
+   "indexTitle": "Ley de Fraccionamientos Rurales para el Estado de Zacatecas",
+   "indexRow": 40
+  },
+  "zac-ley-057": {
+   "officialDate": "2016-12-31",
+   "indexTitle": "Ley de Hacienda del Estado de Zacatecas",
+   "indexRow": 41
+  },
+  "zac-ley-020": {
+   "officialDate": "1984-12-29",
+   "indexTitle": "Ley de Hacienda Municipal del Estado de Zacatecas",
+   "indexRow": 42
+  },
+  "zac-ley-337": {
+   "officialDate": "2025-12-31",
+   "indexTitle": "Ley de Ingresos del Estado de Zacatecas, para el Ejercicio Fiscal 2026",
+   "indexRow": 43
+  },
+  "zac-ley-336": {
+   "officialDate": "2026-02-21",
+   "indexTitle": "Ley de Justicia Administrativa del Estado de Zacatecas",
+   "indexRow": 44
+  },
+  "zac-ley-144": {
+   "officialDate": "2008-12-31",
+   "indexTitle": "Ley de Justicia Alternativa del Estado de Zacatecas",
+   "indexRow": 45
+  },
+  "zac-ley-070": {
+   "officialDate": "2002-07-10",
+   "indexTitle": "Ley de Justicia Comunitaria del Estado de Zacatecas",
+   "indexRow": 46
+  },
+  "zac-ley-123": {
+   "officialDate": "2006-09-30",
+   "indexTitle": "Ley de Justicia para Adolescentes en el Estado de Zacatecas",
+   "indexRow": 47
+  },
+  "zac-ley-040": {
+   "officialDate": "1993-01-27",
+   "indexTitle": "Ley de la Comisin de Derechos Humanos del Estado de Zacatecas",
+   "indexRow": 48
+  },
+  "zac-ley-034": {
+   "officialDate": "1989-01-07",
+   "indexTitle": "Ley de las Entidades Pblicas Paraestatales",
+   "indexRow": 49
+  },
+  "zac-ley-200": {
+   "officialDate": "2015-04-22",
+   "indexTitle": "Ley de las Instituciones Policiales de la Secretara de Seguridad Pblica del Estado de Zacatecas",
+   "indexRow": 50
+  },
+  "zac-ley-121": {
+   "officialDate": "2015-07-01",
+   "indexTitle": "Ley de los Derechos de Nias, Nios y Adolescentes del Estado de Zacatecas",
+   "indexRow": 51
+  },
+  "zac-ley-208": {
+   "officialDate": "2016-12-31",
+   "indexTitle": "Ley de los Derechos y Defensa del Contribuyente del Estado de Zacatecas y Sus Municipios",
+   "indexRow": 52
+  },
+  "zac-ley-043": {
+   "officialDate": "1994-08-13",
+   "indexTitle": "Ley de los Sistemas de Agua Potable, Alcantarillado y Saneamiento del Estado de Zacatecas",
+   "indexRow": 53
+  },
+  "zac-ley-378": {
+   "officialDate": "2025-10-05",
+   "indexTitle": "Ley de Mecenazgo Cultural del Estado de Zacatecas",
+   "indexRow": 54
+  },
+  "zac-ley-331": {
+   "officialDate": "2020-08-20",
+   "indexTitle": "Ley de Mejora Regulatoria del Estado de Zacatecas y sus Municipios.",
+   "indexRow": 55
+  },
+  "zac-ley-327": {
+   "officialDate": "2020-02-19",
+   "indexTitle": "Ley de Obra Pblica y Servicios Relacionados para el Estado y los Municipios de Zacatecas",
+   "indexRow": 56
+  },
+  "zac-ley-033": {
+   "officialDate": "1988-12-31",
+   "indexTitle": "Ley de Obras Por Cooperacin",
+   "indexRow": 57
+  },
+  "zac-ley-063": {
+   "officialDate": "2001-08-09",
+   "indexTitle": "Ley de Participacin Ciudadana para el Estado de Zacatecas",
+   "indexRow": 58
+  },
+  "zac-ley-223": {
+   "officialDate": "2017-08-09",
+   "indexTitle": "Ley de Planeacin del Estado de Zacatecas y Sus Municipios",
+   "indexRow": 59
+  },
+  "zac-ley-189": {
+   "officialDate": "2014-09-03",
+   "indexTitle": "Ley de Premios al Mrito Ciudadano del Estado de Zacatecas",
+   "indexRow": 60
+  },
+  "zac-ley-214": {
+   "officialDate": "2025-10-05",
+   "indexTitle": "Ley de Prevencin Social de la Violencia y la Delincuencia del Estado de Zacatecas",
+   "indexRow": 61
+  },
+  "zac-ley-148": {
+   "officialDate": "2009-09-23",
+   "indexTitle": "Ley de Procedimiento Administrativo del Estado y Municipios de Zacatecas",
+   "indexRow": 62
+  },
+  "zac-ley-222": {
+   "officialDate": "2015-11-28",
+   "indexTitle": "Ley de Productos Orgnicos para el Estado de Zacatecas",
+   "indexRow": 63
+  },
+  "zac-ley-164": {
+   "officialDate": "2018-03-14",
+   "indexTitle": "Ley de Proteccin Civil del Estado y Municipios de Zacatecas",
+   "indexRow": 64
+  },
+  "zac-ley-165": {
+   "officialDate": "2011-10-05",
+   "indexTitle": "Ley de Proteccin Contra la Exposicin al Humo de Tabaco del Estado de Zacatecas",
+   "indexRow": 65
+  },
+  "zac-ley-211": {
+   "officialDate": "2025-09-21",
+   "indexTitle": "Ley de Proteccin de Datos Personales en Posesin de los Sujetos Obligados del Estado de Zacatecas",
+   "indexRow": 66
+  },
+  "zac-ley-110": {
+   "officialDate": "2006-06-24",
+   "indexTitle": "Ley de Proteccin de los Derechos de las Personas Adultas Mayores para el Estado de Zacatecas",
+   "indexRow": 67
+  },
+  "zac-ley-026": {
+   "officialDate": "2013-12-14",
+   "indexTitle": "Ley de Proteccin y Conservacin del Patrimonio Cultural del Estado de Zacatecas",
+   "indexRow": 68
+  },
+  "zac-ley-156": {
+   "officialDate": "2010-10-16",
+   "indexTitle": "Ley de Residuos Slidos para el Estado de Zacatecas",
+   "indexRow": 69
+  },
+  "zac-ley-366": {
+   "officialDate": "2023-04-29",
+   "indexTitle": "Ley de Responsabilidad Patrimonial del Estado y Municipios de Zacatecas",
+   "indexRow": 70
+  },
+  "zac-ley-064": {
+   "officialDate": "2013-02-06",
+   "indexTitle": "Ley de Responsabilidades de los Servidores Pblicos del Estado y Municipios de Zacatecas",
+   "indexRow": 71
+  },
+  "zac-ley-374": {
+   "officialDate": "2024-09-08",
+   "indexTitle": "Ley de Revocacin de Mandato del Estado de Zacatecas",
+   "indexRow": 72
+  },
+  "zac-ley-061": {
+   "officialDate": "2018-03-07",
+   "indexTitle": "Ley de Salud del Estado de Zacatecas",
+   "indexRow": 73
+  },
+  "zac-ley-230": {
+   "officialDate": "2025-10-08",
+   "indexTitle": "Ley de Salud Mental del Estado de Zacatecas",
+   "indexRow": 74
+  },
+  "zac-ley-179": {
+   "officialDate": "2013-07-03",
+   "indexTitle": "Ley de Servicios Integrales para el Desarrollo Infantil de Zacatecas",
+   "indexRow": 75
+  },
+  "zac-ley-162": {
+   "officialDate": "2025-10-16",
+   "indexTitle": "Ley de Transparencia y Acceso a la Informacin Pblica del Estado de Zacatecas",
+   "indexRow": 76
+  },
+  "zac-ley-141": {
+   "officialDate": "2013-11-20",
+   "indexTitle": "Ley de Transporte, Trnsito y Vialidad del Estado de Zacatecas",
+   "indexRow": 77
+  },
+  "zac-ley-217": {
+   "officialDate": "2018-03-07",
+   "indexTitle": "Ley de Turismo del Estado de Zacatecas",
+   "indexRow": 78
+  },
+  "zac-ley-231": {
+   "officialDate": "2018-08-22",
+   "indexTitle": "Ley de Videovigilancia para el Estado de Zacatecas",
+   "indexRow": 79
+  },
+  "zac-ley-229": {
+   "officialDate": "2018-07-07",
+   "indexTitle": "Ley de Voluntad Anticipada del Estado de Zacatecas",
+   "indexRow": 80
+  },
+  "zac-ley-201": {
+   "officialDate": "2015-09-23",
+   "indexTitle": "Ley del Cambio Climtico para el Estado de Zacatecas y Municipios",
+   "indexRow": 81
+  },
+  "zac-ley-329": {
+   "officialDate": "2020-03-28",
+   "indexTitle": "Ley del Centro de Conciliacin Laboral del Estado de Zacatecas",
+   "indexRow": 82
+  },
+  "zac-ley-114": {
+   "officialDate": "2006-07-12",
+   "indexTitle": "Ley del Centro de Investigaciones Bibliogrficas de Zacatecas",
+   "indexRow": 83
+  },
+  "zac-ley-154": {
+   "officialDate": "2003-06-07",
+   "indexTitle": "Ley del Ejercicio Profesional en el Estado de Zacatecas",
+   "indexRow": 84
+  },
+  "zac-ley-119": {
+   "officialDate": "2007-03-31",
+   "indexTitle": "Ley del Equilibrio Ecolgico y la Proteccin al Ambiente del Estado de Zacatecas",
+   "indexRow": 85
+  },
+  "zac-ley-182": {
+   "officialDate": "2013-07-24",
+   "indexTitle": "Ley del Expediente Clnico Universal para el Estado de Zacatecas",
+   "indexRow": 86
+  },
+  "zac-ley-205": {
+   "officialDate": "2014-12-17",
+   "indexTitle": "Ley del Instituto de la Defensora Pblica del Estado de Zacatecas",
+   "indexRow": 87
+  },
+  "zac-ley-198": {
+   "officialDate": "2015-03-21",
+   "indexTitle": "Ley del Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado de Zacatecas",
+   "indexRow": 88
+  },
+  "zac-ley-188": {
+   "officialDate": "2014-08-30",
+   "indexTitle": "Ley del Instituto Regional del Patrimonio Mundial en Zacatecas",
+   "indexRow": 89
+  },
+  "zac-ley-112": {
+   "officialDate": "2006-08-02",
+   "indexTitle": "Ley del Notariado para el Estado de Zacatecas",
+   "indexRow": 90
+  },
+  "zac-ley-032": {
+   "officialDate": "2014-12-31",
+   "indexTitle": "Ley del Peridico Oficial del Estado de Zacatecas y Sus Municipios",
+   "indexRow": 91
+  },
+  "zac-ley-046": {
+   "officialDate": "1996-09-11",
+   "indexTitle": "Ley del Servicio Civil del Estado de Zacatecas",
+   "indexRow": 92
+  },
+  "zac-ley-330": {
+   "officialDate": "2004-08-04",
+   "indexTitle": "Ley del Servicio Profesional de Carrera del Estado y Municipios de Zacatecas",
+   "indexRow": 93
+  },
+  "zac-ley-081": {
+   "officialDate": "2003-10-04",
+   "indexTitle": "Ley del Sistema de Medios de Impugnacin Electoral del Estado de Zacatecas",
+   "indexRow": 94
+  },
+  "zac-ley-218": {
+   "officialDate": "2017-07-15",
+   "indexTitle": "Ley del Sistema Estatal Anticorrupcin de Zacatecas",
+   "indexRow": 95
+  },
+  "zac-ley-168": {
+   "officialDate": "2012-05-05",
+   "indexTitle": "Ley del Sistema Estatal de Seguridad Pblica de Zacatecas",
+   "indexRow": 96
+  },
+  "zac-ley-160": {
+   "officialDate": "2011-06-18",
+   "indexTitle": "Ley del Sistema Penitenciario y de Ejecucin de Sanciones del Estado de Zacatecas",
+   "indexRow": 97
+  },
+  "zac-ley-173": {
+   "officialDate": "2015-06-06",
+   "indexTitle": "Ley Electoral del Estado de Zacatecas",
+   "indexRow": 98
+  },
+  "zac-ley-326": {
+   "officialDate": "2026-11-01",
+   "indexTitle": "Ley en Materia de Desaparicin y Bsqueda de Personas para el Estado de Zacatecas.",
+   "indexRow": 99
+  },
+  "zac-ley-056": {
+   "officialDate": "2016-11-30",
+   "indexTitle": "Ley Orgnica de la Administracin Pblica del Estado de Zacatecas",
+   "indexRow": 100
+  },
+  "zac-ley-017": {
+   "officialDate": "1981-09-16",
+   "indexTitle": "Ley Orgnica de la Feria Nacional de la Ciudad de Zacatecas",
+   "indexRow": 101
+  },
+  "zac-ley-216": {
+   "officialDate": "2017-12-30",
+   "indexTitle": "Ley Orgnica de la Fiscala General de Justicia del Estado de Zacatecas",
+   "indexRow": 102
+  },
+  "zac-ley-060": {
+   "officialDate": "2001-06-13",
+   "indexTitle": "Ley Orgnica de la Universidad Autnoma de Zacatecas",
+   "indexRow": 103
+  },
+  "zac-ley-174": {
+   "officialDate": "2015-06-06",
+   "indexTitle": "Ley Orgnica del Instituto Electoral del Estado de Zacatecas",
+   "indexRow": 104
+  },
+  "zac-ley-067": {
+   "officialDate": "2016-12-03",
+   "indexTitle": "Ley Orgnica del Municipio del Estado de Zacatecas",
+   "indexRow": 105
+  },
+  "zac-ley-059": {
+   "officialDate": "2025-06-19",
+   "indexTitle": "Ley Orgnica del Poder Judicial del Estado de Zacatecas",
+   "indexRow": 106
+  },
+  "zac-ley-362": {
+   "officialDate": "2024-09-07",
+   "indexTitle": "Ley Orgnica del Poder Legislativo del Estado de Zacatecas",
+   "indexRow": 107
+  },
+  "zac-ley-195": {
+   "officialDate": "2014-11-26",
+   "indexTitle": "Ley Orgnica del Tribunal de Justicia Electoral del Estado de Zacatecas",
+   "indexRow": 108
+  },
+  "zac-ley-117": {
+   "officialDate": "2016-08-24",
+   "indexTitle": "Ley para el Bienestar y Proteccin de los Animales en el Estado de Zacatecas",
+   "indexRow": 109
+  },
+  "zac-ley-340": {
+   "officialDate": "2021-06-05",
+   "indexTitle": "Ley para el Control de la Contaminacin Derivada del Uso de Productos Desechables en el Estado de Zacatecas",
+   "indexRow": 110
+  },
+  "zac-ley-357": {
+   "officialDate": "2022-06-08",
+   "indexTitle": "Ley para el Desarrollo de la Competitividad de las Micro, Pequeas y Medianas Empresas del Estado y Municipios de Zacatecas",
+   "indexRow": 111
+  },
+  "zac-ley-183": {
+   "officialDate": "2013-11-30",
+   "indexTitle": "Ley para el Desarrollo Rural Integral Sustentable del Estado de Zacatecas",
+   "indexRow": 112
+  },
+  "zac-ley-339": {
+   "officialDate": "2021-02-06",
+   "indexTitle": "Ley para el Fomento de la Cultura de Donacin Voluntaria de Sangre en el Estado de Zacatecas",
+   "indexRow": 113
+  },
+  "zac-ley-191": {
+   "officialDate": "2014-09-03",
+   "indexTitle": "Ley para el Fomento de la Lectura y el Libro",
+   "indexRow": 114
+  },
+  "zac-ley-181": {
+   "officialDate": "2013-09-14",
+   "indexTitle": "Ley para Fomentar la Creacin, Desarrollo, Utilizacin y Difusin del Software Libre y de Cdigo Abierto del Estado de Zacatecas",
+   "indexRow": 115
+  },
+  "zac-ley-016": {
+   "officialDate": "1978-05-27",
+   "indexTitle": "Ley para Honrar la Memoria de las Personas Ilustres del Estado de Zacatecas",
+   "indexRow": 116
+  },
+  "zac-ley-203": {
+   "officialDate": "2015-07-01",
+   "indexTitle": "Ley para la Administracin de Bienes Asegurados, Decomisados y Abandonados para el Estado de Zacatecas",
+   "indexRow": 117
+  },
+  "zac-ley-226": {
+   "officialDate": "2018-08-29",
+   "indexTitle": "Ley para la Atencin de los Zacatecanos Migrantes y Sus Familias",
+   "indexRow": 118
+  },
+  "zac-ley-219": {
+   "officialDate": "2021-02-06",
+   "indexTitle": "Ley para la Atencin y Proteccin a las Personas con la Condicin del Espectro Autista del Estado y Municipios de Zacatecas",
+   "indexRow": 119
+  },
+  "zac-ley-377": {
+   "officialDate": "2025-08-06",
+   "indexTitle": "Ley para la Estabilizacin y Balance Financiero de los Municipios del Estado de Zacatecas.",
+   "indexRow": 120
+  },
+  "zac-ley-335": {
+   "officialDate": "2020-12-19",
+   "indexTitle": "Ley para la Igualdad Sustantiva entre Mujeres y Hombres del Estado de Zacatecas",
+   "indexRow": 121
+  },
+  "zac-ley-210": {
+   "officialDate": "2017-05-03",
+   "indexTitle": "Ley para la Inclusin de las Personas con Discapacidad del Estado de Zacatecas",
+   "indexRow": 122
+  },
+  "zac-ley-193": {
+   "officialDate": "2012-09-29",
+   "indexTitle": "Ley para la Inversin y el Empleo de Zacatecas",
+   "indexRow": 123
+  },
+  "zac-ley-368": {
+   "officialDate": "2023-10-01",
+   "indexTitle": "Ley para la Preservacin, Fomento y Proteccin del Arbolado Urbano del Estado de Zacatecas",
+   "indexRow": 124
+  },
+  "zac-ley-361": {
+   "officialDate": "2022-10-02",
+   "indexTitle": "Ley para la Prevencin y Atencin del Desplazamiento Forzado Interno en el Estado de Zacatecas",
+   "indexRow": 125
+  },
+  "zac-ley-379": {
+   "officialDate": "2025-10-05",
+   "indexTitle": "Ley para la Prevencin y Atencin Integral de las Adicciones para el Estado Zacatecas",
+   "indexRow": 126
+  },
+  "zac-ley-373": {
+   "officialDate": "2024-05-30",
+   "indexTitle": "Ley para la promocin, apoyo y proteccin a la lactancia materna con leche humana en el Estado de Zacatecas",
+   "indexRow": 127
+  },
+  "zac-ley-091": {
+   "officialDate": "2021-08-11",
+   "indexTitle": "Ley para la Proteccin de las Abejas y el Desarrollo Apcola del Estado y Municipios de Zacatecas",
+   "indexRow": 128
+  },
+  "zac-ley-206": {
+   "officialDate": "2021-02-06",
+   "indexTitle": "Ley para la Proteccin de Personas que Intervienen en los Procedimientos Penales en el Estado de Zacatecas",
+   "indexRow": 129
+  },
+  "zac-ley-185": {
+   "officialDate": "2024-02-29",
+   "indexTitle": "Ley para las Juventudes del Estado de Zacatecas",
+   "indexRow": 130
+  },
+  "zac-ley-325": {
+   "officialDate": "2019-12-28",
+   "indexTitle": "Ley para Prevenir el Desperdicio de Alimentos y Fomentar su Aprovechamiento en el Estado de Zacatecas",
+   "indexRow": 131
+  },
+  "zac-ley-072": {
+   "officialDate": "2003-02-19",
+   "indexTitle": "Ley para Prevenir y Atender la Violencia Familiar en el Estado de Zacatecas",
+   "indexRow": 132
+  },
+  "zac-ley-113": {
+   "officialDate": "2006-07-29",
+   "indexTitle": "Ley para Prevenir y Erradicar Toda Forma de Discriminacin en el Estado de Zacatecas",
+   "indexRow": 133
+  },
+  "zac-ley-186": {
+   "officialDate": "2014-06-11",
+   "indexTitle": "Ley para Prevenir, Atender y Erradicar el Acoso Escolar en el Estado de Zacatecas",
+   "indexRow": 134
+  },
+  "zac-ley-199": {
+   "officialDate": "2015-02-28",
+   "indexTitle": "Ley para Prevenir, Atender, Combatir y Erradicar la Trata de Personas en el Estado de Zacatecas",
+   "indexRow": 135
+  },
+  "zac-ley-221": {
+   "officialDate": "2016-08-24",
+   "indexTitle": "Ley para Regular Establecimientos Dedicados a la Compra, Venta y Acopio de Material Susceptible de Ser Reciclado O Reutilizado en el Estado de Zacatecas",
+   "indexRow": 136
+  },
+  "zac-ley-024": {
+   "officialDate": "1987-01-14",
+   "indexTitle": "Ley que Crea el Centro Zacatecano de Fomento Cooperativo",
+   "indexRow": 137
+  },
+  "zac-ley-027": {
+   "officialDate": "1987-08-12",
+   "indexTitle": "Ley que Crea el Colegio de Bachilleres del Estado de Zacatecas",
+   "indexRow": 138
+  },
+  "zac-ley-019": {
+   "officialDate": "1984-01-28",
+   "indexTitle": "Ley que Establece el Derecho de Va para el Estado de Zacatecas",
+   "indexRow": 139
+  },
+  "zac-ley-341": {
+   "officialDate": "2021-07-07",
+   "indexTitle": "Ley que Establece el Procedimiento de Declaracin Especial de Ausencia para Personas Desaparecidas en el Estado de Zacatecas",
+   "indexRow": 140
+  },
+  "zac-ley-334": {
+   "officialDate": "2020-11-22",
+   "indexTitle": "Ley que Regula el Uso de Cubrebocas y Dems Medidas para Prevenir la Trasmisin de la Enfermedad COVID-19 en el Estado de Zacatecas",
+   "indexRow": 141
+  },
+  "zac-ley-161": {
+   "officialDate": "1994-08-13",
+   "indexTitle": "Ley Reglamentaria de la Fraccin XVII del Artculo 27 de la Constitucin Poltica de los Estados Unidos Mexicanos",
+   "indexRow": 142
+  },
+  "zac-ley-127": {
+   "officialDate": "2007-09-29",
+   "indexTitle": "Ley Sobre Bebidas Alcohlicas para el Estado de Zacatecas",
+   "indexRow": 143
+  },
+  "zac-ley-232": {
+   "officialDate": "2025-12-31",
+   "indexTitle": "Presupuesto de Egresos del Estado de Zacatecas para el Ejercicio Fiscal 2026",
+   "indexRow": 144
+  }
+ }
+}
