@@ -3,6 +3,8 @@
 pub mod recovery;
 mod proposals;
 mod reminders;
+mod pseudonym_maps;
+pub use pseudonym_maps::{PseudonymEntry, PseudonymSource, PseudonymVersion, PseudonymAudit, NewPseudonymVersion};
 mod time_billing;
 pub use proposals::{AgentAction, AgentActionLog, AgentProposal, PROPOSAL_CONTRACT_VERSION};
 pub use reminders::{REMINDER_CONTRACT_VERSION, Reminder, ReminderAudit};
@@ -159,6 +161,40 @@ impl SyntheticVault {
             _root: root.clone(),
         };
         Ok((Self { root }, vault))
+    }
+    /// New synthetic-only schema 5 fixture; schema 4 create/reopen remain unchanged.
+    /// Never accepts a caller-provided path, key storage or production database.
+    pub fn create_with_pseudonym_maps(key: &KeyMaterial) -> Result<(Self, Vault)> {
+        let root = Arc::new(
+            tempfile::Builder::new()
+                .prefix("lex-vault-h5b2c-synthetic-")
+                .tempdir()?,
+        );
+        fs::set_permissions(root.path(), fs::Permissions::from_mode(0o700))?;
+        fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .mode(0o600)
+            .open(root.path().join("vault.sqlite"))?;
+        let mut connection = open(&root, Some(key))?;
+        let tx = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+        tx.execute_batch(SCHEMA)?;
+        tx.execute_batch(reminders::SCHEMA)?;
+        tx.execute_batch(proposals::SCHEMA)?;
+        tx.execute_batch(time_billing::SCHEMA)?;
+        tx.execute_batch(pseudonym_maps::SCHEMA)?;
+        tx.commit()?;
+        Ok((
+            Self { root: root.clone() },
+            Vault { connection: Some(connection), _root: root },
+        ))
+    }
+    /// Explicit opt-in reopen for schema 5, never a migration or fallback.
+    pub fn reopen_with_pseudonym_maps(&self, key: Option<&KeyMaterial>) -> Result<Vault> {
+        let connection = open(&self.root, key)?;
+        let version: i64 = connection.query_row("PRAGMA user_version", [], |r| r.get(0))?;
+        if version != 5 { return Err(Error::CannotOpen); }
+        Ok(Vault { connection: Some(connection), _root: self.root.clone() })
     }
     pub fn reopen(&self, key: Option<&KeyMaterial>) -> Result<Vault> {
         let connection = open(&self.root, key)?;
