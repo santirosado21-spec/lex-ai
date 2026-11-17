@@ -1,0 +1,3556 @@
+{
+ "kind": "zacatecas-release-candidate-manifest",
+ "state": "cuarentena - candidato, nada liberado",
+ "mapa": "docs/qa/zac-mapa-seleccion-v36c-revisor-2026-11-17.json",
+ "generatedFrom": "v36c (part-14, commit 528458a)",
+ "documents": 144,
+ "documents_list": [
+  {
+   "documentId": "zac-ley-013",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-013/fbbadc810e0bfe62498f055cdd87a43160ddbe8c0eef3db12a289dfc1661b53b/2e17353c1e80d703a7787b5668859fc6059d0ca7e90c7f9c939ae056203ef6e9.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "7fc4558ffb339ad42d8ba07ccca3dfaa09dacf2d2f2ceabb44af998654f27c11",
+   "pdfSha256": "fbbadc810e0bfe62498f055cdd87a43160ddbe8c0eef3db12a289dfc1661b53b",
+   "configSha256": "2e17353c1e80d703a7787b5668859fc6059d0ca7e90c7f9c939ae056203ef6e9",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=13&tipo=pdf",
+   "declaredPublicationAt": "1944-09-23",
+   "declaredAmendedAt": "1965-03-03",
+   "records": {
+    "articulo": 15,
+    "transitorio": 2
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-014",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-014/0edbdcfdaa5e55709ba79d59361899e31d4797d70ffb72344e2979cedea34896/c095b5b64724a3b1b81ada19ac08d9de39c07a16d151c63cef2faf1fc23bca81.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "4518cdf1c55d62abcba563c35980bd5aa8b819c948faf226b4a4298e0be4d20b",
+   "pdfSha256": "0edbdcfdaa5e55709ba79d59361899e31d4797d70ffb72344e2979cedea34896",
+   "configSha256": "c095b5b64724a3b1b81ada19ac08d9de39c07a16d151c63cef2faf1fc23bca81",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=14&tipo=pdf",
+   "declaredPublicationAt": "1955-02-19",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 14,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-016",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-016/da96b8ad63aea653cbb5c15bf691db87d1358a72db4a1d93615dec6b8f9db718/80cf994f6d31679ecf9803f8948c7306864fc1886a96c636b1ddce444e301eca.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "b26033718462c3bc82ae6b38e672b98a3ebb78bd66f872ee3b3ad273cbc2c20c",
+   "pdfSha256": "da96b8ad63aea653cbb5c15bf691db87d1358a72db4a1d93615dec6b8f9db718",
+   "configSha256": "80cf994f6d31679ecf9803f8948c7306864fc1886a96c636b1ddce444e301eca",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=16&tipo=pdf",
+   "declaredPublicationAt": "1978-05-27",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 20,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-017",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-017/6b7257b08a15fceaffc57d5a6a90398e10187243701af3d44a8606d9030334dc/6a69a5b8d7efac32f925de821abfe89016c04a124b593a24594c4955f99cdd66.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "c901ead5b1c666e350a2fac07f0707506ee05607198bea756a7c0e97e26e2046",
+   "pdfSha256": "6b7257b08a15fceaffc57d5a6a90398e10187243701af3d44a8606d9030334dc",
+   "configSha256": "6a69a5b8d7efac32f925de821abfe89016c04a124b593a24594c4955f99cdd66",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=17&tipo=pdf",
+   "declaredPublicationAt": "1981-09-16",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 40,
+    "transitorio": 18
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-019",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-019/4b041a7b220f5b96b360d55035b7003821da3684cd6259b242120b000ff92c8d/d4f227f84dbf16ce4993997c2a34354e45abb43570c99b5b4dd3cce39a73238b.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "0fc7551f840e8d53588b3f7db242081cf583ffbb14b97e09dcec5f437214e552",
+   "pdfSha256": "4b041a7b220f5b96b360d55035b7003821da3684cd6259b242120b000ff92c8d",
+   "configSha256": "d4f227f84dbf16ce4993997c2a34354e45abb43570c99b5b4dd3cce39a73238b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=19&tipo=pdf",
+   "declaredPublicationAt": "1984-01-28",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 12,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-020",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-020/0456a4c25e5a468ea8e4f9a59481922d4ba1a38f468e849e6e3a631d21ce03a1/6397c74bd7d0b555dda159120c4dc863acaed5fcda1149715e6b11c7e1c9c46e.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "03f4891afd543042394f5058f341073ae0ed5e518a8fb166f7c51dadf5c8b761",
+   "pdfSha256": "0456a4c25e5a468ea8e4f9a59481922d4ba1a38f468e849e6e3a631d21ce03a1",
+   "configSha256": "6397c74bd7d0b555dda159120c4dc863acaed5fcda1149715e6b11c7e1c9c46e",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=20&tipo=pdf",
+   "declaredPublicationAt": "1984-12-29",
+   "declaredAmendedAt": "2014-12-03",
+   "records": {
+    "articulo": 78,
+    "transitorio": 17
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-024",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-024/1997be46efccb0a982322ac627b152544858d552ff0e1642831ace18022ca859/127571c8be00fe4b1d654259905a7c6bd5942b3d82db338d90f725040fb1775e.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "fc63d3d427cc2f2bc0fd8b67a603129150a07fad8e228168bde9d5c4132c187f",
+   "pdfSha256": "1997be46efccb0a982322ac627b152544858d552ff0e1642831ace18022ca859",
+   "configSha256": "127571c8be00fe4b1d654259905a7c6bd5942b3d82db338d90f725040fb1775e",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=24&tipo=pdf",
+   "declaredPublicationAt": "1987-01-14",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 15,
+    "transitorio": 1
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-026",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-026/03a0214572cde08aadffbcab6731e193abe6996c2ba5d3af3d28f4c527f51401/27d548bc6412016a6fb3899ff9e9a91657c8a89b4b172286a49398899c42718b.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "30ebc7f74af47df16655ae5d9b68ed730d481052f52e13b6005967448d80b798",
+   "pdfSha256": "03a0214572cde08aadffbcab6731e193abe6996c2ba5d3af3d28f4c527f51401",
+   "configSha256": "27d548bc6412016a6fb3899ff9e9a91657c8a89b4b172286a49398899c42718b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=26&tipo=pdf",
+   "declaredPublicationAt": "2013-12-14",
+   "declaredAmendedAt": "2018-09-29",
+   "records": {
+    "articulo": 97,
+    "transitorio": 14
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-027",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-027/b7db2cabe49a9e44af470f8345ffa9070aeea063d6c0e42ada4c5f2394f14a4f/e1fe2947e3d0913d5a674c3432209793461b7b102f00157600c43ba780c53bbf.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "36069ea4fb1dac33786dd97902482202d1c4bb6d3eb5789a5d6664a01b48209f",
+   "pdfSha256": "b7db2cabe49a9e44af470f8345ffa9070aeea063d6c0e42ada4c5f2394f14a4f",
+   "configSha256": "e1fe2947e3d0913d5a674c3432209793461b7b102f00157600c43ba780c53bbf",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=27&tipo=pdf",
+   "declaredPublicationAt": "1987-08-12",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 19,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-028",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-028/e68210b98962abd256fe00c542469948ab80e223896ce7177a7a0c751cc977ae/a5f31b7b702946d4c5e5483fff195f30ad0f880f01d8ba063d7624c6f454f714.json",
+   "dir": "zac-v36c-poppler-01-2026-11-17",
+   "extractionFileSha256": "f7138c67b77354573bc2b809fc6c6d4748be5cf4422b58c99957bcfea60a5242",
+   "pdfSha256": "e68210b98962abd256fe00c542469948ab80e223896ce7177a7a0c751cc977ae",
+   "configSha256": "a5f31b7b702946d4c5e5483fff195f30ad0f880f01d8ba063d7624c6f454f714",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=28&tipo=pdf",
+   "declaredPublicationAt": "1987-09-10",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 93,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-030",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-030/7a3200ceba2f17b40d5eeca25da95f75d726a78656d4416ed59a0afa8413f332/730e500bcf20f5f2a70045e0f05dc8c7b8a5b7e4b1a2ed66c7319ef0ce5e0697.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "cb2d05477bbbd7e7f45efe82fa87f122cd9125649afc3a8855cfaf93c01e2702",
+   "pdfSha256": "7a3200ceba2f17b40d5eeca25da95f75d726a78656d4416ed59a0afa8413f332",
+   "configSha256": "730e500bcf20f5f2a70045e0f05dc8c7b8a5b7e4b1a2ed66c7319ef0ce5e0697",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=30&tipo=pdf",
+   "declaredPublicationAt": "1988-01-07",
+   "declaredAmendedAt": "2014-12-03",
+   "records": {
+    "articulo": 58,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "unmatched-suffixed-heading-in-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-032",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-032/01044d9e3365fc93d4c15d6ad5de48181256ab5d245207c085b9d8287bcefa21/d7f767ed041a7b3d8141aa597614ca5739cde453af98f974e07f8466e94d8be3.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "2c8d2e47715865071bca164293528ac4e443f9ccf41191e6cdffc27e9701c112",
+   "pdfSha256": "01044d9e3365fc93d4c15d6ad5de48181256ab5d245207c085b9d8287bcefa21",
+   "configSha256": "d7f767ed041a7b3d8141aa597614ca5739cde453af98f974e07f8466e94d8be3",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=32&tipo=pdf",
+   "declaredPublicationAt": "2014-12-31",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 38,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-033",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-033/45c28fd04e779901276714fbc9ba9883dd7f307281d7b85c9833b70513c90db2/43e9d04ef23d978c2fd509155c98943e3607e36117544b91f7bf12425d4412fc.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "6b71ee3ecf2a80dc7dbe847d6528d30acc85b55f659666b1bb4191f578b28ab1",
+   "pdfSha256": "45c28fd04e779901276714fbc9ba9883dd7f307281d7b85c9833b70513c90db2",
+   "configSha256": "43e9d04ef23d978c2fd509155c98943e3607e36117544b91f7bf12425d4412fc",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=33&tipo=pdf",
+   "declaredPublicationAt": "1988-12-31",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 14,
+    "transitorio": 2
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-034",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-034/b8345e597a9c4ce9f935db58c885fe3d0c2319c6ffa914d43862f17338bb5ee9/2585445b44ba35f21fbc8ebe5fb89032b6abbf1dddbae95a4eb226b74eac25ab.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "4cfab5ebbe96b8d13b3ca33a4e2bcd1ed023f6c575ed8c9ce2e714e8e7b75eb8",
+   "pdfSha256": "b8345e597a9c4ce9f935db58c885fe3d0c2319c6ffa914d43862f17338bb5ee9",
+   "configSha256": "2585445b44ba35f21fbc8ebe5fb89032b6abbf1dddbae95a4eb226b74eac25ab",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=34&tipo=pdf",
+   "declaredPublicationAt": "1989-01-07",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 68,
+    "transitorio": 15
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-036",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-036/5a1e59b4733fdb620822b7d682670cbca594686d4a9da3c82815f178d9d22fc8/54d927b048e206abae9a9b404e508ccc42aae635e6492600a1eab288520c1616.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "ef06fb546ccf310549d2ca663564970c352a035da406d9d524786d8fbd974a25",
+   "pdfSha256": "5a1e59b4733fdb620822b7d682670cbca594686d4a9da3c82815f178d9d22fc8",
+   "configSha256": "54d927b048e206abae9a9b404e508ccc42aae635e6492600a1eab288520c1616",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=36&tipo=pdf",
+   "declaredPublicationAt": "1989-03-01",
+   "declaredAmendedAt": "1997-02-15",
+   "records": {
+    "articulo": 48,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-038",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-038/680916e6f1d02af2dd753b357eb3283ef684a6c5a864a50210de0a418e536fcc/31987202f94fdf9661ca7f837bcfaf90b3806d24746979b8ab6ad7fab4f47085.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "76b1982814e9c278142461ff6a2d58e20e60bde5ada3d3593eb908ef6ddf3b1c",
+   "pdfSha256": "680916e6f1d02af2dd753b357eb3283ef684a6c5a864a50210de0a418e536fcc",
+   "configSha256": "31987202f94fdf9661ca7f837bcfaf90b3806d24746979b8ab6ad7fab4f47085",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=38&tipo=pdf",
+   "declaredPublicationAt": "1989-12-30",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 27,
+    "transitorio": 2
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-040",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-040/5a4b498f49d699b5c0c2a34e03b34f4febd9dfd313fee9b117cb89ff87eb8da1/2a5b501ebb0b5948435a278f99c490788d3a19809898443ef174b098fcdc40c0.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "590f2ec1439794ede52c0141184ccd7fc481994cd2c5db0fe10effe8c757cfd4",
+   "pdfSha256": "5a4b498f49d699b5c0c2a34e03b34f4febd9dfd313fee9b117cb89ff87eb8da1",
+   "configSha256": "2a5b501ebb0b5948435a278f99c490788d3a19809898443ef174b098fcdc40c0",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=40&tipo=pdf",
+   "declaredPublicationAt": "1993-01-27",
+   "declaredAmendedAt": "2025-10-04",
+   "records": {
+    "articulo": 101,
+    "transitorio": 45
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-043",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-043/a5cc430e049ca6c9b6ee39b4b52e858960d8d31c2972d867aab038f53823d713/5336ae4acb18332dd7a5ddbc7acb3aa321bb0e0413c6d4f471a4a3e1917b9330.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "d239b150beed69f97e2b28a31d090312b017455f1efd6dcf3100b08eb663b059",
+   "pdfSha256": "a5cc430e049ca6c9b6ee39b4b52e858960d8d31c2972d867aab038f53823d713",
+   "configSha256": "5336ae4acb18332dd7a5ddbc7acb3aa321bb0e0413c6d4f471a4a3e1917b9330",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=43&tipo=pdf",
+   "declaredPublicationAt": "1994-08-13",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 124,
+    "transitorio": 30
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-046",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-046/34ddaec3cd31d4bee733cb88f4f4810d53a82fc922de80cb902e430648147543/b87985e12a734531ba0c0ccff767cfb78730fcd7805b16d96cd347a0b9e9f767.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "1d7b865471443b20c02327a59a19433b86cd4c9be6a52ccf65baaf38472f49ee",
+   "pdfSha256": "34ddaec3cd31d4bee733cb88f4f4810d53a82fc922de80cb902e430648147543",
+   "configSha256": "b87985e12a734531ba0c0ccff767cfb78730fcd7805b16d96cd347a0b9e9f767",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=46&tipo=pdf",
+   "declaredPublicationAt": "1996-09-11",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 301,
+    "transitorio": 62
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-053",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-053/59096ab598688067a127d026d1bd02a776094bd7f7fe3506283588e7ff7ab042/422ab6c9483423dc0eb44769c291edec5e8e0b3e315ad5fe9989d8a0e80451e0.json",
+   "dir": "zac-v36c-poppler-02-2026-11-17",
+   "extractionFileSha256": "feaccecda99fce323426642117b7fa57b6d59cf8d45a4cf34ec041741f1a1a6e",
+   "pdfSha256": "59096ab598688067a127d026d1bd02a776094bd7f7fe3506283588e7ff7ab042",
+   "configSha256": "422ab6c9483423dc0eb44769c291edec5e8e0b3e315ad5fe9989d8a0e80451e0",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=53&tipo=pdf",
+   "declaredPublicationAt": "2000-03-30",
+   "declaredAmendedAt": "2015-02-07",
+   "records": {
+    "articulo": 80,
+    "transitorio": 24
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-056",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-056/1306c5e2f6e970c68be996ec56c33b98701d4dedaf2d4ec1944a0dbb1e5b31c3/3e942b273727cfedaa411165ea9fb783a13b06afec385edc267b20b70b7bcdc7.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "5b609a3cf31f078ca7bd8fd567116fcd933ccefc1a4e929cce10ebdc8712d5eb",
+   "pdfSha256": "1306c5e2f6e970c68be996ec56c33b98701d4dedaf2d4ec1944a0dbb1e5b31c3",
+   "configSha256": "3e942b273727cfedaa411165ea9fb783a13b06afec385edc267b20b70b7bcdc7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=56&tipo=pdf",
+   "declaredPublicationAt": "2016-11-30",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 50,
+    "transitorio": 66
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-057",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-057/9d91159667c384324d9c84583f49c98067c3363ddac1da0a103656928ad57e9e/a7f1f3cd071a7f8b9c68a6bc112bd15f8dd751dd43e447c379de8cc68afdf23d.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "44a9e51f2de87cfd2f0ed0194df4a29e26683f6fe533ede7ca7cd1846c980f29",
+   "pdfSha256": "9d91159667c384324d9c84583f49c98067c3363ddac1da0a103656928ad57e9e",
+   "configSha256": "a7f1f3cd071a7f8b9c68a6bc112bd15f8dd751dd43e447c379de8cc68afdf23d",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=57&tipo=pdf",
+   "declaredPublicationAt": "2016-12-31",
+   "declaredAmendedAt": "2026-08-22",
+   "records": {
+    "articulo": 150,
+    "transitorio": 54
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-059",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-059/ae75c3d9265a29f66f63e7e567f8808b65f97a1533da46c24c09870ca49ae45c/3e4c222c6b0154da2de858482000ebfd621d5a5c2a02b7e2498bf739b99fcd50.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "ea31e2a7e1d52b91f1120bd9cf4139cb13c1ebccbfa964dff67588c6c5497763",
+   "pdfSha256": "ae75c3d9265a29f66f63e7e567f8808b65f97a1533da46c24c09870ca49ae45c",
+   "configSha256": "3e4c222c6b0154da2de858482000ebfd621d5a5c2a02b7e2498bf739b99fcd50",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=59&tipo=pdf",
+   "declaredPublicationAt": "2025-06-19",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 183,
+    "transitorio": 11
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-060",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-060/0e832176f9443fc3b5462cc62c790c33c4f1395bbb489933709b58310ff041be/2fc14816bfc30357c78a1c78f0ac9e06909f541339707c237d2036467ef746b5.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "dddb5f0f2892c3ed14e8a17e17f29d3835b36315931fbb026ef2bd7906c31310",
+   "pdfSha256": "0e832176f9443fc3b5462cc62c790c33c4f1395bbb489933709b58310ff041be",
+   "configSha256": "2fc14816bfc30357c78a1c78f0ac9e06909f541339707c237d2036467ef746b5",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=60&tipo=pdf",
+   "declaredPublicationAt": "2001-06-13",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 74,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-061",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-061/560c1312505d1d1504f5519482f42b03712a37c692888d6c82881ac622c9e6ba/2ae7f09c2fbf8055c1f9b82dad09fb5e8e8cfe2f9daecf2b3b07611195b8f899.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "6d552ad81f155c08ed00d9a6ed61a3a67c38a8bce44fa0f3948eac1738ee25d2",
+   "pdfSha256": "560c1312505d1d1504f5519482f42b03712a37c692888d6c82881ac622c9e6ba",
+   "configSha256": "2ae7f09c2fbf8055c1f9b82dad09fb5e8e8cfe2f9daecf2b3b07611195b8f899",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=61&tipo=pdf",
+   "declaredPublicationAt": "2018-03-07",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 278,
+    "transitorio": 58
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-063",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-063/6f4a5f1e051b34976750a9526d4266ccbf541676d971c059851318e07e190874/b2f32be5fc0796aeb2b1966f1444c9e96a53eedee8fa3c127dae8a13be9c83d8.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "c502f6bcb494f803edfd5c76142c7312a7bfa3fc067d70fb87afdc9bac45ad47",
+   "pdfSha256": "6f4a5f1e051b34976750a9526d4266ccbf541676d971c059851318e07e190874",
+   "configSha256": "b2f32be5fc0796aeb2b1966f1444c9e96a53eedee8fa3c127dae8a13be9c83d8",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=63&tipo=pdf",
+   "declaredPublicationAt": "2001-08-09",
+   "declaredAmendedAt": "2023-03-08",
+   "records": {
+    "articulo": 70,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-064",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-064/cff8fc2794870797cb9847d28f7522a4fc397344d548a3aa367a8235e17cf947/b219508145e6b0f88ee19f34d071a2157220b79e301faa432217092e94b484a7.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "83c30836d4ff7705924be49040d82001d0a17e773becfb3d2ff0e0a31632ca93",
+   "pdfSha256": "cff8fc2794870797cb9847d28f7522a4fc397344d548a3aa367a8235e17cf947",
+   "configSha256": "b219508145e6b0f88ee19f34d071a2157220b79e301faa432217092e94b484a7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=64&tipo=pdf",
+   "declaredPublicationAt": "2013-02-06",
+   "declaredAmendedAt": "2017-07-15",
+   "records": {
+    "articulo": 115,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-067",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-067/0d6e37303ccb9dd2c0cf80cc8b1824d05eb0fc5d74452b9c12d5c9eb71333300/6b8c07a79fe85aacc3a272cc617275bf2186ad2a68acc29ca68831b048f04c27.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "40b266e54e2f6e1f89c6ff81c29fa0dbe3a9e36b421cb2c0b3a8ca6b63040293",
+   "pdfSha256": "0d6e37303ccb9dd2c0cf80cc8b1824d05eb0fc5d74452b9c12d5c9eb71333300",
+   "configSha256": "6b8c07a79fe85aacc3a272cc617275bf2186ad2a68acc29ca68831b048f04c27",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=67&tipo=pdf",
+   "declaredPublicationAt": "2016-12-03",
+   "declaredAmendedAt": "2026-10-31",
+   "records": {
+    "articulo": 268,
+    "transitorio": 64
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-068",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-068/d3cabb006f9304e635f612852a106a57d8093f4a978a09160213a604d80c9a75/3942de826cce1af96ae4c67a27ad084e55c9b01c52c2f92b8f72737400b00bef.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "85c9290f6dd11dd269c2ccfb6ea3920a9e570d28211d7064d6910abe2c3df25b",
+   "pdfSha256": "d3cabb006f9304e635f612852a106a57d8093f4a978a09160213a604d80c9a75",
+   "configSha256": "3942de826cce1af96ae4c67a27ad084e55c9b01c52c2f92b8f72737400b00bef",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=68&tipo=pdf",
+   "declaredPublicationAt": "2021-12-29",
+   "declaredAmendedAt": "2024-05-15",
+   "records": {
+    "articulo": 167,
+    "transitorio": 23
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-070",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-070/6a90d8185d6a3bed60a4e6bb470249fd00a0fc517511f28de5d99ee90d3800b9/3709675e5802b323183d44d190528a87b5e3ee7c09f13bcf16691bd736c47da7.json",
+   "dir": "zac-v36c-poppler-03-2026-11-17",
+   "extractionFileSha256": "1c7b155849d5cd8207523023bbb956766a4a9703b194393981b03a426ad1290b",
+   "pdfSha256": "6a90d8185d6a3bed60a4e6bb470249fd00a0fc517511f28de5d99ee90d3800b9",
+   "configSha256": "3709675e5802b323183d44d190528a87b5e3ee7c09f13bcf16691bd736c47da7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=70&tipo=pdf",
+   "declaredPublicationAt": "2002-07-10",
+   "declaredAmendedAt": "2005-10-26",
+   "records": {
+    "articulo": 66,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-072",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-072/d86d8ea96fa01dd2b03b53f6eade198e6074641944b46e192234b0a2d34940f0/9248452d810aa8e8de2eaade8dc9a0b7834dbc62ccc504f056a11c9d9c650271.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "07560d2ea8a7b34a58ea24dc4cfe4283dec99b844ad7efcff57e02fd0fa2c8bd",
+   "pdfSha256": "d86d8ea96fa01dd2b03b53f6eade198e6074641944b46e192234b0a2d34940f0",
+   "configSha256": "9248452d810aa8e8de2eaade8dc9a0b7834dbc62ccc504f056a11c9d9c650271",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=72&tipo=pdf",
+   "declaredPublicationAt": "2003-02-19",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 43,
+    "transitorio": 18
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-076",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-076/b2a77ef44f3ee9cea96ae52ac88e5d1f492db2136d4a95bc46f4162709125adc/be41c2c0d63923c635154bce73993ef7e8677d62fcf9d013a3b00981e9e7365b.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "4d96db1e8b7924e1355fdb8b70180b9742fe8f669c5ff423fc043e18a6d022ad",
+   "pdfSha256": "b2a77ef44f3ee9cea96ae52ac88e5d1f492db2136d4a95bc46f4162709125adc",
+   "configSha256": "be41c2c0d63923c635154bce73993ef7e8677d62fcf9d013a3b00981e9e7365b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=76&tipo=pdf",
+   "declaredPublicationAt": "2003-08-16",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 57,
+    "transitorio": 31
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-077",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-077/2c8a927ac8e7b226868978fea460aec1d8eb285cf02abc0c3e57ae18aa0db88b/b19d6fed0850c983488e6573fe605eb8f95434e8f7095ef2ddf6dda12b190ee6.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "55d99a603a5e41efdf857238177d516c9af981daf87e493aa8c715a7ca38923f",
+   "pdfSha256": "2c8a927ac8e7b226868978fea460aec1d8eb285cf02abc0c3e57ae18aa0db88b",
+   "configSha256": "b19d6fed0850c983488e6573fe605eb8f95434e8f7095ef2ddf6dda12b190ee6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=77&tipo=pdf",
+   "declaredPublicationAt": "2021-09-08",
+   "declaredAmendedAt": "2025-10-04",
+   "records": {
+    "articulo": 63,
+    "transitorio": 13
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-081",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-081/eccc10a4ebebeb211f7882e9736522c2746d7f2ed4d77290bc1eef7c16da5e8c/206ed2d9bee49d0d69c9eca266661cc4a80d73137a734df26ab156b8463e26e5.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "7a6555634764a6e2babb41ab5363584d84054823a8b35be46468dcb5c848beb7",
+   "pdfSha256": "eccc10a4ebebeb211f7882e9736522c2746d7f2ed4d77290bc1eef7c16da5e8c",
+   "configSha256": "206ed2d9bee49d0d69c9eca266661cc4a80d73137a734df26ab156b8463e26e5",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=81&tipo=pdf",
+   "declaredPublicationAt": "2003-10-04",
+   "declaredAmendedAt": "2025-02-15",
+   "records": {
+    "articulo": 80,
+    "transitorio": 20
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-087",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-087/7583b5e81ea28162cfa66b53ce4ddfbc38c0172c626b0f4943db77106cbf061e/43ff6ef1991c859151a60c407c5a7781793472f37cb2a4df53323ebf416f07a5.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "d9e3a91811e538e266888874752a28c0f702020eec080cf83a1341ef05bb7ae7",
+   "pdfSha256": "7583b5e81ea28162cfa66b53ce4ddfbc38c0172c626b0f4943db77106cbf061e",
+   "configSha256": "43ff6ef1991c859151a60c407c5a7781793472f37cb2a4df53323ebf416f07a5",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=87&tipo=pdf",
+   "declaredPublicationAt": "2004-07-14",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 32,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-090",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-090/4609916127dd29d9fa53fcacca25ec05b51d8f63a4c7d59f7b9a28bad28b0a54/86f8b22802c693300326848d499b429da386fb2df036ca246de53023b0259093.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "7e09010863225a1067d7a6dc7d79aee8f01d7d66d28cc585de2d851d064d2f5d",
+   "pdfSha256": "4609916127dd29d9fa53fcacca25ec05b51d8f63a4c7d59f7b9a28bad28b0a54",
+   "configSha256": "86f8b22802c693300326848d499b429da386fb2df036ca246de53023b0259093",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=90&tipo=pdf",
+   "declaredPublicationAt": "2016-12-31",
+   "declaredAmendedAt": "2025-12-31",
+   "records": {
+    "articulo": 61,
+    "transitorio": 37
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-091",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-091/c9bbca697cb8db7d0a2a929d66b86b6722698ba2c6666f1cc88e9bfc0630f59c/86770d17699ec7b7369edff639cf7f5d6404b76a0f210b1f1c00091e799319bf.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "ceaefc7a3ed54b20947da72ed61182f0193de0313a47cda9b0fd814f67b9700f",
+   "pdfSha256": "c9bbca697cb8db7d0a2a929d66b86b6722698ba2c6666f1cc88e9bfc0630f59c",
+   "configSha256": "86770d17699ec7b7369edff639cf7f5d6404b76a0f210b1f1c00091e799319bf",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=91&tipo=pdf",
+   "declaredPublicationAt": "2021-08-11",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 92,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-096",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-096/ca46b3ad8a432ccb2c482c18dcd598d44487c57d5c32fe5c88eb087da4222afd/a33e6301b5900e2cea15bdeb160047041eb992a6a04cb9d15fddd01358faaad8.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "b874887d5f553933c3480cc2dfca3d906a9b1e17ffdd28f8517e7fce0cd2ed95",
+   "pdfSha256": "ca46b3ad8a432ccb2c482c18dcd598d44487c57d5c32fe5c88eb087da4222afd",
+   "configSha256": "a33e6301b5900e2cea15bdeb160047041eb992a6a04cb9d15fddd01358faaad8",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=96&tipo=pdf",
+   "declaredPublicationAt": "2006-03-12",
+   "declaredAmendedAt": "2015-02-25",
+   "records": {
+    "articulo": 17,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-108",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-108/40e66c6b44f8b7a7a1f59173b787a6079a5bf55275c921feb18d636ea93b5673/cf444e8feddf5a31e503e947bd6c0a2198a8bf8d18f529ca7768e07d272801a7.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "5def942db2db34cb42c4f490c39a99363e9eae697a5fee1b834dc475693e051d",
+   "pdfSha256": "40e66c6b44f8b7a7a1f59173b787a6079a5bf55275c921feb18d636ea93b5673",
+   "configSha256": "cf444e8feddf5a31e503e947bd6c0a2198a8bf8d18f529ca7768e07d272801a7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=108&tipo=pdf",
+   "declaredPublicationAt": "2006-04-29",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 186,
+    "transitorio": 21
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-109",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-109/b36527204e188a12e52d146b8bc3307dac497f1843b0d01103ad5daf354a1e9f/f77c5008cac11a47fe39729ad78f534dc8daf89c42c98c0a7a3a562dd05262f1.json",
+   "dir": "zac-v36c-poppler-04-2026-11-17",
+   "extractionFileSha256": "c0da174bb7769543497c47a6c09ffbc8c471f3d58d107ba35131739da515145b",
+   "pdfSha256": "b36527204e188a12e52d146b8bc3307dac497f1843b0d01103ad5daf354a1e9f",
+   "configSha256": "f77c5008cac11a47fe39729ad78f534dc8daf89c42c98c0a7a3a562dd05262f1",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=109&tipo=pdf",
+   "declaredPublicationAt": "2006-05-14",
+   "declaredAmendedAt": "2021-07-07",
+   "records": {
+    "articulo": 92,
+    "transitorio": 27
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "duplicated-bare-and-inline-heading-merged",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-110",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-110/e611ad2b75d70dceb2a618bd23d807ce5d449a98a8e5c331579769f0410d86eb/8c9f69fa72849da1311c75afea24849fe194429a2dfcad390b4b2258cc29858c.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "94b79cb44956aa41a81449bb20b3ee7cf54616d86a75c81d76e0fb02b3d49b7b",
+   "pdfSha256": "e611ad2b75d70dceb2a618bd23d807ce5d449a98a8e5c331579769f0410d86eb",
+   "configSha256": "8c9f69fa72849da1311c75afea24849fe194429a2dfcad390b4b2258cc29858c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=110&tipo=pdf",
+   "declaredPublicationAt": "2006-06-24",
+   "declaredAmendedAt": "2026-01-21",
+   "records": {
+    "articulo": 97,
+    "transitorio": 19
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-112",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-112/4ce9a681f051218de4b0ff539046dbc0aaaca0e094d82476d9a6037cc359e760/c7529738597344c63ac98bcff76990defbfe9e189bf667747a9e8b90282d8d33.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "f07c719d9c2403c52863d7d8b78ac4ffe1bff10faf3f7c939abf04b705cd5cbb",
+   "pdfSha256": "4ce9a681f051218de4b0ff539046dbc0aaaca0e094d82476d9a6037cc359e760",
+   "configSha256": "c7529738597344c63ac98bcff76990defbfe9e189bf667747a9e8b90282d8d33",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=112&tipo=pdf",
+   "declaredPublicationAt": "2006-08-02",
+   "declaredAmendedAt": "2025-12-18",
+   "records": {
+    "articulo": 187,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-113",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-113/4a0249ba98ce9b654a30030bdc17a2b4f59e5953ca3482ce814ed2ab7a16aeff/e7c7b9dfdae7839151a4a43325e5eadc41b92af1f4023c1006851092fb4ba3f7.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "79a99a235fe3b57e9cbf23ea85ee3753468b84bf956ac644a2fe2fd61861b8b7",
+   "pdfSha256": "4a0249ba98ce9b654a30030bdc17a2b4f59e5953ca3482ce814ed2ab7a16aeff",
+   "configSha256": "e7c7b9dfdae7839151a4a43325e5eadc41b92af1f4023c1006851092fb4ba3f7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=113&tipo=pdf",
+   "declaredPublicationAt": "2006-07-29",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 53,
+    "transitorio": 17
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-114",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-114/c3f2f0885975ca1cc930d98d2733c7ff2c1b38eea6d1b2d9bd17083a8e053484/e000b8d4d16db5b62ad56e59fa1968d03b29027e832f018c8c5c2044c43baf99.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "5e517dfc7ef5205dac137e7938e420cbb08e97b204967632ec2e12db702f429e",
+   "pdfSha256": "c3f2f0885975ca1cc930d98d2733c7ff2c1b38eea6d1b2d9bd17083a8e053484",
+   "configSha256": "e000b8d4d16db5b62ad56e59fa1968d03b29027e832f018c8c5c2044c43baf99",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=114&tipo=pdf",
+   "declaredPublicationAt": "2006-07-12",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 26,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-117",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-117/c5948fa1e3efbfc95ad8556c6c4c10cae90e58a896dcf3701706c5cd6f29e166/a24966afde5fcafc69ead69855a10a5698dedc741c6bfde932fef79f2ea6b561.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "f88e430e6d5857620b34ba0eff640df3c3ae82c23773c3358a839a2cae4356b7",
+   "pdfSha256": "c5948fa1e3efbfc95ad8556c6c4c10cae90e58a896dcf3701706c5cd6f29e166",
+   "configSha256": "a24966afde5fcafc69ead69855a10a5698dedc741c6bfde932fef79f2ea6b561",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=117&tipo=pdf",
+   "declaredPublicationAt": "2016-08-24",
+   "declaredAmendedAt": "2026-04-25",
+   "records": {
+    "articulo": 91,
+    "transitorio": 15
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-119",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-119/7517f3ddbc0a986b42b6d00573128dd205887960fb7bacc88488c2fddefa2703/ca8edf6b8f51d7a74d4fb2ff835012842915ca7a49754adda37376f50fc432ba.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "9901c47eb58ee50af7f1896542b89bfaad188f12a27a878731573b6c59412b8b",
+   "pdfSha256": "7517f3ddbc0a986b42b6d00573128dd205887960fb7bacc88488c2fddefa2703",
+   "configSha256": "ca8edf6b8f51d7a74d4fb2ff835012842915ca7a49754adda37376f50fc432ba",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=119&tipo=pdf",
+   "declaredPublicationAt": "2007-03-31",
+   "declaredAmendedAt": "2021-01-09",
+   "records": {
+    "articulo": 213,
+    "transitorio": 28
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-120",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-120/b7bff3867e98c00835951e6a7555474aae246f45920ebaebe06456bd4a276dab/8d6ec291f778689dfe3135d7cabe16fc16ec6713f7fbe26c5b13aad372f19e27.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "6a81fa33277c3bb7b51bdf1825ae0b0a463411526dff09112894740b2c1493fc",
+   "pdfSha256": "b7bff3867e98c00835951e6a7555474aae246f45920ebaebe06456bd4a276dab",
+   "configSha256": "8d6ec291f778689dfe3135d7cabe16fc16ec6713f7fbe26c5b13aad372f19e27",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=120&tipo=pdf",
+   "declaredPublicationAt": "2007-04-05",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 154,
+    "transitorio": 26
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-121",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-121/a1e9fd8a1a33cd09f5b0558a27c72aa2baa02a2a18c75ef15845f2ac70d12245/739bff19277a06bd9a43a15294817550759a348ac6c9c4e96b1c4da4c9e3c1e2.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "93f4bc6e54c6840b46de5bb1379451db854c83ac7ef06e61569caf7298709500",
+   "pdfSha256": "a1e9fd8a1a33cd09f5b0558a27c72aa2baa02a2a18c75ef15845f2ac70d12245",
+   "configSha256": "739bff19277a06bd9a43a15294817550759a348ac6c9c4e96b1c4da4c9e3c1e2",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=121&tipo=pdf",
+   "declaredPublicationAt": "2015-07-01",
+   "declaredAmendedAt": "2026-01-24",
+   "records": {
+    "articulo": 136,
+    "transitorio": 34
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-123",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-123/76bd8b42e0b41f73a90e72693e7b368ef6091629699dfc600c466966f2ab307b/6b1857ea63774ec358dadb9c4990c46861872b0f8941a044aed3a6a2f02b6a8a.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "96c83f65518fcfa2b2c15fa1b8f75fa6213aea5d03b9ac231278407c4f7e12e0",
+   "pdfSha256": "76bd8b42e0b41f73a90e72693e7b368ef6091629699dfc600c466966f2ab307b",
+   "configSha256": "6b1857ea63774ec358dadb9c4990c46861872b0f8941a044aed3a6a2f02b6a8a",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=123&tipo=pdf",
+   "declaredPublicationAt": "2006-09-30",
+   "declaredAmendedAt": "2016-01-09",
+   "records": {
+    "articulo": 228,
+    "transitorio": 17
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-125",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-125/cd420221cf8a80cb79fadc4dcaef196ef680c1e3645742b2a6c64f4c8f215e19/451edcd4c9d5dfff250625c467b654f339368769fafa58645dc2d79ed7a28a79.json",
+   "dir": "zac-v36c-poppler-05-2026-11-17",
+   "extractionFileSha256": "56cc6ccf4955016f2214c767317e3919f50be7cf9a8c5b7c67970a2c13b9bbbd",
+   "pdfSha256": "cd420221cf8a80cb79fadc4dcaef196ef680c1e3645742b2a6c64f4c8f215e19",
+   "configSha256": "451edcd4c9d5dfff250625c467b654f339368769fafa58645dc2d79ed7a28a79",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=125&tipo=pdf",
+   "declaredPublicationAt": "2006-10-28",
+   "declaredAmendedAt": "2018-01-10",
+   "records": {
+    "articulo": 137,
+    "transitorio": 13
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-127",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-127/e429a88bfb3f44f5a119e6bc440a3e294ec09920e0e76d0f3eaf773a6f486b40/0a360ba249cc939ccdc345eb5c25260bf2f6bd046ca08abf279774630d540bbd.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "3d5916c8b7f7d7af83e68c32122168b28d9ae38e4e32b8fc2b8e426cdf342ddd",
+   "pdfSha256": "e429a88bfb3f44f5a119e6bc440a3e294ec09920e0e76d0f3eaf773a6f486b40",
+   "configSha256": "0a360ba249cc939ccdc345eb5c25260bf2f6bd046ca08abf279774630d540bbd",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=127&tipo=pdf",
+   "declaredPublicationAt": "2007-09-29",
+   "declaredAmendedAt": "2025-12-31",
+   "records": {
+    "articulo": 131,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-141",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-141/bf2e2e40e95056f55f84a25cd947bdd1a9a5d0cea14c69f991c4ab574f870423/5dffc2136c530fd2dc31b34493f1164e5887cc636beaee9b7a3369f990d2f3ff.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "d2021b94c22259569177d9869a97bc60712cb26b06ca90e23c58a50d47bcc3c3",
+   "pdfSha256": "bf2e2e40e95056f55f84a25cd947bdd1a9a5d0cea14c69f991c4ab574f870423",
+   "configSha256": "5dffc2136c530fd2dc31b34493f1164e5887cc636beaee9b7a3369f990d2f3ff",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=141&tipo=pdf",
+   "declaredPublicationAt": "2013-11-20",
+   "declaredAmendedAt": "2026-09-30",
+   "records": {
+    "articulo": 147,
+    "transitorio": 30
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-142",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-142/2e2bc5fd9431e0e75c8d550a128e4d0a8a70ae11198fbcd2a25fc22af858553e/6cfa6124b6485be27f863debed9b4c3cd468a836aa2a562628cd4e2276eb7ab7.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "ba7975d34c013ef005c19161cd9d7ce52692d938fbcb74b8c8106d90ea098a23",
+   "pdfSha256": "2e2bc5fd9431e0e75c8d550a128e4d0a8a70ae11198fbcd2a25fc22af858553e",
+   "configSha256": "6cfa6124b6485be27f863debed9b4c3cd468a836aa2a562628cd4e2276eb7ab7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=142&tipo=pdf",
+   "declaredPublicationAt": "2009-01-18",
+   "declaredAmendedAt": "2026-07-18",
+   "records": {
+    "articulo": 110,
+    "transitorio": 40
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-143",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-143/1b6c30103740fe174e27275d4fd7dded00e84793fadc6912da25e6e594bbf2bf/383a9928b0a7c7adc1b7918c8ec03c2438ffbffe4cf9e5e716d3e3049d49c4f6.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "a18d30dcc77a18cb322bff8df9a19b8b99be8b596d31a0260f8b6d7b6e05de0a",
+   "pdfSha256": "1b6c30103740fe174e27275d4fd7dded00e84793fadc6912da25e6e594bbf2bf",
+   "configSha256": "383a9928b0a7c7adc1b7918c8ec03c2438ffbffe4cf9e5e716d3e3049d49c4f6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=143&tipo=pdf",
+   "declaredPublicationAt": "2009-01-17",
+   "declaredAmendedAt": "2026-01-21",
+   "records": {
+    "articulo": 84,
+    "transitorio": 30
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-144",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-144/94d7b9b813dd65b94decd3e33a204f3cd9a6a1b56a63c6882df28ce2535e8aa5/a5e153ef5f8961c2eba29da21620047a929293082c7298affe8dfb8bef9b277c.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "8ef3cf02c5bd4ffb25a5f9ca646f443173355383096a811c689e96b28d6dec0d",
+   "pdfSha256": "94d7b9b813dd65b94decd3e33a204f3cd9a6a1b56a63c6882df28ce2535e8aa5",
+   "configSha256": "a5e153ef5f8961c2eba29da21620047a929293082c7298affe8dfb8bef9b277c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=144&tipo=pdf",
+   "declaredPublicationAt": "2008-12-31",
+   "declaredAmendedAt": "2021-02-24",
+   "records": {
+    "articulo": 83
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-146",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-146/d78936f29375e97f925b4bfa7141454022b9c6da2d431cdf6e03a1ef0fe8ec5f/6b80d1b7f2f761a217f4d657653afa0a91789bc28d43c94cad79ab7bc5bdb39e.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "fa748ba4f2a852494b4b7b03cd9e7b1f2e0f6875e87adba9f2e4d35bdb679a7e",
+   "pdfSha256": "d78936f29375e97f925b4bfa7141454022b9c6da2d431cdf6e03a1ef0fe8ec5f",
+   "configSha256": "6b80d1b7f2f761a217f4d657653afa0a91789bc28d43c94cad79ab7bc5bdb39e",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=146&tipo=pdf",
+   "declaredPublicationAt": "2009-06-13",
+   "declaredAmendedAt": "2021-02-24",
+   "records": {
+    "articulo": 193,
+    "transitorio": 17
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-147",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-147/ee52add3a9255fb07af4f60721382f173f9c64cb1f78cafb0299823c39e9d498/03df2bbd2540cd259d5b8df994d6e5a23dbec88d63c654e69bd552210b65943c.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "05e36bd5f2e73b12071d5ac99d1ca50f31f082eb6ea712dadbf26ace188ebbed",
+   "pdfSha256": "ee52add3a9255fb07af4f60721382f173f9c64cb1f78cafb0299823c39e9d498",
+   "configSha256": "03df2bbd2540cd259d5b8df994d6e5a23dbec88d63c654e69bd552210b65943c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=147&tipo=pdf",
+   "declaredPublicationAt": "2015-06-17",
+   "declaredAmendedAt": "2021-08-11",
+   "records": {
+    "articulo": 109,
+    "transitorio": 15
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-148",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-148/f0a4c20bb188faedd678c2aa10b5811d5db5cba4ced0501b3509e0e6d46361d8/2b88b5fb9c2ea8ad2b1463c8ca2e0dde70d034bf8dced430887e1fac3be26242.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "1fc956b8bf88955ff2052891ce613d9591d212f567bbcfa4ce2153c054c0fa01",
+   "pdfSha256": "f0a4c20bb188faedd678c2aa10b5811d5db5cba4ced0501b3509e0e6d46361d8",
+   "configSha256": "2b88b5fb9c2ea8ad2b1463c8ca2e0dde70d034bf8dced430887e1fac3be26242",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=148&tipo=pdf",
+   "declaredPublicationAt": "2009-09-23",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 146,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-152",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-152/9d4a8d53c3a38a2f38ea652f8d5e28ef64c6e6bbd69743854750d05279781ee0/3269e8f4c4345e72dd1ab88fe2d2da7037ca6b85262f96120585db0f2d7a7769.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "480ab881d02198b9e3cc7c52955735ff42c5853b76031604b6d103fcf1ef12b5",
+   "pdfSha256": "9d4a8d53c3a38a2f38ea652f8d5e28ef64c6e6bbd69743854750d05279781ee0",
+   "configSha256": "3269e8f4c4345e72dd1ab88fe2d2da7037ca6b85262f96120585db0f2d7a7769",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=152&tipo=pdf",
+   "declaredPublicationAt": "2010-02-04",
+   "declaredAmendedAt": "2017-09-16",
+   "records": {
+    "articulo": 80,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-154",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-154/1bd3315b64f95b3d5c603ec64df8266a7b19afbd9036807e83ad21ca383c3951/faa351f1dfa326809599bdb451e5fdac2d598d024b6d35e80dad65b02a597563.json",
+   "dir": "zac-v36c-poppler-06-2026-11-17",
+   "extractionFileSha256": "2f8dfc95641c6f588e35ae6ec651e25aa645d3fcb99e6a8b9a3e62af8d85d1cc",
+   "pdfSha256": "1bd3315b64f95b3d5c603ec64df8266a7b19afbd9036807e83ad21ca383c3951",
+   "configSha256": "faa351f1dfa326809599bdb451e5fdac2d598d024b6d35e80dad65b02a597563",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=154&tipo=pdf",
+   "declaredPublicationAt": "2003-06-07",
+   "declaredAmendedAt": "2018-08-18",
+   "records": {
+    "articulo": 80,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-156",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-156/ba1d5457f04d6ab76ec9efb40fd76a973fe7e93cde94649ad27d39345d8bb926/1d7df8c89bbb9883186576823091e52db0dd4acb43f87780f327b337186c826c.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "d6fcd27b7df401fccbc263bb8758af408d6e1e911617aa85ff7244b4e45cb245",
+   "pdfSha256": "ba1d5457f04d6ab76ec9efb40fd76a973fe7e93cde94649ad27d39345d8bb926",
+   "configSha256": "1d7df8c89bbb9883186576823091e52db0dd4acb43f87780f327b337186c826c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=156&tipo=pdf",
+   "declaredPublicationAt": "2010-10-16",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 130,
+    "transitorio": 12
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-158",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-158/d76e51fa0a3fa4717e16d375f8cef47a9f3a94a451864ef240bfd8fdc70453b1/f6413d4c855c92a2d78e6e71d4f91fd392f342561aa5134aac74ef408db59f02.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "c400732caf667575b2525ba40d0ac4beec05330e434ddb2a4a617f07ccd7b1c7",
+   "pdfSha256": "d76e51fa0a3fa4717e16d375f8cef47a9f3a94a451864ef240bfd8fdc70453b1",
+   "configSha256": "f6413d4c855c92a2d78e6e71d4f91fd392f342561aa5134aac74ef408db59f02",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=158&tipo=pdf",
+   "declaredPublicationAt": "2010-12-04",
+   "declaredAmendedAt": "2018-02-21",
+   "records": {
+    "articulo": 17,
+    "transitorio": 11
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-159",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-159/aecd6c6348ee86ce493d3f9c15c0eb8dd79027d716b5008228c4d7380659c1bb/e45e65b507fb4a881962a1bf91e8f867bd7b712312f7ffcb0ac627038c87730a.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "406a7c96293c4fa143459feeda4d95908c032cb5efe3fbfd8cd3442bb1caeac8",
+   "pdfSha256": "aecd6c6348ee86ce493d3f9c15c0eb8dd79027d716b5008228c4d7380659c1bb",
+   "configSha256": "e45e65b507fb4a881962a1bf91e8f867bd7b712312f7ffcb0ac627038c87730a",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=159&tipo=pdf",
+   "declaredPublicationAt": "2011-03-02",
+   "declaredAmendedAt": "2015-04-11",
+   "records": {
+    "articulo": 84,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-160",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-160/e510bca07b72adfad4961acdde04bfa0b2faaa04006a904ee9e4477a98f24fcd/e32d684272a98c17921fac63b71405b6fb84a53a584523bb6f27827597105de6.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "0937abec5422c69f694f8a2845df26b067070f55f32b905fa7d96d699f1f6cf2",
+   "pdfSha256": "e510bca07b72adfad4961acdde04bfa0b2faaa04006a904ee9e4477a98f24fcd",
+   "configSha256": "e32d684272a98c17921fac63b71405b6fb84a53a584523bb6f27827597105de6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=160&tipo=pdf",
+   "declaredPublicationAt": "2011-06-18",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 209,
+    "prefacio-articulo-citado": 3,
+    "transitorio": 14
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "decree-preface-transitory-skipped:3-preface-candidates-dropped",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-161",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-161/61125f79aa48953d9b0b8b184931d4c93bca9310d2e1ebb78ee4f3705485b333/7beebaff681ee34c65d5af37f8d9e98e3a60dc68c809b19c96ca3b0412b69706.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "c4b81ed046ce9682199cb8088a4e1ed8bd58675cece109b3dd561203fa657357",
+   "pdfSha256": "61125f79aa48953d9b0b8b184931d4c93bca9310d2e1ebb78ee4f3705485b333",
+   "configSha256": "7beebaff681ee34c65d5af37f8d9e98e3a60dc68c809b19c96ca3b0412b69706",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=161&tipo=pdf",
+   "declaredPublicationAt": "1994-08-13",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 28,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-162",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-162/f8d9b1ee9b0031f1d1a54a6da6112bdf6c13f2b108b281e5b5cbd1304e41f1a6/c06acc7e881e0b5e4d4058fbc16d50401d5471a70a0b79c1d73d0b1cfae0840e.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "4c315b7f0c6095b1da2a2823d75301abd4c08ff3c86e9b249ce3e740f3668d53",
+   "pdfSha256": "f8d9b1ee9b0031f1d1a54a6da6112bdf6c13f2b108b281e5b5cbd1304e41f1a6",
+   "configSha256": "c06acc7e881e0b5e4d4058fbc16d50401d5471a70a0b79c1d73d0b1cfae0840e",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=162&tipo=pdf",
+   "declaredPublicationAt": "2025-10-16",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 173,
+    "transitorio": 11
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-164",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-164/040340aa6a864190274a01bdcc7d3194f3e6c3cd79f7eb4e35fc6b1636e1a573/c1557c6c42f20ff037e1c5eb75a9582fba21cfcda6394e17c44893274c23c20f.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "805efbcd417ec23d3d56b53762299cc90c62c70ab7deb3a07b4558a05676065e",
+   "pdfSha256": "040340aa6a864190274a01bdcc7d3194f3e6c3cd79f7eb4e35fc6b1636e1a573",
+   "configSha256": "c1557c6c42f20ff037e1c5eb75a9582fba21cfcda6394e17c44893274c23c20f",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=164&tipo=pdf",
+   "declaredPublicationAt": "2018-03-14",
+   "declaredAmendedAt": "2026-09-30",
+   "records": {
+    "articulo": 131,
+    "transitorio": 20
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-165",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-165/e6eb98a5f2af4f7bae60e15c47ff4e820fbb4c7fc59dca3e802de9bcb78d3dc2/135990453c0e83a9833e57095aad65ba2e585ebff67da8d434fd48da7c20db58.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "9a7f8c278b3a6584c650114733068094bb50edfac35e05dcd2fcfc568348d02c",
+   "pdfSha256": "e6eb98a5f2af4f7bae60e15c47ff4e820fbb4c7fc59dca3e802de9bcb78d3dc2",
+   "configSha256": "135990453c0e83a9833e57095aad65ba2e585ebff67da8d434fd48da7c20db58",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=165&tipo=pdf",
+   "declaredPublicationAt": "2011-10-05",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 28,
+    "transitorio": 18
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-168",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-168/2bb4f69417901b42da3eda8ec005bc6d17f5cee8d2b330ef4583b56f1c7fa7bc/354ec89d131f5dd733916f3702b167c37b3672e7cde458c5a9ba68cdd83dbfb6.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "430808aab7cc634e6a74268090c9f0d8fbcfdeaf08658aa66fc0379fa5a82c9b",
+   "pdfSha256": "2bb4f69417901b42da3eda8ec005bc6d17f5cee8d2b330ef4583b56f1c7fa7bc",
+   "configSha256": "354ec89d131f5dd733916f3702b167c37b3672e7cde458c5a9ba68cdd83dbfb6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=168&tipo=pdf",
+   "declaredPublicationAt": "2012-05-05",
+   "declaredAmendedAt": "2026-09-30",
+   "records": {
+    "articulo": 124,
+    "transitorio": 55
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-173",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-173/a2136abb9c7fe85e936c28c6bba7f56b6770cd33e553b43337f3035ebfc3b208/8cbd0d4b0e104f01795e92bfd5de0685bf73deb74debc12ee319bb01bc16e368.json",
+   "dir": "zac-v36c-poppler-07-2026-11-17",
+   "extractionFileSha256": "5fc23cec1395128a10700e59348ac07c3b7e3627fb98a2e4ea0c850ca723098a",
+   "pdfSha256": "a2136abb9c7fe85e936c28c6bba7f56b6770cd33e553b43337f3035ebfc3b208",
+   "configSha256": "8cbd0d4b0e104f01795e92bfd5de0685bf73deb74debc12ee319bb01bc16e368",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=173&tipo=pdf",
+   "declaredPublicationAt": "2015-06-06",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 487,
+    "transitorio": 39
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "bare-heading-with-inline-list-marker",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-174",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-174/f47ea1dc2b5ea8adbd24d6bb47eb7e30af2bbe005120cb626dbbd4da390be788/fcdf1062fa13652340acce552db359a72edec6da447bb7077fe1e2cd93ac3215.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "ae6292f34a9fd6d29031a856a7e6e83aeb41d114b5814b8f0ddfb6f8bbadbc38",
+   "pdfSha256": "f47ea1dc2b5ea8adbd24d6bb47eb7e30af2bbe005120cb626dbbd4da390be788",
+   "configSha256": "fcdf1062fa13652340acce552db359a72edec6da447bb7077fe1e2cd93ac3215",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=174&tipo=pdf",
+   "declaredPublicationAt": "2015-06-06",
+   "declaredAmendedAt": "2023-05-31",
+   "records": {
+    "articulo": 92,
+    "transitorio": 28
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-179",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-179/68de3683f377fd576066f25ec31cae2c5ce95d5d8e73db9d0a4063923d5618cb/a1b7bdd1bf753513669d55789a4ca16585d9c2a0e954f080fb054b9bacfc7e91.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "8b53ed66004f33f800353f7910d3db4f4e8886438c7fd5cde6b01e235a7b8bce",
+   "pdfSha256": "68de3683f377fd576066f25ec31cae2c5ce95d5d8e73db9d0a4063923d5618cb",
+   "configSha256": "a1b7bdd1bf753513669d55789a4ca16585d9c2a0e954f080fb054b9bacfc7e91",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=179&tipo=pdf",
+   "declaredPublicationAt": "2013-07-03",
+   "declaredAmendedAt": "2021-08-11",
+   "records": {
+    "articulo": 90,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-180",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-180/f0f4cdf0618a4faaed6afda23f7cdbdaaab44b95eaa507b07782c06e9417eb4a/f3adc0d6ef216e4a68f618484665045f165fe64668b984b641a0414f5697c223.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "760f5c06165329bf5631e50d3606dc0f7f977eabf2c6b7dcf63fa63934083375",
+   "pdfSha256": "f0f4cdf0618a4faaed6afda23f7cdbdaaab44b95eaa507b07782c06e9417eb4a",
+   "configSha256": "f3adc0d6ef216e4a68f618484665045f165fe64668b984b641a0414f5697c223",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=180&tipo=pdf",
+   "declaredPublicationAt": "2020-06-17",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 146,
+    "transitorio": 42
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-181",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-181/a75b2a450cc7c9956a8a1fbc4263945ed497fabaf659bd84a38510a9f5f629e3/aa51e3b7b042bf574f50ba40cd3726fd17b36a3526e3608485beadba6988d478.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "71cab0c651a55e1e35ee6f4fc05d3bd9065e22d6a95b5f3081a2c9c0b1edb98e",
+   "pdfSha256": "a75b2a450cc7c9956a8a1fbc4263945ed497fabaf659bd84a38510a9f5f629e3",
+   "configSha256": "aa51e3b7b042bf574f50ba40cd3726fd17b36a3526e3608485beadba6988d478",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=181&tipo=pdf",
+   "declaredPublicationAt": "2013-09-14",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 19,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-182",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-182/27e577f28853fb9e918509c458c46f7b4e98addf993e2487e624dbe2ba04538c/8353556630ee29b1515d399d3e00f44bd3b76a5946cf1d8393c45a2e25e6c9ef.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "876f31ae6b8ba40bfc04dc19d3407597e80d5acf287de469cd6abf28bc0b9be8",
+   "pdfSha256": "27e577f28853fb9e918509c458c46f7b4e98addf993e2487e624dbe2ba04538c",
+   "configSha256": "8353556630ee29b1515d399d3e00f44bd3b76a5946cf1d8393c45a2e25e6c9ef",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=182&tipo=pdf",
+   "declaredPublicationAt": "2013-07-24",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 53,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-183",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-183/734c5fa5f480ccbc1f7ba4837d780b8a7f993c9474f3e0ffe4299687674ba7f3/933f185feb914bd2484e8fcaa2279ae02eaeb8b002bd07f0c1bd26961cd01392.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "5dfd0f5296a82bf542df17b3106517af60bd0764618d4b9960c276eaeb021e56",
+   "pdfSha256": "734c5fa5f480ccbc1f7ba4837d780b8a7f993c9474f3e0ffe4299687674ba7f3",
+   "configSha256": "933f185feb914bd2484e8fcaa2279ae02eaeb8b002bd07f0c1bd26961cd01392",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=183&tipo=pdf",
+   "declaredPublicationAt": "2013-11-30",
+   "declaredAmendedAt": "2026-07-18",
+   "records": {
+    "articulo": 114,
+    "transitorio": 33
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-184",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-184/8a576cdc5de23047b7138e6445cfc376bbab53ac442390965fb285ff9c314b68/cee7aa05697f074ad3e2392c99169281aba5735aa987704e1b0f5fc5eb26ce3c.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "36e9546a4de32e4de01aeb5b87873dcffdf7a751bbb97f9f678c047748a8ba8b",
+   "pdfSha256": "8a576cdc5de23047b7138e6445cfc376bbab53ac442390965fb285ff9c314b68",
+   "configSha256": "cee7aa05697f074ad3e2392c99169281aba5735aa987704e1b0f5fc5eb26ce3c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=184&tipo=pdf",
+   "declaredPublicationAt": "2013-12-25",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 63,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-185",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-185/c6b48c60152db12232fba01d4e47741e2a84804232e5044a20d9dec98b906103/07ee58821f8178eaa8d7ee0c6c7e9416ebb34f349745dd774e88bfa30d50adf3.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "5de1b20044ebe1ee60c4fad5efff072bab1e8514363e0952dc5c1ed002f0a390",
+   "pdfSha256": "c6b48c60152db12232fba01d4e47741e2a84804232e5044a20d9dec98b906103",
+   "configSha256": "07ee58821f8178eaa8d7ee0c6c7e9416ebb34f349745dd774e88bfa30d50adf3",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=185&tipo=pdf",
+   "declaredPublicationAt": "2024-02-29",
+   "declaredAmendedAt": "2026-09-30",
+   "records": {
+    "articulo": 128,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-186",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-186/b93297b891905514fca30eedb5f668b9774ab9a2308758fcd10638b500206c04/6f20a6457b201430773bb4fd82d3f9fbdfd6e5d67b9168a55b240bb9f7bb3529.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "890ba35ef6687127feff9f7d37a2f2940ffc4b85baab259326458d076267a299",
+   "pdfSha256": "b93297b891905514fca30eedb5f668b9774ab9a2308758fcd10638b500206c04",
+   "configSha256": "6f20a6457b201430773bb4fd82d3f9fbdfd6e5d67b9168a55b240bb9f7bb3529",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=186&tipo=pdf",
+   "declaredPublicationAt": "2014-06-11",
+   "declaredAmendedAt": "2026-01-24",
+   "records": {
+    "articulo": 86,
+    "prefacio-articulo-citado": 1,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "preface-operative-candidates-dropped:1",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-188",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-188/7f78da5671796183c67045ae351f56bb36a08aba553eb0e0028c43fc270cc518/e0e1ba47f4b264efc79407803051266dacba930093d6162b8145264da342ccfa.json",
+   "dir": "zac-v36c-poppler-08-2026-11-17",
+   "extractionFileSha256": "d6c93c202b0dcdaae894226e855671542b12caa1d70884ea66f4145e6b677220",
+   "pdfSha256": "7f78da5671796183c67045ae351f56bb36a08aba553eb0e0028c43fc270cc518",
+   "configSha256": "e0e1ba47f4b264efc79407803051266dacba930093d6162b8145264da342ccfa",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=188&tipo=pdf",
+   "declaredPublicationAt": "2014-08-30",
+   "declaredAmendedAt": "2017-11-25",
+   "records": {
+    "articulo": 19,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-198",
+   "layer": "pdfparse",
+   "extractionPath": "extractions/zac-ley-198/17d1b726885557cb72836ded0774c500dc46a7851cba4d49fea3f9ad596cb5c9/b31d3e5e5f2bb9a43ca115bcc07591676c4cc7bec2d643eca80a0dc61dddb33d.json",
+   "dir": "zac-v36c-pdfparse-09-2026-11-17",
+   "extractionFileSha256": "80acb203559687633934bdb7e90bcf5761cdd802e9fbfa44e04c02d43412ae36",
+   "pdfSha256": "17d1b726885557cb72836ded0774c500dc46a7851cba4d49fea3f9ad596cb5c9",
+   "configSha256": "b31d3e5e5f2bb9a43ca115bcc07591676c4cc7bec2d643eca80a0dc61dddb33d",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=198&tipo=pdf",
+   "declaredPublicationAt": "2015-03-21",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 163,
+    "transitorio": 46
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ]
+  },
+  {
+   "documentId": "zac-ley-189",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-189/3420e85a583a5dc17066f82f3c100717f6c55743b33c84c9ecd3f2e337e8048e/3c7892fe0eaa7003145db05da937361d671b5695c05859fd50dcac8c0f794c0d.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "d7bcc03a37f3605b5e9eb56a77d9110f6cde53c01a9ced53643e46166af5f7e5",
+   "pdfSha256": "3420e85a583a5dc17066f82f3c100717f6c55743b33c84c9ecd3f2e337e8048e",
+   "configSha256": "3c7892fe0eaa7003145db05da937361d671b5695c05859fd50dcac8c0f794c0d",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=189&tipo=pdf",
+   "declaredPublicationAt": "2014-09-03",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 112,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-191",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-191/e64da9b1cfa8c123f0343fb7e31e5d4e7f0c1cf9a842cdc4452d720b185c88ab/c4f36c84c7aca554eccb49172d53a8f03a18c79d0742d66f4cf5c29d1bbb1956.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "1bc00ec24ae1b075269f7f9a37202fe6c2a322629d4c76eb7d0828de42b11582",
+   "pdfSha256": "e64da9b1cfa8c123f0343fb7e31e5d4e7f0c1cf9a842cdc4452d720b185c88ab",
+   "configSha256": "c4f36c84c7aca554eccb49172d53a8f03a18c79d0742d66f4cf5c29d1bbb1956",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=191&tipo=pdf",
+   "declaredPublicationAt": "2014-09-03",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 17,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-193",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-193/8d2d46958a4bcbc37f8369ba5c14f04de757861e72a7160041c5a530e0d44d75/8d587dc7d65dde5cc630ff28b9a58fa4b1bc80640fa29ba861e454ffa15cce30.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "a13fc42db5323e6916f1de3746c8df5cbc1e143003ecc63b34a22c81f156209d",
+   "pdfSha256": "8d2d46958a4bcbc37f8369ba5c14f04de757861e72a7160041c5a530e0d44d75",
+   "configSha256": "8d587dc7d65dde5cc630ff28b9a58fa4b1bc80640fa29ba861e454ffa15cce30",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=193&tipo=pdf",
+   "declaredPublicationAt": "2012-09-29",
+   "declaredAmendedAt": "2021-02-29",
+   "records": {
+    "articulo": 142,
+    "transitorio": 22
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-194",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-194/728e64950ad8a40bffcf2903ee1575482074f62a2f6a2a723515a11de257d469/c120f27363ab8466323c6fefa4e870cb8454f5c0656d658085b39f14434dca9f.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "994d1ac72ffa2f46b89733e5578e737aeb91185c662e1b46ca261be15852d881",
+   "pdfSha256": "728e64950ad8a40bffcf2903ee1575482074f62a2f6a2a723515a11de257d469",
+   "configSha256": "c120f27363ab8466323c6fefa4e870cb8454f5c0656d658085b39f14434dca9f",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=194&tipo=pdf",
+   "declaredPublicationAt": "1993-07-10",
+   "declaredAmendedAt": "2013-03-23",
+   "records": {
+    "articulo": 74,
+    "transitorio": 38
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-195",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-195/66f8bd9bcdecba4bd368d3a0bba50027065cec72b92468d36bd1b9d79a7b427a/62658afbdd3851b0efe827a76075615cd49d6bfc24ce92c70a9c64402f32b040.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "1767a12f3278ccc1e3efc9b65b2e81016e968bed8d2c82b479e28a7343e32ac2",
+   "pdfSha256": "66f8bd9bcdecba4bd368d3a0bba50027065cec72b92468d36bd1b9d79a7b427a",
+   "configSha256": "62658afbdd3851b0efe827a76075615cd49d6bfc24ce92c70a9c64402f32b040",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=195&tipo=pdf",
+   "declaredPublicationAt": "2014-11-26",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 86,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-196",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-196/ee1da9200ecbf5cad82a266c523566a461bd5d71e12842cbea780c7261f18a21/f345ebc23ed53d7c32881e3f98598377535c508adc40c6ce7f7b4f8949c15ba0.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "56b7e6f70dcdc6d1ff6383cf658b71e2dd33b1924aee65875f91f037bc283588",
+   "pdfSha256": "ee1da9200ecbf5cad82a266c523566a461bd5d71e12842cbea780c7261f18a21",
+   "configSha256": "f345ebc23ed53d7c32881e3f98598377535c508adc40c6ce7f7b4f8949c15ba0",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=196&tipo=pdf",
+   "declaredPublicationAt": "2015-12-14",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 103,
+    "prefacio-articulo-citado": 3,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "preface-operative-candidates-dropped:3",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-199",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-199/f259be38b9d45e13e6eb418d3fd79c28af3e7c4398dcbb8a9f313bbcb96136da/9a1ded53c7b614dbf3648d88b05773881a9b52b1ca4633202e977a675b991afb.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "f0fb971a6953ac8d1315e02ce1f556b8006cbe76d4ebdcedcec0b81c50a66bc5",
+   "pdfSha256": "f259be38b9d45e13e6eb418d3fd79c28af3e7c4398dcbb8a9f313bbcb96136da",
+   "configSha256": "9a1ded53c7b614dbf3648d88b05773881a9b52b1ca4633202e977a675b991afb",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=199&tipo=pdf",
+   "declaredPublicationAt": "2015-02-28",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 60,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-200",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-200/f76c7b1c480613db12de164b82a53217cb400acb1238b5e7571e8de17192b4ea/965c123e8904f7ef6a40ed50a6204458906dd02406080de29b7eba60fa11f802.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "c4c03dbf7ae44db396627485e1f9341fd5252c859791009550531bbfa772122a",
+   "pdfSha256": "f76c7b1c480613db12de164b82a53217cb400acb1238b5e7571e8de17192b4ea",
+   "configSha256": "965c123e8904f7ef6a40ed50a6204458906dd02406080de29b7eba60fa11f802",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=200&tipo=pdf",
+   "declaredPublicationAt": "2015-04-22",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 114,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-201",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-201/b2cf3ebbaea402e710daa9e6da7777b8716dc0fc2fa077e2f5fa9fcc6376a15d/d3abfa36b49bf8294d41814ef50240908711526713fef19166f71de332280658.json",
+   "dir": "zac-v36c-poppler-09-2026-11-17",
+   "extractionFileSha256": "8406674681ebbf3bba4d4bedfabbcb73c9e9bcf24fccf5656f646c5f19a5131d",
+   "pdfSha256": "b2cf3ebbaea402e710daa9e6da7777b8716dc0fc2fa077e2f5fa9fcc6376a15d",
+   "configSha256": "d3abfa36b49bf8294d41814ef50240908711526713fef19166f71de332280658",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=201&tipo=pdf",
+   "declaredPublicationAt": "2015-09-23",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 136,
+    "transitorio": 25
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-202",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-202/dadd4e3b6fca970dc48312a17861027e5a0222dc5169b4439aeeb4bc007e79e3/bb24d9b5c4fd38d974fa30545eece77b2f0a72a75e4fd200de8850cfad1f1976.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "f2deeef9cf4555a13bc48e12283419dd11ab11e4a34f779b6f740fd20e634ac1",
+   "pdfSha256": "dadd4e3b6fca970dc48312a17861027e5a0222dc5169b4439aeeb4bc007e79e3",
+   "configSha256": "bb24d9b5c4fd38d974fa30545eece77b2f0a72a75e4fd200de8850cfad1f1976",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=202&tipo=pdf",
+   "declaredPublicationAt": "2016-06-01",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 84,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-203",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-203/b8d2f4d8a23ee2405c542c35f3fcdb265acb9a9c434934a787f61f99bb65ed2f/10d7b9441ef6a7ecd76953e99176ffbc98ea53244729d87717584fd5cb91f85b.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "fe493d6347db3a8dfac49bf76aa85b3b9acb0205ce812188b8a9e96f700728fe",
+   "pdfSha256": "b8d2f4d8a23ee2405c542c35f3fcdb265acb9a9c434934a787f61f99bb65ed2f",
+   "configSha256": "10d7b9441ef6a7ecd76953e99176ffbc98ea53244729d87717584fd5cb91f85b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=203&tipo=pdf",
+   "declaredPublicationAt": "2015-07-01",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 26,
+    "transitorio": 2
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-204",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-204/e1d0bc5617a26bdbf80232d63c56c4d4eacbf02c12839c54b6103652baf751c4/6aa4e2aab6ab840a5b2740cd59da23e2d27c322a2c57ce664002adc9ecfbc7ca.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "46847dd508af707977ed524262704a3031a14f1c235b086597068436773911f3",
+   "pdfSha256": "e1d0bc5617a26bdbf80232d63c56c4d4eacbf02c12839c54b6103652baf751c4",
+   "configSha256": "6aa4e2aab6ab840a5b2740cd59da23e2d27c322a2c57ce664002adc9ecfbc7ca",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=204&tipo=pdf",
+   "declaredPublicationAt": "2015-12-26",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 24,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-205",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-205/15e01b0ae147313ffa081eebe568fd6f41c0549807c484ae037d785ee90b9b6b/af71007d2772d307421ddd7c33b09a22f58e8a16a540d03f61305df646603c6f.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "2e9eaf1f81a1dc735bd0a3500f4e535805a971413492fe94c0b84b77d7f1617b",
+   "pdfSha256": "15e01b0ae147313ffa081eebe568fd6f41c0549807c484ae037d785ee90b9b6b",
+   "configSha256": "af71007d2772d307421ddd7c33b09a22f58e8a16a540d03f61305df646603c6f",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=205&tipo=pdf",
+   "declaredPublicationAt": "2014-12-17",
+   "declaredAmendedAt": "2019-12-28",
+   "records": {
+    "articulo": 57,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-206",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-206/d28b9631fe164091136297d153353e9859f8d51552c58b0795a3cfd2c27371b1/c8fb7061b852cd050217c38569f29a8d5310e0c1bfbd732e9485238fc68fe93f.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "0171a8d6a374903aad226b165bb729223a93d1c2a3c20fcf21719df89afbe3e2",
+   "pdfSha256": "d28b9631fe164091136297d153353e9859f8d51552c58b0795a3cfd2c27371b1",
+   "configSha256": "c8fb7061b852cd050217c38569f29a8d5310e0c1bfbd732e9485238fc68fe93f",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=206&tipo=pdf",
+   "declaredPublicationAt": "2021-02-06",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 41,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-208",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-208/73a280696fafc7621f52097681d53d7caa7c7ec57ae3e09afa28663574133f85/d11bbcb9364f839821051f121eda34f862c948bc842d08a27eb68b312ca59a4d.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "6ac6015e0593f43feb59169ff5b8077119ef15f0834859f25b7b591e3a5a70cc",
+   "pdfSha256": "73a280696fafc7621f52097681d53d7caa7c7ec57ae3e09afa28663574133f85",
+   "configSha256": "d11bbcb9364f839821051f121eda34f862c948bc842d08a27eb68b312ca59a4d",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=208&tipo=pdf",
+   "declaredPublicationAt": "2016-12-31",
+   "declaredAmendedAt": "2019-12-28",
+   "records": {
+    "articulo": 50,
+    "transitorio": 21
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-210",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-210/4dbb5ce71c453e15059f89991b8ce99c52e4caeba5ceed3c3aace671e633e37f/514fcd44ca159867e2a97b371c4aa654c142b8dc63291a471c0455b8e7c4878b.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "d56d2c2d4bdbf91df52ba987c9068a6872e23cfdba3490e7dea5537490fea0ac",
+   "pdfSha256": "4dbb5ce71c453e15059f89991b8ce99c52e4caeba5ceed3c3aace671e633e37f",
+   "configSha256": "514fcd44ca159867e2a97b371c4aa654c142b8dc63291a471c0455b8e7c4878b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=210&tipo=pdf",
+   "declaredPublicationAt": "2017-05-03",
+   "declaredAmendedAt": "2026-09-16",
+   "records": {
+    "articulo": 99,
+    "transitorio": 18
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-211",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-211/fd0dfc27432fa08e28dcb1c811e65f9521e01042884706ab7da120be48ba1ae0/21e0eb671f18ecfcdd15832ecfc6918dbb2bf95dee5285827340023729f22ef2.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "d30debd9cdd3fa3fc81ec978809c33198077fb5c3634f03e8e140d1031d51da7",
+   "pdfSha256": "fd0dfc27432fa08e28dcb1c811e65f9521e01042884706ab7da120be48ba1ae0",
+   "configSha256": "21e0eb671f18ecfcdd15832ecfc6918dbb2bf95dee5285827340023729f22ef2",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=211&tipo=pdf",
+   "declaredPublicationAt": "2025-09-21",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 136,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-212",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-212/3d4b12f532796e5e41ed9a7f9dd623f51a08d5cf0d559e8360a4ec49ab664fea/af82caf65600af2dc0c40fbdc9236f9ef0d0bb3bf47289a6eeda7a9a0e56708c.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "beef7899ca51390a212fd937675c3795c4be4875d40acccb2dac35514964f686",
+   "pdfSha256": "3d4b12f532796e5e41ed9a7f9dd623f51a08d5cf0d559e8360a4ec49ab664fea",
+   "configSha256": "af82caf65600af2dc0c40fbdc9236f9ef0d0bb3bf47289a6eeda7a9a0e56708c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=212&tipo=pdf",
+   "declaredPublicationAt": "2017-07-15",
+   "declaredAmendedAt": "2025-03-26",
+   "records": {
+    "articulo": 121,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-213",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-213/c9cb510da1d586b0ede2645b572ca8fe7b09ff37652e2d9c49038cfbea04ffac/5056fe5f35a46e730abb1bf2aaa1614848826be0f1f4ddd3646782f3f6edf986.json",
+   "dir": "zac-v36c-poppler-10-2026-11-17",
+   "extractionFileSha256": "5af5c659b305120499ed3b19eedd30300b4225f8caa7a4af339bfaf73eeda87f",
+   "pdfSha256": "c9cb510da1d586b0ede2645b572ca8fe7b09ff37652e2d9c49038cfbea04ffac",
+   "configSha256": "5056fe5f35a46e730abb1bf2aaa1614848826be0f1f4ddd3646782f3f6edf986",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=213&tipo=pdf",
+   "declaredPublicationAt": "2018-01-07",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 132,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-214",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-214/89252a716305a89966c98be1dd3c1d5b18bd633cd65a57339310a9f2890f286b/9cd062ffe4dc99e2df5b3a5245fc61cb49f98e949d5ec64972c5a51bfc975ecb.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "a24bc3f4afdd9ce89b536e65cd2fbeb55911ffe95578513e8296cf423bba5d56",
+   "pdfSha256": "89252a716305a89966c98be1dd3c1d5b18bd633cd65a57339310a9f2890f286b",
+   "configSha256": "9cd062ffe4dc99e2df5b3a5245fc61cb49f98e949d5ec64972c5a51bfc975ecb",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=214&tipo=pdf",
+   "declaredPublicationAt": "2025-10-05",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 54,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-216",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-216/b36e275c1e66b93426c2a4dc9427b34bb52accc922fc149457b046e7c8540a22/9ea3c883edb95bb3a20276401fd73903c6e17580c0a6b89a50183f5c70b2ed8b.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "825c4972df526fde81cc6390e75f8db1ec8a96cd48f1debb58e01368929c7369",
+   "pdfSha256": "b36e275c1e66b93426c2a4dc9427b34bb52accc922fc149457b046e7c8540a22",
+   "configSha256": "9ea3c883edb95bb3a20276401fd73903c6e17580c0a6b89a50183f5c70b2ed8b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=216&tipo=pdf",
+   "declaredPublicationAt": "2017-12-30",
+   "declaredAmendedAt": "2026-10-31",
+   "records": {
+    "articulo": 97,
+    "transitorio": 45
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-217",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-217/7f9e4e7094dd8570cc5b4ee93d28b76937b9f76e74cbf661c8f688b5cb9f74eb/efea736bdaab8deda78cdc89220a5b3319eee9ab62857865ea0e736299719c24.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "e361d61f5088ddbde6bc1b21bce877173ebab9c6772d68d60b8148338ca7ce23",
+   "pdfSha256": "7f9e4e7094dd8570cc5b4ee93d28b76937b9f76e74cbf661c8f688b5cb9f74eb",
+   "configSha256": "efea736bdaab8deda78cdc89220a5b3319eee9ab62857865ea0e736299719c24",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=217&tipo=pdf",
+   "declaredPublicationAt": "2018-03-07",
+   "declaredAmendedAt": "2026-08-22",
+   "records": {
+    "articulo": 85,
+    "transitorio": 31
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-218",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-218/e19884cf57236856d570de3f62a7e6453244707d2ed7f600b011d9ca9b59c154/e7910acff9f378a4f5357f62f62c14162f07e7309806cca7354c897e82391362.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "e62facdf7e99f5181fe4c8b3f3213a5f89af78c4a7e28986f28270fc011cbb78",
+   "pdfSha256": "e19884cf57236856d570de3f62a7e6453244707d2ed7f600b011d9ca9b59c154",
+   "configSha256": "e7910acff9f378a4f5357f62f62c14162f07e7309806cca7354c897e82391362",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=218&tipo=pdf",
+   "declaredPublicationAt": "2017-07-15",
+   "declaredAmendedAt": "2025-10-15",
+   "records": {
+    "articulo": 72,
+    "transitorio": 24
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-219",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-219/4caa6ac906c85e6eb3bf479d80130f6a267758a19659a4d02aed28e439777924/1795faeaecf8c631539e360301132b07fc781e9f3d6cae91ec44d59fd8637202.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "acaa0d6bd23400e6778a6b22aea6e56b819f5eb035e628e15cfa2a4219450279",
+   "pdfSha256": "4caa6ac906c85e6eb3bf479d80130f6a267758a19659a4d02aed28e439777924",
+   "configSha256": "1795faeaecf8c631539e360301132b07fc781e9f3d6cae91ec44d59fd8637202",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=219&tipo=pdf",
+   "declaredPublicationAt": "2021-02-06",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 28,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "nospace-numeric-heading",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-220",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-220/afc64f12ea8e5a27fa9e2f0ed2bbeafe64202ef16a10ef0171faab8bbe08673a/3d1805737429f22b25c133495f0d3f8e1825e17328f8cac41b38795ae4f15aa6.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "1c61a1d381bb68d0efdc6df05c5d946ff69f7bb2b06d87e7a33b1a2ff650fd7c",
+   "pdfSha256": "afc64f12ea8e5a27fa9e2f0ed2bbeafe64202ef16a10ef0171faab8bbe08673a",
+   "configSha256": "3d1805737429f22b25c133495f0d3f8e1825e17328f8cac41b38795ae4f15aa6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=220&tipo=pdf",
+   "declaredPublicationAt": "2018-06-16",
+   "declaredAmendedAt": "2026-04-25",
+   "records": {
+    "articulo": 92,
+    "transitorio": 12
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-221",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-221/244520daf2263b4fc4023f69e33bbe886fa7bf726460b956be58094a867e8a21/edb93fb6ad57e0d67be710f0133392466f4aa80a7092363acc7d9106ae686450.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "1909a8f508ee9b733ffe77957b298c577b6bc994d45ef07cfcacfdc57581bacf",
+   "pdfSha256": "244520daf2263b4fc4023f69e33bbe886fa7bf726460b956be58094a867e8a21",
+   "configSha256": "edb93fb6ad57e0d67be710f0133392466f4aa80a7092363acc7d9106ae686450",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=221&tipo=pdf",
+   "declaredPublicationAt": "2016-08-24",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 24,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-222",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-222/ed0f40d4fd4a046e539c250373828a0781b39c9223d4cee79c6e08d874b5950a/bdc824286ea39a168db2ecd4c4a98788f140056797235899b9d57425bb35de07.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "e3e2276e526b3aaa1b8e23496b45e3e0d4f4b905e43cad74000de151430f5a80",
+   "pdfSha256": "ed0f40d4fd4a046e539c250373828a0781b39c9223d4cee79c6e08d874b5950a",
+   "configSha256": "bdc824286ea39a168db2ecd4c4a98788f140056797235899b9d57425bb35de07",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=222&tipo=pdf",
+   "declaredPublicationAt": "2015-11-28",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 116,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-223",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-223/c4b42ef163b370957219e387ec321332c5a646dc5ad92e42e634c7d1c69e439e/449e2b450c76f6367b45203a6250778dbfef82cea691d45e9f6319a88c27efe8.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "8a78d8c0844e9dfca85b4ce6624f64c2d646e729b856f93bf0a30114003067d9",
+   "pdfSha256": "c4b42ef163b370957219e387ec321332c5a646dc5ad92e42e634c7d1c69e439e",
+   "configSha256": "449e2b450c76f6367b45203a6250778dbfef82cea691d45e9f6319a88c27efe8",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=223&tipo=pdf",
+   "declaredPublicationAt": "2017-08-09",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 88,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-226",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-226/86ee56214edbafb696cc5d4999bdf42df9d0460ba75a1834ebbee7d207c1ca71/245ab07b553b2a617870770246dfc5cf1be705b86e06fc4410633601bb6b4c24.json",
+   "dir": "zac-v36c-poppler-11-2026-11-17",
+   "extractionFileSha256": "1481ed706a4c6e77da1a8e8da72b0cd29d55e0291bfeb94a00897f32d6299608",
+   "pdfSha256": "86ee56214edbafb696cc5d4999bdf42df9d0460ba75a1834ebbee7d207c1ca71",
+   "configSha256": "245ab07b553b2a617870770246dfc5cf1be705b86e06fc4410633601bb6b4c24",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=226&tipo=pdf",
+   "declaredPublicationAt": "2018-08-29",
+   "declaredAmendedAt": "2023-09-30",
+   "records": {
+    "articulo": 35,
+    "transitorio": 11
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-230",
+   "layer": "pdfparse",
+   "extractionPath": "extractions/zac-ley-230/43ec2f4482e3ac0fce265b5e284b2f0fe17f6e40bed2d4f3044bf2e0e9ceb578/f9647a0539277fa84f9abc967af7eef3118926bbb3876e5e769ee9fd1b6ccc1c.json",
+   "dir": "zac-v36c-pdfparse-12-2026-11-17",
+   "extractionFileSha256": "de54e511a46f41d0ed9893be49dd0f78468c736decbcde5dc9b40c2dcf579d7d",
+   "pdfSha256": "43ec2f4482e3ac0fce265b5e284b2f0fe17f6e40bed2d4f3044bf2e0e9ceb578",
+   "configSha256": "f9647a0539277fa84f9abc967af7eef3118926bbb3876e5e769ee9fd1b6ccc1c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=230&tipo=pdf",
+   "declaredPublicationAt": "2025-10-08",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 72,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": []
+  },
+  {
+   "documentId": "zac-ley-227",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-227/aa0be791a891b26ae69718197fc8c227f11584d8a2ccfca9825c4ec78551b8cc/156094f45715e29baf4bc257198f5c6c456c7656143c3b849ccce3dce21cc735.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "e3a587ee659d63d28edd05eec4626b72cca078c94d03ca16e8f93c38b914a0cd",
+   "pdfSha256": "aa0be791a891b26ae69718197fc8c227f11584d8a2ccfca9825c4ec78551b8cc",
+   "configSha256": "156094f45715e29baf4bc257198f5c6c456c7656143c3b849ccce3dce21cc735",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=227&tipo=pdf",
+   "declaredPublicationAt": "2021-07-03",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 136,
+    "transitorio": 20
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-229",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-229/a88aadd75d33ab1017c416a90edba3bdb788f19870514eb430c13d7b7b6f4194/8232e375793008626e32269730ff0b29439ed4ac3ae3ab134574e580827fd296.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "699eade6153ebbcf544b62595f51a2c4a5ca9d48b1e1eb0f5c17a076d4925904",
+   "pdfSha256": "a88aadd75d33ab1017c416a90edba3bdb788f19870514eb430c13d7b7b6f4194",
+   "configSha256": "8232e375793008626e32269730ff0b29439ed4ac3ae3ab134574e580827fd296",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=229&tipo=pdf",
+   "declaredPublicationAt": "2018-07-07",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 43,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-231",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-231/d135ccdf3a89890d6d7acb72538a4146614fb581c978763f0592873c2b7215a1/146525e48db757015a2343c10f8eb289fc70fd548c8f1978144797b6415886be.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "270d0f47f2185e8e2bc3867422358a537709f4619009bb8b99adc8ac209ea393",
+   "pdfSha256": "d135ccdf3a89890d6d7acb72538a4146614fb581c978763f0592873c2b7215a1",
+   "configSha256": "146525e48db757015a2343c10f8eb289fc70fd548c8f1978144797b6415886be",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=231&tipo=pdf",
+   "declaredPublicationAt": "2018-08-22",
+   "declaredAmendedAt": "2021-02-06",
+   "records": {
+    "articulo": 39,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-232",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-232/8f5b3dee1408c125b12cd469b18e01515338fd0639e75f4290044697f6a232d0/241dcfc3c9b2f83d52e1c900bd9eb92f25bde1865e60948c205b203a25887c3b.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "86828bfb2e4549da6105b6705a5a14d3a0eafa364564acd77510d84ec3994bd9",
+   "pdfSha256": "8f5b3dee1408c125b12cd469b18e01515338fd0639e75f4290044697f6a232d0",
+   "configSha256": "241dcfc3c9b2f83d52e1c900bd9eb92f25bde1865e60948c205b203a25887c3b",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=232&tipo=pdf",
+   "declaredPublicationAt": "2025-12-31",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 85,
+    "prefacio-articulo-citado": 4,
+    "transitorio": 25
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-233",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-233/4e01e92e0e7d158ddc62bbbc9faf01db867550280424060eacb88c0b5147b124/7437438774f0feaf562178a6700190dd80f45fc2a11877f6a0d47e483519b329.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "ba77dcf3b0b6858d7c88ab8f4fe6dc0def6e44a826786e0c19f8308b81fbd40b",
+   "pdfSha256": "4e01e92e0e7d158ddc62bbbc9faf01db867550280424060eacb88c0b5147b124",
+   "configSha256": "7437438774f0feaf562178a6700190dd80f45fc2a11877f6a0d47e483519b329",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=233&tipo=pdf",
+   "declaredPublicationAt": "2019-07-03",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 161,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-324",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-324/0bb3311fe5c23f38a45f878e4f17738841630b7c1b70bfde6165bfedee10b345/0ddd628410cdc97bdd3b453138ec86bd8cac32f6b848ad348185344d07ec4765.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "0995e2727e11005537e7c295f7b95541d4829eea10d540aa0fa52db7c1dd9c22",
+   "pdfSha256": "0bb3311fe5c23f38a45f878e4f17738841630b7c1b70bfde6165bfedee10b345",
+   "configSha256": "0ddd628410cdc97bdd3b453138ec86bd8cac32f6b848ad348185344d07ec4765",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=324&tipo=pdf",
+   "declaredPublicationAt": "2019-12-28",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 108,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-325",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-325/8dac607729c00c8641cdd3a299be7d918c345b5bc207b085f599f737e31fb7e3/4d099c10b1045d56006926d52b72635967f8265621f42548cfe565aa6f84ab0e.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "4f0132c3a42fd689ce43903c728d585b844724ef06ecbd0d7e2383ff54c405df",
+   "pdfSha256": "8dac607729c00c8641cdd3a299be7d918c345b5bc207b085f599f737e31fb7e3",
+   "configSha256": "4d099c10b1045d56006926d52b72635967f8265621f42548cfe565aa6f84ab0e",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=325&tipo=pdf",
+   "declaredPublicationAt": "2019-12-28",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 34,
+    "transitorio": 3
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-326",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-326/ae26b78719215c23f1eab2a0ce56282be4263d1f8c0d90996f3ebab09c891a73/a6b72dba4e5321e5d2330966eccbc97aca148187e8592baebff325211b18a824.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "99127eeffb3ffa8e1fd9b71356479f16face58e8ad0795d48efde2d14fb15be2",
+   "pdfSha256": "ae26b78719215c23f1eab2a0ce56282be4263d1f8c0d90996f3ebab09c891a73",
+   "configSha256": "a6b72dba4e5321e5d2330966eccbc97aca148187e8592baebff325211b18a824",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=326&tipo=pdf",
+   "declaredPublicationAt": "2026-11-01",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 110,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-327",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-327/987dec3e35a855a52f8bfcd5b67e928e943d9c30cb13e570a10e1b418b3471d9/1cffb31e49e15c5ba9f150ea42204f8a52cbec2719bbfb9256e144a792be8e11.json",
+   "dir": "zac-v36c-poppler-12-2026-11-17",
+   "extractionFileSha256": "3fb8cadff251d583031934938956ed52d86613d1dd665594ee7311a323ada341",
+   "pdfSha256": "987dec3e35a855a52f8bfcd5b67e928e943d9c30cb13e570a10e1b418b3471d9",
+   "configSha256": "1cffb31e49e15c5ba9f150ea42204f8a52cbec2719bbfb9256e144a792be8e11",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=327&tipo=pdf",
+   "declaredPublicationAt": "2020-02-19",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 236,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-329",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-329/f1fbc482f07154754a1acbda9928242720a93f6eb28d166993ca312b5479ad05/ec33b881c9cda5b35a13e761f18f489956782f02ba86e731d3c584b19b07ba97.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "a8df6b27d0fc4e7ec59c493eac51531b3e35aae8dc627b643f09fec091979ed0",
+   "pdfSha256": "f1fbc482f07154754a1acbda9928242720a93f6eb28d166993ca312b5479ad05",
+   "configSha256": "ec33b881c9cda5b35a13e761f18f489956782f02ba86e731d3c584b19b07ba97",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=329&tipo=pdf",
+   "declaredPublicationAt": "2020-03-28",
+   "declaredAmendedAt": "2025-10-15",
+   "records": {
+    "articulo": 31,
+    "transitorio": 16
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-330",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-330/2ae6c326e1fea2d543f485b9fb3d73178bcc4a76c104be8a5f49592b44ce27e6/ac4a9c7a01684fcf620b465357f9239b44b62fcdb91f061c1b951da7b5a151e4.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "6684628dfb884f20cb0fa9def43080d9224c47de19fe3324fd26f0a7374ef5e4",
+   "pdfSha256": "2ae6c326e1fea2d543f485b9fb3d73178bcc4a76c104be8a5f49592b44ce27e6",
+   "configSha256": "ac4a9c7a01684fcf620b465357f9239b44b62fcdb91f061c1b951da7b5a151e4",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=330&tipo=pdf",
+   "declaredPublicationAt": "2004-08-04",
+   "declaredAmendedAt": "2022-11-26",
+   "records": {
+    "articulo": 76,
+    "transitorio": 21
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-331",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-331/5e2856f40d17ede5713d934d15eb62034797369b7ffe17e7c2471305c68b6f2d/19476946ee32422bfedfee6ba867444de35af1b69417e2ee247b673b8133fdb3.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "47a4f0765e4eea3cdf1d75b35652abeed0ef2045d580bad08aa95fd456266ad4",
+   "pdfSha256": "5e2856f40d17ede5713d934d15eb62034797369b7ffe17e7c2471305c68b6f2d",
+   "configSha256": "19476946ee32422bfedfee6ba867444de35af1b69417e2ee247b673b8133fdb3",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=331&tipo=pdf",
+   "declaredPublicationAt": "2020-08-20",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 92,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-332",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-332/9f7220afffbaa2c3b04a6b550426bcd54159bc34bdbd0ff72a33b5067e46aeab/104d0e51abb3eb430612fe24ce3186fc63ccf6c9dedd2d4bdfbd3e759f471717.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "3fb93012e56932bf63b0b825550d126b4458aeeb9ca0c5ed5b7e3d2c4ab2a911",
+   "pdfSha256": "9f7220afffbaa2c3b04a6b550426bcd54159bc34bdbd0ff72a33b5067e46aeab",
+   "configSha256": "104d0e51abb3eb430612fe24ce3186fc63ccf6c9dedd2d4bdfbd3e759f471717",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=332&tipo=pdf",
+   "declaredPublicationAt": "2020-08-29",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 45,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-334",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-334/d90a0a8154a4107a696db5274fa41e7d17b8c5991dc2e5013971da4001312410/21440a4ae7d889d6f6c0e021ffdad8e8e5905dd6eea0d1d929e05a0f19af9d43.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "67c413da8b3fd8b5e72a531448b07f7de4bc1847699dce981328ae7d536ea9eb",
+   "pdfSha256": "d90a0a8154a4107a696db5274fa41e7d17b8c5991dc2e5013971da4001312410",
+   "configSha256": "21440a4ae7d889d6f6c0e021ffdad8e8e5905dd6eea0d1d929e05a0f19af9d43",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=334&tipo=pdf",
+   "declaredPublicationAt": "2020-11-22",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 25,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-335",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-335/0238a8ccf70b4ac22904f0b74c392b4b4972d5d10a6b85cecd58e0e73b2b34a5/8d095133b1408d66ff4195f7d9f2ec0ffe5f8ce575c1cf96da9f8266c8d4d65c.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "bf9828c9de3991c14e5695fada467ab2992beac574fc9385064309f681dba3fa",
+   "pdfSha256": "0238a8ccf70b4ac22904f0b74c392b4b4972d5d10a6b85cecd58e0e73b2b34a5",
+   "configSha256": "8d095133b1408d66ff4195f7d9f2ec0ffe5f8ce575c1cf96da9f8266c8d4d65c",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=335&tipo=pdf",
+   "declaredPublicationAt": "2020-12-19",
+   "declaredAmendedAt": "2026-09-16",
+   "records": {
+    "articulo": 56,
+    "transitorio": 18
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-336",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-336/6801e296386e66ba5381ef92de2fcff918c266d284d679f3656383fc9683d5ac/07148c4b238cfc881a2fd3007fcea5d97642f386a2b623131efe50da6cd1f129.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "31d98dd5eca22ba122deeba9cabd8831ac38a59850a398f7e45d94a70084bc23",
+   "pdfSha256": "6801e296386e66ba5381ef92de2fcff918c266d284d679f3656383fc9683d5ac",
+   "configSha256": "07148c4b238cfc881a2fd3007fcea5d97642f386a2b623131efe50da6cd1f129",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=336&tipo=pdf",
+   "declaredPublicationAt": "2026-02-21",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 211,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-337",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-337/7cf21ee664ef619ca769e01ca984801a947126f2d707408e150c5975b5a5eacf/dbbd4ef1cd05dd0132f5edb4237fd8c4cc10947acad55d30623bc4403df81d90.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "6f7ab02439c29fe3f61f6e000cf35a9a524238d89df39ae49a3eb6cff8c0e414",
+   "pdfSha256": "7cf21ee664ef619ca769e01ca984801a947126f2d707408e150c5975b5a5eacf",
+   "configSha256": "dbbd4ef1cd05dd0132f5edb4237fd8c4cc10947acad55d30623bc4403df81d90",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=337&tipo=pdf",
+   "declaredPublicationAt": "2025-12-31",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 36,
+    "prefacio-articulo-citado": 4,
+    "transitorio": 11
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-339",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-339/6488986dbaf0d975c0fa2da407d2691ce7f0426c7be4d76449ebc4ccefee4e31/20396944aa5f069a2c35e7455595c548c6debd7833e6f60bff6f637b2285d467.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "294dc0bd88f01846a4c89a59cd2842afe63b07143757c2f820509fbc7f9a9e30",
+   "pdfSha256": "6488986dbaf0d975c0fa2da407d2691ce7f0426c7be4d76449ebc4ccefee4e31",
+   "configSha256": "20396944aa5f069a2c35e7455595c548c6debd7833e6f60bff6f637b2285d467",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=339&tipo=pdf",
+   "declaredPublicationAt": "2021-02-06",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 31,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-340",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-340/a6c75acf402776223a3b609e65228fce9dbd218fbecdff02a35741386bdd6411/89b61d054d9f52868ba654563d4f04005d6ab3a836b12f0491e8e97f84836a01.json",
+   "dir": "zac-v36c-poppler-13-2026-11-17",
+   "extractionFileSha256": "53bac0ff2b987731c14409d9f12c18f750c73f2e23701ae447c5a24a0ced0103",
+   "pdfSha256": "a6c75acf402776223a3b609e65228fce9dbd218fbecdff02a35741386bdd6411",
+   "configSha256": "89b61d054d9f52868ba654563d4f04005d6ab3a836b12f0491e8e97f84836a01",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=340&tipo=pdf",
+   "declaredPublicationAt": "2021-06-05",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 30,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-368",
+   "layer": "pdfparse",
+   "extractionPath": "extractions/zac-ley-368/ca757c8a34cb74508189f3fb958cb05c720b673c99133e1b06ef1d1d9cf4f39e/898d10cb1f5e5c5384d9c6048f91c96b24be7c6830eec5ff2de4796c9e6164af.json",
+   "dir": "zac-v36c-pdfparse-14-2026-11-17",
+   "extractionFileSha256": "3921579c21c604b6c5d098ca13583ddb42d317f76fd256a5adecad0730d7b604",
+   "pdfSha256": "ca757c8a34cb74508189f3fb958cb05c720b673c99133e1b06ef1d1d9cf4f39e",
+   "configSha256": "898d10cb1f5e5c5384d9c6048f91c96b24be7c6830eec5ff2de4796c9e6164af",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=368&tipo=pdf",
+   "declaredPublicationAt": "2023-10-01",
+   "declaredAmendedAt": "2026-01-21",
+   "records": {
+    "articulo": 67,
+    "transitorio": 7
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": []
+  },
+  {
+   "documentId": "zac-ley-341",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-341/8520b4787ae9be416ea5b2ad593e908bb5e654442f35c41a411076129cfaf08c/6225f67352a42b9c8b31e5297373cc2b127d9f6b123639e5a7d67efac2c592cc.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "37835de3871941872249520123543d943f6d1f629ddf41e60c5c0cbe7ce3ce70",
+   "pdfSha256": "8520b4787ae9be416ea5b2ad593e908bb5e654442f35c41a411076129cfaf08c",
+   "configSha256": "6225f67352a42b9c8b31e5297373cc2b127d9f6b123639e5a7d67efac2c592cc",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=341&tipo=pdf",
+   "declaredPublicationAt": "2021-07-07",
+   "declaredAmendedAt": "2026-10-31",
+   "records": {
+    "articulo": 32,
+    "transitorio": 13
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-357",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-357/0b628321b5af0c3d496b6e640511c83969d862aefe3f4769f16699abd164c6fd/eedb3392ff907b7e635fef5001245b7bf6bbbc15f2e23887947787038bfc2a91.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "0fbf797dd5ad9d7b73be36c108d226fffb609508ab9c90bdd6863fa528076fea",
+   "pdfSha256": "0b628321b5af0c3d496b6e640511c83969d862aefe3f4769f16699abd164c6fd",
+   "configSha256": "eedb3392ff907b7e635fef5001245b7bf6bbbc15f2e23887947787038bfc2a91",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=357&tipo=pdf",
+   "declaredPublicationAt": "2022-06-08",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 70,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-361",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-361/a12cbb81776b12bf13384ef1a606b88f02948497fe001ca91e75a88bda5a0462/1a9c1145afb2ea11ab344c98a3469e7473fe5aae727d3a5cc341a637ea612d8a.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "4f567d4111158f652a992c2fd690b128f9d2f17edba033bb86b130c2e89f9898",
+   "pdfSha256": "a12cbb81776b12bf13384ef1a606b88f02948497fe001ca91e75a88bda5a0462",
+   "configSha256": "1a9c1145afb2ea11ab344c98a3469e7473fe5aae727d3a5cc341a637ea612d8a",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=361&tipo=pdf",
+   "declaredPublicationAt": "2022-10-02",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 73,
+    "transitorio": 10
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-362",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-362/08aa5a8ed5feaa6e0ef2e860af4ea2aa79f55f2d4375017910a0d13733c80ede/6804334f91f157d84f3d96eee63128e395da6e94372ef2fdf4fdae0c00a718bd.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "0560df2f987fe83b1465fcc657c6d75341789792d7cdb1bd90beab1f973591c5",
+   "pdfSha256": "08aa5a8ed5feaa6e0ef2e860af4ea2aa79f55f2d4375017910a0d13733c80ede",
+   "configSha256": "6804334f91f157d84f3d96eee63128e395da6e94372ef2fdf4fdae0c00a718bd",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=362&tipo=pdf",
+   "declaredPublicationAt": "2024-09-07",
+   "declaredAmendedAt": "2026-10-31",
+   "records": {
+    "articulo": 215,
+    "transitorio": 29
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-366",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-366/cad00e005095843dedaa3635208e4da6514cca01bafb3ee4a16b942982c859ea/1edd4dea73f55e84e2a20428e60b6100741b2875e0ffd73f8666f76b9b160763.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "01f4493c2824a04509ac67756059524d92958034f312597a8c22d417f6cb2a37",
+   "pdfSha256": "cad00e005095843dedaa3635208e4da6514cca01bafb3ee4a16b942982c859ea",
+   "configSha256": "1edd4dea73f55e84e2a20428e60b6100741b2875e0ffd73f8666f76b9b160763",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=366&tipo=pdf",
+   "declaredPublicationAt": "2023-04-29",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 30,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-371",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-371/76e1dee85d16ec93b380f4352828f1c223905393b474be96123a3e3ae583ea93/5dc61310c593f948a3aec992b79fbcefce70290a89a332f8f36d0863674ef72a.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "4b2440e0858423e60a0c95a03e6560045573b08b0c27d90d770c52f69f0aae88",
+   "pdfSha256": "76e1dee85d16ec93b380f4352828f1c223905393b474be96123a3e3ae583ea93",
+   "configSha256": "5dc61310c593f948a3aec992b79fbcefce70290a89a332f8f36d0863674ef72a",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=371&tipo=pdf",
+   "declaredPublicationAt": "2024-05-15",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 54,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-372",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-372/12dff05b54b127ea654a4a8c0a86e1b3b265f9b172aa5f17901a9b3a3313f2cb/3f3d93203b2a3267057e4fb8bc5e7e0d293010c5cf82e63af4a7f8911f0ab5e3.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "d707f3bb07e5a7b06860473fd1eec71118a6f942260d954b8bda4bb88b1fae9f",
+   "pdfSha256": "12dff05b54b127ea654a4a8c0a86e1b3b265f9b172aa5f17901a9b3a3313f2cb",
+   "configSha256": "3f3d93203b2a3267057e4fb8bc5e7e0d293010c5cf82e63af4a7f8911f0ab5e3",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=372&tipo=pdf",
+   "declaredPublicationAt": "2024-05-15",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 67,
+    "transitorio": 8
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-373",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-373/b82c5f4453b43beab9269923b46c42acd5c37ed4459c5cf02c4792a9a044f1f7/ad5a02570b8f1ee6d53389dbb44a06b4cf84e71add6db1c27d46deeccd7e9e01.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "5688482ea141d4826c947a9b48b38fca2408efbdb86451034ac15170057ddf1d",
+   "pdfSha256": "b82c5f4453b43beab9269923b46c42acd5c37ed4459c5cf02c4792a9a044f1f7",
+   "configSha256": "ad5a02570b8f1ee6d53389dbb44a06b4cf84e71add6db1c27d46deeccd7e9e01",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=373&tipo=pdf",
+   "declaredPublicationAt": "2024-05-30",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 31,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-374",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-374/fa36ce5a6042ba0b715cdbc5fecbc5376e029235fa590fd50ee0d538ebd421de/c2966f6ace50574e4c37c37b9b614ede7f4c01af07b16bd45ac1c50743ddb9b6.json",
+   "dir": "zac-v36c-poppler-14-2026-11-17",
+   "extractionFileSha256": "0f0a76aeb5341ad7b6e2213c47cf430720131ae94687ea074c6edb8b092d1b5a",
+   "pdfSha256": "fa36ce5a6042ba0b715cdbc5fecbc5376e029235fa590fd50ee0d538ebd421de",
+   "configSha256": "c2966f6ace50574e4c37c37b9b614ede7f4c01af07b16bd45ac1c50743ddb9b6",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=374&tipo=pdf",
+   "declaredPublicationAt": "2024-09-08",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 59,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-377",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-377/bf4839e795237d6731bda3ada72760b6f3ed369b145d219e7add3b5ff7d6ae61/78815fd72f8cf68f3c83fa54fb735acee8715ca97e59322937a9be84e5434e2d.json",
+   "dir": "zac-v36c-poppler-15-2026-11-17",
+   "extractionFileSha256": "c14fdf42b3e01509fd46be5e11cb892dc14add40f22051dfcb7dafa10bbdb8c9",
+   "pdfSha256": "bf4839e795237d6731bda3ada72760b6f3ed369b145d219e7add3b5ff7d6ae61",
+   "configSha256": "78815fd72f8cf68f3c83fa54fb735acee8715ca97e59322937a9be84e5434e2d",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=377&tipo=pdf",
+   "declaredPublicationAt": "2025-08-06",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 57,
+    "transitorio": 6
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-378",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-378/b764c56a789bbd698c769519a304a9e1c8d7dc0d49a67325138f8ca10af26774/3b8fe0778d346ca4fb573778853b441e5b5b6176bdb91129feb363dd02b468d9.json",
+   "dir": "zac-v36c-poppler-15-2026-11-17",
+   "extractionFileSha256": "379af07833397b05674b130256d1d6d5a139475e4854a470a70d50eb7fa9e871",
+   "pdfSha256": "b764c56a789bbd698c769519a304a9e1c8d7dc0d49a67325138f8ca10af26774",
+   "configSha256": "3b8fe0778d346ca4fb573778853b441e5b5b6176bdb91129feb363dd02b468d9",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=378&tipo=pdf",
+   "declaredPublicationAt": "2025-10-05",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 22,
+    "transitorio": 4
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-379",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-379/cae5d8bb2d31ff9bcf4a9afbb9b09fe695714316a3927be9dd618cf31cd9ce61/7a3666f48dfcc8d47853f190b0555416d32a6702c926d859a728064bc9a7fa77.json",
+   "dir": "zac-v36c-poppler-15-2026-11-17",
+   "extractionFileSha256": "026464dc9c2d7d4ce441aa8ccf639155d395b1f500f9b0ad9228f5dd4f40ff2d",
+   "pdfSha256": "cae5d8bb2d31ff9bcf4a9afbb9b09fe695714316a3927be9dd618cf31cd9ce61",
+   "configSha256": "7a3666f48dfcc8d47853f190b0555416d32a6702c926d859a728064bc9a7fa77",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=379&tipo=pdf",
+   "declaredPublicationAt": "2025-10-05",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 42,
+    "transitorio": 5
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ]
+  },
+  {
+   "documentId": "zac-ley-380",
+   "layer": "poppler",
+   "extractionPath": "extractions/zac-ley-380/c274130bd4eb4196c80293520719e03b56b16df8ee7011e40f6054ce076e282a/30aff99b890731bcf729c530181592591fdcd5f111bb8548add07dcf8d9b99c7.json",
+   "dir": "zac-v36c-poppler-15-2026-11-17",
+   "extractionFileSha256": "a0a0f7e76a42e40efe61b1792e667da20b439c3c30e316b79856a7732e06952e",
+   "pdfSha256": "c274130bd4eb4196c80293520719e03b56b16df8ee7011e40f6054ce076e282a",
+   "configSha256": "30aff99b890731bcf729c530181592591fdcd5f111bb8548add07dcf8d9b99c7",
+   "sourceUrl": "https://www.congresozac.gob.mx/65/ley&cual=380&tipo=pdf",
+   "declaredPublicationAt": "2026-09-17",
+   "declaredAmendedAt": null,
+   "records": {
+    "articulo": 151,
+    "transitorio": 9
+   },
+   "status": "quarantined",
+   "published": false,
+   "indexed": false,
+   "textReview": "pending",
+   "legalReview": "pending",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1325 @@
+{
+ "corte": "v36c (part-14, commit 528458a, tar sha256 32279371...b899 verificado contra MANIFEST)",
+ "generado": "2026-11-17T15:13 CST",
+ "estado": "cuarentena - mapa candidato, nada liberado",
+ "criterio": "poppler por defecto; pdf-parse solo donde poppler pierde articulos completos por PDF una-palabra-por-linea (198/230/368: arts. 139/59/61 resp.)",
+ "documentos": 144,
+ "seleccion": {
+  "poppler": 141,
+  "pdfparse": [
+   "198",
+   "230",
+   "368"
+  ]
+ },
+ "totales": {
+  "articulo": 13207,
+  "transitorio": 2237,
+  "prefacio": 15
+ },
+ "suma_registros": 15459,
+ "fechas_publicacion": "144/144 (poppler cubre 213 que pdf-parse no)",
+ "fechas_reforma_capturadas": {
+  "poppler": 78,
+  "pdfparse": 76,
+  "nota": "164 capturada solo por poppler; la seleccion la conserva. Nuevas v36c verificadas contra encabezado fuente: 036,164,212,220,226,362"
+ },
+ "por_documento": {
+  "zac-ley-013": {
+   "layer": "poppler",
+   "records": 17,
+   "articulos": 15,
+   "transitorios": 2,
+   "prefacio": 0,
+   "publication": "1944-09-23",
+   "reforma": "1965-03-03"
+  },
+  "zac-ley-014": {
+   "layer": "poppler",
+   "records": 18,
+   "articulos": 14,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "1955-02-19",
+   "reforma": null
+  },
+  "zac-ley-016": {
+   "layer": "poppler",
+   "records": 28,
+   "articulos": 20,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "1978-05-27",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-017": {
+   "layer": "poppler",
+   "records": 58,
+   "articulos": 40,
+   "transitorios": 18,
+   "prefacio": 0,
+   "publication": "1981-09-16",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-019": {
+   "layer": "poppler",
+   "records": 19,
+   "articulos": 12,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "1984-01-28",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-020": {
+   "layer": "poppler",
+   "records": 95,
+   "articulos": 78,
+   "transitorios": 17,
+   "prefacio": 0,
+   "publication": "1984-12-29",
+   "reforma": "2014-12-03"
+  },
+  "zac-ley-024": {
+   "layer": "poppler",
+   "records": 16,
+   "articulos": 15,
+   "transitorios": 1,
+   "prefacio": 0,
+   "publication": "1987-01-14",
+   "reforma": null
+  },
+  "zac-ley-026": {
+   "layer": "poppler",
+   "records": 111,
+   "articulos": 97,
+   "transitorios": 14,
+   "prefacio": 0,
+   "publication": "2013-12-14",
+   "reforma": "2018-09-29"
+  },
+  "zac-ley-027": {
+   "layer": "poppler",
+   "records": 23,
+   "articulos": 19,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "1987-08-12",
+   "reforma": null
+  },
+  "zac-ley-028": {
+   "layer": "poppler",
+   "records": 96,
+   "articulos": 93,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "1987-09-10",
+   "reforma": null
+  },
+  "zac-ley-030": {
+   "layer": "poppler",
+   "records": 67,
+   "articulos": 58,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "1988-01-07",
+   "reforma": "2014-12-03"
+  },
+  "zac-ley-032": {
+   "layer": "poppler",
+   "records": 46,
+   "articulos": 38,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2014-12-31",
+   "reforma": null
+  },
+  "zac-ley-033": {
+   "layer": "poppler",
+   "records": 16,
+   "articulos": 14,
+   "transitorios": 2,
+   "prefacio": 0,
+   "publication": "1988-12-31",
+   "reforma": null
+  },
+  "zac-ley-034": {
+   "layer": "poppler",
+   "records": 83,
+   "articulos": 68,
+   "transitorios": 15,
+   "prefacio": 0,
+   "publication": "1989-01-07",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-036": {
+   "layer": "poppler",
+   "records": 53,
+   "articulos": 48,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "1989-03-01",
+   "reforma": "1997-02-15"
+  },
+  "zac-ley-038": {
+   "layer": "poppler",
+   "records": 29,
+   "articulos": 27,
+   "transitorios": 2,
+   "prefacio": 0,
+   "publication": "1989-12-30",
+   "reforma": null
+  },
+  "zac-ley-040": {
+   "layer": "poppler",
+   "records": 146,
+   "articulos": 101,
+   "transitorios": 45,
+   "prefacio": 0,
+   "publication": "1993-01-27",
+   "reforma": "2025-10-04"
+  },
+  "zac-ley-043": {
+   "layer": "poppler",
+   "records": 154,
+   "articulos": 124,
+   "transitorios": 30,
+   "prefacio": 0,
+   "publication": "1994-08-13",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-046": {
+   "layer": "poppler",
+   "records": 363,
+   "articulos": 301,
+   "transitorios": 62,
+   "prefacio": 0,
+   "publication": "1996-09-11",
+   "reforma": null
+  },
+  "zac-ley-053": {
+   "layer": "poppler",
+   "records": 104,
+   "articulos": 80,
+   "transitorios": 24,
+   "prefacio": 0,
+   "publication": "2000-03-30",
+   "reforma": "2015-02-07"
+  },
+  "zac-ley-056": {
+   "layer": "poppler",
+   "records": 116,
+   "articulos": 50,
+   "transitorios": 66,
+   "prefacio": 0,
+   "publication": "2016-11-30",
+   "reforma": null
+  },
+  "zac-ley-057": {
+   "layer": "poppler",
+   "records": 204,
+   "articulos": 150,
+   "transitorios": 54,
+   "prefacio": 0,
+   "publication": "2016-12-31",
+   "reforma": "2026-08-22"
+  },
+  "zac-ley-059": {
+   "layer": "poppler",
+   "records": 194,
+   "articulos": 183,
+   "transitorios": 11,
+   "prefacio": 0,
+   "publication": "2025-06-19",
+   "reforma": null
+  },
+  "zac-ley-060": {
+   "layer": "poppler",
+   "records": 79,
+   "articulos": 74,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2001-06-13",
+   "reforma": null
+  },
+  "zac-ley-061": {
+   "layer": "poppler",
+   "records": 336,
+   "articulos": 278,
+   "transitorios": 58,
+   "prefacio": 0,
+   "publication": "2018-03-07",
+   "reforma": null
+  },
+  "zac-ley-063": {
+   "layer": "poppler",
+   "records": 78,
+   "articulos": 70,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2001-08-09",
+   "reforma": "2023-03-08"
+  },
+  "zac-ley-064": {
+   "layer": "poppler",
+   "records": 131,
+   "articulos": 115,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2013-02-06",
+   "reforma": "2017-07-15"
+  },
+  "zac-ley-067": {
+   "layer": "poppler",
+   "records": 332,
+   "articulos": 268,
+   "transitorios": 64,
+   "prefacio": 0,
+   "publication": "2016-12-03",
+   "reforma": "2026-10-31"
+  },
+  "zac-ley-068": {
+   "layer": "poppler",
+   "records": 190,
+   "articulos": 167,
+   "transitorios": 23,
+   "prefacio": 0,
+   "publication": "2021-12-29",
+   "reforma": "2024-05-15"
+  },
+  "zac-ley-070": {
+   "layer": "poppler",
+   "records": 70,
+   "articulos": 66,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2002-07-10",
+   "reforma": "2005-10-26"
+  },
+  "zac-ley-072": {
+   "layer": "poppler",
+   "records": 61,
+   "articulos": 43,
+   "transitorios": 18,
+   "prefacio": 0,
+   "publication": "2003-02-19",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-076": {
+   "layer": "poppler",
+   "records": 88,
+   "articulos": 57,
+   "transitorios": 31,
+   "prefacio": 0,
+   "publication": "2003-08-16",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-077": {
+   "layer": "poppler",
+   "records": 76,
+   "articulos": 63,
+   "transitorios": 13,
+   "prefacio": 0,
+   "publication": "2021-09-08",
+   "reforma": "2025-10-04"
+  },
+  "zac-ley-081": {
+   "layer": "poppler",
+   "records": 100,
+   "articulos": 80,
+   "transitorios": 20,
+   "prefacio": 0,
+   "publication": "2003-10-04",
+   "reforma": "2025-02-15"
+  },
+  "zac-ley-087": {
+   "layer": "poppler",
+   "records": 42,
+   "articulos": 32,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2004-07-14",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-090": {
+   "layer": "poppler",
+   "records": 98,
+   "articulos": 61,
+   "transitorios": 37,
+   "prefacio": 0,
+   "publication": "2016-12-31",
+   "reforma": "2025-12-31"
+  },
+  "zac-ley-091": {
+   "layer": "poppler",
+   "records": 101,
+   "articulos": 92,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2021-08-11",
+   "reforma": null
+  },
+  "zac-ley-096": {
+   "layer": "poppler",
+   "records": 23,
+   "articulos": 17,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2006-03-12",
+   "reforma": "2015-02-25"
+  },
+  "zac-ley-108": {
+   "layer": "poppler",
+   "records": 207,
+   "articulos": 186,
+   "transitorios": 21,
+   "prefacio": 0,
+   "publication": "2006-04-29",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-109": {
+   "layer": "poppler",
+   "records": 119,
+   "articulos": 92,
+   "transitorios": 27,
+   "prefacio": 0,
+   "publication": "2006-05-14",
+   "reforma": "2021-07-07"
+  },
+  "zac-ley-110": {
+   "layer": "poppler",
+   "records": 116,
+   "articulos": 97,
+   "transitorios": 19,
+   "prefacio": 0,
+   "publication": "2006-06-24",
+   "reforma": "2026-01-21"
+  },
+  "zac-ley-112": {
+   "layer": "poppler",
+   "records": 197,
+   "articulos": 187,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2006-08-02",
+   "reforma": "2025-12-18"
+  },
+  "zac-ley-113": {
+   "layer": "poppler",
+   "records": 70,
+   "articulos": 53,
+   "transitorios": 17,
+   "prefacio": 0,
+   "publication": "2006-07-29",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-114": {
+   "layer": "poppler",
+   "records": 33,
+   "articulos": 26,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "2006-07-12",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-117": {
+   "layer": "poppler",
+   "records": 106,
+   "articulos": 91,
+   "transitorios": 15,
+   "prefacio": 0,
+   "publication": "2016-08-24",
+   "reforma": "2026-04-25"
+  },
+  "zac-ley-119": {
+   "layer": "poppler",
+   "records": 241,
+   "articulos": 213,
+   "transitorios": 28,
+   "prefacio": 0,
+   "publication": "2007-03-31",
+   "reforma": "2021-01-09"
+  },
+  "zac-ley-120": {
+   "layer": "poppler",
+   "records": 180,
+   "articulos": 154,
+   "transitorios": 26,
+   "prefacio": 0,
+   "publication": "2007-04-05",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-121": {
+   "layer": "poppler",
+   "records": 170,
+   "articulos": 136,
+   "transitorios": 34,
+   "prefacio": 0,
+   "publication": "2015-07-01",
+   "reforma": "2026-01-24"
+  },
+  "zac-ley-123": {
+   "layer": "poppler",
+   "records": 245,
+   "articulos": 228,
+   "transitorios": 17,
+   "prefacio": 0,
+   "publication": "2006-09-30",
+   "reforma": "2016-01-09"
+  },
+  "zac-ley-125": {
+   "layer": "poppler",
+   "records": 150,
+   "articulos": 137,
+   "transitorios": 13,
+   "prefacio": 0,
+   "publication": "2006-10-28",
+   "reforma": "2018-01-10"
+  },
+  "zac-ley-127": {
+   "layer": "poppler",
+   "records": 147,
+   "articulos": 131,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2007-09-29",
+   "reforma": "2025-12-31"
+  },
+  "zac-ley-141": {
+   "layer": "poppler",
+   "records": 177,
+   "articulos": 147,
+   "transitorios": 30,
+   "prefacio": 0,
+   "publication": "2013-11-20",
+   "reforma": "2026-09-30"
+  },
+  "zac-ley-142": {
+   "layer": "poppler",
+   "records": 150,
+   "articulos": 110,
+   "transitorios": 40,
+   "prefacio": 0,
+   "publication": "2009-01-18",
+   "reforma": "2026-07-18"
+  },
+  "zac-ley-143": {
+   "layer": "poppler",
+   "records": 114,
+   "articulos": 84,
+   "transitorios": 30,
+   "prefacio": 0,
+   "publication": "2009-01-17",
+   "reforma": "2026-01-21"
+  },
+  "zac-ley-144": {
+   "layer": "poppler",
+   "records": 83,
+   "articulos": 83,
+   "transitorios": 0,
+   "prefacio": 0,
+   "publication": "2008-12-31",
+   "reforma": "2021-02-24"
+  },
+  "zac-ley-146": {
+   "layer": "poppler",
+   "records": 210,
+   "articulos": 193,
+   "transitorios": 17,
+   "prefacio": 0,
+   "publication": "2009-06-13",
+   "reforma": "2021-02-24"
+  },
+  "zac-ley-147": {
+   "layer": "poppler",
+   "records": 124,
+   "articulos": 109,
+   "transitorios": 15,
+   "prefacio": 0,
+   "publication": "2015-06-17",
+   "reforma": "2021-08-11"
+  },
+  "zac-ley-148": {
+   "layer": "poppler",
+   "records": 152,
+   "articulos": 146,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2009-09-23",
+   "reforma": null
+  },
+  "zac-ley-152": {
+   "layer": "poppler",
+   "records": 96,
+   "articulos": 80,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2010-02-04",
+   "reforma": "2017-09-16"
+  },
+  "zac-ley-154": {
+   "layer": "poppler",
+   "records": 90,
+   "articulos": 80,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2003-06-07",
+   "reforma": "2018-08-18"
+  },
+  "zac-ley-156": {
+   "layer": "poppler",
+   "records": 142,
+   "articulos": 130,
+   "transitorios": 12,
+   "prefacio": 0,
+   "publication": "2010-10-16",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-158": {
+   "layer": "poppler",
+   "records": 28,
+   "articulos": 17,
+   "transitorios": 11,
+   "prefacio": 0,
+   "publication": "2010-12-04",
+   "reforma": "2018-02-21"
+  },
+  "zac-ley-159": {
+   "layer": "poppler",
+   "records": 92,
+   "articulos": 84,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2011-03-02",
+   "reforma": "2015-04-11"
+  },
+  "zac-ley-160": {
+   "layer": "poppler",
+   "records": 226,
+   "articulos": 209,
+   "transitorios": 14,
+   "prefacio": 3,
+   "publication": "2011-06-18",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-161": {
+   "layer": "poppler",
+   "records": 31,
+   "articulos": 28,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "1994-08-13",
+   "reforma": null
+  },
+  "zac-ley-162": {
+   "layer": "poppler",
+   "records": 184,
+   "articulos": 173,
+   "transitorios": 11,
+   "prefacio": 0,
+   "publication": "2025-10-16",
+   "reforma": null
+  },
+  "zac-ley-164": {
+   "layer": "poppler",
+   "records": 151,
+   "articulos": 131,
+   "transitorios": 20,
+   "prefacio": 0,
+   "publication": "2018-03-14",
+   "reforma": "2026-09-30"
+  },
+  "zac-ley-165": {
+   "layer": "poppler",
+   "records": 46,
+   "articulos": 28,
+   "transitorios": 18,
+   "prefacio": 0,
+   "publication": "2011-10-05",
+   "reforma": null
+  },
+  "zac-ley-168": {
+   "layer": "poppler",
+   "records": 179,
+   "articulos": 124,
+   "transitorios": 55,
+   "prefacio": 0,
+   "publication": "2012-05-05",
+   "reforma": "2026-09-30"
+  },
+  "zac-ley-173": {
+   "layer": "poppler",
+   "records": 526,
+   "articulos": 487,
+   "transitorios": 39,
+   "prefacio": 0,
+   "publication": "2015-06-06",
+   "reforma": null
+  },
+  "zac-ley-174": {
+   "layer": "poppler",
+   "records": 120,
+   "articulos": 92,
+   "transitorios": 28,
+   "prefacio": 0,
+   "publication": "2015-06-06",
+   "reforma": "2023-05-31"
+  },
+  "zac-ley-179": {
+   "layer": "poppler",
+   "records": 99,
+   "articulos": 90,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2013-07-03",
+   "reforma": "2021-08-11"
+  },
+  "zac-ley-180": {
+   "layer": "poppler",
+   "records": 188,
+   "articulos": 146,
+   "transitorios": 42,
+   "prefacio": 0,
+   "publication": "2020-06-17",
+   "reforma": null
+  },
+  "zac-ley-181": {
+   "layer": "poppler",
+   "records": 23,
+   "articulos": 19,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2013-09-14",
+   "reforma": null
+  },
+  "zac-ley-182": {
+   "layer": "poppler",
+   "records": 57,
+   "articulos": 53,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2013-07-24",
+   "reforma": null
+  },
+  "zac-ley-183": {
+   "layer": "poppler",
+   "records": 147,
+   "articulos": 114,
+   "transitorios": 33,
+   "prefacio": 0,
+   "publication": "2013-11-30",
+   "reforma": "2026-07-18"
+  },
+  "zac-ley-184": {
+   "layer": "poppler",
+   "records": 67,
+   "articulos": 63,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2013-12-25",
+   "reforma": null
+  },
+  "zac-ley-185": {
+   "layer": "poppler",
+   "records": 134,
+   "articulos": 128,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2024-02-29",
+   "reforma": "2026-09-30"
+  },
+  "zac-ley-186": {
+   "layer": "poppler",
+   "records": 96,
+   "articulos": 86,
+   "transitorios": 9,
+   "prefacio": 1,
+   "publication": "2014-06-11",
+   "reforma": "2026-01-24"
+  },
+  "zac-ley-188": {
+   "layer": "poppler",
+   "records": 28,
+   "articulos": 19,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2014-08-30",
+   "reforma": "2017-11-25"
+  },
+  "zac-ley-189": {
+   "layer": "poppler",
+   "records": 117,
+   "articulos": 112,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2014-09-03",
+   "reforma": null
+  },
+  "zac-ley-191": {
+   "layer": "poppler",
+   "records": 22,
+   "articulos": 17,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2014-09-03",
+   "reforma": null
+  },
+  "zac-ley-193": {
+   "layer": "poppler",
+   "records": 164,
+   "articulos": 142,
+   "transitorios": 22,
+   "prefacio": 0,
+   "publication": "2012-09-29",
+   "reforma": "2021-02-29"
+  },
+  "zac-ley-194": {
+   "layer": "poppler",
+   "records": 112,
+   "articulos": 74,
+   "transitorios": 38,
+   "prefacio": 0,
+   "publication": "1993-07-10",
+   "reforma": "2013-03-23"
+  },
+  "zac-ley-195": {
+   "layer": "poppler",
+   "records": 102,
+   "articulos": 86,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2014-11-26",
+   "reforma": null
+  },
+  "zac-ley-196": {
+   "layer": "poppler",
+   "records": 109,
+   "articulos": 103,
+   "transitorios": 3,
+   "prefacio": 3,
+   "publication": "2015-12-14",
+   "reforma": null
+  },
+  "zac-ley-198": {
+   "layer": "pdfparse",
+   "records": 209,
+   "articulos": 163,
+   "transitorios": 46,
+   "prefacio": 0,
+   "publication": "2015-03-21",
+   "reforma": null
+  },
+  "zac-ley-199": {
+   "layer": "poppler",
+   "records": 67,
+   "articulos": 60,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "2015-02-28",
+   "reforma": null
+  },
+  "zac-ley-200": {
+   "layer": "poppler",
+   "records": 122,
+   "articulos": 114,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2015-04-22",
+   "reforma": null
+  },
+  "zac-ley-201": {
+   "layer": "poppler",
+   "records": 161,
+   "articulos": 136,
+   "transitorios": 25,
+   "prefacio": 0,
+   "publication": "2015-09-23",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-202": {
+   "layer": "poppler",
+   "records": 94,
+   "articulos": 84,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2016-06-01",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-203": {
+   "layer": "poppler",
+   "records": 28,
+   "articulos": 26,
+   "transitorios": 2,
+   "prefacio": 0,
+   "publication": "2015-07-01",
+   "reforma": null
+  },
+  "zac-ley-204": {
+   "layer": "poppler",
+   "records": 27,
+   "articulos": 24,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "2015-12-26",
+   "reforma": null
+  },
+  "zac-ley-205": {
+   "layer": "poppler",
+   "records": 67,
+   "articulos": 57,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2014-12-17",
+   "reforma": "2019-12-28"
+  },
+  "zac-ley-206": {
+   "layer": "poppler",
+   "records": 45,
+   "articulos": 41,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2021-02-06",
+   "reforma": null
+  },
+  "zac-ley-208": {
+   "layer": "poppler",
+   "records": 71,
+   "articulos": 50,
+   "transitorios": 21,
+   "prefacio": 0,
+   "publication": "2016-12-31",
+   "reforma": "2019-12-28"
+  },
+  "zac-ley-210": {
+   "layer": "poppler",
+   "records": 117,
+   "articulos": 99,
+   "transitorios": 18,
+   "prefacio": 0,
+   "publication": "2017-05-03",
+   "reforma": "2026-09-16"
+  },
+  "zac-ley-211": {
+   "layer": "poppler",
+   "records": 141,
+   "articulos": 136,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2025-09-21",
+   "reforma": null
+  },
+  "zac-ley-212": {
+   "layer": "poppler",
+   "records": 137,
+   "articulos": 121,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2017-07-15",
+   "reforma": "2025-03-26"
+  },
+  "zac-ley-213": {
+   "layer": "poppler",
+   "records": 135,
+   "articulos": 132,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "2018-01-07",
+   "reforma": null
+  },
+  "zac-ley-214": {
+   "layer": "poppler",
+   "records": 63,
+   "articulos": 54,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2025-10-05",
+   "reforma": null
+  },
+  "zac-ley-216": {
+   "layer": "poppler",
+   "records": 142,
+   "articulos": 97,
+   "transitorios": 45,
+   "prefacio": 0,
+   "publication": "2017-12-30",
+   "reforma": "2026-10-31"
+  },
+  "zac-ley-217": {
+   "layer": "poppler",
+   "records": 116,
+   "articulos": 85,
+   "transitorios": 31,
+   "prefacio": 0,
+   "publication": "2018-03-07",
+   "reforma": "2026-08-22"
+  },
+  "zac-ley-218": {
+   "layer": "poppler",
+   "records": 96,
+   "articulos": 72,
+   "transitorios": 24,
+   "prefacio": 0,
+   "publication": "2017-07-15",
+   "reforma": "2025-10-15"
+  },
+  "zac-ley-219": {
+   "layer": "poppler",
+   "records": 35,
+   "articulos": 28,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "2021-02-06",
+   "reforma": null
+  },
+  "zac-ley-220": {
+   "layer": "poppler",
+   "records": 104,
+   "articulos": 92,
+   "transitorios": 12,
+   "prefacio": 0,
+   "publication": "2018-06-16",
+   "reforma": "2026-04-25"
+  },
+  "zac-ley-221": {
+   "layer": "poppler",
+   "records": 29,
+   "articulos": 24,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2016-08-24",
+   "reforma": null
+  },
+  "zac-ley-222": {
+   "layer": "poppler",
+   "records": 121,
+   "articulos": 116,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2015-11-28",
+   "reforma": null
+  },
+  "zac-ley-223": {
+   "layer": "poppler",
+   "records": 92,
+   "articulos": 88,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2017-08-09",
+   "reforma": null
+  },
+  "zac-ley-226": {
+   "layer": "poppler",
+   "records": 46,
+   "articulos": 35,
+   "transitorios": 11,
+   "prefacio": 0,
+   "publication": "2018-08-29",
+   "reforma": "2023-09-30"
+  },
+  "zac-ley-227": {
+   "layer": "poppler",
+   "records": 156,
+   "articulos": 136,
+   "transitorios": 20,
+   "prefacio": 0,
+   "publication": "2021-07-03",
+   "reforma": null
+  },
+  "zac-ley-229": {
+   "layer": "poppler",
+   "records": 46,
+   "articulos": 43,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "2018-07-07",
+   "reforma": null
+  },
+  "zac-ley-230": {
+   "layer": "pdfparse",
+   "records": 78,
+   "articulos": 72,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2025-10-08",
+   "reforma": null
+  },
+  "zac-ley-231": {
+   "layer": "poppler",
+   "records": 49,
+   "articulos": 39,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2018-08-22",
+   "reforma": "2021-02-06"
+  },
+  "zac-ley-232": {
+   "layer": "poppler",
+   "records": 114,
+   "articulos": 85,
+   "transitorios": 25,
+   "prefacio": 4,
+   "publication": "2025-12-31",
+   "reforma": null
+  },
+  "zac-ley-233": {
+   "layer": "poppler",
+   "records": 171,
+   "articulos": 161,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2019-07-03",
+   "reforma": null
+  },
+  "zac-ley-324": {
+   "layer": "poppler",
+   "records": 114,
+   "articulos": 108,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2019-12-28",
+   "reforma": null
+  },
+  "zac-ley-325": {
+   "layer": "poppler",
+   "records": 37,
+   "articulos": 34,
+   "transitorios": 3,
+   "prefacio": 0,
+   "publication": "2019-12-28",
+   "reforma": null
+  },
+  "zac-ley-326": {
+   "layer": "poppler",
+   "records": 120,
+   "articulos": 110,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2026-11-01",
+   "reforma": null
+  },
+  "zac-ley-327": {
+   "layer": "poppler",
+   "records": 243,
+   "articulos": 236,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "2020-02-19",
+   "reforma": null
+  },
+  "zac-ley-329": {
+   "layer": "poppler",
+   "records": 47,
+   "articulos": 31,
+   "transitorios": 16,
+   "prefacio": 0,
+   "publication": "2020-03-28",
+   "reforma": "2025-10-15"
+  },
+  "zac-ley-330": {
+   "layer": "poppler",
+   "records": 97,
+   "articulos": 76,
+   "transitorios": 21,
+   "prefacio": 0,
+   "publication": "2004-08-04",
+   "reforma": "2022-11-26"
+  },
+  "zac-ley-331": {
+   "layer": "poppler",
+   "records": 102,
+   "articulos": 92,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2020-08-20",
+   "reforma": null
+  },
+  "zac-ley-332": {
+   "layer": "poppler",
+   "records": 51,
+   "articulos": 45,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2020-08-29",
+   "reforma": null
+  },
+  "zac-ley-334": {
+   "layer": "poppler",
+   "records": 29,
+   "articulos": 25,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2020-11-22",
+   "reforma": null
+  },
+  "zac-ley-335": {
+   "layer": "poppler",
+   "records": 74,
+   "articulos": 56,
+   "transitorios": 18,
+   "prefacio": 0,
+   "publication": "2020-12-19",
+   "reforma": "2026-09-16"
+  },
+  "zac-ley-336": {
+   "layer": "poppler",
+   "records": 219,
+   "articulos": 211,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2026-02-21",
+   "reforma": null
+  },
+  "zac-ley-337": {
+   "layer": "poppler",
+   "records": 51,
+   "articulos": 36,
+   "transitorios": 11,
+   "prefacio": 4,
+   "publication": "2025-12-31",
+   "reforma": null
+  },
+  "zac-ley-339": {
+   "layer": "poppler",
+   "records": 36,
+   "articulos": 31,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2021-02-06",
+   "reforma": null
+  },
+  "zac-ley-340": {
+   "layer": "poppler",
+   "records": 39,
+   "articulos": 30,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2021-06-05",
+   "reforma": null
+  },
+  "zac-ley-341": {
+   "layer": "poppler",
+   "records": 45,
+   "articulos": 32,
+   "transitorios": 13,
+   "prefacio": 0,
+   "publication": "2021-07-07",
+   "reforma": "2026-10-31"
+  },
+  "zac-ley-357": {
+   "layer": "poppler",
+   "records": 78,
+   "articulos": 70,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2022-06-08",
+   "reforma": null
+  },
+  "zac-ley-361": {
+   "layer": "poppler",
+   "records": 83,
+   "articulos": 73,
+   "transitorios": 10,
+   "prefacio": 0,
+   "publication": "2022-10-02",
+   "reforma": null
+  },
+  "zac-ley-362": {
+   "layer": "poppler",
+   "records": 244,
+   "articulos": 215,
+   "transitorios": 29,
+   "prefacio": 0,
+   "publication": "2024-09-07",
+   "reforma": "2026-10-31"
+  },
+  "zac-ley-366": {
+   "layer": "poppler",
+   "records": 35,
+   "articulos": 30,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2023-04-29",
+   "reforma": null
+  },
+  "zac-ley-368": {
+   "layer": "pdfparse",
+   "records": 74,
+   "articulos": 67,
+   "transitorios": 7,
+   "prefacio": 0,
+   "publication": "2023-10-01",
+   "reforma": "2026-01-21"
+  },
+  "zac-ley-371": {
+   "layer": "poppler",
+   "records": 62,
+   "articulos": 54,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2024-05-15",
+   "reforma": null
+  },
+  "zac-ley-372": {
+   "layer": "poppler",
+   "records": 75,
+   "articulos": 67,
+   "transitorios": 8,
+   "prefacio": 0,
+   "publication": "2024-05-15",
+   "reforma": null
+  },
+  "zac-ley-373": {
+   "layer": "poppler",
+   "records": 36,
+   "articulos": 31,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2024-05-30",
+   "reforma": null
+  },
+  "zac-ley-374": {
+   "layer": "poppler",
+   "records": 65,
+   "articulos": 59,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2024-09-08",
+   "reforma": null
+  },
+  "zac-ley-377": {
+   "layer": "poppler",
+   "records": 63,
+   "articulos": 57,
+   "transitorios": 6,
+   "prefacio": 0,
+   "publication": "2025-08-06",
+   "reforma": null
+  },
+  "zac-ley-378": {
+   "layer": "poppler",
+   "records": 26,
+   "articulos": 22,
+   "transitorios": 4,
+   "prefacio": 0,
+   "publication": "2025-10-05",
+   "reforma": null
+  },
+  "zac-ley-379": {
+   "layer": "poppler",
+   "records": 47,
+   "articulos": 42,
+   "transitorios": 5,
+   "prefacio": 0,
+   "publication": "2025-10-05",
+   "reforma": null
+  },
+  "zac-ley-380": {
+   "layer": "poppler",
+   "records": 160,
+   "articulos": 151,
+   "transitorios": 9,
+   "prefacio": 0,
+   "publication": "2026-09-17",
+   "reforma": null
+  }
+ }
+}
