@@ -31,7 +31,7 @@ import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocum
 // conformidad...") still opens; no local signal distinguishes it from a real
 // heading (frozen case "ARTICULO 136. Derogado" has the same shape).
 // Numbers are never invented; references keep their original text verbatim.
-export const EXTRACTOR_VERSION=35;
+export const EXTRACTOR_VERSION=36;
 // v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
 // digital text layer exists but is unusable (e.g. body font without a Unicode
 // map: only repeated headers extract). The flag only WIDENS the OCR trigger;
@@ -376,7 +376,7 @@ function extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
   const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,removedBulletGlyphs:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
-  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+DOF)?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
+  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+(?:DOF|POG))?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
@@ -684,12 +684,22 @@ export async function ingestLibrary({catalog,outputDir,limit=40,download=true,fe
 
 if(!isMainThread&&workerData?.kind==='extract-legal-library'){
   try{const {default:pdf}=await import('pdf-parse/lib/pdf-parse.js');const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('PDF too large');const pages=[];
-    const result=await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
-    if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');pages.sort((a,b)=>a.number-b.number);
+    const poppler=workerData.source?.textLayer==='poppler';let popplerInfo=null;
+    const result=poppler?{numpages:-1}:await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
+    if(poppler){const execFileAsync=promisify(execFile);
+      // v36: registry-flagged alternate text layer (Poppler pdftotext) for PDFs whose pdf-parse text layer is defective (glued headings, corrupt flate). Provenance recorded in coverage.parser; the pdf-parse extraction is never replaced silently.
+      const {stdout}=await execFileAsync('pdftotext',['-enc','UTF-8',workerData.file,'-'],{maxBuffer:1<<28,timeout:60000});
+      const {stdout:ver,stderr:verr}=await execFileAsync('pdftotext',['-v'],{timeout:10000}).catch(e=>({stdout:'',stderr:String(e.stderr??'')}));
+      const chunks=stdout.split('\f');if(chunks.at(-1)==='')chunks.pop();
+      if(!chunks.length||chunks.length>EXTRACTOR_MAX_PAGES)throw new Error('Poppler page coverage incomplete');
+      chunks.forEach((text,i)=>pages.push({number:i+1,text}));
+      popplerInfo={engine:'poppler-pdftotext',version:(String(verr||ver).split('\n')[0]||'unknown').trim(),pages:pages.length};
+    }else{
+    if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');}pages.sort((a,b)=>a.number-b.number);
     let ocr=null;
     const digitalChars=pages.reduce((total,page)=>total+page.text.trim().length,0);
     const forceOcr=workerData.source?.forceOcr===true;
-    if(forceOcr||digitalChars<pages.length*OCR_MIN_PAGE_CHARS){
+    if(!poppler&&(forceOcr||digitalChars<pages.length*OCR_MIN_PAGE_CHARS)){
       const tools=detectOcrTools();
       if(!tools.available)ocr={skipped:'ocr-tools-unavailable'};
       else if(pages.length>OCR_PAGE_CAP)ocr={skipped:'ocr-page-cap-exceeded',pages:pages.length,cap:OCR_PAGE_CAP};
@@ -704,6 +714,7 @@ if(!isMainThread&&workerData?.kind==='extract-legal-library'){
       }
     }
     const parsed=extractArticles(pages,workerData.source,workerData.metadata);
+    if(popplerInfo){parsed.coverage.parser=popplerInfo;parsed.documentAnomalies.push('alternate-text-layer:poppler');}
     if(ocr){parsed.coverage.ocr=ocr;if(!ocr.skipped&&ocr.outcome!=='no-text-recovered-digital-kept'){parsed.documentAnomalies.push('ocr-derived-text-layer');if(ocr.forced)parsed.documentAnomalies.push('registry-forced-ocr');if(ocr.repairedHeadings)parsed.documentAnomalies.push('ocr-ordinal-suffix-fused-heading-repaired');if(ocr.commaTerminatorRepaired)parsed.documentAnomalies.push('ocr-comma-terminator-heading-repaired');for(const record of parsed.records){record.quality.status='quarantined';if(!record.quality.anomalies.includes('ocr-derived-text-layer'))record.quality.anomalies.push('ocr-derived-text-layer');}}}
     parentPort.postMessage({result:parsed});
   }catch(e){parentPort.postMessage({error:e.message});}
