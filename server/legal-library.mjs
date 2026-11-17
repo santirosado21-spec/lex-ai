@@ -444,7 +444,8 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(bareMatch){
         const bareNumber=Number(bareMatch[1]);
         const currentNumber=current?Number(current.articleId.split('-')[0]):null;
-        if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)){
+        if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)||(current&&bareNumber>currentNumber+1&&bareNumber<=currentNumber+3&&!seen.has(bareMatch[1])&&prevClosed(lines,li)&&!midSentenceFragment(lines,li))){
+          if(current&&bareNumber>currentNumber+1&&!documentAnomalies.includes('bare-heading-forward-gap'))documentAnomalies.push('bare-heading-forward-gap');
           finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
           if(seen.has(bareId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:bareId};ended=true;break;}
           current={articleId:bareId,lines:[line],editorial:[]};continue;
