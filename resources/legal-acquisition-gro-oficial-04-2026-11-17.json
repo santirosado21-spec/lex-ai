@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-gro-oficial-04-2026-11-17",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresogro-oficial",
+   "title": "Congreso del Estado de Guerrero - Legislación (Leyes ordinarias y constitución)",
+   "jurisdiction": "MX-GRO",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "evidence": "Live official Guerrero state congress legislation index fetched 2026-11-17; index sha256 983daabfa1dd9b9cb0bbd550c2e16ff648fea4a28c364f772f341e91cb95cc28 (93,546 bytes, HTTP 200, no challenge); robots.txt HTTP 200 sha256 8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b is ONLY the Cloudflare content-signals preamble (1,248 bytes): it declares NO Content-Signal and NO User-agent rule; per its own rule (c), absence of a signal neither grants nor restricts; no terms page linked from index; index anchors link directly to per-document PDFs under /legislacion/",
+    "observedAt": "2026-11-17T16:54:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-17T16:54:00.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-17 before acquisition: robots.txt HTTP 200 contains only the Cloudflare content-signals preamble with NO declared signals and NO User-agent rules (sha256 8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b); no aviso legal, terms-of-use or reuse/IP prohibition located from the index page (absence of terms is NOT treated as express authorization by the owner); index HTTP 200 with identifying UA, no challenge; direct per-document PDF links used by the site's own pages. Scope limited to official normative texts; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. NOTA DE ENCUADRE: el valor status='approved' es requisito mecanico del validador del pipeline (source-registry.mjs); la evaluacion de derechos es SUSTENTADA por la evidencia citada (robots/terminos/verificacion del dia), no una aprobacion del titular ni una conclusion legal por delegacion.",
+    "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresogro-oficial-20261117",
+    "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "observedAt": "2026-11-17T16:54:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "gro-ley-031",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 230 DE ADQUISICIONES, ENAJENACIONES, ARRENDAMIENTOS, PRESTACIÓN DE SERVICIOS Y ADMINISTRACIÓN DE BIENES MUEBLES E INMUEBLES DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-ADQUISICIONES-ENAJENACIONES-ARRENDAMIENTOS-PRESTACION-DE-SERVICIOS-Y-ADMINISTRACION-DE-BIENES-MUEBLES-E-INMUEBLES-DEL-ESTADO-DE-GUERRERO-230-2022-08-12.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-032",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 239 PARA EL FOMENTO Y DESARROLLO DE LA CULTURA Y LAS ARTES DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-PARA-EL-FOMENTO-Y-DESARROLLO-DE-LA-CULTURA-Y-LAS-ARTES-DEL-ESTADO-DE-GUERRERO-239-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-033",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 239 DE RECONOCIMIENTO Y DERECHOS DE LAS PERSONAS DE LA COMUNIDAD LGBTTTIQ+ DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-RECONOCIMIENTO-LGBTTTIQ-DEL-ESTADO-DE-GUERRERO-239.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-034",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 240 DE PROPIEDAD EN CONDOMINIO PARA EL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/ley-propiedad-en-condominio-240.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-035",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY DE REESTRUCTURACION DEL SECTOR EDUCATIVO DEL ESTADO DE GUERRERO NUM. 243",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-REESTRUCTURACION-DEL-SECTOR-EDUCATIVO-DEL-ESTADO-DE-GUERRERO-243-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-036",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY DE TRABAJO DE LOS SERVIDORES PUBLICOS DEL ESTADO DE GUERRERO NUMERO 248",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-TRABAJO-DE-LOS-SERVIDORES-PUBLICOS-DEL-ESTADO-DE-GUERRERO-248.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-037",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 260 PARA LA PREVENCIÓN Y ATENCIÓN DEL CÁNCER DE MAMA DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/ley-numero-260-para-la-prevencion-y-atencion-del-cancer-de-mama-del-estado-de-guerrero-13-02-2024.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-038",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 266 DE CATASTRO PARA LOS MUNICIPIOS DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-CATASTRO-PARA-LOS-MUNICIPIOS-DEL-ESTADO-DE-GUERRERO-266-2022-02-25.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-039",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY DE OBRAS PÚBLICAS Y SUS SERVICIOS DEL ESTADO DE GUERRERO NUMERO 266",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-OBRAS-PUBLICAS-Y-SUS-SERVICIOS-DEL-ESTADO-DE-GUERRERO-266-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-040",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 278 PARA LA PREVENCIÓN SOCIAL DE LA VIOLENCIA Y LA DELINCUENCIA CON PARTICIPACIÓN CIUDADANA DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-PARA-LA-PREVENCION-Y-ATENCION-DEL-CANCER-DE-MAMA-DEL-ESTADO-DE-GUERRERO-260-2024-03-12.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  }
+ ]
+}

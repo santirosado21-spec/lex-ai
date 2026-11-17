@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-gro-oficial-05-2026-11-17",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresogro-oficial",
+   "title": "Congreso del Estado de Guerrero - Legislación (Leyes ordinarias y constitución)",
+   "jurisdiction": "MX-GRO",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "evidence": "Live official Guerrero state congress legislation index fetched 2026-11-17; index sha256 983daabfa1dd9b9cb0bbd550c2e16ff648fea4a28c364f772f341e91cb95cc28 (93,546 bytes, HTTP 200, no challenge); robots.txt HTTP 200 sha256 8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b is ONLY the Cloudflare content-signals preamble (1,248 bytes): it declares NO Content-Signal and NO User-agent rule; per its own rule (c), absence of a signal neither grants nor restricts; no terms page linked from index; index anchors link directly to per-document PDFs under /legislacion/",
+    "observedAt": "2026-11-17T16:54:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-17T16:54:00.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-17 before acquisition: robots.txt HTTP 200 contains only the Cloudflare content-signals preamble with NO declared signals and NO User-agent rules (sha256 8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b); no aviso legal, terms-of-use or reuse/IP prohibition located from the index page (absence of terms is NOT treated as express authorization by the owner); index HTTP 200 with identifying UA, no challenge; direct per-document PDF links used by the site's own pages. Scope limited to official normative texts; quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. NOTA DE ENCUADRE: el valor status='approved' es requisito mecanico del validador del pipeline (source-registry.mjs); la evaluacion de derechos es SUSTENTADA por la evidencia citada (robots/terminos/verificacion del dia), no una aprobacion del titular ni una conclusion legal por delegacion.",
+    "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresogro-oficial-20261117",
+    "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php",
+    "observedAt": "2026-11-17T16:54:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "gro-ley-041",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY DE PREVENCIÓN Y ATENCIÓN DE LA VIOLENCIA FAMILIAR DEL ESTADO DE GUERRERO NÚMERO 280",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/ley-de-prevencion-y-atencion-de-la-violencia-familiar-del-estado-de-guerrero-numero-280-07-02-2024.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-042",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY SOBRE EL SISTEMA ESTATAL DE ASISTENCIA SOCIAL NUMERO 332",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-SOBRE-EL-SISTEMA-ESTATAL-DE-ASISTENCIA-SOCIAL-332-2024-03-12.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-043",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 375 DE LOS DERECHOS DE LAS PERSONAS ADULTAS MAYORES DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-LOS-DERECHOS-DE-LAS-PERSONAS-ADULTAS-MAYORES-DEL-ESTADO-DE-GUERRERO-375.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-044",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 391 DE PROTECCIÓN DE LOS DEFENSORES DE LOS DERECHOS HUMANOS EN EL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-PROTECCION-DE-LOS-DEFENSORES-DE-LOS-DERECHOS-HUMANOS-EN-EL-ESTADO-DE-GUERRERO-391-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-045",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 393 DE FOMENTO APÍCOLA DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-FOMENTO-APICOLA-DEL-ESTADO-DE-GUERRERO-393-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-046",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 417 PARA PREVENIR Y ERRADICAR LA TRATA DE PERSONAS Y PARA LA PROTECCIÓN, ATENCIÓN Y ASISTENCIA DE LAS VÍCTIMAS, OFENDIDOS Y TESTIGOS DE ESTOS DELITOS EN EL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-PARA-PREVENIR-Y-ERRADICAR-LA-TRATA-DE-PERSONAS-Y-PARA-LA-PROTECCION-ATENCION-Y-ASISTENCIA-DE-LAS-VICTIMAS-OFENDIDOS-Y-TESTIGOS-DE-ESTOS-DELITOS-EN-EL-ESTADO-DE-GUERRERO-417-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-047",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 419 DE HACIENDA DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/ley-de-hacienda-del-estado-de-guerrero-419.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-048",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 427 DEL SISTEMA DE COORDINACIÓN HACENDARIA DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/ley-del-sistema-de-coordinacion-hacendaria-del-estado-de-guerrero-427.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-049",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NÚMERO 427 DE ZONAS ECONÓMICAS ESPECIALES DEL ESTADO DE GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-ZONAS-ECONOMICAS-ESPECIALES-DEL-ESTADO-DE-GUERRERO-427-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  },
+  {
+   "id": "gro-ley-050",
+   "sourceId": "congresogro-oficial",
+   "title": "LEY NUMERO 428 DE CONSERVACION Y VIGILANCIA DE OLINALA, GUERRERO",
+   "jurisdiction": "MX-GRO",
+   "status": "approved",
+   "url": "https://congresogro.gob.mx/legislacion/ordinarias/ARCHI/LEY-DE-CONSERVACION-Y-VIGILANCIA-DE-OLINALA-GUERRERO-428-2021-03-10.pdf",
+   "versionId": "congresogro-oficial-20261117",
+   "evidenceUrl": "https://congresogro.gob.mx/legislacion/leyes-ordinarias.php"
+  }
+ ]
+}
