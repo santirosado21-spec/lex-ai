@@ -403,6 +403,10 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
+    if(match&&started&&current&&match[1]==='1'&&!match[2]&&current.articleId!=='1'&&(records[0]?.articleId??current.articleId)!=='1'&&lines.slice(li+1,li+1500).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*[.\-]/.test(l.text))){
+      // v36: operative numbering never began at article 1 (document opened on a quoted/preface article) and a heading for article 1 now appears followed by article 2: the earlier candidates are preface quotations.
+      const dropped=records.length+1;current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+      documentAnomalies.push('preface-quoted-article-candidates-dropped:'+dropped);}
     if(match&&current&&current.articleId===match[1]&&current.lines.length===1&&bare.test(current.lines[0].text)){
       // v35: publisher prints a bare heading line and then repeats the same heading with its text; one article, not a restart.
       current.lines[0]=line;if(!documentAnomalies.includes('duplicated-bare-and-inline-heading-merged'))documentAnomalies.push('duplicated-bare-and-inline-heading-merged');continue;}
