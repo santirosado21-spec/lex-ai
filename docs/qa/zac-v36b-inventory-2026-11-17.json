@@ -1,0 +1,5210 @@
+{
+ "zac-ley-013": {
+  "v33": {
+   "articles": 15,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 15,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1944-09-23",
+   "maxNumeric": 15,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "1965-03-03",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "77170e9f9ad75dcbe56007ef1448bb6893814b3750c4d5234b6b8ebd4c1c51d0"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 15,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1944-09-23",
+   "maxNumeric": 15,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "1965-03-03",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2e17353c1e80d703a7787b5668859fc6059d0ca7e90c7f9c939ae056203ef6e9"
+  }
+ },
+ "zac-ley-014": {
+  "v33": {
+   "articles": null,
+   "state": "no-extraction"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 14,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1955-02-19",
+   "maxNumeric": 14,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "259fb134e7fd2d8a87d666b68eaac04c37e9fc6bd1f771188000d9906efe37d3"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 14,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1955-02-19",
+   "maxNumeric": 14,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c095b5b64724a3b1b81ada19ac08d9de39c07a16d151c63cef2faf1fc23bca81"
+  }
+ },
+ "zac-ley-016": {
+  "v33": {
+   "articles": 20,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 20,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1978-05-27",
+   "maxNumeric": 20,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "09db528ba4a5689ee42c5ea71ca192bea1e32ba054dbc11dbedd1f0b4573af29"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 20,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1978-05-27",
+   "maxNumeric": 20,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "80cf994f6d31679ecf9803f8948c7306864fc1886a96c636b1ddce444e301eca"
+  }
+ },
+ "zac-ley-017": {
+  "v33": {
+   "articles": 40,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 40,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1981-09-16",
+   "maxNumeric": 40,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "bb2e421d483a3f735018d224c19bec447448351664c45b1e8baa83ecbf5a79a5"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 40,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1981-09-16",
+   "maxNumeric": 40,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6a69a5b8d7efac32f925de821abfe89016c04a124b593a24594c4955f99cdd66"
+  }
+ },
+ "zac-ley-019": {
+  "v33": {
+   "articles": 12,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 12,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1984-01-28",
+   "maxNumeric": 12,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c39c27bb5ca7128ee4882c27735b8b3f8db8b6a0bb149eba55974305471fe421"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 12,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1984-01-28",
+   "maxNumeric": 12,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "d4f227f84dbf16ce4993997c2a34354e45abb43570c99b5b4dd3cce39a73238b"
+  }
+ },
+ "zac-ley-020": {
+  "v33": {
+   "articles": 78,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 78,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1984-12-29",
+   "maxNumeric": 78,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2014-12-03",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b86c0da20848c72f308f5e2bc20dbb65b6319099a2aa048dad782cf4bee16a2a"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 78,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1984-12-29",
+   "maxNumeric": 78,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2014-12-03",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6397c74bd7d0b555dda159120c4dc863acaed5fcda1149715e6b11c7e1c9c46e"
+  }
+ },
+ "zac-ley-024": {
+  "v33": {
+   "articles": 15,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 15,
+   "transitorios": 1,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-01-14",
+   "maxNumeric": 15,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e6b8798fbb4628831832daa0509614e229ffa2a145457875512bfe3c80c9acad"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 15,
+   "transitorios": 1,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-01-14",
+   "maxNumeric": 15,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "127571c8be00fe4b1d654259905a7c6bd5942b3d82db338d90f725040fb1775e"
+  }
+ },
+ "zac-ley-026": {
+  "v33": {
+   "articles": 97,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-12-14",
+   "maxNumeric": 95,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-09-29",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3d3d00952ce10da6977421ec46a213fab950a15091401c223849e035986feb87"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 14,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-12-14",
+   "maxNumeric": 95,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-09-29",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "27d548bc6412016a6fb3899ff9e9a91657c8a89b4b172286a49398899c42718b"
+  }
+ },
+ "zac-ley-027": {
+  "v33": {
+   "articles": 19,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-08-12",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "86c88f5e818140d54235669c5c96aaacd4a6a9d3224192466b1d5e4ef7198e32"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-08-12",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e1fe2947e3d0913d5a674c3432209793461b7b102f00157600c43ba780c53bbf"
+  }
+ },
+ "zac-ley-028": {
+  "v33": {
+   "articles": 0,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 0,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-09-10",
+   "maxNumeric": 0,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "non-article-document-class:resolutivos"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6ab2a782108eac4efa9585e486141a0b7279af4bbefc080cca725816bc1f6de4"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 93,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1987-09-10",
+   "maxNumeric": 93,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a5f31b7b702946d4c5e5483fff195f30ad0f880f01d8ba063d7624c6f454f714"
+  }
+ },
+ "zac-ley-030": {
+  "v33": {
+   "articles": 0,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 0,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1988-01-07",
+   "maxNumeric": 0,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "non-article-document-class:resolutivos"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3d9f8a0ebf4f37673bbcff9bd13d6b00d2f92895efca1aa734578021cc7b85b0"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 58,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1988-01-07",
+   "maxNumeric": 58,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2014-12-03",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "unmatched-suffixed-heading-in-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "730e500bcf20f5f2a70045e0f05dc8c7b8a5b7e4b1a2ed66c7319ef0ce5e0697"
+  }
+ },
+ "zac-ley-032": {
+  "v33": {
+   "articles": 38,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 38,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-12-31",
+   "maxNumeric": 38,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "cc656a5caedf8599275e377fe24b80b0c132d6360a3bac894c1ad060f84877be"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 38,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-12-31",
+   "maxNumeric": 38,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "d7f767ed041a7b3d8141aa597614ca5739cde453af98f974e07f8466e94d8be3"
+  }
+ },
+ "zac-ley-033": {
+  "v33": {
+   "articles": 14,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 14,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1988-12-31",
+   "maxNumeric": 14,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c05b8979755bea7fc94e92bbaa6239199d8f50b3195b4b6d69a58e40af663487"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 14,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1988-12-31",
+   "maxNumeric": 14,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "43e9d04ef23d978c2fd509155c98943e3607e36117544b91f7bf12425d4412fc"
+  }
+ },
+ "zac-ley-034": {
+  "v33": {
+   "articles": 68,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 68,
+   "transitorios": 15,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-01-07",
+   "maxNumeric": 66,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a8c682dac56575847920f371dcfa6b581a114c639c14d8deff2f57b848ef6eb6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 68,
+   "transitorios": 15,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-01-07",
+   "maxNumeric": 66,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2585445b44ba35f21fbc8ebe5fb89032b6abbf1dddbae95a4eb226b74eac25ab"
+  }
+ },
+ "zac-ley-036": {
+  "v33": {
+   "articles": 48,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 48,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-03-01",
+   "maxNumeric": 48,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1293b967db1fe05783628566cda3789fd0d869254db821492063d5ca985d5140"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 48,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-03-01",
+   "maxNumeric": 48,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "54d927b048e206abae9a9b404e508ccc42aae635e6492600a1eab288520c1616"
+  }
+ },
+ "zac-ley-038": {
+  "v33": {
+   "articles": 27,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 27,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-12-30",
+   "maxNumeric": 27,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "22aa00acae52c7310653c2b656875e2229cb272a202545407cb4d6ba20d3e276"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 27,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1989-12-30",
+   "maxNumeric": 27,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "31987202f94fdf9661ca7f837bcfaf90b3806d24746979b8ab6ad7fab4f47085"
+  }
+ },
+ "zac-ley-040": {
+  "v33": {
+   "articles": 101,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 101,
+   "transitorios": 45,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1993-01-27",
+   "maxNumeric": 77,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-04",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "f408e48d5e6983a6073535bd83c08df8c9c982b4fb521501d5237f0a9904e977"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 101,
+   "transitorios": 45,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1993-01-27",
+   "maxNumeric": 77,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-04",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2a5b501ebb0b5948435a278f99c490788d3a19809898443ef174b098fcdc40c0"
+  }
+ },
+ "zac-ley-043": {
+  "v33": {
+   "articles": 124,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 124,
+   "transitorios": 29,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1994-08-13",
+   "maxNumeric": 124,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "be013a1e4658a738b502f4656ee9dce208340780f0711ef8c5e602e65019290f"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 124,
+   "transitorios": 29,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1994-08-13",
+   "maxNumeric": 124,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "5336ae4acb18332dd7a5ddbc7acb3aa321bb0e0413c6d4f471a4a3e1917b9330"
+  }
+ },
+ "zac-ley-046": {
+  "v33": {
+   "articles": 301,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 301,
+   "transitorios": 62,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1996-09-11",
+   "maxNumeric": 291,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3e2c0ecd2cdfd918c47f7602268e49c0fd0fd8d587bd735ba4c684812372e889"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 301,
+   "transitorios": 62,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1996-09-11",
+   "maxNumeric": 291,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "b87985e12a734531ba0c0ccff767cfb78730fcd7805b16d96cd347a0b9e9f767"
+  }
+ },
+ "zac-ley-053": {
+  "v33": {
+   "articles": 80,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 24,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2000-03-30",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2015-02-07",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e690ea341f6fa471b269c68897b36d5d7ba17e85edd5e88f70bcf0904ae388b4"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 24,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2000-03-30",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2015-02-07",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "422ab6c9483423dc0eb44769c291edec5e8e0b3e315ad5fe9989d8a0e80451e0"
+  }
+ },
+ "zac-ley-056": {
+  "v33": {
+   "articles": 50,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 50,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-11-30",
+   "maxNumeric": 50,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6630f78066d3465fc5b000d352a3aed74944601bd7cddbf2f0c29f9b509207e0"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 50,
+   "transitorios": 66,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-11-30",
+   "maxNumeric": 50,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3e942b273727cfedaa411165ea9fb783a13b06afec385edc267b20b70b7bcdc7"
+  }
+ },
+ "zac-ley-057": {
+  "v33": {
+   "articles": 150,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 150,
+   "transitorios": 54,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 140,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-08-22",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "7f47747b5dea4253cd91a2e2fc01efcefee247ea16471bcc69f1d39e13b94546"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 150,
+   "transitorios": 54,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 140,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-08-22",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a7f1f3cd071a7f8b9c68a6bc112bd15f8dd751dd43e447c379de8cc68afdf23d"
+  }
+ },
+ "zac-ley-059": {
+  "v33": {
+   "articles": 183,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 183,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-06-19",
+   "maxNumeric": 183,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "8c4933d5ab4e32366405e4f87c6aa0a4d9b0b4ed382f8cc7b90941c7e5d9816b"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 183,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-06-19",
+   "maxNumeric": 183,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3e4c222c6b0154da2de858482000ebfd621d5a5c2a02b7e2498bf739b99fcd50"
+  }
+ },
+ "zac-ley-060": {
+  "v33": {
+   "articles": null,
+   "state": "no-extraction"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 74,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2001-06-13",
+   "maxNumeric": 74,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b23720ab628674f638b22936b4d01b6772628be72f0c173b4b646820ba6974eb"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 74,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2001-06-13",
+   "maxNumeric": 74,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2fc14816bfc30357c78a1c78f0ac9e06909f541339707c237d2036467ef746b5"
+  }
+ },
+ "zac-ley-061": {
+  "v33": {
+   "articles": 278,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 278,
+   "transitorios": 58,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-07",
+   "maxNumeric": 263,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "f2401144001e3bbeba008bb4be9baa802ad3427ee13282f6f088d07c110901fa"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 278,
+   "transitorios": 58,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-07",
+   "maxNumeric": 263,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2ae7f09c2fbf8055c1f9b82dad09fb5e8e8cfe2f9daecf2b3b07611195b8f899"
+  }
+ },
+ "zac-ley-063": {
+  "v33": {
+   "articles": null,
+   "state": "no-extraction"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 70,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2001-08-09",
+   "maxNumeric": 70,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-03-08",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "8691fe8d8a2d5e32a19ed9aa82326efc67f43ff7507d5fb0155a9a8eed3acffe"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 70,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2001-08-09",
+   "maxNumeric": 70,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-03-08",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "b2f32be5fc0796aeb2b1966f1444c9e96a53eedee8fa3c127dae8a13be9c83d8"
+  }
+ },
+ "zac-ley-064": {
+  "v33": {
+   "articles": 115,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 115,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-02-06",
+   "maxNumeric": 115,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-07-15",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "118e54a23b77e9c9bb20a4d68642545eb9e1621b42e6fa5c1ac83bda0c859222"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 115,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-02-06",
+   "maxNumeric": 115,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-07-15",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "b219508145e6b0f88ee19f34d071a2157220b79e301faa432217092e94b484a7"
+  }
+ },
+ "zac-ley-067": {
+  "v33": {
+   "articles": 268,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 268,
+   "transitorios": 64,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-03",
+   "maxNumeric": 263,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "14e698d9f34c9ba798c35ccfff3eff4571720e7197cf7dba8729c8e28571ff19"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 268,
+   "transitorios": 64,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-03",
+   "maxNumeric": 263,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6b8c07a79fe85aacc3a272cc617275bf2186ad2a68acc29ca68831b048f04c27"
+  }
+ },
+ "zac-ley-068": {
+  "v33": {
+   "articles": 167,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 167,
+   "transitorios": 23,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-12-29",
+   "maxNumeric": 165,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2024-05-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "dafa193e6eb802749dafdbd4ab1f7119c02aab0bd0d383a71862352404aef3d6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 167,
+   "transitorios": 23,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-12-29",
+   "maxNumeric": 165,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2024-05-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3942de826cce1af96ae4c67a27ad084e55c9b01c52c2f92b8f72737400b00bef"
+  }
+ },
+ "zac-ley-070": {
+  "v33": {
+   "articles": 66,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 66,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2002-07-10",
+   "maxNumeric": 66,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2005-10-26",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a3a4c4ac7660c46a7ca27f6019b4ecac05d0ff21fde43ce93edcc474251c87aa"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 66,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2002-07-10",
+   "maxNumeric": 66,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2005-10-26",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3709675e5802b323183d44d190528a87b5e3ee7c09f13bcf16691bd736c47da7"
+  }
+ },
+ "zac-ley-072": {
+  "v33": {
+   "articles": 43,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 43,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-02-19",
+   "maxNumeric": 43,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "75cd2b4b91c6f5d9b573da80b3f070af68968e6ecc0bf9f6e7d7d74e07daec53"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 43,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-02-19",
+   "maxNumeric": 43,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "9248452d810aa8e8de2eaade8dc9a0b7834dbc62ccc504f056a11c9d9c650271"
+  }
+ },
+ "zac-ley-076": {
+  "v33": {
+   "articles": 57,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 31,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-08-16",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c01b8222c3bd6de7fcf8dfa9cf5ee6a033702bf0beb9db49914fe021118ed713"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 31,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-08-16",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "be41c2c0d63923c635154bce73993ef7e8677d62fcf9d013a3b00981e9e7365b"
+  }
+ },
+ "zac-ley-077": {
+  "v33": {
+   "articles": 63,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 63,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-09-08",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-04",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "cd4098f4109db15315a6b0a650c14c688a45ee70efb13e3479f4e3f8bfc6bc95"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 63,
+   "transitorios": 13,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-09-08",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-04",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "b19d6fed0850c983488e6573fe605eb8f95434e8f7095ef2ddf6dda12b190ee6"
+  }
+ },
+ "zac-ley-081": {
+  "v33": {
+   "articles": 2,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 20,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-10-04",
+   "maxNumeric": 73,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-02-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "2b04dc875d1f64f6b631e7bea8f7519ba558d6099170b2cb8655b5f6aa0ec16c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 20,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-10-04",
+   "maxNumeric": 73,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-02-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "206ed2d9bee49d0d69c9eca266661cc4a80d73137a734df26ab156b8463e26e5"
+  }
+ },
+ "zac-ley-087": {
+  "v33": {
+   "articles": 32,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 32,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2004-07-14",
+   "maxNumeric": 32,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "474dff0b1fce298d4a3a9957d8ae486c88d18eebe531329f40c6c971a95f3df0"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 32,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2004-07-14",
+   "maxNumeric": 32,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "43ff6ef1991c859151a60c407c5a7781793472f37cb2a4df53323ebf416f07a5"
+  }
+ },
+ "zac-ley-090": {
+  "v33": {
+   "articles": 61,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 61,
+   "transitorios": 37,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "285ee7e5cf7f17772be70d0d36b1b7daeb0b19fef8a67433103c77b4f36cb504"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 61,
+   "transitorios": 37,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "86f8b22802c693300326848d499b429da386fb2df036ca246de53023b0259093"
+  }
+ },
+ "zac-ley-091": {
+  "v33": {
+   "articles": 92,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-08-11",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e81dac25441db38c31a20183dc308f4ce8f28060c98c588068796f38772231f3"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-08-11",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "86770d17699ec7b7369edff639cf7f5d6404b76a0f210b1f1c00091e799319bf"
+  }
+ },
+ "zac-ley-096": {
+  "v33": {
+   "articles": 0,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 0,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-03-12",
+   "maxNumeric": 0,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "non-article-document-class:resolutivos"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6281fde5c38c90bb91b293bbd9101c3b3e18440d4d4be8486395a8a43f05359b"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 17,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-03-12",
+   "maxNumeric": 17,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2015-02-25",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a33e6301b5900e2cea15bdeb160047041eb992a6a04cb9d15fddd01358faaad8"
+  }
+ },
+ "zac-ley-108": {
+  "v33": {
+   "articles": 186,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 186,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-04-29",
+   "maxNumeric": 185,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0a4d4e12e416c5c56107b42e4fb5ec9815eb399ac5be577913a93a3a3cf2a0d5"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 186,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-04-29",
+   "maxNumeric": 185,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "cf444e8feddf5a31e503e947bd6c0a2198a8bf8d18f529ca7768e07d272801a7"
+  }
+ },
+ "zac-ley-109": {
+  "v33": {
+   "articles": 20,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 27,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-05-14",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-07-07",
+   "anomalies": [
+    "duplicated-bare-and-inline-heading-merged",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "dafe0422968803e4dba5c3bcbb9a833328ec054127957fc02297466381272250"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 27,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-05-14",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-07-07",
+   "anomalies": [
+    "duplicated-bare-and-inline-heading-merged",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "f77c5008cac11a47fe39729ad78f534dc8daf89c42c98c0a7a3a562dd05262f1"
+  }
+ },
+ "zac-ley-110": {
+  "v33": {
+   "articles": 97,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 19,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-06-24",
+   "maxNumeric": 96,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e2fd9aeec6e3714faf4e25377c444989153cf464950812f0704eae2daafd376d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 19,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-06-24",
+   "maxNumeric": 96,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8c9f69fa72849da1311c75afea24849fe194429a2dfcad390b4b2258cc29858c"
+  }
+ },
+ "zac-ley-112": {
+  "v33": {
+   "articles": 187,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 187,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-08-02",
+   "maxNumeric": 186,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-18",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1f1727e6720a68c594248628e0773aabfb2bd63dde26db8ecc7128e5c03cf1b3"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 187,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-08-02",
+   "maxNumeric": 186,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-18",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c7529738597344c63ac98bcff76990defbfe9e189bf667747a9e8b90282d8d33"
+  }
+ },
+ "zac-ley-113": {
+  "v33": {
+   "articles": 53,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 53,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-07-29",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1dfcba4700c19e6e46f983e2b2fc4465218d8ab3e6549430453aa7dd8acf417a"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 53,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-07-29",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e7c7b9dfdae7839151a4a43325e5eadc41b92af1f4023c1006851092fb4ba3f7"
+  }
+ },
+ "zac-ley-114": {
+  "v33": {
+   "articles": 26,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 26,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-07-12",
+   "maxNumeric": 26,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b95ddee30c38e152c4d3eeed0862a63480fbe434c1d36232c708da441b43f85b"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 26,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-07-12",
+   "maxNumeric": 26,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e000b8d4d16db5b62ad56e59fa1968d03b29027e832f018c8c5c2044c43baf99"
+  }
+ },
+ "zac-ley-117": {
+  "v33": {
+   "articles": 91,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 91,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-08-24",
+   "maxNumeric": 91,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-04-25",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "17823e8aed1d15dd7459de723536f0c4a259cac5f700d604d2a07cd03eb409b9"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 91,
+   "transitorios": 15,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-08-24",
+   "maxNumeric": 91,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-04-25",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a24966afde5fcafc69ead69855a10a5698dedc741c6bfde932fef79f2ea6b561"
+  }
+ },
+ "zac-ley-119": {
+  "v33": {
+   "articles": 212,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 212,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-03-31",
+   "maxNumeric": 211,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-01-09",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0273b5e4fa9aa9347da1320b37045ebbf4203238bb8f08f04be8682ce110c64c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 213,
+   "transitorios": 28,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-03-31",
+   "maxNumeric": 211,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-01-09",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "ca8edf6b8f51d7a74d4fb2ff835012842915ca7a49754adda37376f50fc432ba"
+  }
+ },
+ "zac-ley-120": {
+  "v33": {
+   "articles": 124,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 154,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-04-05",
+   "maxNumeric": 155,
+   "sequenceGaps": [
+    125
+   ],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "bare-heading-forward-gap",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0bb8a84994e0531a3d6700d82adda48dbf6159c8a23722e670106655a6b3e7ae"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 154,
+   "transitorios": 26,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-04-05",
+   "maxNumeric": 155,
+   "sequenceGaps": [
+    125
+   ],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8d6ec291f778689dfe3135d7cabe16fc16ec6713f7fbe26c5b13aad372f19e27"
+  }
+ },
+ "zac-ley-121": {
+  "v33": {
+   "articles": 136,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 34,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-07-01",
+   "maxNumeric": 125,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-24",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a3cfd114b672244c359f881a0321eb9492419042250926be24bafea054711b65"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 34,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-07-01",
+   "maxNumeric": 125,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-24",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "739bff19277a06bd9a43a15294817550759a348ac6c9c4e96b1c4da4c9e3c1e2"
+  }
+ },
+ "zac-ley-123": {
+  "v33": {
+   "articles": 228,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 228,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-09-30",
+   "maxNumeric": 228,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2016-01-09",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b69730b873aa613f28ffda9ea0cdd19b186a2b9f608854e6910fc8b9a2300578"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 228,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-09-30",
+   "maxNumeric": 228,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2016-01-09",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6b1857ea63774ec358dadb9c4990c46861872b0f8941a044aed3a6a2f02b6a8a"
+  }
+ },
+ "zac-ley-125": {
+  "v33": {
+   "articles": 137,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 137,
+   "transitorios": 13,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-10-28",
+   "maxNumeric": 135,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-01-10",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "acc6f77cd106da278d864fe81d03f4856034597f9741778d7cc729c7bf55c88b"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 137,
+   "transitorios": 13,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2006-10-28",
+   "maxNumeric": 135,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-01-10",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "451edcd4c9d5dfff250625c467b654f339368769fafa58645dc2d79ed7a28a79"
+  }
+ },
+ "zac-ley-127": {
+  "v33": {
+   "articles": 131,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 131,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-09-29",
+   "maxNumeric": 121,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a42a3a50831e81b3b606f931e6f33c3bd276b675ef2645a4a046c32a1e2f2fdf"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 131,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2007-09-29",
+   "maxNumeric": 121,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-12-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "0a360ba249cc939ccdc345eb5c25260bf2f6bd046ca08abf279774630d540bbd"
+  }
+ },
+ "zac-ley-141": {
+  "v33": {
+   "articles": 147,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 147,
+   "transitorios": 22,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-11-20",
+   "maxNumeric": 132,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4facd703e585345326777d8552b5dba5ca1abe43be9e2d010fcbd15a8979c8e8"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 147,
+   "transitorios": 30,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-11-20",
+   "maxNumeric": 132,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "5dffc2136c530fd2dc31b34493f1164e5887cc636beaee9b7a3369f990d2f3ff"
+  }
+ },
+ "zac-ley-142": {
+  "v33": {
+   "articles": 110,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 110,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-01-18",
+   "maxNumeric": 101,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-07-18",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c22d39698374a26cb5d414b3c500da7e520ad64fbba4dcfce4668b1085df19b2"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 110,
+   "transitorios": 40,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-01-18",
+   "maxNumeric": 101,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-07-18",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6cfa6124b6485be27f863debed9b4c3cd468a836aa2a562628cd4e2276eb7ab7"
+  }
+ },
+ "zac-ley-143": {
+  "v33": {
+   "articles": 75,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-01-17",
+   "maxNumeric": 84,
+   "sequenceGaps": [
+    75
+   ],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "bare-heading-forward-gap",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0bb6b0a64ec4fa2336863974bf6d9d7ab70b6965ca5261e4ac42e4ec6f7cbd50"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 30,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-01-17",
+   "maxNumeric": 84,
+   "sequenceGaps": [
+    75
+   ],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "383a9928b0a7c7adc1b7918c8ec03c2438ffbffe4cf9e5e716d3e3049d49c4f6"
+  }
+ },
+ "zac-ley-144": {
+  "v33": {
+   "articles": 83,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 83,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2008-12-31",
+   "maxNumeric": 83,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-24",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "52cf83af0dbb15649950228b17a6b38baa89f41452eb67297e9a52a0d5689f45"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 83,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2008-12-31",
+   "maxNumeric": 83,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-24",
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a5e153ef5f8961c2eba29da21620047a929293082c7298affe8dfb8bef9b277c"
+  }
+ },
+ "zac-ley-146": {
+  "v33": {
+   "articles": 193,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 193,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-06-13",
+   "maxNumeric": 182,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-24",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "86cb72c39fbeed67495409bf913be819340e0f2eb8977e3240a9afc6118e5eb6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 193,
+   "transitorios": 17,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-06-13",
+   "maxNumeric": 182,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-24",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6b80d1b7f2f761a217f4d657653afa0a91789bc28d43c94cad79ab7bc5bdb39e"
+  }
+ },
+ "zac-ley-147": {
+  "v33": {
+   "articles": 109,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 109,
+   "transitorios": 15,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-17",
+   "maxNumeric": 109,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-08-11",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ee51e322a93e4db6b1a6f8d35a6a2518ef6a453ab2f999e1aba86b56456d82e6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 109,
+   "transitorios": 15,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-17",
+   "maxNumeric": 109,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-08-11",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "03df2bbd2540cd259d5b8df994d6e5a23dbec88d63c654e69bd552210b65943c"
+  }
+ },
+ "zac-ley-148": {
+  "v33": {
+   "articles": 146,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 146,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-09-23",
+   "maxNumeric": 146,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "addd7ef872f67e83c435ce80095cc4c1f4a7b312583e25cbf1aa2d04aa6fb7e4"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 146,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2009-09-23",
+   "maxNumeric": 146,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2b88b5fb9c2ea8ad2b1463c8ca2e0dde70d034bf8dced430887e1fac3be26242"
+  }
+ },
+ "zac-ley-152": {
+  "v33": {
+   "articles": 80,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-02-04",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-09-16",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "83553cfc0beb0952333140163f885712337adc87206e6839020d4f0e03d25295"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-02-04",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-09-16",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3269e8f4c4345e72dd1ab88fe2d2da7037ca6b85262f96120585db0f2d7a7769"
+  }
+ },
+ "zac-ley-154": {
+  "v33": {
+   "articles": 80,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-06-07",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-08-18",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "56fc46d9a0ca9d80d4fb61c3f6658db942a1df84759d2511af088a94ca08e44d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 80,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2003-06-07",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-08-18",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "faa351f1dfa326809599bdb451e5fdac2d598d024b6d35e80dad65b02a597563"
+  }
+ },
+ "zac-ley-156": {
+  "v33": {
+   "articles": 130,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 130,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-10-16",
+   "maxNumeric": 130,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "de4acf25290130aa160c2c093f1459f3d87a83aae4371921e5a2870ac107d968"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 130,
+   "transitorios": 12,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-10-16",
+   "maxNumeric": 130,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "1d7df8c89bbb9883186576823091e52db0dd4acb43f87780f327b337186c826c"
+  }
+ },
+ "zac-ley-158": {
+  "v33": {
+   "articles": 17,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 17,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-12-04",
+   "maxNumeric": 17,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-02-21",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "9bb85accfb5baf4dc3dff808348d91f422102bb6414d0db021028e721d43becb"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 17,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2010-12-04",
+   "maxNumeric": 17,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2018-02-21",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "f6413d4c855c92a2d78e6e71d4f91fd392f342561aa5134aac74ef408db59f02"
+  }
+ },
+ "zac-ley-159": {
+  "v33": {
+   "articles": 23,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2011-03-02",
+   "maxNumeric": 85,
+   "sequenceGaps": [
+    24
+   ],
+   "declaredAmendedAt": "2015-04-11",
+   "anomalies": [
+    "bare-heading-forward-gap"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "2ae02757f06bbeda69cb31f1a7c67deca5678cdee5c1b65c1a535e1fd9ebe6c3"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2011-03-02",
+   "maxNumeric": 85,
+   "sequenceGaps": [
+    24
+   ],
+   "declaredAmendedAt": "2015-04-11",
+   "anomalies": [
+    "bare-heading-forward-gap",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e45e65b507fb4a881962a1bf91e8f867bd7b712312f7ffcb0ac627038c87730a"
+  }
+ },
+ "zac-ley-160": {
+  "v33": {
+   "articles": 3,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 209,
+   "transitorios": 14,
+   "prefacioPreservado": 4,
+   "declaredPublicationAt": "2011-06-18",
+   "maxNumeric": 209,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "decree-preface-transitory-skipped:3-preface-candidates-dropped",
+    "preface-operative-candidates-dropped:1",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6700b1991bf98f782235e118ed506bb044d9cf8f06d7cf1ac9e650c0ff30111a"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 209,
+   "transitorios": 14,
+   "prefacioPreservado": 3,
+   "declaredPublicationAt": "2011-06-18",
+   "maxNumeric": 209,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "decree-preface-transitory-skipped:3-preface-candidates-dropped",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e32d684272a98c17921fac63b71405b6fb84a53a584523bb6f27827597105de6"
+  }
+ },
+ "zac-ley-161": {
+  "v33": {
+   "articles": 28,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1994-08-13",
+   "maxNumeric": 28,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4d06d152271be235f0ef95295d249a8b6256f6f805b582f27a133ea8a14f0375"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1994-08-13",
+   "maxNumeric": 28,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "7beebaff681ee34c65d5af37f8d9e98e3a60dc68c809b19c96ca3b0412b69706"
+  }
+ },
+ "zac-ley-162": {
+  "v33": {
+   "articles": 173,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 173,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-16",
+   "maxNumeric": 173,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3dd87340e3bca429a312aa6599f3a3d903aef178d8c4cb3b95d6f74115b526d2"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 173,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-16",
+   "maxNumeric": 173,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c06acc7e881e0b5e4d4058fbc16d50401d5471a70a0b79c1d73d0b1cfae0840e"
+  }
+ },
+ "zac-ley-164": {
+  "v33": {
+   "articles": 131,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 131,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-14",
+   "maxNumeric": 130,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "26da2863785753a4bf31402fd71d5ce074bd3184af2d7b1a279295cbcd79fd0d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 131,
+   "transitorios": 20,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-14",
+   "maxNumeric": 130,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c1557c6c42f20ff037e1c5eb75a9582fba21cfcda6394e17c44893274c23c20f"
+  }
+ },
+ "zac-ley-165": {
+  "v33": {
+   "articles": 28,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2011-10-05",
+   "maxNumeric": 27,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0448933ca9518fa5053dda5959b2cbb93031e246d34e1d0d47bccd6b9d3d54ea"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2011-10-05",
+   "maxNumeric": 27,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "135990453c0e83a9833e57095aad65ba2e585ebff67da8d434fd48da7c20db58"
+  }
+ },
+ "zac-ley-168": {
+  "v33": {
+   "articles": 124,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 124,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2012-05-05",
+   "maxNumeric": 124,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "7b54bd18009aa14af5e0c5eb32ff54b7e8ef6daf0350023bbc309831740e6fab"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 124,
+   "transitorios": 55,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2012-05-05",
+   "maxNumeric": 124,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "354ec89d131f5dd733916f3702b167c37b3672e7cde458c5a9ba68cdd83dbfb6"
+  }
+ },
+ "zac-ley-173": {
+  "v33": {
+   "articles": 469,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 487,
+   "transitorios": 39,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-06",
+   "maxNumeric": 484,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "bare-heading-with-inline-list-marker"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "212427061edeae526216c65c9a91839f0ea03181bbe8896edb97c287e6823e8c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 487,
+   "transitorios": 39,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-06",
+   "maxNumeric": 484,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "bare-heading-with-inline-list-marker",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8cbd0d4b0e104f01795e92bfd5de0685bf73deb74debc12ee319bb01bc16e368"
+  }
+ },
+ "zac-ley-174": {
+  "v33": {
+   "articles": 92,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-06",
+   "maxNumeric": 88,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-05-31",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a1dbb210f8292de2316593a3687a1f79fabf6b744f007dde0c88ba7c2ae55faa"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 28,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-06-06",
+   "maxNumeric": 88,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-05-31",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "fcdf1062fa13652340acce552db359a72edec6da447bb7077fe1e2cd93ac3215"
+  }
+ },
+ "zac-ley-179": {
+  "v33": {
+   "articles": 90,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 90,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-07-03",
+   "maxNumeric": 90,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-08-11",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0520276d2ba43e976ab1717e72613985510fc7d0b0dd08d2862fb0afb451443f"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 90,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-07-03",
+   "maxNumeric": 90,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-08-11",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a1b7bdd1bf753513669d55789a4ca16585d9c2a0e954f080fb054b9bacfc7e91"
+  }
+ },
+ "zac-ley-180": {
+  "v33": {
+   "articles": 146,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 146,
+   "transitorios": 42,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-06-17",
+   "maxNumeric": 146,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "8d9b9730c590ae7df3641f521154e3c0adfba428d808021bb95fa717fc9e998d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 146,
+   "transitorios": 42,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-06-17",
+   "maxNumeric": 146,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "f3adc0d6ef216e4a68f618484665045f165fe64668b984b641a0414f5697c223"
+  }
+ },
+ "zac-ley-181": {
+  "v33": {
+   "articles": 19,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-09-14",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "f5fbae7eed42c81bb2491caa6dc929333ab67d48ccaeb26878fe0b23963a2abc"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-09-14",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "aa51e3b7b042bf574f50ba40cd3726fd17b36a3526e3608485beadba6988d478"
+  }
+ },
+ "zac-ley-182": {
+  "v33": {
+   "articles": 53,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 53,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-07-24",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e732c40eb4021e30a8c808516add1440978941bdc5e2774df594372e6a747740"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 53,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-07-24",
+   "maxNumeric": 53,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8353556630ee29b1515d399d3e00f44bd3b76a5946cf1d8393c45a2e25e6c9ef"
+  }
+ },
+ "zac-ley-183": {
+  "v33": {
+   "articles": 114,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 114,
+   "transitorios": 33,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-11-30",
+   "maxNumeric": 105,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-07-18",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "33529dc5a8c2ea170027b9d16d531578a17240fc2b5c329c4799be989492896d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 114,
+   "transitorios": 33,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-11-30",
+   "maxNumeric": 105,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-07-18",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "933f185feb914bd2484e8fcaa2279ae02eaeb8b002bd07f0c1bd26961cd01392"
+  }
+ },
+ "zac-ley-184": {
+  "v33": {
+   "articles": 63,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 63,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-12-25",
+   "maxNumeric": 63,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c3e4579f17c9872077b268030e33f48acb72346aa94028ce824dc63b753c2119"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 63,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2013-12-25",
+   "maxNumeric": 63,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "cee7aa05697f074ad3e2392c99169281aba5735aa987704e1b0f5fc5eb26ce3c"
+  }
+ },
+ "zac-ley-185": {
+  "v33": {
+   "articles": 128,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 128,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-02-29",
+   "maxNumeric": 128,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "aa3a8b85a64c0579b24093b2ebc8046f2108a279a75080803540362f9c5589c4"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 128,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-02-29",
+   "maxNumeric": 128,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-30",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "07ee58821f8178eaa8d7ee0c6c7e9416ebb34f349745dd774e88bfa30d50adf3"
+  }
+ },
+ "zac-ley-186": {
+  "v33": {
+   "articles": 60,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 86,
+   "transitorios": 9,
+   "prefacioPreservado": 1,
+   "declaredPublicationAt": "2014-06-11",
+   "maxNumeric": 86,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-24",
+   "anomalies": [
+    "preface-operative-candidates-dropped:1"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ee4bc5ad1f974f05f126b1239cde0cd9f173e5e9541efcc5392d3155db9af9ff"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 86,
+   "transitorios": 9,
+   "prefacioPreservado": 1,
+   "declaredPublicationAt": "2014-06-11",
+   "maxNumeric": 86,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-24",
+   "anomalies": [
+    "preface-operative-candidates-dropped:1",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6f20a6457b201430773bb4fd82d3f9fbdfd6e5d67b9168a55b240bb9f7bb3529"
+  }
+ },
+ "zac-ley-188": {
+  "v33": {
+   "articles": 19,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-08-30",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-11-25",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "5b7d24537de2c91ea63fe534f813fba7867c92f61518eb9bb536f663e3f6e50e"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 19,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-08-30",
+   "maxNumeric": 19,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2017-11-25",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e0e1ba47f4b264efc79407803051266dacba930093d6162b8145264da342ccfa"
+  }
+ },
+ "zac-ley-189": {
+  "v33": {
+   "articles": 112,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 112,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-09-03",
+   "maxNumeric": 109,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "5dc1b1c806349778cf2f09f144927c422fc3de4f09e953535369be4309a9945c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 112,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-09-03",
+   "maxNumeric": 109,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3c7892fe0eaa7003145db05da937361d671b5695c05859fd50dcac8c0f794c0d"
+  }
+ },
+ "zac-ley-191": {
+  "v33": {
+   "articles": 17,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 17,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-09-03",
+   "maxNumeric": 17,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1830197b724645e6fb4be453a172526ab375593f9e9a60853b8942d70a4c18e5"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 17,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-09-03",
+   "maxNumeric": 17,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c4f36c84c7aca554eccb49172d53a8f03a18c79d0742d66f4cf5c29d1bbb1956"
+  }
+ },
+ "zac-ley-193": {
+  "v33": {
+   "articles": 142,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 142,
+   "transitorios": 22,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2012-09-29",
+   "maxNumeric": 142,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-29",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6f53ced6e16c518d03d4b47d99d64a9c3f9fce31b19a8411f03946537df6789a"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 142,
+   "transitorios": 22,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2012-09-29",
+   "maxNumeric": 142,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-29",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8d587dc7d65dde5cc630ff28b9a58fa4b1bc80640fa29ba861e454ffa15cce30"
+  }
+ },
+ "zac-ley-194": {
+  "v33": {
+   "articles": 74,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 74,
+   "transitorios": 38,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1993-07-10",
+   "maxNumeric": 74,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "2e346135b6ad1079326bf935bffd1128267d535be4253d41683d1c5a653dea50"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 74,
+   "transitorios": 38,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "1993-07-10",
+   "maxNumeric": 74,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2013-03-23",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c120f27363ab8466323c6fefa4e870cb8454f5c0656d658085b39f14434dca9f"
+  }
+ },
+ "zac-ley-195": {
+  "v33": {
+   "articles": 84,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 86,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-11-26",
+   "maxNumeric": 84,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "91bdaa5e906fbc86e19fe3172baa5ea22e8ad490ab61dd0a55f02ed2fc523c97"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 86,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-11-26",
+   "maxNumeric": 84,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "marginal-rubric-before-heading",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "62658afbdd3851b0efe827a76075615cd49d6bfc24ce92c70a9c64402f32b040"
+  }
+ },
+ "zac-ley-196": {
+  "v33": {
+   "articles": 0,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 0,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-12-14",
+   "maxNumeric": 0,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary",
+    "non-article-document-class:resolutivos"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "5bb773b5e1b57a8c2924127381740eafa54fb58021f5828a52b0a8850d1c40e1"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 103,
+   "transitorios": 3,
+   "prefacioPreservado": 3,
+   "declaredPublicationAt": "2015-12-14",
+   "maxNumeric": 103,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "preface-operative-candidates-dropped:3",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "f345ebc23ed53d7c32881e3f98598377535c508adc40c6ce7f7b4f8949c15ba0"
+  }
+ },
+ "zac-ley-198": {
+  "v33": {
+   "articles": 163,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 163,
+   "transitorios": 44,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-03-21",
+   "maxNumeric": 158,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b31d3e5e5f2bb9a43ca115bcc07591676c4cc7bec2d643eca80a0dc61dddb33d"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 162,
+   "transitorios": 45,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-03-21",
+   "maxNumeric": 158,
+   "sequenceGaps": [
+    139
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "2f5ed997bf7bf9a06475cf07bdd94b59932a813236d310b6e8b34d6b903600ff"
+  }
+ },
+ "zac-ley-199": {
+  "v33": {
+   "articles": 60,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 60,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-02-28",
+   "maxNumeric": 60,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "102d55e506cadef1e3395da31b091aabb0b92509556f785ab6573b6ca30ab4e6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 60,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-02-28",
+   "maxNumeric": 60,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "9a1ded53c7b614dbf3648d88b05773881a9b52b1ca4633202e977a675b991afb"
+  }
+ },
+ "zac-ley-200": {
+  "v33": {
+   "articles": 114,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 114,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-04-22",
+   "maxNumeric": 114,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "756dce80dfab2d7af4d71d47b6a55b5352d453544f3264cf30be438ead468bcb"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 114,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-04-22",
+   "maxNumeric": 114,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "965c123e8904f7ef6a40ed50a6204458906dd02406080de29b7eba60fa11f802"
+  }
+ },
+ "zac-ley-201": {
+  "v33": {
+   "articles": 136,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 25,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-09-23",
+   "maxNumeric": 135,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "f4174d7b440d3f85e4617b0725999f3e7b36577ec8c50bd577cc3f7708618239"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 25,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-09-23",
+   "maxNumeric": 135,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "d3abfa36b49bf8294d41814ef50240908711526713fef19166f71de332280658"
+  }
+ },
+ "zac-ley-202": {
+  "v33": {
+   "articles": 84,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-06-01",
+   "maxNumeric": 84,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "930a1616b23d6413be50f45463125137943f7c031c5c0aed74f1316610e52bf1"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 84,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-06-01",
+   "maxNumeric": 84,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2023-09-30",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "bb24d9b5c4fd38d974fa30545eece77b2f0a72a75e4fd200de8850cfad1f1976"
+  }
+ },
+ "zac-ley-203": {
+  "v33": {
+   "articles": 26,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 26,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-07-01",
+   "maxNumeric": 26,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4ab84cf2e46f4c2d6084b25452dd92e0e7ac9f3eaad726f2a7840dcf79e9c2e2"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 26,
+   "transitorios": 2,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-07-01",
+   "maxNumeric": 26,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "10d7b9441ef6a7ecd76953e99176ffbc98ea53244729d87717584fd5cb91f85b"
+  }
+ },
+ "zac-ley-204": {
+  "v33": {
+   "articles": 24,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 24,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-12-26",
+   "maxNumeric": 24,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4dd042d09fc9be01ab0da7432ca0efa9e092fe08ba26334a5946c87a5b89dc42"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 24,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-12-26",
+   "maxNumeric": 24,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6aa4e2aab6ab840a5b2740cd59da23e2d27c322a2c57ce664002adc9ecfbc7ca"
+  }
+ },
+ "zac-ley-205": {
+  "v33": {
+   "articles": 57,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-12-17",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2019-12-28",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6101f5d71faa4ae2a2a1676b4a6e1c510c26d648c821e31f9a95ca215dd9b017"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2014-12-17",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2019-12-28",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "af71007d2772d307421ddd7c33b09a22f58e8a16a540d03f61305df646603c6f"
+  }
+ },
+ "zac-ley-206": {
+  "v33": {
+   "articles": 41,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 41,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 41,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "a9ec3099dd050298cdbeaf6de420ec52154f0dec4a9dd2e75bc5d2ad8609f597"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 41,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 41,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c8fb7061b852cd050217c38569f29a8d5310e0c1bfbd732e9485238fc68fe93f"
+  }
+ },
+ "zac-ley-208": {
+  "v33": {
+   "articles": 50,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 50,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 50,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2019-12-28",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ec35f1f031f82b5ef426a49856e849b83404c698fc360497afe2fabfcad8a703"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 50,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-12-31",
+   "maxNumeric": 50,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2019-12-28",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "d11bbcb9364f839821051f121eda34f862c948bc842d08a27eb68b312ca59a4d"
+  }
+ },
+ "zac-ley-210": {
+  "v33": {
+   "articles": 99,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 99,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-05-03",
+   "maxNumeric": 97,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-16",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e52eca2453185f9908124863eb41fc000361a800017fcede8ae98e978ef63a4f"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 99,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-05-03",
+   "maxNumeric": 97,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-16",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "514fcd44ca159867e2a97b371c4aa654c142b8dc63291a471c0455b8e7c4878b"
+  }
+ },
+ "zac-ley-211": {
+  "v33": {
+   "articles": 136,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-09-21",
+   "maxNumeric": 136,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0bdb60fdbc594e676e8700b5c93070aae4f6bea7548871f721ca48521854a23e"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-09-21",
+   "maxNumeric": 136,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "21e0eb671f18ecfcdd15832ecfc6918dbb2bf95dee5285827340023729f22ef2"
+  }
+ },
+ "zac-ley-212": {
+  "v33": {
+   "articles": 121,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 121,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-07-15",
+   "maxNumeric": 117,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "97f57fb8c178d5e7e6202ea37527f0d430b2ab7fdf4f6c5a948696cf8df96c19"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 121,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-07-15",
+   "maxNumeric": 117,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "af82caf65600af2dc0c40fbdc9236f9ef0d0bb3bf47289a6eeda7a9a0e56708c"
+  }
+ },
+ "zac-ley-213": {
+  "v33": {
+   "articles": null,
+   "state": "no-extraction"
+  },
+  "pdfparse_v36": {
+   "state": "failed"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 132,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-01-07",
+   "maxNumeric": 132,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "5056fe5f35a46e730abb1bf2aaa1614848826be0f1f4ddd3646782f3f6edf986"
+  }
+ },
+ "zac-ley-214": {
+  "v33": {
+   "articles": 54,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 54,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "d4e6dd74bdb6916fcac4c8a460c4b2a052c5f9a2fd70000a34e235fbbb7be250"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 54,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "9cd062ffe4dc99e2df5b3a5245fc61cb49f98e949d5ec64972c5a51bfc975ecb"
+  }
+ },
+ "zac-ley-216": {
+  "v33": {
+   "articles": 97,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 45,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-12-30",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0a7729ba531b0a1bca50090616d1abf2c8c0df3a2df3edf3a88cb79484bbde68"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 97,
+   "transitorios": 45,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-12-30",
+   "maxNumeric": 80,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "9ea3c883edb95bb3a20276401fd73903c6e17580c0a6b89a50183f5c70b2ed8b"
+  }
+ },
+ "zac-ley-217": {
+  "v33": {
+   "articles": 85,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 85,
+   "transitorios": 31,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-07",
+   "maxNumeric": 69,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-08-22",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "81cb55c7af40ce16a70830521356939aff20de04609555c37657cb5bc95c4604"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 85,
+   "transitorios": 31,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-03-07",
+   "maxNumeric": 69,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-08-22",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "efea736bdaab8deda78cdc89220a5b3319eee9ab62857865ea0e736299719c24"
+  }
+ },
+ "zac-ley-218": {
+  "v33": {
+   "articles": 72,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 72,
+   "transitorios": 24,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-07-15",
+   "maxNumeric": 72,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "293310e7c25c162489f906274a1bdceacb68d43362435d6e3efda9d88e47d2b7"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 72,
+   "transitorios": 24,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-07-15",
+   "maxNumeric": 72,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-15",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "e7910acff9f378a4f5357f62f62c14162f07e7309806cca7354c897e82391362"
+  }
+ },
+ "zac-ley-219": {
+  "v33": {
+   "articles": 27,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 28,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "nospace-numeric-heading",
+    "section-discard-exceeded-2-lines",
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "572ee2e87e3bb8fc4f0d25896424baf1fab1f2921e2555b2f932931f66b2db87"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 28,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 28,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "nospace-numeric-heading",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "1795faeaecf8c631539e360301132b07fc781e9f3d6cae91ec44d59fd8637202"
+  }
+ },
+ "zac-ley-220": {
+  "v33": {
+   "articles": 92,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 12,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-06-16",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "8cd8cbdaea762f7ccbd3d181c3beb69d094fce840f7df54a23b1e9e3c4394e5e"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 12,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-06-16",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3d1805737429f22b25c133495f0d3f8e1825e17328f8cac41b38795ae4f15aa6"
+  }
+ },
+ "zac-ley-221": {
+  "v33": {
+   "articles": 24,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 24,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-08-24",
+   "maxNumeric": 24,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c32892fcf9993297f2d1531d008b71f7ceb33457788f5d62bbfc77534859ec42"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 24,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2016-08-24",
+   "maxNumeric": 24,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "edb93fb6ad57e0d67be710f0133392466f4aa80a7092363acc7d9106ae686450"
+  }
+ },
+ "zac-ley-222": {
+  "v33": {
+   "articles": 116,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 116,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-11-28",
+   "maxNumeric": 116,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ef274317adc4dee8a284d534313fe0919501cdf69d72a23f5431556d021e7888"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 116,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2015-11-28",
+   "maxNumeric": 116,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "bdc824286ea39a168db2ecd4c4a98788f140056797235899b9d57425bb35de07"
+  }
+ },
+ "zac-ley-223": {
+  "v33": {
+   "articles": 88,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 88,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-08-09",
+   "maxNumeric": 88,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "763b142598d2bfd8468d3ac4091974943ce406d8222df70deddcb5e381817ff0"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 88,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2017-08-09",
+   "maxNumeric": 88,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "449e2b450c76f6367b45203a6250778dbfef82cea691d45e9f6319a88c27efe8"
+  }
+ },
+ "zac-ley-226": {
+  "v33": {
+   "articles": 35,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 35,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-08-29",
+   "maxNumeric": 35,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b5ec1c1ebfdd03adba1ab8b3190d09bc1ecc28439ec2c07811b197af77ec1d65"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 35,
+   "transitorios": 11,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-08-29",
+   "maxNumeric": 35,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "245ab07b553b2a617870770246dfc5cf1be705b86e06fc4410633601bb6b4c24"
+  }
+ },
+ "zac-ley-227": {
+  "v33": {
+   "articles": 136,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 19,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-07-03",
+   "maxNumeric": 136,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "05a1cfd8b37ee4e802502384d184619f6a017e214d47d378c5c9bf50fd806a03"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 136,
+   "transitorios": 19,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-07-03",
+   "maxNumeric": 136,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "156094f45715e29baf4bc257198f5c6c456c7656143c3b849ccce3dce21cc735"
+  }
+ },
+ "zac-ley-229": {
+  "v33": {
+   "articles": 43,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 43,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-07-07",
+   "maxNumeric": 43,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "8770b5dc227e4b4d5e9ec82c8f8cb83898a345c56b0a1a67bec934beca22029c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 43,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-07-07",
+   "maxNumeric": 43,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8232e375793008626e32269730ff0b29439ed4ac3ae3ab134574e580827fd296"
+  }
+ },
+ "zac-ley-230": {
+  "v33": {
+   "articles": 72,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 72,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-08",
+   "maxNumeric": 72,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "f9647a0539277fa84f9abc967af7eef3118926bbb3876e5e769ee9fd1b6ccc1c"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 71,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-08",
+   "maxNumeric": 72,
+   "sequenceGaps": [
+    59
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "18c826f2746f458d974874c4d1fbc0955c7ab2de28cf745e22f809c9c4986b8d"
+  }
+ },
+ "zac-ley-231": {
+  "v33": {
+   "articles": 39,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 39,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-08-22",
+   "maxNumeric": 39,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-06",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3a9025d72e559a368931734e3f27b8dbc90b2426e7b2fbf9d261aa47fcd48e13"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 39,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2018-08-22",
+   "maxNumeric": 39,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2021-02-06",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "146525e48db757015a2343c10f8eb289fc70fd548c8f1978144797b6415886be"
+  }
+ },
+ "zac-ley-232": {
+  "v33": {
+   "articles": 26,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 85,
+   "transitorios": 24,
+   "prefacioPreservado": 4,
+   "declaredPublicationAt": "2025-12-31",
+   "maxNumeric": 85,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0244d800c1b272660150dfb60a1545ba59fb1d7be9fef2d48079510de386cdd8"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 85,
+   "transitorios": 24,
+   "prefacioPreservado": 4,
+   "declaredPublicationAt": "2025-12-31",
+   "maxNumeric": 85,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "241dcfc3c9b2f83d52e1c900bd9eb92f25bde1865e60948c205b203a25887c3b"
+  }
+ },
+ "zac-ley-233": {
+  "v33": {
+   "articles": 161,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 161,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-07-03",
+   "maxNumeric": 159,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6ed2c5a496041a1eef7a6de75a2cc1a61de9ecf33334ffa317831428a7d69f87"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 161,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-07-03",
+   "maxNumeric": 159,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "7437438774f0feaf562178a6700190dd80f45fc2a11877f6a0d47e483519b329"
+  }
+ },
+ "zac-ley-324": {
+  "v33": {
+   "articles": 108,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 108,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-12-28",
+   "maxNumeric": 108,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1d18dd1c4afb2e904a3bb723d239e303f2fb9df146e4ca2a81d06d3f10932b98"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 108,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-12-28",
+   "maxNumeric": 108,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "0ddd628410cdc97bdd3b453138ec86bd8cac32f6b848ad348185344d07ec4765"
+  }
+ },
+ "zac-ley-325": {
+  "v33": {
+   "articles": 34,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 34,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-12-28",
+   "maxNumeric": 35,
+   "sequenceGaps": [
+    7
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "694891feef97be78cbb991b737b6c9294f825d567e732d7a0df0bfc8300011dc"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 34,
+   "transitorios": 3,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2019-12-28",
+   "maxNumeric": 35,
+   "sequenceGaps": [
+    7
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "4d099c10b1045d56006926d52b72635967f8265621f42548cfe565aa6f84ab0e"
+  }
+ },
+ "zac-ley-326": {
+  "v33": {
+   "articles": 110,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 110,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-11-01",
+   "maxNumeric": 110,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "c27e2b1c2f487fa08b54675541ff419b7665d35eb459b908733d2298f06dbeca"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 110,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-11-01",
+   "maxNumeric": 110,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a6b72dba4e5321e5d2330966eccbc97aca148187e8592baebff325211b18a824"
+  }
+ },
+ "zac-ley-327": {
+  "v33": {
+   "articles": 236,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 236,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-02-19",
+   "maxNumeric": 236,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ac5db1b32ee6be61afc057b56926d8fbe1acba1bc7c30ef90de4a56af0f0caff"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 236,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-02-19",
+   "maxNumeric": 236,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "1cffb31e49e15c5ba9f150ea42204f8a52cbec2719bbfb9256e144a792be8e11"
+  }
+ },
+ "zac-ley-329": {
+  "v33": {
+   "articles": 31,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-03-28",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-15",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "43d34e568beb5c89d231645d27c0400a0f9ee8dfbb1653a4091d4eaf338df2a8"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 16,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-03-28",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2025-10-15",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "ec33b881c9cda5b35a13e761f18f489956782f02ba86e731d3c584b19b07ba97"
+  }
+ },
+ "zac-ley-330": {
+  "v33": {
+   "articles": 76,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 76,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2004-08-04",
+   "maxNumeric": 76,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2022-11-26",
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "ade8fdeed1f2eb883cbf7218a2b0b0222eb730099c0eb0bd5333f64e63bb3a6f"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 76,
+   "transitorios": 21,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2004-08-04",
+   "maxNumeric": 76,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2022-11-26",
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "ac4a9c7a01684fcf620b465357f9239b44b62fcdb91f061c1b951da7b5a151e4"
+  }
+ },
+ "zac-ley-331": {
+  "v33": {
+   "articles": 92,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-08-20",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "474c74eac99d145688339d4fc92e51c24afb73b526f0dce73335486decf40ace"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 92,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-08-20",
+   "maxNumeric": 92,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "19476946ee32422bfedfee6ba867444de35af1b69417e2ee247b673b8133fdb3"
+  }
+ },
+ "zac-ley-332": {
+  "v33": {
+   "articles": 45,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 45,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-08-29",
+   "maxNumeric": 45,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4950b2ce689c6b019ecbcacda701d52e256afb3d0ad51ea17d04c5a603c31e13"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 45,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-08-29",
+   "maxNumeric": 45,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "104d0e51abb3eb430612fe24ce3186fc63ccf6c9dedd2d4bdfbd3e759f471717"
+  }
+ },
+ "zac-ley-334": {
+  "v33": {
+   "articles": 25,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 25,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-11-22",
+   "maxNumeric": 25,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "1c48d62ad0e6120d5b9009968b38717303022988647321f161e8ebbef35c3f20"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 25,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-11-22",
+   "maxNumeric": 25,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "21440a4ae7d889d6f6c0e021ffdad8e8e5905dd6eea0d1d929e05a0f19af9d43"
+  }
+ },
+ "zac-ley-335": {
+  "v33": {
+   "articles": 56,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 56,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-12-19",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-16",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "67dd7ed2e9ca313e7b2efce2410e796b948234df9f8e871a1c2c012f46a37bdb"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 56,
+   "transitorios": 18,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2020-12-19",
+   "maxNumeric": 55,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-09-16",
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "8d095133b1408d66ff4195f7d9f2ec0ffe5f8ce575c1cf96da9f8266c8d4d65c"
+  }
+ },
+ "zac-ley-336": {
+  "v33": {
+   "articles": 211,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 211,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-02-21",
+   "maxNumeric": 211,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "e6b5b49d8e02e5e98a0acd7baceee7f25e405a461420ff5c8cefcb3e67a198cf"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 211,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-02-21",
+   "maxNumeric": 211,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "07148c4b238cfc881a2fd3007fcea5d97642f386a2b623131efe50da6cd1f129"
+  }
+ },
+ "zac-ley-337": {
+  "v33": {
+   "articles": 26,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 36,
+   "transitorios": 11,
+   "prefacioPreservado": 4,
+   "declaredPublicationAt": "2025-12-31",
+   "maxNumeric": 36,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "d7ff2e2123e6581d6f03d4398d842b8be930c8d7896aed95b8745da9cc8d51e3"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 36,
+   "transitorios": 11,
+   "prefacioPreservado": 4,
+   "declaredPublicationAt": "2025-12-31",
+   "maxNumeric": 36,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "preface-quoted-article-candidates-dropped:4",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "dbbd4ef1cd05dd0132f5edb4237fd8c4cc10947acad55d30623bc4403df81d90"
+  }
+ },
+ "zac-ley-339": {
+  "v33": {
+   "articles": 31,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6b971c860cd0e03011003c0f96c1da7d7283e812e3b2fb91717a69ca869c2990"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-02-06",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "20396944aa5f069a2c35e7455595c548c6debd7833e6f60bff6f637b2285d467"
+  }
+ },
+ "zac-ley-340": {
+  "v33": {
+   "articles": 30,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 30,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-06-05",
+   "maxNumeric": 30,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "b0efe79c58ba4488a95e1eb6084c111e0c319dcf85cfa1db097a55aa32e4013f"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 30,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-06-05",
+   "maxNumeric": 30,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "89b61d054d9f52868ba654563d4f04005d6ab3a836b12f0491e8e97f84836a01"
+  }
+ },
+ "zac-ley-341": {
+  "v33": {
+   "articles": 32,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 32,
+   "transitorios": 13,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-07-07",
+   "maxNumeric": 32,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "6e27454e2f331e9d1ded44b604634d1c0f57f5c0ba4ca3ba0767e367eb9190c6"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 32,
+   "transitorios": 13,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2021-07-07",
+   "maxNumeric": 32,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-10-31",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6225f67352a42b9c8b31e5297373cc2b127d9f6b123639e5a7d67efac2c592cc"
+  }
+ },
+ "zac-ley-357": {
+  "v33": {
+   "articles": 70,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 70,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2022-06-08",
+   "maxNumeric": 70,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "820c4d272d945df03f2954fa1687dc8d1fb783962dc02adb6c7bbd6a5d41c6dc"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 70,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2022-06-08",
+   "maxNumeric": 70,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "eedb3392ff907b7e635fef5001245b7bf6bbbc15f2e23887947787038bfc2a91"
+  }
+ },
+ "zac-ley-361": {
+  "v33": {
+   "articles": 73,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 73,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2022-10-02",
+   "maxNumeric": 73,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "36f7badf298d97d3e7768de11436233cb51d058816b31e5e412d552d28d912e7"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 73,
+   "transitorios": 10,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2022-10-02",
+   "maxNumeric": 73,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "1a9c1145afb2ea11ab344c98a3469e7473fe5aae727d3a5cc341a637ea612d8a"
+  }
+ },
+ "zac-ley-362": {
+  "v33": {
+   "articles": 215,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 215,
+   "transitorios": 29,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-09-07",
+   "maxNumeric": 213,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "23570aea15bb1b42a80b80cc710a6b331a81953b1f3d944255db7b66587842bc"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 215,
+   "transitorios": 29,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-09-07",
+   "maxNumeric": 213,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "6804334f91f157d84f3d96eee63128e395da6e94372ef2fdf4fdae0c00a718bd"
+  }
+ },
+ "zac-ley-366": {
+  "v33": {
+   "articles": 30,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 30,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2023-04-29",
+   "maxNumeric": 30,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "3712c918826fcbcb55c71a7f5d24d40751b53bbe3f1d11786917bc4abe05baa8"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 30,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2023-04-29",
+   "maxNumeric": 30,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "1edd4dea73f55e84e2a20428e60b6100741b2875e0ffd73f8666f76b9b160763"
+  }
+ },
+ "zac-ley-368": {
+  "v33": {
+   "articles": 67,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 67,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2023-10-01",
+   "maxNumeric": 67,
+   "sequenceGaps": [],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "898d10cb1f5e5c5384d9c6048f91c96b24be7c6830eec5ff2de4796c9e6164af"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 66,
+   "transitorios": 7,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2023-10-01",
+   "maxNumeric": 67,
+   "sequenceGaps": [
+    61
+   ],
+   "declaredAmendedAt": "2026-01-21",
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "a834ef9e1d1c9aaf62581e6bb8f61af5b0a38af85e3555338090617eab1839b7"
+  }
+ },
+ "zac-ley-371": {
+  "v33": {
+   "articles": 54,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 54,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-15",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0ef9733ceb74aa8beb0d034a10bcf296941efbdf6e81e7818cb2601214a599d4"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 54,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-15",
+   "maxNumeric": 54,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "5dc61310c593f948a3aec992b79fbcefce70290a89a332f8f36d0863674ef72a"
+  }
+ },
+ "zac-ley-372": {
+  "v33": {
+   "articles": 67,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 67,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-15",
+   "maxNumeric": 67,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "584b7c9d1a014eec49d1448933883c8199b3d948c7a4b48c4997aaecaa742b67"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 67,
+   "transitorios": 8,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-15",
+   "maxNumeric": 67,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3f3d93203b2a3267057e4fb8bc5e7e0d293010c5cf82e63af4a7f8911f0ab5e3"
+  }
+ },
+ "zac-ley-373": {
+  "v33": {
+   "articles": 31,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-30",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "0543c1a2f96c81e750ad2b0340c3322edb9bd5c0f76d5a49214963468479baee"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 31,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-05-30",
+   "maxNumeric": 31,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "ad5a02570b8f1ee6d53389dbb44a06b4cf84e71add6db1c27d46deeccd7e9e01"
+  }
+ },
+ "zac-ley-374": {
+  "v33": {
+   "articles": 59,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 59,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-09-08",
+   "maxNumeric": 59,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4d17286b1d9b8fa46d1d8e2f07e259d4110eddb9b1c3d4679d7d6b2ab05a25a9"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 59,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2024-09-08",
+   "maxNumeric": 59,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "c2966f6ace50574e4c37c37b9b614ede7f4c01af07b16bd45ac1c50743ddb9b6"
+  }
+ },
+ "zac-ley-377": {
+  "v33": {
+   "articles": 57,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-08-06",
+   "maxNumeric": 57,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4a54fd447b01872ad71e5ceb32199e3f5c1d97a4bacdf0842bb624030fa52ee1"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 57,
+   "transitorios": 6,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-08-06",
+   "maxNumeric": 57,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "mid-sentence-structural-line-kept-as-body",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "78815fd72f8cf68f3c83fa54fb735acee8715ca97e59322937a9be84e5434e2d"
+  }
+ },
+ "zac-ley-378": {
+  "v33": {
+   "articles": 22,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 22,
+   "transitorios": 0,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 22,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "no-explicit-transitory-boundary"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "4fe838352519b2f06255835b50bbef1f03f1ff88305dbf6702a33b90ba624b64"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 22,
+   "transitorios": 4,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 22,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "3b8fe0778d346ca4fb573778853b441e5b5b6176bdb91129feb363dd02b468d9"
+  }
+ },
+ "zac-ley-379": {
+  "v33": {
+   "articles": 42,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 42,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 43,
+   "sequenceGaps": [
+    40
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines"
+   ],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "9c1b9d4be37c7c7c699a3204cd2f902d7ae6b62156a8896b762c67c950a8ca78"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 42,
+   "transitorios": 5,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2025-10-05",
+   "maxNumeric": 43,
+   "sequenceGaps": [
+    40
+   ],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "section-discard-exceeded-2-lines",
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "7a3666f48dfcc8d47853f190b0555416d32a6702c926d859a728064bc9a7fa77"
+  }
+ },
+ "zac-ley-380": {
+  "v33": {
+   "articles": 151,
+   "state": "quarantined"
+  },
+  "pdfparse_v36": {
+   "state": "quarantined",
+   "articles": 151,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-09-17",
+   "maxNumeric": 151,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [],
+   "parser": "pdf-parse",
+   "extractorConfigSha256": "58be48fcf3002c6dfced2dc596b72ed2b9f488520cac54197712affbf1483f07"
+  },
+  "poppler_v36": {
+   "state": "quarantined",
+   "articles": 151,
+   "transitorios": 9,
+   "prefacioPreservado": 0,
+   "declaredPublicationAt": "2026-09-17",
+   "maxNumeric": 151,
+   "sequenceGaps": [],
+   "declaredAmendedAt": null,
+   "anomalies": [
+    "alternate-text-layer:poppler"
+   ],
+   "parser": "poppler-pdftotext",
+   "extractorConfigSha256": "30aff99b890731bcf729c530181592591fdcd5f111bb8548add07dcf8d9b99c7"
+  }
+ }
+}

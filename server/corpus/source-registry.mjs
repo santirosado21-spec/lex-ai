@@ -97,9 +97,10 @@ export function validateAcquisitionRegistry(input){
   }
   const documentIds=new Set(),destinations=new Set();
   for(const document of registry.documents){
-    const {forceOcr,textLayer,...documentCore}=document;
+    const {forceOcr,textLayer,declaredPublicationAt,...documentCore}=document;
     fields(documentCore,['id','sourceId','title','jurisdiction','status','url','versionId','evidenceUrl'],'document');
     if(forceOcr!==undefined&&forceOcr!==true)fail('document.forceOcr, when present, must be true (opt-in only).');
+    if(declaredPublicationAt!==undefined&&!/^\d{4}-\d{2}-\d{2}$/.test(declaredPublicationAt))fail('document.declaredPublicationAt, when present, must be YYYY-MM-DD as printed by the official index.');
     if(textLayer!==undefined&&textLayer!=='poppler')fail('document.textLayer, when present, must be "poppler" (opt-in alternate text layer).');
     identifier(document.id,'document.id');identifier(document.sourceId,'document.sourceId');identifier(document.versionId,'document.versionId');
     if(documentIds.has(document.id))fail('Duplicate document.id.');documentIds.add(document.id);

@@ -1,0 +1,163 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-zac-oficial-11-2026-11-17",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresozac-oficial",
+   "title": "Congreso del Estado de Zacatecas - Sistema Estatal Normativo (Leyes)",
+   "jurisdiction": "MX-ZAC",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.congresozac.gob.mx/65/leyes",
+    "evidence": "Live official Zacatecas state congress Sistema Estatal Normativo fetched 2026-11-17; index sha256 7ad9f7c8911b8e84fbaf442917dd54105b5f779beaf2dbf54582e94d50ca4a76; robots.txt HTTP 200 'User-agent: * Disallow:' (empty, allow-all, no content-signals) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no terms page linked from index; direct per-document /65/ley&cual=N&tipo=pdf and tipo=doc links",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-17T16:34:00.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-17 before acquisition: robots.txt HTTP 200 'User-agent: * Disallow:' empty (allow-all) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no content-signals and no AI-agent restrictions in robots; no aviso legal, terms-of-use or reuse/IP prohibition located from the index page (absence of terms is NOT treated as express authorization by the owner); official state congress Sistema Estatal Normativo publishing direct per-document PDF/DOC downloads used by the site's own pages; index HTTP 200 with identifying UA. Scope limited to official normative texts (leyes catalog); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. NOTA DE ENCUADRE: el valor status='approved' es requisito mecanico del validador del pipeline (source-registry.mjs); la evaluacion de derechos es SUSTENTADA por la evidencia citada (robots/terminos/verificacion del dia), no una aprobacion del titular ni una conclusion legal por delegacion.",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresozac-oficial-20261117",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "zac-ley-214",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Prevención Social de la Violencia y la Delincuencia del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=214&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2025-10-05"
+  },
+  {
+   "id": "zac-ley-216",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley Orgánica de la Fiscalía General de Justicia del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=216&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2017-12-30"
+  },
+  {
+   "id": "zac-ley-217",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Turismo del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=217&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2018-03-07"
+  },
+  {
+   "id": "zac-ley-218",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley del Sistema Estatal Anticorrupción de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=218&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2017-07-15"
+  },
+  {
+   "id": "zac-ley-219",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para la Atención y Protección a las Personas con la Condición del Espectro Autista del Estado y Municipios de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=219&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2021-02-06"
+  },
+  {
+   "id": "zac-ley-220",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Entrega-recepción del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=220&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2018-06-16"
+  },
+  {
+   "id": "zac-ley-221",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para Regular Establecimientos Dedicados a la Compra, Venta y Acopio de Material Susceptible de Ser Reciclado O Reutilizado en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=221&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2016-08-24"
+  },
+  {
+   "id": "zac-ley-222",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Productos Orgánicos para el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=222&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2015-11-28"
+  },
+  {
+   "id": "zac-ley-223",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Planeación del Estado de Zacatecas y Sus Municipios",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=223&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2017-08-09"
+  },
+  {
+   "id": "zac-ley-226",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para la Atención de los Zacatecanos Migrantes y Sus Familias",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=226&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2018-08-29"
+  }
+ ]
+}

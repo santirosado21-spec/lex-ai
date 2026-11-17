@@ -1,0 +1,163 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-zac-oficial-13-2026-11-17",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 10,
+  "maxRequests": 25,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresozac-oficial",
+   "title": "Congreso del Estado de Zacatecas - Sistema Estatal Normativo (Leyes)",
+   "jurisdiction": "MX-ZAC",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.congresozac.gob.mx/65/leyes",
+    "evidence": "Live official Zacatecas state congress Sistema Estatal Normativo fetched 2026-11-17; index sha256 7ad9f7c8911b8e84fbaf442917dd54105b5f779beaf2dbf54582e94d50ca4a76; robots.txt HTTP 200 'User-agent: * Disallow:' (empty, allow-all, no content-signals) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no terms page linked from index; direct per-document /65/ley&cual=N&tipo=pdf and tipo=doc links",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-17T16:34:00.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-17 before acquisition: robots.txt HTTP 200 'User-agent: * Disallow:' empty (allow-all) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no content-signals and no AI-agent restrictions in robots; no aviso legal, terms-of-use or reuse/IP prohibition located from the index page (absence of terms is NOT treated as express authorization by the owner); official state congress Sistema Estatal Normativo publishing direct per-document PDF/DOC downloads used by the site's own pages; index HTTP 200 with identifying UA. Scope limited to official normative texts (leyes catalog); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. NOTA DE ENCUADRE: el valor status='approved' es requisito mecanico del validador del pipeline (source-registry.mjs); la evaluacion de derechos es SUSTENTADA por la evidencia citada (robots/terminos/verificacion del dia), no una aprobacion del titular ni una conclusion legal por delegacion.",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresozac-oficial-20261117",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "zac-ley-329",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley del Centro de Conciliación Laboral del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=329&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2020-03-28"
+  },
+  {
+   "id": "zac-ley-330",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley del Servicio Profesional de Carrera del Estado y Municipios de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=330&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2004-08-04"
+  },
+  {
+   "id": "zac-ley-331",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Mejora Regulatoria del Estado de Zacatecas y sus Municipios.",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=331&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2020-08-20"
+  },
+  {
+   "id": "zac-ley-332",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Desarrollo, Protección y Difusión de las  Actividades Artesanales del Estado de Zacatecas y sus Municipios",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=332&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2020-08-29"
+  },
+  {
+   "id": "zac-ley-334",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley que Regula el Uso de Cubrebocas y Demás Medidas para Prevenir la Trasmisión de la Enfermedad COVID-19 en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=334&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2020-11-22"
+  },
+  {
+   "id": "zac-ley-335",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para la Igualdad Sustantiva entre Mujeres y Hombres del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=335&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2020-12-19"
+  },
+  {
+   "id": "zac-ley-336",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Justicia Administrativa del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=336&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2026-02-21"
+  },
+  {
+   "id": "zac-ley-337",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Ingresos del Estado de Zacatecas, para el Ejercicio Fiscal 2026",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=337&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2025-12-31"
+  },
+  {
+   "id": "zac-ley-339",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para el Fomento de la Cultura de Donación Voluntaria de Sangre en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=339&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2021-02-06"
+  },
+  {
+   "id": "zac-ley-340",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para el Control de la Contaminación Derivada del Uso de Productos Desechables en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=340&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+   "declaredPublicationAt": "2021-06-05"
+  }
+ ]
+}

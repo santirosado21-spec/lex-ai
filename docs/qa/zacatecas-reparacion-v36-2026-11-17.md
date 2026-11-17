@@ -26,3 +26,10 @@ npm test: 1204 pass, 1 fail (OCR de PDF escaneado: falla también sin estos camb
 
 ## Límites
 Transitorios: segmentación solo ordinal/numérica; el grupo es el encabezado más cercano (no verificado semánticamente). Fechas de reforma: 72/144 con fecha declarada en cabecera (Poppler). Sin afirmar paridad con Luthor ni cobertura de entidad.
+
+## Adenda v36b (misma fecha, 15:00): prefacio preservado y fecha de publicación trazable
+- Los candidatos de prefacio/decreto previo que reglas v35/v36 apartan ya NO se descartan: pasan a registros recordKind 'prefacio-articulo-citado' (motivo en headingTitle: decree-transitory, quoted-article, art1-restart), después de los artículos y antes de los transitorios, con texto, hash y páginas. No cuentan como artículos operativos.
+- document.declaredPublicationAt (registry, YYYY-MM-DD) se copia a la extracción con declaredPublicationAtBasis='official-index-fecha-de-publicacion' (144/144). Es la fecha del índice oficial, no reforma ni vigencia.
+- Reproceso offline v36b en directorios NUEVOS zac-v36b-pdfparse-NN / zac-v36b-poppler-NN (scripts/zac-v36b-reprocess.sh rechaza sobrescribir; registries resources/legal-acquisition-zac-v36b-<capa>-NN-2026-11-17.json). Los directorios v33 y v36 y sus reportes no se tocan. Inventario: docs/qa/zac-v36b-inventory-2026-11-17.json (V=v36b node scripts/zac-v36-inventory.mjs).
+- Resultado: mismos artículos que v36 (pdf-parse 12,803; Poppler 13,204) y mismos transitorios (1,732; 2,233); prefacio preservado: 13 registros pdf-parse, 15 Poppler. Conteos de registros, no cobertura validada.
+- El report.json original del lote 10 sigue siendo el sobrescrito por la corrida de un solo documento (10:50): se conserva como reporte de incidente; los reportes nuevos son los de cada directorio v36/v36b.

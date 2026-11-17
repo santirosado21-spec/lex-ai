@@ -380,7 +380,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
-  const records=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0,numericStarted=false,lastOrd=0;const seen=new Set();
+  const records=[],prefaceRecords=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0,numericStarted=false,lastOrd=0;const seen=new Set();
   // Two-pass mode gate: any strict numeric heading anywhere in the document selects numeric mode (byte-identical to v22); the ordinal path below only runs for documents with NO numeric headings at all, so preambles of modern laws ("ARTÍCULO PRIMERO.- Se expide…") can never poison numeric extraction.
   const ordinalEnabled=!lines.some(l=>headingPre.test(l.text)&&(ARTICLE.test(l.text)||bare.test(l.text)));
   const sampleDiscard=(rule,line)=>{if(coverage.discardedSamples.length<50)coverage.discardedSamples.push({rule,page:line.page,line:line.text.slice(0,200)});};
@@ -397,7 +397,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       // v35: a TRANSITORIOS block that precedes a later restart of operative numbering at article 1 belongs to the promulgation decree, not the law body.
       const laterOne=lines.slice(li+1).findIndex(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s*1\s*(?:[oº°])?\s*(?:\.-|[.\-])?\s*$/.test(l.text)||/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text));
       if(laterOne>=0&&seen.has(String(1))===false&&!lines.slice(li+1,li+1+laterOne).some(l=>transitory.test(l.text)&&false)){
-        const dropped=records.length+(current?1:0);current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+        finish();const dropped=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'decree-transitory'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
         documentAnomalies.push('decree-preface-transitory-skipped:'+dropped+'-preface-candidates-dropped');coverage.decreePrefaceSkippedAtPage=line.page;continue;}
       finish();coverage.transitoryStartPage=line.page;coverage.transitoryStartLine=li;ended=true;break;}
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
@@ -405,7 +405,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
     if(match&&started&&current&&match[1]==='1'&&!match[2]&&current.articleId!=='1'&&(records[0]?.articleId??current.articleId)!=='1'&&lines.slice(li+1,li+1500).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*[.\-]/.test(l.text))){
       // v36: operative numbering never began at article 1 (document opened on a quoted/preface article) and a heading for article 1 now appears followed by article 2: the earlier candidates are preface quotations.
-      const dropped=records.length+1;current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+      finish();const dropped=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'quoted-article'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
       documentAnomalies.push('preface-quoted-article-candidates-dropped:'+dropped);}
     if(match&&current&&current.articleId===match[1]&&current.lines.length===1&&bare.test(current.lines[0].text)){
       // v35: publisher prints a bare heading line and then repeats the same heading with its text; one article, not a restart.
@@ -454,7 +454,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
         const bareNumber=Number(bareMatch[1]);
         const currentNumber=current?Number(current.articleId.split('-')[0]):null;
         if(started&&current&&bareNumber===1&&currentNumber>1&&!seen.has('1')&&lines.slice(li+1,li+40).some(l=>bare.test(l.text)&&Number(bare.exec(l.text)[1])===2)){
-          const dropped=records.length+1;current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+          finish();const dropped=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'art1-restart'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
           documentAnomalies.push('preface-operative-candidates-dropped:'+dropped);}
         if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)||(current&&bareNumber>currentNumber+1&&bareNumber<=currentNumber+3&&!seen.has(bareMatch[1])&&prevClosed(lines,li)&&!midSentenceFragment(lines,li))){
           if(current&&bareNumber>currentNumber+1&&!documentAnomalies.includes('bare-heading-forward-gap'))documentAnomalies.push('bare-heading-forward-gap');
@@ -574,6 +574,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     flush();
     coverage.transitoryRecords=transitories.length;
   }
+  coverage.prefaceRecordsPreserved=prefaceRecords.length;
   coverage.operativeArticleCandidates=records.length;
   if(!records.length){
     const nonArticle=extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,declaredAmendedAt,retrievedAt,coverage,documentAnomalies});
@@ -582,7 +583,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   }
   if(documentAnomalies.length)for(const record of records){record.quality.status='quarantined';record.quality.anomalies.push(...documentAnomalies);}
   coverage.exportableArticles=records.filter(r=>r.quality.status==='structurally-verified').length;
-  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records,transitories};
+  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records,transitories,prefaceRecords};
 }
 
 let ocrToolsCache;
