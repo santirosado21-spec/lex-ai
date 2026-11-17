@@ -295,3 +295,7 @@ El dueño indicó que la fila de API Platform termina en OAwA. Una comparación 
 ## 2026-11-11 07:31 — codex — OpenAI API de desarrollo conectada
 
 El dueño entregó la clave completa mediante TXT temporal fuera del repo. GET de gpt-6-luna HTTP200 y una generación sintética store:false completada: 40 tokens entrada, 6 salida, 2056 ms, costo estimado USD0,000007; cargo y saldo no auditados. La importación de 164 caracteres por stdin a security -w se truncó a 128 en esta máquina. La clave completa quedó verificada en Keychain, el TXT y el ítem duplicado se eliminaron, y --auth pasó. Pendiente lote S2b público/sintético y verificación de facturación.
+
+## 2026-11-11 — ChatGPT (Pedro) — Propuesta SQLCipher Windows/Linux, sin ejecución
+
+Pedro reservó el frente documental en el tablero y rama `pedro/sqlcipher-portability-proposal-20261111`. Se redactó `docs/architecture/sqlcipher-windows-linux-provider-proposal-2026-11-11.md` con tres alternativas, riesgos de cadena de suministro, OpenSSL/licencias BSD/Apache y criterios de CI/ACL/reapertura/canarios. Fuentes oficiales Zetetic y rusqlite consultadas. **Cero pruebas** y cero cambios al proveedor/Keychain/código; propuesta requiere revisión y elección de Santi antes de implementar. No se declara portabilidad validada.

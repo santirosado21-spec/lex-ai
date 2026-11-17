@@ -96,6 +96,7 @@ El coordinador concede `done` únicamente con aceptación demostrada, revisión 
 | H4b.2b.5e | Estructura Nym v1 medida | H4b.2b.5c | done | ebd1975;8testigos/1admitidoestructural/8bloqueadosNN/0forwards;440565760B tokenizer-only,review; no calidad |
 | H4b.2b.5f | Prueba de contenido original v2 | H4b.2b.5e/fuentes fijadas | done-with-failure | 36mocks PASS; ejecución real FAIL SAMPLE_GAP143.671ms durante inventario/0testigos/0NN; evidencia preservada, no calidad |
 | H5b.2b.1 | Primer subconjunto recuperación sintética de lectura | H5b.2b/diagnóstico aislado | done | CI42904113430:18/18 invocaciones,11.268s,R23a4/R23b3,reviewSol; picos separados padre296222720B/hijo291110912B; no matriz24/H5 completo |
+| H5-P-WL | Propuesta documental SQLCipher Windows/Linux | Contrato H5, sin implementación | review-pending | **Pedro/ChatGPT** `pedro/sqlcipher-portability-proposal-20261111`: opciones OpenSSL sistema/vendorizado/Zetetic comercial, riesgos/licencias y gates de CI; sin código. Decisión D1–D3 de Santi pendiente. |
 | H5b.2c | Mapas H3 seudonimizados tipados/versionados | H5b.2b.1 y contrato H3 | todo | Contrato y límites en vault-next-native-slices; código/VM/review pendientes |
 | H5b.2d | Aprobación atómica de propuesta de recordatorio | H5b.1b.2 y H5b.2c | todo | Una transacción/CAS/idempotencia; revisión/VM pendientes |
 | H4b.2b.5g | Inventario preparado Nym separado | H4b.2b.5f | done | 198804filas/13.533.851B, auditoría independiente total; asset de construcción, no inferencia ni20ms runtime |
