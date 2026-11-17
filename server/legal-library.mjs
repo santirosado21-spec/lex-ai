@@ -31,7 +31,7 @@ import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocum
 // conformidad...") still opens; no local signal distinguishes it from a real
 // heading (frozen case "ARTICULO 136. Derogado" has the same shape).
 // Numbers are never invented; references keep their original text verbatim.
-export const EXTRACTOR_VERSION=34;
+export const EXTRACTOR_VERSION=35;
 // v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
 // digital text layer exists but is unusable (e.g. body font without a Unicode
 // map: only repeated headers extract). The flag only WIDENS the OCR trigger;
@@ -393,7 +393,13 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     const content=text.replace(ARTICLE,'').trim();
     records.push({id:`${versionId}:art:${current.articleId}`,lawId:source.lawId,lawTitle:source.title,versionId,versionDate,articleId:current.articleId,text,sourceUrl:source.url,publisher:source.authority,jurisdiction:source.jurisdiction,language:'es',pdfSha256,textSha256:digest(text),contentSha256:digest(content),sourcePages:[...new Set(current.lines.map(x=>x.page))],declaredAmendedAt,effectiveAt:null,retrievedAt,split:splitForLaw(source.lawId),splitGroup:source.lawId,quality:{status:anomalies.length?'quarantined':'structurally-verified',anomalies,legalAccuracy:'not-evaluated',currentness:'unverified',extraction:'deterministic-pdf-text-no-generated-content'},rights:source.reuseBasis,editorialNotes:current.editorial});current=null;}
   for(let li=0;li<lines.length;li++){const line=lines[li];
-    if(started&&transitory.test(line.text)){finish();coverage.transitoryStartPage=line.page;ended=true;break;}
+    if(started&&transitory.test(line.text)){
+      // v35: a TRANSITORIOS block that precedes a later restart of operative numbering at article 1 belongs to the promulgation decree, not the law body.
+      const laterOne=lines.slice(li+1).findIndex(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s*1\s*(?:[oº°])?\s*(?:\.-|[.\-])?\s*$/.test(l.text)||/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text));
+      if(laterOne>=0&&seen.has(String(1))===false&&!lines.slice(li+1,li+1+laterOne).some(l=>transitory.test(l.text)&&false)){
+        const dropped=records.length+(current?1:0);current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+        documentAnomalies.push('decree-preface-transitory-skipped:'+dropped+'-preface-candidates-dropped');coverage.decreePrefaceSkippedAtPage=line.page;continue;}
+      finish();coverage.transitoryStartPage=line.page;ended=true;break;}
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
