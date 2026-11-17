@@ -18,7 +18,12 @@ test('pure strict BIO decoding: original UTF16, combining accents, whitespace, n
 def logits(labels):
  return [[20.0 if i==label else -20.0 for i in range(35)] for label in labels]
 r=m['decode'](text,offsets,special,ids,logits([0,0,1,2,0]))
-assert r==[{'start':3,'end':14,'category':'person','score':1.0}]
+# Softmax is near one, not mathematically one. Python 3.12+ sum preserves
+# the small denominator contribution that older naive summation lost.
+assert len(r)==1
+score=r[0].pop('score')
+assert r==[{'start':3,'end':14,'category':'person'}]
+assert __import__('math').isfinite(score) and 0.0 <= score <= 1.0 and abs(score-1.0)<1e-12
 date='10/11/2026'; assert m['decode'](date,[(0,0),(0,10),(0,0)],[1,0,1],[2,5,3],logits([0,0,0]))==[]
 assert 'onnxruntime' not in __import__('sys').modules
 `);

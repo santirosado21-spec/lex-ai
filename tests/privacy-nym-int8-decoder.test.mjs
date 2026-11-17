@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { assertNativeScoreParity } from './helpers/native-score-parity.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -62,10 +63,12 @@ test('parent reconstruction rejects dropped or forged native output',()=>{
  const f=fixture(),r=decodeNymNative(f);assert.deepEqual(validateNymNativeResult(r,f),r);
  for(const edit of [r=>r.nativeSpans=[],r=>r.nativeSpans[0].kind='TAX_ID',r=>r.nativeSpans[0].end=2,r=>r.egressEligible=true]){const changed=structuredClone(r);edit(changed);assert.throws(()=>validateNymNativeResult(changed,f));}
 });
-test('Python pure decoder mirrors JS across all40 native labels and Unicode',()=>{
+test('Python pure decoder mirrors JS across all40 native labels and Unicode within score tolerance',()=>{
  const fixtures=NYM_KINDS.map(k=>fixture('😀José',[[0,5]],[`B-${k}`]));fixtures.push(fixture('😀',[[0,1],[0,1]],['O','O']),fixture('Ana',[[0,3]],['I-GIVEN_NAME']));
  const values=python("print(json.dumps([m.decode_native(v['text'],v['encoding'],v['logits']) for v in x]))",fixtures);
- for(let i=0;i<fixtures.length;i++)assert.deepEqual(values[i],decodeNymNative(fixtures[i]));
+ // Historical exact-score assertion is preserved in git at ccce17e. Python
+ // 3.12+ compensated sum differs from JS sequential addition by ~6e-15.
+ for(let i=0;i<fixtures.length;i++)assertNativeScoreParity(values[i],decodeNymNative(fixtures[i]));
 });
 test('PLAN imports no inference/tokenizer runtime and does not read cache',()=>{
  const p=python("print(json.dumps({'plan':m.plan(),'loaded':[k for k in ('onnxruntime','tokenizers','numpy','torch') if k in sys.modules]}))",null);assert.deepEqual(p.loaded,[]);assert.equal(p.plan.forwards,0);assert.equal(p.plan.executionAuthorized,false);
@@ -254,4 +257,20 @@ for tokens in (True,False,3.0,0,2,513):
  except m.Failure:rejected+=1
 print(json.dumps({'rejected':rejected}))`,f);
  assert.equal(r.rejected,28);
+});
+
+test('native parity rejects changed decisions, coordinates, provenance and material score errors',()=>{
+ const expected=decodeNymNative(fixture());
+ for(const edit of [
+  r=>r.nativeSpans[0].score=NaN,
+  r=>r.nativeSpans[0].score+=1e-8,
+  r=>r.nativeSpans[0].end++,
+  r=>r.nativeSpans[0].provenance.textSha256='forged',
+  r=>r.nativeSpans[0].extra=true,
+  r=>r.nativeSpans=[],
+  r=>r.egressEligible=true,
+  r=>r.status='blocked',
+ ]){const changed=structuredClone(expected);edit(changed);assert.throws(()=>assertNativeScoreParity(changed,expected));}
+ const near=structuredClone(expected);near.nativeSpans[0].score-=1e-14;
+ assertNativeScoreParity(near,expected);
 });

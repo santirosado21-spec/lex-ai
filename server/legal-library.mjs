@@ -397,8 +397,6 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
       // v33 reference preservation: a strict heading-shaped match that cannot be
       // a real new article here is preserved as body text (wrapped reference):
-      //  - backward number (< current base) without suffix: the article already
-      //    passed or belongs to another law, so the line cites, it does not open;
       //  - forward gap (> expected next) whose continuation starts lowercase
       //    ("Artículo 15. de la presente ley"): real headings start uppercase.
       // Forward gaps with heading-like continuations keep the v22-v32 behavior

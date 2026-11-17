@@ -26,18 +26,14 @@ jobs:
       - run: npm run build
       # Local OCR fallback (extractor v29): tesseract + poppler render scanned
       # PDFs offline; Pillow builds the synthetic scanned fixture.
-      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core antiword
       # Fresh clones omit generated public-library.sqlite and model research assets.
       # Node pinned >=22.23: earlier 22.x builds of node:sqlite lack FTS5, which
       # buildPublicLibrary and the API workflow smoke require. Keep this gate explicit.
       - name: Portable source contracts from a clean checkout
         run: |
-          # The historical V1 byte-exact Python/JS score test is retained for
-          # its frozen macOS evidence; Linux libm differs by ~6e-15. Its new
-          # portable counterpart asserts all other fields exactly and bounds
-          # the score difference to 1e-12 across all 40 labels.
-          echo 'Excluding one frozen V1 exact-float comparison; running portable 40-label parity instead.'
-          node --test --test-skip-pattern='^Python pure decoder mirrors JS across all40 native labels and Unicode$' \
+          # Score-only tolerance is explicit; no frozen-float test exclusion.
+          node --test \
             tests/landing-downloads.test.mjs \
             tests/privacy-nym-int8-decoder.test.mjs \
             tests/privacy-nym-float-parity-portable.test.mjs \
@@ -47,6 +43,12 @@ jobs:
             tests/openrouter-keychain.test.mjs \
             tests/windows-descendant-classification-diagnostic.test.mjs \
             tests/windows-owned-tree-bootstrap-diagnostic.test.mjs \
+            tests/legal-library.test.mjs \
+            tests/extractor-format-variants.test.mjs \
+            tests/extractor-non-article-classes.test.mjs \
+            tests/nuevo-leon-extraction.test.mjs \
+            tests/privacy-token-ner.test.mjs \
+            tests/word-extraction.test.mjs \
             tests/extractor-ocr-fallback.test.mjs
       # Full product workflow over the REAL HTTP server with explicitly mocked
       # inference (import -> analyze -> export DOCX -> feedback/proposal lifecycle).
