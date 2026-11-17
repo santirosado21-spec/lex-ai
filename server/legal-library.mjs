@@ -403,6 +403,9 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
+    if(match&&current&&current.articleId===match[1]&&current.lines.length===1&&bare.test(current.lines[0].text)){
+      // v35: publisher prints a bare heading line and then repeats the same heading with its text; one article, not a restart.
+      current.lines[0]=line;if(!documentAnomalies.includes('duplicated-bare-and-inline-heading-merged'))documentAnomalies.push('duplicated-bare-and-inline-heading-merged');continue;}
     if(match){
       const rest=line.text.slice(match[0].length);
       if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
