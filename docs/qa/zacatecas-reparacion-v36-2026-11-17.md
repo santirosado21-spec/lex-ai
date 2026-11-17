@@ -33,3 +33,10 @@ Transitorios: segmentación solo ordinal/numérica; el grupo es el encabezado m�
 - Reproceso offline v36b en directorios NUEVOS zac-v36b-pdfparse-NN / zac-v36b-poppler-NN (scripts/zac-v36b-reprocess.sh rechaza sobrescribir; registries resources/legal-acquisition-zac-v36b-<capa>-NN-2026-11-17.json). Los directorios v33 y v36 y sus reportes no se tocan. Inventario: docs/qa/zac-v36b-inventory-2026-11-17.json (V=v36b node scripts/zac-v36-inventory.mjs).
 - Resultado: mismos artículos que v36 (pdf-parse 12,803; Poppler 13,204) y mismos transitorios (1,732; 2,233); prefacio preservado: 13 registros pdf-parse, 15 Poppler. Conteos de registros, no cobertura validada.
 - El report.json original del lote 10 sigue siendo el sobrescrito por la corrida de un solo documento (10:50): se conserva como reporte de incidente; los reportes nuevos son los de cada directorio v36/v36b.
+
+## Adenda v36c (15:09): metadatos de reforma y transitorios (delta sobre v36b; v36b queda intacto)
+- Fecha de última reforma declarada en cabecera: acepta "Ultima Reforma POG" sin acento y fechas con mes en texto ("15 de febrero de 1997 (Decreto 132)"). pdf-parse 70 -> 76, Poppler 72 -> 78 de 144 (el resto no declara reforma en cabecera: no se infiere). Fecha de publicación del índice oficial: 144/144 en Poppler, 143/144 en pdf-parse (213 no extrae con pdf-parse: flate corrupto, "partial 9/10" del lote 10).
+- Transitorios: se reúnen encabezados partidos por palabra ("Artículo" / "Décimo" / "Quinto.") y se reconocen ordinales con acento ("Décimo Séptimo"). Cambian solo 043, 198, 227, 232 (1 a 2 transitorios más cada uno; 198: 44/45 -> 46 con ambas capas, sin fragmento vacío "Décimo"). Artículos: idénticos a v36b (12,803 / 13,204).
+- Directorios nuevos zac-v36c-pdfparse-NN / zac-v36c-poppler-NN (scripts/zac-v36c-reprocess.sh, rechaza sobrescribir); v36b intacto. Inventario docs/qa/zac-v36c-inventory-2026-11-17.json. Totales transitorios: pdf-parse 1,737; Poppler 2,237.
+- El mapa de selección del revisor está ligado a v36b: requiere QA delta antes de reutilizar su aprobación sobre v36c.
+- npm test: 1206 pass, 1 fail (OCR, preexistente).

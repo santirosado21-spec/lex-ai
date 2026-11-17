@@ -90,3 +90,19 @@ test('v36 captures transitory provisions as separate records with provenance and
   assert.ok(result.transitories.every((t) => t.recordKind === 'transitorio' && t.sourcePages[0] === 1));
   assert.ok(result.records.every((r) => !/entrará en vigor/.test(r.text)));
 });
+
+test('v36c rejoins word-per-line transitory headings and recognizes accented ordinals', async () => {
+  const { extractArticles } = await import('../server/legal-library.mjs');
+  const source = { lawId: 'x-ley-2', title: 'LEY DE PRUEBA DOS', url: 'https://example.invalid/y.pdf', authority: 'x', jurisdiction: 'x' };
+  const body = 'Artículo 1. Esta ley regula la materia de prueba para verificar el extractor de forma suficiente.\nArtículo 2. Se aplica en el territorio del estado de manera supletoria y complementaria.\nTRANSITORIOS\nArtículo Décimo Sexto. Texto del sexto con contenido suficiente.\nArtículo Décimo Séptimo. Texto del séptimo con contenido suficiente.\nArtículo\nDécimo\nQuinto.\nTexto del quinto con contenido suficiente.';
+  const result = extractArticles([{ number: 1, text: body }], source, { pdfSha256: 'b'.repeat(64), retrievedAt: '2026-11-17' });
+  assert.deepEqual(result.transitories.map((t) => t.ordinal), ['DÉCIMO SEXTO', 'DÉCIMO SÉPTIMO', 'DÉCIMO QUINTO']);
+  assert.ok(result.transitories.every((t) => t.text.length > 30));
+});
+test('v36c reads declared last-reform dates without accent and with textual month', async () => {
+  const { extractArticles } = await import('../server/legal-library.mjs');
+  const source = { lawId: 'x-ley-3', title: 'LEY DE PRUEBA TRES', url: 'https://example.invalid/z.pdf', authority: 'x', jurisdiction: 'x' };
+  const mk = (head) => extractArticles([{ number: 1, text: head + '\nArtículo 1. Esta ley regula la materia de prueba para verificar el extractor de forma suficiente.\nArtículo 2. Se aplica en el territorio del estado de manera supletoria y complementaria.' }], source, { pdfSha256: 'c'.repeat(64), retrievedAt: '2026-11-17' }).declaredAmendedAt;
+  assert.equal(mk('Ultima Reforma POG 26-03-2025'), '2025-03-26');
+  assert.equal(mk('Última reforma POG 15 de febrero de 1997 (Decreto 132)'), '1997-02-15');
+});

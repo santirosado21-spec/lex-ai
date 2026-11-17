@@ -376,7 +376,10 @@ function extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,
 export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
   const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,removedBulletGlyphs:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
-  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/Últimas?\s+Reformas?(?:\s+publicadas?)?(?:\s+(?:DOF|POG))?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:null;
+  const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/[ÚU]ltimas?\s+[Rr]eformas?(?:\s+publicadas?)?(?:\s+(?:DOF|POG))?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const MONTHS={enero:'01',febrero:'02',marzo:'03',abril:'04',mayo:'05',junio:'06',julio:'07',agosto:'08',septiembre:'09',setiembre:'09',octubre:'10',noviembre:'11',diciembre:'12'};
+  const textDate=!date?/[ÚU]ltimas?\s+[Rr]eformas?(?:\s+publicadas?)?(?:\s+(?:DOF|POG))?\s+(\d{1,2})\s+de\s+([a-záéíóú]+)\s+de(?:l)?\s+(\d{4})/i.exec(cover):null;
+  const textMonth=textDate?MONTHS[textDate[2].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')]:null;
+  const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:(textMonth?`${textDate[3]}-${textMonth}-${textDate[1].padStart(2,'0')}`:null);
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
   for(const p of pages){for(const line of p.text.split('\n')){const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
@@ -560,14 +563,22 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   // v36: transitory provisions are captured as SEPARATE records (never mixed into operative articles) with page provenance and the decree group they sit under. Ordinal segmentation only; unrecognized text stays in the group's unsegmented remainder.
   const transitories=[];
   if(ended&&Number.isInteger(coverage.transitoryStartLine)){
-    const ORD=/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+\w+)?|DECIMO\w*|VIG[ÉE]SIMO(?:\s+\w+)?|[ÚU]NICO)\s*(?:\.-|[.\-–:])\s*/i;
+    const ORD=/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)?|DECIMO\w*|VIG[ÉE]SIMO(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)?|[ÚU]NICO)\s*(?:\.-|[.\-–:])\s*/i;
     const DECREE=/^(?:DECRETO\s*(?:No\.?|#|N[ÚU]M\.?)?\s*[\w\-\/]+|ART[IÍ]CULOS?\s+TRANSITORIOS?\s+DE\s+.*)$/i;
     let group='ley-original',cur=null;let n=0;
     const flush=()=>{if(!cur)return;const text=normalize(cur.lines.map(x=>x.text).join(' '));if(text){n++;transitories.push({id:`${versionId}:trans:${n}`,lawId:source.lawId,versionId,ordinal:cur.ordinal,group,text,sourcePages:[...new Set(cur.lines.map(x=>x.page))],textSha256:digest(text),recordKind:'transitorio'});}cur=null;};
-    for(const l of lines.slice(coverage.transitoryStartLine+1)){
+    // v36c: word-per-line text layers split headings ("Artículo" / "Décimo" / "Quinto."); rejoin them before segmenting.
+    const ORDW=/^(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO|VIG[ÉE]SIMO|[ÚU]NICO)\.?-?$/i;
+    const tail=lines.slice(coverage.transitoryStartLine+1);const joined=[];
+    for(let i=0;i<tail.length;i++){let l=tail[i];
+      if(/^(?:ART[IÍ]CULO|D[ÉE]CIMO|VIG[ÉE]SIMO)$/i.test(l.text)){let text=l.text,k=i+1,took=0;
+        while(k<tail.length&&took<3&&ORDW.test(tail[k].text)&&!/[.\-]$/.test(text)){text+=' '+tail[k].text;k++;took++;if(/[.\-]$/.test(tail[k-1].text))break;}
+        if(took>0){l={...l,text};i=k-1;coverage.transitoryHeadingsRejoined=(coverage.transitoryHeadingsRejoined??0)+1;}}
+      joined.push(l);}
+    for(const l of joined){
       if(transitory.test(l.text))continue;
       if(DECREE.test(l.text)&&l.text.length<120&&!ORD.test(l.text)){flush();group=normalize(l.text).slice(0,120);continue;}
-      const m=ORD.exec(l.text)||/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+\w+)?|[ÚU]NICO)\s*$/i.exec(l.text)||/^ART[IÍ]CULO\s+(\d+)\s*(?:[oº°]|\/[oº])?\s*(?:[.\-])?\s*$/i.exec(l.text);
+      const m=ORD.exec(l.text)||/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)?|[ÚU]NICO)\s*$/i.exec(l.text)||/^ART[IÍ]CULO\s+(\d+)\s*(?:[oº°]|\/[oº])?\s*(?:[.\-])?\s*$/i.exec(l.text);
       if(m){flush();cur={ordinal:m[1].toUpperCase(),lines:[{text:l.text,page:l.page}]};continue;}
       if(cur)cur.lines.push({text:l.text,page:l.page});
     }
