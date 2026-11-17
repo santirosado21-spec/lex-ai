@@ -412,7 +412,9 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       current.lines[0]=line;if(!documentAnomalies.includes('duplicated-bare-and-inline-heading-merged'))documentAnomalies.push('duplicated-bare-and-inline-heading-merged');continue;}
     if(match){
       const rest=line.text.slice(match[0].length);
-      if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
+      const marginalRubric=(()=>{if(!current||rest.trim()!=='')return false;const prev=lines[li-1]?.text??'';const nxt=Number(match[1]);const base=Number(current.articleId.split('-')[0]);return nxt===base+1&&prev.length<=60&&prev.split(/\s+/).length<=6&&/^[A-ZÁÉÍÓÚÑ]/.test(prev)&&!/[.,;:]$/.test(prev)&&/^[A-ZÁÉÍÓÚÑ]/.test(lines[li+1]?.text??'');})();
+      if(marginalRubric)documentAnomalies.includes('marginal-rubric-before-heading')||documentAnomalies.push('marginal-rubric-before-heading');
+      if(!marginalRubric&&(rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
       // v33 reference preservation: a strict heading-shaped match that cannot be
       // a real new article here is preserved as body text (wrapped reference):
       //  - forward gap (> expected next) whose continuation starts lowercase
