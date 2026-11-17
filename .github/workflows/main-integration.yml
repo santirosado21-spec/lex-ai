@@ -47,3 +47,8 @@ jobs:
             tests/windows-descendant-classification-diagnostic.test.mjs \
             tests/windows-owned-tree-bootstrap-diagnostic.test.mjs \
             tests/extractor-ocr-fallback.test.mjs
+      # Full product workflow over the REAL HTTP server with explicitly mocked
+      # inference (import -> analyze -> export DOCX -> feedback/proposal lifecycle).
+      # Synthetic fixtures only; never evidence of model quality.
+      - name: API workflow smoke (mocked inference, synthetic data)
+        run: node scripts/api-workflow-smoke.mjs
