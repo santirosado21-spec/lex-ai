@@ -444,6 +444,9 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(bareMatch){
         const bareNumber=Number(bareMatch[1]);
         const currentNumber=current?Number(current.articleId.split('-')[0]):null;
+        if(started&&current&&bareNumber===1&&currentNumber>1&&!seen.has('1')&&lines.slice(li+1,li+40).some(l=>bare.test(l.text)&&Number(bare.exec(l.text)[1])===2)){
+          const dropped=records.length+1;current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
+          documentAnomalies.push('preface-operative-candidates-dropped:'+dropped);}
         if((!started&&bareNumber===1)||(current&&bareNumber===currentNumber+1)||(current&&bareNumber>currentNumber+1&&bareNumber<=currentNumber+3&&!seen.has(bareMatch[1])&&prevClosed(lines,li)&&!midSentenceFragment(lines,li))){
           if(current&&bareNumber>currentNumber+1&&!documentAnomalies.includes('bare-heading-forward-gap'))documentAnomalies.push('bare-heading-forward-gap');
           finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
