@@ -399,7 +399,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(laterOne>=0&&seen.has(String(1))===false&&!lines.slice(li+1,li+1+laterOne).some(l=>transitory.test(l.text)&&false)){
         const dropped=records.length+(current?1:0);current=null;records.length=0;seen.clear();started=false;numericStarted=false;lastOrd=0;
         documentAnomalies.push('decree-preface-transitory-skipped:'+dropped+'-preface-candidates-dropped');coverage.decreePrefaceSkippedAtPage=line.page;continue;}
-      finish();coverage.transitoryStartPage=line.page;ended=true;break;}
+      finish();coverage.transitoryStartPage=line.page;coverage.transitoryStartLine=li;ended=true;break;}
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
@@ -557,6 +557,23 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     current.lines.push(line);
   }
   if(!ended){finish();documentAnomalies.push('no-explicit-transitory-boundary');}
+  // v36: transitory provisions are captured as SEPARATE records (never mixed into operative articles) with page provenance and the decree group they sit under. Ordinal segmentation only; unrecognized text stays in the group's unsegmented remainder.
+  const transitories=[];
+  if(ended&&Number.isInteger(coverage.transitoryStartLine)){
+    const ORD=/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+\w+)?|DECIMO\w*|VIG[ÉE]SIMO(?:\s+\w+)?|[ÚU]NICO)\s*(?:\.-|[.\-–:])\s*/i;
+    const DECREE=/^(?:DECRETO\s*(?:No\.?|#|N[ÚU]M\.?)?\s*[\w\-\/]+|ART[IÍ]CULOS?\s+TRANSITORIOS?\s+DE\s+.*)$/i;
+    let group='ley-original',cur=null;let n=0;
+    const flush=()=>{if(!cur)return;const text=normalize(cur.lines.map(x=>x.text).join(' '));if(text){n++;transitories.push({id:`${versionId}:trans:${n}`,lawId:source.lawId,versionId,ordinal:cur.ordinal,group,text,sourcePages:[...new Set(cur.lines.map(x=>x.page))],textSha256:digest(text),recordKind:'transitorio'});}cur=null;};
+    for(const l of lines.slice(coverage.transitoryStartLine+1)){
+      if(transitory.test(l.text))continue;
+      if(DECREE.test(l.text)&&l.text.length<120&&!ORD.test(l.text)){flush();group=normalize(l.text).slice(0,120);continue;}
+      const m=ORD.exec(l.text)||/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+\w+)?|[ÚU]NICO)\s*$/i.exec(l.text)||/^ART[IÍ]CULO\s+(\d+)\s*(?:[oº°]|\/[oº])?\s*(?:[.\-])?\s*$/i.exec(l.text);
+      if(m){flush();cur={ordinal:m[1].toUpperCase(),lines:[{text:l.text,page:l.page}]};continue;}
+      if(cur)cur.lines.push({text:l.text,page:l.page});
+    }
+    flush();
+    coverage.transitoryRecords=transitories.length;
+  }
   coverage.operativeArticleCandidates=records.length;
   if(!records.length){
     const nonArticle=extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,declaredAmendedAt,retrievedAt,coverage,documentAnomalies});
@@ -565,7 +582,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   }
   if(documentAnomalies.length)for(const record of records){record.quality.status='quarantined';record.quality.anomalies.push(...documentAnomalies);}
   coverage.exportableArticles=records.filter(r=>r.quality.status==='structurally-verified').length;
-  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records};
+  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records,transitories};
 }
 
 let ocrToolsCache;

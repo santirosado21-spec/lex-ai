@@ -79,3 +79,14 @@ test('worker page cap raised and exported (nay-ley-148 class: 1376 pages)',async
   assert.ok(EXTRACTOR_MAX_PAGES>=1376);
   assert.equal(EXTRACTOR_VERSION,36);
 });
+
+test('v36 captures transitory provisions as separate records with provenance and keeps them out of operative articles', async () => {
+  const { extractArticles } = await import('../server/legal-library.mjs');
+  const source = { lawId: 'x-ley-1', title: 'LEY DE PRUEBA', url: 'https://example.invalid/x.pdf', authority: 'x', jurisdiction: 'x' };
+  const pages = [{ number: 1, text: 'Artículo 1. Esta ley regula la materia de prueba para verificar el extractor de forma suficiente.\nArtículo 2. Se aplica en el territorio del estado de manera supletoria y complementaria.\nTRANSITORIOS\nPRIMERO.- Esta ley entrará en vigor al día siguiente de su publicación.\nSEGUNDO.- Se derogan las disposiciones contrarias.' }];
+  const result = extractArticles(pages, source, { pdfSha256: 'a'.repeat(64), retrievedAt: '2026-11-17' });
+  assert.equal(result.records.length, 2);
+  assert.deepEqual(result.transitories.map((t) => t.ordinal), ['PRIMERO', 'SEGUNDO']);
+  assert.ok(result.transitories.every((t) => t.recordKind === 'transitorio' && t.sourcePages[0] === 1));
+  assert.ok(result.records.every((r) => !/entrará en vigor/.test(r.text)));
+});
