@@ -9,7 +9,29 @@ import os from 'node:os';
 import path from 'node:path';
 import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocumentFormat} from './legal-sync.mjs';
 
-export const EXTRACTOR_VERSION=32;
+// v33: reference preservation on the strict numeric-heading path. A wrapped
+// body reference capitalized at line start, carrying a terminator, a number
+// ABOVE the expected next article and a lowercase continuation (the exact
+// shape "Artículo 15. de la presente ley") used to OPEN a spurious article and
+// split the current one (reproduced synthetically). Real headings start
+// uppercase; references continue in sentence case, so that shape is now kept
+// as body text verbatim. Deliberately unchanged after frozen-evidence review:
+//  - forward jumps with heading-like (uppercase) continuations still open and
+//    continue: official numbering variants, derogated ranges and excerpted
+//    codes require it (legal-library freeze tests: numbering variants,
+//    derogated paren-markers, Código Penal NL suffix chains);
+//  - backward candidates keep the v22 restart stop ('operative-numbering-
+//    restarts-before-transitory-boundary'), which doubles as the citation
+//    guard for already-passed articles;
+//  - out-of-sequence period-less/loose/ordinal shapes stay absorbed as body
+//    (v17/v19 freeze tests): absorption preserves the text inside the previous
+//    record, while stopping would lose the document tail.
+// Residual documented ambiguity: a capitalized reference with terminator AND
+// uppercase continuation and a forward number (e.g. "Artículo 15. De
+// conformidad...") still opens; no local signal distinguishes it from a real
+// heading (frozen case "ARTICULO 136. Derogado" has the same shape).
+// Numbers are never invented; references keep their original text verbatim.
+export const EXTRACTOR_VERSION=33;
 // v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
 // digital text layer exists but is unusable (e.g. body font without a Unicode
 // map: only repeated headers extract). The flag only WIDENS the OCR trigger;
@@ -373,6 +395,20 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(match){
       const rest=line.text.slice(match[0].length);
       if((rest.trim()===''||match[0].endsWith('('))&&midSentenceFragment(lines,li)){if(current)current.lines.push(line);continue;}
+      // v33 reference preservation: a strict heading-shaped match that cannot be
+      // a real new article here is preserved as body text (wrapped reference):
+      //  - backward number (< current base) without suffix: the article already
+      //    passed or belongs to another law, so the line cites, it does not open;
+      //  - forward gap (> expected next) whose continuation starts lowercase
+      //    ("Artículo 15. de la presente ley"): real headings start uppercase.
+      // Forward gaps with heading-like continuations keep the v22-v32 behavior
+      // (open and continue): frozen real-document evidence (official numbering
+      // variants, derogated ranges, excerpted codes) requires tolerating jumps.
+      const candidateNumber=Number(match[1]);
+      const currentBase=current?Number(current.articleId.split('-')[0]):null;
+      const forwardGap=started&&currentBase!==null&&candidateNumber>currentBase+1;
+      const continuation=rest.trimStart();
+      if(forwardGap&&continuation&&/^[a-záéíóúñ]/.test(continuation)){if(current)current.lines.push(line);continue;}
       finish();started=true;numericStarted=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
