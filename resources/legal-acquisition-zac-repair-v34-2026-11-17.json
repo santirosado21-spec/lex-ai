@@ -1,0 +1,283 @@
+{
+ "schemaVersion": 1,
+ "id": "legal-acquisition-zac-repair-v34-2026-11-17",
+ "registryVersion": "v1",
+ "dataClass": "public-legal",
+ "productionEnabled": false,
+ "policy": {
+  "approvalAuthority": "developer-reviewed",
+  "purpose": "bounded-public-acquisition",
+  "scope": "public-legal"
+ },
+ "limits": {
+  "maxDocuments": 23,
+  "maxRequests": 50,
+  "maxTotalBytes": 52428800,
+  "maxDocumentBytes": 10485760,
+  "maxDurationMs": 1200000,
+  "rateMs": 2000,
+  "concurrency": 1,
+  "timeoutMs": 45000,
+  "maxRetries": 0,
+  "maxRedirects": 3
+ },
+ "sources": [
+  {
+   "id": "congresozac-oficial",
+   "title": "Congreso del Estado de Zacatecas - Sistema Estatal Normativo (Leyes)",
+   "jurisdiction": "MX-ZAC",
+   "collection": "state-legislation",
+   "status": "approved",
+   "discovery": {
+    "url": "https://www.congresozac.gob.mx/65/leyes",
+    "evidence": "Live official Zacatecas state congress Sistema Estatal Normativo fetched 2026-11-17; index sha256 7ad9f7c8911b8e84fbaf442917dd54105b5f779beaf2dbf54582e94d50ca4a76; robots.txt HTTP 200 'User-agent: * Disallow:' (empty, allow-all, no content-signals) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no terms page linked from index; direct per-document /65/ley&cual=N&tipo=pdf and tipo=doc links",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   },
+   "rightsReview": {
+    "status": "approved",
+    "reviewedBy": "instinct-rejon-agent",
+    "reviewedAt": "2026-11-17T16:34:00.000Z",
+    "basis": "Bounded acquisition of official state legislative texts under the same documented basis as the closed programs: LFDA art. 14 frac. VIII (documented basis, not a legal conclusion). Verified 2026-11-17 before acquisition: robots.txt HTTP 200 'User-agent: * Disallow:' empty (allow-all) sha256 53fe30e279057a307a5790ae0c90b960c93760f06d0b31aae097f4a52ac89321; no content-signals and no AI-agent restrictions in robots; no aviso legal, terms-of-use or reuse/IP prohibition located from the index page (absence of terms is NOT treated as express authorization by the owner); official state congress Sistema Estatal Normativo publishing direct per-document PDF/DOC downloads used by the site's own pages; index HTTP 200 with identifying UA. Scope limited to official normative texts (leyes catalog); quarantine only; no publication, no product activation. Stop the source if any restriction or challenge appears. NOTA DE ENCUADRE: el valor status='approved' es requisito mecanico del validador del pipeline (source-registry.mjs); la evaluacion de derechos es SUSTENTADA por la evidencia citada (robots/terminos/verificacion del dia), no una aprobacion del titular ni una conclusion legal por delegacion.",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "scope": "bounded-public-pilot"
+   },
+   "version": {
+    "id": "congresozac-oficial-20261117",
+    "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes",
+    "observedAt": "2026-11-17T16:34:00.000Z"
+   }
+  }
+ ],
+ "documents": [
+  {
+   "id": "zac-ley-014",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Estímulos y Recompensas a los Funcionarios y Empleados del Estado",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=14&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-028",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Cajas Populares del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=28&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-030",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Catastro del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=30&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-060",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley Orgánica de la Universidad Autónoma de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=60&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-063",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Participación Ciudadana para el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=63&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-081",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley del Sistema de Medios de Impugnación Electoral del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=81&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-096",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Bibliotecas Públicas del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=96&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-109",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Ciencia, Tecnología E Innovación del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=109&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-120",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Asistencia Social del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=120&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-143",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Desarrollo Social para el Estado y Municipios de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=143&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-159",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Extinción de Dominio del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=159&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-160",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley del Sistema Penitenciario y de Ejecución de Sanciones del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=160&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-165",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Protección Contra la Exposición al Humo de Tabaco del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=165&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-173",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley Electoral del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=173&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-186",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para Prevenir, Atender y Erradicar el Acoso Escolar en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=186&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-195",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley Orgánica del Tribunal de Justicia Electoral del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=195&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-196",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Atención a Víctimas del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=196&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-213",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Asociaciones Público Privadas del Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=213&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-219",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para la Atención y Protección a las Personas con la Condición del Espectro Autista del Estado y Municipios de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=219&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-232",
+   "sourceId": "congresozac-oficial",
+   "title": "Presupuesto de Egresos del Estado de Zacatecas para el Ejercicio Fiscal 2026",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=232&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-326",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley en Materia de Desaparición y Búsqueda de Personas para el Estado de Zacatecas.",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=326&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-337",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley de Ingresos del Estado de Zacatecas, para el Ejercicio Fiscal 2026",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=337&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  },
+  {
+   "id": "zac-ley-339",
+   "sourceId": "congresozac-oficial",
+   "title": "Ley para el Fomento de la Cultura de Donación Voluntaria de Sangre en el Estado de Zacatecas",
+   "jurisdiction": "MX-ZAC",
+   "status": "approved",
+   "url": "https://www.congresozac.gob.mx/65/ley&cual=339&tipo=pdf",
+   "versionId": "congresozac-oficial-20261117",
+   "evidenceUrl": "https://www.congresozac.gob.mx/65/leyes"
+  }
+ ]
+}

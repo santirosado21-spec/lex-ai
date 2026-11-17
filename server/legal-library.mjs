@@ -31,7 +31,7 @@ import {runLegalSync,validateSourceUrl,robotsPolicy,LEGAL_SYNC_AGENT,detectDocum
 // conformidad...") still opens; no local signal distinguishes it from a real
 // heading (frozen case "ARTICULO 136. Derogado" has the same shape).
 // Numbers are never invented; references keep their original text verbatim.
-export const EXTRACTOR_VERSION=33;
+export const EXTRACTOR_VERSION=34;
 // v32: registry-flagged force-OCR (document.forceOcr===true) for PDFs whose
 // digital text layer exists but is unusable (e.g. body font without a Unicode
 // map: only repeated headers extract). The flag only WIDENS the OCR trigger;
@@ -288,6 +288,8 @@ const ordinalHeadingTC=new RegExp(`^Art[íi]culo ((?:${ordWordTC})(?: ${ordWordT
 const nospaceHeading=/^Art[íi]culo(\d+)[oº°]?[.][-–]/;
 // Reversed ordinal variant ("Artículo.-1o.Constituyen…", seen in Yucatán official PDFs): the word takes its terminator first, then the ordinal number. Fail-closed: exact rigid shape with the ordinal number carrying its own terminator; ordinal gate only, strictly sequential, document flagged.
 const reversedOrdinal=/^Art[íi]culo[ \t]*[.:][ \t]*-[ \t]*(\d+)[oº°]?(?=[ \t]*[.:])/;
+// No-space numeric heading with simple period terminator ('Artículo18. Para...', seen in Zacatecas official PDFs), inside numeric mode. Fail-closed: ^-anchored whole-heading start, only continues strictly sequentially in numeric mode, and the document is flagged. A wrapped body reference is never strictly sequential by construction of the gate.
+const nospaceNumeric=/^Art[íi]culo(\d+)[oº°]?\.(?=[ \t]|$)/;
 const ORD_UNIT={PRIMERO:1,SEGUNDO:2,TERCERO:3,CUARTO:4,QUINTO:5,SEXTO:6,SEPTIMO:7,OCTAVO:8,NOVENO:9};
 const ORD_BASE={DECIMO:10,UNDECIMO:11,DUODECIMO:12,VIGESIMO:20,TRIGESIMO:30};
 function ordinalValue(phrase){const p=phrase.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();if(p==='UNICO')return 1;if(ORD_UNIT[p])return ORD_UNIT[p];if(ORD_BASE[p])return ORD_BASE[p];const m=/^(DECIMO|VIGESIMO|TRIGESIMO) (PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|SEPTIMO|OCTAVO|NOVENO)$/.exec(p);return m?ORD_BASE[m[1]]+ORD_UNIT[m[2]]:null;}
@@ -296,7 +298,10 @@ const noTerm=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(?!(
 // Loose suffixed heading glued to body text ("Artículo 21 Bis 1. ..."): after the suffix there must be EOL, a terminator, a numeric list marker or an uppercase word; "Artículo 21 Bis de la ley" (lowercase tail) stays body text.
 const noTermSuffix=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)[ \t]+(Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)(?![a-záéíóúñ])(?:[ \t]+([IVXL]+)(?=[ \t]*[.,\-]))?(?=[ \t]*[.:]|[ \t]+\d+[.)]|[ \t]+[A-ZÁÉÍÓÚÑ(]|[ \t]*,[ \t]*\((?:DEROGADO|Derogado)|[ \t]*$)/i;
 // Official period-less heading variant: the whole line is exactly "Artículo N" (seen in LGSMIME and Reg_Senado official PDFs). Accepted fail-closed: it can only open the body at article 1 or continue it strictly sequentially; anything else stays body text.
-const bare=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]*$/;
+// Bare-with-ordinal-suffix variant: whole line 'ARTÍCULO 1º' / 'ARTÍCULO 1°' / 'ARTÍCULO 1/º' (seen in Zacatecas official PDFs). Same fail-closed gate as bare: only opens at article 1 or continues strictly sequentially; anything else stays body text.
+const bare=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)(?:[oº°]|\/[oº])?[ \t]*$/;
+// Bare heading with an inline numbered-paragraph marker glued to the same line ('ARTÍCULO 455 1.', seen in Zacatecas official PDFs). The whole source line is kept verbatim as the record's first line (no text invented or dropped). Fail-closed: only opens at article 1 or continues strictly sequentially; anything else stays body text and flags the document.
+const bareList=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]+\d{1,2}\.[ \t]*$/;
 // Official period-less SUFFIXED heading variant: the whole line is exactly "Artículo N Sufijo" (seen in LGSMIME and Reg_Senado official PDFs). Accepted fail-closed: only right after its numeric base article; anything else stays body text and flags the document.
 const bareSuffix=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo)\s+(\d+)[ \t]+(Bis|Ter|Qu[áa]ter|Quater|Quinquies|Quintus|Sexies|Sextus|Septies|Septimus|Octies|Nonies|Nonus|Decies|Undecies|Duodecies|Duodecimus)(?:[ \t]+([IVXL]+|\d+))?[ \t]*$/i;
 const suffixId=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
@@ -437,6 +442,28 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
           finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const bareId=bareMatch[1];
           if(seen.has(bareId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:bareId};ended=true;break;}
           current={articleId:bareId,lines:[line],editorial:[]};continue;
+        }
+      }
+      const bareListM=bareList.exec(line.text);
+      if(bareListM){
+        const blNumber=Number(bareListM[1]);
+        const currentNumberBL=current?Number(current.articleId.split('-')[0]):null;
+        if((!started&&blNumber===1)||(current&&blNumber===currentNumberBL+1)){
+          finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const blId=bareListM[1];
+          if(seen.has(blId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:blId};ended=true;break;}
+          if(!documentAnomalies.includes('bare-heading-with-inline-list-marker'))documentAnomalies.push('bare-heading-with-inline-list-marker');
+          current={articleId:blId,lines:[line],editorial:[]};continue;
+        }
+      }
+      const nsnM=nospaceNumeric.exec(line.text);
+      if(nsnM){
+        const nsnNumber=Number(nsnM[1]);
+        const currentNumberNS=current?Number(current.articleId.split('-')[0]):null;
+        if(((!started&&nsnNumber===1)||(current&&nsnNumber===currentNumberNS+1))&&!midSentenceFragment(lines,li,false)){
+          finish();started=true;numericStarted=true;pendingSection=false;sectionDiscard=0;const nsnId=nsnM[1];
+          if(seen.has(nsnId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId:nsnId};ended=true;break;}
+          if(!documentAnomalies.includes('nospace-numeric-heading'))documentAnomalies.push('nospace-numeric-heading');
+          current={articleId:nsnId,lines:[line],editorial:[]};continue;
         }
       }
       const bareSuf=bareSuffix.exec(line.text);

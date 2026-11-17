@@ -1,0 +1,52 @@
+{
+ "paquete": "defectos-extractor-zacatecas-2026-11-17 (bugs accionables; sin fixtures ni metodos de validacion del revisor)",
+ "D1_formatos_encabezado_no_reconocidos": {
+  "zac-ley-014": "18 encabezados 'ARTICULO n/º' (sufijo /º)",
+  "zac-ley-060": "74 encabezados 'ARTICULO nº'",
+  "zac-ley-063": "72 encabezados 'ARTICULO nº' (via Poppler; el parser actual ve ~5)",
+  "zac-ley-081": "73 encabezados 'ARTÍCULO n°' (solo 2 capturados)",
+  "zac-ley-213": "133 encabezados 'Artículo n.' + fallo flate de pdf-parse; Poppler extrae 105,655 chars (fallback)",
+  "zac-ley-219": "'Artículo18.' sin espacio (art. 18 omitido)",
+  "zac-ley-173": "'ARTÍCULO 455 1.' (arts. 455-472 omitidos)"
+ },
+ "D2_documento_completo_mal_clasificado_como_resolutivos": {
+  "detalle": "0 articulos operativos capturados; nonArticleClass=resolutivos; registros con espacios eliminados y texto truncado",
+  "zac-ley-028": "93 articulos en fuente",
+  "zac-ley-030": "58",
+  "zac-ley-096": "17",
+  "zac-ley-196": "103"
+ },
+ "D3_regla_section_discard_traga_articulos": {
+  "zac-ley-186": "anomalia 'section-discard-exceeded-2-lines'; arts. 1-26 descartados (capturo 27-86)"
+ },
+ "D4_extraccion_truncada_parcial": {
+  "zac-ley-109": "se detiene en art. 20; faltan 21-80",
+  "zac-ley-159": "23/84; faltan 25-85",
+  "zac-ley-160": "3/209",
+  "zac-ley-232": "26/88; faltan 24-85",
+  "zac-ley-120": "124/154; faltan 126-155",
+  "zac-ley-143": "faltan 76-84",
+  "zac-ley-337": "26/40; faltan 13 numeros reales"
+ },
+ "D5_omisiones_individuales": {
+  "zac-ley-165": "falta 105",
+  "zac-ley-195": "faltan 83 y 84",
+  "zac-ley-326": "falta 242",
+  "zac-ley-339": "falta 341"
+ },
+ "D6_transitorios_no_capturados": {
+  "docs_con_encabezado_TRANSITORIOS": 139,
+  "provisiones_ordinales_estimadas_minimo": 722,
+  "nota": "50 docs sin ordinal estilo PRIMERO.- tras el encabezado (posible estilo 'Artículo Primero/Único'); estimacion es piso",
+  "mencion_no_estandar": [
+   "zac-ley-019",
+   "zac-ley-144",
+   "zac-ley-147",
+   "zac-ley-180",
+   "zac-ley-374"
+  ]
+ },
+ "D7_metadatos_fecha": "declaredAmendedAt solo 4/144; encabezados 'Última Reforma POG dd-mm-yyyy' presentes y no capturados; indice oficial /65/leyes provee fecha de publicacion por documento",
+ "D8_resolutivos_defectuosos": "en 028/030/096/196: texto con espacios eliminados y truncado (artefactos 'COMU', corte a media palabra)",
+ "no_son_defectos": "0 ids duplicados reales (bis/ter/quater bien ordenados); 12,086/12,086 textSha256 consistentes; fidelidad de texto de articulos correcta en set limpio"
+}
