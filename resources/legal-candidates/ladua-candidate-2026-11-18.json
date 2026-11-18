@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "status": "candidate-not-adopted-pending-QA",
+ "lawId": "MX-FED-LADUA",
+ "title": "LEY Aduanera",
+ "officialUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf (case-sensitive: LADUA.pdf returns 404)",
+ "authority": "Cámara de Diputados del H. Congreso de la Unión",
+ "retrievedAt": "2026-11-18T14:37:50.766Z",
+ "httpStatus": 200,
+ "robotsHttpStatus": 404,
+ "robotsNote": "404 = absence of rules, not a verified allow",
+ "pdfSha256": "43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d",
+ "pdfBytes": 2088249,
+ "pdfPages": 220,
+ "pdfPath": "artifacts/legal-candidates/ladua-2026-11-18/snapshots/ladua/43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d.pdf (not committed)",
+ "textExtraction": {
+  "tool": "pdftotext -layout",
+  "textSha256": "56e9eda1478029b5f5ab70336d7bf2400d9140b17f68e572459d42bb67bfff94",
+  "characters": 869338
+ },
+ "publisherDeclaredLastReform": "DOF 19-11-2025 (in the PDF header)",
+ "catalogDiscrepancy": "resources/legal-library-catalog.json lists this law's index row as 'DOF 27/12/2025'; the downloaded PDF declares last reform DOF 19-11-2025. Unresolved: either the index changed after the catalog capture or one of them is wrong. Not reconciled.",
+ "licenseBasis": "official-legislative-text per catalog reuseBasis; not an individualized license opinion.",
+ "validation": {
+  "distinctArticleHeadings": 203,
+  "first": 1,
+  "last": 203,
+  "gapsInSequence": [],
+  "numberingResets": 18,
+  "hasTransitorios": true,
+  "eligibilityCondition": "Numbering resets (likely transitorios by decree) must be isolated by decree block or excluded with documentation before adoption, as for the Nuevo León candidate. The standard is not changed.",
+  "notChecked": [
+   "comparison with DOF",
+   "which reform is the latest (see catalogDiscrepancy)",
+   "currentness",
+   "fidelity sample",
+   "internal cross-references",
+   "Anexos or tables outside article text"
+  ]
+ },
+ "limits": "Candidate in a separate area. Not in the frozen library, not used by the app."
+}
