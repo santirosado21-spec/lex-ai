@@ -49,18 +49,24 @@ async function boundedJson(response, limit = 262144) {
 }
 
 export function createOpenAiProvider({enabled = false, getApiKey, model, fetchImpl = globalThis.fetch, timeoutMs = 30000,
-  maxOutputTokens = 512, maxCalls = 0, maxTotalTokens = 0} = {}) {
+  maxOutputTokens = 512, maxCalls = 0, maxTotalTokens = 0, reasoningEffort, pricing, maxUsd = 0} = {}) {
  if (typeof enabled !== 'boolean' || typeof getApiKey !== 'function' || !validModel(model) || typeof fetchImpl !== 'function' ||
   !Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 120000 ||
   !Number.isInteger(maxOutputTokens) || maxOutputTokens < 1 || maxOutputTokens > 4096 ||
   !Number.isInteger(maxCalls) || maxCalls < 0 || maxCalls > 100000 ||
-  !Number.isInteger(maxTotalTokens) || maxTotalTokens < 0 || maxTotalTokens > 1e9) throw error('invalid_configuration');
+  !Number.isInteger(maxTotalTokens) || maxTotalTokens < 0 || maxTotalTokens > 1e9 ||
+  reasoningEffort !== undefined && !['none','minimal','low','medium','high'].includes(reasoningEffort) ||
+  pricing !== undefined && !(Number.isFinite(pricing?.inputPerMillion) && pricing.inputPerMillion >= 0 && Number.isFinite(pricing?.outputPerMillion) && pricing.outputPerMillion >= 0) ||
+  !Number.isFinite(maxUsd) || maxUsd < 0 || maxUsd > 1000 || maxUsd > 0 && pricing === undefined) throw error('invalid_configuration');
+ // maxUsd is a LOCAL ESTIMATE under the fixed tariff passed in `pricing`; it is not an account spending limit.
+ let spentUsd = 0;
+ const usd = (promptTokens, outputTokens) => pricing ? (promptTokens * pricing.inputPerMillion + outputTokens * pricing.outputPerMillion) / 1e6 : 0;
  let busy = false, calls = 0, tokens = 0, lastReceipt = null;
  return {
   outputContract: 'paragraph-citations-v1',
   status() {
    return {state:enabled ? 'configured' : 'disabled', busy, model:'OpenAI', remote:true,
-    callsRemaining:Math.max(0, maxCalls - calls), tokensRemaining:maxTotalTokens ? Math.max(0, maxTotalTokens - tokens) : null};
+    callsRemaining:Math.max(0, maxCalls - calls), estimatedSpentUsd:pricing ? Number(spentUsd.toFixed(6)) : null, usdIsEstimate:true, tokensRemaining:maxTotalTokens ? Math.max(0, maxTotalTokens - tokens) : null};
   },
   get lastReceipt() { return lastReceipt ? {...lastReceipt} : null; },
   async *generate(messages, {responseFormat = 'text', signal} = {}) {
@@ -69,6 +75,7 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
    if (!['text','json'].includes(responseFormat) || signal !== undefined && !(signal instanceof AbortSignal)) throw error('invalid_request');
    const prepared = snapshotMessages(messages);
    const body = JSON.stringify({model, messages:prepared, max_completion_tokens:maxOutputTokens, stream:false, store:false,
+    ...(reasoningEffort !== undefined ? {reasoning_effort:reasoningEffort} : {}),
     ...(responseFormat === 'json' ? {response_format:{type:'json_object'}} : {})});
    if (new TextEncoder().encode(body).byteLength > 32768) throw error('invalid_request');
    if (signal?.aborted) throw error('cancelled');
@@ -77,8 +84,10 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
    // (prompt estimated at one token per two characters plus the full output allowance).
    if (busy) throw error('busy');
    const reserve = Math.ceil(body.length / 2) + maxOutputTokens;
-   if (calls >= maxCalls || maxTotalTokens && tokens + reserve > maxTotalTokens) throw error('budget_exhausted');
-   busy = true; lastReceipt = null; calls += 1;
+   // Worst case for prompt tokens: one token per body byte.
+   const reserveUsd = usd(new TextEncoder().encode(body).byteLength, maxOutputTokens);
+   if (calls >= maxCalls || maxTotalTokens && tokens + reserve > maxTotalTokens || maxUsd && spentUsd + reserveUsd > maxUsd) throw error('budget_exhausted');
+   busy = true; lastReceipt = null; calls += 1; spentUsd += reserveUsd;
    let key;
    try {
     try { key = await getApiKey(); } catch { throw error('missing_credential'); }
@@ -86,7 +95,7 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     if (signal?.aborted) throw error('cancelled');
    } catch (cause) {
     // Nothing was dispatched: give the reservation back.
-    calls -= 1; busy = false;
+    calls -= 1; spentUsd -= reserveUsd; busy = false;
     throw cause;
    }
    const timeout = AbortSignal.timeout(timeoutMs), combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
@@ -102,7 +111,7 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     const result = await boundedJson(response);
     const choice = Array.isArray(result?.choices) && result.choices.length === 1 ? result.choices[0] : null;
     const usage = record(result?.usage) ? {promptTokens:count(result.usage.prompt_tokens), completionTokens:count(result.usage.completion_tokens)} : null;
-    if (usage) tokens += (usage.promptTokens ?? 0) + (usage.completionTokens ?? 0);
+    if (usage) { tokens += (usage.promptTokens ?? 0) + (usage.completionTokens ?? 0); if (usage.promptTokens !== null && usage.completionTokens !== null) spentUsd += usd(usage.promptTokens, usage.completionTokens) - reserveUsd; }
     lastReceipt = Object.freeze({requestedModel:model, observedModel:typeof result?.model === 'string' ? result.model.slice(0, 80) : null, usage});
     // A length stop is an incomplete answer: never present it as complete.
     if (!choice) throw error('invalid_response');

@@ -18,3 +18,7 @@ Límites que siguen abiertos (no ocultar):
 3. El mapa de reidentificación vive en memoria. El sellado AES-GCM existe (`pseudonym-persistence.mjs`) pero falta persistirlo y custodiar la clave.
 4. Falta cablear servicio/chat/borradores, UI de concesiones y selección de modelo por el dueño.
 5. Modelo y tope los fija el dueño; el código no asume ninguno.
+
+## Adenda: custodia de clave y tope en USD
+- `server/providers/openai-keychain.mjs`: Llavero de macOS, solo darwin, apagado por defecto. La clave la escribe el usuario en un diálogo nativo con respuesta oculta y llega a `security -i` por stdin: nunca en argv, entorno, logs, archivos ni front. Verificado solo con dobles; NO probado en un Mac (lo cubre el guion de Mac, pendiente). Es custodia, no autoriza egreso ni gasto.
+- `server/providers/openai.mjs`: `pricing` + `maxUsd` es una ESTIMACIÓN local con tarifa fijada (peor caso reservado antes de enviar). No es un límite de la cuenta y no garantiza el USD real. `reasoningEffort` configurable (none evita gastar el límite de salida en razonamiento).

@@ -227,3 +227,21 @@ test('status exposes grants and cap without secrets', async () => {
  assert.deepEqual(status.grants[0].allowedCategories, ['pseudonymized']);
  assert.ok(!JSON.stringify(status).includes(KEY));
 });
+
+test('fixed-tariff USD estimate caps worst-case spend before dispatch and sends reasoning_effort when configured', async () => {
+ const sent = [];
+ const make = maxUsd => createOpenAiProvider({enabled:true, getApiKey:async () => KEY, model:'test-model', maxCalls:10, maxOutputTokens:512, reasoningEffort:'none',
+  pricing:{inputPerMillion:0.1, outputPerMillion:0.5}, maxUsd,
+  fetchImpl:async (url, init) => { sent.push(JSON.parse(init.body)); return new Response(JSON.stringify({model:'test-model', choices:[{finish_reason:'stop', message:{content:'ok'}}], usage:{prompt_tokens:20, completion_tokens:3}})); }});
+ const run = async provider => { for await (const _ of provider.generate([{role:'user', content:'hola'}], {responseFormat:'text'})); };
+ const tight = make(0.0001);
+ await assert.rejects(run(tight), {code:'budget_exhausted'});
+ assert.equal(sent.length, 0);
+ const roomy = make(0.01);
+ await run(roomy);
+ assert.equal(sent[0].reasoning_effort, 'none');
+ const status = roomy.status();
+ assert.equal(status.usdIsEstimate, true);
+ assert.ok(status.estimatedSpentUsd > 0 && status.estimatedSpentUsd < 0.00001, String(status.estimatedSpentUsd));
+ assert.throws(() => createOpenAiProvider({enabled:true, getApiKey:async () => KEY, model:'m', maxUsd:1}), {code:'invalid_configuration'});
+});
