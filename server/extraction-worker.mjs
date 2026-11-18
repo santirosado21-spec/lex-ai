@@ -31,7 +31,22 @@ try {
     const pdf=require('pdf-parse/lib/pdf-parse.js');
     // PDF.js expects Uint8Array slicing semantics; Node Buffer.slice() aliases
     // memory and makes some valid cross-reference tables fail to parse.
-    const parsed=await pdf(new Uint8Array(bytes),{max:200});
+    // pdf-parse's default renderer joins text items on one line with no separator, so table cells like 'PZA' '1' '1,900,000.00' collapse into 'PZA11,900,000.00'
+    // and silently change amounts. Same line grouping as the default; a space is added only where the items have a real horizontal gap and neither side already carries whitespace.
+    const pagerender=async page=>{
+      const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});
+      let lastY,lastEnd,lastStr='',text='';
+      for(const item of content.items){
+        const x=item.transform[4],y=item.transform[5];
+        if(lastY===undefined||lastY===y){
+          if(lastY!==undefined&&Number.isFinite(lastEnd)&&x-lastEnd>1.5&&!/\s$/.test(lastStr)&&!/^\s/.test(item.str))text+=' ';
+          text+=item.str;
+        }else text+='\n'+item.str;
+        lastY=y;lastEnd=x+(item.width||0);lastStr=item.str;
+      }
+      return text;
+    };
+    const parsed=await pdf(new Uint8Array(bytes),{max:200,pagerender});
     if(parsed.numpages>200)throw new Error('El PDF supera el límite de 200 páginas. Divide el documento antes de importarlo.');
     text=parsed.text;
   }
