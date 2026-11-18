@@ -82,6 +82,13 @@ try {
  await expect(page.locator('.document-reading mark')).toHaveCount(2);
  await page.getByRole('button',{name:'Siguiente coincidencia',exact:true}).click();
  await page.getByRole('button',{name:'Limpiar búsqueda en documento',exact:true}).click();
+ {
+  const [saved]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'Guardar texto extraído (.txt)',exact:true}).click()]);
+  assert.equal(saved.suggestedFilename(),'contrato-ui (texto extraido).txt');
+  assert.match(await readFile(await saved.path(),'utf8'),/CONTRATO SINTÉTICO/);
+  await page.getByText(/No es el archivo original ni conserva su formato/).waitFor();
+  await page.screenshot({path:'artifacts/ui-document-viewer.png',fullPage:true});
+ }
 
  await page.getByRole('button',{name:'Cerrar diálogo'}).click();
  report.checks.push('create matter, import and inspect extracted synthetic TXT');

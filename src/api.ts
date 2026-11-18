@@ -83,6 +83,17 @@ export function downloadFile(file: {name: string; base64: string; mime: string})
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+export function textFileName(name: string) {
+  const base = name.replace(/\.[^./\\]{1,8}$/, '').replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim().normalize('NFD').replace(/\p{M}+/gu, '').replace(/[^\x20-\x7e]+/g, '_').slice(0, 120) || 'documento';
+  // ASCII only: a non-ASCII download name was dropped by headless Chrome (saved as "download").
+  return `${base} (texto extraido).txt`;
+}
+export function downloadText(name: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], {type: 'text/plain;charset=utf-8'}));
+  const link = document.createElement('a'); link.href = url; link.download = textFileName(name); link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 export interface SourceCatalogEntry { id: string; title: string; url: string; jurisdiction: string }
 export interface SourceSyncEntry extends SourceCatalogEntry {
   state: string; checkedAt?: string; lastSuccessAt?: string; httpStatus?: number; sha256?: string;
