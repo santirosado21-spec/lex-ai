@@ -5,25 +5,25 @@
 @source "./components/ui";
 
 @theme inline {
-  --color-background: #f7f3eb;
-  --color-foreground: #182b3d;
-  --color-primary: #1f4a73;
+  --color-background: #FDFCFB;
+  --color-foreground: #4D3533;
+  --color-primary: #4D3533;
   --color-primary-foreground: #ffffff;
-  --color-muted: #eee9df;
-  --color-muted-foreground: #637083;
-  --color-border: #d8d2c7;
-  --color-ring: #1f4a73;
+  --color-muted: #F6F2EF;
+  --color-muted-foreground: #827170;
+  --color-border: #E6DFDB;
+  --color-ring: #4D3533;
 }
 :root{
-  --lex-ink-950:#182b3d;
-  --lex-ink-800:#1f4a73;
-  --lex-ink-700:#285b88;
-  --lex-paper:#f7f3eb;
-  --lex-surface:#fffdf8;
+  --lex-ink-950:#4D3533;
+  --lex-ink-800:#4D3533;
+  --lex-ink-700:#3A2826;
+  --lex-paper:#FDFCFB;
+  --lex-surface:#F6F2EF;
   --lex-surface-muted:#f0ece3;
-  --lex-rule:#d8d2c7;
+  --lex-rule:#E6DFDB;
   --lex-rule-strong:#bdb5a8;
-  --lex-muted:#637083;
+  --lex-muted:#827170;
   --lex-brass:#a26f28;
   --lex-brass-dark:#80551c;
   --lex-success:#2f6b5a;

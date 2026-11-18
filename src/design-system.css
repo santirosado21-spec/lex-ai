@@ -8,37 +8,37 @@
 /* ---------- Tokens ---------- */
 :root,
 :root[data-theme="light"]{
-  --bg:#EEF1F4;--surface:#FFFFFF;--surface-2:#F5F7F9;--sidebar:#E9EDF1;
-  --ink:#0F1B2D;--ink-2:#4A5568;--ink-3:#6B7685;
-  --line:#DDE2E8;--rule-strong:#C7CED8;
-  --seal:#8C1D2C;--seal-hover:#731724;--seal-soft:#F6E7EA;--on-seal:#FFFFFF;
+  --bg:#FDFCFB;--surface:#FFFFFF;--surface-2:#EFE8E3;--sidebar:#F6F2EF;
+  --ink:#4D3533;--ink-2:#827170;--ink-3:#8F7F7D;
+  --line:#E6DFDB;--rule-strong:#D3C8C3;
+  --seal:#4D3533;--seal-hover:#3A2826;--seal-soft:#EFE8E3;--on-seal:#FFFFFF;
   --ok:#2F7D6B;--ok-soft:#E3F1ED;--warn:#8A5A00;--warn-soft:#FBF0D9;--danger:#A1271C;--danger-soft:#F9E5E2;
-  --hover:rgba(15,27,45,.055);--pressed:rgba(15,27,45,.09);
-  --shadow-pop:0 1px 2px rgba(15,27,45,.06),0 8px 24px rgba(15,27,45,.10);
-  --chart-grid:#DDE2E8;--chart-axis:#4A5568;--chart-tooltip:#FFFFFF;
+  --hover:rgba(77,53,51,.055);--pressed:rgba(77,53,51,.09);
+  --shadow-pop:0 1px 2px rgba(77,53,51,.06),0 8px 24px rgba(77,53,51,.10);
+  --chart-grid:#E6DFDB;--chart-axis:#827170;--chart-tooltip:#FFFFFF;
   color-scheme:light;
 }
 :root[data-theme="dark"]{
-  --bg:#0E141C;--surface:#151D28;--surface-2:#1B2531;--sidebar:#111821;
-  --ink:#E8ECF2;--ink-2:#AAB4C3;--ink-3:#7F8A9A;
-  --line:#2A3646;--rule-strong:#455268;
-  --seal:#D4616F;--seal-hover:#E47783;--seal-soft:#3A2029;--on-seal:#0E141C;
+  --bg:#241B1A;--surface:#2F2322;--surface-2:#3A2C2A;--sidebar:#2A201F;
+  --ink:#F6F2EF;--ink-2:#CDBFBA;--ink-3:#A3938F;
+  --line:#4A3A38;--rule-strong:#6A5753;
+  --seal:#EBDDD7;--seal-hover:#FDFCFB;--seal-soft:#443230;--on-seal:#241B1A;
   --ok:#65B6A1;--ok-soft:#16302B;--warn:#E0B25C;--warn-soft:#33280F;--danger:#EE7B6F;--danger-soft:#3A1C19;
-  --hover:rgba(232,236,242,.06);--pressed:rgba(232,236,242,.10);
+  --hover:rgba(246,242,239,.06);--pressed:rgba(246,242,239,.10);
   --shadow-pop:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35);
-  --chart-grid:#455268;--chart-axis:#B8C3D1;--chart-tooltip:#1B2531;
+  --chart-grid:#6A5753;--chart-axis:#CDBFBA;--chart-tooltip:#3A2C2A;
   color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0E141C;--surface:#151D28;--surface-2:#1B2531;--sidebar:#111821;
-    --ink:#E8ECF2;--ink-2:#AAB4C3;--ink-3:#7F8A9A;
-    --line:#2A3646;--rule-strong:#455268;
-    --seal:#D4616F;--seal-hover:#E47783;--seal-soft:#3A2029;--on-seal:#0E141C;
+    --bg:#241B1A;--surface:#2F2322;--surface-2:#3A2C2A;--sidebar:#2A201F;
+    --ink:#F6F2EF;--ink-2:#CDBFBA;--ink-3:#A3938F;
+    --line:#4A3A38;--rule-strong:#6A5753;
+    --seal:#EBDDD7;--seal-hover:#FDFCFB;--seal-soft:#443230;--on-seal:#241B1A;
     --ok:#65B6A1;--ok-soft:#16302B;--warn:#E0B25C;--warn-soft:#33280F;--danger:#EE7B6F;--danger-soft:#3A1C19;
-    --hover:rgba(232,236,242,.06);--pressed:rgba(232,236,242,.10);
+    --hover:rgba(246,242,239,.06);--pressed:rgba(246,242,239,.10);
     --shadow-pop:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35);
-    --chart-grid:#455268;--chart-axis:#B8C3D1;--chart-tooltip:#1B2531;
+    --chart-grid:#6A5753;--chart-axis:#CDBFBA;--chart-tooltip:#3A2C2A;
     color-scheme:dark;
   }
 }
@@ -76,7 +76,7 @@
 .app-shell.macos-workspace :is(.primary,.secondary){min-height:var(--control-h);padding:0 12px;font-size:13px;font-weight:500;border-radius:var(--radius-s)}
 .app-shell.macos-workspace .primary{background:var(--seal)!important;border:1px solid var(--seal)!important;color:var(--on-seal)!important}
 .app-shell.macos-workspace .primary:hover:not(:disabled){background:var(--seal-hover)!important;border-color:var(--seal-hover)!important}
-.app-shell.macos-workspace .secondary{background:var(--surface)!important;border:1px solid var(--rule-strong)!important;color:var(--ink)!important;box-shadow:0 1px 0 rgba(15,27,45,.04)}
+.app-shell.macos-workspace .secondary{background:var(--surface)!important;border:1px solid var(--rule-strong)!important;color:var(--ink)!important;box-shadow:0 1px 0 rgba(77,53,51,.04)}
 .app-shell.macos-workspace .secondary:hover:not(:disabled){background:var(--surface-2)!important}
 .app-shell.macos-workspace :is(.primary,.secondary):disabled{background:var(--surface-2)!important;border-color:var(--line)!important;color:var(--ink-3)!important;box-shadow:none}
 .app-shell.macos-workspace .text-button{min-height:var(--control-h-s);padding:0 6px;margin-inline:-6px;color:var(--seal)!important;font-size:13px;font-weight:500;background:transparent}
@@ -179,7 +179,7 @@
 .app-shell.macos-workspace .citation-link{color:var(--seal)!important}
 
 /* ---------- Composer ---------- */
-.app-shell.macos-workspace .composer.lex-prompt-bar{padding:10px 10px 8px 14px;background:var(--surface);border:1px solid var(--rule-strong);border-radius:var(--radius-l);box-shadow:0 1px 2px rgba(15,27,45,.05);color:var(--ink)}
+.app-shell.macos-workspace .composer.lex-prompt-bar{padding:10px 10px 8px 14px;background:var(--surface);border:1px solid var(--rule-strong);border-radius:var(--radius-l);box-shadow:0 1px 2px rgba(77,53,51,.05);color:var(--ink)}
 .app-shell.macos-workspace .composer.lex-prompt-bar:focus-within{border-color:color-mix(in oklab,var(--seal) 45%,var(--rule-strong));box-shadow:0 0 0 3px color-mix(in oklab,var(--seal) 14%,transparent)}
 .app-shell.macos-workspace .composer.lex-prompt-bar textarea#question{min-height:40px;padding:6px 0;margin:0 0 6px;border:0;background:transparent;color:var(--ink);font:400 14px/22px var(--font-ui)!important}
 .app-shell.macos-workspace .composer.lex-prompt-bar textarea#question:focus-visible{outline:0!important}
