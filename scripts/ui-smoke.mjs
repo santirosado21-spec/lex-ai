@@ -52,6 +52,9 @@ try {
  await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
  await expect(page.locator('.app-cover-logo .cover-logo-r')).toBeVisible();
  assert.equal(await page.locator('.app-cover img[src*="lex-cover"]').count(),0);
+ assert.equal(await page.getByRole('figure',{name:'Portada de Rejon.AI'}).count(),1);
+ const heroColors=await page.evaluate(()=>{const g=s=>getComputedStyle(document.querySelector(s));return {bg:g('.app-cover').backgroundColor,r:g('.cover-logo-r').fill,dot:g('.cover-logo-dot').fill}});
+ assert.deepEqual(heroColors,{bg:'rgb(15, 27, 45)',r:'rgb(247, 248, 250)',dot:'rgb(224, 86, 106)'});
  await page.screenshot({path:'artifacts/ui-app-cover.png',fullPage:true});
  await page.setViewportSize({width:390,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);

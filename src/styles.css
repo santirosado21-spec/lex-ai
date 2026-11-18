@@ -501,12 +501,20 @@ body .app-shell.macos-workspace>.sidebar .sidebar-bottom>p{color:var(--rail-mute
 @media (prefers-color-scheme:light){:root:not([data-theme='dark']) body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-light{display:none}:root:not([data-theme='dark']) body .app-shell.macos-workspace>.sidebar .brand-mark .theme-mark-dark{display:block}}
 
 .app-cover-logo,.app-cover.app-cover-logo figcaption{background:#0F1B2D;color:#EEF1F4}
-.cover-logo-stage{flex:1;min-height:630px;display:flex;align-items:center;justify-content:center}
+.app-cover.app-cover-logo{overflow:visible}
+.cover-logo-stage{flex:1;min-height:630px;display:flex;align-items:flex-start;justify-content:center}
+.cover-logo-svg{position:sticky;top:max(96px,calc(50vh - 120px))}
+.app-cover.app-cover-logo figcaption{position:sticky;bottom:0}
 .cover-logo-svg{width:min(34%,190px);min-width:96px;height:auto;overflow:visible}
 .cover-logo-r{fill:#f7f8fa;transform-origin:50% 50%;animation:cover-r-in 900ms cubic-bezier(.2,.7,.2,1) both}
-.cover-logo-dot{fill:#e0566a;animation:cover-dot-in 700ms 700ms cubic-bezier(.3,1.4,.5,1) both,cover-dot-pulse 4.5s 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.cover-logo-dot{fill:#e0566a;animation:cover-dot-in 500ms 400ms cubic-bezier(.2,.7,.2,1) both,cover-dot-pulse 4.5s 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes cover-r-in{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes cover-dot-in{from{opacity:0;transform:translateY(-14px) scale(.4)}to{opacity:1;transform:none}}
-@keyframes cover-dot-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.28);opacity:.82}}
-@media(max-width:900px){.cover-logo-stage{min-height:0;height:170px}.cover-logo-svg{width:84px;min-width:0}}
+@keyframes cover-dot-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media(max-width:900px){.cover-logo-stage{min-height:0;height:170px;align-items:center}.cover-logo-svg{width:84px;min-width:0;position:static}.app-cover.app-cover-logo figcaption{position:static}}
 @media(prefers-reduced-motion:reduce){.cover-logo-r,.cover-logo-dot{animation:none}}
+:root[data-theme='dark'] .onboarding.onboarding-with-cover{background:var(--bg)}
+:root[data-theme='dark'] .onboarding-with-cover .onboarding-intro h1{color:var(--ink)}
+:root[data-theme='dark'] .onboarding-with-cover .onboarding-intro>p,:root[data-theme='dark'] .app-cover-steps,:root[data-theme='dark'] .onboarding-with-cover .onboarding-form .privacy-caption{color:var(--ink-2)}
+:root[data-theme='dark'] .app-cover-steps li[aria-current=step]{color:var(--ink)}
+:root[data-theme='dark'] .onboarding-with-cover .onboarding-form{border-top-color:var(--line)}
