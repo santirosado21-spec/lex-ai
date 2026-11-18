@@ -278,8 +278,11 @@ export function splitForLaw(lawId){const bucket=parseInt(digest('lex-law-split-v
 const ARTICLE=/^[ \t]*(?:ART[ÍI]CULO|Art[íi]culo|ART\.|Art\.)\s+(\d+)(?:(?:[oº°]|\/o)(?=\s|[.\-]))?(?:[.](?=[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)\b|[ \t]*-[ \t]*(?:[A-ZÑ]|\d+)(?:[ \t]+(?:BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS))?[.\-]))?(?:[ \t]*[-–][ \t]*(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS|[A-ZÑ]|\d+))?(?:[ \t]+(BIS|TER|QU[ÁA]TER|QUATER|QUINQUIES|QUINTUS|SEXIES|SEXTUS|SEPTIES|SEPTIMUS|OCTIES|NONIES|NONUS|DECIES|UNDECIES|DUODECIES|DUODECIMUS)(?:(?:[ \t-]+|\.[ \t]+)((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?)?(?:[ \t]*[-–][ \t]*((?:[IVXL]+)|\d+)(?=[ \t]*[.\-]))?[ \t]*(?:[.:]|[-–](?![A-Za-zÑñ\d])|[ \t]+\((?=(?:DEROGADO|REFORMADO|ADICIONADO)\b))/i;
 const amendment=/^(?:Art[íi]culo|P[áa]rrafo|Fracci[óo]n|Inciso|Numeral|Apartado|Cap[íi]tulo|Secci[óo]n|Denominaci[óo]n|T[íi]tulo)\b.*\b(?:reformad[oa]|adicionad[oa]|derogad[oa]|recorrid[oa])\b.*\bDOF\b/i;
 const section=/^(?:LIBRO|T[IÍ]TULO|CAP[IÍ]TULO|SECCI[ÓO]N|SUBSECCI[ÓO]N)\s+(?:[IVXLCDM]+|\d+|PRIMER[OA]|SEGUND[OA]|TERCER[OA]?|CUART[OA]|QUINT[OA]|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO|[ÚU]NIC[OA])\b/i;
-const transitory=/^(?:ART[IÍ]CULOS?\s+)?TRANSITORIOS?\s*[.:]?$/i;
-const editorialLine=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con art[íi]culo transitorio|[A-Za-zÁÉÍÓÚáéíóúñÑ ]+ (?:reformado|adicionado|derogado) DOF)\b/i;
+const transitory=/^(?:ART[IÍ]CULOS?\s+)?T\s*R\s*A\s*N\s*S\s*I\s*T\s*O\s*R\s*I\s*O\s*S?\s*[.:]?$/i;
+const editorialLineBase=/^(?:Reforma DOF|Fe de erratas|Art[íi]culo vinculado con art[íi]culo transitorio|[A-Za-zÁÉÍÓÚáéíóúñÑ ]+ (?:reformado|adicionado|derogado) DOF)\b/i;
+// Ley Aduanera-style amounts-update notes ('Multa de la fracción actualizada DOF …', 'Cantidades actualizadas DOF …') and their wrapped date-list continuation lines are editorial, never body.
+const dofUpdateNote=/^(?:(?:Multas?|Cantidad(?:es)?|Montos?)(?: (?:de la|del|de los|de las) [a-zA-Záéíóúñ]+)? actualizad[ao]s?(?: por [a-záéíóúñ ]+)? DOF\b|Multa DOF\b|por DOF \d{2}-\d{2}-\d{4}[^)]*\)$|\d{2}-\d{2}-\d{4}(?:,\s*\d{2}-\d{2}-\d{4})*[,.]?(?:\s+.*\bDOF\b.*)?$)/i;
+const editorialLine={test:text=>editorialLineBase.test(text)||dofUpdateNote.test(text)};
 const reformNote=/^\((?:REFORMADO|ADICIONADO|DEROGADO)/i;
 const headingPre=/^(?:ART[IÍ]CULO|Art[íi]culo|ART\.|Art\.)\s/;
 // Spelled-out ordinal headings in older official PDFs ("ARTICULO PRIMERO.-", "ARTICULOS PRIMERO A OCTAVO.-"). Fail-closed: all-caps ARTICULO(S) only (body references like "el artículo primero de esta ley" never match), a strict terminator, only while no numeric article has opened, and strictly sequential from the previous ordinal. Unknown ordinal words never match.
@@ -430,7 +433,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApp
       if(laterOne>=0&&seen.has(String(1))===false&&!lines.slice(li+1,li+1+laterOne).some(l=>transitory.test(l.text)&&false)){
         finish();const dropped=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'decree-transitory'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
         documentAnomalies.push('decree-preface-transitory-skipped:'+dropped+'-preface-candidates-dropped');coverage.decreePrefaceSkippedAtPage=line.page;continue;}
-      finish();coverage.transitoryStartPage=line.page;coverage.transitoryStartLine=li;ended=true;break;}
+      finish();coverage.transitoryStartPage=line.page;coverage.transitoryStartLine=li;coverage.transitoryPagesNotStructured=pages.length-line.page+1;ended=true;break;}
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
