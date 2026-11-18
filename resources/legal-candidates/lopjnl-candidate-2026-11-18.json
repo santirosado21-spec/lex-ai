@@ -1,0 +1,41 @@
+{
+ "schemaVersion": 1,
+ "status": "candidate-not-adopted-pending-QA",
+ "lawId": "MX-NLE-LOPJ",
+ "title": "Ley Orgánica del Poder Judicial del Estado de Nuevo León",
+ "officialUrl": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/pdf/LEY%20ORGANICA%20DEL%20PODER%20JUDICIAL%20DEL%20ESTADO%20DE%20NUEVO%20LEON.pdf",
+ "officialPage": "https://www.hcnl.gob.mx/trabajo_legislativo/leyes/leyes/ley_organica_del_poder_judicial_del_estado_de_nuevo_leon/",
+ "authority": "H. Congreso del Estado de Nuevo León",
+ "retrievedAt": "2026-11-18T06:03:23.038Z",
+ "httpStatus": 200,
+ "robotsHttpStatus": 200,
+ "robotsRule": "User-agent * Allow /",
+ "pdfSha256": "92e3bcdd4a57bb721240fefda5577d961717404b8be0b59dab65b539fae73aec",
+ "pdfBytes": 406742,
+ "pdfPages": 61,
+ "pdfPath": "artifacts/legal-candidates/lopjnl-2026-11-18/snapshots/lopjnl/92e3bcdd4a57bb721240fefda5577d961717404b8be0b59dab65b539fae73aec.pdf (not committed)",
+ "textExtraction": {
+  "tool": "pdftotext -layout",
+  "textSha256": "97229fac87f21bfffbc6bf52e8e8efd0d8e0a7323b97e841afed3eda6daf0b25",
+  "characters": 147490
+ },
+ "publisherDeclaredLastReform": "P.O. 70, 20 de mayo de 2022",
+ "licenseBasis": "No site terms of use found on the publisher page (only privacy notices). Same statutory-text reuse basis the project applies to official legislative text (LFDA art. 14 VIII); not an individualized license opinion.",
+ "validation": {
+  "distinctArticleHeadings": 155,
+  "first": 1,
+  "last": 155,
+  "gapsInSequence": [],
+  "numberingResetsInDecreeSections": 3,
+  "hasTransitorios": true,
+  "relevantProvision": "Art. 36 Bis 8 names the oral mercantile trial judges (jurisdiction text not analyzed)",
+  "notChecked": [
+   "independent comparison with the Periódico Oficial",
+   "whether reforms after the declared 2022 date exist",
+   "currentness",
+   "fidelity sample",
+   "identity of articles inside transitory decree sections (same ambiguity that excluded MX-NLE-CPC from the state release)"
+  ]
+ },
+ "limits": "Candidate in a separate area. Not in the frozen state library, not used by the app. Currentness not verified; the publisher's own date is 2022."
+}
