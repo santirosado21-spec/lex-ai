@@ -452,6 +452,10 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
         if(j>=0){
           current=null;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'restart-before-art1'})));seen.clear();started=false;numericStarted=false;lastOrd=0;
           documentAnomalies.push('preface-operative-candidates-dropped-restart-before-art1');coverage.restartBeforeArt1Page=line.page;li=li+j;continue;}}
+      if(seen.has(articleId)&&articleId==='1'&&lines.slice(0,li).some(l=>/^CONSIDERANDO\b/i.test(l.text))&&lines.slice(li+1,li+601).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*[.\-]/.test(l.text))&&lines.slice(li+1).filter((l,k)=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*[.\-]/.test(l.text)&&lines.slice(li+2+k,li+602+k).some(m=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*[.\-]/.test(m.text))).length===0){
+        // A dictamen (CONSIDERANDO) quoted article 1 before the real law restarted at article 1 followed by article 2 (and no later article 1 candidate makes the choice ambiguous): the earlier candidates are quotations.
+        prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'dictamen-quoted-article-restart-at-1'})));seen.clear();lastOrd=0;
+        documentAnomalies.push('preface-quoted-candidates-dropped-dictamen-restart-at-art1');coverage.restartAtArt1Page=line.page;}
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}
       current={articleId,lines:[line],editorial:[]};continue;}
     if(!match&&!current&&!seen.has('1')&&ordinalMarkV37.test(line.text)&&Number(ordinalMarkV37.exec(line.text)[1])===1){

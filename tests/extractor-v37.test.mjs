@@ -62,3 +62,21 @@ test('ambiguous period-style quotations (two candidate article 1 headings, both 
   assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
   assert.ok(!r.documentAnomalies.includes('preface-operative-candidates-dropped-restart-before-art1'));
 });
+const dictamen='CONSIDERANDO\nArtículo 1. Las disposiciones de la presente Ley son de orden público y de interés general.\nArtículo 3. Las dependencias del estado relacionadas con el tema colaborarán entre sí.\nArtículo 8. La víctima podrá solicitar ser examinada por un perito independiente.\n\f';
+const realLaw='LEY NÚMERO 2 DE PRUEBA\nCAPÍTULO I\nArtículo 1. Las disposiciones de la presente Ley son de orden público y de interés general.\nArtículo 2. Para los efectos de esta Ley, se entenderá por víctima a la persona afectada.\nArtículo 3. Las dependencias del estado relacionadas con el tema colaborarán entre sí.\nArtículo 4. La autoridad aplicará esta Ley en el ámbito de su competencia.\n';
+test('dictamen that quotes article 1 before the real law restarts at article 1 keeps the whole law (real shape: gro-ley-053)',()=>{
+  const r=run(dictamen+realLaw);
+  assert.deepEqual(arts(r),['1','2','3','4']);
+  assert.ok(r.documentAnomalies.includes('preface-quoted-candidates-dropped-dictamen-restart-at-art1'));
+  assert.ok(!r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+  assert.equal(r.coverage.prefaceRecordsPreserved,3);
+});
+test('control: the same restart at article 1 without a CONSIDERANDO dictamen still stops (no silent drop of earlier law text)',()=>{
+  const r=run(dictamen.replace('CONSIDERANDO\n','Texto previo sin dictamen.\n')+realLaw);
+  assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+});
+test('dictamen quoting article 1 twice before the real law is ambiguous: no guess, the stop is kept',()=>{
+  const d='CONSIDERANDO\nArtículo 1. Las disposiciones citadas del dictamen son de orden público.\nArtículo 2. Para los efectos citados se entenderá por afectado a la persona.\nArtículo 1. Las disposiciones citadas del dictamen son de orden público.\nArtículo 2. Para los efectos citados se entenderá por afectado a la persona.\n\f';
+  const r=run(d+realLaw);
+  assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+});
