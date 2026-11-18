@@ -8,6 +8,7 @@ import {canonicalJson} from './canonical-json.mjs';
 import {privacyTextHash, segmentsFromEnvelope, validPrivacyScope, createProvenanceRegistry} from './privacy/provenance.mjs';
 import {createLocalPrivacyDetector} from './privacy/detector.mjs';
 import {createVariantAwareDetector} from './privacy/detector-variants.mjs';
+import {createModelAdditiveDetector} from './privacy/detector-model-additive.mjs';
 import {verifyDetectorEligibility} from './privacy/eligibility.mjs';
 
 const failure = code => Object.assign(new Error('Ruta de nube no disponible para esta solicitud.'), {name:'CloudRouteError', code});
@@ -46,13 +47,16 @@ function entitiesFor(segments, detections) {
 const DETECTORS = Object.freeze({
  baseline:{create:createLocalPrivacyDetector, extraSources:[]},
  variants:{create:createVariantAwareDetector, extraSources:['server/privacy/detector-variants.mjs']},
+ model:{create:null, extraSources:['server/privacy/detector-variants.mjs', 'server/privacy/detector-model-additive.mjs', 'server/privacy/token-ner-composition-v2.mjs']},
 });
 
-export function createPseudonymizedCloudRoute({detector:detectorName = 'baseline', pseudonyms, provider, grants, destination = 'openai', evaluation = null} = {}) {
+// detector:'model' needs localModel: the local token-NER backend (supplied by the caller; no weights are loaded here).
+export function createPseudonymizedCloudRoute({detector:detectorName = 'baseline', localModel = null, pseudonyms, provider, grants, destination = 'openai', evaluation = null} = {}) {
  const entry = Object.hasOwn(DETECTORS, detectorName) ? DETECTORS[detectorName] : null;
+ if (detectorName === 'model' && typeof localModel?.detect !== 'function') throw failure('invalid_configuration');
  if (!entry || typeof pseudonyms?.protect !== 'function' || typeof provider?.generate !== 'function' || typeof grants?.policy !== 'function' || !identifier(destination)) throw failure('invalid_configuration');
  const provenance = createProvenanceRegistry();
- const detector = entry.create({provenanceRegistry:provenance});
+ const detector = detectorName === 'model' ? createModelAdditiveDetector({provenanceRegistry:provenance, backend:localModel}) : entry.create({provenanceRegistry:provenance});
  const eligibility = () => evaluation ? verifyDetectorEligibility({root:evaluation.root, detectorVersion:detector.version, extraSources:entry.extraSources, record:evaluation.record}) : {eligible:false, reason:'missing_record'};
  let validated = eligibility().eligible;
  const pending = new Map();
