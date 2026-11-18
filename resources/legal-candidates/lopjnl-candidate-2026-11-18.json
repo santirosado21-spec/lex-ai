@@ -35,7 +35,10 @@
    "currentness",
    "fidelity sample",
    "identity of articles inside transitory decree sections (same ambiguity that excluded MX-NLE-CPC from the state release)"
-  ]
+  ],
+  "eligibilityCondition": "Not eligible for adoption as is: the ordinal transitory articles (e.g. 'Artículo Primero/Segundo') repeat identity across 3 decree blocks. Before adoption, isolate transitorios by decree block or exclude them with documentation. The standard is not changed to admit the body.",
+  "currentness": "Only the publisher's own declared date (P.O. 70, 20-05-2022). No later Periódico Oficial checked; not verified as current."
  },
- "limits": "Candidate in a separate area. Not in the frozen state library, not used by the app. Currentness not verified; the publisher's own date is 2022."
+ "limits": "Candidate in a separate area. Not in the frozen state library, not used by the app. Currentness not verified; the publisher's own date is 2022.",
+ "qaNote": "Independent QA confirmed bytes, extraction and the 155 body articles; flagged the transitory identity repetition."
 }
