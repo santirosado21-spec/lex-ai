@@ -1,7 +1,7 @@
 // Opt-in H2 prototype. No production wiring, network, detector or tool execution.
 import {canonicalJson} from './canonical-json.mjs';
 
-const CATEGORIES = ['public', 'synthetic'];
+const CATEGORIES = ['public', 'synthetic', 'pseudonymized'];
 const SCOPE_KEYS = ['workspaceId', 'matterId', 'threadId'];
 const identifier = value => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,79}$/.test(value);
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);

@@ -6,7 +6,8 @@
 // only when the caller names scope AND destination AND the egress gate grants
 // that exact envelope; without a grant the request fails closed and is NEVER
 // retried locally or against another destination. The 'pseudonymized' category
-// does not exist here: only the gate's 'public'/'synthetic' categories pass.
+// is granted only through server/cloud-route.mjs, which requires a validated
+// detector attestation; plain callers still cannot mint that category.
 import {createEgressPolicy} from './egress-policy.mjs';
 
 const failure = code => Object.assign(new Error('Ruta de generación no disponible.'), {name:'GenerationGatewayError', code});
