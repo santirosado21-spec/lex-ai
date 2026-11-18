@@ -80,3 +80,11 @@ test('dictamen quoting article 1 twice before the real law is ambiguous: no gues
   const r=run(d+realLaw);
   assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
 });
+test('ordinal-mark headings (1o.-, 2o.-) after a dictamen that quotes later articles: the preface is dropped and the real law is kept (real shape: gro-ley-032)',()=>{
+  const d='CONSIDERANDOS\nARTÍCULO 20.- La Comisión Intersecretarial de Cultura es una Comisión de carácter permanente.\nARTÍCULO 8º. …\nARTÍCULO 11. …\n\f';
+  const law='LEY DE PRUEBA\nARTÍCULO 1o.- El objeto de esta Ley es regular las políticas, programas y acciones culturales.\nARTÍCULO 2o.- Las disposiciones de esta Ley son de orden público e interés social.\nARTÍCULO 3o.- La cultura es creación y patrimonio de la sociedad y su desarrollo.\nARTÍCULO 8o.- Para los efectos de la presente Ley se entenderá como cultura lo dicho.\nARTÍCULO 11.- Se crea el consejo de cultura del estado de Guerrero.\n';
+  const r=run(d+law);
+  assert.deepEqual(arts(r),['1','2','3','8','11']);
+  assert.ok(!r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+  assert.ok(r.coverage.prefaceRecordsPreserved>=1);
+});

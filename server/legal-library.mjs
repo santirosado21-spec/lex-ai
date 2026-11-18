@@ -416,7 +416,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
     if(current&&/^Nota\s*:/i.test(line.text)){current.note=true;current.anomalies=['publisher-note-requires-manual-segmentation'];current.editorial.push(line.text);continue;}
     const match=headingPre.test(line.text)?ARTICLE.exec(line.text):null;
     if(current?.note&&(!match||Number(match[1])<=Number(current.articleId.split('-')[0]))){current.editorial.push(line.text);continue;}
-    if(match&&started&&current&&match[1]==='1'&&!match[2]&&current.articleId!=='1'&&(records[0]?.articleId??current.articleId)!=='1'&&lines.slice(li+1,li+1500).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*[.\-]/.test(l.text))){
+    if(match&&started&&current&&match[1]==='1'&&!match[2]&&current.articleId!=='1'&&(records[0]?.articleId??current.articleId)!=='1'&&lines.slice(li+1,li+1500).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*[.\-]/.test(l.text))){
       // v36: operative numbering never began at article 1 (document opened on a quoted/preface article) and a heading for article 1 now appears followed by article 2: the earlier candidates are preface quotations.
       finish();const dropped=records.length;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'quoted-article'})));current=null;seen.clear();started=false;numericStarted=false;lastOrd=0;
       documentAnomalies.push('preface-quoted-article-candidates-dropped:'+dropped);}
