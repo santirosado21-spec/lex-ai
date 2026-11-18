@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {validateGroundedOutput,settleText,TEXT_CAP} from '../server/grounded-output.mjs';
 import {validateMixedOutput} from '../server/grounded-output-mixed.mjs';
-import {generateValidated,RETRY_INSTRUCTION,INCOMPLETE_MESSAGE} from '../server/bounded-generation.mjs';
+import {generateValidated,RETRY_INSTRUCTION,INCOMPLETE_MESSAGE,TIMEOUT_MESSAGE} from '../server/bounded-generation.mjs';
 const quote='Artículo 1797. La validez y el cumplimiento del contrato no pueden dejarse al arbitrio de uno de los contratantes.';
 const evidence=[{id:'L1',text:quote,allowedQuotes:[quote]}];
 const first='El artículo 1797 describe un límite al arbitrio de los contratantes en el contrato.';
@@ -66,4 +66,23 @@ test('retry: aborted signal is honored and engine output over the character budg
  const ac=new AbortController();ac.abort();
  await assert.rejects(generateValidated({generate:engine([raw(okText)]).generate,validate,messages,signal:ac.signal}),/cancelado/);
  await assert.rejects(generateValidated({generate:engine(['x'.repeat(100)]).generate,validate,messages,maxChars:50}),/límite de salida/);
+});
+
+test('shared budget: the retry cannot start after the cycle deadline and the character budget is shared',async()=>{
+ let t=0;const now=()=>t;
+ const slow=engine([raw(cut(first))]);
+ const gen=async function*(turn,o){t+=100;yield* slow.generate(turn,o);};
+ await assert.rejects(generateValidated({generate:gen,validate,messages,deadlineMs:100,now}),new RegExp(TIMEOUT_MESSAGE));
+ assert.equal(slow.calls.length,1);
+ const e=engine([raw(cut(first))]);const size=raw(cut(first)).length;
+ await assert.rejects(generateValidated({generate:e.generate,validate,messages,maxChars:size+10}),/límite de salida/);
+ assert.equal(e.calls.length,2);
+});
+test('shared budget: a slow engine is aborted at the deadline and a caller abort mid-stream stops without retry',async()=>{
+ const hang=async function*(turn,o){await new Promise((_,rej)=>o.signal.addEventListener('abort',()=>rej(Object.assign(new Error('aborted'),{name:'AbortError'}))));yield 'x';};
+ await assert.rejects(generateValidated({generate:hang,validate,messages,deadlineMs:40}),new RegExp(TIMEOUT_MESSAGE));
+ const ac=new AbortController();let calls=0;
+ const mid=async function*(turn,o){calls++;setTimeout(()=>ac.abort(),10);await new Promise((_,rej)=>o.signal.addEventListener('abort',()=>rej(new Error('aborted'))));yield 'x';};
+ await assert.rejects(generateValidated({generate:mid,validate,messages,signal:ac.signal}),/cancelado\./);
+ assert.equal(calls,1);
 });
