@@ -40,3 +40,23 @@ test('letter-spaced Transitorios heading ends the last article; amounts-update n
   assert.equal(r.coverage.transitoryStartPage,1);
   assert.equal(r.coverage.transitoryPagesNotStructured,1,'coverage records how many pages from the boundary on were not structured');
 });
+
+test('feminine ordinal section headings (Sección Séptima ...) are not glued to the end of the previous article',async()=>{
+  const lines=[
+   'REGLAMENTO SINTETICO DE PRUEBA',
+   'Articulo 1. Este reglamento sintetico regula operaciones ficticias de prueba en el territorio nacional.',
+   'Articulo 2. Los avisos ficticios se presentaran en los terminos que se establezca mediante Reglas.',
+   'Seccion Septima',
+   'Via Postal',
+   'Articulo 3. Las operaciones por via postal ficticia se sujetaran a las Reglas que emita la autoridad.',
+   'Seccion Novena',
+   'Otros Medios de Conduccion',
+   'Articulo 4. Los medios de conduccion ficticios se senalaran mediante Reglas de la autoridad sintetica.',
+   'T r a n s i t o r i o s',
+   'Primero. Este reglamento sintetico entrara en vigor al dia siguiente de su publicacion ficticia.',
+  ];
+  const dir=await mkdtemp(path.join(os.tmpdir(),'lex-sec-'));const f=path.join(dir,'s.pdf');await writeFile(f,pdf(lines));
+  const r=await parsePdfInWorker(f,{lawId:'synthetic-sec-law',url:'https://example.invalid/s',title:'REGLAMENTO SINTETICO DE PRUEBA'},{pdfSha256:'4'.repeat(64),retrievedAt:'2026-11-18T00:00:00Z'});
+  assert.deepEqual(r.records.map(x=>x.articleId),['1','2','3','4']);
+  for(const rec of r.records)assert.ok(!/Seccion|Via Postal|Otros Medios/.test(rec.text),rec.articleId+': '+rec.text);
+});
