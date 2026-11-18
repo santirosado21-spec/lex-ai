@@ -15,6 +15,19 @@ export function buildGroundedSchema(evidence){
  const sources=citeableEvidence(evidence);if(!sources.length)throw Error('No hay citas aprobadas suficientes para generar.');
  return {type:'object',additionalProperties:false,required:['paragraphs'],properties:{paragraphs:{type:'array',minItems:Math.min(2,sources.length),maxItems:3,items:{anyOf:sources.map(({source,quotes})=>({type:'object',additionalProperties:false,required:['sourceId','quote','text'],properties:{sourceId:{type:'string',const:source.id},quote:{type:'string',enum:quotes},text:{type:'string',minLength:40,maxLength:350},kind:{type:'string',enum:[...KINDS]}}}))}}}};
 }
+// Constrained decoding stops a paragraph exactly at the schema cap (350 characters), often mid-sentence.
+// Punctuation does not prove the meaning is complete (a final caveat may be gone), so a paragraph that
+// reached the cap, or ends near it without closing a sentence, is never shown, trimmed or repaired:
+// it is rejected with TRUNCATED_TEXT so the caller can retry once and then fail explicitly.
+export const TEXT_CAP=350,NEAR_CAP=330;
+const OPEN_ABBREVIATION=/(?:^|[\s(])(?:art|arts|fr|frac|fracc|inc|n[uú]m|n[oº°]|p[aá]rr|cap|t[ií]t|secc|dr|dra|lic|sr|sra|vs|p|pp|ej)\.[\s"'»”)\]]*$/i;
+export function truncatedTextError(){const error=Error('Respuesta incompleta: el modelo se cortó al llegar al límite de longitud.');error.code='TRUNCATED_TEXT';return error;}
+export function settleText(text){
+ if(typeof text!=='string')return text;
+ const closed=/[.!?…][\s"'»”)\]]*$/.test(text)&&!OPEN_ABBREVIATION.test(text);
+ if(text.length>=TEXT_CAP-1||text.length>=NEAR_CAP&&!closed)throw truncatedTextError();
+ return text;
+}
 const numberWords=new Set('cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciséis dieciseis diecisiete dieciocho diecinueve veinte veintiuno veintidós veintidos veintitrés veintitres veinticuatro veinticinco veintiséis veintiseis veintisiete veintiocho veintinueve treinta cuarenta cincuenta sesenta setenta ochenta noventa cien ciento doscientos trescientos cuatrocientos quinientos seiscientos setecientos ochocientos novecientos mil millón millon millones primero segundo tercero cuarto quinto sexto séptimo septimo octavo noveno décimo decimo enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre'.split(' '));
 // "veinte" in the law and "20" in the explanation are the same claim.
 const CARDINALS=Object.entries({cero:0,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,'dieciséis':16,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veintiuno:21,'veintidós':22,veintidos:22,'veintitrés':23,veintitres:23,veinticuatro:24,veinticinco:25,'veintiséis':26,veintiseis:26,veintisiete:27,veintiocho:28,veintinueve:29,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100});
@@ -49,6 +62,7 @@ export function validateGroundedOutput(raw,evidence){
   // Control characters are a format integrity failure; a paragraph that is too
   // short/long or carries an inline [ID] is only unusable, so callers may drop it.
   if(/[\u0000-\u001f]/.test(p.text))throw Error('Texto con caracteres de controles no admitidos.');
+  settleText(p.text);
   if(p.text.length<40||p.text.length>350||/[\[\]]/.test(p.text))throw unsupported('Texto fuera de límites o con corchetes.');
   // Naming the cited article itself ("el artículo 47") is backed by the
   // source's own metadata, not an invented reference.

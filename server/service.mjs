@@ -1,6 +1,7 @@
 import {registerTimeBilling} from './time-billing.mjs';
 import jurisdictions from '../resources/mexico-jurisdictions.json' with {type:'json'};
 import {buildGroundedSchema,validateGroundedOutput} from './grounded-output.mjs';
+import {generateValidated} from './bounded-generation.mjs';
 import {buildMixedSchema,validateMixedOutput,MIXED_INSTRUCTIONS,EVIDENCE_ABSTENTION} from './grounded-output-mixed.mjs';
 import {createThreadMemory,buildUnifiedContext} from './thread-memory.mjs';
 import { createMatterTasks } from './matter-tasks.mjs';
@@ -667,15 +668,10 @@ ${grounded ? 'Devuelve SOLO JSON: {"paragraphs":[{"sourceId":"ID recibido","quot
     }
     busy=true;const started=Date.now();
     try {
-      let raw='';
-      for await(const chunk of inference.generate(messages,{signal,outputSchema})){
-        if(typeof chunk!=='string')throw new Error('El motor local devolvió un fragmento inválido.');
-        raw+=chunk;if(raw.length>40_000)throw new Error('El modelo superó el límite de salida.');
-      }
-      if(signal?.aborted)throw new Error('Análisis cancelado.');
       let checked;
-      try{checked=automatic?validateMixedOutput(raw,promptEvidence):grounded?validateGroundedOutput(raw,promptEvidence).validated:validateModelOutput(raw,promptEvidence);}
-      catch(error){if(!automatic||error.code!=='UNGROUNDED_CLAIM')throw error;return finishNonGroundedAnswer({m,skill,payload,threadId,text:EVIDENCE_ABSTENTION,status:'abstained-no-relevant-sources',onToken,signal});}
+      try{
+        checked=(await generateValidated({generate:(turn,o)=>inference.generate(turn,{...o,outputSchema}),messages,signal,validate:raw=>automatic?validateMixedOutput(raw,promptEvidence):grounded?validateGroundedOutput(raw,promptEvidence).validated:validateModelOutput(raw,promptEvidence)})).value;
+      }catch(error){if(!automatic||error.code!=='UNGROUNDED_CLAIM')throw error;return finishNonGroundedAnswer({m,skill,payload,threadId,text:EVIDENCE_ABSTENTION,status:'abstained-no-relevant-sources',onToken,signal});}
       const restoreId=id=>{const canonical=canonicalByModelId.get(id);if(!canonical)throw new Error('Identificador de fuente fuera del mapa de esta respuesta.');return canonical;};
       const restored={analysis:checked.text.replace(/\[([^\]\n]+)\]/g,(_,id)=>`[${restoreId(id)}]`),citations:checked.citations.map(c=>({sourceId:restoreId(c.id),quote:c.quote}))};
       const validated=automatic?{...checked,citations:checked.citations.map(c=>({...evidence.find(s=>s.id===restoreId(c.id)),id:c.id,canonicalId:restoreId(c.id),quote:c.quote}))}:validateModelOutput(JSON.stringify(restored),evidence);

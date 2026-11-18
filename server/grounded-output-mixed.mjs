@@ -1,4 +1,4 @@
-import {buildGroundedSchema,validateGroundedOutput,numericClaims} from './grounded-output.mjs';
+import {buildGroundedSchema,validateGroundedOutput,numericClaims,settleText} from './grounded-output.mjs';
 import {escapeLiteralJsonStringControls} from './skills.mjs';
 
 export const EVIDENCE_ABSTENTION='No tengo evidencia suficiente para fundamentar esa respuesta. Comparte la disposición oficial o el documento del asunto y seguimos con la revisión.';
@@ -88,7 +88,7 @@ export function validateMixedOutput(raw,evidence){
   if(!p||typeof p!=='object'||Array.isArray(p))throw Error('Párrafo inválido.');
   if(p.kind==='conversacion'){
    if(Object.keys(p).some(k=>!['kind','text'].includes(k))||typeof p.text!=='string'||p.text.length>350)throw Error('Párrafo conversacional fuera del esquema.');
-   try{rendered.push(validateConversationText(p.text));}catch(e){if(e.code!=='UNGROUNDED_CLAIM')throw e;ungrounded=true;}
+   try{settleText(p.text);rendered.push(validateConversationText(p.text));}catch(e){if(e.code!=='UNGROUNDED_CLAIM')throw e;ungrounded=true;}
   }else{
    const source=evidence.find(s=>s.id===p.sourceId);
    if(!source)throw Error('Fuente o cita no aprobada para este párrafo.');
