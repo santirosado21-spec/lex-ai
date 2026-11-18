@@ -144,9 +144,52 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     return quotes.length?quotes:[fallback];
   }
   const titleKey=value=>normalize(value).replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim();
+  // Plural or list references ("artículos 78 y 1832 del Código de Comercio").
+  // Each list binds only to the law named right after it. A list with an unknown,
+  // missing or ambiguous law returns {unavailable:true}: nothing is substituted.
+  function listedArticleReferences(query){
+    const text=normalize(query)
+      .replace(/\bccf\b/g,'codigo civil federal').replace(/\bcpeum\b/g,'constitucion politica de los estados unidos mexicanos')
+      .replace(/\bconstitucion\b(?! politica)/g,'constitucion politica de los estados unidos mexicanos');
+    const num='\\d{1,6}(?:\\s*-\\s*[a-zñ]\\b|\\s+(?:bis|ter|quater|quinquies)\\b)?';
+    const groupRe=new RegExp('\\b(articulos?|arts?[.]?)\\s+('+num+'(?:\\s*(?:,|\\by\\b|\\be\\b)\\s*'+num+')*)','g');
+    const groups=[...text.matchAll(groupRe)].map(m=>({plural:/s$/.test(m[1])||/^arts\b/.test(m[1]),start:m.index,end:m.index+m[0].length,
+      items:[...m[2].matchAll(new RegExp(num,'g'))].map(x=>x[0].replace(/\s*-\s*/,'-').replace(/\s+/g,'-').toUpperCase())}));
+    if(!groups.length||!(groups.length>1||groups[0].items.length>1||groups[0].plural))return null;
+    const candidates=[...corpus.map(c=>({title:c.title,lawId:null,jurisdiction:c.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(c=>({title:c.title,lawId:c.id,jurisdiction:c.jurisdiction}))];
+    const mentions=segment=>{const k=' '+titleKey(segment)+' ';const out=[];
+      for(const c of candidates){const t=' '+titleKey(c.title)+' ';let at=k.indexOf(t);while(at>=0){out.push({at,len:t.length,c});at=k.indexOf(t,at+1);}}
+      // A longer title that contains a shorter one wins at the same place.
+      return out.filter(a=>!out.some(b=>b!==a&&b.at<=a.at&&b.at+b.len>=a.at+a.len&&b.len>a.len)).sort((a,b)=>a.at-b.at||Number(Boolean(b.c.lawId))-Number(Boolean(a.c.lawId)));};
+    const allLaws=new Set(mentions(text).map(m=>m.c.title));
+    const refs=[];
+    for(let i=0;i<groups.length;i++){
+      const g=groups[i],segment=text.slice(g.end,i+1<groups.length?groups[i+1].start:text.length);
+      const found=mentions(segment);let law;
+      const named=/^\s*(?:,\s*)?(?:de|del)\s+(?:la\s+|el\s+)?(?:codigo|ley|constitucion|reglamento)\b/.test(segment);
+      if(found.length){
+        const first=found[0];
+        // Only the law that starts the segment is bound; a second list inside it means ambiguity.
+        if(/(?:,|\by\b|\be\b)\s*\d{1,6}\b/.test(segment))return {unavailable:true};
+        law=first.c;
+      }else if(named)return {unavailable:true};
+      else if(allLaws.size===1)law=mentions(text)[0].c;
+      else return {unavailable:true};
+      const key=titleKey(law.title);
+      const lawId=law.lawId??(law.jurisdiction==='MX-FED'&&key==='codigo civil federal'?'MX-FED-CCF':null);
+      for(const articleId of g.items)refs.push({lawId,jurisdiction:law.jurisdiction,titleKey:key,articleId});
+    }
+    const seen=new Set();
+    return {multi:true,refs:refs.filter(r=>{const k=r.jurisdiction+'|'+r.titleKey+'|'+r.articleId;if(seen.has(k))return false;seen.add(k);return true;})};
+  }
+  function lookupReference(reference){
+    if(publicLibrary&&reference.lawId&&reference.jurisdiction==='MX-FED'){const found=publicLibrary.lookupArticle?.({lawId:reference.lawId,articleId:reference.articleId});if(found)return [found];}
+    return corpus.filter(s=>s.jurisdiction===reference.jurisdiction&&titleKey(s.title)===reference.titleKey&&titleKey(String(s.article)).replace(/^articulo /,'').replace(/ /g,'-').toUpperCase()===reference.articleId).slice(0,1);
+  }
   function explicitArticleReference(query,jurisdiction){
     const stateReference=stateLibrary?.reference(query);if(stateReference)return stateReference;
     if(requestedLegalJurisdiction(query)?.exactOnly)return {unavailable:true};
+    const listed=listedArticleReferences(query);if(listed)return listed;
     const article=/\b(?:articulo|art[.]?)\s+(\d{1,6})(?:[oº°])?(?:\s*-\s*([a-zñ]|\d+))?(?:\s+(bis|ter|quater|quinquies))?(?:\s*-\s*(\d+))?\b/i.exec(normalize(query));
     if(!article)return null;
     const normalized=' '+titleKey(query)+' ';
@@ -169,6 +212,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     if(reference){
       if(reference.unavailable)return [];
       if(reference.state){const found=stateLibrary.lookupArticle(reference);return found?[found]:[];}
+      if(reference.multi){const all=reference.refs.map(lookupReference);return all.some(a=>!a.length)?[]:all.flat();}
       if(publicLibrary&&reference.lawId&&reference.jurisdiction==='MX-FED'){const found=publicLibrary.lookupArticle?.({lawId:reference.lawId,articleId:reference.articleId});if(found)return [found];}
       return corpus.filter(s=>s.jurisdiction===reference.jurisdiction&&titleKey(s.title)===reference.titleKey&&titleKey(String(s.article)).replace(/^articulo /,'').replace(/ /g,'-').toUpperCase()===reference.articleId).slice(0,1);
     }
@@ -537,7 +581,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     const terms=researchWords(query),exactArticle=explicitArticleReference(query,jurisdiction);
     const chunks=scope?store.search(scope,query).filter(c=>isRelevant(c.text,terms)):[];
     let legal=research(query,jurisdiction).map(s=>s.id.startsWith('PUB-')?publicLibrary?.getSource(s.id):s).filter(Boolean)
-      .filter(s=>s.jurisdiction===jurisdiction&&isRelevant(`${s.title} ${s.article} ${s.text}`,terms,{exactArticle:Boolean(exactArticle&&!exactArticle.unavailable)}));
+      .filter(s=>(exactArticle&&!exactArticle.unavailable||s.jurisdiction===jurisdiction)&&isRelevant(`${s.title} ${s.article} ${s.text}`,terms,{exactArticle:Boolean(exactArticle&&!exactArticle.unavailable)}));
     if(ranking)legal=ranking.rankHybrid(legal);
     if(fragments)legal=legal.map(source=>{
       const article={...source,lawId:source.lawId||source.id,article:String(source.article||'')};
