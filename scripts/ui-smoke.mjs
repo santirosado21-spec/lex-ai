@@ -50,14 +50,14 @@ try {
  const exceptions=[];
  page.on('pageerror',error=>exceptions.push(error.message));
  await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
- await expect(page.locator('.app-cover img[src*="lex-cover"]')).toBeVisible();
- await expect.poll(()=>page.locator('.app-cover img[src*="lex-cover"]').evaluate(image=>image.complete&&image.naturalWidth>0)).toBe(true);
+ await expect(page.locator('.app-cover-logo .cover-logo-r')).toBeVisible();
+ assert.equal(await page.locator('.app-cover img[src*="lex-cover"]').count(),0);
  await page.screenshot({path:'artifacts/ui-app-cover.png',fullPage:true});
  await page.setViewportSize({width:390,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
  await page.screenshot({path:'artifacts/ui-app-cover-mobile.png',fullPage:true});
  await page.setViewportSize({width:1440,height:1000});
- report.checks.push('generated app cover loads with accessible text; 390px onboarding has no horizontal overflow');
+ report.checks.push('animated Rejon monogram cover replaces the paper photo, with accessible text; 390px onboarding has no horizontal overflow');
  await page.getByLabel('Nombre del despacho').fill('Despacho sintético UI');
  await page.getByRole('button',{name:'Crear espacio privado',exact:true}).click();
  await page.getByRole('heading',{name:'Asistente',exact:true}).waitFor();
