@@ -28,11 +28,24 @@
   "hasTransitorios": true,
   "headerMatchesCatalogReform": true,
   "notChecked": [
-   "independent comparison with DOF",
    "currentness beyond the publisher's declared last reform",
    "text-level fidelity sample (910-sample method not applied)",
-   "reference to other statutes' articles inside the text"
-  ]
+   "reference to other statutes' articles inside the text",
+   "direct fetch of dof.gob.mx (not reachable from this session)",
+   "internal cross-references to other statutes",
+   "other reforms after 14-11-2025",
+   "fidelity sample"
+  ],
+  "robotsNote": "robots.txt on diputados.gob.mx returned 404: absence of rules, not a verified allow.",
+  "dofCrossCheck": {
+   "date": "2026-11-18",
+   "source": "https://www.diputados.gob.mx/LeyesBiblio/ref/lgoaac/LGOAAC_ref27_14nov25.pdf",
+   "sourceNature": "Cámara de Diputados copy of the DOF 14-11-2025 (Edición Vespertina) omnibus decree; not fetched from dof.gob.mx",
+   "sourceSha256": "15678aaed27ce2cbb7b2b535777f8a032ed5f4a6f67b5132c0ee28c24befb8ca",
+   "decreeProvisionOnThisLaw": "Artículo Cuadragésimo Noveno: reforms the third paragraph of art. 88 Bis 4",
+   "result": "The reformed paragraph's text appears verbatim in the candidate text (whitespace-normalized) and is annotated 'Párrafo reformado DOF 14-11-2025'. No other LGOAAC provision found in the decree.",
+   "scope": "One paragraph checked. Not a full fidelity audit, not a currentness check beyond that date."
+  }
  },
  "limits": "Candidate in a separate area. Not added to the frozen public library, not signed, not used by the app. Currentness not verified."
 }
