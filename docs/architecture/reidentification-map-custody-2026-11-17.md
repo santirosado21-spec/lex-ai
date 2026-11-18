@@ -12,9 +12,15 @@ Estado: diseño y pruebas sintéticas. Sin disco, red, Keychain ni cableado. No 
 4. El proveedor OpenAI no recibe mapa, clave del mapa ni snapshot. El mapa solo existe en el proceso local.
 5. Los snapshots sin sellar son solo memoria local y sintéticos; nunca se escriben a disco.
 
-## Brecha abierta (no resuelta aquí)
-- Dónde vive la clave del mapa en una Mac real (Keychain con ACL propia, distinta del ítem de la API key) y cómo se respalda o se pierde. Es trabajo de custodia (H6b) y requiere una Mac real; no se implementó para no ampliar funciones.
-- Qué pasa si se pierde la clave: el mapa es irrecuperable y las respuestas ya recibidas no se pueden reidentificar. Debe decidirlo el usuario.
-- Sin ese destino confirmado, no hay persistencia del mapa: reiniciar la app borra la reidentificación.
+## Custodia local de la clave (server/privacy/map-key-keychain.mjs, solo fakes)
+- Ítem de Keychain propio (`LEX AI.product.reidentification-map` / `map-seal-key-v1`), distinto del de la API key.
+- La clave son 32 bytes aleatorios locales, guardados como 64 hex por stdin de `security -i`; nunca en argv, env, logs, archivos ni front. No hay diálogo: el usuario no ve ni elige la clave.
+- `create()` nunca sobrescribe (sin -U). `getKey()` con ítem ausente o malformado falla (`key_missing` / `invalid_key_item`) y NUNCA crea una clave nueva en silencio, porque eso dejaría mapas sellados ilegibles.
+- `remove()` devuelve `sealedMapsUnrecoverable:true`. No hay respaldo ni recuperación; no se promete ninguna.
+- Desactivado por defecto, solo darwin. NO verificado en una Mac real; no hay persistencia en disco del mapa sellado aún (qué archivo y dónde sigue sin implementar).
 
-Pruebas: `tests/reidentification-map-custody.test.mjs`, `tests/privacy-pseudonym-persistence.test.mjs`.
+## Brecha abierta
+- Dónde se escribe el blob sellado en disco y su ciclo de vida: sin implementar.
+- Sin Mac real no se verifica el comportamiento de `security -i`.
+
+Pruebas: `tests/reidentification-map-custody.test.mjs`, `tests/map-key-keychain.test.mjs`, `tests/privacy-pseudonym-persistence.test.mjs`.
