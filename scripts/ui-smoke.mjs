@@ -50,11 +50,11 @@ try {
  const exceptions=[];
  page.on('pageerror',error=>exceptions.push(error.message));
  await page.goto(`${app.connection.url}/#token=${app.connection.token}`);
- await expect(page.locator('.app-cover-logo .cover-logo-r')).toBeVisible();
+ await expect(page.locator('.app-cover-logo .cover-wordmark')).toBeVisible();
  assert.equal(await page.locator('.app-cover img[src*="lex-cover"]').count(),0);
- assert.equal(await page.getByRole('figure',{name:'Portada de Rejon.AI'}).count(),1);
- const heroColors=await page.evaluate(()=>{const g=s=>getComputedStyle(document.querySelector(s));return {bg:g('.app-cover').backgroundColor,r:g('.cover-logo-r').fill,dot:g('.cover-logo-dot').fill}});
- assert.deepEqual(heroColors,{bg:'rgb(15, 27, 45)',r:'rgb(247, 248, 250)',dot:'rgb(224, 86, 106)'});
+ assert.equal(await page.getByRole('figure',{name:'Portada de Rejon'}).count(),1);
+ const heroColors=await page.evaluate(()=>({bg:getComputedStyle(document.querySelector('.app-cover')).backgroundColor,src:document.querySelector('.cover-wordmark').getAttribute('src')}));
+ assert.equal(heroColors.bg,'rgb(77, 53, 51)');assert.match(heroColors.src,/wordmark/);
  await page.screenshot({path:'artifacts/ui-app-cover.png',fullPage:true});
  await page.setViewportSize({width:390,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
