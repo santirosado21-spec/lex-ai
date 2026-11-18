@@ -87,7 +87,7 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
    // Worst case for prompt tokens: one token per body byte.
    const reserveUsd = usd(new TextEncoder().encode(body).byteLength, maxOutputTokens);
    if (calls >= maxCalls || maxTotalTokens && tokens + reserve > maxTotalTokens || maxUsd && spentUsd + reserveUsd > maxUsd) throw error('budget_exhausted');
-   busy = true; lastReceipt = null; calls += 1; spentUsd += reserveUsd;
+   busy = true; lastReceipt = null; calls += 1; spentUsd += reserveUsd; tokens += reserve;
    let key;
    try {
     try { key = await getApiKey(); } catch { throw error('missing_credential'); }
@@ -95,7 +95,7 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     if (signal?.aborted) throw error('cancelled');
    } catch (cause) {
     // Nothing was dispatched: give the reservation back.
-    calls -= 1; spentUsd -= reserveUsd; busy = false;
+    calls -= 1; spentUsd -= reserveUsd; tokens -= reserve; busy = false;
     throw cause;
    }
    const timeout = AbortSignal.timeout(timeoutMs), combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
@@ -111,7 +111,9 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     const result = await boundedJson(response);
     const choice = Array.isArray(result?.choices) && result.choices.length === 1 ? result.choices[0] : null;
     const usage = record(result?.usage) ? {promptTokens:count(result.usage.prompt_tokens), completionTokens:count(result.usage.completion_tokens)} : null;
-    if (usage) { tokens += (usage.promptTokens ?? 0) + (usage.completionTokens ?? 0); if (usage.promptTokens !== null && usage.completionTokens !== null) spentUsd += usd(usage.promptTokens, usage.completionTokens) - reserveUsd; }
+    // The conservative reservation stays charged unless the response reports complete usage: a missing or partial
+    // usage block never lets the aggregate cap be exceeded.
+    if (usage && usage.promptTokens !== null && usage.completionTokens !== null) { tokens += usage.promptTokens + usage.completionTokens - reserve; spentUsd += usd(usage.promptTokens, usage.completionTokens) - reserveUsd; }
     lastReceipt = Object.freeze({requestedModel:model, observedModel:typeof result?.model === 'string' ? result.model.slice(0, 80) : null, usage});
     // A length stop is an incomplete answer: never present it as complete.
     if (!choice) throw error('invalid_response');

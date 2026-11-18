@@ -23,16 +23,17 @@ const REPO = new URL('..', import.meta.url).pathname;
 // verifier's binding logic; nothing like it exists in the product.
 function fixtureRoot(extra = []) {
  const root = mkdtempSync(path.join(tmpdir(), 'elig-'));
- for (const file of [...CORE_SOURCES, ...extra, 'eval/privacy/protocol.json']) { mkdirSync(path.dirname(path.join(root, file)), {recursive:true}); copyFileSync(path.join(REPO, file), path.join(root, file)); }
- writeFileSync(path.join(root, 'eval/privacy/heldout-standin.jsonl'), 'synthetic stand-in\n');
- writeFileSync(path.join(root, 'eval/privacy/manifest.json'), JSON.stringify({protocol:{file:'protocol.json', sha256:sha(path.join(root, 'eval/privacy/protocol.json'))},
-  splits:{heldout:{file:'heldout-standin.jsonl', sha256:sha(path.join(root, 'eval/privacy/heldout-standin.jsonl'))}}}));
+ mkdirSync(path.join(root, 'eval/privacy-v2'), {recursive:true});
+ for (const file of [...CORE_SOURCES, ...extra, 'eval/privacy-v2/protocol.json']) { mkdirSync(path.dirname(path.join(root, file)), {recursive:true}); copyFileSync(path.join(REPO, file), path.join(root, file)); }
+ writeFileSync(path.join(root, 'eval/privacy-v2/heldout-standin.jsonl'), 'synthetic stand-in\n');
+ writeFileSync(path.join(root, 'eval/privacy-v2/manifest.json'), JSON.stringify({version:2, protocol:{file:'protocol.json', sha256:sha(path.join(root, 'eval/privacy-v2/protocol.json'))},
+  splits:{heldout:{file:'heldout-standin.jsonl', sha256:sha(path.join(root, 'eval/privacy-v2/heldout-standin.jsonl'))}}}));
  return root;
 }
 function fixtureRecord(root, version, extra = [], change = {}) {
  const sourceHashes = Object.fromEntries([...CORE_SOURCES, ...extra].map(file => [file, sha(path.join(root, file))]));
- const record = {score:{split:'heldout', candidateId:version, protocolSha256:sha(path.join(root, 'eval/privacy/protocol.json')),
-   corpusSha256:sha(path.join(root, 'eval/privacy/heldout-standin.jsonl')), experimentalGate:{status:'eligible-for-integration-evaluation', failures:[], minimumFailures:[], minimumsApplied:true}},
+ const record = {score:{version:2, split:'heldout', candidateId:version, correctBlockReason:{numerator:48, denominator:48, rate:1}, protocolSha256:sha(path.join(root, 'eval/privacy-v2/protocol.json')),
+   corpusSha256:sha(path.join(root, 'eval/privacy-v2/heldout-standin.jsonl')), experimentalGate:{status:'eligible-for-integration-evaluation', failures:[], minimumFailures:[], minimumsApplied:true}},
   execution:{candidateVersion:version, sourceHashes}};
  return change.record ? change.record(record) : record;
 }
@@ -103,12 +104,15 @@ test('detector blocked or a residual identifier after protection stops the send'
 
 test('eligibility record must bind to the running detector, protocol, thresholds and corpus; any change fails closed', async () => {
  const cases = {
-  protocol_changed:(root) => appendFileSync(path.join(root, 'eval/privacy/protocol.json'), ' '),
+  protocol_changed:(root) => appendFileSync(path.join(root, 'eval/privacy-v2/protocol.json'), ' '),
   detector_changed:(root) => appendFileSync(path.join(root, 'server/privacy/detector.mjs'), '\n// edited'),
-  corpus_changed:(root) => appendFileSync(path.join(root, 'eval/privacy/heldout-standin.jsonl'), 'x'),
+  corpus_changed:(root) => appendFileSync(path.join(root, 'eval/privacy-v2/heldout-standin.jsonl'), 'x'),
   candidate_mismatch:(root, record) => { record.score.candidateId = 'other-detector'; },
   gate_not_passed:(root, record) => { record.score.experimentalGate.status = 'failed'; },
   record_retired:(root, record) => { record.retiredForFutureTuning = true; },
+  record_not_v2:(root, record) => { record.score.version = 1; },
+  block_reason_rate:(root, record) => { record.score.correctBlockReason.rate = 0.9; },
+  gates_weakened:(root) => { const file = path.join(root, 'eval/privacy-v2/protocol.json'); const p = JSON.parse(readFileSync(file, 'utf8')); p.experimentalGates.mandatoryExactRecall = 0.5; writeFileSync(file, JSON.stringify(p)); },
   sources_not_recorded:(root, record) => { delete record.execution.sourceHashes['server/canonical-json.mjs']; },
  };
  for (const [reason, tamper] of Object.entries(cases)) {
@@ -244,4 +248,18 @@ test('fixed-tariff USD estimate caps worst-case spend before dispatch and sends 
  assert.equal(status.usdIsEstimate, true);
  assert.ok(status.estimatedSpentUsd > 0 && status.estimatedSpentUsd < 0.00001, String(status.estimatedSpentUsd));
  assert.throws(() => createOpenAiProvider({enabled:true, getApiKey:async () => KEY, model:'m', maxUsd:1}), {code:'invalid_configuration'});
+});
+
+test('missing or partial usage keeps the conservative reservation charged, so the aggregate cap cannot be exceeded', async () => {
+ for (const usage of [undefined, {prompt_tokens:5}]) {
+  const sent = [];
+  const provider = createOpenAiProvider({enabled:true, getApiKey:async () => KEY, model:'test-model', maxCalls:10, maxOutputTokens:100, maxTotalTokens:400,
+   pricing:{inputPerMillion:1, outputPerMillion:1}, maxUsd:1,
+   fetchImpl:async (url, init) => { sent.push(init.body); return new Response(JSON.stringify({model:'test-model', choices:[{finish_reason:'stop', message:{content:'ok'}}], ...(usage ? {usage} : {})})); }});
+  const run = async () => { for await (const _ of provider.generate([{role:'user', content:'x'.repeat(100)}], {responseFormat:'text'})); };
+  let ok = 0, blocked = 0;
+  for (let i = 0; i < 6; i++) { try { await run(); ok++; } catch (error) { assert.equal(error.code, 'budget_exhausted'); blocked++; } }
+  assert.ok(ok <= 2 && blocked >= 4, `${ok}/${blocked} ${JSON.stringify(usage)}`);
+  assert.equal(sent.length, ok);
+ }
 });

@@ -51,3 +51,35 @@ test('base blocked status is preserved, never upgraded to complete', async () =>
  const source = provenance.registerSource({objectId:'S', version:'v1', scope, classification:'private', extraction:{status:'complete', extractorVersion:'t', originalSha256:privacyTextHash(text)}, segments:[{id:'SEG', path:'content', text}]});
  assert.equal((await detector.detect({scope, segments:source.segments})).status, 'blocked');
 });
+
+test('honorific plus lowercase name is detected', async () => {
+ const {hits} = await variants('El señor don pedro ramirez soto firmó el contrato.');
+ assert.ok(hits.some(h => h.includes('pedro ramirez soto')), hits.join('|'));
+});
+
+test('RFC with OCR digit/letter swaps and spaces is covered', async () => {
+ const text = 'Su RFC es R0SJ 850 3O1 AB3 y vive aquí.';
+ const {result} = await variants(text);
+ assert.ok(result.detections.some(d => text.slice(d.start, d.end).startsWith('R0SJ 850 3O1') && d.end - d.start >= 'R0SJ 850 3O1 AB3'.length), 'RFC not fully covered');
+});
+
+test('malformed @ makes the detector abstain instead of passing the text', async () => {
+ const {result} = await variants('Contacto: foo@@bar.');
+ assert.equal(result.status, 'blocked');
+});
+
+test('a long digit run is either covered by a detection or blocks the text', async () => {
+ const text = 'Folio interno 20260101234567 del expediente.';
+ const {result} = await variants(text);
+ const covered = result.detections.some(d => d.start <= text.indexOf('2026') && d.end >= text.indexOf('2026') + 14);
+ assert.ok(covered || result.status === 'blocked', result.status);
+});
+
+test('ordinary legal prose and headings produce no detection and no block', async () => {
+ for (const text of ['La parte actora presentó demanda conforme al artículo 123 de la Ley Federal del Trabajo el 5 de mayo de 2020 por 1500000 pesos.',
+  'CAPÍTULO PRIMERO DISPOSICIONES GENERALES. El tribunal resolvió con base en jurisprudencia.']) {
+  const {result, hits} = await variants(text);
+  assert.equal(result.status, 'complete', text);
+  assert.deepEqual(hits, [], text);
+ }
+});
