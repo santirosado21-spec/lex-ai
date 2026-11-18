@@ -518,3 +518,13 @@ body .app-shell.macos-workspace>.sidebar .sidebar-bottom>p{color:var(--rail-mute
 :root[data-theme='dark'] .onboarding-with-cover .onboarding-intro>p,:root[data-theme='dark'] .app-cover-steps,:root[data-theme='dark'] .onboarding-with-cover .onboarding-form .privacy-caption{color:var(--ink-2)}
 :root[data-theme='dark'] .app-cover-steps li[aria-current=step]{color:var(--ink)}
 :root[data-theme='dark'] .onboarding-with-cover .onboarding-form{border-top-color:var(--line)}
+
+/* Welcome layout: no empty sidebar gutter before a workspace exists; the cover is one viewport tall and stays put while the form scrolls. */
+.app-shell.no-workspace.macos-workspace>.app-content{margin-left:0;width:100%}
+@media(min-width:901px){
+ .onboarding.onboarding-with-cover{align-items:start}
+ .app-cover.app-cover-logo{position:sticky;top:64px;height:calc(100vh - 64px);min-height:480px;align-self:start}
+ .cover-logo-stage{min-height:0;align-items:center}
+ .cover-logo-svg{position:static}
+ .app-cover.app-cover-logo figcaption{position:static}
+}
