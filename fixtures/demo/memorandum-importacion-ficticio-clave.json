@@ -1,0 +1,18 @@
+{
+ "fixture": "memorandum-importacion-ficticio.md",
+ "status": "synthetic-demo-key-not-legal-validation",
+ "note": "Clave escrita por el equipo de producto, no es revisión jurídica. Las citas se contrastaron a mano con la copia de la Cámara de la Ley Aduanera (candidata NO adoptada, cabecera 'Última Reforma DOF 19-11-2025', sha256 del PDF 43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d; vigencia no verificada; reforma DOF 23-10-2026 en vigor desde 2027-01-01 no toca estos artículos). La Ley Aduanera NO está en la biblioteca congelada de Rejon: el resultado esperado hoy es que la compuerta de citas no pueda verificarlas, no que las corrija.",
+ "expectedCurrentBehavior": "Sin la ley en la biblioteca, las citas a Ley Aduanera deben quedar sin verificar y no presentarse como confirmadas.",
+ "citationDefects": [
+  {"id":"T1","paragraph":3,"article":"65","claimed":"el valor de transacción es únicamente el precio pagado; transporte y seguros no forman parte","sourceSays":"El valor de transacción comprenderá, además del precio pagado, los cargos listados, entre ellos los gastos de transporte, seguros y gastos conexos, en la medida en que corran a cargo del importador y no estén incluidos en el precio pagado (fracción I, inciso d)."},
+  {"id":"T2","paragraph":4,"article":"89","claimed":"los datos del pedimento no pueden modificarse una vez transmitido","sourceSays":"Los datos contenidos en el pedimento se podrán modificar mediante la rectificación a dicho pedimento."},
+  {"id":"T3","paragraph":5,"article":"35","claimed":"el despacho lo realiza únicamente el agente aduanal","sourceSays":"El despacho aduanero lo realizan ante la aduana quienes introducen o extraen mercancías (consignatarios, destinatarios, propietarios, poseedores, tenedores, remitentes), así como los agentes o agencias aduanales."}
+ ],
+ "internalDefects": [
+  {"id":"T4","paragraph":2,"issue":"El valor en aduana declarado (USD 120,000.00) omite el flete y seguro de USD 9,500.00 que el propio memorándum dice estar a cargo del importador."},
+  {"id":"T5","paragraph":6,"issue":"La llegada a puerto (9 de noviembre) es posterior a la importación declarada (3 de noviembre) y el plazo de 10 días se cuenta desde el 1 de octubre, fecha anterior a la importación, sin base en el documento."},
+  {"id":"T6","paragraph":"CONCLUSION","issue":"Concluye que no hay contingencia pese a T1, T2 y T4."}
+ ],
+ "syntheticIdentifiers": ["MRS260102XY3","26 47 3999 6000123","000111222333444","FAC-2026-0457"],
+ "syntheticAddresses": ["calle Ejemplo 45, Hamburgo"]
+}
