@@ -9,6 +9,7 @@ import { createService } from './service.mjs';
 import { createInference } from './inference.mjs';
 import { createOpenAIInference } from './inference-openai.mjs';
 import { createGenerationGateway } from './generation-gateway.mjs';
+import { createCloudDemo } from './cloud-demo.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
 import { openPublicLibrary } from './public-library.mjs';
@@ -16,7 +17,7 @@ import { createLocalFileOpener } from './local-files.mjs';
 import { createOfficeBridge } from './office-bridge.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
-export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
@@ -76,6 +77,15 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     if(body.action==='engine.status')result=await inference.status();
     else if(body.action==='engine.initialize')result=await inference.initialize();
     else if(body.action==='engine.stop')result=await inference.stop();
+    else if(body.action==='cloudDemo.run'){
+     if(Object.keys(body).some(key=>key!=='action'&&key!=='payload')||
+        (body.payload!==undefined&&(!body.payload||Array.isArray(body.payload)||typeof body.payload!=='object'||Object.keys(body.payload).length))){
+      json(res,400,{error:'La prueba de nube no admite texto ni archivos.'});return;
+     }
+     const controller=new AbortController();
+     res.once('close',()=>{if(!res.writableEnded)controller.abort();});
+     result=await cloudDemo({signal:controller.signal});
+    }
     else if(body.action==='office.pair' || body.action==='office.revoke'){
      const {matterId,tenant}=body.payload||{};
      // This check uses the same workspace/matter boundary as the desktop.
