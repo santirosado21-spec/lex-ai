@@ -52,5 +52,26 @@
   "consequence": "On 2026-11-18 the 19-11-2025 text in this PDF is the in-force text, but it will be outdated for those articles from 2027-01-01. The Cámara PDF header still says 19-11-2025 (index already lists the decree). Adoption would need the amended articles integrated or a currentness label.",
   "entryIntoForceDate": "2027-01-01",
   "entryIntoForceBasis": "Primero transitorio, per Cámara copy of the decree; the issuer text on sidof docFuente was read by independent QA and matched (QA report 15:39), not by the author"
- }
+ },
+ "adoptionPreconditions": [
+  {
+   "id": "dof-full-text-comparison",
+   "status": "open",
+   "evidence": null,
+   "requires": "completed text-to-text comparison of every article against the DOF consolidated or original publications, with source and date recorded in validation.dofComparison"
+  },
+  {
+   "id": "transitory-pages-decision",
+   "status": "open",
+   "evidence": null,
+   "requires": "decision, by independent QA, on the 61 pages after the transitory boundary that the importer does not structure (coverage.transitoryPagesNotStructured)"
+  },
+  {
+   "id": "validity-window-plan-2027-01-01",
+   "status": "open",
+   "evidence": null,
+   "requires": "plan to record a validity window: this text is in force until 2027-01-01 and the DOF 23-10-2026 decree then amends arts. 144, 151, 153, 154, 177, 185; adoption needs the amended text or a dated validity label"
+  }
+ ],
+ "adoptionPreconditionsNote": "All open. None may be marked satisfied without recorded evidence. Candidate stays quarantined and out of the frozen library and the app."
 }

@@ -39,5 +39,26 @@
   "fidelityNote": "Text layer is native PDF text, not OCR. No article-level fidelity sample against DOF yet."
  },
  "limits": "Candidate in a separate area. Not in the frozen library, not used by the app.",
- "currentnessCheck": "Cámara index https://www.diputados.gob.mx/LeyesBiblio/regla.htm read 2026-11-18 5:15 PM CST: row 'REGLAMENTO de la Ley Aduanera' lists Original DOF 20/04/2015, Cantidades up to DOF 27/12/2025 and last 'Reforma DOF 23/02/2026', consistent with the PDF header. Not compared with the DOF; says nothing about reforms published after the index page was last updated by the Cámara."
+ "currentnessCheck": "Cámara index https://www.diputados.gob.mx/LeyesBiblio/regla.htm read 2026-11-18 5:15 PM CST: row 'REGLAMENTO de la Ley Aduanera' lists Original DOF 20/04/2015, Cantidades up to DOF 27/12/2025 and last 'Reforma DOF 23/02/2026', consistent with the PDF header. Not compared with the DOF; says nothing about reforms published after the index page was last updated by the Cámara.",
+ "adoptionPreconditions": [
+  {
+   "id": "dof-full-text-comparison",
+   "status": "open",
+   "evidence": null,
+   "requires": "completed text-to-text comparison of every article against the DOF consolidated or original publications, with source and date recorded in validation.dofComparison"
+  },
+  {
+   "id": "transitory-pages-decision",
+   "status": "open",
+   "evidence": null,
+   "requires": "decision, by independent QA, on the 10 pages after the transitory boundary that the importer does not structure (coverage.transitoryPagesNotStructured)"
+  }
+ ],
+ "adoptionPreconditionsNote": "All open. None may be marked satisfied without recorded evidence. Candidate stays quarantined and out of the frozen library and the app.",
+ "partialEvidence": {
+  "kind": "author-run, not independent, not a completed comparison",
+  "source": "https://sidof.segob.gob.mx/notas/docFuente/5780677 (DOF 23-02-2026 decree reforming the Reglamento, issuer text)",
+  "method": "normalized text comparison of article blocks the decree quotes in full (no '...' placeholders)",
+  "result": "36 fully quoted blocks: 27 exact normalized matches, 9 non-matches. Author's reading of the 9: 34 and 38-C had a section heading glued to the end by the importer (defect, fix proposed as a separate unit); 6-B decree block includes a chapter heading; 11, 29, 30, 47, 62, 141 decree quotes only some paragraphs. Not exhaustively reviewed. Does not cover articles the decree did not touch."
+ }
 }
