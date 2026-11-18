@@ -48,7 +48,9 @@
    "https://sidof.segob.gob.mx/notas/5802077 (found in search, content not read)"
   ],
   "articlesTouched": "151 (primer párrafo, fr. VII), 153 (2o párrafo), 154 (2o párrafo), 177 (fr. XII); adds to 144 (fr. XII, párrafo 2o) and 185 (frs. I, II, III, párrafo 2o)",
-  "entryIntoForce": "2027-01-01 (Primero transitorio, per Cámara copy)",
-  "consequence": "On 2026-11-18 the 19-11-2025 text in this PDF is the in-force text, but it will be outdated for those articles from 2027-01-01. The Cámara PDF header still says 19-11-2025 (index already lists the decree). Adoption would need the amended articles integrated or a currentness label."
+  "entryIntoForce": "2027-01-01",
+  "consequence": "On 2026-11-18 the 19-11-2025 text in this PDF is the in-force text, but it will be outdated for those articles from 2027-01-01. The Cámara PDF header still says 19-11-2025 (index already lists the decree). Adoption would need the amended articles integrated or a currentness label.",
+  "entryIntoForceDate": "2027-01-01",
+  "entryIntoForceBasis": "Primero transitorio, per Cámara copy of the decree; the issuer text on sidof docFuente was read by independent QA and matched (QA report 15:39), not by the author"
  }
 }

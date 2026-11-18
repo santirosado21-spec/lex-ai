@@ -39,5 +39,5 @@
   "fidelityNote": "Text layer is native PDF text, not OCR. No article-level fidelity sample against DOF yet."
  },
  "limits": "Candidate in a separate area. Not in the frozen library, not used by the app.",
- "currentnessCheck": "Cámara index for the Reglamento not checked in this run."
+ "currentnessCheck": "Cámara index https://www.diputados.gob.mx/LeyesBiblio/regla.htm read 2026-11-18 5:15 PM CST: row 'REGLAMENTO de la Ley Aduanera' lists Original DOF 20/04/2015, Cantidades up to DOF 27/12/2025 and last 'Reforma DOF 23/02/2026', consistent with the PDF header. Not compared with the DOF; says nothing about reforms published after the index page was last updated by the Cámara."
 }
