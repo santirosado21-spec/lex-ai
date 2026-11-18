@@ -719,14 +719,14 @@ async function ocrPdfPages(file,pageCount,tools,{cacheKey=null}={}){
 // Every repair is recorded as a document anomaly and records stay quarantined.
 function repairOcrArticleHeadings(pages){
   let expected=1,repaired=0,commaRepaired=0;
-  const heading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o)?([\.\-].*)$/i;
+  const heading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o0?)?([\.\-].*)$/i;
   const commaHeading=/^(\s*ART[ÍI]CULO\s+)(\d+)(o)?(, )([A-ZÁÉÍÓÚÑ].*)$/i;
   for(const page of pages){
     page.text=page.text.split('\n').map(line=>{
       const match=heading.exec(line);
       if(match){
         const n=Number(match[2]);
-        if(n===expected){expected=n+1;return line;}
+        if(n===expected){expected=n+1;if(match[3]&&match[3].length===2){repaired++;return `${match[1]}${n}o${match[4]}`;}return line;}
         if(!match[3]&&n===expected*10){expected++;repaired++;return `${match[1]}${expected-1}o${match[4]}`;}
         return line;
       }
