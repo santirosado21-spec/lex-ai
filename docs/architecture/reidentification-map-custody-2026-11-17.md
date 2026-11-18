@@ -20,6 +20,7 @@ Estado: diseño y pruebas sintéticas. Sin disco, red, Keychain ni cableado. No 
 - Desactivado por defecto, solo darwin. NO verificado en una Mac real; no hay persistencia en disco del mapa sellado aún (qué archivo y dónde sigue sin implementar).
 
 ## Almacén sellado en disco (server/privacy/map-vault-store.mjs, solo temp dirs en pruebas)
+- Directorio: ruta absoluta ya resuelta (sin symlinks en ningún componente), propiedad del usuario actual y sin permisos de grupo/otros; si existe y no cumple se rechaza (`unsafe_directory`) sin chmod, sin seguir enlaces y sin tocar su contenido. Solo se crea la hoja (0700) bajo un padre propio y no escribible por grupo/otros. Archivos sellados: regulares, un solo enlace, del usuario, sin permisos de grupo/otros (`unsafe_file`), también para load, save, exists y remove.
 - Un archivo por asunto, nombre = sha256 del par workspace+matter (sin texto del cliente), modo 0600, directorio 0700. Contenido: solo bytes sellados AES-GCM del sellador existente.
 - Escritura atómica: se sella, se escribe un temporal exclusivo, se relee y se abre con la misma clave, y solo entonces se renombra sobre el anterior. Error o cancelación borran el temporal y dejan intacto el original.
 - `load` importa solo en un asunto vacío; con clave ausente/incorrecta, archivo manipulado o asunto ocupado no importa nada ni modifica ni borra el archivo.

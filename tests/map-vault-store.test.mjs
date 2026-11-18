@@ -1,7 +1,7 @@
 // Temp directories, random keys and synthetic data only. No real Keychain, no user files, no network.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync, readdirSync, readFileSync, writeFileSync, statSync} from 'node:fs';
+import {mkdtempSync, readdirSync, readFileSync, writeFileSync, statSync, mkdirSync, symlinkSync, linkSync, chmodSync, realpathSync, lstatSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {randomBytes} from 'node:crypto';
@@ -12,7 +12,7 @@ const full = {workspaceId:'W1', matterId:'M1', threadId:'T1'}, scope = {workspac
 const NAME = 'Zoilo Hernández Barrientos';
 const holder = {key:randomBytes(32)};
 const getKey = async () => { if (!holder.key) throw new Error('missing'); return Buffer.from(holder.key); };
-const dirOf = () => path.join(mkdtempSync(path.join(tmpdir(), 'mapvault-')), 'maps');
+const dirOf = () => path.join(realpathSync(mkdtempSync(path.join(tmpdir(), 'mapvault-'))), 'maps');
 function seeded(dir = dirOf()) {
  const pseudonyms = createPseudonymStore();
  const out = pseudonyms.protect({scope:full, messages:[{role:'user', content:`Cliente ${NAME}`}], entities:[NAME]});
@@ -92,4 +92,73 @@ test('remove deletes only this matter file, reports permanence, and is idempoten
 test('invalid configuration and scopes are rejected', async () => {
  assert.throws(() => createMapVaultStore({directory:'relative', getKey, pseudonyms:createPseudonymStore()}), {code:'invalid_configuration'});
  await rejects(seeded().store.save({scope:{workspaceId:'../x', matterId:'M1', threadId:'T1'}}), 'invalid_scope');
+});
+
+const mode = file => lstatSync(file).mode & 0o777;
+
+test('a missing leaf is created 0700 under a safe parent', async () => {
+ holder.key = randomBytes(32);
+ const {dir, store} = seeded(); await store.save({scope:full});
+ assert.equal(mode(dir), 0o700);
+});
+
+test('an existing directory with group/other access is rejected and left unchanged', async () => {
+ holder.key = randomBytes(32);
+ const {dir, store} = seeded(); mkdirSync(dir, {mode:0o755}); chmodSync(dir, 0o755);
+ await rejects(store.save({scope:full}), 'unsafe_directory');
+ assert.equal(mode(dir), 0o755); assert.deepEqual(readdirSync(dir), []);
+ await rejects(store.load({scope:full}), 'unsafe_directory');
+ assert.equal(await store.exists({scope:full}), false);
+ await rejects(store.remove({scope:full}), 'unsafe_directory');
+});
+
+test('a symlink as the directory is rejected: nothing is written through it', async () => {
+ holder.key = randomBytes(32);
+ const {dir, store} = seeded(); const decoy = path.join(path.dirname(dir), 'decoy'); mkdirSync(decoy, {mode:0o700});
+ symlinkSync(decoy, dir);
+ await rejects(store.save({scope:full}), 'unsafe_directory');
+ assert.deepEqual(readdirSync(decoy), []);
+});
+
+test('a symlink in an ancestor path is rejected', async () => {
+ holder.key = randomBytes(32);
+ const base = realpathSync(mkdtempSync(path.join(tmpdir(), 'mapvault-'))), real = path.join(base, 'real'), link = path.join(base, 'link');
+ mkdirSync(real, {mode:0o700}); symlinkSync(real, link);
+ const pseudonyms = createPseudonymStore(); pseudonyms.protect({scope:full, messages:[{role:'user', content:`Cliente ${NAME}`}], entities:[NAME]});
+ const store = createMapVaultStore({directory:path.join(link, 'maps'), pseudonyms, getKey});
+ await rejects(store.save({scope:full}), 'unsafe_directory');
+ assert.deepEqual(readdirSync(real), []);
+});
+
+test('a group-writable parent is rejected before creating the leaf', async () => {
+ holder.key = randomBytes(32);
+ const {dir, store} = seeded(); mkdirSync(path.dirname(dir), {recursive:true}); chmodSync(path.dirname(dir), 0o775);
+ await rejects(store.save({scope:full}), 'unsafe_directory');
+ assert.deepEqual(readdirSync(path.dirname(dir)), []);
+});
+
+test('a sealed file that is a symlink, hardlink or too permissive is never read, replaced or removed', async () => {
+ holder.key = randomBytes(32);
+ for (const kind of ['symlink', 'hardlink', 'perm']) {
+  const {dir, store} = seeded(); await store.save({scope:full});
+  const file = path.join(dir, readdirSync(dir)[0]), original = readFileSync(file);
+  const outside = path.join(path.dirname(dir), 'outside.txt');
+  if (kind === 'symlink') { writeFileSync(outside, original); const {unlinkSync} = await import('node:fs'); unlinkSync(file); symlinkSync(outside, file); }
+  if (kind === 'hardlink') linkSync(file, outside);
+  if (kind === 'perm') chmodSync(file, 0o644);
+  await rejects(store.load({scope:full}), 'unsafe_file');
+  await rejects(store.save({scope:full}), 'unsafe_file');
+  await rejects(store.remove({scope:full}), 'unsafe_file');
+  assert.equal(await store.exists({scope:full}), false);
+  assert.ok(lstatSync(file) && readdirSync(dir).length === 1);
+  if (kind !== 'symlink') assert.deepEqual(readFileSync(file), original);
+ }
+});
+
+test('a relative or unresolved directory path is rejected', async () => {
+ assert.throws(() => createMapVaultStore({directory:'maps', getKey, pseudonyms:createPseudonymStore()}), {code:'invalid_configuration'});
+ holder.key = randomBytes(32);
+ const {dir, pseudonyms} = seeded(); mkdirSync(path.dirname(dir), {recursive:true});
+ const store = createMapVaultStore({directory:`${path.dirname(dir)}/../${path.basename(path.dirname(dir))}/maps`, pseudonyms, getKey});
+ await rejects(store.save({scope:full}), 'unsafe_directory');
 });
