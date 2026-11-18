@@ -19,8 +19,17 @@ Estado: diseño y pruebas sintéticas. Sin disco, red, Keychain ni cableado. No 
 - `remove()` devuelve `sealedMapsUnrecoverable:true`. No hay respaldo ni recuperación; no se promete ninguna.
 - Desactivado por defecto, solo darwin. NO verificado en una Mac real; no hay persistencia en disco del mapa sellado aún (qué archivo y dónde sigue sin implementar).
 
-## Brecha abierta
-- Dónde se escribe el blob sellado en disco y su ciclo de vida: sin implementar.
-- Sin Mac real no se verifica el comportamiento de `security -i`.
+## Almacén sellado en disco (server/privacy/map-vault-store.mjs, solo temp dirs en pruebas)
+- Un archivo por asunto, nombre = sha256 del par workspace+matter (sin texto del cliente), modo 0600, directorio 0700. Contenido: solo bytes sellados AES-GCM del sellador existente.
+- Escritura atómica: se sella, se escribe un temporal exclusivo, se relee y se abre con la misma clave, y solo entonces se renombra sobre el anterior. Error o cancelación borran el temporal y dejan intacto el original.
+- `load` importa solo en un asunto vacío; con clave ausente/incorrecta, archivo manipulado o asunto ocupado no importa nada ni modifica ni borra el archivo.
+- Clave ausente = error. Nunca se crea clave ni se sobrescribe un mapa desde este módulo.
+- `remove` borra únicamente el archivo de ese asunto, `unrecoverable:true`. Sin respaldo ni recuperación.
+- No está conectado a la app ni a la ruta cloud. No usa el Keychain real: recibe `getKey`.
 
-Pruebas: `tests/reidentification-map-custody.test.mjs`, `tests/map-key-keychain.test.mjs`, `tests/privacy-pseudonym-persistence.test.mjs`.
+## Brecha abierta
+- Sin Mac real no se verifica `security -i` ni el ciclo Keychain+disco juntos. Una prueba de borrado en Mac debe usar un ítem y directorio temporales propios, nunca claves o mapas reales.
+- Quién llama a save/load y cuándo (cableado a la app) sin implementar.
+- Fallos de disco a mitad de rename dependen del sistema de archivos; no se simularon.
+
+Pruebas: `tests/map-vault-store.test.mjs`, `tests/map-key-keychain.test.mjs`, `tests/reidentification-map-custody.test.mjs`, `tests/privacy-pseudonym-persistence.test.mjs`.
