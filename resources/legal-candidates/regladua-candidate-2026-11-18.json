@@ -23,10 +23,8 @@
   "distinctArticleHeadings": 248,
   "first": 1,
   "last": 249,
-  "gapsInSequence": [
-   88
-  ],
-  "gapNote": "Article 88 is present in the PDF but printed as 'Artículo. 88.' (stray period), so the heading pattern misses it; an importer must handle this typography before adoption.",
+  "gapsInSequence": [],
+  "gapNote": "Correction: heading regex tolerant of 'Artículo.' finds art. 88; 249 distinct body articles, no gaps.",
   "numberingResets": 12,
   "eligibilityCondition": "Numbering resets (likely transitorios by decree) must be isolated or excluded with documentation before adoption. Standard unchanged.",
   "notChecked": [
@@ -36,7 +34,10 @@
    "internal cross-references",
    "Anexos",
    "relation to the Ley Aduanera candidate reform date discrepancy"
-  ]
+  ],
+  "bodyTransitoriosSeparation": "Body ends at first 'TRANSITORIOS' heading (line 5158 of pdftotext -layout output); before it 249 distinct articles 1-249, monotone, no gaps. Decree transitorios follow (second block at line 5504) and must be excluded. Not implemented in importer.",
+  "fidelityNote": "Text layer is native PDF text, not OCR. No article-level fidelity sample against DOF yet."
  },
- "limits": "Candidate in a separate area. Not in the frozen library, not used by the app."
+ "limits": "Candidate in a separate area. Not in the frozen library, not used by the app.",
+ "currentnessCheck": "Cámara index for the Reglamento not checked in this run."
 }

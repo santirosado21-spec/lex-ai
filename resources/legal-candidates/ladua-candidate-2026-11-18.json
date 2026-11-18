@@ -19,7 +19,7 @@
   "characters": 869338
  },
  "publisherDeclaredLastReform": "DOF 19-11-2025 (in the PDF header)",
- "catalogDiscrepancy": "resources/legal-library-catalog.json lists this law's index row as 'DOF 27/12/2025'; the downloaded PDF declares last reform DOF 19-11-2025. Unresolved: either the index changed after the catalog capture or one of them is wrong. Not reconciled.",
+ "catalogDiscrepancy": "RESOLVED 2026-11-18 by the Cámara index https://www.diputados.gob.mx/LeyesBiblio/ref/ladua.htm: DOF 27-12-2025 is an RGCE amounts update, not a statutory reform. The statutory reform in the PDF header (DOF 19-11-2025) is consistent with that index.",
  "licenseBasis": "official-legislative-text per catalog reuseBasis; not an individualized license opinion.",
  "validation": {
   "distinctArticleHeadings": 203,
@@ -36,7 +36,19 @@
    "fidelity sample",
    "internal cross-references",
    "Anexos or tables outside article text"
-  ]
+  ],
+  "bodyTransitoriosSeparation": "Feasible: body ends at first 'Transitorios' heading (line 10399 of 13237 in pdftotext -layout output). Body arts 1-203 present without gaps; 294 body headings vs 203 distinct because of suffix articles (e.g. -A). 32 article-like headings after that point are references inside decree transitorios and must be excluded. Not implemented in importer."
  },
- "limits": "Candidate in a separate area. Not in the frozen library, not used by the app."
+ "limits": "Candidate in a separate area. Not in the frozen library, not used by the app.",
+ "pendingReform": {
+  "decree": "DECRETO por el que se reforman y adicionan diversas disposiciones de la Ley Aduanera",
+  "dof": "2026-10-23 (Edición Vespertina)",
+  "sources": [
+   "https://www.diputados.gob.mx/LeyesBiblio/ref/ladua/LAdua_ref21_23oct26.pdf (Cámara copy, read)",
+   "https://sidof.segob.gob.mx/notas/5802077 (found in search, content not read)"
+  ],
+  "articlesTouched": "151 (primer párrafo, fr. VII), 153 (2o párrafo), 154 (2o párrafo), 177 (fr. XII); adds to 144 (fr. XII, párrafo 2o) and 185 (frs. I, II, III, párrafo 2o)",
+  "entryIntoForce": "2027-01-01 (Primero transitorio, per Cámara copy)",
+  "consequence": "On 2026-11-18 the 19-11-2025 text in this PDF is the in-force text, but it will be outdated for those articles from 2027-01-01. The Cámara PDF header still says 19-11-2025 (index already lists the decree). Adoption would need the amended articles integrated or a currentness label."
+ }
 }
