@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 1,
+ "status": "candidate-not-adopted-pending-QA",
+ "lawId": "MX-FED-REG-LADUA",
+ "title": "REGLAMENTO de la Ley Aduanera",
+ "officialUrl": "https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf",
+ "authority": "Cámara de Diputados del H. Congreso de la Unión",
+ "httpStatus": 200,
+ "robotsHttpStatus": 404,
+ "robotsNote": "404 = absence of rules, not a verified allow",
+ "pdfSha256": "bcdfcd9073014aec4aefbacc01c9dd5b1f97f0da0c4556f0f506d20f12d77812",
+ "pdfBytes": 903770,
+ "pdfPages": 90,
+ "pdfPath": "artifacts/legal-candidates/regladua-2026-11-18/ (not committed)",
+ "textExtraction": {
+  "tool": "pdftotext -layout",
+  "textSha256": "16e057257e205eae30d189aece258ac9f16044722d50374c4a23414202a90f6b",
+  "characters": 340933
+ },
+ "publisherDeclaredLastReform": "DOF 23-02-2026 (in the PDF header)",
+ "licenseBasis": "official-legislative-text per catalog reuseBasis; not an individualized license opinion.",
+ "validation": {
+  "distinctArticleHeadings": 248,
+  "first": 1,
+  "last": 249,
+  "gapsInSequence": [
+   88
+  ],
+  "gapNote": "Article 88 is present in the PDF but printed as 'Artículo. 88.' (stray period), so the heading pattern misses it; an importer must handle this typography before adoption.",
+  "numberingResets": 12,
+  "eligibilityCondition": "Numbering resets (likely transitorios by decree) must be isolated or excluded with documentation before adoption. Standard unchanged.",
+  "notChecked": [
+   "comparison with DOF",
+   "currentness",
+   "fidelity sample",
+   "internal cross-references",
+   "Anexos",
+   "relation to the Ley Aduanera candidate reform date discrepancy"
+  ]
+ },
+ "limits": "Candidate in a separate area. Not in the frozen library, not used by the app."
+}
