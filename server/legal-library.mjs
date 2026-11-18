@@ -384,7 +384,7 @@ function extractNonArticleRecords(lines,{versionId,versionDate,source,pdfSha256,
   return null;
 }
 
-export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
+export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApproved=[]}={}){
   const titleFold=folded(source.title);const lines=[];const rawLines=[];
   const coverage={pages:pages.length,rawCharacters:pages.reduce((n,p)=>n+p.text.length,0),removedHeaderLines:0,removedEditorialLines:0,removedSectionLines:0,removedSubtitleLines:0,removedTrailingRubrics:0,removedBulletGlyphs:0,keptAmbiguousStructuralLines:0,discardedSamples:[],operativeArticleCandidates:0,exportableArticles:0,transitoryStartPage:null};
   const cover=pages.slice(0,2).map(p=>p.text).join('\n');const date=/[ÚU]ltimas?\s+[Rr]eformas?(?:\s+publicadas?)?(?:\s+(?:DOF|POG))?\s+(\d{2})[-/](\d{2})[-/](\d{4})/i.exec(cover);const MONTHS={enero:'01',febrero:'02',marzo:'03',abril:'04',mayo:'05',junio:'06',julio:'07',agosto:'08',septiembre:'09',setiembre:'09',octubre:'10',noviembre:'11',diciembre:'12'};
@@ -392,9 +392,26 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
   const textMonth=textDate?MONTHS[textDate[2].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')]:null;
   const declaredAmendedAt=date?`${date[3]}-${date[2]}-${date[1]}`:(textMonth?`${textDate[3]}-${textMonth}-${textDate[1].padStart(2,'0')}`:null);
   const versionDate=declaredAmendedAt??retrievedAt.slice(0,10);const versionId=`${source.lawId}@${versionDate}+${pdfSha256.slice(0,16)}`;
-  for(const p of pages){for(const line of p.text.split('\n')){const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
+  const furnitureLog=[];
+  // Running page furniture detection only SUGGESTS candidates (repeated same-position edge lines, sequential page numbers); nothing is removed by detection. A line is removed only when a reviewer approved that exact text (metadata.furnitureApproved: [{text,pos?}]) for this document, and every removal is logged completely in coverage.furnitureRemovedLog (the raw page text is untouched, so removal is reversible).
+  const furniture=(()=>{
+    const per=pages.map(p=>{const out=[];p.text.split('\n').forEach((raw,idx)=>{const c=normalize(raw);const g=(c.match(/\u00AC/g)||[]).length;const v=g?c.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():c;if(v)out.push({idx,v});});return {number:p.number,out};});
+    // Each edge line carries its position (rank from the top or from the bottom); furniture must repeat in the same position, so a body sentence that merely repeats is never removed.
+    const edge=e=>e.out.map((x,i)=>{const fromEnd=e.out.length-1-i,upper=!/[a-zñáéíóúü]/.test(x.v);return {x,pos:fromEnd<3||(fromEnd<4&&upper)?'b'+fromEnd:(i<3||(i<24&&upper))?'t'+i:null};}).filter(y=>y.pos);
+    const eligible=v=>!headingPre.test(v)&&!section.test(v)&&!transitory.test(v)&&!/^(?:[IVXLCDM]+[.\-)]|[a-zñ]\)|\d{1,3}[.\-)])(?:\s|$)/i.test(v)&&(v.length>=4||/^[A-ZÑ]$/.test(v))&&!/^\d+$/.test(v);
+    const counts=new Map();for(const e of per){for(const k of new Set(edge(e).filter(y=>eligible(folded(y.x.v))).map(y=>folded(y.x.v)+'|'+y.pos)))counts.set(k,(counts.get(k)||0)+1);}
+    const min=Math.max(4,Math.ceil(pages.length*0.3));const repeated=new Set([...counts].filter(([,n])=>n>=min).map(([k])=>k));
+    const offs=new Map();for(const e of per)for(const {x} of edge(e))if(/^\d{1,3}$/.test(x.v)){const o=Number(x.v)-e.number;offs.set(o,(offs.get(o)||0)+1);}
+    const best=[...offs].sort((a,b)=>b[1]-a[1])[0];const pageNo=best&&best[1]>=Math.max(4,Math.ceil(pages.length*0.5))?best[0]:null;
+    const drop=new Map();for(const e of per)for(const {x,pos} of edge(e)){if(repeated.has(folded(x.v)+'|'+pos)||(pageNo!==null&&/^\d{1,3}$/.test(x.v)&&Number(x.v)-e.number===pageNo))drop.set(e.number+':'+x.idx,{page:e.number,line:x.idx,text:x.v,pos});}
+    return drop;})();
+  for(const p of pages){let lineIdx=-1;for(const line of p.text.split('\n')){lineIdx++;{const cand=furniture.get(p.number+':'+lineIdx);if(cand&&furnitureApproved.some(a=>typeof a?.text==='string'&&folded(a.text)===folded(cand.text)&&(a.pos===undefined||a.pos===cand.pos))){coverage.removedHeaderLines++;furnitureLog.push({page:cand.page,line:cand.line,text:cand.text,pos:cand.pos});continue;}}const cleaned=normalize(line);const glyphCount=(cleaned.match(/\u00AC/g)||[]).length;const value=glyphCount?cleaned.replace(/\u00AC/g,' ').replace(/\s+/g,' ').trim():cleaned;if(glyphCount)coverage.removedBulletGlyphs+=glyphCount;if(!value)continue;rawLines.push({text:value,page:p.number});const upper=folded(value);
     if(upper===titleFold||/^CÁMARA DE DIPUTADOS/.test(value)||/^Secretaría General$|^Secretaría de Servicios Parlamentarios$|^Últimas?\s+Reformas?\s+DOF|^\d+ de \d+$/i.test(value)){coverage.removedHeaderLines++;continue;}lines.push({text:value,page:p.number});}}
   const records=[],prefaceRecords=[],documentAnomalies=[];let current=null,started=false,ended=false,pendingSection=false,sectionDiscard=0,numericStarted=false,lastOrd=0;const seen=new Set();
+  {const groups=new Map();for(const c of furniture.values()){const k=folded(c.text)+'|'+c.pos;const g=groups.get(k)||{text:c.text,pos:c.pos,pages:[]};g.pages.push(c.page);groups.set(k,g);}
+   coverage.furnitureCandidates=[...groups.values()].map(g=>({text:g.text.slice(0,200),pos:g.pos,count:g.pages.length,pages:g.pages}));coverage.furnitureRemovedLog=furnitureLog;
+   if(furnitureLog.length)documentAnomalies.push('running-page-furniture-removed-by-review:'+furnitureLog.length);
+   if(groups.size&&furnitureLog.length<furniture.size)documentAnomalies.push('running-page-furniture-candidates-kept-for-review:'+(furniture.size-furnitureLog.length));}
   // Two-pass mode gate: any strict numeric heading anywhere in the document selects numeric mode (byte-identical to v22); the ordinal path below only runs for documents with NO numeric headings at all, so preambles of modern laws ("ARTÍCULO PRIMERO.- Se expide…") can never poison numeric extraction.
   const ordinalEnabled=!lines.some(l=>headingPre.test(l.text)&&(ARTICLE.test(l.text)||bare.test(l.text)));
   const sampleDiscard=(rule,line)=>{if(coverage.discardedSamples.length<50)coverage.discardedSamples.push({rule,page:line.page,line:line.text.slice(0,200)});};
