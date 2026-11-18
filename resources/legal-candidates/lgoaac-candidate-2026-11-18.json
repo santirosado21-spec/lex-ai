@@ -1,0 +1,38 @@
+{
+ "schemaVersion": 1,
+ "status": "candidate-not-adopted-pending-QA",
+ "lawId": "MX-FED-LGOAAC",
+ "title": "LEY General de Organizaciones y Actividades Auxiliares del Crédito",
+ "officialUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGOAAC.pdf",
+ "authority": "Cámara de Diputados del H. Congreso de la Unión",
+ "retrievedAt": "2026-11-18T06:01:38.371Z",
+ "httpStatus": 200,
+ "robotsHttpStatus": 404,
+ "pdfSha256": "54747e6ec98327430ccf77b2acc5ba3033ef64f42d8d7f1fdee957755070f683",
+ "pdfBytes": 1467304,
+ "pdfPages": 148,
+ "pdfPath": "artifacts/legal-candidates/lgoaac-2026-11-18/snapshots/lgoaac/54747e6ec98327430ccf77b2acc5ba3033ef64f42d8d7f1fdee957755070f683.pdf (not committed)",
+ "textExtraction": {
+  "tool": "pdftotext -layout",
+  "textSha256": "b4953f923a780768935ed2ab5a0370e19d452ba2fd9f29f6b7029f76aa087ed9",
+  "characters": 571276
+ },
+ "publisherDeclaredLastReform": "DOF 14-11-2025",
+ "catalogIndexRow": "resources/legal-library-catalog.json lawId MX-FED-LGOAAC",
+ "licenseBasis": "official-legislative-text per resources/legal-library-catalog.json reuseBasis (statutory text only; not an individualized license opinion)",
+ "validation": {
+  "articleHeadingsDistinct": 103,
+  "firstArticle": 1,
+  "lastArticle": 103,
+  "gapsInSequence": [],
+  "hasTransitorios": true,
+  "headerMatchesCatalogReform": true,
+  "notChecked": [
+   "independent comparison with DOF",
+   "currentness beyond the publisher's declared last reform",
+   "text-level fidelity sample (910-sample method not applied)",
+   "reference to other statutes' articles inside the text"
+  ]
+ },
+ "limits": "Candidate in a separate area. Not added to the frozen public library, not signed, not used by the app. Currentness not verified."
+}
