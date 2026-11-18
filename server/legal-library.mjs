@@ -298,6 +298,7 @@ const reversedOrdinal=/^Art[íi]culo[ \t]*[.:][ \t]*-[ \t]*(\d+)[oº°]?(?=[ \t]
 const wrappedTransitoryRefV37=/\bART[IÍ]CULO\s+(?:PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[EÉ]PTIMO|OCTAVO|NOVENO|D[EÉ]CIMO|UND[EÉ]CIMO|DUOD[EÉ]CIMO|VIG[EÉ]SIMO|[ÚU]NICO)\s*$/i;
 const nospaceDashV37=/^Art[íi]culo(\d+)[oº°]?\.[-–]/;
 const periodAfterWordV37=/^Art[íi]culo\.[ \t]+(\d+)[oº°]?\.(?=[ \t])/;
+const periodGlueV37=/^(?:ART[IÍ]CULO|Art[íi]culo)\.(\d+)[oº°]?\.[-–]/; // publisher typo 'ARTÍCULO.9o.-' (period glued to the word); only accepted as the next sequential article
 const ordinalMarkV37=/^Art[íi]culo[ \t]+(\d+)[oº°](?=[ \t]+[A-ZÁÉÍÓÚÑ])/;
 const nospaceNumeric=/^Art[íi]culo(\d+)[oº°]?\.(?=[ \t]|$)/;
 const ORD_UNIT={PRIMERO:1,SEGUNDO:2,TERCERO:3,CUARTO:4,QUINTO:5,SEXTO:6,SEPTIMO:7,OCTAVO:8,NOVENO:9};
@@ -517,7 +518,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
           current={articleId:nsnId,lines:[line],editorial:[]};continue;
         }
       }
-      const v37M=(ordinalEnabled?null:nospaceDashV37.exec(line.text))||periodAfterWordV37.exec(line.text)||ordinalMarkV37.exec(line.text); // documents in ordinal mode keep the v36 nospace path unchanged
+      const v37M=(ordinalEnabled?null:nospaceDashV37.exec(line.text))||periodAfterWordV37.exec(line.text)||periodGlueV37.exec(line.text)||ordinalMarkV37.exec(line.text); // documents in ordinal mode keep the v36 nospace path unchanged
       if(v37M){
         const v37Number=Number(v37M[1]);
         const currentNumberV37=current?Number(current.articleId.split('-')[0]):null;
