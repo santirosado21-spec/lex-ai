@@ -35,8 +35,10 @@ Distinciones que este mapa NO borra:
 - Estar en la biblioteca no prueba que el artículo siga vigente ni que sea la norma aplicable.
 - Sin medición contra una referencia externa no hay base para afirmar paridad de cobertura con ningún otro producto.
 
-## Bloqueo concreto para cerrar brechas ahora
+## Qué se puede hacer y qué bloquea (actualizado)
 
-- LGOAAC y reglamentos: requieren una descarga de fuente oficial y reconstrucción de la biblioteca congelada. Eso es adquisición con red y regenerar un artefacto firmado, no una edición local; las reglas de la sesión lo excluyen (sin red real, sin tocar la cuarentena) y reabrirlo no aportaría al demo mercantil más que una ley auxiliar.
-- Jurisprudencia y normas estatales: no hay fuente en el inventario y su adquisición necesita decisión sobre fuentes y licencias.
-- Probar la biblioteca completa en el demo: requiere el artefacto `public-library.sqlite` (no está en el checkout; solo su manifiesto).
+- Descargas puntuales de texto legislativo oficial están permitidas esta noche (sin cuentas, gasto ni envío de datos privados) y se guardan como candidatas separadas, con procedencia, fecha y hash, sin tocar la biblioteca congelada ni la cuarentena. Hechas: LGOAAC (`resources/legal-candidates/lgoaac-candidate-2026-11-18.json`) y Ley Orgánica del Poder Judicial de Nuevo León (`lopjnl-candidate-2026-11-18.json`). Ninguna está adoptada: falta QA, y la vigencia de ambas no se verificó.
+- Reglamentos faltantes: adquirible de la misma forma, uno por uno, si el demo los necesita; no se hizo en masa.
+- Jurisprudencia: sin términos oficiales que autoricen reuso masivo del Semanario Judicial; solo consulta puntual por tesis con registro digital.
+- CPC de Nuevo León: ya descargado antes y excluido por identidades de artículo ambiguas; es problema de extracción, no de adquisición.
+- Probar la biblioteca completa en el demo: existe `public-library.sqlite` (153,014,272 bytes) en la carpeta de Drive del proyecto, pero la herramienta de Drive de esta sesión rechaza descargas de más de 25 MB (error: "download exceeds 26214400 byte limit"). No se verificó su hash. Hasta tener el archivo por otra vía, el demo no usa la biblioteca completa y no se debe presentar como si la usara.
