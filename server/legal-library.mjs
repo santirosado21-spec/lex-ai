@@ -442,8 +442,14 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt}={}){
       if(forwardGap&&continuation&&/^[a-záéíóúñ]/.test(continuation)){if(current)current.lines.push(line);continue;}
       finish();started=true;numericStarted=true;pendingSection=false;const articleId=[match[1],match[2]?.toUpperCase(),match[3]?.toUpperCase(),match[4]?.toUpperCase(),match[5]?.toUpperCase()].filter(Boolean).join('-');
       if(seen.has(articleId)&&!seen.has('1')){
-        const j=lines.slice(li+1).findIndex(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text));
-        if(j>=0&&lines.slice(li+1+j+1,li+1+j+601).some(l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*\.-/.test(l.text))){
+        // Anchor selection: the strict '.-' heading format keeps its original behavior (first article 1 followed by article 2). Only when that format is absent, accept period-style headings, and only if exactly one such article 1 is followed by article 2 (ambiguous quotations keep the stop).
+        const art1Strict=l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*\.-/.test(l.text),art2Strict=l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*\.-/.test(l.text);
+        const art1Loose=l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+1\s*(?:[oº°])?\s*[.\-]/.test(l.text),art2Loose=l=>/^(?:ART[IÍ]CULO|Art[íi]culo)\s+2\s*(?:[oº°])?\s*[.\-]/.test(l.text);
+        let j=lines.slice(li+1).findIndex(art1Strict);
+        if(!(j>=0&&lines.slice(li+1+j+1,li+1+j+601).some(art2Strict))){
+          const cands=[];for(let k=li+1;k<lines.length;k++)if(art1Loose(lines[k])&&lines.slice(k+1,k+601).some(art2Loose))cands.push(k-li-1);
+          j=cands.length===1?cands[0]:-1;}
+        if(j>=0){
           current=null;prefaceRecords.push(...records.splice(0).map(r=>({...r,prefaceReason:'restart-before-art1'})));seen.clear();started=false;numericStarted=false;lastOrd=0;
           documentAnomalies.push('preface-operative-candidates-dropped-restart-before-art1');coverage.restartBeforeArt1Page=line.page;li=li+j;continue;}}
       if(seen.has(articleId)){documentAnomalies.push('operative-numbering-restarts-before-transitory-boundary');coverage.stoppedAt={page:line.page,line:line.text.slice(0,300),articleId};ended=true;break;}

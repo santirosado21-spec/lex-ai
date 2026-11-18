@@ -32,3 +32,33 @@ test('a body reference with the same shapes in the middle of a sentence does not
   assert.deepEqual(arts(r),['1','2']);
   assert.ok(r.records[0].text.includes('constitucional'));
 });
+test('dictamen preamble with period-and-title headings (no dash) then the real law from article 1 keeps the whole law (real shape: gro-ley-072)',()=>{
+  const pre='CONSIDERANDO\nArtículo 28. Prueba anticipada\nEl juez podrá ordenar la práctica de pruebas anticipadas cuando exista riesgo de pérdida.\nArtículo 2. Glosario\n......\nDe la I a la III . . . . .\nArtículo 4. Hechos ilícitos\nLos hechos ilícitos se determinarán conforme a la legislación penal aplicable.\nArtículo 2. Glosario\n......\n\f';
+  const law='LEY NÚMERO 1 DE PRUEBA\nArtículo 1. Naturaleza y objeto de la ley\nLas disposiciones de la presente Ley son de orden público e interés social.\nArtículo 2. Glosario\nPara los efectos de esta Ley se entenderá por afectado a la persona titular del bien.\nArtículo 3. Autoridades\nLas autoridades aplicarán esta Ley en el ámbito de su competencia.\nArtículo 4. Supletoriedad\nPara los casos no previstos serán aplicables las normas generales.\n';
+  const r=run(pre+law);
+  assert.deepEqual(arts(r),['1','2','3','4']);
+  assert.ok(r.documentAnomalies.includes('preface-operative-candidates-dropped-restart-before-art1'));
+  assert.ok(!r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+  assert.equal(r.coverage.prefaceRecordsPreserved,3);
+});
+test('a law that really repeats an article number without a later article 1 still stops at the restart',()=>{
+  const body='LEY DE PRUEBA\nArtículo 2. Glosario\nTexto uno del glosario con contenido suficiente para ser un artículo.\nArtículo 3. Objeto\nTexto del objeto de la ley con contenido suficiente.\nArtículo 2. Glosario\nTexto repetido del glosario.\n';
+  const r=run(body);
+  assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+});
+test('regression (QA probe shape): a dictamen quoting article 2 twice and then period-style articles 1 and 2 must not shadow the real law that uses the dash format',()=>{
+  const pre='CONSIDERANDO\nArtículo 2. Glosario de la iniciativa con texto citado del dictamen.\nArtículo 2. Glosario de la iniciativa con texto citado del dictamen.\nArtículo 1. Las disposiciones citadas del dictamen son de orden público.\nArtículo 2. Para los efectos citados se entenderá por afectado a la persona.\n\f';
+  const law='LEY REAL DE PRUEBA\nARTÍCULO 1.- Las disposiciones de la presente Ley son de orden público e interés social.\nARTÍCULO 2.- Para los efectos de la presente Ley se entenderá por afectado a la persona titular.\nARTÍCULO 3.- Las autoridades aplicarán esta Ley en el ámbito de su competencia.\n';
+  const r=run(pre+law);
+  assert.deepEqual(arts(r),['1','2','3']);
+  assert.ok(r.records.every(x=>!/citad/.test(x.text)));
+  assert.ok(r.documentAnomalies.includes('preface-operative-candidates-dropped-restart-before-art1'));
+  assert.ok(r.coverage.prefaceRecordsPreserved>=1);
+});
+test('ambiguous period-style quotations (two candidate article 1 headings, both followed by article 2) are not guessed: the extractor keeps its stop',()=>{
+  const pre='CONSIDERANDO\nArtículo 2. Glosario de la iniciativa con texto citado del dictamen.\nArtículo 2. Glosario de la iniciativa con texto citado del dictamen.\nArtículo 1. Las disposiciones citadas del dictamen son de orden público.\nArtículo 2. Para los efectos citados se entenderá por afectado a la persona.\n\f';
+  const law='LEY REAL DE PRUEBA\nArtículo 1. Las disposiciones de la presente Ley son de orden público e interés social.\nArtículo 2. Para los efectos de la presente Ley se entenderá por afectado a la persona titular.\nArtículo 3. Las autoridades aplicarán esta Ley en el ámbito de su competencia.\n';
+  const r=run(pre+law);
+  assert.ok(r.documentAnomalies.includes('operative-numbering-restarts-before-transitory-boundary'));
+  assert.ok(!r.documentAnomalies.includes('preface-operative-candidates-dropped-restart-before-art1'));
+});

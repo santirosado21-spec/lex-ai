@@ -185,3 +185,8 @@ test('terminating the extraction wrapper terminates nested parser workers (Node 
   const worker=new Worker(outer,{eval:true,workerData:{inner,file:heartbeat}});await new Promise((resolve,reject)=>{worker.once('message',resolve);worker.once('error',reject);});
   await new Promise(resolve=>setTimeout(resolve,40));await worker.terminate();const before=await readFile(heartbeat,'utf8');await new Promise(resolve=>setTimeout(resolve,50));assert.equal(await readFile(heartbeat,'utf8'),before);
 });
+
+test('acquisition script failure reports the real reason (wrong registry or unknown document) in a bounded detail field',async()=>{
+  const run=promisify(execFile)(process.execPath,['scripts/legal-acquisition.mjs','--live','--documents','no-such-document'],{cwd:path.resolve('.')});
+  await assert.rejects(run,error=>{const out=JSON.parse(error.stderr);return out.errorCategory==='invalid-or-failed-acquisition'&&/unknown or not approved/.test(out.detail)&&out.detail.length<=200;});
+});

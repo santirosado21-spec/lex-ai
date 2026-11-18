@@ -33,5 +33,5 @@ export async function main(args=process.argv.slice(2)){
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
-  main().catch(error=>{process.stderr.write(JSON.stringify({state:'failed',errorCategory:['unsafe-output','integrity-error','source-drift','locked'].includes(error.code)?error.code:'invalid-or-failed-acquisition'})+'\n');process.exitCode=1;});
+  main().catch(error=>{process.stderr.write(JSON.stringify({state:'failed',errorCategory:['unsafe-output','integrity-error','source-drift','locked'].includes(error.code)?error.code:'invalid-or-failed-acquisition',...(['unsafe-output','integrity-error','source-drift','locked'].includes(error.code)?{}:{detail:String(error?.message??error).slice(0,200)})})+'\n');process.exitCode=1;});
 }
