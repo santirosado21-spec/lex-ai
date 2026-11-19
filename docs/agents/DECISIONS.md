@@ -125,3 +125,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-10 20:38 — codex — Monograma R de Rejon.AI para app y landing
 
 **Por qué:** El dueño eligió Rejon.AI. Se creó la marca vectorial original en Figma y se usó una misma geometría para SVG, favicon e iconos de escritorio. Los identificadores internos y el instalador anterior conservan compatibilidad hasta contar con migración y build verificado.
+
+## 2026-11-19 11:54 — codex — Guardar los soportes revisados por asunto y verificar la procedencia del documento de práctica
+
+**Por qué:** El abogado necesita consultar el original e insertar un dato después de reabrir la sesión. El expediente cifrado vincula el mapa al despacho y al asunto. Sólo el documento sintético generado por el servidor puede aportar hechos del texto a la solicitud de práctica. El detector todavía pierde información en los controles aduaneros.

@@ -1,19 +1,20 @@
 import {useEffect, useRef, useState, type FormEvent} from 'react';
 import {ArrowDownToLine, ArrowRight, BookOpen, Check, ChevronLeft, Cloud, ExternalLink, FileText, FolderClosed, HardDrive, LoaderCircle, Monitor, Presentation, Table2} from 'lucide-react';
 import {api, downloadFile} from './api';
+import IntakeCaseDocument,{type CaseDatum} from './IntakeCaseDocument';
 import LocalIntakeImport from './LocalIntakeImport';
 import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'opening' | 'documents' | 'trade' | `research-${string}`;
+type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
-type IntakeFields = {client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
+type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
   id: Task; title: string; preview?: string;
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string}[];
 };
-type PilotStatus = {saved: boolean; protectedRecords?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -21,8 +22,8 @@ const formats = [
 ] as const;
 
 function MarkedText({text}:{text:string}) {
-  return <>{text.split(/(\[\[[A-Z_][A-Z_0-9]*\]\])/g).map((part,index)=>
-    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part}</mark> : part)}</>;
+  return <>{text.split(/(\[\[(?:[A-Z_][A-Z_0-9]*|DATO_\d+_[a-f0-9]{12})\]\])/g).map((part,index)=>
+    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part.startsWith('[[DATO_')?'Dato '+part.split('_')[1]:part}</mark> : part)}</>;
 }
 
 export default function IntakePilot() {
@@ -35,6 +36,9 @@ export default function IntakePilot() {
   const [title,setTitle] = useState('');
   const [documentKind,setDocumentKind] = useState('otro');
   const [scenarioId,setScenarioId] = useState<string>();
+  const [reviewId,setReviewId] = useState<string>();
+  const [keepDocument,setKeepDocument] = useState(true);
+  const editBox=useRef<HTMLTextAreaElement>(null);
   const [supplier,setSupplier] = useState('');
   const [selected,setSelected] = useState<Task>('trade');
   const [format,setFormat] = useState<Format>('docx');
@@ -53,7 +57,7 @@ export default function IntakePilot() {
 
   useEffect(()=>{
     let active=true;
-    api<PilotStatus>('intake.status').then(result=>{if(active) setPilot(result);})
+    api<PilotStatus>('intake.status').then(result=>{if(active){setPilot(result);if(result.tasks.some(item=>item.id==='case-note'))setSelected('case-note');}})
       .catch(()=>{if(active) setError('Abre el piloto desde su lanzador local para conectar con el expediente.');})
       .finally(()=>{if(active) setActivity(null);});
     return ()=>{active=false;};
@@ -69,9 +73,10 @@ export default function IntakePilot() {
   }
   function importActivity(busy:boolean) {
     setInspecting(busy);
-    if (busy) clearScenario();
+    if (busy) {clearScenario();setReviewId(undefined);}
   }
   function applyExtract(fields:IntakeFields) {
+    setReviewId(fields.reviewId);setKeepDocument(true);
     setClient(fields.client);
     setTitle(fields.title);
     setDocumentKind(fields.documentKind);
@@ -90,10 +95,12 @@ export default function IntakePilot() {
       const data=await api<PilotStatus>('intake.save',{
         firm:firm.trim(),client:client.trim(),title:title.trim(),jurisdiction:'MX-FED',documentKind,
         ...(invoice ? {scenarioId} : {}),
+        ...(keepDocument&&reviewId?{reviewId}:{}),
         ...(invoice && supplier.trim() ? {supplier:supplier.trim()} : {}),
       });
       setPilot(data);
-      setFirm(''); setClient(''); setTitle(''); clearScenario();
+      if(data.tasks.some(item=>item.id==='case-note'))setSelected('case-note');
+      setFirm(''); setClient(''); setTitle('');setReviewId(undefined); clearScenario();
       setNotice('Expediente guardado en este equipo.');
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
     finally {setActivity(null);}
@@ -120,11 +127,20 @@ export default function IntakePilot() {
     catch {setError('El servicio local no pudo recuperar el texto original.');}
     finally {setActivity(null);}
   }
+  function insertDatum(item:CaseDatum) {
+    const element=editBox.current;
+    if(editText===null||!element)return;
+    const start=element.selectionStart,end=element.selectionEnd;
+    const next=editText.slice(0,start)+item.token+editText.slice(end);
+    if(next.length>1800){setError('El marcador superaría los 1800 caracteres del borrador.');return;}
+    setEditText(next);clearFeedback();
+    requestAnimationFrame(()=>{element.focus();element.setSelectionRange(start+item.token.length,start+item.token.length);});
+  }
   async function saveEdit() {
     if (busy || !task || editText===null) return;
     clearFeedback();
-    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]') || /\[\[|\]\]/.test(editText.replace(/\[\[(?:CLIENTE|ASUNTO)\]\]/g,''))) {
-      setError('Conserva los marcadores [[CLIENTE]] y [[ASUNTO]] y evita otros marcadores dobles.');
+    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]') || /\[\[|\]\]/.test(editText.replace(/\[\[(?:CLIENTE|ASUNTO|DATO_[1-9]\d{0,2}_[a-f0-9]{12})\]\]/g,''))) {
+      setError('Conserva los marcadores [[CLIENTE]] y [[ASUNTO]] y usa los datos del soporte de este expediente.');
       return;
     }
     setActivity('edit');
@@ -174,20 +190,21 @@ export default function IntakePilot() {
         </div>
         {activity==='loading'&&<p role="status">Abriendo el espacio local…</p>}
         {pilot&&!saved&&<div key={clientStep?'client':'firm'} className="rp-reveal">
-          {clientStep&&<LocalIntakeImport onBusyChange={importActivity} onExtract={applyExtract}/>}
+          {clientStep&&<LocalIntakeImport ciphered={pilot.protectedRecords} onBusyChange={importActivity} onExtract={applyExtract}/>}
           <form className="rp-form" onSubmit={save}>
             {!clientStep?<label htmlFor="intake-firm">Nombre del despacho<input id="intake-firm" autoComplete="off" required maxLength={120} value={firm} onChange={e=>setFirm(e.target.value)} placeholder="Nombre del despacho ficticio"/></label>:<>
               <label htmlFor="intake-client">Cliente<input id="intake-client" autoComplete="off" required maxLength={200} disabled={busy} value={client} onChange={e=>setClient(e.target.value)}/></label>
               {documentKind==='factura'&&scenarioId==='factura-origen-v1'&&<label htmlFor="intake-supplier">Proveedor<input id="intake-supplier" autoComplete="off" maxLength={200} disabled={busy} value={supplier} onChange={e=>setSupplier(e.target.value)}/></label>}
               <label htmlFor="intake-title">Asunto<input id="intake-title" autoComplete="off" required maxLength={200} disabled={busy} value={title} onChange={e=>setTitle(e.target.value)}/></label>
               <label htmlFor="intake-kind">Tipo de documento<select id="intake-kind" disabled={busy} value={documentKind} onChange={e=>{setDocumentKind(e.target.value);clearScenario();}}><option value="otro">Otro</option><option value="pedimento">Pedimento</option><option value="factura">Factura</option><option value="contrato">Contrato</option></select></label>
+              {reviewId&&<label className="rp-keep-document"><input type="checkbox" checked={keepDocument} onChange={event=>setKeepDocument(event.target.checked)}/> Guardar el texto revisado y sus sustituciones en este expediente cifrado</label>}
               <small>La plantilla de comercio exterior incluye el tipo de documento que confirmes aquí.</small>
             </>}
             <div className="rp-actions">
               <button className="rp-primary" disabled={busy||!firm.trim()||(clientStep&&(!client.trim()||!title.trim()))}>{clientStep?'Guardar en este equipo':'Continuar'} <ArrowRight size={16}/></button>
-              <button className="rp-quiet" type="button" disabled={busy} onClick={()=>{if(clientStep){setClient('Comercial Brújula Ficticia');setTitle('Revisión de pedimento ficticio');setDocumentKind('pedimento');clearScenario();}else setFirm('Despacho Horizonte Ficticio');}}>Usar ejemplo</button>
+              <button className="rp-quiet" type="button" disabled={busy} onClick={()=>{if(clientStep){setClient('Comercial Brújula Ficticia');setReviewId(undefined);setTitle('Revisión de pedimento ficticio');setDocumentKind('pedimento');clearScenario();}else setFirm('Despacho Horizonte Ficticio');}}>Usar ejemplo</button>
             </div>
-            {clientStep&&<button type="button" className="rp-back" disabled={busy} onClick={()=>{clearFeedback();setClientStep(false);}}><ChevronLeft size={15}/> Volver al despacho</button>}
+            {clientStep&&<button type="button" className="rp-back" disabled={busy} onClick={()=>{clearFeedback();setReviewId(undefined);setClientStep(false);}}><ChevronLeft size={15}/> Volver al despacho</button>}
           </form>
         </div>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
@@ -195,17 +212,20 @@ export default function IntakePilot() {
             {pilot?.tasks.map(item=><option value={item.id} key={item.id}>{item.title}</option>)}
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
+          {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument/>}
           {activeTask.references?.length ? <details className="rp-details" key={'sources-'+task}><summary><BookOpen size={16}/> Fuentes de consulta ({activeTask.references.length})</summary>
             <ul>{activeTask.references.map(source=><li key={source.id}><a href={source.url} rel="noreferrer" target="_blank">{source.title} <ExternalLink size={12}/></a><p>{source.locator} · {source.summary}</p>
                 {source.text&&<details className="rp-citation"><summary>Texto del artículo</summary><blockquote>{source.text}</blockquote>{source.sourceId&&<small>{source.sourceId}</small>}</details>}
               </li>)}</ul></details>:null}
+          {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
           {draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> Ver el mensaje enviado</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
             <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> Generando borrador…</>:<>Enviar y generar borrador <ArrowRight size={16}/></>}</button>
             </section>}
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
-              <label htmlFor="intake-edit">Editar en este equipo<textarea id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
+              <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
+              {pilot?.hasDocument&&<IntakeCaseDocument insert={insertDatum}/>}
               <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/1800</small>
               <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
             </div>:<>

@@ -311,3 +311,7 @@ Piloto r3 con mapa temporal; la API recibe sólo variantes aprobadas o un pasaje
 ## 2026-11-19 11:11 — codex — Cifrado local del expediente y cuentas temporales en r4
 
 151 pruebas dirigidas. Dos aperturas reales del lanzador del ZIP en terminal macOS, con proveedor y claves de prueba: alternancia principal/Lorenzo, recibos independientes y tres exportaciones con nombre restituido tras reabrir. Se comprobó que el pegado inmediato de la frase y las claves no hizo eco en el ensayo. Los registros de un caso nuevo quedaron cifrados y la migración conservó la copia previa. Pendientes confidencialidad de extremo a extremo en expedientes no vistos, utilidad jurídica, plataformas externas y cuenta real de Lorenzo.
+
+## 2026-11-19 11:54 — codex — Prueba de Rejon.AI con restitución documental y adquisición local de la LIGIE
+
+Edición r5. Un expediente ficticio de cupos recibió una cita del artículo 23 y el marcador del proveedor mediante una llamada real. LibreOffice abrió las tres exportaciones y conservó el proveedor. 157 pruebas dirigidas aprobadas. Ollama cubrió 19/19 apariciones en nueve documentos y 24/24 domicilios de desarrollo. Sólo 5/25 controles aduaneros quedaron enteros. Localizador separado de la LIGIE: 9020 apariciones de 8183 códigos, sin validación de cuotas o vigencia.

@@ -2,6 +2,7 @@ import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
 import {createPseudonymStore} from './pseudonyms.mjs';
+import {formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges} from './trade-document-structure.mjs';
 
 // Local review of extracted text. The temporary map belongs only to this call.
 // The returned view contains originals and is never a cloud request.
@@ -10,17 +11,30 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,fields
  if (text.includes('[[LEX_') || !Array.isArray(suggestions) || suggestions.length>96) return incomplete;
  const scope={workspaceId:'local-preview',matterId:randomUUID(),threadId:'document'};
  const registry=createProvenanceRegistry();
+ const pieces=detectorSegments(text);
+ if(pieces.length>256)return incomplete;
+ const segments=pieces.map((piece,i)=>({id:'s'+i,path:'content',text:piece.text}));
+ const offsets=new Map(segments.map((segment,i)=>[segment.id,pieces[i].start]));
+ const captions=formCaptionRanges(text);
+ const isCaption=(start,end)=>captions.some(([first,last])=>start>=first&&end<=last);
  const source=registry.registerSource({objectId:'input',version:'1',scope,classification:'private',
    extraction:{status:'complete',extractorVersion:'intake-text-v1',originalSha256:originalHash},
-   segments:[{id:'body',path:'content',text}]});
+   segments});
  const result=await createVariantAwareDetector({provenanceRegistry:registry}).detect({scope,segments:source.segments,signal});
  let needsReview=result.status!=='complete';
- const ranges=result.detections.map(({start,end})=>[start,end]);
- for (const value of [...fields,...suggestions]) {
+ const ranges=[...labelledIdentityRanges(text),...postalBlockRanges(text)];
+ for (const detection of result.detections) {
+  const offset=offsets.get(detection.segmentId),start=offset+detection.start,end=offset+detection.end;
+  if(detection.category==='person'&&isCaption(start,end))continue;
+  ranges.push([start,end]);
+ }
+ const fieldValues=new Set(fields);
+ for (const value of new Set([...fields,...suggestions])) {
   if (value==='') continue;
   if (typeof value!=='string'||value.trim().length<2||value.length>1024||!text.includes(value)) {needsReview=true;continue;}
   for(let start=text.indexOf(value);start!==-1;start=text.indexOf(value,start+value.length)) {
-   ranges.push([start,start+value.length]);
+   const end=start+value.length;
+   if(fieldValues.has(value)||!isCaption(start,end))ranges.push([start,end]);
   }
  }
  ranges.sort((a,b)=>a[0]-b[0]||b[1]-a[1]);

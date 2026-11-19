@@ -9,7 +9,6 @@ import { createService } from './service.mjs';
 import { createInference } from './inference.mjs';
 import { createOpenAIInference } from './inference-openai.mjs';
 import { createGenerationGateway } from './generation-gateway.mjs';
-import {inspectLocalDocument} from './intake-import.mjs';
 import { createCloudDemo } from './cloud-demo.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
@@ -98,9 +97,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
      }
      const controller=new AbortController();
      res.once('close',()=>{if(!res.writableEnded)controller.abort();});
-     result=body.action==='intake.inspectLocal'
-      ? await inspectLocalDocument(body.payload,{signal:controller.signal})
-      : await service.dispatch(body.action,body.payload,{signal:controller.signal});
+     result=await service.dispatch(body.action,body.payload,{signal:controller.signal});
     }
     else if(body.action==='office.pair' || body.action==='office.revoke'){
      const {matterId,tenant}=body.payload||{};

@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 11:11 por codex: Cifrado local del expediente y cuentas temporales en r4
+**Última actualización:** 2026-11-19 11:54 por codex: Prueba de Rejon.AI con restitución documental y adquisición local de la LIGIE
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r5 guarda el texto ficticio y sus sustituciones en el expediente cifrado. La prueba integrada restituyó el proveedor tras una llamada real y exportó Word, Excel y PowerPoint. Pasaron 157 pruebas dirigidas. Sobre la muestra de Instinct se cubrieron 24/24 domicilios y quedaron íntegros 5/25 controles aduaneros. La captura de la LIGIE ya tiene localizadores por fracción y página para investigación. Ver el informe de comercio exterior del 19 de noviembre.
 
 - El lanzador privado r4 cifra el contenido del expediente, el borrador y la auditoría con una frase local. Abre una copia anterior en modo de sólo lectura para importarla una vez. La copia anterior sigue en claro. El paquete descomprimido abrió dos veces en una terminal de macOS y exportó los tres formatos después de reabrir. Se probaron dos cuentas temporales simuladas.
 
@@ -47,6 +49,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Medir la pérdida de campos aduaneros y los identificadores indirectos en un conjunto reservado. Cotejar unidades, cuotas y transitorios de las tablas arancelarias. Quedan pendientes la segunda clave real, la revisión profesional, Windows y los equipos de los socios.
 
 - Ampliar la evaluación de anonimización, utilidad jurídica y fuentes de comercio antes de abrir el flujo de documentos libres. Revisar almacenamiento y distribución en los equipos de los socios.
 

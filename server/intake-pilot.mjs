@@ -1,3 +1,7 @@
+import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
+import {randomUUID} from 'node:crypto';
+import {inspectLocalDocument} from './intake-import.mjs';
+import {bindReviewedDocument,documentToken,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
 import {loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
@@ -47,10 +51,12 @@ function exactFields(payload, fields) {
  }
 }
 
-function draftText(value) {
+function draftText(value,doc) {
+ const allowed=new Set(documentTokens(doc).map(item=>item.token));
+ const unrecognized=typeof value==='string' ? value.replace(marker,'').replace(documentToken,token=>allowed.has(token)?'':token) : '';
  if (typeof value!=='string' || value.length>1800 || !value.includes('[[CLIENTE]]') ||
-     !value.includes('[[ASUNTO]]') || /\[\[|\]\]|[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(value.replace(marker,''))) {
-  throw new Error('El borrador debe conservar [[CLIENTE]] y [[ASUNTO]], sin otros marcadores, con un máximo de 1800 caracteres.');
+     !value.includes('[[ASUNTO]]') || /\[\[|\]\]|[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(unrecognized)) {
+  throw new Error('El borrador debe conservar [[CLIENTE]] y [[ASUNTO]], con los marcadores de este expediente, con un máximo de 1800 caracteres.');
  }
  return value;
 }
@@ -63,18 +69,18 @@ export function createIntakeGenerator({
   enabled:true,getApiKey,fetchImpl,model:'gpt-6-luna',
   maxCalls:3,maxOutputTokens:320,maxTotalTokens:4000,reasoningEffort:'none',
  });
- const gateFor=approvedResearch=>createEgressPolicy({
+ const gateFor=(approvedDynamic,dynamicCategory)=>createEgressPolicy({
   destinations:{[destination]:provider},
   getPolicy:()=>({version:'intake-v1',grants:[{scope,destination,allowedCategories:['synthetic','public']}]}),
   classify:({serialized,scope,destination,policyVersion})=>{
-   const isResearch=approvedResearch===serialized;
-   const exact=isResearch || allowedEnvelopes.has(serialized);
-   return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:isResearch?'public':'synthetic'};
+   const dynamic=approvedDynamic===serialized;
+   const exact=dynamic || allowedEnvelopes.has(serialized);
+   return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:dynamic?dynamicCategory:'synthetic'};
   },
  });
- return async (task,{signal,documentKind,articles,scenarioId,research}={}) => {
-  const envelope=research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
-  const gate=gateFor(research ? canonicalJson(envelope) : null);
+ return async (task,{signal,documentKind,articles,scenarioId,research,practice}={}) => {
+  const envelope=practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+  const gate=gateFor(practice||research ? canonicalJson(envelope) : null,research?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   let answer='';
@@ -92,6 +98,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
  try { articles=tradeArticles(publicLibrary); } catch { articles=null; }
  const tradeReferences=articles?[...articles,...supportingReferences]:[];
  let pending=false;
+ let latestReview=null;
+ let inspectionRevision=0;
  const current = () => {
   const firm=workspace();
   const intake=firm && store.get('intake-pilot',`intake-${firm.id}`);
@@ -105,14 +113,25 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   const selection=intake?.research?.[task];
   return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection) : null;
  };
+ const practiceFor = saved=>prepareProtectedCase(saved.intake.practiceSeed,saved.intake.document,saved.firm.id,saved.entry.id,publicLibrary);
+ const practiceTask = saved=>{
+  if(!saved?.intake.practiceSeed)return null;
+  const archived=saved.intake.researchHistory?.['case-note'];
+  if(archived)return {id:'case-note',...archived};
+  try {
+   const note=practiceFor(saved);
+   return {id:'case-note',title:note.title,preview:note.prompt,references:[note.ref]};
+  } catch {return {id:'case-note',title:'Nota del expediente protegido',preview:null,references:[]};}
+ };
  const status = () => {
   const saved=current();
   return {
    saved:Boolean(saved),
    protectedRecords:store.protectedRecords===true,
+   hasDocument:Boolean(saved?.intake.document),
    drafts:saved?.intake.drafts??{},
    editedTasks:saved?.intake.editedTasks??[],
-   tasks:Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]})).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
+   tasks:[practiceTask(saved)].filter(Boolean).concat(Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
     const archived=saved.intake.researchHistory?.[id];
     if (archived) return {id,...archived};
     try {
@@ -125,6 +144,31 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
 
  return async (action,payload,{signal}={}) => {
   switch (action) {
+   case 'intake.createPractice':
+   case 'intake.inspectLocal': {
+    let practiceSeed;
+    if(action==='intake.createPractice'){
+     exactFields(payload,[]);
+     if(workspace()||!store.protectedRecords)throw Error('Abre un ejercicio cifrado nuevo para preparar el caso.');
+     practiceSeed=newPracticeSeed();
+     const {text}=practiceDocument(practiceSeed);
+     payload={extension:'txt',base64:Buffer.from(text).toString('base64'),review:true};
+    }
+    const revision=++inspectionRevision;
+    latestReview=null;
+    const data=await inspectLocalDocument(payload,{signal});
+    if(revision===inspectionRevision&&!workspace()&&store.protectedRecords&&data.protection?.available){
+     const id=randomUUID();
+     latestReview={id,protection:data.protection,practiceSeed};
+     return {...data,reviewId:id};
+    }
+    return data;
+   }
+   case 'intake.readDocument': {
+    exactFields(payload,[]);
+    const saved=current();
+    return openReviewedDocument(saved?.intake.document,saved?.firm.id,saved?.entry.id);
+   }
    case 'intake.status':
     exactFields(payload,[]);
     return status();
@@ -148,15 +192,18 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const fields = ['firm','client','title','jurisdiction'];
     const hasScenario = payload && Object.hasOwn(payload,'scenarioId');
     const hasSupplier = payload && Object.hasOwn(payload,'supplier');
+    const keepDocument=payload&&Object.hasOwn(payload,'reviewId');
+    if (keepDocument) fields.push('reviewId');
     if (hasKind) fields.push('documentKind');
     if (hasScenario) fields.push('scenarioId');
     if (hasSupplier) fields.push('supplier');
     exactFields(payload,fields);
+    if(keepDocument&&(!store.protectedRecords||!latestReview||latestReview.id!==payload.reviewId))throw Error('Vuelve a leer el documento que quieres guardar.');
     if (hasScenario && (!getPilotTradeScenario(payload.scenarioId) || payload.documentKind !== 'factura')) throw new Error('Ejemplo documental inválido.');
     if (hasSupplier && (!hasScenario || typeof payload.supplier !== 'string' || !payload.supplier.trim() ||
         payload.supplier.length>200 || /[\p{C}\[\]]/u.test(payload.supplier))) throw new Error('Proveedor inválido para este ejemplo.');
     if (hasKind && !documentKinds.includes(payload.documentKind)) throw new Error('Clase documental inválida.');
-    return store.transaction(()=>{
+    const savedStatus=store.transaction(()=>{
      if (workspace()) throw new Error('Este espacio ya tiene un alta. Vuelve a cargar la página para continuar.');
      const fields=[payload.firm,payload.client,payload.title];
      if (fields.some(value=>typeof value!=='string' || /[\p{Cc}\[\]]/u.test(value))) {
@@ -165,16 +212,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const firm=createWorkspace({name:payload.firm,practiceAreas:['Mercantil']});
      const entry=createMatter({client:payload.client,title:payload.title,jurisdiction:payload.jurisdiction});
      const id=`intake-${firm.id}`;
-     store.put('intake-pilot',{id,workspaceId:firm.id,matterId:entry.id,documentKind:payload.documentKind??null,scenarioId:payload.scenarioId??null,supplier:hasSupplier?payload.supplier.trim():null,drafts:{}});
+     const document=keepDocument?bindReviewedDocument(latestReview.protection,firm.id,entry.id):null;
+     store.put('intake-pilot',{id,...(document?{document,practiceSeed:latestReview.practiceSeed??null}:{}),workspaceId:firm.id,matterId:entry.id,documentKind:payload.documentKind??null,scenarioId:payload.scenarioId??null,supplier:hasSupplier?payload.supplier.trim():null,drafts:{}});
      store.audit('intake.local.save',entry.id);
      return status();
     });
+    latestReview=null;
+    return savedStatus;
    }
    case 'intake.draft': {
     exactFields(payload,['task']);
     const {task}=payload;
     const saved=current();
-    const known=typeof task==='string' && (Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task));
+    const known=typeof task==='string' && (Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task)||(task==='case-note'&&saved?.intake.practiceSeed));
     if (!known) throw new Error('Selecciona una tarea del piloto.');
     if (!saved) throw new Error('Completa primero el alta del cliente.');
     if (Object.hasOwn(saved.intake.drafts,task)) return status();
@@ -183,13 +233,15 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     try {
      if (task==='trade' && !articles) throw new Error('La edición de los artículos necesita una revisión.');
      const research=noteFor(saved.intake,task);
-     const raw=await generate(task,{research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
-     const answer=draftText(research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw);
+     const practice=task==='case-note'?practiceFor(saved):null;
+     const raw=await generate(task,{practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
+     const answer=draftText(practice?renderProtectedCase(raw,practice):research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw,practice?saved.intake.document:null);
      signal?.throwIfAborted();
      store.transaction(()=>{
       const {intake}=current();
       if (intake.id!==saved.intake.id) throw new Error('Cambió el asunto del piloto.');
-      const snapshot=research ? {researchHistory:{...intake.researchHistory,[task]:{title:research.title,preview:research.prompt,references:[research.ref]}}} : {};
+      const source=practice??research;
+      const snapshot=source ? {researchHistory:{...intake.researchHistory,[task]:{title:source.title,preview:source.prompt,references:[source.ref]}}} : {};
       store.put('intake-pilot',{...intake,...snapshot,drafts:{...intake.drafts,[task]:answer}});
       store.audit('intake.cloud.draft',intake.matterId);
      });
@@ -204,7 +256,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const saved=current();
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
-     const drafts={...intake.drafts,[task]:draftText(text)};
+     const drafts={...intake.drafts,[task]:draftText(text,intake.document)};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks});
      store.audit('intake.local.edit',entry.id);
@@ -222,7 +274,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     }
     const {firm,entry,intake}=saved;
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
-    const draft=draftText(intake.drafts[task]).replace(marker,(_match,slot)=>values[slot]);
+    const text=draftText(intake.drafts[task],intake.document);
+    const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
+    if(text.includes('[[DATO_')){
+     for(const item of openReviewedDocument(intake.document,firm.id,entry.id).tokens)originals.set(item.token,item.value);
+    }
+    const draft=text.replace(/\[\[[^\[\]]+\]\]/g,token=>originals.get(token));
     const hasSupplier=task==='trade' && intake.scenarioId==='factura-origen-v1' && intake.supplier;
     const restored=hasSupplier?draft+'\n\nProveedor registrado: '+intake.supplier:draft;
     if (action==='intake.preview') return {text:restored};

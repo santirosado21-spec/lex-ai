@@ -122,3 +122,8 @@
 .rp-source-picker p { overflow-wrap: anywhere; }
 .rp-private-review pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow: auto; line-height: 1.65; }
 .rp-private-review mark { border-radius: .3rem; padding: .08em .25em; }
+.rp-form .rp-keep-document { display:flex; align-items:flex-start; gap:.65rem; font-weight:400; }
+.rp-form .rp-keep-document input { width:1.1rem; height:1.1rem; flex:none; margin-top:.15rem; }
+.rp-case-document,.rp-data-insert { display:grid; gap:.65rem; min-width:0; }
+.rp-case-document .rp-quiet { justify-self:start; }
+.rp-data-insert select { max-width:100%; }

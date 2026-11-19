@@ -93,7 +93,7 @@ El abogado ya puede buscar en el índice federal y redactar una nota con un pasa
 
 ## Protección del texto extraído en documentos nuevos
 
-La revisión previa utiliza Ollama y reglas locales sobre el documento ficticio completo dentro del límite de 8,000 caracteres. Comprueba que las propuestas aparecen literalmente en el texto, une las zonas que se solapan y verifica la restitución mediante la huella del texto extraído. El visor local permite comparar el original y las sustituciones. El mapa temporal se usa para la comprobación en memoria. El texto libre revisado no se admite como mensaje para la nube.
+La revisión previa utiliza Ollama y reglas locales sobre el documento ficticio completo dentro del límite de 8,000 caracteres. Comprueba que las propuestas aparecen literalmente en el texto, une las zonas que se solapan y verifica la restitución mediante la huella del texto extraído. El visor local permite comparar el original y las sustituciones. En la edición r3 el mapa temporal servía para la comprobación en memoria. El texto libre revisado no se admite como mensaje para la nube.
 
 En los tres ejemplos ficticios definidos en `scripts/check-pilot-local-privacy.mjs`, Ollama y las reglas cubrieron íntegramente seis de seis identificadores anotados, incluidos dos domicilios, uno mexicano y otro extranjero. La restitución coincidió en los tres. De seis expresiones operativas anotadas sólo una quedó íntegra y visible en la vista protegida. Por tanto, este ensayo también documenta pérdida de información jurídica útil. Son tres documentos de desarrollo distintos de los utilizados por Instinct. Las cifras no son comparables ni estiman el rendimiento sobre expedientes reales. Un ejercicio adicional de navegador con viewport de 390 píxeles verificó el correo oculto y la restitución desde la interfaz. La selección de pasaje oficial, su generación de nota y la exportación son un recorrido separado.
 
@@ -103,3 +103,28 @@ En los tres ejemplos ficticios definidos en `scripts/check-pilot-local-privacy.m
 El lanzador abre cada ejercicio con una frase local. Una sal aleatoria y scrypt derivan la clave de AES-256-GCM. Cada escritura utiliza un nonce nuevo. La autenticación comprueba el perfil, el código del ejercicio y la identidad de cada registro. SQLite conserva en claro los identificadores internos y el tipo de registro. El archivo de recibos locales contiene la cuenta seleccionada, el modelo y el consumo. Las exportaciones llevan los datos restituidos. El cifrado cubre los registros guardados por el piloto. Memoria, copias anteriores, archivos de Office y protección del sistema operativo requieren controles propios.
 
 Probé reapertura, rechazo de frase incorrecta, edición, exportación tras reiniciar, reversión de escrituras, lectores simultáneos, trasplante de registros y de un archivo entre ejercicios. La migración leyó un ejemplo r3 en modo de sólo lectura y conservó su archivo byte por byte. Los nombres y el borrador ficticios no aparecieron como texto en los archivos del ejercicio nuevo. El lanzador también admite dos claves temporales en una sesión. La alternancia se comprobó con credenciales ficticias. La segunda clave real y la revisión de seguridad externa siguen pendientes.
+
+
+## Expediente de práctica y restitución en r5
+
+El lanzador cifrado permite guardar el texto de un documento ficticio leído en este equipo. El abogado puede reabrir el soporte, cotejar identidades e insertar un marcador desde el editor. El mapa queda vinculado al despacho y al asunto. Un documento nuevo que el usuario importe desde su disco permanece local. Para practicar el recorrido hacia OpenAI, el servidor genera un expediente sintético de origen o cupos con cliente, proveedor, asunto y contacto variables. Se verifica la procedencia, el texto íntegro, cada identidad sustituida y los hechos que conserva la operación. La vista previa utiliza marcadores exclusivos de esa solicitud. El programa coteja el hecho, el proveedor y la cita que devuelve la nube antes de restituir los valores en el equipo.
+
+Una prueba de navegador con la cuenta principal y el artículo 23 de la LCE envió una solicitud real. La vista previa coincidió con el mensaje enviado y quedaron fuera los cuatro datos del documento más el nombre del despacho. El proveedor devolvió el marcador del proveedor, una cita literal comprobada y una pregunta. Reportó 444 tokens de entrada y 72 de salida. Tras reabrir el expediente cifrado se pudo restituir el proveedor. Los tres formatos Office se abrieron con LibreOffice y conservaron el proveedor en el PDF renderizado. En un segundo recorrido con un TXT ficticio nuevo se insertó un correo desde el soporte local. El navegador mostró el correo restituido y mantuvo la página dentro del ancho disponible a 320, 390, 768 y 1280 píxeles.
+
+| Evaluación local con Ollama | Resultado | Alcance |
+|---|---|---|
+| Nueve documentos ficticios de desarrollo | 19 de 19 apariciones sensibles cubiertas, 14 de 18 expresiones operativas intactas, 9 restituciones exactas | La comparación con r4 sobre los mismos ejemplos dio 5 de 18 expresiones intactas. |
+| Muestra de domicilios de Instinct | 24 de 24 domicilios cubiertos. En 5 de 25 controles quedó íntegro todo el texto aduanero. Se restituyeron los 49 textos | Lote de desarrollo usado al ajustar reglas. En 20 controles quedó oculta al menos una parte. |
+| Seis expedientes adicionales de origen o cupos | Cinco habilitaron la vista de envío con el artículo previsto. Un caso de cupos quedó en local por pérdida de hechos | Tres expedientes por tema. Ollama real, sin generar en la nube. |
+
+Los resultados miden esos textos extraídos. Faltan un lote reservado sin ajustes, mediciones de combinación de identificadores indirectos y aceptación profesional con los socios. Los ejemplos se limitan a texto extraíble. Los escaneos, sellos y firmas requieren un flujo con OCR y cotejo visual antes de admitirlos.
+
+## Localizar una fracción en la captura de la LIGIE
+
+La herramienta de desarrollo recorre las 894 páginas de la captura e identifica códigos de ocho dígitos al inicio de una línea extraída con Poppler. Devuelve fracción, página, línea de texto extraído, huella y enlace al PDF. Encontró 9,020 apariciones de 8,183 códigos distintos en 809 páginas. Un código puede aparecer en la tabla, en notas o en reformas posteriores. Para 0102.29.99 devolvió cuatro páginas y para 8413.70.99 devolvió la página 631. Las posiciones sirven para abrir el original e investigar las referencias. Siguen pendientes la reconstrucción de celdas multilínea, cuotas, unidades, transitorios y vigencia para la fecha de la operación. El índice de citas del producto se mantiene separado de esta captura de desarrollo. La Secretaría de Economía publica por separado el catálogo NICO y sus modificaciones. [NICO en SNICE](https://www.snice.gob.mx/cs/avi/snice/ligie.nico2022.html)
+
+Desde la raíz del repositorio, con Poppler disponible, se puede reproducir la consulta sobre el PDF capturado. Omitir la última opción genera el CSV completo.
+
+```sh
+python3 scripts/locate-ligie-fractions.py --sha256 955510d7ea82cf42d18c72e3146f999af254c0fda5eda3f12a1fd1c10e9864ce --fraccion 84137099
+```
