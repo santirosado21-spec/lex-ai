@@ -120,3 +120,5 @@
 
 .rp-source-picker { display: grid; gap: .65rem; padding-block-end: 1rem; margin-block-end: 1rem; border-bottom: 1px solid var(--border); }
 .rp-source-picker p { overflow-wrap: anywhere; }
+.rp-private-review pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow: auto; line-height: 1.65; }
+.rp-private-review mark { border-radius: .3rem; padding: .08em .25em; }

@@ -27,3 +27,24 @@ test('recognized invoice has a fixed kind even if the local model misclassifies 
  assert.match(recognized.scenarioPreview,/\[\[PROVEEDOR\]\]/);
  assert.equal((await inspect(Buffer.concat([bytes,Buffer.from([0])]))).scenarioId,undefined);
 });
+
+test('local review masks repeated literals and rule-only email, restores the full extracted document, and treats uncertain output explicitly',async()=>{
+ const text='Proveedor: Taller Ficticio Azul. Envíe soporte a soporte@example.test. Taller Ficticio Azul confirma el trámite.';
+ const payload={extension:'txt',base64:Buffer.from(text).toString('base64'),review:true};
+ const run=entities=>inspectLocalDocument(payload,{fetchImpl:async(url,opts)=>{
+  assert.equal(url,'http://127.0.0.1:11434/api/chat');
+  assert.equal(JSON.parse(opts.body).format.properties.entities.type,'array');
+  return Response.json({message:{content:JSON.stringify({client:'',title:'',documentKind:'otro',entities})}});
+ }});
+ const result=await run(['Taller Ficticio Azul','nombre inventado']);
+ assert.equal(result.protection.available,true);
+ const {parts,restored,needsReview}=result.protection;
+ assert.equal(restored,text);
+ const visible=parts.map(part=>part.text||part.label).join('');
+ assert.ok(!visible.includes('Taller Ficticio Azul')&&!visible.includes('soporte@example.test'));
+ assert.match(visible,/confirma el trámite/);
+ assert.equal(needsReview,true);
+ assert.ok(parts.filter(part=>part.label===parts.find(part=>part.label)?.label).length>=2);
+ const broken=await run(null);
+ assert.equal(broken.protection.available,false);
+});

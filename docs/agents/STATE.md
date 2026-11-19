@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 11:02 por codex: Investigación federal con pasaje verificable en el piloto privado
+**Última actualización:** 2026-11-19 11:04 por codex: Revisión local de seudonimización y restitución de documentos nuevos
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- La entrega r3 permite revisar la protección y restitución del texto extraído de documentos ficticios nuevos en el navegador local. Medición con tres ejemplos de desarrollo y Ollama: 6/6 identificadores cubiertos, 1/6 expresiones operativas intactas, 3/3 restituciones. El texto libre permanece local.
 
 - El piloto r2 permite elegir un pasaje del índice público en el navegador y producir notas con cita literal, preguntas y tres exportaciones. Dos generaciones sintéticas reales sobre LCE 23 usaron 758 tokens de entrada y 161 de salida en total. La segunda devolvió tanto cita verificable como pregunta admitida.
 
@@ -43,6 +45,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Reducir el ocultamiento excesivo de términos aduaneros y validar con casos nuevos. Evaluar el cifrado del almacenamiento antes de cualquier uso con clientes reales.
 
 - Probar el mismo ejercicio ficticio en los equipos de Lorenzo y Pedro, verificar la segunda cuenta y revisar la calidad jurídica. Antes de admitir expedientes reales, validar documentos no vistos, protección del almacenamiento local y selección de fuentes por vigencia.
 
