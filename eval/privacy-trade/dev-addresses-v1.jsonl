@@ -1,0 +1,49 @@
+{"id": "ADDR_de-cue", "kind": "positive", "format": "cue", "text": "Seller: Hartwig Lindqvist KG, Waldmeisterweg 45, 20095 Hamburg, Germany", "sensitive": [{"start": 30, "end": 71, "category": "address"}]}
+{"id": "ADDR_de-nocue", "kind": "positive", "format": "nocue", "text": "Hartwig Lindqvist KG\nWaldmeisterweg 45\n20095 Hamburg", "sensitive": [{"start": 21, "end": 52, "category": "address"}]}
+{"id": "ADDR_de-upper", "kind": "positive", "format": "upper", "text": "VERKAEUFER: HARTWIG LINDQVIST KG, WALDMEISTERWEG 45, 20095 HAMBURG", "sensitive": [{"start": 34, "end": 66, "category": "address"}]}
+{"id": "ADDR_de-inline", "kind": "positive", "format": "inline", "text": "Mercancia enviada desde Brunnenallee 12a, 80331 Muenchen por el proveedor.", "sensitive": [{"start": 24, "end": 56, "category": "address"}]}
+{"id": "ADDR_us-cue", "kind": "positive", "format": "cue", "text": "Ship to: 4821 Marlow Creek Blvd, Suite 500, Houston, TX 77002, USA", "sensitive": [{"start": 9, "end": 61, "category": "address"}]}
+{"id": "ADDR_us-nocue", "kind": "positive", "format": "nocue", "text": "Delmar Fabrication LLC\n77 Quillfeather Ave\nTulsa, OK 74103", "sensitive": [{"start": 23, "end": 58, "category": "address"}]}
+{"id": "ADDR_us-inline", "kind": "positive", "format": "inline", "text": "El proveedor, ubicado en 910 Tamarind Row, Reno, NV 89501, confirmo el embarque.", "sensitive": [{"start": 25, "end": 57, "category": "address"}]}
+{"id": "ADDR_us-pdfitems", "kind": "positive", "format": "pdfitems", "text": "Ship to: 4821 Marlow Creek Blvd Suite 500 Houston TX 77002", "sensitive": [{"start": 9, "end": 58, "category": "address"}]}
+{"id": "ADDR_fr-cue", "kind": "positive", "format": "cue", "text": "Vendor address: 25 Rue des Alisiers, 75008 Paris, France", "sensitive": [{"start": 16, "end": 56, "category": "address"}]}
+{"id": "ADDR_fr-nocue", "kind": "positive", "format": "nocue", "text": "Atelier Moreau SARL\n25 Rue des Alisiers\n75008 Paris", "sensitive": [{"start": 20, "end": 51, "category": "address"}]}
+{"id": "ADDR_cn-cue", "kind": "positive", "format": "cue", "text": "Consignee: Hongyu Trading Co Ltd, 88 Bamboo Garden Road, Pudong, Shanghai 200120, China", "sensitive": [{"start": 34, "end": 87, "category": "address"}]}
+{"id": "ADDR_cn-nocue", "kind": "positive", "format": "nocue", "text": "Hongyu Trading Co Ltd\nBuilding 3, 88 Bamboo Garden Road\nShanghai 200120", "sensitive": [{"start": 22, "end": 71, "category": "address"}]}
+{"id": "ADDR_it-nocue", "kind": "positive", "format": "nocue", "text": "Via dei Mandorli 7, 20121 Milano, Italia", "sensitive": [{"start": 0, "end": 40, "category": "address"}]}
+{"id": "ADDR_it-inline", "kind": "positive", "format": "inline", "text": "La ditta Ferraro Srl con sede in Corso Verbena 33, 10121 Torino spedisce lunedi.", "sensitive": [{"start": 33, "end": 63, "category": "address"}]}
+{"id": "ADDR_es-nocue", "kind": "positive", "format": "nocue", "text": "Calle del Olivar 18, 3 B, 28012 Madrid, Espana", "sensitive": [{"start": 0, "end": 38, "category": "address"}]}
+{"id": "ADDR_br-cue", "kind": "positive", "format": "cue", "text": "Endereco: Rua das Jabuticabeiras 250, Sala 12, Sao Paulo - SP, 01310-100, Brasil", "sensitive": [{"start": 10, "end": 72, "category": "address"}]}
+{"id": "ADDR_jp-cue", "kind": "positive", "format": "cue", "text": "Address: 2-14-6 Sakuramachi, Nakano-ku, Tokyo 164-0001, Japan", "sensitive": [{"start": 9, "end": 54, "category": "address"}]}
+{"id": "ADDR_uk-nocue", "kind": "positive", "format": "nocue", "text": "Pemberton Marine Ltd\n14 Cobblers Yard\nBristol BS1 4XY", "sensitive": [{"start": 21, "end": 53, "category": "address"}]}
+{"id": "ADDR_nl-nocue", "kind": "positive", "format": "nocue", "text": "Keizerlaan 91, 1017 AB Amsterdam, Nederland", "sensitive": [{"start": 0, "end": 32, "category": "address"}]}
+{"id": "ADDR_ca-cue", "kind": "positive", "format": "cue", "text": "Bill to: 305 Maplecrest Drive, Unit 4, Calgary, AB T2P 1J9, Canada", "sensitive": [{"start": 9, "end": 58, "category": "address"}]}
+{"id": "ADDR_mx-cue", "kind": "positive", "format": "cue", "text": "Domicilio fiscal: Calle Ficticia 123, Col. Centro, C.P. 06000, Ciudad de Mexico", "sensitive": [{"start": 18, "end": 79, "category": "address"}]}
+{"id": "ADDR_mx-nocue", "kind": "positive", "format": "nocue", "text": "Av. de los Ahuehuetes 410, Int. 2, Col. Lomas Altas, C.P. 11950, CDMX", "sensitive": [{"start": 0, "end": 69, "category": "address"}]}
+{"id": "ADDR_mx-multiline", "kind": "positive", "format": "nocue", "text": "Manufacturas Rio Seco SA de CV\nCalle Zarzamora 77\nCol. Jardines del Sur\nC.P. 45010 Zapopan, Jal.", "sensitive": [{"start": 31, "end": 96, "category": "address"}]}
+{"id": "ADDR_mx-pdfitems", "kind": "positive", "format": "pdfitems", "text": "Calle Zarzamora 77 Col. Jardines del Sur C.P. 45010 Zapopan Jal.", "sensitive": [{"start": 0, "end": 64, "category": "address"}]}
+{"id": "NEG_00", "kind": "negative", "format": "customs", "text": "TIPO OPER: IMP", "sensitive": []}
+{"id": "NEG_01", "kind": "negative", "format": "customs", "text": "CVE. PEDIMENTO: A1", "sensitive": []}
+{"id": "NEG_02", "kind": "negative", "format": "customs", "text": "REGIMEN: IMD", "sensitive": []}
+{"id": "NEG_03", "kind": "negative", "format": "customs", "text": "ADUANA: 470 VERACRUZ", "sensitive": []}
+{"id": "NEG_04", "kind": "negative", "format": "customs", "text": "FECHA ENTRADA: 03/11/2026", "sensitive": []}
+{"id": "NEG_05", "kind": "negative", "format": "customs", "text": "TIPO CAMBIO: 18.6147", "sensitive": []}
+{"id": "NEG_06", "kind": "negative", "format": "customs", "text": "VALOR ADUANA: 2,233,764.00", "sensitive": []}
+{"id": "NEG_07", "kind": "negative", "format": "customs", "text": "SEC FRACCION DESCRIPCION UMC CANT VAL.ADU IGI IVA", "sensitive": []}
+{"id": "NEG_08", "kind": "negative", "format": "customs", "text": "Invoice No: FAC-2026-0457", "sensitive": []}
+{"id": "NEG_09", "kind": "negative", "format": "customs", "text": "Incoterm: FOB Hamburg Currency: USD", "sensitive": []}
+{"id": "NEG_10", "kind": "negative", "format": "customs", "text": "1 84224001 MAQUINA ENVASADORA FICTICIA PZA 1 1,900,000.00 95,000.00 320,000.00", "sensitive": []}
+{"id": "NEG_11", "kind": "negative", "format": "customs", "text": "TOTAL USD 120,000.00", "sensitive": []}
+{"id": "NEG_12", "kind": "negative", "format": "customs", "text": "Country of origin: Germany Port of loading: Hamburg", "sensitive": []}
+{"id": "NEG_13", "kind": "negative", "format": "customs", "text": "Peso bruto 1,250.50 KGM Peso neto 1,180.00 KGM", "sensitive": []}
+{"id": "NEG_14", "kind": "negative", "format": "customs", "text": "Bultos: 12 Marcas: S/M Contenedor: MSKU1234567", "sensitive": []}
+{"id": "NEG_15", "kind": "negative", "format": "customs", "text": "Incoterm: CIF Puerto de destino: Veracruz", "sensitive": []}
+{"id": "NEG_16", "kind": "negative", "format": "customs", "text": "Fraccion arancelaria 84229099 Tasa IGI 5% IVA 16%", "sensitive": []}
+{"id": "NEG_17", "kind": "negative", "format": "customs", "text": "Payment terms: Net 30 days Bank: see attached", "sensitive": []}
+{"id": "NEG_18", "kind": "negative", "format": "customs", "text": "Packing list No: PL-2026-118 Pages: 2 of 2", "sensitive": []}
+{"id": "NEG_19", "kind": "negative", "format": "customs", "text": "Aduana de despacho: 470 Veracruz, Ver. Patente 3999", "sensitive": []}
+{"id": "NEG_20", "kind": "negative", "format": "customs", "text": "Shipped via ocean freight from Hamburg to Veracruz", "sensitive": []}
+{"id": "NEG_21", "kind": "negative", "format": "customs", "text": "Descripcion: partes y refacciones para maquinaria", "sensitive": []}
+{"id": "NEG_22", "kind": "negative", "format": "customs", "text": "Hamburg Sud vessel ETA 12/11/2026", "sensitive": []}
+{"id": "NEG_23", "kind": "negative", "format": "customs", "text": "Fecha de pago 05/11/2026 Forma de pago: transferencia", "sensitive": []}
+{"id": "NEG_24", "kind": "negative", "format": "customs", "text": "Unit price 28.57 Amount 10,000.00 Qty 350", "sensitive": []}
