@@ -82,3 +82,15 @@ test('new document markers persist encrypted, stay out of cloud drafts, restore 
  assert.ok(!sent[0].includes('anil@example.test')&&!sent[0].includes(token)&&!sent[0].includes(fields.title));
  assert.ok(!(await readFile(path.join(dir,'rejon-protegido.sqlite'))).includes(Buffer.from('anil@example.test')));
 });
+
+test('transport references are substituted at each occurrence and ordinary documentary requests stay legible',async()=>{
+ const id='FIC/7781.x',seal='A19-711';
+ const original='Invoice No.: '+id+'\nSello de seguridad: '+seal+'\nVerificar origen del producto (fic/7781.x) y constancia de envío '+seal+'.';
+ const inspected=await review(original);
+ const protectedText=protectedForm(inspected);
+ assert.equal(inspected.restored,original);
+ assert.ok(!protectedText.toLowerCase().includes(id.toLowerCase())&&!protectedText.includes(seal));
+ assert.match(protectedText,/origen del producto/);
+ const missing='Se requiere la factura comercial. Invoice: pending.';
+ assert.ok(protectedForm(await review(missing)).includes('pending'));
+});

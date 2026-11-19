@@ -315,3 +315,7 @@ Piloto r3 con mapa temporal; la API recibe sólo variantes aprobadas o un pasaje
 ## 2026-11-19 11:54 — codex — Prueba de Rejon.AI con restitución documental y adquisición local de la LIGIE
 
 Edición r5. Un expediente ficticio de cupos recibió una cita del artículo 23 y el marcador del proveedor mediante una llamada real. LibreOffice abrió las tres exportaciones y conservó el proveedor. 157 pruebas dirigidas aprobadas. Ollama cubrió 19/19 apariciones en nueve documentos y 24/24 domicilios de desarrollo. Sólo 5/25 controles aduaneros quedaron enteros. Localizador separado de la LIGIE: 9020 apariciones de 8183 códigos, sin validación de cuotas o vigencia.
+
+## 2026-11-19 12:01 — codex — Rejon r6 sugiere lecturas sobre siete temas y coteja dos fuentes por nota
+
+Un DOCX ficticio importado con Ollama activó una revisión de clasificación. Un envío real de 768 tokens de entrada y 87 de salida produjo dos claves verificadas. El lote fue incorporado y editado en local. Los tres formatos Office renderizaron el lote y ambas referencias. 161 pruebas dirigidas aprobadas. Se probaron cuatro anchos de navegador. Ocho muestras de referencias de transporte dieron 11/11 identificadores cubiertos y 11/14 expresiones útiles intactas con ambas versiones del detector.

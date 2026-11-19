@@ -2,7 +2,7 @@ import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
 import {createPseudonymStore} from './pseudonyms.mjs';
-import {formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges} from './trade-document-structure.mjs';
+import {formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges} from './trade-document-structure.mjs';
 
 // Local review of extracted text. The temporary map belongs only to this call.
 // The returned view contains originals and is never a cloud request.
@@ -22,7 +22,7 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,fields
    segments});
  const result=await createVariantAwareDetector({provenanceRegistry:registry}).detect({scope,segments:source.segments,signal});
  let needsReview=result.status!=='complete';
- const ranges=[...labelledIdentityRanges(text),...postalBlockRanges(text)];
+ const ranges=[...labelledIdentityRanges(text),...postalBlockRanges(text),...logisticsReferenceRanges(text)];
  for (const detection of result.detections) {
   const offset=offsets.get(detection.segmentId),start=offset+detection.start,end=offset+detection.end;
   if(detection.category==='person'&&isCaption(start,end))continue;

@@ -68,3 +68,25 @@ export function postalBlockRanges(text) {
  }
  return ranges;
 }
+
+// Transport and invoice references can identify an operation even when they
+// contain no personal name. Protect the value on later, unlabelled mentions too.
+const referenceLabel=/(?<![\p{L}\p{N}])(?:factura(?: comercial)?|invoice|conocimiento de embarque|bill of lading|b\/l|air waybill|booking(?: reference)?|reserva de embarque|contenedor|container|sello(?: de seguridad)?|seal)(?:[ \t]+(?:n[úu]m(?:ero)?\.?|no\.?|number|id))?[ \t]*[:#][ \t]*([a-z0-9]+(?:[./_-][a-z0-9]+)*)/dgiu;
+const entryNumber=/(?<![\p{L}\p{N}])(?:n[úu]m(?:ero)?\.?[ \t]+(?:de[ \t]+)?)?pedimento[ \t]*[:#][ \t]*(\d{2}[ \t-]+\d{2}[ \t-]+\d{4}[ \t-]+\d{7}|\d{15})(?!\d)/dgiu;
+const containerNumber=/(?<![a-z\d])[a-z]{3}[ujz]\d{7}(?![a-z\d])/giu;
+
+export function logisticsReferenceRanges(text){
+ const values=new Set();
+ for(const match of text.matchAll(referenceLabel)){
+  const value=match[1];
+  if(value.length>=4&&value.length<=80&&/\d/u.test(value))values.add(value);
+ }
+ for(const match of text.matchAll(entryNumber))values.add(match[1]);
+ const ranges=Array.from(text.matchAll(containerNumber),match=>[match.index,match.index+match[0].length]);
+ for(const value of values){
+  const literal=value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const repeated=new RegExp('(?<![a-z0-9])'+literal+'(?![a-z0-9])','giu');
+  for(const match of text.matchAll(repeated))ranges.push([match.index,match.index+match[0].length]);
+ }
+ return ranges;
+}

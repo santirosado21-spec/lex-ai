@@ -128,3 +128,25 @@ Desde la raíz del repositorio, con Poppler disponible, se puede reproducir la c
 ```sh
 python3 scripts/locate-ligie-fractions.py --sha256 955510d7ea82cf42d18c72e3146f999af254c0fda5eda3f12a1fd1c10e9864ce --fraccion 84137099
 ```
+
+## Lecturas sugeridas desde un documento importado en r6
+
+En un expediente cifrado, Rejon lee el texto local y busca menciones de siete temas comerciales. Conserva un fragmento literal y el número de línea del texto extraído. Omite los campos rotulados de identidad al buscar temas. Una mención incluso en una frase negativa puede sugerir un tema. El abogado coteja la línea y decide si envía la consulta. La lectura utiliza el primer pasaje de cada artículo. Para revisar el resto se puede abrir la biblioteca y elegir otro pasaje.
+
+| Tema sugerido | Fuentes de partida en la edición empaquetada |
+|---|---|
+| Origen | LCE 9 y 10 |
+| Cupos | LCE 23 y 24 |
+| Regulaciones y restricciones no arancelarias | LCE 17 y 20 |
+| Clasificación de mercancías | LIGIE 2 y LCE 20 |
+| Discriminación de precios | LCE 28 y 30 |
+| Subvenciones | LCE 28 y 37 |
+| Salvaguardas | LCE 45 y 49 |
+
+El mensaje para la nube contiene el tema y dos pasajes públicos con fragmentos numerados. El modelo elige una clave en cada fuente y propone preguntas documentales. El código comprueba cada clave dentro de su fuente y recupera el texto literal. El fragmento del documento, el nombre de archivo, el cliente, el asunto y el despacho quedan en el equipo. En el borrador se añade un marcador que se puede retirar antes de exportar. La copia local conserva las fuentes y el fragmento utilizados al generar la nota.
+
+La prueba integral importó un Word ficticio nuevo con Ollama, abrió las dos referencias, envió la vista previa a OpenAI, editó la nota y descargó los tres formatos. En una versión anterior que pedía copiar dos citas, una respuesta real coincidió con uno de los dos textos. La versión con selección numerada obtuvo dos citas literales en una llamada posterior, con 768 tokens de entrada y 87 de salida. El navegador sólo se comunicó con el proceso local. LibreOffice abrió Word, Excel y PowerPoint y en los tres se comprobó el identificador ficticio del lote y ambas referencias en el PDF renderizado. La interfaz se comprobó a 320, 390, 768 y 1280 píxeles. La aceptación en Microsoft Office y la evaluación del criterio jurídico siguen pendientes.
+
+Una prueba automatizada comprueba el rechazo individual de un fragmento atribuido a la fuente equivocada, edición, reapertura sin biblioteca, eliminación voluntaria del soporte y exportación. Para reproducir el recorrido en navegador, con el proyecto compilado y Ollama local, ejecuta `node scripts/check-pilot-trade-reading.mjs`. El transporte simulado es el predeterminado. Añadir `--openai` usa la cuenta real configurada y consume API.
+
+El detector local también reconoce referencias de factura, contenedor, reserva, sello, conocimiento de embarque y pedimento, aunque se repitan fuera de su campo. En ocho textos de desarrollo con Ollama, r5 y r6 cubrieron las mismas 11 apariciones anotadas, conservaron 11 de 14 expresiones documentales y restituyeron los ocho textos. La nueva prueba de reglas comprueba las sustituciones incluso sin sugerencias de Ollama. Los controles históricos de Instinct etiquetan la ausencia de domicilios o datos personales. Algunos incluyen folios y números de contenedor que pueden identificar una operación. Por ello medir la línea completa como intacta combina valores útiles y referencias privadas.

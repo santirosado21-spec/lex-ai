@@ -1,7 +1,8 @@
+import {suggestTradeReadings,loadTradeReading,tradeReadingEnvelope,renderTradeReading} from './corpus/intake-trade-reading.mjs';
 import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
 import {randomUUID} from 'node:crypto';
 import {inspectLocalDocument} from './intake-import.mjs';
-import {bindReviewedDocument,documentToken,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
+import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
 import {loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
@@ -17,7 +18,6 @@ const tasks = Object.freeze({
  opening:{title:'Acuse de apertura',instruction:'Redacta un acuse de apertura de expediente de dos frases.'},
  documents:{title:'Solicitud de documentos',instruction:'Redacta una solicitud breve para pedir al cliente documentos y una cronología. No pidas números de identificación.'},
 });
-const marker = /\[\[(CLIENTE|ASUNTO)\]\]/g;
 const scope = Object.freeze({workspaceId:'intake-pilot',matterId:'synthetic-template',threadId:'draft'});
 const destination = 'openai';
 const documentKinds = ['pedimento','factura','contrato','otro'];
@@ -51,9 +51,10 @@ function exactFields(payload, fields) {
  }
 }
 
-function draftText(value,doc) {
- const allowed=new Set(documentTokens(doc).map(item=>item.token));
- const unrecognized=typeof value==='string' ? value.replace(marker,'').replace(documentToken,token=>allowed.has(token)?'':token) : '';
+function draftText(value,doc,evidence) {
+ const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...documentTokens(doc).map(item=>item.token)]);
+ if(evidence)allowed.add('[[SOPORTE]]');
+ const unrecognized=typeof value==='string' ? value.replace(/\[\[[^\[\]]+\]\]/g,token=>allowed.has(token)?'':token) : '';
  if (typeof value!=='string' || value.length>1800 || !value.includes('[[CLIENTE]]') ||
      !value.includes('[[ASUNTO]]') || /\[\[|\]\]|[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(unrecognized)) {
   throw new Error('El borrador debe conservar [[CLIENTE]] y [[ASUNTO]], con los marcadores de este expediente, con un máximo de 1800 caracteres.');
@@ -78,9 +79,9 @@ export function createIntakeGenerator({
    return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:dynamic?dynamicCategory:'synthetic'};
   },
  });
- return async (task,{signal,documentKind,articles,scenarioId,research,practice}={}) => {
-  const envelope=practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
-  const gate=gateFor(practice||research ? canonicalJson(envelope) : null,research?'public':'synthetic');
+ return async (task,{signal,documentKind,articles,scenarioId,research,practice,reading}={}) => {
+  const envelope=reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+  const gate=gateFor(practice||research||reading ? canonicalJson(envelope) : null,research||reading?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   let answer='';
@@ -123,6 +124,29 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    return {id:'case-note',title:note.title,preview:note.prompt,references:[note.ref]};
   } catch {return {id:'case-note',title:'Nota del expediente protegido',preview:null,references:[]};}
  };
+ const readingCache=new Map();
+ const readingFor=task=>{
+  if(!readingCache.has(task))readingCache.set(task,loadTradeReading(publicLibrary,task));
+  return readingCache.get(task);
+ };
+ const readingChoices=saved=>{
+  if(!saved?.intake.document)return [];
+  const original=openReviewedDocument(saved.intake.document,saved.firm.id,saved.entry.id).original;
+  const choices=new Map(suggestTradeReadings(original).map(item=>[item.id,item]));
+  for(const [id,record] of Object.entries(saved.intake.researchHistory??{})){
+   if(id.startsWith('lectura-')&&record.evidence)choices.set(id,{id,title:record.title,...record.evidence});
+  }
+  return [...choices.values()];
+ };
+ const readingTasks=saved=>readingChoices(saved).map(({id,title,line,excerpt})=>{
+  const evidence={line,excerpt};
+  const archived=saved.intake.researchHistory?.[id];
+  if(archived)return {id,...archived};
+  try{
+   const reading=readingFor(id);
+   return {id,title,preview:reading.prompt,references:reading.refs,evidence};
+  }catch{return {id,title,preview:null,references:[],evidence};}
+ });
  const status = () => {
   const saved=current();
   return {
@@ -131,7 +155,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    hasDocument:Boolean(saved?.intake.document),
    drafts:saved?.intake.drafts??{},
    editedTasks:saved?.intake.editedTasks??[],
-   tasks:[practiceTask(saved)].filter(Boolean).concat(Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
+   tasks:[practiceTask(saved)].filter(Boolean).concat(readingTasks(saved),Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
     const archived=saved.intake.researchHistory?.[id];
     if (archived) return {id,...archived};
     try {
@@ -224,7 +248,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     exactFields(payload,['task']);
     const {task}=payload;
     const saved=current();
-    const known=typeof task==='string' && (Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task)||(task==='case-note'&&saved?.intake.practiceSeed));
+    const selection=typeof task==='string'&&task.startsWith('lectura-')?readingChoices(saved).find(item=>item.id===task):null;
+    const known=typeof task==='string' && (selection||Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task)||(task==='case-note'&&saved?.intake.practiceSeed));
     if (!known) throw new Error('Selecciona una tarea del piloto.');
     if (!saved) throw new Error('Completa primero el alta del cliente.');
     if (Object.hasOwn(saved.intake.drafts,task)) return status();
@@ -234,14 +259,15 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      if (task==='trade' && !articles) throw new Error('La edición de los artículos necesita una revisión.');
      const research=noteFor(saved.intake,task);
      const practice=task==='case-note'?practiceFor(saved):null;
-     const raw=await generate(task,{practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
-     const answer=draftText(practice?renderProtectedCase(raw,practice):research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw,practice?saved.intake.document:null);
+     const reading=selection?readingFor(task):null;
+     const raw=await generate(task,{reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
+     const answer=draftText(reading?renderTradeReading(raw,reading):practice?renderProtectedCase(raw,practice):research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw,practice?saved.intake.document:null,selection);
      signal?.throwIfAborted();
      store.transaction(()=>{
       const {intake}=current();
       if (intake.id!==saved.intake.id) throw new Error('Cambió el asunto del piloto.');
-      const source=practice??research;
-      const snapshot=source ? {researchHistory:{...intake.researchHistory,[task]:{title:source.title,preview:source.prompt,references:[source.ref]}}} : {};
+      const source=reading??practice??research;
+      const snapshot=source ? {researchHistory:{...intake.researchHistory,[task]:{title:source.title,preview:source.prompt,references:reading?reading.refs:[source.ref],...(selection?{evidence:{line:selection.line,excerpt:selection.excerpt}}:{})}}} : {};
       store.put('intake-pilot',{...intake,...snapshot,drafts:{...intake.drafts,[task]:answer}});
       store.audit('intake.cloud.draft',intake.matterId);
      });
@@ -256,7 +282,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const saved=current();
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
-     const drafts={...intake.drafts,[task]:draftText(text,intake.document)};
+     const drafts={...intake.drafts,[task]:draftText(text,intake.document,intake.researchHistory?.[task]?.evidence)};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks});
      store.audit('intake.local.edit',entry.id);
@@ -274,8 +300,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     }
     const {firm,entry,intake}=saved;
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
-    const text=draftText(intake.drafts[task],intake.document);
+    const evidence=intake.researchHistory?.[task]?.evidence;
+    const text=draftText(intake.drafts[task],intake.document,evidence);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
+    if(evidence)originals.set('[[SOPORTE]]','Línea '+evidence.line+' del texto extraído · '+evidence.excerpt);
     if(text.includes('[[DATO_')){
      for(const item of openReviewedDocument(intake.document,firm.id,entry.id).tokens)originals.set(item.token,item.value);
     }

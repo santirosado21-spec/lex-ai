@@ -127,3 +127,8 @@
 .rp-case-document,.rp-data-insert { display:grid; gap:.65rem; min-width:0; }
 .rp-case-document .rp-quiet { justify-self:start; }
 .rp-data-insert select { max-width:100%; }
+
+.rp-reading-evidence blockquote {margin:12px 0 18px;padding:8px 14px;border-left:2px solid #b0a188;overflow-wrap:anywhere;white-space:pre-wrap}
+.rp-reading-summary {margin:0 0 12px;font-size:14px;line-height:1.55;color:var(--rp-muted)}
+.rp-reading-message {margin-bottom:16px}
+.rp-reading-message[open] .rp-preview,.rp-reading-evidence[open] blockquote {animation:rp-enter .18s ease-out both}

@@ -7,11 +7,11 @@ import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}`;
+type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
-  id: Task; title: string; preview?: string;
+  id: Task; title: string; preview?: string; evidence?:{line:number;excerpt:string};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string}[];
 };
 type PilotStatus = {saved: boolean; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
@@ -23,7 +23,7 @@ const formats = [
 
 function MarkedText({text}:{text:string}) {
   return <>{text.split(/(\[\[(?:[A-Z_][A-Z_0-9]*|DATO_\d+_[a-f0-9]{12})\]\])/g).map((part,index)=>
-    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part.startsWith('[[DATO_')?'Dato '+part.split('_')[1]:part}</mark> : part)}</>;
+    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part==='[[SOPORTE]]'?'Fragmento del soporte':part.startsWith('[[DATO_')?'Dato '+part.split('_')[1]:part}</mark> : part)}</>;
 }
 
 export default function IntakePilot() {
@@ -57,7 +57,7 @@ export default function IntakePilot() {
 
   useEffect(()=>{
     let active=true;
-    api<PilotStatus>('intake.status').then(result=>{if(active){setPilot(result);if(result.tasks.some(item=>item.id==='case-note'))setSelected('case-note');}})
+    api<PilotStatus>('intake.status').then(result=>{if(active){setPilot(result);const initial=result.tasks.find(item=>item.id==='case-note'||item.evidence);if(initial)setSelected(initial.id);}})
       .catch(()=>{if(active) setError('Abre el piloto desde su lanzador local para conectar con el expediente.');})
       .finally(()=>{if(active) setActivity(null);});
     return ()=>{active=false;};
@@ -99,7 +99,7 @@ export default function IntakePilot() {
         ...(invoice && supplier.trim() ? {supplier:supplier.trim()} : {}),
       });
       setPilot(data);
-      if(data.tasks.some(item=>item.id==='case-note'))setSelected('case-note');
+      const initial=data.tasks.find(item=>item.id==='case-note'||item.evidence);if(initial)setSelected(initial.id);
       setFirm(''); setClient(''); setTitle('');setReviewId(undefined); clearScenario();
       setNotice('Expediente guardado en este equipo.');
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
@@ -139,7 +139,8 @@ export default function IntakePilot() {
   async function saveEdit() {
     if (busy || !task || editText===null) return;
     clearFeedback();
-    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]') || /\[\[|\]\]/.test(editText.replace(/\[\[(?:CLIENTE|ASUNTO|DATO_[1-9]\d{0,2}_[a-f0-9]{12})\]\]/g,''))) {
+    const validatedText=activeTask?.evidence?editText.replaceAll('[[SOPORTE]]',''):editText;
+    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]') || /\[\[|\]\]/.test(validatedText.replace(/\[\[(?:CLIENTE|ASUNTO|DATO_[1-9]\d{0,2}_[a-f0-9]{12})\]\]/g,''))) {
       setError('Conserva los marcadores [[CLIENTE]] y [[ASUNTO]] y usa los datos del soporte de este expediente.');
       return;
     }
@@ -212,14 +213,21 @@ export default function IntakePilot() {
             {pilot?.tasks.map(item=><option value={item.id} key={item.id}>{item.title}</option>)}
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
+          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> Por qué se sugiere esta lectura</summary>
+            <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
+            <blockquote>{activeTask.evidence.excerpt}</blockquote>
+          </details>}
           {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument/>}
           {activeTask.references?.length ? <details className="rp-details" key={'sources-'+task}><summary><BookOpen size={16}/> Fuentes de consulta ({activeTask.references.length})</summary>
             <ul>{activeTask.references.map(source=><li key={source.id}><a href={source.url} rel="noreferrer" target="_blank">{source.title} <ExternalLink size={12}/></a><p>{source.locator} · {source.summary}</p>
                 {source.text&&<details className="rp-citation"><summary>Texto del artículo</summary><blockquote>{source.text}</blockquote>{source.sourceId&&<small>{source.sourceId}</small>}</details>}
               </li>)}</ul></details>:null}
+          {activeTask.evidence&&!activeTask.preview&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
           {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
           {draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> Ver el mensaje enviado</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
-            <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>
+            <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2>{activeTask.evidence?<><p className="rp-reading-summary">La consulta incluye el tema y dos pasajes de la biblioteca federal. El fragmento del expediente permanece en este equipo.</p>
+                <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
+                <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> Generando borrador…</>:<>Enviar y generar borrador <ArrowRight size={16}/></>}</button>
             </section>}
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':'Borrador'}</h2>

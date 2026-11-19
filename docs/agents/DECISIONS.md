@@ -129,3 +129,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 11:54 — codex — Guardar los soportes revisados por asunto y verificar la procedencia del documento de práctica
 
 **Por qué:** El abogado necesita consultar el original e insertar un dato después de reabrir la sesión. El expediente cifrado vincula el mapa al despacho y al asunto. Sólo el documento sintético generado por el servidor puede aportar hechos del texto a la solicitud de práctica. El detector todavía pierde información en los controles aduaneros.
+
+## 2026-11-19 12:01 — codex — Elegir fragmentos jurídicos por clave y unir el soporte del asunto después de la respuesta
+
+**Por qué:** Una prueba de copia libre devolvió una cita inexacta de dos. El modelo puede seleccionar entre fragmentos de dos fuentes verificadas y plantear preguntas. El servicio local inserta la cita literal. El documento importado y la línea que motivó la lectura permanecen en el equipo.

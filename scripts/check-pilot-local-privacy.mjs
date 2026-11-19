@@ -23,6 +23,10 @@ if(process.argv.includes('--direcciones')){
   useful:row.kind==='negative'?[row.text]:[],
  })));
 }
+if(process.argv.includes('--referencias')){
+ const file=await readFile(new URL('../eval/privacy-trade/document-references-dev.jsonl',import.meta.url),'utf8');
+ cases.splice(0,cases.length,...file.trim().split('\n').map(line=>JSON.parse(line)));
+}
 for (const row of cases) {
  const {protection}=await inspectLocalDocument({extension:'txt',base64:Buffer.from(row.text).toString('base64'),review:true});
  if(!protection.available){console.log(JSON.stringify({id:row.id,available:false}));continue;}

@@ -1,0 +1,5 @@
+Cliente: Manufacturas Níspero de Ensayo
+Asunto: Revisión de bomba industrial
+Proveedor: Taller Lila Ficticio
+Operación de práctica. Falta cotejar la fracción arancelaria de la bomba centrífuga del lote MUESTRA-NISPERO-014 con su ficha técnica.
+Documentación recibida: catálogo de componentes.

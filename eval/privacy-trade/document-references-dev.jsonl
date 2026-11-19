@@ -1,0 +1,8 @@
+{"id":"contenedor-repetido","text":"Documento ficticio de traslado. Contenedor: TSTU5527198. La unidad TSTU5527198 requiere inspección de sellos antes de la salida.","private":["TSTU5527198"],"useful":["inspección de sellos","antes de la salida"]}
+{"id":"factura-es","text":"Factura comercial: SIM-047-XZ\nEl expediente menciona por segunda vez SIM-047-XZ. Se requiere la ficha técnica.","private":["SIM-047-XZ"],"useful":["ficha técnica"]}
+{"id":"embarque-en","text":"Bill of lading: BL-TIDE-6110\nReview the packaging description before release. Shipment record BL-TIDE-6110.","private":["BL-TIDE-6110"],"useful":["packaging description","before release"]}
+{"id":"sellos","text":"Sello de seguridad: QA-5518\nEl sello QA-5518 debe cotejarse con la constancia de arribo.","private":["QA-5518"],"useful":["constancia de arribo"]}
+{"id":"reserva","text":"Booking reference: B7R91M\nVerificar la fecha de embarque asociada con B7R91M.","private":["B7R91M"],"useful":["fecha de embarque"]}
+{"id":"pedimento","text":"Número de pedimento: 26 47 0000 6000359\nRevisar la fecha de pago y el acuse de validación.","private":["26 47 0000 6000359"],"useful":["fecha de pago","acuse de validación"]}
+{"id":"solo-rotulos","text":"Falta el conocimiento de embarque. Se solicitará la factura comercial y el número de contenedor.","private":[],"useful":["conocimiento de embarque","factura comercial","número de contenedor"]}
+{"id":"sin-folio","text":"Factura comercial: pendiente de emisión. Solicitar después el comprobante de pago.","private":[],"useful":["pendiente de emisión","comprobante de pago"]}
