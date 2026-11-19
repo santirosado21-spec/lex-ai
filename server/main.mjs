@@ -18,7 +18,8 @@ import { createLocalFileOpener } from './local-files.mjs';
 import { createOfficeBridge } from './office-bridge.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
-export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),intakePilot=false,intakeGenerate,autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),intakePilot=false,intakeGenerate,pilotPassphrase,autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+ if(pilotPassphrase!==undefined&&(!intakePilot||service))throw Error('La frase local requiere el servicio integrado del piloto.');
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
@@ -27,7 +28,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  // H4: every product generation goes through the gateway. Remote destinations
  // stay disabled by default; the local route is a pure passthrough.
  inference = createGenerationGateway({local: inference});
- try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,intakeGenerate});}catch(e){publicLibrary?.close();throw e;}
+ try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,intakeGenerate,pilotPassphrase});}catch(e){publicLibrary?.close();throw e;}
  let officeBridge=null, officeStarting=null;
  async function enableOffice() {
   if (officeBridge) return officeBridge;
@@ -50,7 +51,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
   })();
   try{return await officeStarting;}finally{officeStarting=null;}
  }
- if(process.env.LEX_OFFICE_BRIDGE==='1')try{await enableOffice();}catch(error){service.close?.();publicLibrary?.close();throw error;}
+ if(!intakePilot&&process.env.LEX_OFFICE_BRIDGE==='1')try{await enableOffice();}catch(error){service.close?.();publicLibrary?.close();throw error;}
  const token=randomBytes(32).toString('hex');let closing=false;
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));};
  const server=http.createServer(async(req,res)=>{

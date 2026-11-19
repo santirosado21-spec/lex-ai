@@ -14,3 +14,23 @@ export function selectPilotCredential(mode='primary', read=slot=>createOpenAiKey
   }
  };
 }
+
+
+export async function selectTemporaryPilotCredential(mode, askHidden, selected) {
+ if (!['primary','lorenzo','backup','alternate'].includes(mode)) throw Error('Modo de cuenta no válido.');
+ const combined=mode==='backup'||mode==='alternate';
+ const slots=combined?['primary','lorenzo']:[mode];
+ const keys=new Map();
+ for(const slot of slots){
+  const label=slot==='primary'?'principal':'de Lorenzo';
+  const literal=(await askHidden('Clave temporal '+label+(combined?' (Enter para omitir)':'')+': ')).trim();
+  if(!literal&&combined)continue;
+  if(!/^sk-[A-Za-z0-9_-]{20,256}$/.test(literal))throw Error('Formato de clave no válido.');
+  keys.set(slot,literal);
+ }
+ if(!keys.size)throw Error('Ingresa al menos una clave para la sesión.');
+ return selectPilotCredential(mode,async slot=>{
+  if(!keys.has(slot))throw Object.assign(Error('Cuenta sin configurar.'),{code:'credential_unavailable'});
+  return keys.get(slot);
+ },selected);
+}

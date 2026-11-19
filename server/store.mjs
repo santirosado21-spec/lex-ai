@@ -1,14 +1,18 @@
 import { DatabaseSync } from 'node:sqlite';
-import { mkdirSync, chmodSync } from 'node:fs';
+import {attachPilotRecordVault,PILOT_VAULT_FILE} from './privacy/pilot-record-vault.mjs';
+import { mkdirSync, chmodSync, existsSync, lstatSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 
-export function createStore(dataDir) {
+export function createStore(dataDir,{pilotPassphrase}={}) {
   mkdirSync(dataDir, { recursive: true, mode: 0o700 });
+  if (pilotPassphrase!==undefined&&!lstatSync(dataDir).isDirectory())throw Error('La carpeta del expediente debe ser un directorio local.');
   chmodSync(dataDir, 0o700);
   const path = join(dataDir, 'lex.sqlite');
-  const db = new DatabaseSync(path);
-  chmodSync(path, 0o600);
+  const protect = pilotPassphrase !== undefined;
+  if (!protect && existsSync(join(dataDir,PILOT_VAULT_FILE))) throw Error('Este expediente requiere su frase local.');
+  const db = new DatabaseSync(protect ? ':memory:' : path);
+  if (!protect) chmodSync(path, 0o600);
   db.exec(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=DELETE;
     CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, kind TEXT NOT NULL, matter_id TEXT, payload TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS records_scope ON records(kind,matter_id);
@@ -123,6 +127,11 @@ export function createStore(dataDir) {
       }
       db.exec(`PRAGMA user_version=${Math.max(schemaVersion,3)}; COMMIT`);
     } catch(error) {db.exec('ROLLBACK');throw error;}
+  }
+  let secure;
+  if (protect) {
+    try {secure=attachPilotRecordVault(db,dataDir,pilotPassphrase);}
+    catch(error){db.close();throw error;}
   }
   const parse = r => r ? JSON.parse(r.payload) : null;
   return {
@@ -288,6 +297,7 @@ export function createStore(dataDir) {
       return db.prepare('SELECT id,document_id AS documentId,text FROM chunks WHERE matter_id=? ORDER BY rowid LIMIT ?').all(matterId,limit);
     },
     close() { db.close(); },
+    ...secure,
   };
 }
 

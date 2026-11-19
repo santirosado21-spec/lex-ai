@@ -59,8 +59,9 @@ function isFollowUpQuestion(value) {
   return /^(?:y|tambien|entonces|sobre lo anterior|respecto de lo anterior|el articulo anterior|esa|ese|esto|aquello)\b/.test(compact);
 }
 
-export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City',intakePilot=false,intakeGenerate}) {
-  const store=createStore(dataDir);
+export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City',intakePilot=false,intakeGenerate,pilotPassphrase}) {
+  if(pilotPassphrase!==undefined&&!intakePilot)throw Error('El almacenamiento cifrado está disponible para el piloto.');
+  const store=createStore(dataDir,{pilotPassphrase});
   const stt=injectedStt||createStt({dataDir});
   let corpus=[];
   try {
@@ -104,7 +105,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   const email=createLocalEmail({store,workspace,matter,transport:mailTransport,clock:plannerNow,schedulerEnabled:false});
   const proactive=createProactiveDrafts({store,workspace,matter,inference,record,clock:plannerNow});
   async function schedulerTick(){return {email:await email.tick(),proactive:await proactive.tick()};}
-  const schedulerTimer=schedulerEnabled?setInterval(()=>{void schedulerTick().catch(()=>{});},15000):null;schedulerTimer?.unref?.();
+  const schedulerTimer=schedulerEnabled&&!intakePilot?setInterval(()=>{void schedulerTick().catch(()=>{});},15000):null;schedulerTimer?.unref?.();
   function reminderFields(payload,allowed){for(const key of Object.keys(payload))if(!allowed.includes(key))throw new Error(`Campo de recordatorio no admitido: ${key}.`);}
   function reminderDueAt(value){
     if(value===undefined||value===null||value==='')return null;

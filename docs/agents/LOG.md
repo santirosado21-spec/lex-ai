@@ -307,3 +307,7 @@ Rejon r2. El abogado busca en local y elige un pasaje. El servidor sólo deriva 
 ## 2026-11-19 11:04 — codex — Revisión local de seudonimización y restitución de documentos nuevos
 
 Piloto r3 con mapa temporal; la API recibe sólo variantes aprobadas o un pasaje de la edición pública verificada. El modelo Ollama real y las reglas sobre tres documentos ficticios: 6/6 identificadores anotados protegidos, 1/6 expresiones operativas intactas, 3/3 restituciones exactas del texto. Navegador a 390 px: se ocultó el correo, se recuperó el texto y no hubo solicitudes externas. 117 pruebas dirigidas aprobadas. Son ejemplos de desarrollo; siguen pendientes privacidad y utilidad sobre expedientes inéditos de aceptación.
+
+## 2026-11-19 11:11 — codex — Cifrado local del expediente y cuentas temporales en r4
+
+151 pruebas dirigidas. Dos aperturas reales del lanzador del ZIP en terminal macOS, con proveedor y claves de prueba: alternancia principal/Lorenzo, recibos independientes y tres exportaciones con nombre restituido tras reabrir. Se comprobó que el pegado inmediato de la frase y las claves no hizo eco en el ensayo. Los registros de un caso nuevo quedaron cifrados y la migración conservó la copia previa. Pendientes confidencialidad de extremo a extremo en expedientes no vistos, utilidad jurídica, plataformas externas y cuenta real de Lorenzo.

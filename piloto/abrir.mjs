@@ -1,13 +1,14 @@
 import {execFile} from 'node:child_process';
-import {access,appendFile} from 'node:fs/promises';
+import {access,appendFile,stat} from 'node:fs/promises';
+import {PILOT_VAULT_FILE} from '../server/privacy/pilot-record-vault.mjs';
 import {homedir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createInterface} from 'node:readline/promises';
-import {Writable} from 'node:stream';
+import {hiddenInput} from './entrada-oculta.mjs';
 import {startServer} from '../server/main.mjs';
 import {createIntakeGenerator} from '../server/intake-pilot.mjs';
-import {selectPilotCredential} from '../server/providers/pilot-credentials.mjs';
+import {selectPilotCredential,selectTemporaryPilotCredential} from '../server/providers/pilot-credentials.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 process.chdir(root);
@@ -28,6 +29,11 @@ if (args.includes('--elegir-perfil')) {
    temporary=choice==='2';
    mode=({1:'primary',2:'primary',3:'lorenzo',4:'alternate',5:'backup'})[choice];
   }
+  if(temporary) {
+   const option=(await menu.question('Cuenta temporal: 1 principal, 2 Lorenzo, 3 alternar, 4 respaldo [1]: ')).trim()||'1';
+   if(!['1','2','3','4'].includes(option))throw Error('Cuenta no válida.');
+   mode=({1:'primary',2:'lorenzo',3:'alternate',4:'backup'})[option];
+  }
  } finally {menu.close();}
 }
 if(!/^[a-z0-9][a-z0-9-]{0,47}$/.test(caseName)) throw Error('Usa un código ficticio con letras minúsculas, números o guiones.');
@@ -35,24 +41,33 @@ if (!['santiago','pedro','lorenzo'].includes(profile)) throw Error('Selecciona s
 let account='temporal';
 let getApiKey=selectPilotCredential(mode,undefined,slot=>{account=slot;});
 if (temporary) {
- if(!process.stdin.isTTY) throw Error('Abre una terminal interactiva para la clave temporal.');
- if(mode!=='primary') throw Error('Las cuentas múltiples requieren el Llavero de macOS.');
- process.stdout.write('Clave de OpenAI para esta sesión (entrada oculta): ');
- const silent=new Writable({write(_chunk,_encoding,done){done();}});
- const rl=createInterface({input:process.stdin,output:silent,terminal:true,historySize:0});
- let key;
- try {key=(await rl.question('')).trim();} finally {rl.close();process.stdout.write('\n');}
- if(!/^sk-[A-Za-z0-9_-]{20,256}$/.test(key)) throw Error('Formato de clave no válido.');
- getApiKey=async()=>key;
+ getApiKey=await selectTemporaryPilotCredential(mode,hiddenInput,slot=>{account=slot;});
 }
 const dataDir=path.join(homedir(),'.rejon-piloto-comercio',profile,caseName);
+async function hasFile(name) {
+ try{const file=await stat(path.join(dataDir,name));return file.isFile()&&file.size>0;}
+ catch(error){if(error.code==='ENOENT')return false;throw error;}
+}
+const hasVault=await hasFile(PILOT_VAULT_FILE);
+if(await hasFile('lex.sqlite')) console.log('Este ejercicio conserva una copia anterior en claro. La primera apertura copia sus registros al archivo cifrado.');
+if(!hasVault)console.log('Crea una frase exclusiva para abrir este ejercicio. Guárdala para volver a entrar.');
+const passphrase=Buffer.from(await hiddenInput(hasVault?'Frase local del expediente: ':'Nueva frase local (al menos 12 caracteres): '),'utf8');
+if (!hasVault) {
+ const confirmation=Buffer.from(await hiddenInput('Repite la frase local: '),'utf8');
+ const valid=passphrase.equals(confirmation)&&Array.from(passphrase.toString()).length>=12&&passphrase.length<=1024;
+ confirmation.fill(0);
+ if(!valid){passphrase.fill(0);throw Error('Las frases deben coincidir y tener al menos 12 caracteres.');}
+}
 async function onReceipt(receipt) {
  if(!receipt)return;
  const record={at:new Date().toISOString(),account,model:receipt.observedModel,usage:receipt.usage};
  try {await appendFile(path.join(dataDir,'uso-openai.jsonl'),JSON.stringify(record)+'\n',{mode:0o600});}
  catch {console.error('El borrador se conserva. No se pudo guardar el recibo de uso local.');}
 }
-const app=await startServer({dataDir,autoInitialize:false,intakePilot:true,intakeGenerate:createIntakeGenerator({getApiKey,onReceipt})});
+let app;
+try {
+ app=await startServer({dataDir,autoInitialize:false,intakePilot:true,pilotPassphrase:passphrase,intakeGenerate:createIntakeGenerator({getApiKey,onReceipt})});
+} finally {passphrase.fill(0);}
 const local=new URL(app.connection.url);
 local.hash=new URLSearchParams({pilot:'intake',token:app.connection.token}).toString();
 const open=process.platform==='darwin'?['/usr/bin/open',[local.href]]:process.platform==='win32'?['rundll32.exe',['url.dll,FileProtocolHandler',local.href]]:['xdg-open',[local.href]];

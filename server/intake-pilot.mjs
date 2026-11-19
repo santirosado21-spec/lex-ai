@@ -109,6 +109,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   const saved=current();
   return {
    saved:Boolean(saved),
+   protectedRecords:store.protectedRecords===true,
    drafts:saved?.intake.drafts??{},
    editedTasks:saved?.intake.editedTasks??[],
    tasks:Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]})).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{

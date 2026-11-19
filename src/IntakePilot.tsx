@@ -13,7 +13,7 @@ type TaskInfo = {
   id: Task; title: string; preview?: string;
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string}[];
 };
-type PilotStatus = {saved: boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean; protectedRecords?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -148,7 +148,7 @@ export default function IntakePilot() {
     <header className="rp-top">
       <div className="rp-brand"><img src={mark} alt=""/>Rejon<span>.AI</span></div>
       <div className="rp-tools"><button className="rp-library-button" type="button" aria-controls="rp-law-library" aria-expanded={libraryOpen} disabled={busy||editText!==null} onClick={()=>setLibraryOpen(!libraryOpen)}><BookOpen size={16}/>{libraryOpen?'Cerrar biblioteca':'Biblioteca federal'}</button>
-      <span className="rp-local"><Monitor size={15}/> Espacio local</span></div>
+      <span className="rp-local"><Monitor size={15}/> {pilot?.protectedRecords?'Expediente cifrado':'Espacio local'}</span></div>
     </header>
     <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
