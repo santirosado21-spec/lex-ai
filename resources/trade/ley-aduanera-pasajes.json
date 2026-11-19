@@ -1,0 +1,75 @@
+{
+  "36": [
+    {
+      "page": 25,
+      "locator": "párrafo primero",
+      "text": "Quienes introduzcan o extraigan mercancías del territorio nacional destinándolas a un régimen aduanero, están obligados a transmitir a las autoridades aduaneras, a través del sistema electrónico aduanero, en documento electrónico, un pedimento con información referente a las citadas mercancías, en los términos y condiciones que establezca el Servicio de Administración Tributaria mediante reglas, empleando la firma electrónica avanzada, el sello digital u otro medio tecnológico de identificación."
+    },
+    {
+      "page": 25,
+      "locator": "párrafo tercero",
+      "text": "En los pedimentos en los que aparezca la firma electrónica avanzada, sello digital u otro medio tecnológico de identificación y el código de aceptación generado por el sistema electrónico aduanero, se considerará que fueron transmitidos y efectuados por la persona a quien corresponda dicha firma electrónica avanzada, sello digital u otro medio tecnológico de identificación, ya sea del importador, exportador, agente aduanal, agencia aduanal o de sus mandatarios autorizados."
+    }
+  ],
+  "36-A": [
+    {
+      "page": 25,
+      "locator": "párrafo primero",
+      "text": "Para efectos del artículo 36, en relación con el artículo 6o. de esta Ley, y demás disposiciones jurídicas aplicables, el agente aduanal, la agencia aduanal y quienes introduzcan o extraigan mercancías del territorio nacional para destinarlas a un régimen aduanero, están obligados a transmitir en documento electrónico o digital como anexos al pedimento, excepto lo previsto en las disposiciones jurídicas aplicables, la información que a continuación se describe, la cual deberá contener el acuse generado por el sistema electrónico aduanero, conforme al cual se tendrá por transmitida y presentada:"
+    },
+    {
+      "page": 26,
+      "locator": "fracción I, inciso a)",
+      "text": "La relativa al valor y demás datos relacionados con la comercialización de las mercancías, contenidos en el comprobante fiscal digital o documento equivalente, cuando el valor en aduana de las mismas se determine conforme al valor de transacción, declarando el acuse correspondiente que se prevé en el artículo 59-A de la presente Ley."
+    },
+    {
+      "page": 26,
+      "locator": "fracción I, inciso b)",
+      "text": "La contenida en el conocimiento de embarque, lista de empaque, guía o demás documentos de transporte, y que requiera el Servicio de Administración Tributaria mediante reglas, declarando el acuse que se prevé en el artículo 20, fracción VII de la presente Ley o el número de documento de transporte que corresponda."
+    }
+  ],
+  "64": [
+    {
+      "page": 46,
+      "locator": "párrafo primero",
+      "text": "La base gravable del impuesto general de importación es el valor en aduana de las mercancías, salvo los casos en que la ley de la materia establezca otra base gravable."
+    },
+    {
+      "page": 46,
+      "locator": "párrafo segundo",
+      "text": "El valor en aduana de las mercancías será el valor de transacción de las mismas, salvo lo dispuesto en el artículo 71 de esta Ley."
+    },
+    {
+      "page": 46,
+      "locator": "párrafo tercero",
+      "text": "Se entiende por valor de transacción de las mercancías a importar, el precio pagado por las mismas, siempre que concurran todas las circunstancias a que se refiere el artículo 67 de esta Ley, y que éstas se vendan para ser exportadas a territorio nacional por compra efectuada por el importador, precio que se ajustará, en su caso, en los términos de lo dispuesto en el artículo 65 de esta Ley."
+    },
+    {
+      "page": 46,
+      "locator": "párrafo cuarto",
+      "text": "Se entiende por precio pagado el pago total que por las mercancías importadas haya efectuado o vaya a efectuar el importador de manera directa o indirecta al vendedor o en beneficio de éste."
+    }
+  ],
+  "65": [
+    {
+      "page": 46,
+      "locator": "fracción I, encabezado",
+      "text": "Los elementos que a continuación se mencionan, en la medida en que corran a cargo del importador y no estén incluidos en el precio pagado por las mercancías:"
+    },
+    {
+      "page": 46,
+      "locator": "fracción I, inciso d)",
+      "text": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías hasta que se den los supuestos a que se refiere la fracción I del artículo 56 de esta Ley."
+    },
+    {
+      "page": 47,
+      "locator": "fracción III",
+      "text": "Las regalías y derechos de licencia relacionados con las mercancías objeto de valoración que el importador tenga que pagar directa o indirectamente como condición de venta de dichas mercancías, en la medida en que dichas regalías y derechos no estén incluidos en el precio pagado."
+    },
+    {
+      "page": 47,
+      "locator": "párrafo final",
+      "text": "Para la determinación del valor de transacción de las mercancías, el precio pagado únicamente se incrementará de conformidad con lo dispuesto en este artículo, sobre la base de datos objetivos y cuantificables."
+    }
+  ]
+}

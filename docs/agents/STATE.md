@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 12:01 por codex: Rejon r6 sugiere lecturas sobre siete temas y coteja dos fuentes por nota
+**Última actualización:** 2026-11-19 12:11 por codex: Rejon r7 integra valoración, pedimento y dos controles editables con documentos locales
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r7 añade valoración y pedimento, 13 pasajes de los artículos 36, 36-A, 64 y 65 de la Ley Aduanera, PDF cotejado y matrices cifradas por asunto. Prueba real con DOCX sintético y OpenAI, 741 tokens de entrada y 87 de salida. Excel local antes de la generación. Pruebas dirigidas 164/164 y exportaciones verificadas con LibreOffice.
 
 - r6 ofrece lecturas con dos fuentes en siete temas detectados localmente al importar un documento ficticio. En una prueba de navegador, el modelo eligió dos fragmentos cotejados y la prueba editó y exportó el soporte original en Word, Excel y PowerPoint. Se probaron 161 contratos y el paquete macOS. El texto libre del documento importado sigue local.
 
@@ -52,7 +54,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Ampliar la evidencia aplicable a valoración aduanera y pedimento con captura oficial por página y edición. Medir pertinencia de las sugerencias y preguntas sobre expedientes nuevos y revisión profesional.
+- Medir pertinencia de las sugerencias y preguntas sobre expedientes nuevos. Revisar el comportamiento del respaldo al agotarse cuota de una cuenta, conservando el límite y evitando duplicar generaciones. Quedan pendientes el flujo libre protegido y la validación profesional.
 
 - Medir la pérdida de campos aduaneros y los identificadores indirectos en un conjunto reservado. Cotejar unidades, cuotas y transitorios de las tablas arancelarias. Quedan pendientes la segunda clave real, la revisión profesional, Windows y los equipos de los socios.
 

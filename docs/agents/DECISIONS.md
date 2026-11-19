@@ -133,3 +133,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 12:01 — codex — Elegir fragmentos jurídicos por clave y unir el soporte del asunto después de la respuesta
 
 **Por qué:** Una prueba de copia libre devolvió una cita inexacta de dos. El modelo puede seleccionar entre fragmentos de dos fuentes verificadas y plantear preguntas. El servicio local inserta la cita literal. El documento importado y la línea que motivó la lectura permanecen en el equipo.
+
+## 2026-11-19 12:11 — codex — Anclar las lecturas aduaneras a páginas de una edición y conservar los importes en el equipo
+
+**Por qué:** El PDF de la Ley Aduanera distingue la edición impresa de la reforma posterior. La matriz de trabajo requiere cantidades, monedas, folios y observaciones para las exportaciones. La consulta pública sólo necesita los pasajes oficiales y el tema.

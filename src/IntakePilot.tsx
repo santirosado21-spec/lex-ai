@@ -2,6 +2,7 @@ import {useEffect, useRef, useState, type FormEvent} from 'react';
 import {ArrowDownToLine, ArrowRight, BookOpen, Check, ChevronLeft, Cloud, ExternalLink, FileText, FolderClosed, HardDrive, LoaderCircle, Monitor, Presentation, Table2} from 'lucide-react';
 import {api, downloadFile} from './api';
 import IntakeCaseDocument,{type CaseDatum} from './IntakeCaseDocument';
+import IntakeTradeWorksheet from './IntakeTradeWorksheet';
 import LocalIntakeImport from './LocalIntakeImport';
 import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
@@ -12,7 +13,7 @@ type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
   id: Task; title: string; preview?: string; evidence?:{line:number;excerpt:string};
-  references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string}[];
+  references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
 type PilotStatus = {saved: boolean; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
 const formats = [
@@ -29,6 +30,7 @@ function MarkedText({text}:{text:string}) {
 export default function IntakePilot() {
   const [pilot,setPilot] = useState<PilotStatus|null>(null);
   const [clientStep,setClientStep] = useState(false);
+  const [worksheetDirty,setWorksheetDirty]=useState(false);
   const [inspecting,setInspecting] = useState(false);
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
@@ -52,7 +54,7 @@ export default function IntakePilot() {
   const activeTask = pilot?.tasks.find(item=>item.id===selected) ?? pilot?.tasks[0];
   const task = activeTask?.id;
   const draft = task && pilot?.drafts[task];
-  const busy = activity!==null || inspecting;
+  const busy = activity!==null || inspecting || worksheetDirty;
   const stage = !saved ? 0 : draft ? 2 : 1;
 
   useEffect(()=>{
@@ -183,7 +185,7 @@ export default function IntakePilot() {
           </ol>
         </div>
       </aside>
-      <section className="rp-work" aria-busy={busy}>
+      <section className="rp-work" aria-busy={activity!==null||inspecting}>
         <div className="rp-intro">
           <div className="rp-eyebrow">{saved?'Mesa de trabajo':clientStep?'Alta del asunto':'Alta del despacho'}</div>
           <h1 tabIndex={-1} ref={heading}>{saved?'Preparar un borrador':clientStep?'Abre tu expediente':'Tu espacio de trabajo'}</h1>
@@ -217,15 +219,18 @@ export default function IntakePilot() {
             <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
             <blockquote>{activeTask.evidence.excerpt}</blockquote>
           </details>}
+          {(task==='lectura-valoracion'||task==='lectura-pedimento')&&editText===null&&<IntakeTradeWorksheet key={task} task={task} disabled={activity!==null}
+            onDirty={setWorksheetDirty} onSave={()=>{setRestored('');clearFeedback();}}/>}
           {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument/>}
           {activeTask.references?.length ? <details className="rp-details" key={'sources-'+task}><summary><BookOpen size={16}/> Fuentes de consulta ({activeTask.references.length})</summary>
             <ul>{activeTask.references.map(source=><li key={source.id}><a href={source.url} rel="noreferrer" target="_blank">{source.title} <ExternalLink size={12}/></a><p>{source.locator} · {source.summary}</p>
-                {source.text&&<details className="rp-citation"><summary>Texto del artículo</summary><blockquote>{source.text}</blockquote>{source.sourceId&&<small>{source.sourceId}</small>}</details>}
+                {source.localUrl&&<p><a href={source.localUrl} target="_blank" rel="noreferrer">Abrir la página en la copia local</a> · <a href={source.historyUrl} target="_blank" rel="noreferrer">Historial de reformas</a></p>}
+                {source.text&&<details className="rp-citation"><summary>Texto consultado</summary><blockquote>{source.text}</blockquote>{source.sourceId&&<small>{source.sourceId}</small>}</details>}
               </li>)}</ul></details>:null}
           {activeTask.evidence&&!activeTask.preview&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
           {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
           {draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> Ver el mensaje enviado</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
-            <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2>{activeTask.evidence?<><p className="rp-reading-summary">La consulta incluye el tema y dos pasajes de la biblioteca federal. El fragmento del expediente permanece en este equipo.</p>
+            <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2>{activeTask.evidence?<><p className="rp-reading-summary">La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.</p>
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> Generando borrador…</>:<>Enviar y generar borrador <ArrowRight size={16}/></>}</button>

@@ -1,11 +1,14 @@
 // Research topics are public and identical for every matter. Text matching and
 // documentary evidence stay in the local process. Only the two pinned passages
 // and the chosen public topic are available to the cloud request builder.
+import {customsLawId,customsPassage} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
 import {proposedQuestions} from './trade-pilot-grounding.mjs';
 
 const lce='MX-FED-LCE';
 const topics=[
+ {key:'valoracion',title:'Valoración en aduana',terms:['valor en aduana','valoración aduanera','valor de transacción','incrementables','precio pagado','regalías'],articles:[[customsLawId,'64'],[customsLawId,'65']]},
+ {key:'pedimento',title:'Pedimento y anexos de importación',terms:['pedimento','pedimentos','anexos al pedimento','acuse de validación'],articles:[[customsLawId,'36'],[customsLawId,'36-A']]},
  {key:'origen',title:'Reglas de origen',terms:['regla de origen','reglas de origen','certificación de origen','certificado de origen','trato preferencial'],articles:[[lce,'9'],[lce,'10']]},
  {key:'cupos',title:'Cupos y asignación',terms:['cupo','cupos','arancel-cupo','constancia de asignación'],articles:[[lce,'23'],[lce,'24']]},
  {key:'restricciones',title:'Regulaciones y restricciones no arancelarias',terms:['regulación no arancelaria','restricciones no arancelarias','regulaciones no arancelarias','permiso previo','permisos previos'],articles:[[lce,'17'],[lce,'20']]},
@@ -72,14 +75,20 @@ function citationChoices(text,prefix){
 export function loadTradeReading(library,task) {
  const topic=topics.find(item=>'lectura-'+item.key===task);
  if(!topic)throw Error('Tema de revisión desconocido.');
- const refs=topic.articles.map(([lawId,articleId])=>{
+ const sources=topic.articles.map(([lawId,articleId],index)=>{
+  const prefix=index?'B':'A';
+  if(lawId===customsLawId){
+   const {ref,passages}=customsPassage(articleId);
+   return {ref,choices:Object.freeze(passages.map((p,i)=>Object.freeze({...p,key:prefix+(i+1)})))};
+  }
   const source=library?.lookupArticle({lawId,articleId});
   const ref=loadResearchPassage(library,source?.sourceId,0).ref;
   if(ref.id!==lawId+'-'+articleId)throw Error('La referencia no coincide con la selección.');
-  return ref;
+  return {ref,choices:citationChoices(ref.text,prefix)};
  });
- const choices=Object.freeze(refs.map((ref,i)=>citationChoices(ref.text,i?'B':'A')));
- const prompt='Prepara dos preguntas de revisión documental sobre '+topic.title+'. Selecciona el fragmento más pertinente de cada fuente. En pasaje escribe su clave exacta, por ejemplo A1 o B1. En solicitud formula una pregunta breve sobre una prueba documental, entre ¿ y ?, con letras y espacios. Evita conclusiones sobre el cliente, la vigencia, los plazos o las cuotas. Devuelve sólo JSON con claves A y B. Cada valor contiene pasaje y solicitud. Si la fuente es insuficiente, usa null para esa clave.\n\n'+refs.map((ref,i)=>(i?'B':'A')+' · '+ref.id+' · '+ref.title+'\n'+ref.locator+'\n'+ref.url+'\n'+choices[i].map(item=>item.key+' | '+item.quote).join('\n')).join('\n\n');
+ const refs=sources.map(source=>source.ref);
+ const choices=Object.freeze(sources.map(source=>source.choices));
+ const prompt='Prepara dos preguntas de revisión documental sobre '+topic.title+'. Selecciona el fragmento más pertinente de cada fuente. En pasaje escribe su clave exacta, por ejemplo A1 o B1. En solicitud formula una pregunta breve sobre una prueba documental, entre ¿ y ?, con letras y espacios. Evita conclusiones sobre el cliente, la vigencia, los plazos o las cuotas. Devuelve sólo JSON con claves A y B. Cada valor contiene pasaje y solicitud. Si la fuente es insuficiente, usa null para esa clave.\n\n'+refs.map((ref,i)=>(i?'B':'A')+' · '+ref.id+' · '+ref.title+'\n'+ref.locator+'\n'+ref.url+'\n'+choices[i].map(item=>item.key+' | '+(item.locator?item.locator+' | ':'')+item.quote).join('\n')).join('\n\n');
  const reading=Object.freeze({task,title:topic.title,prompt,refs:Object.freeze(refs),choices});
  trusted.add(reading);
  return reading;
@@ -95,12 +104,13 @@ export function renderTradeReading(raw,reading){
  try{result=JSON.parse(raw);}catch{result=null;}
  const sections=reading.refs.map((ref,i)=>{
   const pair=result?.[i?'B':'A'];
-  const quote=reading.choices[i].find(item=>item.key===pair?.pasaje)?.quote;
+  const choice=reading.choices[i].find(item=>item.key===pair?.pasaje);
+  const quote=choice?.quote;
   const title='['+ref.id+']';
   if(!quote||Object.keys(pair).some(key=>!['pasaje','solicitud'].includes(key))||!ref.text.includes(quote)||/\[\[|\]\]/u.test(quote))
    return title+'\nFundamento pendiente de cotejo.';
   const question=proposedQuestions(pair.solicitud);
-  return title+'\n'+quote+(question?'\n'+question:'');
+  return title+(choice.locator?' · '+choice.locator:'')+'\n'+quote+(choice.condition?'\nCondición de la fracción I\n'+choice.condition:'')+(question?'\n'+(choice.locator?question.split('\n')[0]:question):'');
  });
  return reading.title+' para [[CLIENTE]] · [[ASUNTO]]\n\nSoporte del expediente\n[[SOPORTE]]\n\n'+sections.join('\n\n')+'\n\nRevisar la edición aplicable y los transitorios a la fecha de la operación.';
 }

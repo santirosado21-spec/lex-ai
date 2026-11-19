@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {customsPdf,customsPdfPath} from './corpus/customs-edition.mjs';
 import { localHttpBoundary } from './local-http-boundary.mjs';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { readFile, mkdir, access } from 'node:fs/promises';
@@ -119,6 +120,11 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     json(res,200,result);return;
    }
    if(req.method!=='GET'){json(res,405,{error:'Método no permitido.'});return;}
+   if(intakePilot&&pathname===customsPdfPath){
+    const bytes=customsPdf();
+    res.writeHead(200,{'Content-Type':'application/pdf','Content-Length':bytes.length});
+    res.end(bytes);return;
+   }
    const rel=decodeURIComponent(pathname)==='/'?'index.html':decodeURIComponent(pathname).replace(/^\//,'');
    const file=path.resolve(root,'dist',rel),dist=path.resolve(root,'dist');
    if(!file.startsWith(dist+path.sep)){json(res,404,{error:'No encontrado.'});return;}

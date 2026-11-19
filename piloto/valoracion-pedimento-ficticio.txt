@@ -1,0 +1,10 @@
+Cliente: Taller Níspero de Ensayo
+Asunto: Revisión documental ficticia
+Proveedor: Aceros Coral Ficticios
+Se requiere revisar el valor en aduana del lote MUESTRA-NIS-027 y los anexos al pedimento.
+Precio pagado: 24,800.00 USD
+Flete: USD 1,275.50
+Seguro: 85.00 USD
+Pedimento: 26 47 0000 6000001
+Factura comercial: SIM-NIS-027
+Acuse de validación: ACUSE-NIS-027

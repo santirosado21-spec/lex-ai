@@ -24,7 +24,7 @@ function blocks(text, limit) {
   return chunks;
 }
 
-async function workbook({firm, matter, answer}, task) {
+async function workbook({firm, matter, answer, worksheet}, task) {
   const {default: ExcelJS} = await import('exceljs');
   const book = new ExcelJS.Workbook();
   book.creator = 'Rejon.AI';
@@ -71,6 +71,21 @@ async function workbook({firm, matter, answer}, task) {
     }
     evidence.autoFilter = 'A1:E' + evidence.rowCount;
   }
+  if (worksheet) {
+    const control=book.addWorksheet(worksheet.title,{pageSetup,views:[{state:'frozen',ySplit:1}]});
+    const headers=['Concepto','Qué cotejar','Estado',...(worksheet.monetary?['Importe','Moneda']:[]),'Referencia local','Observación','Artículo'];
+    control.columns=(worksheet.monetary?[28,58,16,19,12,36,50,13]:[28,58,16,36,50,13]).map(width=>({width}));
+    styleHeader(control.addRow(headers));
+    for(const item of worksheet.rows){
+      const money=worksheet.monetary?[item.amount===''?null:Number(item.amount),item.currency]:[];
+      const row=control.addRow([item.label,item.check,item.status,...money,item.reference,item.note,item.source]);
+      row.alignment={vertical:'middle',wrapText:true};
+      row.height=Math.max(50,18*Math.ceil(item.note.length/42),18*Math.ceil(item.reference.length/28));
+      if(worksheet.monetary)row.getCell(4).numFmt='#,##0.00##';
+      row.getCell(3).dataValidation={type:'list',allowBlank:false,formulae:['"'+worksheet.statuses.join(',')+'"']};
+    }
+    control.autoFilter={from:{row:1,column:1},to:{row:control.rowCount,column:headers.length}};
+  }
   if (answer.citations.length) {
     const sources = book.addWorksheet('Fuentes', {pageSetup});
     sources.columns = [{width: 42}, {width: 50}, {width: 19}, {width: 68}];
@@ -85,7 +100,7 @@ async function workbook({firm, matter, answer}, task) {
   return Buffer.from(await book.xlsx.writeBuffer());
 }
 
-async function presentation({firm, matter, answer}) {
+async function presentation({firm, matter, answer, worksheet}) {
   const {default: PptxGenJS} = await import('pptxgenjs');
   const deck = new PptxGenJS();
   deck.layout = 'LAYOUT_WIDE';
@@ -120,6 +135,18 @@ async function presentation({firm, matter, answer}) {
     body += (body ? '\n\n' : '') + part;
   }
   if (body) addBody();
+  const reviewed=worksheet?.rows.filter(row=>row.revision>0)??[];
+  for(let i=0;i<reviewed.length;i+=2){
+    const slide=page(worksheet.title);
+    for(const [j,item] of reviewed.slice(i,i+2).entries()){
+      const y=1.8+j*2.35;
+      slide.addText(item.label,{x:0.75,y,w:7.35,h:0.46,fontSize:23,color:navy,bold:true,margin:0,fit:'shrink'});
+      const value=[item.status,item.amount&&item.amount+' '+item.currency].filter(Boolean).join(' · ');
+      slide.addText(value,{x:8.1,y,w:4.45,h:0.46,fontSize:17,color:green,align:'right',margin:0,fit:'shrink'});
+      const lines=[item.reference&&'Referencia · '+item.reference,item.note&&'Observación · '+item.note].filter(Boolean);
+      if(lines.length)slide.addText(lines.join('\n'),{x:0.75,y:y+0.56,w:11.8,h:1.45,fontSize:17,color:navy,margin:0,fit:'shrink',valign:'top'});
+    }
+  }
   for (let i = 0; i < answer.citations.length; i += 3) {
     const slide = page('Fuentes de consulta');
     for (const [j, source] of answer.citations.slice(i, i + 3).entries()) {

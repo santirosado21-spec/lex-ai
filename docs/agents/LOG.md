@@ -319,3 +319,7 @@ Edición r5. Un expediente ficticio de cupos recibió una cita del artículo 23 
 ## 2026-11-19 12:01 — codex — Rejon r6 sugiere lecturas sobre siete temas y coteja dos fuentes por nota
 
 Un DOCX ficticio importado con Ollama activó una revisión de clasificación. Un envío real de 768 tokens de entrada y 87 de salida produjo dos claves verificadas. El lote fue incorporado y editado en local. Los tres formatos Office renderizaron el lote y ambas referencias. 161 pruebas dirigidas aprobadas. Se probaron cuatro anchos de navegador. Ocho muestras de referencias de transporte dieron 11/11 identificadores cubiertos y 11/14 expresiones útiles intactas con ambas versiones del detector.
+
+## 2026-11-19 12:11 — codex — Rejon r7 integra valoración, pedimento y dos controles editables con documentos locales
+
+Trece pasajes de cuatro artículos cotejados en cuatro páginas reproducidas con Poppler, PDF.js y revisión visual. Una consulta de OpenAI sobre una operación ficticia devolvió dos fragmentos verificables. Importe, póliza y pedimento ausentes del sobre. Excel local antes de generación, exportaciones editables en tres formatos, 164 pruebas dirigidas. El paquete descomprimido abrió las dos tareas en macOS. Sin validación profesional, segunda clave real o equipos de socios.

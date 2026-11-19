@@ -1,3 +1,4 @@
+import {hasTradeWorksheet,tradeWorksheet,revisedWorksheetRow,worksheetSummary,worksheetProposals} from './intake-trade-worksheet.mjs';
 import {suggestTradeReadings,loadTradeReading,tradeReadingEnvelope,renderTradeReading} from './corpus/intake-trade-reading.mjs';
 import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
 import {randomUUID} from 'node:crypto';
@@ -49,6 +50,11 @@ function exactFields(payload, fields) {
      Object.keys(payload).length!==fields.length || !fields.every(field=>Object.hasOwn(payload,field))) {
   throw new Error('Campos del piloto inválidos.');
  }
+}
+
+function exportCitations(references){
+ return references.map(ref=>({...ref,title:ref.id+' · '+ref.title,version:ref.locator,retrievedAt:ref.checkedOn,
+  status:'Referencia de consulta, aplicación al asunto pendiente de revisión'}));
 }
 
 function draftText(value,doc,evidence) {
@@ -188,6 +194,51 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     }
     return data;
    }
+   case 'intake.readWorksheet':
+   case 'intake.saveWorksheetRow': {
+    const save=action==='intake.saveWorksheetRow';
+    const copy=save&&payload&&Object.hasOwn(payload,'copyId');
+    exactFields(payload,save?['task','id','values','revision',...(copy?['copyId']:[])]:['task']);
+    if(copy&&(typeof payload.copyId!=='string'||!/^[-a-f0-9]{36}$/.test(payload.copyId)))throw Error('Identificador de renglón inválido.');
+    const {task}=payload;
+    return store.transaction(()=>{
+     const saved=current();
+     if(!store.protectedRecords||!hasTradeWorksheet(task)||!readingChoices(saved).some(choice=>choice.id===task))
+      throw Error('Selecciona un expediente cifrado que contenga el tema de revisión.');
+     const stored=saved.intake.worksheets?.[task]??{};
+     const sheet=tradeWorksheet(task,stored);
+     const original=openReviewedDocument(saved.intake.document,saved.firm.id,saved.entry.id).original;
+     const proposals=worksheetProposals(task,original);
+     if(!save)return {...sheet,proposals};
+     const base=sheet.rows.find(row=>row.id===payload.id)?.base;
+     if(!base)throw Error('Concepto de control inválido.');
+     const target=copy?base+'~'+payload.copyId:payload.id;
+     if(copy&&Object.hasOwn(stored,target)){
+      const previous=stored[target],retry=revisedWorksheetRow(sheet,target,payload.values,previous.revision);
+      if(Object.keys(payload.values).some(key=>previous[key]!==retry[key]))throw Error('El renglón duplicado ya se guardó con otros datos. Recarga el control.');
+      return {...sheet,proposals};
+     }
+     if(copy&&sheet.rows.length>=80)throw Error('El control admite hasta 80 renglones.');
+     const item=revisedWorksheetRow(sheet,payload.id,payload.values,payload.revision);
+     const rows={...stored,[target]:copy?{...item,revision:1}:item};
+     store.put('intake-pilot',{...saved.intake,worksheets:{...saved.intake.worksheets,[task]:rows}});
+     store.audit('intake.local.worksheet',saved.entry.id);
+     return {...tradeWorksheet(task,rows),proposals};
+    });
+   }
+   case 'intake.exportWorksheet': {
+    exactFields(payload,['task']);
+    const {task}=payload,saved=current();
+    if(!store.protectedRecords||!hasTradeWorksheet(task)||!readingChoices(saved).some(choice=>choice.id===task))
+     throw Error('Abre un expediente con ese control documental.');
+    const sheet=tradeWorksheet(task,saved.intake.worksheets?.[task]);
+    let refs=saved.intake.researchHistory?.[task]?.references;
+    if(!refs){try{refs=readingFor(task).refs;}catch{refs=[];}}
+    const answer={question:sheet.title,text:'Hoja de trabajo local para el cotejo documental. Revisar los soportes y la edición aplicable.',citations:exportCitations(refs),createdAt:new Date().toISOString()};
+    const file=await exportIntakeDocument('xlsx',task,{firm:saved.firm,matter:saved.entry,answer,worksheet:sheet});
+    store.audit('intake.local.exportWorksheet',saved.entry.id);
+    return {...file,name:'Rejon-control-'+task.slice(8)+'.xlsx'};
+   }
    case 'intake.readDocument': {
     exactFields(payload,[]);
     const saved=current();
@@ -310,14 +361,15 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const draft=text.replace(/\[\[[^\[\]]+\]\]/g,token=>originals.get(token));
     const hasSupplier=task==='trade' && intake.scenarioId==='factura-origen-v1' && intake.supplier;
     const restored=hasSupplier?draft+'\n\nProveedor registrado: '+intake.supplier:draft;
-    if (action==='intake.preview') return {text:restored};
+    const sheet=hasTradeWorksheet(task)?tradeWorksheet(task,intake.worksheets?.[task]):null;
+    const appendix=sheet?worksheetSummary(sheet):'';
+    const withWorksheet=appendix?restored+'\n\n'+appendix:restored;
+    if (action==='intake.preview') return {text:withWorksheet};
     const storedNote=intake.researchHistory?.[task];
     const references=storedNote?.references??(task==='trade'?tradeReferences:[]);
-    const citations=references.map(ref=>({...ref,
-     title:`${ref.id} · ${ref.title}`,version:ref.locator,retrievedAt:ref.checkedOn,status:'Referencia de consulta, aplicación al asunto pendiente de revisión',
-    }));
-    const answer={question:storedNote?.title??tasks[task].title,text:restored,citations,createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer});
+    const citations=exportCitations(references);
+    const answer={question:storedNote?.title??tasks[task].title,text:payload.format==='xlsx'||payload.format==='pptx'?restored:withWorksheet,citations,createdAt:new Date().toISOString()};
+    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet});
     store.audit('intake.local.export',entry.id);
     return file;
    }
