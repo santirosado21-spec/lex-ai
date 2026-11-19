@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 10:44 por codex: Piloto privado de comercio exterior probado
+**Última actualización:** 2026-11-19 11:02 por codex: Investigación federal con pasaje verificable en el piloto privado
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- El piloto r2 permite elegir un pasaje del índice público en el navegador y producir notas con cita literal, preguntas y tres exportaciones. Dos generaciones sintéticas reales sobre LCE 23 usaron 758 tokens de entrada y 161 de salida en total. La segunda devolvió tanto cita verificable como pregunta admitida.
 
 - 19/11/2026. Piloto privado de comercio en la rama local `local/comercio-piloto-20261119`. Una factura sintética pasó por Ollama y una llamada real a OpenAI. Se restituyeron cliente, asunto y proveedor y se exportaron tres formatos Office. Informe y límites en `docs/qa/comercio-exterior-piloto-2026-11-19.md`.
 

@@ -299,3 +299,7 @@ El dueño entregó la clave completa mediante TXT temporal fuera del repo. GET d
 ## 2026-11-19 10:44 — codex — Piloto privado de comercio exterior probado
 
 Prueba en macOS con factura ficticia, Ollama y una llamada a OpenAI: 847 tokens de entrada y 101 de salida. Sin los cuatro literales originales en el cuerpo saliente. Se restituyeron los tres campos del expediente y se abrieron Word, Excel y PowerPoint en LibreOffice. Índice local de 303 instrumentos y 35.452 artículos. Cinco PDF nuevos quedan en cuarentena. Faltan recepción por los socios, validación jurídica, almacenamiento cifrado y cobertura de texto libre.
+
+## 2026-11-19 11:02 — codex — Investigación federal con pasaje verificable en el piloto privado
+
+Rejon r2. El abogado busca en local y elige un pasaje. El servidor sólo deriva el texto público de la copia con huella comprobada. Se guardan pasaje y edición con cada nota. Dos pruebas con la API en LCE 23: 362/108 y 396/53 tokens; la primera devolvió cita y la pregunta no superó el filtro, la segunda devolvió cita y pregunta. Tres archivos Office se abrieron con LibreOffice y conservaron cliente y materia. 116 pruebas dirigidas pasan. Falta validar la protección de texto libre y la calidad jurídica en expedientes nuevos.

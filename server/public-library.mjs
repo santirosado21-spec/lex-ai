@@ -51,13 +51,21 @@ export async function buildPublicLibrary({inputDir,outputFile,maxBytes=256*1024*
 }
 
 export function searchTokens(query){string(query,'query',300);const tokens=[...new Set(query.normalize('NFC').match(/[\p{L}\p{N}]+/gu)??[])];if(!tokens.length||tokens.length>12||tokens.some(t=>t.length>40))throw new Error('Query requires 1–12 words of at most 40 characters');return tokens.map(t=>'"'+t+'"').join(' AND ');}
+// Only the library loader can associate an on-disk digest with a source reader.
+const verifiedReaders = new WeakMap();
+export function getPinnedPublicSource(library, digest, sourceId) {
+  const reader = verifiedReaders.get(library);
+  if (!reader || reader.digest !== digest) throw new Error('Selecciona un artículo de la edición verificada.');
+  return reader.getSource(sourceId);
+}
+
 export async function openPublicLibrary(file){
   const manifest=JSON.parse(await readFile(file+'.manifest.json','utf8'));if(manifest.schemaVersion!==1||manifest.kind!=='public-legal-library'||!SHA.test(manifest.indexSha256)||(await stat(file)).size>1024**3||await fileHash(file)!==manifest.indexSha256)throw new Error('Public library manifest/index integrity mismatch');
   const db=new DatabaseSync(file,{readOnly:true});
   try{
     db.exec('PRAGMA query_only=ON; PRAGMA trusted_schema=OFF; PRAGMA cache_size=-16384;');if(db.prepare('PRAGMA application_id').get().application_id!==1279613016||db.prepare('PRAGMA user_version').get().user_version!==1)throw new Error('Not a public library index');
     const metadata=JSON.parse(db.prepare("SELECT value FROM metadata WHERE key='library'").get().value);if(metadata.corpusSha256!==manifest.corpusSha256||metadata.kind!=='public-legal-library'||metadata.privateDocumentsIncluded!==false)throw new Error('Public metadata mismatch');
-    return {status(){return {available:true,...metadata,indexSha256:manifest.indexSha256};},search({query,lawId,jurisdiction='MX-FED',limit=10,offset=0}={}){
+    const library = {status(){return {available:true,...metadata,indexSha256:manifest.indexSha256};},search({query,lawId,jurisdiction='MX-FED',limit=10,offset=0}={}){
       const match=searchTokens(query);if(!Number.isInteger(limit)||limit<1||limit>10||!Number.isInteger(offset)||offset<0||offset>1000)throw new Error('Invalid search page');if(jurisdiction!=='MX-FED')throw new Error('Unsupported jurisdiction');if(lawId!==undefined&&(typeof lawId!=='string'||!/^MX-FED-[A-Z0-9_-]{1,90}$/.test(lawId)))throw new Error('Invalid law filter');
       const rows=db.prepare(`SELECT a.payload,snippet(articles_fts,3,'','','…',32) AS excerpt FROM articles_fts JOIN articles a ON a.id=articles_fts.id WHERE articles_fts MATCH ? AND a.jurisdiction=? AND (? IS NULL OR a.law_id=?) ORDER BY bm25(articles_fts),a.id LIMIT ? OFFSET ?`).all(match,jurisdiction,lawId??null,lawId??null,limit+1,offset);
       return {query,corpusSha256:metadata.corpusSha256,offset,limit,hasMore:rows.length>limit,sources:rows.slice(0,limit).map(row=>{const source=JSON.parse(row.payload);return {...source,text:source.text.slice(0,12000),textLength:source.text.length,truncated:source.text.length>12000,excerpt:row.excerpt};})};
@@ -75,6 +83,8 @@ export async function openPublicLibrary(file){
       const legacyRows=db.prepare("SELECT payload FROM articles INDEXED BY by_law WHERE law_id=? AND json_extract(payload,'$.articleCanonical') IS NULL ORDER BY json_extract(payload,'$.retrievedAt') DESC,id").all(lawId);
       for(const legacy of legacyRows){const payload=JSON.parse(legacy.payload);if(typeof payload.article==='string'&&articleCanonical(payload.article)===canonical)return payload;}
       return null;
-    },getSource(id){if(typeof id!=='string'||!/^PUB-[a-f0-9]{64}$/.test(id))throw new Error('Invalid public source ID');const row=db.prepare('SELECT payload FROM articles WHERE id=?').get(id);return row?JSON.parse(row.payload):null;},close(){db.close();}};
+    },getSource(id){if(typeof id!=='string'||!/^PUB-[a-f0-9]{64}$/.test(id))throw new Error('Invalid public source ID');const row=db.prepare('SELECT payload FROM articles WHERE id=?').get(id);return row?JSON.parse(row.payload):null;},close(){verifiedReaders.delete(library);db.close();}};
+    verifiedReaders.set(library,{digest:manifest.indexSha256,getSource:library.getSource});
+    return library;
   }catch(e){db.close();throw e;}
 }

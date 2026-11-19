@@ -32,7 +32,7 @@ export function tradeInstruction(articles) {
   return `Prepara la revisión del origen de una importación de [[CLIENTE]] en [[ASUNTO]]. Selecciona una proposición jurídica contenida en UNA oración completa de los artículos transcritos. Cópiala literalmente. Elige por separado un dato faltante para comprobar su aplicación. Redacta una o dos preguntas breves para el cliente sobre hechos o documentos que permitan verificarlo. Omite cifras, fechas concretas, citas y conclusiones en las preguntas. La fecha efectiva, los hechos, el trato preferencial y la fracción del caso están pendientes. Devuelve exclusivamente JSON con {"fuente":"LCE-9 o LCE-10","cita":"oración literal","pendiente":"origen, clasificacion, acuerdo o proceso","solicitud":"¿Pregunta documental en español?"}. Si la evidencia es insuficiente, devuelve {"abstener":true,"pendiente":"acuerdo"}.\n${texts.join('\n')}\nReferencias de consulta adicional:\n${context.join('\n')}`;
 }
 
-function proposedQuestions(value) {
+export function proposedQuestions(value) {
   if (typeof value !== 'string' || value.length > 320) return '';
   const questions = value.trim().match(/¿[\p{L}\p{M} ,–-]{8,155}\?/gu);
   if (!questions || questions.length > 2 || questions.join(' ') !== value.trim().replace(/\s+/gu,' ')) return '';

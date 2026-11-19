@@ -6,7 +6,7 @@ import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'opening' | 'documents' | 'trade';
+type Task = 'opening' | 'documents' | 'trade' | `research-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
@@ -98,6 +98,12 @@ export default function IntakePilot() {
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
     finally {setActivity(null);}
   }
+  async function choosePassage(sourceId:string,part:number) {
+    const result=await api<{task:Task;status:PilotStatus}>('intake.addPassage',{sourceId,part});
+    setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
+    setLibraryOpen(false);setNotice('Pasaje añadido. Revisa el mensaje antes de enviarlo.');
+    heading.current?.focus();
+  }
   async function generate() {
     if (busy || !task || !activeTask?.preview) return;
     clearFeedback(); setRestored(''); setActivity('cloud');
@@ -141,10 +147,10 @@ export default function IntakePilot() {
   return <main className="rp-shell">
     <header className="rp-top">
       <div className="rp-brand"><img src={mark} alt=""/>Rejon<span>.AI</span></div>
-      <div className="rp-tools"><button className="rp-library-button" type="button" aria-controls="rp-law-library" aria-expanded={libraryOpen} disabled={inspecting} onClick={()=>setLibraryOpen(!libraryOpen)}><BookOpen size={16}/>{libraryOpen?'Cerrar biblioteca':'Biblioteca federal'}</button>
+      <div className="rp-tools"><button className="rp-library-button" type="button" aria-controls="rp-law-library" aria-expanded={libraryOpen} disabled={busy||editText!==null} onClick={()=>setLibraryOpen(!libraryOpen)}><BookOpen size={16}/>{libraryOpen?'Cerrar biblioteca':'Biblioteca federal'}</button>
       <span className="rp-local"><Monitor size={15}/> Espacio local</span></div>
     </header>
-    <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<PublicLibrary/>}</div>
+    <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
       <aside className="rp-context">
         <div className="rp-image"><img src="/brand/lex-cover.webp" alt=""/></div>

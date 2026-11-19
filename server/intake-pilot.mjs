@@ -1,3 +1,4 @@
+import {loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
 import {getPilotTradeScenario} from './pilot-trade-scenario.mjs';
@@ -62,16 +63,18 @@ export function createIntakeGenerator({
   enabled:true,getApiKey,fetchImpl,model:'gpt-6-luna',
   maxCalls:3,maxOutputTokens:320,maxTotalTokens:4000,reasoningEffort:'none',
  });
- const gate=createEgressPolicy({
+ const gateFor=approvedResearch=>createEgressPolicy({
   destinations:{[destination]:provider},
-  getPolicy:()=>({version:'intake-v1',grants:[{scope,destination,allowedCategories:['synthetic']}]}),
+  getPolicy:()=>({version:'intake-v1',grants:[{scope,destination,allowedCategories:['synthetic','public']}]}),
   classify:({serialized,scope,destination,policyVersion})=>{
-   const exact=allowedEnvelopes.has(serialized);
-   return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:'synthetic'};
+   const isResearch=approvedResearch===serialized;
+   const exact=isResearch || allowedEnvelopes.has(serialized);
+   return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:isResearch?'public':'synthetic'};
   },
  });
- return async (task,{signal,documentKind,articles,scenarioId}={}) => {
-  const envelope=envelopeFor(task,documentKind,articles,scenarioId);
+ return async (task,{signal,documentKind,articles,scenarioId,research}={}) => {
+  const envelope=research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+  const gate=gateFor(research ? canonicalJson(envelope) : null);
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   let answer='';
@@ -97,13 +100,25 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   if (entry.workspaceId!==intake.workspaceId) throw new Error('El asunto no corresponde al piloto.');
   return {firm,entry,intake};
  };
+ const sourceFor = selection => loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
+ const noteFor = (intake,task) => {
+  const selection=intake?.research?.[task];
+  return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection) : null;
+ };
  const status = () => {
   const saved=current();
   return {
    saved:Boolean(saved),
    drafts:saved?.intake.drafts??{},
    editedTasks:saved?.intake.editedTasks??[],
-   tasks:Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]})),
+   tasks:Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]})).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
+    const archived=saved.intake.researchHistory?.[id];
+    if (archived) return {id,...archived};
+    try {
+     const note=sourceFor(selection);
+     return {id,title:note.title,preview:note.prompt,references:[note.ref]};
+    } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
+   })),
   };
  };
 
@@ -112,6 +127,21 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    case 'intake.status':
     exactFields(payload,[]);
     return status();
+   case 'intake.readPassage':
+   case 'intake.addPassage': {
+    exactFields(payload,['sourceId','part']);
+    if (typeof payload.sourceId!=='string') throw Error('Fuente inválida.');
+    const saved=current();
+    if (!saved) throw Error('Abre primero un expediente.');
+    const note=sourceFor(payload);
+    if (action==='intake.readPassage') return {text:note.ref.text,part:note.part,count:note.count};
+    const {intake}=saved;
+    if (!Object.hasOwn(intake.research??{},note.task)) {
+     if (Object.keys(intake.research??{}).length>=48) throw Error('El expediente admite 48 pasajes de trabajo.');
+     store.put('intake-pilot',{...intake,research:{...intake.research,[note.task]:{sourceId:payload.sourceId,part:payload.part}}});
+    }
+    return {task:note.task,status:status()};
+   }
    case 'intake.save': {
     const hasKind = payload && Object.hasOwn(payload,'documentKind');
     const fields = ['firm','client','title','jurisdiction'];
@@ -142,21 +172,24 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    case 'intake.draft': {
     exactFields(payload,['task']);
     const {task}=payload;
-    if (typeof task!=='string' || !Object.hasOwn(tasks,task)) throw new Error('Selecciona una tarea del piloto.');
     const saved=current();
+    const known=typeof task==='string' && (Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task));
+    if (!known) throw new Error('Selecciona una tarea del piloto.');
     if (!saved) throw new Error('Completa primero el alta del cliente.');
     if (Object.hasOwn(saved.intake.drafts,task)) return status();
     if (pending) throw new Error('Hay un borrador en preparación.');
     pending=true;
     try {
      if (task==='trade' && !articles) throw new Error('La edición de los artículos necesita una revisión.');
-     const raw=await generate(task,{signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
-     const answer=draftText(task==='trade'?renderTradeDraft(raw,articles):raw);
+     const research=noteFor(saved.intake,task);
+     const raw=await generate(task,{research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
+     const answer=draftText(research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw);
      signal?.throwIfAborted();
      store.transaction(()=>{
       const {intake}=current();
       if (intake.id!==saved.intake.id) throw new Error('Cambió el asunto del piloto.');
-      store.put('intake-pilot',{...intake,drafts:{...intake.drafts,[task]:answer}});
+      const snapshot=research ? {researchHistory:{...intake.researchHistory,[task]:{title:research.title,preview:research.prompt,references:[research.ref]}}} : {};
+      store.put('intake-pilot',{...intake,...snapshot,drafts:{...intake.drafts,[task]:answer}});
       store.audit('intake.cloud.draft',intake.matterId);
      });
      return status();
@@ -165,7 +198,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    case 'intake.edit': {
     exactFields(payload,['task','text']);
     const {task,text}=payload;
-    if (typeof task!=='string' || !Object.hasOwn(tasks,task)) throw new Error('Tarea inválida.');
+    if (typeof task!=='string') throw new Error('Tarea inválida.');
     return store.transaction(()=>{
      const saved=current();
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
@@ -183,7 +216,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     exactFields(payload,hasFormat?['task','format']:['task']);
     const {task}=payload;
     const saved=current();
-    if (typeof task!=='string' || !Object.hasOwn(tasks,task) || !saved || !Object.hasOwn(saved.intake.drafts,task)) {
+    if (typeof task!=='string' || !saved || !Object.hasOwn(saved.intake.drafts,task)) {
      throw new Error('Genera primero un borrador para exportar.');
     }
     const {firm,entry,intake}=saved;
@@ -192,10 +225,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const hasSupplier=task==='trade' && intake.scenarioId==='factura-origen-v1' && intake.supplier;
     const restored=hasSupplier?draft+'\n\nProveedor registrado: '+intake.supplier:draft;
     if (action==='intake.preview') return {text:restored};
-    const citations=task==='trade'?tradeReferences.map(ref=>({...ref,
+    const storedNote=intake.researchHistory?.[task];
+    const references=storedNote?.references??(task==='trade'?tradeReferences:[]);
+    const citations=references.map(ref=>({...ref,
      title:`${ref.id} · ${ref.title}`,version:ref.locator,retrievedAt:ref.checkedOn,status:'Referencia de consulta, aplicación al asunto pendiente de revisión',
-    })):[];
-    const answer={question:tasks[task].title,text:restored,citations,createdAt:new Date().toISOString()};
+    }));
+    const answer={question:storedNote?.title??tasks[task].title,text:restored,citations,createdAt:new Date().toISOString()};
     const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer});
     store.audit('intake.local.export',entry.id);
     return file;

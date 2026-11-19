@@ -1,0 +1,70 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {access,mkdtemp,rm} from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import mammoth from 'mammoth';
+import {openPublicLibrary} from '../server/public-library.mjs';
+import {loadResearchPassage,renderResearchNote} from '../server/corpus/intake-research.mjs';
+import {createIntakeGenerator} from '../server/intake-pilot.mjs';
+import {startServer} from '../server/main.mjs';
+
+test('an unverified library or constructed prompt cannot authorize a research request',async()=>{
+ const forged={status(){return {indexSha256:'ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588'};}};
+ assert.throws(()=>loadResearchPassage(forged,'PUB-'+'a'.repeat(64),0),/verificada/);
+ let requests=0;
+ const generate=createIntakeGenerator({getApiKey:async()=>{throw Error();},fetchImpl:()=>{requests++;}});
+ await assert.rejects(generate('opening',{research:{prompt:'Un dato privado'}}),/procedencia/);
+ assert.equal(requests,0);
+});
+
+test('a selected public passage reaches the provider and survives export and an offline reopen',async t=>{
+ const index=path.resolve('resources/public-library.sqlite');
+ try {await access(index);} catch {t.skip('Se requiere el índice federal del paquete');return;}
+ const dir=await mkdtemp(path.join(os.tmpdir(),'rejon-passage-'));
+ const library=await openPublicLibrary(index);
+ const first=library.lookupArticle({lawId:'MX-FED-LCE',articleId:'23'});
+ const other=library.lookupArticle({lawId:'MX-FED-LCE',articleId:'28'});
+ const note=loadResearchPassage(library,first.id,0);
+ const another=loadResearchPassage(library,other.id,0);
+ assert.notEqual(note.prompt,another.prompt);
+ assert.throws(()=>loadResearchPassage(library,first.id,999));
+ assert.match(renderResearchNote('{"cita":"Texto inventado que supera los veinticuatro caracteres"}',note),/Fundamento pendiente/);
+ const longest=library.search({query:'Secretaría',lawId:'MX-FED-LCE'}).sources.find(row=>row.textLength>1600);
+ assert.ok(longest);
+ const second=loadResearchPassage(library,longest.id,1);
+ assert.ok(second.count>1 && longest.text.includes(second.ref.text));
+ library.close();
+ const quote=note.ref.text.slice(0,100).trim();
+ const sent=[];
+ const generate=createIntakeGenerator({getApiKey:async()=>'sk-'+'x'.repeat(32),fetchImpl:async(_url,options)=>{
+   sent.push(JSON.parse(options.body));
+   return Response.json({choices:[{finish_reason:'stop',message:{content:JSON.stringify({cita:quote,solicitud:'¿Qué documento identifica la mercancía de la operación?'})}}]});
+ }});
+ let app=await startServer({intakePilot:true,intakeGenerate:generate,dataDir:dir,autoInitialize:false,libraryPath:index});
+ t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});
+ const dispatch=(action,payload)=>app.service.dispatch(action,payload);
+ const fields={firm:'Despacho Muestra Única',client:'Empresa Simulada Privada',title:'Archivo Local Inventado',jurisdiction:'MX-FED'};
+ await dispatch('intake.save',fields);
+ await assert.rejects(dispatch('intake.addPassage',{sourceId:first.id,part:0,text:fields.client}));
+ const selected=await dispatch('intake.addPassage',{sourceId:first.id,part:0});
+ const {task}=selected;
+ assert.equal(sent.length,0);
+ const entry=selected.status.tasks.find(row=>row.id===task);
+ assert.equal(entry.preview,note.prompt);
+ assert.ok((await dispatch('intake.addPassage',{sourceId:other.id,part:0})).status.tasks.length>selected.status.tasks.length);
+ const after=await dispatch('intake.draft',{task});
+ assert.equal(after.drafts[task].includes(quote),true);
+ assert.match(after.drafts[task],/Pregunta para revisión/);
+ assert.equal(sent[0].messages[0].content,entry.preview);
+ for(const value of [fields.firm,fields.client,fields.title]) assert.ok(!JSON.stringify(sent[0]).includes(value));
+ await app.close();
+ app=await startServer({intakePilot:true,intakeGenerate:generate,dataDir:dir,autoInitialize:false,libraryPath:path.join(dir,'absent.sqlite')});
+ const status=await dispatch('intake.status',{});
+ assert.equal(status.tasks.find(row=>row.id===task).preview,entry.preview);
+ assert.equal((await dispatch('intake.draft',{task})).drafts[task],after.drafts[task]);
+ const file=await dispatch('intake.export',{task,format:'docx'});
+ const {value}=await mammoth.extractRawText({buffer:Buffer.from(file.base64,'base64')});
+ for(const part of [fields.client,fields.title,quote,note.ref.id]) assert.ok(value.includes(part),part);
+ assert.equal(sent.length,1);
+});

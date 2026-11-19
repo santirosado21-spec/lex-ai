@@ -12,3 +12,7 @@ Descomprime el paquete en una carpeta local de cada participante. Abre **Abrir R
 El navegador se comunica con un proceso en loopback. La aplicación no publica una web ni sincroniza expedientes entre participantes. La cuota del proveedor se administra en cada cuenta. El límite de peticiones del piloto es por proceso, no por organización.
 
 Cada generación completada guarda un recibo local en `uso-openai.jsonl` dentro del ejercicio con la cuenta seleccionada, modelo y tokens reportados. La factura y los intentos rechazados se consultan en el proveedor.
+
+### Investigar otro artículo
+
+Una vez guardado un expediente, abre **Biblioteca federal**. Para probar una pregunta sobre cupos, escribe «cupo», elige la Ley de Comercio Exterior y abre el artículo 23. Para investigar otra operación, cambia los términos y elige el artículo que el abogado considere pertinente. En «Usar en el expediente» puedes leer y seleccionar un pasaje, incluso en artículos extensos. Pulsa **Preparar nota con este pasaje** y revisa el texto antes de generar. La búsqueda se queda en el equipo. El servidor compone el mensaje con el pasaje público y su edición. La nota guarda la referencia utilizada y se puede volver a abrir, editar y exportar. Revisa el artículo completo, sus transitorios y la fecha de aplicación.

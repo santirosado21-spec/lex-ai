@@ -117,3 +117,6 @@
 .rp-shell .rp-citation summary{padding:6px 0;font-size:13px}
 .rp-citation blockquote{margin:6px 0 10px;border-left:2px solid #ae9a78;padding:0 11px;white-space:pre-wrap;overflow-wrap:anywhere;font:400 17px/1.45 'Newsreader',Georgia,serif}
 .rp-citation small{overflow-wrap:anywhere;color:var(--rp-muted);font-size:11px}
+
+.rp-source-picker { display: grid; gap: .65rem; padding-block-end: 1rem; margin-block-end: 1rem; border-bottom: 1px solid var(--border); }
+.rp-source-picker p { overflow-wrap: anywhere; }
