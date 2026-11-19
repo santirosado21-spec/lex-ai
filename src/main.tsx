@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import IntakePilot from './IntakePilot';
 import '@fontsource/schibsted-grotesk/400.css';
 import '@fontsource/schibsted-grotesk/500.css';
 import '@fontsource/schibsted-grotesk/600.css';
@@ -11,4 +12,5 @@ import './styles.css';
 import './tailwind.css';
 import './macos.css';
 import './design-system.css';
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>);
+const pilot = new URLSearchParams(window.location.hash.slice(1)).get('pilot') === 'intake';
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode>{pilot?<IntakePilot/>:<App/>}</React.StrictMode>);

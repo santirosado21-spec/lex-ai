@@ -1,3 +1,4 @@
+import {createIntakeGenerator,createIntakePilot} from './intake-pilot.mjs';
 import {registerTimeBilling} from './time-billing.mjs';
 import jurisdictions from '../resources/mexico-jurisdictions.json' with {type:'json'};
 import {buildGroundedSchema,validateGroundedOutput} from './grounded-output.mjs';
@@ -58,7 +59,7 @@ function isFollowUpQuestion(value) {
   return /^(?:y|tambien|entonces|sobre lo anterior|respecto de lo anterior|el articulo anterior|esa|ese|esto|aquello)\b/.test(compact);
 }
 
-export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City'}) {
+export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City',intakePilot=false,intakeGenerate}) {
   const store=createStore(dataDir);
   const stt=injectedStt||createStt({dataDir});
   let corpus=[];
@@ -246,6 +247,12 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   function matterFields(p,allowed){
     if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>!allowed.includes(key)))throw new Error('Campo de asunto no admitido.');
   }
+  function createWorkspace(p){
+    if(workspace())throw new Error('Este almacenamiento ya pertenece a un despacho. No se puede reemplazar.');
+    const name=text(p.name,'Nombre',120);
+    if(!Array.isArray(p.practiceAreas)||!p.practiceAreas.length||p.practiceAreas.length>20||p.practiceAreas.some(a=>typeof a!=='string'||a.length<1||a.length>60))throw new Error('Selecciona entre 1 y 20 áreas de práctica.');
+    return record('workspace',{name,practiceAreas:[...new Set(p.practiceAreas)]});
+  }
   function createMatter(p){
     matterFields(p,['title','client','jurisdiction','counterparties']);
     const w=requireWorkspace();
@@ -389,7 +396,14 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   }
 
   const timeBilling=registerTimeBilling({requireWorkspace,matter,listMatters,clock:plannerNow},store);
-  async function dispatch(action,p={}) {
+  const intake=intakePilot
+    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,generate:intakeGenerate??createIntakeGenerator()})
+    :null;
+  async function dispatch(action,p={},{signal}={}) {
+    if(typeof action==='string'&&action.startsWith('intake.')){
+      if(!intake)throw new Error('El piloto de alta está desactivado.');
+      return intake(action,p,{signal});
+    }
     if(!p||typeof p!=='object'||Array.isArray(p))throw new Error('Parámetros inválidos.');
     if(typeof action==='string'&&/^(?:time|billing|resolution|statistics)\./.test(action))return timeBilling.dispatch(action,p);
     if(typeof action==='string'&&action.startsWith('agent.'))return agentDispatch(action,p);
@@ -439,12 +453,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       case 'planner.propose': {
         return plannerPropose(p);
       }
-      case 'workspace.create': {
-        if(workspace())throw new Error('Este almacenamiento ya pertenece a un despacho. No se puede reemplazar.');
-        const name=text(p.name,'Nombre',120);
-        if(!Array.isArray(p.practiceAreas)||!p.practiceAreas.length||p.practiceAreas.length>20||p.practiceAreas.some(a=>typeof a!=='string'||a.length<1||a.length>60))throw new Error('Selecciona entre 1 y 20 áreas de práctica.');
-        return record('workspace',{name,practiceAreas:[...new Set(p.practiceAreas)]});
-      }
+      case 'workspace.create': return createWorkspace(p);
       case 'matter.create': {
         return createMatter(p);
       }

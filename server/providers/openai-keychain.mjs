@@ -28,8 +28,8 @@ function run(execFileImpl, file, args, {input, timeout = 5000} = {}) {
  });
 }
 
-export function createOpenAiKeychain({enabled = false, platform = process.platform, execFileImpl = execFile} = {}) {
- if (typeof enabled !== 'boolean' || typeof platform !== 'string' || typeof execFileImpl !== 'function') throw failure('invalid_configuration');
+export function createOpenAiKeychain({enabled = false, platform = process.platform, execFileImpl = execFile, slot = 'primary'} = {}) {
+ if (!['primary','lorenzo'].includes(slot) || typeof enabled !== 'boolean' || typeof platform !== 'string' || typeof execFileImpl !== 'function') throw failure('invalid_configuration');
  let busy = false;
  const guard = async work => {
   if (!enabled) throw failure('disabled');
@@ -38,7 +38,8 @@ export function createOpenAiKeychain({enabled = false, platform = process.platfo
   busy = true;
   try { return await work(); } finally { busy = false; }
  };
- const {service, account} = OPENAI_PRODUCT_KEYCHAIN;
+ const {service} = OPENAI_PRODUCT_KEYCHAIN;
+ const account = slot === 'primary' ? OPENAI_PRODUCT_KEYCHAIN.account : 'product-api-key-lorenzo';
  return Object.freeze({
   status() { return {state:!enabled ? 'disabled' : platform !== 'darwin' ? 'unsupported' : 'configured'}; },
   getApiKey() {

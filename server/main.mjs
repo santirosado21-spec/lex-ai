@@ -9,6 +9,7 @@ import { createService } from './service.mjs';
 import { createInference } from './inference.mjs';
 import { createOpenAIInference } from './inference-openai.mjs';
 import { createGenerationGateway } from './generation-gateway.mjs';
+import {inspectLocalDocument} from './intake-import.mjs';
 import { createCloudDemo } from './cloud-demo.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
@@ -17,7 +18,7 @@ import { createLocalFileOpener } from './local-files.mjs';
 import { createOfficeBridge } from './office-bridge.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
-export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),intakePilot=false,intakeGenerate,autoInitialize=process.env.LEX_DESKTOP==='1',libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
@@ -26,7 +27,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  // H4: every product generation goes through the gateway. Remote destinations
  // stay disabled by default; the local route is a pure passthrough.
  inference = createGenerationGateway({local: inference});
- try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile});}catch(e){publicLibrary?.close();throw e;}
+ try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,intakeGenerate});}catch(e){publicLibrary?.close();throw e;}
  let officeBridge=null, officeStarting=null;
  async function enableOffice() {
   if (officeBridge) return officeBridge;
@@ -67,6 +68,10 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     let count=0;const chunks=[];for await(const b of req){count+=b.length;if(count>MAX_BODY){json(res,413,{error:'El archivo supera el límite.'});return;}chunks.push(b);}
     let body;try{body=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{json(res,400,{error:'JSON inválido.'});return;}
     if(!body||typeof body!=='object'||Array.isArray(body)){json(res,400,{error:'Solicitud inválida.'});return;}
+    if(intakePilot && (pathname!=='/api' || typeof body.action!=='string' ||
+       !(body.action.startsWith('intake.') || body.action.startsWith('library.') || body.action==='state'))) {
+     json(res,403,{error:'Esta operación pertenece al espacio de trabajo completo.'});return;
+    }
     if(pathname==='/analyze'){
      const analysisAbort=new AbortController();res.once('close',()=>{if(!res.writableEnded)analysisAbort.abort();});
      res.writeHead(200,{'Content-Type':'application/x-ndjson; charset=utf-8'});
@@ -85,6 +90,16 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
      const controller=new AbortController();
      res.once('close',()=>{if(!res.writableEnded)controller.abort();});
      result=await cloudDemo({signal:controller.signal});
+    }
+    else if(intakePilot&&typeof body.action==='string'&&body.action.startsWith('intake.')){
+     if(Object.keys(body).some(key=>key!=='action'&&key!=='payload')){
+      json(res,400,{error:'Campos del piloto inválidos.'});return;
+     }
+     const controller=new AbortController();
+     res.once('close',()=>{if(!res.writableEnded)controller.abort();});
+     result=body.action==='intake.inspectLocal'
+      ? await inspectLocalDocument(body.payload,{signal:controller.signal})
+      : await service.dispatch(body.action,body.payload,{signal:controller.signal});
     }
     else if(body.action==='office.pair' || body.action==='office.revoke'){
      const {matterId,tenant}=body.payload||{};

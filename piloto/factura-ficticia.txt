@@ -1,0 +1,5 @@
+Factura ficticia para el piloto de Rejon.AI
+Cliente: Comercial Brújula Ficticia
+Asunto: Importación de piezas
+Proveedor: Taller Modelo Ficticio
+La empresa pide revisar qué documentación falta para analizar el origen preferencial. La factura no acredita por sí sola el origen de las piezas.

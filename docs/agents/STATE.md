@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-11 07:31 por codex: OpenAI API de desarrollo conectada
+**Última actualización:** 2026-11-19 10:44 por codex: Piloto privado de comercio exterior probado
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- 19/11/2026. Piloto privado de comercio en la rama local `local/comercio-piloto-20261119`. Una factura sintética pasó por Ollama y una llamada real a OpenAI. Se restituyeron cliente, asunto y proveedor y se exportaron tres formatos Office. Informe y límites en `docs/qa/comercio-exterior-piloto-2026-11-19.md`.
 
 - **API OpenAI:** dueño informó organización Rejon.AI con USD 20 de créditos hasta 16nov y USD 100 mensuales después; saldo/fecha no comprobados en consola. Plan en `docs/orchestration/openai-api-credit-window-2026-11-10.md`. Clave completa con terminación `OAwA` autenticó GET del modelo Luna HTTP200 y una generación sintética `store:false` respondió `LISTO`: 40 entrada/6 salida/46 tokens, 2056ms, costo estimado USD0,000007, cargo real no auditado. Keychain ahora coincide con el secreto completo; TXT temporal eliminado y `--auth` del proyecto pasó. En esta máquina, la importación de 164 caracteres por stdin a `security -w` guardó sólo 128; ítem truncado y duplicado retirados. Las anteriores HTTP401 no produjeron generaciones; este mecanismo de truncamiento explica la discrepancia de la importación observada. 4 pruebas dirigidas, suite1108/1108, build y revisión independiente PASS previos para el script. Los créditos API no aumentan la cuota Codex.
 - **Paquete Instinct:** `artifacts/Rejon-AI-Instinct-handoff-2026-11-10.zip` (local, ignorado por Git) contiene contexto de conversación, encargo de investigación de fuentes jurídicas públicas, cuatro capturas de UI sintética y manifiesto SHA-256. ZIP9 archivos/1.204.457B; integridad y hashes verificados. No contiene claves ni documentos de clientes según revisión de contenido y patrones básicos; no se ha enviado a Instinct ni se ha validado su informe.
@@ -39,6 +41,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Probar el mismo ejercicio ficticio en los equipos de Lorenzo y Pedro, verificar la segunda cuenta y revisar la calidad jurídica. Antes de admitir expedientes reales, validar documentos no vistos, protección del almacenamiento local y selección de fuentes por vigencia.
 
 **API OpenAI:** revisar el cargo y saldo en la consola sin suponer el monto restante. Congelar un lote S2b público/sintético sin respuestas esperadas en el prompt y comparar Luna/Sol con el mismo sobre, manteniendo el techo interno de USD20 y sin Astra rutinaria. La app privada H6 sigue condicionada por H4/H5.
 

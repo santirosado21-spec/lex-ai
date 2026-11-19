@@ -1,0 +1,88 @@
+# Rejon.AI para un despacho mexicano de comercio exterior
+
+**Corte del 19 de noviembre de 2026.** El flujo de mayor valor para probar con los socios empieza con una pregunta concreta sobre una operación, reúne evidencia del expediente y produce un memo con fuentes y una matriz editable de documentos faltantes. Una fracción, una tasa, un plazo o un beneficio fiscal requieren fecha de operación, hechos y texto aplicable. La falta de alguno debe quedar visible en la respuesta.
+
+## Qué puede consultar la instalación
+
+Localicé la base pública de 153,014,272 bytes en el proyecto original y la copié al piloto local. La huella SHA-256 coincide con el manifiesto `ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588`. SQLite pasó `quick_check`. Probé la apertura con el módulo del producto, la búsqueda por palabras de origen y mercancías y la recuperación exacta del artículo 9 de la Ley de Comercio Exterior. El corte del índice es 30/10/2026, con 303 instrumentos y 35,452 artículos. La revisión de fidelidad por muestra registrada cubrió 910 artículos. Cada conclusión de vigencia requiere revisar reformas y transitorios.
+
+El índice de consulta del espacio de trabajo y el contexto que recibe OpenAI son dos mecanismos distintos. En el piloto de alta, la tarea de comercio recibe referencias públicas acotadas de tres fuentes. Sirven para preparar una solicitud de documentos o una lista de cotejo. La investigación libre necesita seleccionar pasajes por pregunta protegida, comprobar el intervalo de aplicación, adjuntar la referencia del pasaje y verificar las citas que devuelve el modelo.
+
+## Necesidades del despacho y entregables
+
+| Trabajo del abogado | Datos que necesita localmente | Resultado y evidencia que debe poder revisar |
+|---|---|---|
+| Alta, conflictos y alcance | Partes, matrices, beneficiarios, proveedor, agente aduanal, poderes, operación y responsable | Ficha por asunto, homónimos por resolver, alcance del encargo y acceso por equipo. La app ya cuenta con asuntos, documentos y búsqueda de conflictos. |
+| Entrevista y recepción de documentos | Factura, pedimento, anexos, acuse, transporte, pagos, contratos y cronología | Índice por versión y página, discrepancias de valor, cantidad, unidad o identidad. Reconocer tablas, escaneos y anexos con cifras legibles. |
+| Clasificación y restricciones | Descripción técnica, función, material, presentación, país, fecha, régimen | Hoja de alternativas con fundamento de sección/capítulo, fracción, NICO, unidad, regulación y dato faltante. Exige cotejar filas y notas de la tarifa. [SNICE y NICO](https://www.snice.gob.mx/cs/avi/snice/ligie.nico2022.html) |
+| Origen y preferencia | Tratado invocado, clasificación, lista y origen de insumos, proceso, costos y certificación | Matriz por producto que muestre el requisito específico y qué hecho lo acredita. Consultar capítulos, anexos, excepciones y reglamentaciones uniformes. [T-MEC](https://www.gob.mx/t-mec/acciones-y-programas/textos-finales-del-tratado-entre-mexico-estados-unidos-y-canada-t-mec-202730) |
+| Valoración y pedimento | Factura, contratos entre partes vinculadas, fletes, seguros, regalías, moneda, pagos y ajustes | Excel con concepto, moneda, supuesto, documento y celda de origen. El abogado decide la inclusión y el método. [Anexo 22 y modificaciones](https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/) |
+| Programas y permisos | Actividad, sector, autorización, domicilios, inventario, retornos y registros | Lista IMMEX/PROSEC, requisitos aplicables, evidencia por trámite y calendario sujeto a revisión. [SNICE](https://www.snice.gob.mx/cs/avi/snice/programas_de_fomento.html) · [VUCEM](https://www.ventanillaunica.gob.mx/vucem/Tramites/index.html) |
+| Auditoría, defensa y medios de impugnación | Acto íntegro, autoridad, forma de notificación, fechas, expediente, pruebas y precedentes | Cronología, matriz de hechos y pruebas, borrador Word y revisión de plazos por el responsable. Distinguir tesis aislada, jurisprudencia, precedente y criterio modificado. [ANAM](https://anam.gob.mx/glosario/) · [TFJA](https://www.tfja.gob.mx/cesmdfa/sctj/) · [Semanario Judicial](https://sjf2.scjn.gob.mx/busqueda-principal-tesis) |
+| Defensa comercial | Producto, productor/exportador, país de origen, periodo, resolución inicial/final y revisiones | Ficha de cuota, alcance y fechas con la publicación exacta. [Biblioteca jurídica SNICE](https://www.snice.gob.mx/cs/avi/snice/biblioteca.juridica.html) |
+| Contrato transfronterizo | Partes, jurisdicción, ley aplicable, entrega, transporte, pago, garantías y arbitraje | Tabla bilingüe de cláusulas, cambios propuestos y riesgo residual. Las condiciones comerciales privadas se consultan con material autorizado. |
+| Gestión y comunicación | Instrucciones del cliente, responsables, aprobaciones, presupuesto y tiempos | Historial de versiones, tareas con responsable, revisión del socio y resumen ejecutivo en PowerPoint. La decisión y firma corresponden al abogado. |
+
+Para otras materias mexicanas se conserva la misma secuencia de expediente, fuentes, borrador y revisión. Civil, mercantil, laboral, fiscal, administrativo, corporativo y amparo requieren pruebas jurídicas separadas, especialmente en competencia estatal, supletoriedad, derecho transitorio y precedentes. Una consulta mal atribuida a otra entidad es un fallo aunque el número de artículo exista.
+
+## Capturas y fuentes
+
+La captura de desarrollo reutiliza la fábrica existente, sus registros oficiales y sus límites de red. Ejecuté las cinco selecciones, conservé PDF y resultados en cuarentena y repetí el proceso offline. Los registros extraídos pueden incluir referencias y transitorios. Su conteo no mide la cantidad de artículos aplicables.
+
+| Instrumento / edición capturada | Registros | SHA-256 del PDF |
+|---|---:|---|
+| [Ley Aduanera](https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf) | 420 | `43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d` |
+| [Reglamento de la Ley Aduanera](https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf) | 295 | `bcdfcd9073014aec4aefbacc01c9dd5b1f97f0da0c4556f0f506d20f12d77812` |
+| [Ley de Comercio Exterior](https://www.diputados.gob.mx/LeyesBiblio/pdf/LCE.pdf) | 126 | `3f114f47007c21b4691bad502b786b45aa5e45c1571bd56dd8ca4f5af991b459` |
+| [Reglamento de la Ley de Comercio Exterior](https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LCE.pdf) | 228 | `14d38a7a24e4d8e5093951b5e80a87f331fa3ea0be2164269573a8b9e4c291dd` |
+| [Ley de los Impuestos Generales de Importación y de Exportación](https://www.diputados.gob.mx/LeyesBiblio/pdf/LIGIE_2022.pdf) | 82 | `955510d7ea82cf42d18c72e3146f999af254c0fda5eda3f12a1fd1c10e9864ce` |
+
+Desde la carpeta del piloto se puede inspeccionar el plan y reproducir las capturas. Los PDF, huellas de configuración, metadatos de origen y segmentos están en `artifacts/public-corpus/comercio-20261119/`.
+
+```sh
+sh scripts/acquire-trade-pilot.sh --plan
+sh scripts/acquire-trade-pilot.sh --live
+sh scripts/acquire-trade-pilot.sh --offline
+```
+
+El índice empaquetable reside en `resources/public-library.sqlite` junto a su manifiesto. Los cinco documentos recién capturados están separados de ese índice. Las referencias base de la plantilla viven en `server/corpus/trade-pilot-references.mjs`. Incluyen fecha de comprobación, edición, localizador y enlace.
+
+## Brechas para la especialización
+
+1. **Tarifa y restricciones.** El PDF capturado de la LIGIE tiene 894 páginas y tablas. La búsqueda por artículos de la biblioteca congelada registra dos artículos de esa ley. Para responder por fracción se necesita una estructura por fila, unidad, cuota, vigencia y excepciones con página de origen. Validar una muestra manual que incluya unidades repetidas, cambios de fracción, filas que continúan de página y reformas. Cruzar después con NICO, NOM y regulaciones de cada dependencia. [Instrumentación SNICE](https://www.snice.gob.mx/cs/avi/snice/nuevaligie.instrumentacion.html)
+2. **Ediciones y efectos.** Conservar el PDF anterior cuando cambia una URL e identificar qué artículos o filas sustituye el decreto. El registro candidato de la Ley Aduanera ya separa una reforma publicada el 23/10/2026 con entrada en vigor el 01/01/2027. Para RGCE, enlazar regla, anexo, modificaciones, anticipadas, transitorios y fecha de la operación. [Decreto de reforma](https://www.diputados.gob.mx/LeyesBiblio/ref/ladua/LAdua_ref21_23oct26.pdf) · [Portal del SAT](https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/)
+3. **Tratados y defensa.** El T-MEC necesita anexos por producto y versiones de los textos. Para las búsquedas del SJF y del TFJA, conservar órgano, registro, época, tipo, fecha, estado y enlace oficial. La investigación del piloto localizó los portales. Siguen pendientes la vía autorizada de reuso y la ingestión de estas colecciones. [T-MEC](https://www.gob.mx/t-mec/acciones-y-programas/textos-finales-del-tratado-entre-mexico-estados-unidos-y-canada-t-mec-202730) · [TFJA](https://www.tfja.gob.mx/cesmdfa/sctj/) · [SJF](https://sjf2.scjn.gob.mx/busqueda-principal-tesis)
+4. **Prueba de calidad.** Probar con expedientes ficticios en pares que difieran en una fecha, país de origen, material o régimen. El abogado califica cada afirmación y abre el pasaje. Registrar cita incorrecta, norma fuera de vigencia, hecho inventado, pregunta de aclaración omitida y restauración cruzada entre clientes. Las ausencias de tarifa o de precedente deben ser detectables.
+5. **Privacidad profesional.** Separar identificadores directos de hechos que pueden identificar al cliente en combinación (ruta, importe, producto poco frecuente y fecha). Revisar texto, imágenes, metadatos del archivo y contexto de turnos anteriores antes del envío. Los mapas de sustitución pertenecen al asunto y la restitución requiere verificar que cada marcador corresponde al documento autorizado. Para una implantación real, el despacho debe revisar finalidades, proveedores, conservación y acceso aplicables a su tratamiento. [LFPDPPP](https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf)
+
+## Qué comparar con Luthor
+
+La referencia identificada en el historial del producto es **Luthor.mx**. Su propia descripción abarca leyes, búsqueda por artículo, jurisprudencia y trazabilidad de fecha y procedencia. Sus términos describen acceso a contenido TFJA en determinados planes. La evaluación funcional debe comparar tareas como encontrar una autoridad, abrir el texto que la respalda y reconstruir la versión aplicable. Verificar por separado normas catalogadas, instrumentos con texto íntegro, artículos con citas, decisiones judiciales y calidad en casos. [Luthor](https://luthor.mx/) · [Términos de Luthor](https://luthor.mx/terminos/)
+
+La base de adquisición de Rejon parte de los textos públicos oficiales. El artículo 14, fracción VIII, de la LFDA distingue los textos oficiales de la obra original de concordancia, anotación o interpretación. Para incorporar compilaciones o contenido editorial de terceros se requiere revisar sus condiciones específicas. La evidencia de este piloto cubre las cinco capturas federales y referencias enumeradas arriba. La paridad documental o de calidad con Luthor sigue sin medirse. [Ley Federal del Derecho de Autor](https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf)
+
+## Ejercicio privado para Santiago, Lorenzo y Pedro
+
+Usar un asunto ficticio en cada equipo. El encargo es preparar la primera solicitud documental para revisar la importación a México de una bomba de agua ensamblada en Canadá. El expediente inicial solo tiene una descripción comercial. Faltan fecha del despacho, ficha técnica, valor de los insumos y certificación. Si el piloto solo admite campos estructurados, el abogado conserva estos hechos en la ficha de evaluación local.
+
+| Persona | Acción | Qué debe observar y guardar |
+|---|---|---|
+| Santiago | Dar de alta «Comercial Nopal Ficticia» y el asunto «Bomba Delta Ficticia». Seleccionar la tarea de preparación de importación y revisar la vista previa antes de generar. | Vista previa con marcadores, tarea y fuentes públicas. Registrar cualquier nombre, título, dato de archivo o identificador que aparezca. En una captura de desarrollo del sobre autorizado deben coincidir vista previa y contenido efectivo. |
+| Lorenzo | Revisar el borrador como abogado. Abrir los artículos 9 y 10 de la LCE, el Anexo 22 y los capítulos 4 y 5 del T-MEC desde sus enlaces. | Lista concreta de faltantes para descripción técnica, origen, valor y pedimento. Registrar cualquier tasa, fracción, conclusión de origen o plazo que el texto otorgue sin datos. El origen declarado en una factura por sí solo no demuestra que se cumple una regla específica. |
+| Pedro | Exportar el borrador en Word, Excel y PowerPoint. Abrir cada archivo, editar una línea o celda y comprobar la identidad restaurada contra el alta local. | Tres archivos legibles y editables, sin marcadores residuales ni datos de otro asunto. Conservar una captura por formato y anotar cualquier diferencia entre el borrador y la exportación. |
+
+**Control temporal.** Para comparar una operación ficticia del 31/12/2026 con otra del 02/01/2027, el revisor debe poder identificar en qué fecha entra en vigor el decreto aduanero del 23/10/2026. El primer transitorio fija el 01/01/2027. La plantilla de solicitud documental no contiene el articulado comparado. Si un borrador pretende resolver ambos casos usando solo las referencias del piloto, registrar la afirmación como carente de respaldo. [Decreto de reforma](https://www.diputados.gob.mx/LeyesBiblio/ref/ladua/LAdua_ref21_23oct26.pdf)
+
+**Control de adquisición.** Las huellas de la tabla identifican las versiones capturadas el 19/11. Una corrida posterior con `--live` puede conservar una versión anterior o recibir bytes distintos de la misma URL. El recolector guarda las dos versiones bajo sus respectivas huellas y genera evidencia para cada una. Comparar la nueva captura con la tabla, revisar reformas, transitorios, cambios editoriales y condiciones del canal antes de actualizar referencias de producto. `--offline` usa la versión almacenada que el manifiesto local selecciona y verifica integridad. Para reconstruir exactamente este corte, conservar una copia del directorio de cuarentena de esta fecha con sus manifiestos y archivos. El permiso técnico para esta captura acotada quedó registrado por fuente. La revisión del conjunto para redistribución comercial y la validación de vigencia por un abogado siguen pendientes.
+
+## Qué se puede probar en esta entrega
+
+| Paso | Implementación y evidencia | Límite de la prueba |
+|---|---|---|
+| Expediente | El producto base incluye vistas de asuntos, conflictos, documentos, tareas, tiempos, correo y aprobaciones. El lanzador lleva a un espacio de prueba por persona y ejercicio. | Los perfiles son carpetas locales dentro de una cuenta del sistema. La colaboración simultánea y los permisos entre abogados requieren otra prueba. |
+| Entrada local | Ollama lee texto extraído en el equipo y propone datos de alta. El usuario corrige y guarda. La factura incluida activa tres sustituciones y una descripción pública fija de la operación. | En otro archivo la ruta conserva el texto libre local y admite sólo la clase documental para el contexto de comercio. Faltan casos nuevos con texto libre, tablas, escaneos, domicilios, RFC y combinaciones que permitan reidentificar. |
+| Trabajo en la nube | La interfaz permite leer el mensaje exacto antes de generar. Un control independiente acepta únicamente los mensajes previstos. En una llamada real la solicitud contenía el marcador de proveedor y la referencia LCE-10. El control comprobó la ausencia de despacho, cliente, título y proveedor originales. El modelo devolvió un fundamento verificable y una pregunta documental. | Recibo del ejercicio: 847 tokens de entrada, 101 de salida. La prueba de una factura acredita ese recorrido. No mide precisión jurídica en asuntos nuevos. |
+| Restitución y edición | El código local sustituye los marcadores por los valores guardados. El abogado puede editar antes de exportar. El libro Excel añade una hoja «Control documental» con siete comprobaciones, estado, responsable y referencia al expediente. Word y PowerPoint conservan borrador y fuentes. | Se abrieron los tres formatos con LibreOffice. Falta comprobarlos con Microsoft Office en los equipos de los socios. El almacenamiento de ensayo en SQLite conserva los valores recuperables en claro. |
+| Interfaz y distribución | El navegador carga recursos locales, adapta la interfaz al ancho y respeta la preferencia de movimiento reducido. Durante el recorrido integrado el navegador sólo habló con el proceso local. El servidor realizó la llamada autorizada a OpenAI. | Se ejecutó en macOS. Windows, los equipos de Lorenzo y Pedro y una máquina física con 8 GB siguen pendientes de aceptación. La clave de Lorenzo se configura por separado. |
+
+**Secuencia para llegar a expedientes reales.** Primero, evaluar detección y restitución sobre documentos sintéticos que el sistema nunca haya visto, incluidos escaneos y pistas indirectas. Medir tanto filtraciones como pérdida de hechos jurídicamente relevantes. Segundo, proteger la base local y probar aislamiento entre asuntos y usuarios, recuperación y borrado. Tercero, conectar la pregunta protegida con pasajes recuperados por fecha y jurisdicción y devolver citas comprobables. Cuarto, pedir a los abogados que califiquen las respuestas y abran los archivos en sus equipos antes de admitir material de clientes.
