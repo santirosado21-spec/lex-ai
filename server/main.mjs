@@ -1,3 +1,4 @@
+import {pedimentoAttachment} from './corpus/pedimento-index.mjs';
 import {nicoAttachment} from './corpus/nico-index.mjs';
 import http from 'node:http';
 import {tariffPdf,tariffPdfPath} from './corpus/tariff-index.mjs';
@@ -128,7 +129,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     res.end(bytes);return;
    }
    if(intakePilot&&pathname.startsWith('/fuentes/')){
-    const attachment=nicoAttachment(pathname);
+    const attachment=nicoAttachment(pathname)??pedimentoAttachment(pathname);
     if(attachment){
      res.writeHead(200,{'Content-Type':attachment.type,'Content-Length':attachment.bytes.length,
       ...(attachment.name?{'Content-Disposition':'attachment; filename="'+attachment.name+'"'}:{})});

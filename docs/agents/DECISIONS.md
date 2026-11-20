@@ -177,3 +177,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 20:34 — codex — Conservar en el equipo la evidencia documental de archivos propios
 
 **Por qué:** Los dos ejercicios verificados pueden enviar líneas elegidas con alias temporales. Los 26 documentos independientes del catálogo dieron 19 de 20 indicios cubiertos y 31 de 32 afirmaciones íntegras. El abogado puede conservar como soporte cualquier línea de sus archivos con referencia local. La ampliación de la salida a expedientes reales sigue pendiente de validación.
+
+## 2026-11-19 20:51 — codex — Seleccionar el periodo del trámite en el equipo a partir de alternativas públicas
+
+**Por qué:** La primera generación pidió comprobar una declaración anterior al hito aplicable. El proveedor recibe las fuentes y las cuatro opciones de redacción; la fecha y la clasificación de la operación permanecen locales. El expediente conserva la lectura temporal para exportarla tras reabrir.

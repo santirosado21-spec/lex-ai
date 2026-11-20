@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 20:36 por codex: Inventario del SAT para el Anexo 22 de comercio exterior
+**Última actualización:** 2026-11-19 20:51 por codex: Rejon r18 coteja las claves del pedimento y conserva el periodo correcto en Office
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r18 integra el apéndice 9 del Anexo 22 en el piloto local. Se cotejaron las 39 descripciones y su página física con dos extractores. Se capturaron las fechas de captura y declaración de aluminio y azúcar y las tablas de 47 y 12 pares de fracción y NICO. En la segunda de dos llamadas reales, OpenAI redactó las opciones por periodo y el equipo eligió la de captura para el 21 de mayo. La prueba verificó tres exportaciones, cuatro anchos, movimiento reducido, reapertura del expediente y el ZIP en este Mac. Suite JS con 1442 aprobadas y 10 omitidas. Evidencia en `artifacts/pedimento-r18/`.
 
 - Catálogo de ediciones del Anexo 22 para investigación. Se extrajeron ocho enlaces oficiales del SAT y se capturaron los tres PDF publicados. El inventario conserva huellas y páginas (133, 1 y 9). La resolución del régimen transitorio y la conexión de estas ediciones a la interfaz siguen abiertas. Ver `docs/research/sat-anexo22-2026-11-19.md`.
 
@@ -76,7 +78,9 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Evaluar en documentos nuevos los indicios formados por oficina, turno y otras circunstancias compartidas. Recoger un juicio independiente de abogados sobre hechos jurídicos ocultos y riesgo de reidentificación. Para ampliar el corpus de pedimentos, reconciliar la edición, las modificaciones y los transitorios del Anexo 22 del SAT con las publicaciones del DOF antes de presentar resultados por fecha de operación.
+- Conectar la pregunta libre del abogado con fuentes por fecha, autoridad y mercancía. Medir en expedientes ficticios inéditos si la protección local preserva los hechos y las relaciones entre partes necesarios para una conversación de varias vueltas. Revisar la respuesta frente a los documentos con un abogado independiente. Para los equipos de los socios y la segunda cuenta real sigue pendiente la prueba física.
+
+- Evaluar en documentos nuevos los indicios formados por oficina, turno y otras circunstancias compartidas. Recoger un juicio independiente de abogados sobre hechos jurídicos ocultos y riesgo de reidentificación. Para continuar el corpus de pedimentos, cotejar los transitorios de otros apéndices y probar con nuevas operaciones el alcance de las claves del apéndice 9.
 
 - Evaluar con Lorenzo y Pedro si pueden resolver o dejar pendiente una discrepancia realista usando los dos originales ficticios, la fecha de la operación y la cita. Validar cobertura de identificadores indirectos en documentos independientes y los equipos de 8 GB antes de ampliar a asuntos de clientes.
 

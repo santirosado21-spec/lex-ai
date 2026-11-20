@@ -1,0 +1,95 @@
+{
+  "sourceSha256": "f2dbfd11f5bf417955969124dbea329698ca256c518aedb54e5507be10e6692c",
+  "fractions": {
+    "1701.12.05": {
+      "description": "De remolacha.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización igual o superior a 99.2 pero inferior a 99.5 grados.",
+          "scope": ""
+        },
+        "02": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización inferior a 99.2 grados.",
+          "scope": ""
+        }
+      }
+    },
+    "1701.13.01": {
+      "description": "Azúcar de caña mencionado en la Nota 2 de subpartida de este Capítulo.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Azúcar de caña mencionado en la Nota 2 de subpartida de este Capítulo.",
+          "scope": ""
+        }
+      }
+    },
+    "1701.14.91": {
+      "description": "Los demás azúcares de caña.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización igual o superior a 99.2 pero inferior a 99.5 grados.",
+          "scope": ""
+        },
+        "02": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización inferior a 99.2 grados.",
+          "scope": ""
+        }
+      }
+    },
+    "1701.91.04": {
+      "description": "Con adición de aromatizante o colorante.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización igual o superior a 99.2 grados.",
+          "scope": ""
+        },
+        "02": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización inferior a 99.2 grados.",
+          "scope": ""
+        }
+      }
+    },
+    "1701.99.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización igual o superior a 99.5 pero inferior a 99.7 grados.",
+          "scope": ""
+        },
+        "02": {
+          "description": "Azúcar cuyo contenido en peso de sacarosa, en estado seco, tenga una polarización igual o superior a 99.7 pero inferior a 99.9 grados.",
+          "scope": ""
+        },
+        "99": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "1702.90.01": {
+      "description": "Azúcar líquida refinada y azúcar invertido.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Azúcar líquida refinada y azúcar invertido.",
+          "scope": ""
+        }
+      }
+    },
+    "2106.90.99": {
+      "description": "Las demás.",
+      "scope": "Únicamente: preparaciones alimenticias constituidas esencialmente de azúcar con productos o sustancias secundarias, tales como carbón activado o sustancias análogas o similares, que no proporcionen un carácter esencial diferente al del azúcar, posteriormente sometiéndolas o no a procesos físicos o químicos para separar o eliminar los componentes secundarios.",
+      "nicos": {
+        "99": {
+          "description": "Las demás.",
+          "scope": "Únicamente: preparaciones alimenticias constituidas esencialmente de azúcar con productos o sustancias secundarias, tales como carbón activado o sustancias análogas o similares, que no proporcionen un carácter esencial diferente al del azúcar, posteriormente sometiéndolas o no a procesos físicos o químicos para separar o eliminar los componentes secundarios."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "authorities": {
+    "SE": "Secretaría de Economía",
+    "SADER": "Secretaría de Agricultura y Desarrollo Rural",
+    "SALUD": "Secretaría de Salud",
+    "SEMARNAT": "Secretaría de Medio Ambiente y Recursos Naturales",
+    "CICOPLAFEST": "Comisión Intersecretarial para el Control del Proceso y Uso de Plaguicidas, Fertilizantes y Sustancias Tóxicas",
+    "SEDENA": "Secretaría de la Defensa Nacional",
+    "SENER": "Secretaría de Energía",
+    "INAH": "Instituto Nacional de Antropología e Historia",
+    "INBAL": "Instituto Nacional de Bellas Artes y Literatura",
+    "CAFÉ": "Consejo Nacional Mexicano del Café o los Consejos Estatales",
+    "CRT": "Consejo Regulador del Tequila",
+    "CRE": "Comisión Reguladora de Energía"
+  },
+  "editions": [
+    {
+      "date": "2026-01-15",
+      "sha256": "f0ad60bd1c7be9d2551ce2f56628178f7baf40b8638eae0ca41743bec4077ec3",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/Anexo22delasRGCEpara2026.pdf",
+      "rows": [
+        {
+          "agency": "SE",
+          "code": "CA",
+          "page": 115,
+          "text": "Certificado de cupo adicional."
+        },
+        {
+          "agency": "SE",
+          "code": "CM",
+          "page": 115,
+          "text": "Cupo medida de transición."
+        },
+        {
+          "agency": "SE",
+          "code": "CP",
+          "page": 115,
+          "text": "Certificado de cupo."
+        },
+        {
+          "agency": "SE",
+          "code": "C1",
+          "page": 115,
+          "text": "Permiso previo o permiso automático de importación definitiva, temporal para mercancías de las fracciones arancelarias comprendidas en los numerales 1, fracción I, 3, 4 y 8 BIS, del Anexo 2.2.1 “Clasificación y codificación de mercancías cuya importación y exportación está sujeta al requisito de permiso previo o aviso automático por parte de la Secretaría de Economía” del “Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones, según se especifique en cada uno de ellos y aviso de la Secretaría de Economía."
+        },
+        {
+          "agency": "SE",
+          "code": "C2",
+          "page": 115,
+          "text": "Permiso previo de importación definitiva, únicamente cuando se trata de mercancías usadas (fracciones arancelarias comprendidas en el numeral 5 salvo las excepciones señaladas en el numeral 6, ambos, del Anexo 2.2.1 “Clasificación y codificación de mercancías cuya importación y exportación está sujeta al requisito de permiso previo o aviso automático por parte de la Secretaría de Economía” del “Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones)."
+        },
+        {
+          "agency": "SE",
+          "code": "C6",
+          "page": 115,
+          "text": "Aviso automático de exportación definitiva o temporal de mercancías; permiso automático previo de exportación y aviso de la Secretaría de Economía."
+        },
+        {
+          "agency": "SE",
+          "code": "M6",
+          "page": 115,
+          "text": "Permiso previo de exportación definitiva o temporal de mercancías (fracciones arancelarias comprendidas en los numerales 7 y 7 BIS del Anexo 2.2.1 “Clasificación y codificación de mercancías cuya importación y exportación está sujeta al requisito de permiso previo o aviso automático por parte de la Secretaría de Economía” del “Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones)."
+        },
+        {
+          "agency": "SE",
+          "code": "AV",
+          "page": 115,
+          "text": "Aviso automático de la SE."
+        },
+        {
+          "agency": "SE",
+          "code": "IM",
+          "page": 115,
+          "text": "Permiso para mercancías sensibles conforme al Decreto IMMEX."
+        },
+        {
+          "agency": "SE",
+          "code": "NM",
+          "page": 115,
+          "text": "Será obligatorio declarar el número del certificado cuando la fracción arancelaria esté comprendida en el Anexo 2.4.1, numerales 1, 2, 4 y 5 del “Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones. En caso de contar con una resolución de no aplicación de la NOM en el punto de entrada al país, emitida por la autoridad competente, se deberá declarar el número de folio señalado en la misma. Cuando se opte por dar cumplimiento a las NOMs de información comercial en territorio nacional conforme a la regla 2.4.8, fracciones II y III del Acuerdo citado, se deberá declarar el número de solicitud de servicios o folio emitido por la unidad de verificación o inspección aprobada o acreditada de que se trate."
+        },
+        {
+          "agency": "SE",
+          "code": "N3",
+          "page": 115,
+          "text": "Será obligatorio declarar la clave de la NOM cuando la fracción arancelaria esté comprendida en el Anexo 2.4.1, numeral 3 del Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones."
+        },
+        {
+          "agency": "SADER",
+          "code": "A1",
+          "page": 115,
+          "text": "Certificado fitozoosanitario y Certificado de sanidad acuícola de importación."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S1",
+          "page": 116,
+          "text": "Autorización sanitaria previa de importación, para importación o autorización de internación definitiva, temporal o a depósito fiscal."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S2",
+          "page": 116,
+          "text": "Aviso sanitario de importación, para importación definitiva, temporal o a depósito fiscal."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S3",
+          "page": 116,
+          "text": "Copia del registro sanitario, para importación definitiva, temporal o a depósito fiscal."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S4",
+          "page": 116,
+          "text": "Mercancía sujeta a cumplir con los requisitos de etiquetado a la importación definitiva, temporal o depósito fiscal."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S5",
+          "page": 116,
+          "text": "Aviso previo de importación definitiva, temporal o depósito fiscal, por parte de la Secretaría de Salud."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S6",
+          "page": 116,
+          "text": "Autorización sanitaria previa de exportación, para la exportación o autorización de salida, temporal o definitiva de mercancías."
+        },
+        {
+          "agency": "SALUD",
+          "code": "S7",
+          "page": 116,
+          "text": "Aviso previo de exportación definitiva o depósito fiscal, por parte de la Secretaría de Salud."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T1",
+          "page": 116,
+          "text": "Mercancía cuya importación definitiva, temporal y depósito fiscal, está sujeta a un certificado CITES o una autorización de importación por parte de la SEMARNAT."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T2",
+          "page": 116,
+          "text": "Mercancía cuya exportación, está sujeta a una autorización de exportación o aviso de retorno por parte de la SEMARNAT otorgado por la Dirección General de Materiales, Residuos y Actividades Riesgosas."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T3",
+          "page": 116,
+          "text": "Mercancía cuya importación, está sujeta a un certificado fitosanitario o zoosanitario por parte de la SEMARNAT otorgado por la Dirección General de Vida Silvestre."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T5",
+          "page": 116,
+          "text": "Mercancía cuya importación, está sujeta a un certificado fitosanitario por parte de la SEMARNAT otorgado por la Dirección General Forestal."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T7",
+          "page": 116,
+          "text": "Mercancía cuya importación, está sujeta a una autorización de importación o aviso de retorno por parte de la SEMARNAT otorgado por la Dirección General de Materiales, Residuos y Actividades Riesgosas."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T8",
+          "page": 116,
+          "text": "Mercancía cuya exportación definitiva temporal y depósito fiscal, está sujeta a un certificado CITES o una autorización de exportación por parte de la SEMARNAT."
+        },
+        {
+          "agency": "SEMARNAT",
+          "code": "T9",
+          "page": 116,
+          "text": "Registro de verificación."
+        },
+        {
+          "agency": "CICOPLAFEST",
+          "code": "PF",
+          "page": 116,
+          "text": "Autorizaciones expedidas por COFEPRIS y SEMARNAT tratándose de importación, y en el caso de la exportación la autorización expedida por SEMARNAT."
+        },
+        {
+          "agency": "SEDENA",
+          "code": "D1",
+          "page": 116,
+          "text": "Autorización de la SEDENA para la importación y exportación de armas, municiones y materiales explosivos."
+        },
+        {
+          "agency": "SENER",
+          "code": "N1",
+          "page": 117,
+          "text": "Autorización para importación temporal o definitiva por parte de la SENER."
+        },
+        {
+          "agency": "SENER",
+          "code": "N6",
+          "page": 117,
+          "text": "Autorización previa para exportaciones temporales o definitivas por parte de la SENER."
+        },
+        {
+          "agency": "SENER",
+          "code": "C1",
+          "page": 117,
+          "text": "Permiso previo de importación y exportación de hidrocarburos y petrolíferos del “Acuerdo que establece las mercancías cuya importación y exportación está sujeta a regulación por parte de la Secretaría de Energía”, publicado en el DOF el 26 de diciembre de 2020 y sus posteriores modificaciones."
+        },
+        {
+          "agency": "SENER",
+          "code": "C6",
+          "page": 117,
+          "text": "Permiso previo de exportación de hidrocarburos y petrolíferos del “Acuerdo que establece las mercancías cuya importación y exportación está sujeta a regulación por parte de la Secretaría de Energía”, publicado en el DOF el 26 de diciembre de 2020 y sus posteriores modificaciones."
+        },
+        {
+          "agency": "INAH",
+          "code": "AH",
+          "page": 117,
+          "text": "Mercancía cuya exportación temporal o definitiva está sujeta a permiso previo."
+        },
+        {
+          "agency": "INBAL",
+          "code": "BA",
+          "page": 117,
+          "text": "Mercancías cuya exportación temporal o definitiva está sujeta a permiso previo."
+        },
+        {
+          "agency": "CAFÉ",
+          "code": "FE",
+          "page": 117,
+          "text": "Mercancía cuya exportación definitiva está sujeta a la presentación de un Certificado de Origen."
+        },
+        {
+          "agency": "CRT",
+          "code": "TQ",
+          "page": 117,
+          "text": "Mercancía cuya exportación definitiva está sujeta a la presentación de un certificado."
+        },
+        {
+          "agency": "CRE",
+          "code": "IR",
+          "page": 117,
+          "text": "Informe de resultados."
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sha256": "4edb1bdfe6db184208651eae0b1ed01e1976884dac710053092d585279c02b3d",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/1ra_modificacionAnexo22delasRGCEpara2026.pdf",
+      "rows": [
+        {
+          "agency": "SE",
+          "code": "AL",
+          "page": 1,
+          "text": "Aviso automático de importación de aluminio."
+        }
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "sha256": "7093c4ba5a6d46f2ae8f36d86cba6bea5f88a3f233382ee8a10fd8784cf61d41",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/2daModificacionAnexo22delasRGCE2026.pdf",
+      "rows": [
+        {
+          "agency": "SE",
+          "code": "C1",
+          "page": 9,
+          "text": "Permiso previo o permiso automático de importación definitiva, temporal para mercancías de las fracciones arancelarias comprendidas en los numerales 1, fracción I, 3, 4,8 BIS y 8 TER, del Anexo 2.2.1 “Clasificación y codificación de mercancías cuya importación y exportación está sujeta al requisito de permiso previo o aviso automático por parte de la Secretaría de Economía” del “Acuerdo por el que la Secretaría de Economía emite Reglas y criterios de carácter general en materia de comercio exterior”, publicado en el DOF el 09 de mayo de 2022 y sus posteriores modificaciones, según se especifique en cada uno de ellos y aviso de la Secretaría de Economía."
+        }
+      ]
+    }
+  ]
+}

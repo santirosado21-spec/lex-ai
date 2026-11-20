@@ -1,0 +1,445 @@
+{
+  "sourceSha256": "c582581ab119be5a9655dcbbb61f65a4b666a43ee161316d6311b22d42cdec84",
+  "fractions": {
+    "7601.10.02": {
+      "description": "Aluminio sin alear.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Lingotes de aluminio con pureza mínima de 99.7% de aluminio, conteniendo en peso: 0.010 a 0.025% de boro, 0.04 a 0.08% de silicio y 0.13 a 0.18% de hierro, reconocibles como destinados a la fabricación de conductores eléctricos.",
+          "scope": ""
+        },
+        "99": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7601.20.02": {
+      "description": "Aleaciones de aluminio.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "En cualquier forma, con un contenido igual o superior a: 5% de titanio y 1% de boro; o de 10% de estroncio, excepto -en ambos casos- de sección transversal circular de diámetro igual o superior a 50 mm.",
+          "scope": ""
+        },
+        "99": {
+          "description": "Las demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.10.01": {
+      "description": "Con pureza mínima de 99.5%, diámetro superior o igual a 9 mm, para la fabricación de conductores eléctricos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con pureza mínima de 99.5%, diámetro superior o igual a 9 mm, para la fabricación de conductores eléctricos.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.10.02": {
+      "description": "Perfiles.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Perfiles.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.10.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.21.01": {
+      "description": "Perfiles huecos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Perfiles huecos.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.29.01": {
+      "description": "Barras de aluminio, con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Barras de aluminio, con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.29.02": {
+      "description": "Perfiles.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Perfiles.",
+          "scope": ""
+        }
+      }
+    },
+    "7604.29.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.11.01": {
+      "description": "De aluminio con pureza superior o igual de 99.5% y diámetro superior o igual a 9 mm, para la fabricación de conductores eléctricos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "De aluminio con pureza superior o igual de 99.5% y diámetro superior o igual a 9 mm, para la fabricación de conductores eléctricos.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.11.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.19.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.21.01": {
+      "description": "Con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.21.02": {
+      "description": "De aleación 5056.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "De aleación 5056.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.21.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.29.01": {
+      "description": "Con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con un contenido de: hierro de 0.7%, silicio superior o igual al 0.4% pero inferior o igual al 0.8%, cobre superior o igual 0.15% pero inferior o igual al 0.40%, magnesio superior o igual al 0.8% pero inferior o igual al 1.2%, cromo superior o igual al 0.04% pero inferior o igual al 0.35%, además de los otros elementos, en peso.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.29.02": {
+      "description": "De la aleación A2011TD, según Norma JIS-H-4040, o sus equivalentes.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "De la aleación A2011TD, según Norma JIS-H-4040, o sus equivalentes.",
+          "scope": ""
+        }
+      }
+    },
+    "7605.29.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.11.01": {
+      "description": "Hojas o tiras o chapas en rollos, con un contenido de aluminio superior o igual al 93%, con resistencia a la tensión superior o igual a 2,812 kg/cm² y con elongación superior o igual al 1% en 5 cm de longitud, reconocibles exclusivamente para la elaboración de envases para bebidas o alimentos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Hojas o tiras o chapas en rollos, con un contenido de aluminio superior o igual al 93%, con resistencia a la tensión superior o igual a 2,812 kg/cm² y con elongación superior o igual al 1% en 5 cm de longitud, reconocibles exclusivamente para la elaboración de envases para bebidas o alimentos.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.11.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.12.01": {
+      "description": "Hojas o tiras o chapas en rollos, con un contenido de aluminio superior o igual al 93%, con resistencia a la tensión superior o igual a 2,812 kg/cm² y con elongación superior o igual al 1% en 5 cm de longitud, reconocibles exclusivamente para la elaboración de envases para bebidas o alimentos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Hojas o tiras o chapas en rollos, con un contenido de aluminio superior o igual al 93%, con resistencia a la tensión superior o igual a 2,812 kg/cm² y con elongación superior o igual al 1% en 5 cm de longitud, reconocibles exclusivamente para la elaboración de envases para bebidas o alimentos.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.12.02": {
+      "description": "Reconocibles para fuselaje de naves aéreas.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Reconocibles para fuselaje de naves aéreas.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.12.03": {
+      "description": "Anodizadas, en rollos, excepto las comprendidas en la fracción arancelaria 7606.12.01.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Anodizadas, en rollos, excepto las comprendidas en la fracción arancelaria 7606.12.01.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.12.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.91.01": {
+      "description": "Reconocibles para naves aéreas.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Reconocibles para naves aéreas.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.91.99": {
+      "description": "Las demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Las demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.92.01": {
+      "description": "Reconocibles para naves aéreas.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Reconocibles para naves aéreas.",
+          "scope": ""
+        }
+      }
+    },
+    "7606.92.99": {
+      "description": "Las demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Las demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.11.01": {
+      "description": "Simplemente laminadas.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Simplemente laminadas.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.19.01": {
+      "description": "Reconocibles para naves aéreas.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Reconocibles para naves aéreas.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.19.02": {
+      "description": "Atacadas en su superficie, reconocibles para la fabricación de condensadores electrolíticos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Atacadas en su superficie, reconocibles para la fabricación de condensadores electrolíticos.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.19.03": {
+      "description": "De espesor inferior o igual a 0.02 mm y anchura inferior a 20 mm, o en espesor inferior a 0.006 mm, en cualquier anchura, en rollos, reconocibles como diseñadas exclusivamente para condensadores eléctricos.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "De espesor inferior o igual a 0.02 mm y anchura inferior a 20 mm, o en espesor inferior a 0.006 mm, en cualquier anchura, en rollos, reconocibles como diseñadas exclusivamente para condensadores eléctricos.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.19.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7607.20.02": {
+      "description": "Con soporte.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con soporte.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.10.03": {
+      "description": "Serpentines.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Serpentines.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.10.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Con diámetro interior inferior o igual a 203.2 mm.",
+          "scope": ""
+        },
+        "99": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.20.01": {
+      "description": "Con diámetro interior inferior o igual a 203.2 mm, excepto lo comprendido en las fracciones arancelarias 7608.20.02 y 7608.20.03.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con diámetro interior inferior o igual a 203.2 mm, excepto lo comprendido en las fracciones arancelarias 7608.20.02 y 7608.20.03.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.20.02": {
+      "description": "Con diámetro interior inferior o igual a 203.2 mm, incluso con órganos de acoplamiento y compuertas laterales de descarga reconocibles como diseñados exclusivamente para sistemas de riego agrícola a flor de tierra.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Con diámetro interior inferior o igual a 203.2 mm, incluso con órganos de acoplamiento y compuertas laterales de descarga reconocibles como diseñados exclusivamente para sistemas de riego agrícola a flor de tierra.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.20.03": {
+      "description": "Serpentines.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Serpentines.",
+          "scope": ""
+        }
+      }
+    },
+    "7608.20.99": {
+      "description": "Los demás.",
+      "scope": "",
+      "nicos": {
+        "00": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7609.00.02": {
+      "description": "Accesorios de tubería (por ejemplo: empalmes (racores), codos, manguitos) de aluminio.",
+      "scope": "",
+      "nicos": {
+        "01": {
+          "description": "Reconocibles para naves aéreas.",
+          "scope": ""
+        },
+        "99": {
+          "description": "Los demás.",
+          "scope": ""
+        }
+      }
+    },
+    "7616.99.99": {
+      "description": "Las demás.",
+      "scope": "Únicamente: las demás piezas coladas o piezas forjadas.",
+      "nicos": {
+        "91": {
+          "description": "Las demás piezas coladas.",
+          "scope": ""
+        },
+        "92": {
+          "description": "Las demás piezas forjadas.",
+          "scope": ""
+        }
+      }
+    }
+  }
+}

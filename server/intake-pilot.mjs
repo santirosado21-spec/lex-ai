@@ -3,6 +3,7 @@ import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-questi
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
 import {questionCandidates} from './corpus/intake-question.mjs';
+import {searchPermits,permitNote} from './corpus/pedimento-index.mjs';
 import {searchNico,nicoRow,nicoReference,nicoEdition} from './corpus/nico-index.mjs';
 import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
 import {focusFromInstruction,isFollowupForm,quotedRanges,prepareFollowup,followupEnvelope,renderFollowup} from './corpus/intake-followup.mjs';
@@ -67,8 +68,14 @@ function exportCitations(references){
   status:'Referencia de consulta, aplicación al asunto pendiente de revisión'}));
 }
 
-function draftText(value,doc,evidence,question) {
+function localPermitControl(intake,task){
+ if(intake.permits?.[task])return intake.permits[task];
+ const follow=intake.followups?.[task];
+ return follow?.form==='control'?intake.permits?.[follow.basisTask??follow.parent]:null;
+}
+function draftText(value,doc,evidence,question,permit) {
  const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...(Array.isArray(doc)?doc:[doc]).flatMap(documentTokens).map(item=>item.token)]);
+ if(permit)allowed.add('[[COTEJO]]');
  if(question)allowed.add('[[CONSULTA]]');
  if(evidence)allowed.add('[[SOPORTE]]');
  const unrecognized=typeof value==='string' ? value.replace(/\[\[[^\[\]]+\]\]/g,token=>allowed.has(token)?'':token) : '';
@@ -220,6 +227,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
  const followupSource=(saved,parent)=>{
   const archived=saved.intake.researchHistory?.[parent]?.comparison;
   if(archived)return comparisonSource(archived.subject);
+  const permit=saved.intake.permits?.[parent];
+  if(permit){
+   const note=permitNote(permit);
+   if(note.id!==parent)throw Error('La ficha procede de otra edición del Anexo 22.');
+   return note;
+  }
   const nico=saved.intake.nicos?.[parent];
   if(nico){
    if(nico.edition!==nicoEdition)throw Error('La ficha pertenece a otra edición del NICO.');
@@ -276,7 +289,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const note=sourceFor(selection,saved);
      return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
-   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
+   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
  };
 
@@ -526,6 +539,28 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     latestReview=null;
     return savedStatus;
    }
+   case 'intake.searchPermits':
+    exactFields(payload,['query','date']);
+    return searchPermits(payload.query,payload.date);
+   case 'intake.inspectPermit':
+   case 'intake.savePermit': {
+    exactFields(payload,['code','agency','date','classification','regime']);
+    const note=permitNote(payload);
+    if(action==='intake.inspectPermit')return {stage:note.stage,detail:note.detail,references:note.references};
+    return store.transaction(()=>{
+     const saved=current();
+     if(!saved||!store.protectedRecords)throw Error('Abre un expediente cifrado para guardar la ficha.');
+     const {intake}=saved,id=note.id;
+     if(!Object.hasOwn(intake.drafts,id)){
+      const text=draftText(note.text,null,null,null,note.selection),ranges=quotedRanges(note,text);
+      store.put('intake-pilot',{...intake,permits:{...intake.permits,[id]:note.selection},drafts:{...intake.drafts,[id]:text},
+       researchHistory:{...intake.researchHistory,[id]:{title:note.title,localOnly:true,references:note.references,localReview:['Fecha de la operación · '+payload.date,note.stage,note.detail].filter(Boolean).join('\n')}},
+       followupBasis:{...intake.followupBasis,[id]:ranges}});
+      store.audit('intake.local.permit',saved.entry.id);
+     }
+     return {task:id,status:status()};
+    });
+   }
    case 'intake.searchNico':
     exactFields(payload,['query','offset']);
     return searchNico(payload.query,payload.offset);
@@ -642,7 +677,9 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(practice)text=renderProtectedCase(raw,practice);
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
-     const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task]);
+     const permit=localPermitControl(saved.intake,task);
+     if(permit)text+='\n\nCotejo local de la operación\n[[COTEJO]]';
+     const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task],permit);
      const parentSource=continuation?followupSource(saved,continuation.basisTask??continuation.parent):comparison?.packet||reading||practice||research;
      const ranges=store.protectedRecords&&parentSource?quotedRanges(parentSource,answer):[];
      signal?.throwIfAborted();
@@ -674,7 +711,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
      const basis=firstBasis(saved,task);
-     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,intake.questions?.[task])};
+     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,intake.questions?.[task],localPermitControl(intake,task))};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks,...(basis.length?{followupBasis:{...intake.followupBasis,[task]:basis}}:{})});
      store.audit('intake.local.edit',entry.id);
@@ -694,8 +731,16 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
     const evidence=intake.researchHistory?.[task]?.evidence;
     const question=intake.questions?.[task];
-    const text=draftText(intake.drafts[task],caseSources(intake).map(s=>s.document),evidence,question);
+    const permit=localPermitControl(intake,task);
+    const text=draftText(intake.drafts[task],caseSources(intake).map(s=>s.document),evidence,question,permit);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
+    if(permit&&text.includes('[[COTEJO]]')){
+     const origin=intake.followups?.[task];
+     const basis=origin?.basisTask??origin?.parent??task;
+     const archived=intake.researchHistory?.[basis]?.localReview;
+     if(typeof archived!=='string')throw Error('Falta el cotejo guardado del pedimento.');
+     originals.set('[[COTEJO]]',archived);
+    }
     if(question&&text.includes('[[CONSULTA]]'))originals.set('[[CONSULTA]]',openReviewedDocument(question,firm.id,entry.id).original);
     if(evidence)originals.set('[[SOPORTE]]',[evidence,...(evidence.additional??[])].map(row=>(row.sourceLabel?row.sourceLabel+' · ':'')+'Línea '+row.line+' del texto extraído · '+row.excerpt).join('\n'));
     if(text.includes('[[DATO_')){

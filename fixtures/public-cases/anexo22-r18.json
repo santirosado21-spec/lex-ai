@@ -1,0 +1,9 @@
+{
+  "sha256": "73ff456fe8c751646a9e10893a3c1bda2568f75302c3adbb9445e62607b30b20",
+  "response": {
+    "comun": "Revisar los documentos de la mercancía y cotejar la información usada para determinar su clasificación.",
+    "antes": "Cotejar la evidencia de la operación o de su fecha.",
+    "captura": "Verificar si el interesado presentó una solicitud y cotejar el acuse, si existe.",
+    "declaracion": "Verificar el número en el pedimento, si procede según el alcance."
+  }
+}

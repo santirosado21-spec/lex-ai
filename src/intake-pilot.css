@@ -211,3 +211,10 @@
 .rp-line-options{max-height:24rem;overflow:auto;overscroll-behavior:contain;padding-inline-end:.4rem}
 .rp-line-options label+label{border-top:1px solid var(--rp-line)}
 .rp-question-lines .rp-question-facts>label{display:grid;gap:.35rem}
+.rp-permit article>a{display:inline-flex;align-items:center;gap:.4rem;margin:.15rem .8rem .6rem 0}
+.rp-permit .rp-sheet-fields{align-items:end;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));margin:1rem 0 .75rem}
+.rp-permit .rp-sheet-fields legend{margin-bottom:.55rem}
+.rp-permit-verdict{border-left:3px solid var(--rp-line);padding:.15rem 0 .15rem 1rem;margin:1.1rem 0 .2rem}
+.rp-permit .rp-permit-timing{font-weight:600;margin:0 0 .6rem}
+.rp-permit-verdict details{margin:.75rem 0}
+.rp-permit details summary{cursor:pointer}
