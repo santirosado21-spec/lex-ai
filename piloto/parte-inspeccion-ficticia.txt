@@ -1,0 +1,4 @@
+Factura: VQA-70246
+Parte de servicio para TRQ-64021.
+El taller ajustó el medidor y no cambió el sensor.
+El repartidor dejó el embalaje donde los vecinos cuelgan espirales de esparto cada jueves.

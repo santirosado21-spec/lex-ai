@@ -5,7 +5,7 @@ import {requestedLegalJurisdiction} from '../assistant-router.mjs';
 // Candidate lookup runs on the device. Only source identifiers and a closed
 // set of research angles are used to reconstruct a question at the cloud boundary.
 import {mentionedConcepts,selectedConcepts} from './question-concepts.mjs';
-import {customsPassage,hasCustomsPassage} from './customs-edition.mjs';
+import {customsPassage,hasCustomsPassage,regulationLawId,regulationPassage} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
 import {loadTradeReading,suggestTradeReadings} from './intake-trade-reading.mjs';
 
@@ -18,10 +18,11 @@ function rank(text,terms){
  const tokens=new Set(normalize(text).match(/\p{L}+/gu));
  return terms.reduce((score,term)=>score+(tokens.has(term)?1:0),0);
 }
-export function questionCandidates(library,original,parts,reference=null){
+export function questionCandidates(library,original,parts,reference=null,context=null){
  const candidates=new Map();
  const visible=parts.map(p=>p.label?' ':p.text).join('');
- const terms=words(visible),localTerms=words(original),concepts=mentionedConcepts(original);
+ const working=context?.manual?[original,...context.lines.map(line=>line.text)].join(' '):original;
+ const terms=words(context?.manual?working:visible),localTerms=words(working),concepts=mentionedConcepts(working);
  const focus=concepts.map(c=>c.id);
  const display=(source,part,ref,text,score,partial=false,section='')=>{
   const key=source+'/'+part;
@@ -38,9 +39,9 @@ export function questionCandidates(library,original,parts,reference=null){
   }
   display(source,best.part,best.ref,best.ref.text,priority+score,partial);
  }
- const customs=(article,priority)=>{
-  const {ref,passages}=customsPassage(article);
-  passages.forEach((p,i)=>display('aduana-'+article,i,{...ref,locator:p.locator+' · '+ref.locator},p.quote+(p.condition?'\n\nCondición del encabezado\n'+p.condition:''),priority+rank(p.quote,localTerms),false,p.locator));
+ const customs=(article,priority,regulation=false)=>{
+  const {ref,passages}=regulation?regulationPassage(article):customsPassage(article);
+  passages.forEach((p,i)=>display((regulation?'reg-aduana-':'aduana-')+article,i,{...ref,locator:p.locator+' · '+ref.locator},p.quote+(p.condition?'\n\nCondición del encabezado\n'+p.condition:''),priority+rank(p.quote,localTerms),false,p.locator));
  };
  const ranked=()=>[...candidates.values()].sort((a,b)=>b.score-a.score||a.key.localeCompare(b.key)).slice(0,8);
  const namedArticle=/\b(?:articulos?|arts?[.]?)\s+\d/u.test(normalize(original));
@@ -52,6 +53,10 @@ export function questionCandidates(library,original,parts,reference=null){
   if(!reference||reference.unavailable||reference.state)return [];
   for(const item of reference.multi?reference.refs:[reference]){
    if(item.jurisdiction!=='MX-FED')return [];
+   if(item.lawId===regulationLawId){
+    if(!['150','174'].includes(item.articleId))return [];
+    customs(item.articleId,60,true);continue;
+   }
    if((item.lawId==='MX-FED-LADUA'||item.titleKey==='ley aduanera')&&hasCustomsPassage(item.articleId)){
     customs(item.articleId,60);continue;
    }
@@ -64,14 +69,16 @@ export function questionCandidates(library,original,parts,reference=null){
  // Match the prior operation as well as the legal event. A product defect
  // or a repair alone can belong to an ordinary civil or consumer dispute.
  if(!named.ambiguous&&(!named.lawId||named.lawId==='MX-FED-LADUA')){
+  if(context?.state==='supported')customs('117',120);
   const q=normalize(original);
   const international=/\b(?:aduan\w*|importa\w*|exporta\w*|extranjero|pedimento)\b/u.test(q);
-  if(international){
+  if(international&&(!context||!['domestic','ambiguous'].includes(context.state))){
    if(/\b(?:sustitu\w*|reemplaz\w*|defectuos\w*)\b/u.test(q)&&/\b(?:importa\w*|retorn\w*)\b/u.test(q))customs('97',75);
    if(/\b(?:repara\w*|elabora\w*|transforma\w*)\b/u.test(q)&&/\b(?:exporta\w*|extranjero)\b/u.test(q))customs('117',75);
    if(/\b(?:mismo estado|sin modificacion(?:es)?|sin modificar)\b/u.test(q)&&/\b(?:exporta\w*|retorn\w*)\b/u.test(q))customs('115',75);
   }
  }
+ if(context?.state&&context.state!=='supported'&&!candidates.size&&!named.lawId)return [];
  if(!named.lawId){
   for(const [i,{ref,part,partial}] of remedySuggestions(original).entries()){
    const key=ref.sourceId+'/'+part;
@@ -81,9 +88,9 @@ export function questionCandidates(library,original,parts,reference=null){
  // Fixed trade topics can be recognised locally even when a whole sentence
  // was masked. Their private evidence and the search terms never enter the request.
  if(!named.ambiguous){
-  for(const row of verifiedConceptSources(library,original,{jurisdiction:'MX-FED',lawId:named.lawId}).slice(0,8))fromLibrary(row.sourceId,25);
+  for(const row of verifiedConceptSources(library,working,{jurisdiction:'MX-FED',lawId:named.lawId}).slice(0,8))fromLibrary(row.sourceId,25);
  }
- const topics=new Set([...suggestTradeReadings(original).map(t=>t.id),...concepts.map(c=>'lectura-'+c.topic)]);
+ const topics=new Set([...suggestTradeReadings(working).map(t=>t.id),...concepts.map(c=>'lectura-'+c.topic)]);
  for(const topic of topics){
   const reading=loadTradeReading(library,topic);
   for(const ref of reading.refs){

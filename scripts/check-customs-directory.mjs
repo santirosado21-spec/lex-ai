@@ -1,9 +1,10 @@
 // Independently read each mapped heading and each selected excerpt with PDF.js.
 import assert from 'node:assert/strict';
 import pdfjs from 'pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js';
-import {customsDirectory,customsPdf} from '../server/corpus/customs-edition.mjs';
+import {customsDirectory,customsPdf,regulationDirectory,regulationPdf} from '../server/corpus/customs-edition.mjs';
 
-const pdf=await pdfjs.getDocument({data:new Uint8Array(customsPdf()),verbosity:0});
+async function verify(bytes,entries,regulation){
+const pdf=await pdfjs.getDocument({data:new Uint8Array(bytes),verbosity:0});
 const clean=text=>text.replace(/\s+/gu,' ').trim();
 const pages=new Map();
 async function pageText(page){
@@ -23,14 +24,15 @@ async function pageText(page){
 }
 let checked=0;
 try{
- for(const {article,page,passages} of customsDirectory()){
+ for(const {article,page,passages} of entries){
   const [base,...suffix]=article.split('-');
   const ordinal=Number(base)<10?'o':'';
   const parts=suffix.length===1&&suffix[0].length===1
    ?(ordinal?'.':'')+'-'+suffix[0]:suffix.map(s=>' '+s.toLowerCase()).join('');
   const title=base+ordinal+parts+'.';
   const text=await pageText(page);
-  assert.ok(['ARTICULO','Artículo','ARTÍCULO'].some(label=>text.includes(label+' '+title)),title+' (p. '+page+')');
+  if(regulation)assert.ok(['Artículo ', 'Artículo. '].some(label=>text.includes(label+article+'.')),article+' (p. '+page+')');
+  else assert.ok(['ARTICULO','Artículo','ARTÍCULO'].some(label=>text.includes(label+' '+title)),title+' (p. '+page+')');
   for(const passage of passages){
    const first=await pageText(passage.page);
    if(passage.endPage){
@@ -44,5 +46,8 @@ try{
    checked++;
   }
  }
- console.log(customsDirectory().length+' encabezados y '+checked+' pasajes confirmados con PDF.js');
+ console.log((regulation?'Reglamento':'Ley')+' · '+entries.length+' encabezados y '+checked+' pasajes confirmados con PDF.js');
 }finally{await pdf.destroy();}
+}
+await verify(customsPdf(),customsDirectory(),false);
+await verify(regulationPdf(),regulationDirectory(),true);

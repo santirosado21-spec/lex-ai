@@ -1,0 +1,1424 @@
+[
+  {
+    "article": "1",
+    "page": 1,
+    "passages": []
+  },
+  {
+    "article": "2",
+    "page": 2,
+    "passages": []
+  },
+  {
+    "article": "3",
+    "page": 2,
+    "passages": []
+  },
+  {
+    "article": "4",
+    "page": 2,
+    "passages": []
+  },
+  {
+    "article": "5",
+    "page": 3,
+    "passages": []
+  },
+  {
+    "article": "6",
+    "page": 3,
+    "passages": []
+  },
+  {
+    "article": "6-A",
+    "page": 3,
+    "passages": []
+  },
+  {
+    "article": "6-B",
+    "page": 4,
+    "passages": []
+  },
+  {
+    "article": "7",
+    "page": 4,
+    "passages": []
+  },
+  {
+    "article": "7-A",
+    "page": 5,
+    "passages": []
+  },
+  {
+    "article": "8",
+    "page": 6,
+    "passages": []
+  },
+  {
+    "article": "9",
+    "page": 6,
+    "passages": []
+  },
+  {
+    "article": "10",
+    "page": 7,
+    "passages": []
+  },
+  {
+    "article": "11",
+    "page": 7,
+    "passages": []
+  },
+  {
+    "article": "12",
+    "page": 8,
+    "passages": []
+  },
+  {
+    "article": "13",
+    "page": 8,
+    "passages": []
+  },
+  {
+    "article": "13-A",
+    "page": 8,
+    "passages": []
+  },
+  {
+    "article": "14",
+    "page": 9,
+    "passages": []
+  },
+  {
+    "article": "15",
+    "page": 9,
+    "passages": []
+  },
+  {
+    "article": "16",
+    "page": 9,
+    "passages": []
+  },
+  {
+    "article": "17",
+    "page": 9,
+    "passages": []
+  },
+  {
+    "article": "17-A",
+    "page": 10,
+    "passages": []
+  },
+  {
+    "article": "18",
+    "page": 10,
+    "passages": []
+  },
+  {
+    "article": "19",
+    "page": 11,
+    "passages": []
+  },
+  {
+    "article": "20",
+    "page": 11,
+    "passages": []
+  },
+  {
+    "article": "21",
+    "page": 11,
+    "passages": []
+  },
+  {
+    "article": "22",
+    "page": 11,
+    "passages": []
+  },
+  {
+    "article": "23",
+    "page": 12,
+    "passages": []
+  },
+  {
+    "article": "24",
+    "page": 12,
+    "passages": []
+  },
+  {
+    "article": "25",
+    "page": 12,
+    "passages": []
+  },
+  {
+    "article": "26",
+    "page": 13,
+    "passages": []
+  },
+  {
+    "article": "27",
+    "page": 13,
+    "passages": []
+  },
+  {
+    "article": "28",
+    "page": 13,
+    "passages": []
+  },
+  {
+    "article": "29",
+    "page": 13,
+    "passages": []
+  },
+  {
+    "article": "30",
+    "page": 13,
+    "passages": []
+  },
+  {
+    "article": "31",
+    "page": 14,
+    "passages": []
+  },
+  {
+    "article": "32",
+    "page": 14,
+    "passages": []
+  },
+  {
+    "article": "33",
+    "page": 14,
+    "passages": []
+  },
+  {
+    "article": "34",
+    "page": 14,
+    "passages": []
+  },
+  {
+    "article": "35",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "36",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "37",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "38",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "38-A",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "38-B",
+    "page": 15,
+    "passages": []
+  },
+  {
+    "article": "38-C",
+    "page": 16,
+    "passages": []
+  },
+  {
+    "article": "39",
+    "page": 16,
+    "passages": []
+  },
+  {
+    "article": "40",
+    "page": 17,
+    "passages": []
+  },
+  {
+    "article": "41",
+    "page": 17,
+    "passages": []
+  },
+  {
+    "article": "42",
+    "page": 18,
+    "passages": []
+  },
+  {
+    "article": "43",
+    "page": 18,
+    "passages": []
+  },
+  {
+    "article": "44",
+    "page": 18,
+    "passages": []
+  },
+  {
+    "article": "45",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "46",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "47",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "48",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "49",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "50",
+    "page": 19,
+    "passages": []
+  },
+  {
+    "article": "51",
+    "page": 20,
+    "passages": []
+  },
+  {
+    "article": "52",
+    "page": 20,
+    "passages": []
+  },
+  {
+    "article": "53",
+    "page": 20,
+    "passages": []
+  },
+  {
+    "article": "54",
+    "page": 21,
+    "passages": []
+  },
+  {
+    "article": "54-A",
+    "page": 22,
+    "passages": []
+  },
+  {
+    "article": "55",
+    "page": 22,
+    "passages": []
+  },
+  {
+    "article": "56",
+    "page": 22,
+    "passages": []
+  },
+  {
+    "article": "57",
+    "page": 23,
+    "passages": []
+  },
+  {
+    "article": "58",
+    "page": 23,
+    "passages": []
+  },
+  {
+    "article": "59",
+    "page": 23,
+    "passages": []
+  },
+  {
+    "article": "60",
+    "page": 24,
+    "passages": []
+  },
+  {
+    "article": "61",
+    "page": 24,
+    "passages": []
+  },
+  {
+    "article": "62",
+    "page": 24,
+    "passages": []
+  },
+  {
+    "article": "63",
+    "page": 24,
+    "passages": []
+  },
+  {
+    "article": "64",
+    "page": 25,
+    "passages": []
+  },
+  {
+    "article": "64-A",
+    "page": 25,
+    "passages": []
+  },
+  {
+    "article": "65",
+    "page": 25,
+    "passages": []
+  },
+  {
+    "article": "66",
+    "page": 26,
+    "passages": []
+  },
+  {
+    "article": "67",
+    "page": 26,
+    "passages": []
+  },
+  {
+    "article": "68",
+    "page": 26,
+    "passages": []
+  },
+  {
+    "article": "69",
+    "page": 26,
+    "passages": []
+  },
+  {
+    "article": "70",
+    "page": 27,
+    "passages": []
+  },
+  {
+    "article": "71",
+    "page": 27,
+    "passages": []
+  },
+  {
+    "article": "72",
+    "page": 27,
+    "passages": []
+  },
+  {
+    "article": "73",
+    "page": 27,
+    "passages": []
+  },
+  {
+    "article": "74",
+    "page": 28,
+    "passages": []
+  },
+  {
+    "article": "75",
+    "page": 28,
+    "passages": []
+  },
+  {
+    "article": "76",
+    "page": 29,
+    "passages": []
+  },
+  {
+    "article": "76-A",
+    "page": 29,
+    "passages": []
+  },
+  {
+    "article": "76-B",
+    "page": 29,
+    "passages": []
+  },
+  {
+    "article": "77",
+    "page": 30,
+    "passages": []
+  },
+  {
+    "article": "78",
+    "page": 30,
+    "passages": []
+  },
+  {
+    "article": "79",
+    "page": 30,
+    "passages": []
+  },
+  {
+    "article": "80",
+    "page": 30,
+    "passages": []
+  },
+  {
+    "article": "81",
+    "page": 30,
+    "passages": []
+  },
+  {
+    "article": "81-A",
+    "page": 31,
+    "passages": []
+  },
+  {
+    "article": "82",
+    "page": 31,
+    "passages": []
+  },
+  {
+    "article": "83",
+    "page": 32,
+    "passages": []
+  },
+  {
+    "article": "84",
+    "page": 32,
+    "passages": []
+  },
+  {
+    "article": "85",
+    "page": 32,
+    "passages": []
+  },
+  {
+    "article": "86",
+    "page": 32,
+    "passages": []
+  },
+  {
+    "article": "87",
+    "page": 33,
+    "passages": []
+  },
+  {
+    "article": "88",
+    "page": 34,
+    "passages": []
+  },
+  {
+    "article": "89",
+    "page": 34,
+    "passages": []
+  },
+  {
+    "article": "90",
+    "page": 34,
+    "passages": []
+  },
+  {
+    "article": "91",
+    "page": 34,
+    "passages": []
+  },
+  {
+    "article": "92",
+    "page": 35,
+    "passages": []
+  },
+  {
+    "article": "93",
+    "page": 35,
+    "passages": []
+  },
+  {
+    "article": "94",
+    "page": 35,
+    "passages": []
+  },
+  {
+    "article": "95",
+    "page": 35,
+    "passages": []
+  },
+  {
+    "article": "96",
+    "page": 35,
+    "passages": []
+  },
+  {
+    "article": "97",
+    "page": 36,
+    "passages": []
+  },
+  {
+    "article": "98",
+    "page": 36,
+    "passages": []
+  },
+  {
+    "article": "99",
+    "page": 36,
+    "passages": []
+  },
+  {
+    "article": "100",
+    "page": 36,
+    "passages": []
+  },
+  {
+    "article": "101",
+    "page": 36,
+    "passages": []
+  },
+  {
+    "article": "102",
+    "page": 37,
+    "passages": []
+  },
+  {
+    "article": "103",
+    "page": 37,
+    "passages": []
+  },
+  {
+    "article": "104",
+    "page": 38,
+    "passages": []
+  },
+  {
+    "article": "105",
+    "page": 38,
+    "passages": []
+  },
+  {
+    "article": "106",
+    "page": 38,
+    "passages": []
+  },
+  {
+    "article": "107",
+    "page": 39,
+    "passages": []
+  },
+  {
+    "article": "108",
+    "page": 39,
+    "passages": []
+  },
+  {
+    "article": "109",
+    "page": 39,
+    "passages": []
+  },
+  {
+    "article": "110",
+    "page": 39,
+    "passages": []
+  },
+  {
+    "article": "111",
+    "page": 40,
+    "passages": []
+  },
+  {
+    "article": "112",
+    "page": 40,
+    "passages": []
+  },
+  {
+    "article": "113",
+    "page": 40,
+    "passages": []
+  },
+  {
+    "article": "114",
+    "page": 41,
+    "passages": []
+  },
+  {
+    "article": "115",
+    "page": 41,
+    "passages": []
+  },
+  {
+    "article": "116",
+    "page": 41,
+    "passages": []
+  },
+  {
+    "article": "117",
+    "page": 41,
+    "passages": []
+  },
+  {
+    "article": "118",
+    "page": 42,
+    "passages": []
+  },
+  {
+    "article": "119",
+    "page": 42,
+    "passages": []
+  },
+  {
+    "article": "120",
+    "page": 42,
+    "passages": []
+  },
+  {
+    "article": "121",
+    "page": 42,
+    "passages": []
+  },
+  {
+    "article": "122",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "123",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "124",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "125",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "126",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "127",
+    "page": 43,
+    "passages": []
+  },
+  {
+    "article": "128",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "129",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "130",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "131",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "132",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "133",
+    "page": 44,
+    "passages": []
+  },
+  {
+    "article": "134",
+    "page": 45,
+    "passages": []
+  },
+  {
+    "article": "134-A",
+    "page": 45,
+    "passages": []
+  },
+  {
+    "article": "135",
+    "page": 45,
+    "passages": []
+  },
+  {
+    "article": "136",
+    "page": 46,
+    "passages": []
+  },
+  {
+    "article": "137",
+    "page": 46,
+    "passages": []
+  },
+  {
+    "article": "138",
+    "page": 46,
+    "passages": []
+  },
+  {
+    "article": "139",
+    "page": 47,
+    "passages": []
+  },
+  {
+    "article": "140",
+    "page": 47,
+    "passages": []
+  },
+  {
+    "article": "141",
+    "page": 48,
+    "passages": []
+  },
+  {
+    "article": "141-A",
+    "page": 48,
+    "passages": []
+  },
+  {
+    "article": "142",
+    "page": 48,
+    "passages": []
+  },
+  {
+    "article": "143",
+    "page": 48,
+    "passages": []
+  },
+  {
+    "article": "144",
+    "page": 49,
+    "passages": []
+  },
+  {
+    "article": "145",
+    "page": 49,
+    "passages": []
+  },
+  {
+    "article": "146",
+    "page": 49,
+    "passages": []
+  },
+  {
+    "article": "147",
+    "page": 50,
+    "passages": []
+  },
+  {
+    "article": "148",
+    "page": 50,
+    "passages": []
+  },
+  {
+    "article": "149",
+    "page": 50,
+    "passages": []
+  },
+  {
+    "article": "150",
+    "page": 50,
+    "passages": [
+      {
+        "page": 50,
+        "locator": "párrafo primero",
+        "text": "El interesado en sustituir las Mercancías importadas que resultaron defectuosas o con diferentes especificaciones a las convenidas, en su solicitud señalará en qué consisten los defectos o las diferencias y ofrecerá las pruebas correspondientes. En caso de que se otorgue la autorización a que se refiere el artículo 97 de la Ley, el interesado tramitará el retorno de las Mercancías importadas mediante Pedimento de exportación al que acompañará en Documento Digital copia del Pedimento de importación definitiva."
+      }
+    ]
+  },
+  {
+    "article": "151",
+    "page": 51,
+    "passages": []
+  },
+  {
+    "article": "152",
+    "page": 51,
+    "passages": []
+  },
+  {
+    "article": "153",
+    "page": 51,
+    "passages": []
+  },
+  {
+    "article": "154",
+    "page": 52,
+    "passages": []
+  },
+  {
+    "article": "155",
+    "page": 52,
+    "passages": []
+  },
+  {
+    "article": "156",
+    "page": 52,
+    "passages": []
+  },
+  {
+    "article": "157",
+    "page": 52,
+    "passages": []
+  },
+  {
+    "article": "158",
+    "page": 53,
+    "passages": []
+  },
+  {
+    "article": "159",
+    "page": 53,
+    "passages": []
+  },
+  {
+    "article": "160",
+    "page": 53,
+    "passages": []
+  },
+  {
+    "article": "161",
+    "page": 54,
+    "passages": []
+  },
+  {
+    "article": "162",
+    "page": 54,
+    "passages": []
+  },
+  {
+    "article": "163",
+    "page": 55,
+    "passages": []
+  },
+  {
+    "article": "164",
+    "page": 55,
+    "passages": []
+  },
+  {
+    "article": "165",
+    "page": 55,
+    "passages": []
+  },
+  {
+    "article": "165-A",
+    "page": 56,
+    "passages": []
+  },
+  {
+    "article": "166",
+    "page": 56,
+    "passages": []
+  },
+  {
+    "article": "167",
+    "page": 56,
+    "passages": []
+  },
+  {
+    "article": "168",
+    "page": 57,
+    "passages": []
+  },
+  {
+    "article": "169",
+    "page": 57,
+    "passages": []
+  },
+  {
+    "article": "170",
+    "page": 57,
+    "passages": []
+  },
+  {
+    "article": "171",
+    "page": 57,
+    "passages": []
+  },
+  {
+    "article": "172",
+    "page": 57,
+    "passages": []
+  },
+  {
+    "article": "173",
+    "page": 58,
+    "passages": []
+  },
+  {
+    "article": "174",
+    "page": 58,
+    "passages": [
+      {
+        "page": 58,
+        "locator": "párrafo único",
+        "text": "Para efectos del artículo 117, primer párrafo de la Ley, las empresas con programa de manufactura, maquila y de servicios de exportación autorizados por la Secretaría de Economía, que hayan efectuado importaciones temporales de equipos completos, partes o componentes de dichas Mercancías, para efectuar su retorno con el propósito de que sean reparados en el extranjero o para su sustitución, deberán someterse al régimen de exportación temporal previsto en dicha disposición."
+      }
+    ]
+  },
+  {
+    "article": "175",
+    "page": 58,
+    "passages": []
+  },
+  {
+    "article": "176",
+    "page": 58,
+    "passages": []
+  },
+  {
+    "article": "177",
+    "page": 59,
+    "passages": []
+  },
+  {
+    "article": "178",
+    "page": 59,
+    "passages": []
+  },
+  {
+    "article": "178-A",
+    "page": 59,
+    "passages": []
+  },
+  {
+    "article": "179",
+    "page": 60,
+    "passages": []
+  },
+  {
+    "article": "180",
+    "page": 60,
+    "passages": []
+  },
+  {
+    "article": "181",
+    "page": 61,
+    "passages": []
+  },
+  {
+    "article": "182",
+    "page": 61,
+    "passages": []
+  },
+  {
+    "article": "183",
+    "page": 61,
+    "passages": []
+  },
+  {
+    "article": "184",
+    "page": 62,
+    "passages": []
+  },
+  {
+    "article": "185",
+    "page": 62,
+    "passages": []
+  },
+  {
+    "article": "186",
+    "page": 63,
+    "passages": []
+  },
+  {
+    "article": "187",
+    "page": 63,
+    "passages": []
+  },
+  {
+    "article": "188",
+    "page": 63,
+    "passages": []
+  },
+  {
+    "article": "189",
+    "page": 63,
+    "passages": []
+  },
+  {
+    "article": "189-A",
+    "page": 64,
+    "passages": []
+  },
+  {
+    "article": "190",
+    "page": 65,
+    "passages": []
+  },
+  {
+    "article": "190-A",
+    "page": 65,
+    "passages": []
+  },
+  {
+    "article": "191",
+    "page": 65,
+    "passages": []
+  },
+  {
+    "article": "192",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "193",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "194",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "195",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "196",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "197",
+    "page": 66,
+    "passages": []
+  },
+  {
+    "article": "198",
+    "page": 67,
+    "passages": []
+  },
+  {
+    "article": "199",
+    "page": 68,
+    "passages": []
+  },
+  {
+    "article": "200",
+    "page": 68,
+    "passages": []
+  },
+  {
+    "article": "201",
+    "page": 68,
+    "passages": []
+  },
+  {
+    "article": "202",
+    "page": 68,
+    "passages": []
+  },
+  {
+    "article": "203",
+    "page": 68,
+    "passages": []
+  },
+  {
+    "article": "204",
+    "page": 69,
+    "passages": []
+  },
+  {
+    "article": "205",
+    "page": 69,
+    "passages": []
+  },
+  {
+    "article": "206",
+    "page": 69,
+    "passages": []
+  },
+  {
+    "article": "207",
+    "page": 70,
+    "passages": []
+  },
+  {
+    "article": "208",
+    "page": 70,
+    "passages": []
+  },
+  {
+    "article": "209",
+    "page": 70,
+    "passages": []
+  },
+  {
+    "article": "210",
+    "page": 71,
+    "passages": []
+  },
+  {
+    "article": "211",
+    "page": 71,
+    "passages": []
+  },
+  {
+    "article": "211-A",
+    "page": 72,
+    "passages": []
+  },
+  {
+    "article": "211-B",
+    "page": 72,
+    "passages": []
+  },
+  {
+    "article": "211-C",
+    "page": 72,
+    "passages": []
+  },
+  {
+    "article": "212",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "213",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "214",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "215",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "216",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "217",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "218",
+    "page": 73,
+    "passages": []
+  },
+  {
+    "article": "219",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "220",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "221",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "222",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "223",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "224",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "225",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "226",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "227",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "228",
+    "page": 74,
+    "passages": []
+  },
+  {
+    "article": "229",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "230",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "231",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "232",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "233",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "234",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "235",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "235-A",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "235-B",
+    "page": 75,
+    "passages": []
+  },
+  {
+    "article": "235-C",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-D",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-E",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-F",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-G",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-H",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-I",
+    "page": 76,
+    "passages": []
+  },
+  {
+    "article": "235-J",
+    "page": 77,
+    "passages": []
+  },
+  {
+    "article": "235-K",
+    "page": 77,
+    "passages": []
+  },
+  {
+    "article": "236",
+    "page": 77,
+    "passages": []
+  },
+  {
+    "article": "237",
+    "page": 78,
+    "passages": []
+  },
+  {
+    "article": "238",
+    "page": 78,
+    "passages": []
+  },
+  {
+    "article": "239",
+    "page": 79,
+    "passages": []
+  },
+  {
+    "article": "240",
+    "page": 79,
+    "passages": []
+  },
+  {
+    "article": "241",
+    "page": 79,
+    "passages": []
+  },
+  {
+    "article": "242",
+    "page": 79,
+    "passages": []
+  },
+  {
+    "article": "243",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "244",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "245",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "246",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "247",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "248",
+    "page": 80,
+    "passages": []
+  },
+  {
+    "article": "249",
+    "page": 81,
+    "passages": []
+  }
+]

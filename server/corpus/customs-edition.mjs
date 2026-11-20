@@ -12,7 +12,7 @@ let edition;
 
 function checkedFile(name,hash){
  const bytes=readFileSync(new URL(name,root));
- if(createHash('sha256').update(bytes).digest('hex')!==hash)throw Error('La copia local de la Ley Aduanera requiere cotejo.');
+ if(createHash('sha256').update(bytes).digest('hex')!==hash)throw Error('La copia local de la fuente aduanera requiere cotejo.');
  return bytes;
 }
 
@@ -57,4 +57,29 @@ export function customsPassage(article){
  return {ref,passages:passages.map(p=>({quote:p.text,locator:p.locator+(p.endPage?' · pp. '+p.page+'–'+p.endPage:' · p. '+p.page),
   ...(['97','117'].includes(article)&&p!==passages[0]?{condition:passages[0].text}:{}),
   ...(firstFraction&&p.locator==='fracción I, inciso d)'?{condition:firstFraction.text}:{})}))};
+}
+
+const regulationHash='bcdfcd9073014aec4aefbacc01c9dd5b1f97f0da0c4556f0f506d20f12d77812';
+export const regulationTitle='Reglamento de la Ley Aduanera';
+export const regulationLawId='MX-FED-REG-LADUA';
+export const regulationPdfPath='/fuentes/'+regulationHash+'.pdf';
+export const regulationPdf=()=>checkedFile('reglamento-aduanero-2026.pdf',regulationHash);
+let regulationIndex;
+export function regulationDirectory(){
+ if(!regulationIndex){
+  regulationPdf();
+  const data=checkedFile('reglamento-aduanero-indice.json','c55e83a216dec11004c22fcd87d90b711d1bec5873965a72bef0e6ab1e93ab31');
+  regulationIndex=JSON.parse(data).map(row=>({...row,localUrl:regulationPdfPath+'#page='+row.page}));
+ }
+ return regulationIndex;
+}
+
+export function regulationPassage(article){
+ const entry=regulationDirectory().find(row=>row.article===article);
+ if(!entry?.passages.length)throw Error('Artículo del Reglamento sin pasaje cotejado.');
+ const {page,passages,localUrl}=entry,locator='Artículo '+article+' · '+passages[0].locator+' · p. '+page+' · edición 23-02-2026';
+ const ref=Object.freeze({id:regulationLawId+'-'+article,title:regulationTitle,article,locator,checkedOn:'2026-11-19',
+  pdfSha256:regulationHash,localUrl,url:'https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf#page='+page,
+  text:passages[0].text,summary:'Comprueba la fecha de la operación y las disposiciones transitorias del Reglamento.'});
+ return {ref,passages:passages.map(p=>({quote:p.text,locator:p.locator+' · p. '+page}))};
 }

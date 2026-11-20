@@ -1,3 +1,4 @@
+import {regulationTitle,regulationLawId} from './corpus/customs-edition.mjs';
 import {createIntakeGenerator,createIntakePilot} from './intake-pilot.mjs';
 import {registerTimeBilling} from './time-billing.mjs';
 import jurisdictions from '../resources/mexico-jurisdictions.json' with {type:'json'};
@@ -149,7 +150,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   // Plural or list references ("artículos 78 y 1832 del Código de Comercio").
   // Each list binds only to the law named right after it. A list with an unknown,
   // missing or ambiguous law returns {unavailable:true}: nothing is substituted.
-  const pilotLaws=intakePilot?[{title:'Ley Aduanera',lawId:'MX-FED-LADUA',jurisdiction:'MX-FED'}]:[];
+  const pilotLaws=intakePilot?[{title:regulationTitle,lawId:regulationLawId,jurisdiction:'MX-FED'},{title:'Ley Aduanera',lawId:'MX-FED-LADUA',jurisdiction:'MX-FED'}]:[];
   function listedArticleReferences(query){
     const text=normalize(query)
       .replace(/\bccf\b/g,'codigo civil federal').replace(/\bcpeum\b/g,'constitucion politica de los estados unidos mexicanos')

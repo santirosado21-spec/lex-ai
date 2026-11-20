@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 23:14 por codex: Rejon r25 protege términos de la pregunta y conserva referencias anidadas
+**Última actualización:** 2026-11-19 23:25 por codex: Rejon r26.1 enlaza la pregunta con soportes del expediente e incorpora el Reglamento aduanero
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r26.1 entrega el piloto privado con lectura de soportes originales antes de enviar, búsqueda por folio y Reglamento de la Ley Aduanera. La copia extraída del ZIP completó los dos borradores, su reapertura y seis exportaciones verificadas en LibreOffice. Los dos envíos originales a OpenAI contenían material público. [Comprobaciones y límites](../qa/cotejo-expediente-reglamento-r26.md).
 
 - r25 admite reservas manuales en la pregunta, protege señales temporales de sonido y conserva referencias de producto ocultas dentro de otra sustitución. Los 38 documentos históricos conservaron sus cifras. En la reserva inédita de inspección la proyección cubrió 7/7 menciones directas, 1/2 indicios y conservó 4/6 hechos. ZIP reproducido en Chromium, seis archivos comprobados en LibreOffice y suite de 1 460 aprobadas y diez omitidas. [Medición, riesgos residuales y reproducción](../qa/privacidad-preguntas-retorno-r25.md).
 
@@ -102,7 +104,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Recuperar el contexto de los documentos del mismo expediente cuando una pregunta breve cita sus folios o alude al mismo bien. En cuatro preguntas de garantía e inspección la biblioteca no ofreció el 117 en los ocho primeros resultados. Probar con expedientes que mezclen dos bienes, con cambios de pieza y de equipo completo y con reparaciones nacionales. Evaluar el razonamiento frente a los soportes y medir privacidad en una reserva nueva.
+- Medir en expedientes ficticios inéditos si se identifican operaciones con folios compartidos, referencias cruzadas y descripciones indirectas del equipo. Obtener cotejo jurídico de socios, probar el respaldo con su cuenta real y completar la actualización de las fuentes prioritarias por fecha de operación.
 
 - Permitir que un abogado retome una pregunta del expediente con los soportes y fuentes ya elegidos. Medir una nueva estrategia de detección contextual local en preguntas y anexos inéditos, con atención a indicios por sonidos y acontecimientos y a quién asumió o acredita una obligación. Mantener revisión independiente de la utilidad y la privacidad. Para retorno, medir en otro expediente ficticio si el flujo distingue que una pieza sustituida en un servicio de reparación puede corresponder a la misma mercancía que se exportó, y qué soporte permitiría comprobarlo.
 

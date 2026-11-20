@@ -407,3 +407,7 @@ Cotejados con Poppler y PDF.js 277 encabezados y 20 pasajes. Una primera llamada
 ## 2026-11-19 23:14 — codex — Rejon r25 protege términos de la pregunta y conserva referencias anidadas
 
 Se restituyeron los cuatro textos de cada diálogo. La reserva inédita de inspección cubrió siete de siete menciones directas, uno de dos indicios y conservó cuatro de seis expresiones técnicas. El ZIP reabrió dos borradores, reprodujo dos respuestas anteriores y exportó seis archivos verificados con LibreOffice. La suite registró 1460 aprobadas y diez omitidas. Faltan la consulta contextual entre documentos, el uso con clientes reales y la prueba en los equipos de los socios.
+
+## 2026-11-19 23:25 — codex — Rejon r26.1 enlaza la pregunta con soportes del expediente e incorpora el Reglamento aduanero
+
+Piloto privado reproducido desde el ZIP en Chromium en este Mac. Se abrieron las líneas originales y sus sustituciones, se comparó la vista previa con el mensaje y se reabrieron dos borradores. Dos respuestas reales con datos públicos, 745 tokens de entrada y 191 de salida. Seis exportaciones del ZIP verificadas con LibreOffice. Reglamento con 282 encabezados y dos pasajes cotejados por dos lectores. Lanzador con respaldo simulado, 1464 pruebas aprobadas y diez omitidas. Pendientes la prueba en equipos de los socios, la segunda cuenta real y la reducción de identificadores indirectos.

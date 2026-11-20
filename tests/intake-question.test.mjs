@@ -71,6 +71,14 @@ test('question review stays on loopback, original restores only within its matte
  assert.ok(manualTask!==undefined);
  const listed=await rpc('inspectQuestion',{text:'Coteja los artículos 97 y 117 de la Ley Aduanera.'});
  assert.deepEqual(new Set(listed.candidates.map(row=>row.citationId)),new Set(['MX-FED-LADUA-97','MX-FED-LADUA-117']));
+ const regulation=await rpc('inspectQuestion',{text:'Compara los artículos 150 y 174 del Reglamento de la Ley Aduanera.'});
+ assert.deepEqual(new Set(regulation.candidates.map(row=>row.key)),new Set(['reg-aduana-150/0','reg-aduana-174/0']));
+ const single=await rpc('inspectQuestion',{text:'¿Qué dispone el artículo 174 del Reglamento de la Ley Aduanera?'});
+ assert.deepEqual(single.candidates.map(r=>r.key),['reg-aduana-174/0']);
+ const regulationTask=await rpc('addQuestion',{reviewId:single.id,key:single.candidates[0].key,angle:'documentos'});
+ const regulationPreview=regulationTask.status.tasks.find(r=>r.id===regulationTask.task).preview;
+ assert.match(regulationPreview,/programa de manufactura/);
+ assert.match(regulationPreview,/hayan efectuado importaciones temporales/);
  const choice={reviewId:inquiry.id,key:'aduana-65/1',angle:'documentos'};
  assert.deepEqual(inquiry.facts,[]);
  for(const factIds of [[],['H1'],[original],null])await assert.rejects(rpc('addQuestion',{...choice,factIds}));
@@ -130,4 +138,32 @@ test('return and replacement identify separate customs regimes and preserve the 
  const next=prepareFollowup(note,quotedRanges(note,rendered),'control');
  assert.ok(next.prompt.includes(second.condition)&&next.prompt.includes('Condición del párrafo primero'));
  assert.throws(()=>questionPassage(library,{sourceId:'aduana-999',part:0,angle:'documentos'}));
+});
+
+test('manual search uses reviewed lines in this matter and keeps the private document out of a generic question',async t=>{
+ const dir=await mkdtemp(path.join(tmpdir(),'rejon-soporte-manual-'));
+ const app=await startServer({dataDir:dir,intakePilot:true,autoInitialize:false,pilotPassphrase:Buffer.from('palabras del expediente de ensayo')});
+ t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});
+ t.mock.method(globalThis,'fetch',async(url,opts)=>{
+  assert.equal(url,'http://127.0.0.1:11434/api/chat');
+  const shape=JSON.parse(opts.body).format.properties;
+  return Response.json({message:{content:JSON.stringify(shape.oraciones?{oraciones:[]}:{entities:[],documentKind:'otro',client:'',title:''})}});
+ });
+ const rpc=(name,payload)=>app.service.dispatch('intake.'+name,payload);
+ await rpc('save',{firm:'Despacho de Ensayo',client:'Cliente de Ensayo',title:'Prueba de líneas',jurisdiction:'MX-FED'});
+ const sentence='El comprador pagó el flete del embarque de ensayo GSQ-54821 para determinar el valor en aduana.';
+ const file=await rpc('inspectSource',{extension:'txt',base64:Buffer.from(sentence).toString('base64'),review:true});
+ const source=await rpc('addSource',{reviewId:file.reviewId,label:'Recibo turquesa'});
+ const query=await rpc('inspectQuestion',{text:'¿Qué información permite aclarar lo sucedido?'});
+ const refine=lines=>rpc('refineQuestion',{reviewId:query.id,lines});
+ await assert.rejects(refine(['line:inventada/1']));
+ const [row]=await rpc('questionLines',{reviewId:query.id,sourceId:source.id});
+ for(const invalid of [[],[row.id,row.id],null])await assert.rejects(refine(invalid));
+ const result=await refine([row.id]);assert.notEqual(result.id,query.id);
+ const freight=result.candidates.find(r=>r.key==='aduana-65/1');assert.ok(freight);
+ const choice={reviewId:result.id,key:freight.key,angle:'documentos'};
+ await assert.rejects(rpc('addQuestion',choice));
+ const {status,task}=await rpc('addQuestion',{...choice,factIds:[row.id]});
+ const prompt=status.tasks.find(x=>x.id===task).preview;
+ assert.ok(!prompt.includes('GSQ-54821')&&!prompt.includes(sentence)&&!prompt.includes('Recibo turquesa'));
 });

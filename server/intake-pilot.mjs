@@ -1,4 +1,5 @@
-import {customsDirectory} from './corpus/customs-edition.mjs';
+import {returnContext,isReturnQuestion,returnIdentityInquiry} from './corpus/return-context.mjs';
+import {customsDirectory,regulationDirectory} from './corpus/customs-edition.mjs';
 import {remedyCatalog,remedyPeriod} from './corpus/remedy-index.mjs';
 import {maskedMatterQuestion,questionLines} from './corpus/intake-question-lines.mjs';
 import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
@@ -287,6 +288,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    return {id,title:note.title+' · '+selection.parentTitle,preview:note.prompt,references:note.refs,parent:selection.parent};
   }catch{return {id,title:'Seguimiento pendiente de cotejo',preview:null,parent:selection.parent};}
  });
+ const researchChoices=(saved,question,parts,chosen)=>{
+  const original=question.original;
+  const reference=explicitArticleReference?.(original,'MX-FED');
+  const context=!reference&&isReturnQuestion(original)?returnContext(original,openedCaseSources(saved),chosen):null;
+  const searchContext=chosen?{...context,manual:true,lines:chosen}:context;
+  const candidates=questionCandidates(publicLibrary,original,parts,reference,searchContext);
+  const linked=context?.lines.map(line=>{
+   const row=questionLines(saved,line.sourceId).find(r=>r.evidence.line===line.line);
+   return row&&{id:row.id,label:line.label,line:line.line,text:row.masked};
+  }).filter(Boolean)??[];
+  return {candidates,context:context&&{state:context.state,lines:linked}};
+ };
+ const visibleChoices=rows=>rows.map(({key,citationId,label,locator,text,partial})=>({key,citationId,label,locator,text,partial}));
  const status = () => {
   const saved=current();
   return {
@@ -303,7 +317,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if (archived) return {id,...archived,...(selection.angle?{aliasedQuestion:!!archived.aliasedQuestion}:{})};
     try {
      const note=sourceFor(selection,saved,saved.intake.questions?.[id]);
-     return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(selection.angle?{aliasedQuestion:!!note.caseFacts?.inquiry,publicQuestion:note.caseFacts?.inquiry}:{}),...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
+     return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(selection.angle?{aliasedQuestion:!!note.caseFacts?.inquiry,publicQuestion:note.caseFacts?.inquiry??(note.equipmentIdentity?returnIdentityInquiry:undefined)}:{}),...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
    })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
@@ -472,20 +486,49 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const review=data.protection,document=bindReviewedDocument(review,saved.firm.id,saved.entry.id);
     const restored=openReviewedDocument(document,saved.firm.id,saved.entry.id);
     if(restored.original!==text.replace(/\r\n/gu,'\n').trim())throw Error('La pregunta no se pudo restituir.');
-    const candidates=questionCandidates(publicLibrary,restored.original,review.parts,explicitArticleReference?.(restored.original,'MX-FED'));
+    const {candidates,context}=researchChoices(saved,restored,review.parts);
     const permit=permitQuestionHint(restored.original,[saved.firm.name,saved.entry.client,saved.entry.title,saved.intake.supplier]);
     if(permit)permit.supports=documentPermitFields(openedCaseSources(saved));
-    if(!candidates.length&&!permit)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
+    if(!candidates.length&&!permit&&!caseSources(saved.intake).length)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
     const id=randomUUID();
     if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
     const facts=availableQuestionFacts(saved).map(({id,text,evidence})=>({id,text,label:evidence.sourceLabel,line:evidence.line}));
     const defenseDate=candidates.some(row=>row.source.startsWith('ad29-'))?operationDate(restored.original.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase()):'';
-    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,permit,defenseDate,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
+    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,context,parts:review.parts,permit,defenseDate,factIds:[...facts.map(f=>f.id),...(context?.lines.map(l=>l.id)??[])],concepts:mentionedConcepts(restored.original).map(c=>c.id)});
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
     return {id,...maskedMatterQuestion(saved,document,'consulta-'+id,restored.original),suggestedAngle,facts,permit,sources:caseSources(saved.intake).map(sourceSummary),
-     candidates:candidates.map(({key,citationId,label,locator,text,partial})=>({key,citationId,label,locator,text,partial}))};
+     context,candidates:visibleChoices(candidates)};
+   }
+   case 'intake.refineQuestion': {
+    exactFields(payload,['reviewId','lines']);
+    const saved=current(),review=pendingQuestions.get(payload.reviewId);
+    if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id)throw Error('Revisa la pregunta en este expediente.');
+    const ids=payload.lines;
+    if(!Array.isArray(ids)||ids.length<1||ids.length>4||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'||!id.startsWith('line:')||!review.factIds.includes(id)))throw Error('Elige entre una y cuatro líneas revisadas.');
+    const rows=ids.map(id=>{
+     const source=id.slice(5).split('/')[0];
+     const row=questionLines(saved,source).find(r=>r.id===id);
+     if(!row)throw Error('El soporte cambió. Revisa la pregunta otra vez.');
+     return {sourceId:source,label:row.evidence.sourceLabel,line:row.evidence.line,text:row.evidence.excerpt};
+    });
+    const result=researchChoices(saved,openReviewedDocument(review.document,saved.firm.id,saved.entry.id),review.parts,rows);
+    const id=randomUUID();
+    if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
+    pendingQuestions.set(id,{...review,...result,refinedLines:ids});
+    return {id,context:result.context,candidates:visibleChoices(result.candidates)};
+   }
+   case 'intake.readContextLines': {
+    exactFields(payload,['reviewId']);
+    const saved=current(),review=pendingQuestions.get(payload.reviewId);
+    if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id)throw Error('Revisa la pregunta en este expediente.');
+    return (review.context?.lines??[]).map(({id})=>{
+     const source=id.slice(5).split('/')[0];
+     const row=questionLines(saved,source).find(r=>r.id===id);
+     if(!row)throw Error('El soporte cambió. Revisa la pregunta otra vez.');
+     return {id,text:row.evidence.excerpt};
+    });
    }
    case 'intake.questionLines': {
     exactFields(payload,['reviewId','sourceId']);
@@ -506,9 +549,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
     const other=paired?review.candidates.find(row=>row.key===payload.secondKey):null;
     if(paired&&(!other||other.citationId===choice.citationId))throw Error('Selecciona otra disposición que aparezca en la revisión.');
-    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(other?{second:{sourceId:other.source,part:other.part}}:{}),...((choice.source.startsWith('ad29-')||other?.source.startsWith('ad29-'))&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(review.context?.state==='supported'&&choice.source==='aduana-117'?{equipmentIdentity:true}:{}),...(other?{second:{sourceId:other.source,part:other.part}}:{}),...((choice.source.startsWith('ad29-')||other?.source.startsWith('ad29-'))&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
     if(usesFacts&&(!Array.isArray(payload.factIds)||!payload.factIds.length||payload.factIds.length>4||new Set(payload.factIds).size!==payload.factIds.length||
        !payload.factIds.every(id=>review.factIds.includes(id))))throw Error('Elige los hechos que aparecen en la revisión de esta pregunta.');
+    if(review.refinedLines?.some(id=>!payload.factIds?.includes(id)))throw Error('La búsqueda requiere las líneas elegidas. Vuelve a buscar si cambiaste de soporte.');
     const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(other?'-con-'+other.source+'-'+other.part:'')+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
     if(!Object.hasOwn(intake.research??{},task)){
      if(Object.keys(intake.research??{}).length>=48)throw Error('El expediente admite 48 pasajes de trabajo.');
@@ -569,6 +613,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    }
    case 'intake.remedyPeriod':
     exactFields(payload,['date']);return remedyPeriod(payload.date);
+   case 'intake.regulationDirectory':
+    exactFields(payload,[]);return regulationDirectory();
    case 'intake.customsDirectory':
     exactFields(payload,[]);return customsDirectory();
    case 'intake.remedyCatalog':
@@ -754,7 +800,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
        const title=followup?followup.title+' · '+continuation.parentTitle:comparison?.title??source.title;
        const references=source.refs??[source.ref];
        const evidence=followEvidence??comparison?.evidence??selection?.evidence??research?.caseFacts?.evidence;
-       const note={title,preview:source.prompt,references,...(research?.angle?{aliasedQuestion:!!research.caseFacts?.inquiry,publicQuestion:research.caseFacts?.inquiry}:{}),...(research?.caseFacts?{usesFacts:!!research.caseFacts.texts.length,localLines:research.caseFacts.localCount}:{}),...(evidence?{evidence}:{}),
+       const note={title,preview:source.prompt,references,...(research?.angle?{aliasedQuestion:!!research.caseFacts?.inquiry,publicQuestion:research.caseFacts?.inquiry??(research.equipmentIdentity?returnIdentityInquiry:undefined)}:{}),...(research?.caseFacts?{usesFacts:!!research.caseFacts.texts.length,localLines:research.caseFacts.localCount}:{}),...(evidence?{evidence}:{}),
         ...(comparison?{comparison:comparisonInfo(comparison)}:{})};
        snapshot={researchHistory:{...intake.researchHistory,[task]:note}};
       }

@@ -384,3 +384,9 @@ En la primera ejecución el validador rechazó la lectura porque contenía H1 y 
 | Retorno, reserva posterior a los ajustes | 8/8 | 1/2 | 2/6 | 3/3 |
 
 Los ensayos de privacidad usaron Ollama en el Mac sin llamadas a la nube. El diálogo de retorno quedó congelado después del ajuste, antes de medirlo con r22 y r23. En esa reserva r22 conservó un alias de tres, r23 los tres. Ambas cubrieron los ocho datos directos y un indicio de dos, y conservaron dos de seis expresiones. Las campanas que identificaban la operación siguieron visibles. El ensayo documenta la mejora de las referencias entre documentos y el riesgo residual de la conversación libre. La revisión por un abogado y las pruebas en los equipos de los socios siguen pendientes.
+
+### Cotejo de soporte documental y Reglamento aduanero · r26
+
+El piloto vincula una pregunta sobre la identidad del equipo con la orden y el informe de servicio del expediente. Muestra los fragmentos al abogado y admite una segunda búsqueda con hasta cuatro líneas elegidas. Se incluyeron dos archivos ficticios para reproducir el recorrido desde el lanzador.
+
+Se extrajo el índice del cuerpo del Reglamento de la Ley Aduanera de la edición de la Cámara de Diputados que incorpora la reforma del 23 de febrero de 2026. Poppler y PDF.js permitieron cotejar el encabezado y la página física de 282 artículos, así como el primer párrafo del 150 y el párrafo único del 174. Los 282 se pueden abrir en la biblioteca local. Los dos pasajes cotejados se pueden seleccionar en preguntas del expediente para trabajar en la nube. El 174 exige comprobar el programa autorizado y la importación temporal previa. El 150 trata la sustitución por defecto o por especificaciones distintas y remite al 97 de la Ley. [Reglamento de la Ley Aduanera](https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf)

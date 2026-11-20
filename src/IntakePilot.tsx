@@ -43,7 +43,7 @@ export default function IntakePilot() {
   const [worksheetDirty,setWorksheetDirty]=useState(false);
   const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
-  const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
+  const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'reglamento'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
   const [nicoQuery,setNicoQuery]=useState('');
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
@@ -216,11 +216,12 @@ export default function IntakePilot() {
     <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<><div className="rp-library-views" role="group" aria-label="Colección jurídica">
     <button className="rp-quiet" aria-pressed={libraryView==='leyes'} onClick={()=>setLibraryView('leyes')}>Leyes federales</button>
     <button className="rp-quiet" aria-pressed={libraryView==='aduana'} onClick={()=>setLibraryView('aduana')}>Ley Aduanera</button>
+    <button className="rp-quiet" aria-pressed={libraryView==='reglamento'} onClick={()=>setLibraryView('reglamento')}>Reglamento aduanero</button>
     <button className="rp-quiet" aria-pressed={libraryView==='tarifa'} onClick={()=>setLibraryView('tarifa')}>Tarifa arancelaria</button>
     <button className="rp-quiet" aria-pressed={libraryView==='nico'} onClick={()=>{setNicoQuery('');setLibraryView('nico');}}>Catálogo NICO</button>
     <button className="rp-quiet" aria-pressed={libraryView==='pedimento'} onClick={()=>setLibraryView('pedimento')}>Claves del pedimento</button>
     <button className="rp-quiet" aria-pressed={libraryView==='defensa'} onClick={()=>setLibraryView('defensa')}>Defensa comercial</button></div>
-    {libraryView==='aduana'?<IntakeCustomsLaw/>:libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
+    {libraryView==='aduana'||libraryView==='reglamento'?<IntakeCustomsLaw key={libraryView} regulation={libraryView==='reglamento'}/>:libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
       <aside className="rp-context">
         <div className="rp-image"><img src="/brand/lex-cover.webp" alt=""/></div>

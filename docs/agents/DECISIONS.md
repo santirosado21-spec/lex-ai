@@ -209,3 +209,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 23:14 — codex — Restringir la nueva instrucción local al contexto de retorno
 
 **Por qué:** Aplicarla a todo el corpus redujo de seis a tres los indicios protegidos en doce documentos históricos. La revisión específica mejoró retorno y garantía y el código final mantuvo las cifras de los 38 documentos de regresión. El texto libre de los expedientes continúa en el equipo.
+
+## 2026-11-19 23:25 — codex — Vincular folios y conservar los soportes de identidad en el equipo
+
+**Por qué:** Un folio permite recuperar documentos, pero no demuestra que volvió el mismo equipo. Las preguntas de identidad se formulan en la nube como una hipótesis normativa. Las líneas elegidas y la consulta original se cotejan y restituyen en el expediente. El Reglamento se consulta por su propio título e identificador para distinguirlo de la Ley.

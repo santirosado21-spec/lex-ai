@@ -243,3 +243,9 @@
 .rp-reserved li{display:flex;align-items:center;justify-content:space-between;gap:.5rem;border-top:1px solid var(--rp-line);padding:.25rem 0}
 .rp-reserved li span{overflow-wrap:anywhere;min-width:0}
 .rp-reserved li button{flex:none;min-height:36px;min-width:36px;justify-content:center}
+
+.rp-context-links{padding:.85rem 1rem;border-left:2px solid var(--rp-accent)}
+.rp-context-links h3{margin:0;font-size:1.12rem}
+.rp-context-links label{display:flex;gap:.6rem;align-items:flex-start;padding:.4rem 0}
+.rp-context-links input[type=checkbox]{flex:none;width:1.1rem;height:1.1rem;min-height:1.1rem;margin:.2rem 0 0}
+.rp-context-links small{display:block;color:var(--rp-muted);font-weight:400;overflow-wrap:anywhere}
