@@ -431,3 +431,7 @@ Se comprobaron 1032 ubicaciones y 507 extractos en el tratado publicado. Se reab
 ## 2026-11-20 00:34 — codex — Rejon r32.1 probado con minutas y edición
 
 El paquete local pasó cuatro recorridos con respuestas grabadas, doce exportaciones abiertas y 1486 pruebas aprobadas. Los 38 documentos históricos se restituyeron. Se cubrieron 35 de 35 identificadores y 31 de 32 indicios. Se conservaron 47 de 50 hechos. Siguen pendientes el ensayo real con Lorenzo y Pedro, Windows y un equipo de 8 GB.
+
+## 2026-11-20 05:31 — rejon-dev — Línea base en Linux y dos expedientes de privacidad anotados sin medir
+
+Rama local `rejon/comercio-b-20261120` sobre `local/comercio-piloto-20261119` (4ad70b4). `npm ci --ignore-scripts` y build correctos; `npm test`: 1496 pruebas, 1454 aprobadas, 3 fallidas, 39 omitidas. Las 3 fallas (tests 462, 473, 476) fallan por ENOENT de `resources/public-library.sqlite`, archivo ignorado por git que se genera desde `artifacts/legal-library/exports-v1`, ausente aquí; no se reconstruyó ni se modificaron pruebas. Dos expedientes ficticios nuevos anotados y con huella antes de correr; no medidos porque no hay Ollama con el modelo local. Borrador de guía B0 sólo para Santiago. Las entradas STATE/LOG del 12 al 18 de noviembre no estaban en la rama.

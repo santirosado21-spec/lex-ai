@@ -12,6 +12,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- Línea base en Linux de la rama del piloto: build correcto, 1 454 de 1 496 pruebas aprobadas y 3 fallidas por falta del artefacto local `public-library.sqlite`. Dos expedientes ficticios de privacidad (turno y oficina; ruta e incidente vial) están anotados y con huella pero **sin medir**: falta el modelo local. Ver `docs/qa/medicion-privacidad-reserva-b0-20261120.md`.
+
 - r32.1 comprueba el recorrido de dos minutas de café desde la importación hasta la edición con marcador, reapertura y exportación. Se cotejaron doce archivos en LibreOffice. Los 38 documentos históricos se restituyeron íntegros. La cobertura fue de 35/35 identificadores y 31/32 indicios. Se conservaron 47/50 hechos. Las nuevas mediciones y sus límites figuran en el [informe de privacidad y edición](../qa/privacidad-contextual-y-edicion-r32.md).
 
 - r31.1 añade 1 032 referencias del Anexo 4-B y 507 extractos con código y página cotejados. La prueba del ZIP recuperó las notas de cacao y café y sus seis archivos en LibreOffice. La reserva inédita de café cubrió 3/3 folios y 0/3 indicios, conservó 4/8 hechos y se restituyó entera. [Resultados y límites](../qa/reglas-producto-tmec-r31.md).
@@ -113,6 +115,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Medir en un equipo con Ollama los dos expedientes b0 sin ajustar el detector con ellos. Cotejar por fecha de operación asuntos jurídicos nuevos con varias obligaciones o excepciones del mismo artículo. Entregar a Santiago la guía B0 revisada.
 
 - Contrastar en documentos nuevos las descripciones de patios y embalajes que aún permiten reconocer el lugar, y la pérdida de información sobre un envío por la siguiente ruta. Medir los dos efectos antes de cambiar los criterios. Probar con los socios el recorrido de edición y restitución con datos ficticios.
 
