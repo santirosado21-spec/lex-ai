@@ -1,5 +1,5 @@
 import {execFile} from 'node:child_process';
-import {access,appendFile,stat} from 'node:fs/promises';
+import {access,stat} from 'node:fs/promises';
 import {PILOT_VAULT_FILE} from '../server/privacy/pilot-record-vault.mjs';
 import {homedir} from 'node:os';
 import path from 'node:path';
@@ -8,6 +8,7 @@ import {createInterface} from 'node:readline/promises';
 import {hiddenInput} from './entrada-oculta.mjs';
 import {startServer} from '../server/main.mjs';
 import {createIntakeGenerator} from '../server/intake-pilot.mjs';
+import {openPilotUsage} from '../server/providers/pilot-usage.mjs';
 import {selectPilotCredential,selectTemporaryPilotCredential} from '../server/providers/pilot-credentials.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -58,15 +59,10 @@ if (!hasVault) {
  confirmation.fill(0);
  if(!valid){passphrase.fill(0);throw Error('Las frases deben coincidir y tener al menos 12 caracteres.');}
 }
-async function onReceipt(receipt) {
- if(!receipt)return;
- const record={at:new Date().toISOString(),account,model:receipt.observedModel,usage:receipt.usage};
- try {await appendFile(path.join(dataDir,'uso-openai.jsonl'),JSON.stringify(record)+'\n',{mode:0o600});}
- catch {console.error('El borrador se conserva. No se pudo guardar el recibo de uso local.');}
-}
+const usage=await openPilotUsage(dataDir,mode);
 let app;
 try {
- app=await startServer({dataDir,autoInitialize:false,intakePilot:true,pilotPassphrase:passphrase,intakeGenerate:createIntakeGenerator({getApiKey,onReceipt})});
+ app=await startServer({dataDir,autoInitialize:false,intakePilot:true,pilotPassphrase:passphrase,intakeGenerate:createIntakeGenerator({getApiKey,usageStatus:usage.status,onAttempt:attempt=>usage.record(account,attempt)})});
 } finally {passphrase.fill(0);}
 const local=new URL(app.connection.url);
 local.hash=new URLSearchParams({pilot:'intake',token:app.connection.token}).toString();

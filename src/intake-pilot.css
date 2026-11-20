@@ -143,3 +143,9 @@
 
 .rp-proposal {padding:12px;border-left:2px solid #b0a188;background:#f3f0e7;min-width:0}
 .rp-proposal blockquote {margin:8px 0;font-size:15px;overflow-wrap:anywhere}
+
+.rp-usage{margin:1rem 0}
+.rp-usage table{width:100%;border-collapse:collapse;font-size:.85rem;font-variant-numeric:tabular-nums}
+.rp-usage caption{text-align:left;margin:.5rem 0;font-weight:600}
+.rp-usage th,.rp-usage td{padding:.45rem .2rem;text-align:right;border-bottom:1px solid #c8ceca}
+.rp-usage th:first-child{text-align:left}

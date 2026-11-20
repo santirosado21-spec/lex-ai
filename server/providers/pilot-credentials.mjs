@@ -1,11 +1,11 @@
-// Select local Keychain accounts before dispatch. Never replay an HTTP request.
+// Resolve credentials locally. Only explicit backup mode offers a second key after a confirmed refusal.
 import {createOpenAiKeychain} from './openai-keychain.mjs';
 
 export function selectPilotCredential(mode='primary', read=slot=>createOpenAiKeychain({enabled:true,slot}).getApiKey(), selected=()=>{}) {
  if (!['primary','lorenzo','backup','alternate'].includes(mode)) throw new Error('Selecciona primary, lorenzo, backup o alternate.');
- let turn=0;
- const use=async slot=>{const key=await read(slot);selected(slot);return key;};
- return async () => {
+ let turn=0, lastSlot;
+ const use=async slot=>{const key=await read(slot);lastSlot=slot;selected(slot);return key;};
+ const choose=async () => {
   if (mode==='primary' || mode==='lorenzo') return use(mode);
   const slots=mode==='alternate' && (turn++%2===1) ? ['lorenzo','primary'] : ['primary','lorenzo'];
   try {return await use(slots[0]);} catch (error) {
@@ -13,6 +13,13 @@ export function selectPilotCredential(mode='primary', read=slot=>createOpenAiKey
    return use(slots[1]);
   }
  };
+ if (mode==='backup') choose.afterRejection=async previous=>{
+  if(lastSlot!=='primary')throw Error('Respaldo agotado.');
+  const key=await read('lorenzo');
+  if(key===previous)throw Error('La clave de respaldo coincide con la principal.');
+  lastSlot='lorenzo';selected('lorenzo');return key;
+ };
+ return choose;
 }
 
 

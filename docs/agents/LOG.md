@@ -323,3 +323,7 @@ Un DOCX ficticio importado con Ollama activó una revisión de clasificación. U
 ## 2026-11-19 12:11 — codex — Rejon r7 integra valoración, pedimento y dos controles editables con documentos locales
 
 Trece pasajes de cuatro artículos cotejados en cuatro páginas reproducidas con Poppler, PDF.js y revisión visual. Una consulta de OpenAI sobre una operación ficticia devolvió dos fragmentos verificables. Importe, póliza y pedimento ausentes del sobre. Excel local antes de generación, exportaciones editables en tres formatos, 164 pruebas dirigidas. El paquete descomprimido abrió las dos tareas en macOS. Sin validación profesional, segunda clave real o equipos de socios.
+
+## 2026-11-19 18:08 — codex — Rejon r8 incorpora respaldo por cuenta y consumo visible en el expediente
+
+98 pruebas dirigidas y compilación aprobadas. Chromium a cuatro anchos completó una respuesta simulada tras negativa por cuota y mostró el siguiente corte sin repetir la consulta. Dos extracciones independientes del ZIP probaron alternancia y respaldo desde el lanzador con claves temporales ficticias, reinicio con recibos persistentes y exportación a los tres formatos. Cero llamadas facturables en este corte. El ZIP privado termina en r8. Sin validación con la cuenta real de Lorenzo, documentos reales o equipos de los socios.

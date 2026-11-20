@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 12:11 por codex: Rejon r7 integra valoración, pedimento y dos controles editables con documentos locales
+**Última actualización:** 2026-11-19 18:08 por codex: Rejon r8 incorpora respaldo por cuenta y consumo visible en el expediente
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r8 añade consumo local por cuenta y respaldo tras un rechazo explícito de la principal. Compilación, 98 pruebas dirigidas, navegador en cuatro anchos y lanzador desde ZIP verificados con claves ficticias. El historial conserva los tokens reportados y distingue resultados inciertos.
 
 - r7 añade valoración y pedimento, 13 pasajes de los artículos 36, 36-A, 64 y 65 de la Ley Aduanera, PDF cotejado y matrices cifradas por asunto. Prueba real con DOCX sintético y OpenAI, 741 tokens de entrada y 87 de salida. Excel local antes de la generación. Pruebas dirigidas 164/164 y exportaciones verificadas con LibreOffice.
 
@@ -54,7 +56,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Medir pertinencia de las sugerencias y preguntas sobre expedientes nuevos. Revisar el comportamiento del respaldo al agotarse cuota de una cuenta, conservando el límite y evitando duplicar generaciones. Quedan pendientes el flujo libre protegido y la validación profesional.
+- Medir pertinencia de las sugerencias y preguntas sobre expedientes nuevos. El respaldo por cuota ya está probado con respuestas simuladas. Queda la prueba con las dos cuentas reales. Quedan pendientes el flujo libre protegido y la validación profesional.
 
 - Medir la pérdida de campos aduaneros y los identificadores indirectos en un conjunto reservado. Cotejar unidades, cuotas y transitorios de las tablas arancelarias. Quedan pendientes la segunda clave real, la revisión profesional, Windows y los equipos de los socios.
 

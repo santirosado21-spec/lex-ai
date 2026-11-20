@@ -2,6 +2,7 @@ import {useEffect, useRef, useState, type FormEvent} from 'react';
 import {ArrowDownToLine, ArrowRight, BookOpen, Check, ChevronLeft, Cloud, ExternalLink, FileText, FolderClosed, HardDrive, LoaderCircle, Monitor, Presentation, Table2} from 'lucide-react';
 import {api, downloadFile} from './api';
 import IntakeCaseDocument,{type CaseDatum} from './IntakeCaseDocument';
+import IntakeCloudUsage,{type CloudUsage} from './IntakeCloudUsage';
 import IntakeTradeWorksheet from './IntakeTradeWorksheet';
 import LocalIntakeImport from './LocalIntakeImport';
 import PublicLibrary from './PublicLibrary';
@@ -15,7 +16,7 @@ type TaskInfo = {
   id: Task; title: string; preview?: string; evidence?:{line:number;excerpt:string};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
-type PilotStatus = {saved: boolean; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -119,7 +120,10 @@ export default function IntakePilot() {
     try {
       setPilot(await api<PilotStatus>('intake.draft',{task}));
       setNotice('Borrador recibido. Ya puedes revisar la versión local.');
-    } catch {setError('OpenAI no entregó el borrador. Verifica la conexión y la clave configurada en el lanzador.');}
+    } catch {
+      setError('La consulta terminó sin un borrador. Revisa el uso de OpenAI y las cuentas configuradas en el lanzador.');
+      try{setPilot(await api<PilotStatus>('intake.status'));}catch{ /* Preserve the local view if the service is offline. */ }
+    }
     finally {setActivity(null);}
   }
   async function reveal() {
@@ -210,6 +214,7 @@ export default function IntakePilot() {
             {clientStep&&<button type="button" className="rp-back" disabled={busy} onClick={()=>{clearFeedback();setReviewId(undefined);setClientStep(false);}}><ChevronLeft size={15}/> Volver al despacho</button>}
           </form>
         </div>}
+        {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
             {pilot?.tasks.map(item=><option value={item.id} key={item.id}>{item.title}</option>)}
@@ -233,7 +238,8 @@ export default function IntakePilot() {
             <section className="rp-proof"><h2><Cloud size={17}/> Mensaje para OpenAI</h2>{activeTask.evidence?<><p className="rp-reading-summary">La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.</p>
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
-              <button type="button" className="rp-primary" disabled={busy||!activeTask.preview} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> Generando borrador…</>:<>Enviar y generar borrador <ArrowRight size={16}/></>}</button>
+              <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||pilot?.cloudUsage?.remaining===0} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> Generando borrador…</>:<>Enviar y generar borrador <ArrowRight size={16}/></>}</button>
+              {pilot?.cloudUsage?.remaining===0&&<p className="rp-availability">Se usaron los tres envíos de esta sesión. Puedes seguir trabajando con el expediente y los borradores guardados.</p>}
             </section>}
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">

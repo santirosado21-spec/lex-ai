@@ -70,10 +70,19 @@ function draftText(value,doc,evidence) {
 
 export function createIntakeGenerator({
  getApiKey=createOpenAiKeychain({enabled:true}).getApiKey,
- fetchImpl,onReceipt,
+ fetchImpl,onReceipt,onAttempt,usageStatus,
 }={}) {
+ let active=false, previousKey, retry=false, confirmedRefusal=false;
  const provider=createOpenAiProvider({
-  enabled:true,getApiKey,fetchImpl,model:'gpt-6-luna',
+  onAttempt:async attempt=>{
+   confirmedRefusal=Boolean(attempt.rejection);
+   if(onAttempt)await onAttempt(attempt);
+  },
+  getApiKey:async()=>{
+   if(retry)return getApiKey.afterRejection(previousKey);
+   previousKey=await getApiKey();return previousKey;
+  },
+  enabled:true,fetchImpl,model:'gpt-6-luna',
   maxCalls:3,maxOutputTokens:320,maxTotalTokens:4000,reasoningEffort:'none',
  });
  const gateFor=(approvedDynamic,dynamicCategory)=>createEgressPolicy({
@@ -85,19 +94,35 @@ export function createIntakeGenerator({
    return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:dynamic?dynamicCategory:'synthetic'};
   },
  });
- return async (task,{signal,documentKind,articles,scenarioId,research,practice,reading}={}) => {
+ const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading}={}) => {
   const envelope=reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
   const gate=gateFor(practice||research||reading ? canonicalJson(envelope) : null,research||reading?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
-  let answer='';
-  for await (const chunk of gate.generate(envelope.messages,{scope,destination,responseFormat:envelope.responseFormat,signal})) answer+=chunk;
-  // A local accounting failure must not discard a completed provider response.
-  if (onReceipt && provider.lastReceipt) {
-   try { await onReceipt(provider.lastReceipt); } catch { /* the draft remains available */ }
-  }
-  return answer.trim();
+  if(active)throw Error('Hay una consulta en curso.');
+  active=true;
+  const dispatch=async()=>{
+   let answer='';
+   for await (const chunk of gate.generate(envelope.messages,{scope,destination,responseFormat:envelope.responseFormat,signal})) answer+=chunk;
+   return answer.trim();
+  };
+  try {
+   let answer;
+   try {answer=await dispatch();}
+   catch(error){
+    if(!confirmedRefusal || !getApiKey.afterRejection || signal?.aborted)throw error;
+    // Reauthorize the same immutable request and reserve a second physical dispatch under the same provider budget.
+    retry=true;
+    answer=await dispatch();
+   }
+   if(onReceipt && provider.lastReceipt){
+    try{await onReceipt(provider.lastReceipt);}catch{ /* Keep the draft if local accounting fails. */ }
+   }
+   return answer;
+  } finally {active=false;previousKey=undefined;confirmedRefusal=false;retry=false;}
  };
+ if(usageStatus)generate.usageStatus=()=>({...usageStatus(),remaining:provider.status().callsRemaining});
+ return generate;
 }
 
 export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary}) {
@@ -157,6 +182,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   const saved=current();
   return {
    saved:Boolean(saved),
+   ...(generate.usageStatus?{cloudUsage:generate.usageStatus()}:{}),
    protectedRecords:store.protectedRecords===true,
    hasDocument:Boolean(saved?.intake.document),
    drafts:saved?.intake.drafts??{},

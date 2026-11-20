@@ -137,3 +137,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 12:11 — codex — Anclar las lecturas aduaneras a páginas de una edición y conservar los importes en el equipo
 
 **Por qué:** El PDF de la Ley Aduanera distingue la edición impresa de la reforma posterior. La matriz de trabajo requiere cantidades, monedas, folios y observaciones para las exportaciones. La consulta pública sólo necesita los pasajes oficiales y el tema.
+
+## 2026-11-19 18:07 — codex — Limitar el respaldo automático a rechazos expresos de la cuenta principal
+
+**Por qué:** Para el piloto de Rejon, el mismo sobre se vuelve a autorizar una sola vez con otra clave únicamente ante clave inválida o cuota insuficiente explícitas. Ambos envíos conservan el presupuesto común. Un corte, límite por frecuencia o generación incompleta deja el resultado para revisión y evita repetir el envío.

@@ -49,8 +49,8 @@ async function boundedJson(response, limit = 262144) {
 }
 
 export function createOpenAiProvider({enabled = false, getApiKey, model, fetchImpl = globalThis.fetch, timeoutMs = 30000,
-  maxOutputTokens = 512, maxCalls = 0, maxTotalTokens = 0, reasoningEffort, pricing, maxUsd = 0} = {}) {
- if (typeof enabled !== 'boolean' || typeof getApiKey !== 'function' || !validModel(model) || typeof fetchImpl !== 'function' ||
+  maxOutputTokens = 512, maxCalls = 0, maxTotalTokens = 0, reasoningEffort, pricing, maxUsd = 0, onAttempt} = {}) {
+ if (onAttempt !== undefined && typeof onAttempt !== 'function' || typeof enabled !== 'boolean' || typeof getApiKey !== 'function' || !validModel(model) || typeof fetchImpl !== 'function' ||
   !Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 120000 ||
   !Number.isInteger(maxOutputTokens) || maxOutputTokens < 1 || maxOutputTokens > 4096 ||
   !Number.isInteger(maxCalls) || maxCalls < 0 || maxCalls > 100000 ||
@@ -99,14 +99,23 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     throw cause;
    }
    const timeout = AbortSignal.timeout(timeoutMs), combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
+   let outcome = 'unconfirmed', rejection, answer;
    try {
     let response;
     try {
      response = await fetchImpl(URL_CHAT, {method:'POST', headers:{Authorization:`Bearer ${key}`, 'Content-Type':'application/json', Accept:'application/json'},
       body, signal:combined, redirect:'error', credentials:'omit', cache:'no-store'});
     } catch { if (signal?.aborted) throw error('cancelled'); if (timeout.aborted) throw error('timeout'); throw error('network'); }
-    if (response.status === 401 || response.status === 403) { await response.body?.cancel?.().catch(() => {}); throw error('auth'); }
-    if (response.status === 402 || response.status === 429) { await response.body?.cancel?.().catch(() => {}); throw error('quota'); }
+    if (response.status === 401 || response.status === 429) {
+     const reason = await boundedJson(response, 8192).catch(() => null);
+     if (response.status === 401 && keysOnly(reason, ['error']) && reason.error?.code === 'invalid_api_key') rejection = 'invalid_key';
+     if (response.status === 429 && keysOnly(reason, ['error']) && reason.error?.code === 'insufficient_quota') rejection = 'insufficient_quota';
+     outcome = 'rejected';
+     throw error(response.status === 401 ? 'auth' : 'quota');
+    }
+    if (response.status >= 400 && response.status < 500) outcome = 'rejected';
+    if (response.status === 403) { await response.body?.cancel?.().catch(() => {}); throw error('auth'); }
+    if (response.status === 402) { await response.body?.cancel?.().catch(() => {}); throw error('quota'); }
     if (!response.ok) { await response.body?.cancel?.().catch(() => {}); throw error('provider_failed'); }
     const result = await boundedJson(response);
     const choice = Array.isArray(result?.choices) && result.choices.length === 1 ? result.choices[0] : null;
@@ -115,19 +124,25 @@ export function createOpenAiProvider({enabled = false, getApiKey, model, fetchIm
     // usage block never lets the aggregate cap be exceeded.
     if (usage && usage.promptTokens !== null && usage.completionTokens !== null) { tokens += usage.promptTokens + usage.completionTokens - reserve; spentUsd += usd(usage.promptTokens, usage.completionTokens) - reserveUsd; }
     lastReceipt = Object.freeze({requestedModel:model, observedModel:typeof result?.model === 'string' ? result.model.slice(0, 80) : null, usage});
+    outcome = 'incomplete';
     // A length stop is an incomplete answer: never present it as complete.
     if (!choice) throw error('invalid_response');
     if (choice.finish_reason === 'length') throw error('incomplete_response');
     if (choice.finish_reason !== 'stop' || typeof choice.message?.content !== 'string' || !choice.message.content.length ||
      choice.message.content.length > 32768 || choice.message.tool_calls !== undefined || choice.message.refusal) throw error('invalid_response');
     if (combined.aborted) throw error('cancelled');
-    busy = false;
-    yield choice.message.content;
+    answer = choice.message.content;
+    outcome = 'answered';
    } catch (cause) {
     if (signal?.aborted) throw error('cancelled');
     if (cause?.name === 'OpenAiProviderError') throw cause;
     throw error('provider_failed');
-   } finally { busy = false; }
+   } finally {
+    try { if (onAttempt) await onAttempt({outcome, ...(rejection ? {rejection} : {}), receipt:lastReceipt}); }
+    catch { /* Accounting must never discard a provider answer. */ }
+    busy = false;
+   }
+   yield answer;
   },
  };
 }
