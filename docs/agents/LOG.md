@@ -363,3 +363,7 @@ Se verificaron tres envíos reales con los dos hechos ficticios seleccionados, s
 ## 2026-11-19 20:34 — codex — Rejon r17 recupera un folio en la lectura de OpenAI y en tres formatos Office
 
 Una solicitud sobre textos ficticios, 563 tokens, dos líneas con el mismo alias y un tercer soporte reservado al equipo. LibreOffice abrió los tres formatos y se cotejó el contenido exportado. Las 38 narraciones históricas restituyeron los originales, cubrieron 43 de 43 identificadores y conservaron 50 de 66 expresiones. Suite con concurrencia de tres, 1438 aprobadas y 10 omitidas. La clave de Lorenzo y los equipos de los socios quedan por probar.
+
+## 2026-11-19 20:36 — codex — Inventario del SAT para el Anexo 22 de comercio exterior
+
+Extracción reproducida desde el HTML del SAT de 19 de noviembre de 2026. Ocho enlaces, tres PDF capturados y cotejo del índice del DOF. Se separaron publicaciones, compilaciones y anticipadas. La vigencia por operación queda pendiente.

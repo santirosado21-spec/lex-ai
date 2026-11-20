@@ -1,0 +1,64 @@
+{
+  "catalogo": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/normatividad_rmf_rgce2026.html",
+  "sha256_catalogo": "59b97968e570189c065d0cb275b91853d28b59062c7d060923c0e71a03fa2a71",
+  "alcance": "Inventario del portal. La fecha de entrada en vigor requiere cotejo con el DOF.",
+  "documentos": [
+    {
+      "tipo": "publicacion",
+      "titulo": "Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-01-15",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/Anexo22delasRGCEpara2026.pdf",
+      "sha256_pdf": "f0ad60bd1c7be9d2551ce2f56628178f7baf40b8638eae0ca41743bec4077ec3",
+      "bytes": 1380263,
+      "paginas": 133
+    },
+    {
+      "tipo": "compilacion",
+      "titulo": "Compilado Anexo 22 1raRMRGCE para 2026",
+      "fecha_en_portal": "2026-05-20",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/compiladas/CompiladoAnexo22-1raRMRGCE2026.pdf"
+    },
+    {
+      "tipo": "publicacion",
+      "titulo": "1ra Modificación Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-05-20",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/1ra_modificacionAnexo22delasRGCEpara2026.pdf",
+      "sha256_pdf": "4edb1bdfe6db184208651eae0b1ed01e1976884dac710053092d585279c02b3d",
+      "bytes": 46214,
+      "paginas": 1
+    },
+    {
+      "tipo": "anticipada",
+      "titulo": "4ta Versión Anticipada de la 2da modificación al Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-08-31",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anticipadas/2daModificacionAnexo22_2daRMRGCE_2026_CuartaAnticipada.pdf"
+    },
+    {
+      "tipo": "anticipada",
+      "titulo": "5ta Versión Anticipada de la 2da modificación al Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-09-14",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anticipadas/2da_ModificacionAnexo22_2daRMRGCE_2026_QuintaAnticipada.pdf"
+    },
+    {
+      "tipo": "compilacion",
+      "titulo": "Compilado Anexo 22 2daRMRGCE para 2026",
+      "fecha_en_portal": "2026-09-22",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/compiladas/CompiladoAnexo22_2daRMRGCE2026.pdf"
+    },
+    {
+      "tipo": "publicacion",
+      "titulo": "2da Modificación Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-09-22",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anexos/2daModificacionAnexo22delasRGCE2026.pdf",
+      "sha256_pdf": "7093c4ba5a6d46f2ae8f36d86cba6bea5f88a3f233382ee8a10fd8784cf61d41",
+      "bytes": 208725,
+      "paginas": 9
+    },
+    {
+      "tipo": "anticipada",
+      "titulo": "1ra Versión Anticipada de la 3ra modificación al Anexo 22 de las RGCE 2026",
+      "fecha_en_portal": "2026-09-30",
+      "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rgce/anticipadas/3raModificacionAnexo22_3raRMRGCE_2026_PrimeraVersionAnticipada.pdf"
+    }
+  ]
+}

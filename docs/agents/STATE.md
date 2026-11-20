@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 20:34 por codex: Rejon r17 recupera un folio en la lectura de OpenAI y en tres formatos Office
+**Última actualización:** 2026-11-19 20:36 por codex: Inventario del SAT para el Anexo 22 de comercio exterior
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- Catálogo de ediciones del Anexo 22 para investigación. Se extrajeron ocho enlaces oficiales del SAT y se capturaron los tres PDF publicados. El inventario conserva huellas y páginas (133, 1 y 9). La resolución del régimen transitorio y la conexión de estas ediciones a la interfaz siguen abiertas. Ver `docs/research/sat-anexo22-2026-11-19.md`.
 
 - r17 permite elegir líneas de cualquier documento como soporte local. Dos archivos de práctica acreditados pueden compartir un alias efímero en la consulta pública. Una generación real recuperó el folio en el párrafo de OpenAI y añadió tres soportes en Word, Excel y PowerPoint. Coste medido en tokens, 446 de entrada y 117 de salida. En 26 documentos ficticios se restituyeron 26 originales, se cubrieron 23/23 identificadores y 19/20 indicios y se conservaron 31/32 hechos anotados. La reserva tuvo seis documentos. Suite de JavaScript, 1438 aprobadas y 10 omitidas. Evidencia en `artifacts/privacidad-r17/`.
 
