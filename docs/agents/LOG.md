@@ -399,3 +399,7 @@ Dos respuestas reales con 1014 tokens de entrada y 300 de salida. Se probó la r
 ## 2026-11-19 22:58 — codex — Rejon r23 vincula preguntas a folios y mide privacidad en cuatro diálogos
 
 Probado el ZIP con la reproducción de una respuesta real a la pregunta con referencias sustituidas, tres exportaciones abiertas en LibreOffice, reapertura, dos fuentes y lanzador con respaldo simulado. La primera lectura real se rechazó por una referencia a H1 y una pregunta subsidiaria mal formada. En la reserva de retorno los ocho identificadores quedaron cubiertos, un indicio de dos y dos de seis frases útiles. Suite 1457 aprobadas y diez omitidas. Pendientes equipos de los socios, segunda cuenta real, revisión jurídica y diálogo general protegido.
+
+## 2026-11-19 23:05 — codex — Rejon r24 recupera reparación y sustitución en la consulta ordinaria
+
+Cotejados con Poppler y PDF.js 277 encabezados y 20 pasajes. Una primera llamada real dejó la nota sin cita validada. Tras ajustar el contexto, dos llamadas reales completaron la nota y la lista. El ZIP privado reprodujo ambas respuestas, reabrió ambos borradores y exportó seis archivos Office verificados en LibreOffice. La suite pasó 1458 pruebas y omitió diez. El lanzador pasó con dos claves simuladas. Pendientes los equipos de los socios, su revisión jurídica y la privacidad de expedientes libres.

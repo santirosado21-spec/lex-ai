@@ -1,5 +1,10 @@
 # Rejon.AI
 
+## Piloto local de comercio exterior para Santiago, Lorenzo y Pedro
+
+La rama de piloto abre Rejon en el navegador de cada equipo. Para comenzar un expediente ficticio usa [Abrir Rejon en Mac](Abrir%20Rejon.command) o [Abrir Rejon en Windows](Abrir%20Rejon.cmd). La [guía del piloto](piloto/LEEME.md) explica la instalación, las dos cuentas de OpenAI, la revisión de datos y las exportaciones. El [informe de comercio exterior](docs/qa/comercio-exterior-piloto-2026-11-19.md) recoge las tareas del despacho, la cobertura de fuentes y las brechas medidas.
+
+
 Nombre público vigente desde el 10 de noviembre de 2026. Los identificadores internos, el repositorio `lex-ai`, las rutas de datos y los instaladores anteriores conservan el nombre LEX AI para no romper compatibilidad ni atribuir la nueva marca a un binario antiguo. No hay instalador Rejon.AI verificado todavía.
 
 **Estado de `main` (10 de noviembre de 2026): integración experimental para colaboradores.** La aplicación activa aún usa inferencia local y SQLite sin cifrado; los módulos de privacidad, recuperación y nube en desarrollo no forman un flujo privado validado. Usar sólo datos públicos o sintéticos. [Plan de lo que falta](docs/orchestration/main-cofounder-execution-plan-2026-11-10.md) · [Guía para Lorenzo y Pedro](docs/qa/cofounder-main-handoff-2026-11-10.md). La landing muestra Mac Silicon, Intel y Windows; sólo ofrece el DMG ARM **anterior** 0.4.3 como descarga real.

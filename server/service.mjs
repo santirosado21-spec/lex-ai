@@ -149,6 +149,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   // Plural or list references ("artículos 78 y 1832 del Código de Comercio").
   // Each list binds only to the law named right after it. A list with an unknown,
   // missing or ambiguous law returns {unavailable:true}: nothing is substituted.
+  const pilotLaws=intakePilot?[{title:'Ley Aduanera',lawId:'MX-FED-LADUA',jurisdiction:'MX-FED'}]:[];
   function listedArticleReferences(query){
     const text=normalize(query)
       .replace(/\bccf\b/g,'codigo civil federal').replace(/\bcpeum\b/g,'constitucion politica de los estados unidos mexicanos')
@@ -158,7 +159,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     const groups=[...text.matchAll(groupRe)].map(m=>({plural:/s$/.test(m[1])||/^arts\b/.test(m[1]),start:m.index,end:m.index+m[0].length,
       items:[...m[2].matchAll(new RegExp(num,'g'))].map(x=>x[0].replace(/\s*-\s*/,'-').replace(/\s+/g,'-').toUpperCase())}));
     if(!groups.length||!(groups.length>1||groups[0].items.length>1||groups[0].plural))return null;
-    const candidates=[...corpus.map(c=>({title:c.title,lawId:null,jurisdiction:c.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(c=>({title:c.title,lawId:c.id,jurisdiction:c.jurisdiction}))];
+    const candidates=[...pilotLaws,...corpus.map(c=>({title:c.title,lawId:null,jurisdiction:c.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(c=>({title:c.title,lawId:c.id,jurisdiction:c.jurisdiction}))];
     const mentions=segment=>{const k=' '+titleKey(segment)+' ';const out=[];
       for(const c of candidates){const t=' '+titleKey(c.title)+' ';let at=k.indexOf(t);while(at>=0){out.push({at,len:t.length,c});at=k.indexOf(t,at+1);}}
       // A longer title that contains a shorter one wins at the same place.
@@ -195,7 +196,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     const article=/\b(?:articulo|art[.]?)\s+(\d{1,6})(?:[oº°])?(?:\s*-\s*([a-zñ]|\d+))?(?:\s+(bis|ter|quater|quinquies))?(?:\s*-\s*(\d+))?\b/i.exec(normalize(query));
     if(!article)return null;
     const normalized=' '+titleKey(query)+' ';
-    const candidates=[...corpus.map(s=>({title:s.title,lawId:null,jurisdiction:s.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(s=>({title:s.title,lawId:s.id,jurisdiction:s.jurisdiction}))];
+    const candidates=[...pilotLaws,...corpus.map(s=>({title:s.title,lawId:null,jurisdiction:s.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(s=>({title:s.title,lawId:s.id,jurisdiction:s.jurisdiction}))];
     const match=candidates.filter(s=>normalized.includes(' '+titleKey(s.title)+' ')).sort((a,b)=>titleKey(b.title).length-titleKey(a.title).length||Number(Boolean(b.lawId))-Number(Boolean(a.lawId)))[0];
     const ccfAlias=/\bccf\b/i.test(query);
     const localConstitution=/\bconstitucion\b.*\b(?:cdmx|distrito federal|estado(?!s)|local|ciudad)\b/.test(normalize(query));

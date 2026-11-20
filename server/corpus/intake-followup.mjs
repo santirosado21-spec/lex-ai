@@ -118,7 +118,7 @@ export function prepareFollowup(source,ranges,form,focus=[],prior){
   'Devuelve JSON con una sola clave "acciones", una lista de dos oraciones en español de hasta 200 caracteres cada una. ';
  const instruction=period?(form==='carta'?'Prepara opciones de petición al cliente. Inicia cada oración con «Solicitamos» o «Por favor».':'Prepara opciones de cotejo interno. Inicia cada oración con «Cotejar», «Verificar», «Comparar», «Revisar» o «Identificar».'):spec.instruction;
  const prompt='Continúa el trabajo de la nota anterior. '+instruction+(names.length?' Menciona literalmente cada tipo de documento seleccionado por el abogado al menos una vez en las acciones: '+names.join(' y ')+'.':'')+' '+schema+'Limita el texto a solicitudes de documentos o tareas de cotejo. Evita nombres, identificadores, cifras, citas nuevas, plazos y conclusiones jurídicas.\n\nFundamentos seleccionados en el primer borrador\n'+
-  quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n\n')+
+  quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?(['MX-FED-LADUA-97','MX-FED-LADUA-117'].includes(ref.id)?'\nCondición del párrafo primero\n':'\nCondición de la fracción I\n')+condition:'')).join('\n\n')+
   (source.caseFacts?.inquiry?'\n\nPregunta del abogado con referencias sustituidas\n'+source.caseFacts.inquiry:'')+
   (facts.length?'\n\nHechos del ejercicio con sustituciones locales\n'+facts.join('\n'):'')+previous;
  const localContext=source.localTokens?['Proveedor registrado · '+source.localTokens.find(item=>item.publicToken===source.provider).localToken,
@@ -155,7 +155,7 @@ export function renderFollowup(raw,note,{evidence=false}={}){
     new Set(actions.map(a=>a.toLowerCase().replace(/[\p{P}\s]/gu,''))).size!==2)
   throw Error('La revisión requiere dos acciones documentales completas. Se conserva el primer borrador.');
  const spec=forms[note.form];
- const basis=note.quotes.map(({ref,quote,locator,condition})=>'['+ref.id+']'+(locator?' · '+locator:'')+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n');
+ const basis=note.quotes.map(({ref,quote,locator,condition})=>'['+ref.id+']'+(locator?' · '+locator:'')+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?(['MX-FED-LADUA-97','MX-FED-LADUA-117'].includes(ref.id)?'\nCondición del párrafo primero\n':'\nCondición de la fracción I\n')+condition:'')).join('\n');
  return [note.form==='carta'?'Asunto · [[ASUNTO]]\n\nA la atención de [[CLIENTE]]':spec.title+' para [[CLIENTE]] · [[ASUNTO]]',
   spec.intro,actions.map((a,i)=>(i+1)+'. '+a).join('\n'),
   ...(note.localContext&&note.form==='control'?[note.localContext]:[]),

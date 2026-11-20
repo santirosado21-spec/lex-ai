@@ -13,6 +13,12 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Reparación en el extranjero o sustitución por defecto
+
+En **Biblioteca federal → Ley Aduanera**, elige un artículo para abrir su página en la copia local. Puedes revisar los artículos con letras y los artículos bis. El índice incluye los encabezados del cuerpo de la ley, incluso los de disposiciones derogadas.
+
+En un asunto ficticio abre **Consultar con una pregunta propia**. Prueba «¿Qué documentos permiten distinguir el retorno de una mercancía exportada para reparación de la sustitución de un bien previamente importado por resultar defectuoso?». Selecciona el artículo 117 y elige el 97 como segundo fundamento. Comprueba en la vista previa los pasajes que recibirá el proveedor. Después de generar el borrador, abre **Datos originales** y descarga el formato deseado. Si el bien se exportó para retornar en el mismo estado, revisa también el artículo 115.
+
 ### Preguntar quién pagó el flete
 
 Añade `piloto/carta-porte-practica.txt` y `piloto/recibo-porte-practica.txt` como dos documentos del expediente. En **Consultar con una pregunta propia**, escribe «¿Qué comprobante acredita quién pagó el flete de CPV-904153?». Busca fundamentos y selecciona el artículo 65, fracción I, inciso d), de la Ley Aduanera. En **Elegir líneas de mis documentos**, marca la tercera línea de la carta de porte y la tercera del recibo. Puedes incluir un soporte propio como evidencia local.

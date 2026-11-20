@@ -8,6 +8,8 @@ Localicé la base pública de 153,014,272 bytes en el proyecto original y la cop
 
 El abogado puede buscar artículos en el índice local, elegir un pasaje y preparar una consulta con su cita. El mensaje de cada tarea contiene únicamente los fragmentos y hechos permitidos para esa tarea. El cotejo del apéndice 9 incorpora edición, autoridad y fecha de operación. Para extender la investigación libre al resto de la biblioteca falta determinar sistemáticamente qué publicación y transitorios aplican a cada operación.
 
+En r24 la biblioteca incorpora un directorio con 277 encabezados del cuerpo de la Ley Aduanera, incluidos los que llevan sufijos. El PDF se abre por página. Las consultas sobre reparación, sustitución y retorno en el mismo estado recuperan pasajes de los artículos 117, 97 y 115. La selección para la nube cubre 20 pasajes de siete artículos de esta edición.
+
 ## Necesidades del despacho y entregables
 
 | Trabajo del abogado | Datos que necesita localmente | Resultado y evidencia que debe poder revisar |

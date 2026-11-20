@@ -61,6 +61,8 @@ test('question review stays on loopback, original restores only within its matte
  await rpc('save',{firm:'Despacho ficticio',client:customer,title:'Consulta de ensayo',jurisdiction:'MX-FED'});
  const inquiry=await rpc('inspectQuestion',{text:original});assert.doesNotMatch(inquiry.masked,/Empresa Ensayo Lila|X-9134/);
  assert.deepEqual(calls,[]);assert.equal(local.mock.callCount(),2);
+ const listed=await rpc('inspectQuestion',{text:'Coteja los artículos 97 y 117 de la Ley Aduanera.'});
+ assert.deepEqual(new Set(listed.candidates.map(row=>row.citationId)),new Set(['MX-FED-LADUA-97','MX-FED-LADUA-117']));
  const choice={reviewId:inquiry.id,key:'aduana-65/1',angle:'documentos'};
  assert.deepEqual(inquiry.facts,[]);
  for(const factIds of [[],['H1'],[original],null])await assert.rejects(rpc('addQuestion',{...choice,factIds}));
@@ -102,4 +104,22 @@ test('each citation in a two-source opinion must come from its assigned provisio
  }
  for(const wrong of [[ranges[0]],[ranges[1],ranges[0]],[ranges[1],ranges[1]]])assert.throws(()=>prepareFollowup(source,wrong,'control'));
  assert.throws(()=>questionPassage(null,{...request,second:{sourceId:'aduana-64',part:1}}));
+});
+
+test('return and replacement identify separate customs regimes and preserve the page break and the prior import condition',async t=>{
+ const library=await openPublicLibrary('resources/public-library.sqlite');t.after(()=>library.close());
+ const question='¿Qué documentos permiten distinguir el retorno de una mercancía exportada para reparación de la sustitución de un bien previamente importado por resultar defectuoso?';
+ const candidates=q=>questionCandidates(library,q,[{text:q}]);
+ assert.deepEqual(new Set(candidates(question).slice(0,2).map(r=>r.source)),new Set(['aduana-117','aduana-97']));
+ assert.equal(candidates('¿Qué régimen de exportación temporal permite retornar la mercancía en el mismo estado?')[0].source,'aduana-115');
+ assert.ok(!candidates('¿Qué garantía cubre la reparación de un bien defectuoso que adquirí en una tienda?').some(r=>/^aduana-(97|115|117)$/.test(r.source)));
+ const note=questionPassage(library,{sourceId:'aduana-117',part:1,angle:'documentos',second:{sourceId:'aduana-97',part:1}});
+ assert.match(note.body,/clasificación arancelaria de la mercancía retornada\.$/u);
+ assert.match(note.ref.locator,/79–80/);
+ const [first,second]=note.sources;
+ const rendered=renderResearchNote(JSON.stringify({cita:first.body.slice(0,95),segundaCita:second.body,lectura:'El régimen previo y la identidad de las mercancías permiten distinguir reparación y sustitución.',solicitud:'¿Qué documento identifica la mercancía retornada?'}),note);
+ assert.ok(rendered.includes(second.condition));
+ const next=prepareFollowup(note,quotedRanges(note,rendered),'control');
+ assert.ok(next.prompt.includes(second.condition)&&next.prompt.includes('Condición del párrafo primero'));
+ assert.throws(()=>questionPassage(library,{sourceId:'aduana-999',part:0,angle:'documentos'}));
 });

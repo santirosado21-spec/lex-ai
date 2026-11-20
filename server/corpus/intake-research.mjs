@@ -58,7 +58,7 @@ function questionSource(library,sourceId,part){
  let ref,condition,body;
  if(typeof sourceId==='string'&&sourceId.startsWith('ad29-')){
   ref=remedyReference(sourceId,part);body=ref.text;
- }else if(/^aduana-(?:36|36-A|64|65)$/u.test(sourceId)){
+ }else if(typeof sourceId==='string'&&sourceId.startsWith('aduana-')){
   const article=sourceId.slice(7),source=customsPassage(article);
   if(!Number.isInteger(part)||part<0||part>=source.passages.length)throw Error('Pasaje aduanero inválido.');
   const passage=source.passages[part];
@@ -85,9 +85,13 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[],second}
  const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(ref.remedy?'\nCotejo de alcance y vigencia: '+ref.summary:'')+(condition?'\nCondición del encabezado\n'+condition:'')+inquiry+factBlock+markerRule;
  if(other){
   const sources=Object.freeze([first,other]);
-  const blocks=sources.map(({ref})=>ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+ref.text+(ref.remedy?'\n'+ref.summary:''));
+  const returnRegimes=sources.some(s=>s.ref.id==='MX-FED-LADUA-97')&&sources.some(s=>s.ref.id==='MX-FED-LADUA-117');
+  const blocks=sources.map(({ref,body,condition})=>returnRegimes?
+   ref.title+' · '+ref.locator+'\n'+ref.url+(condition?'\nContexto del párrafo primero\n'+condition:'')+'\nPasaje elegido para la cita literal\n'+body:
+   ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+ref.text+(ref.remedy?'\n'+ref.summary:''));
   const interpret=facts.length?' En la lectura explica si los hechos seleccionados se contradicen y qué documento permitiría aclararlo.':'';
-  const pairedPrompt='Relaciona dos fundamentos para un abogado mexicano. Enfoque: '+angles[angle]+focus+'. Explica cómo se complementan o qué diferencia debe comprobar el abogado. Si uno no sustenta la relación, responde {"abstener":true}. Devuelve sólo JSON con cita y segundaCita (una cita literal continua de 24 a 160 caracteres de cada pasaje, en ese orden), lectura (una o dos oraciones de 40 a 300 caracteres sin cifras, nombres ni conclusiones de cumplimiento) y solicitud (una pregunta documental breve entre signos de interrogación). Conserva condiciones y excepciones. No determines vigencia.'+interpret+'\n\n'+blocks.map((block,i)=>'Fuente '+(i+1)+'\n'+block).join('\n\n')+inquiry+factBlock+markerRule;
+  const taskFocus=returnRegimes?' Distingue la reparación en el extranjero y la sustitución de una importación definitiva por defecto. Para cada cita copia sólo texto del pasaje elegido.':'';
+  const pairedPrompt='Relaciona dos fundamentos para un abogado mexicano.'+taskFocus+' Enfoque: '+angles[angle]+focus+'. Explica cómo se complementan o qué diferencia debe comprobar el abogado. Si uno no sustenta la relación, responde {"abstener":true}. Devuelve sólo JSON con cita y segundaCita (una cita literal continua de 24 a 160 caracteres de cada pasaje, en ese orden), lectura (una o dos oraciones de 40 a 300 caracteres sin cifras, nombres ni conclusiones de cumplimiento) y solicitud (una pregunta documental breve entre signos de interrogación). Conserva condiciones y excepciones. No determines vigencia.'+interpret+'\n\n'+blocks.map((block,i)=>'Fuente '+(i+1)+'\n'+block).join('\n\n')+inquiry+factBlock+markerRule;
   const note=Object.freeze({title:'Cotejo · '+ref.id+' y '+other.ref.id,ref,body,condition,angle,sources,refs:Object.freeze(sources.map(s=>s.ref)),prompt:pairedPrompt,...(caseFacts?{caseFacts}:{})});
   verified.add(note);return note;
  }

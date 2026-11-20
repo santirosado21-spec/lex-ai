@@ -5,7 +5,7 @@ import {requestedLegalJurisdiction} from '../assistant-router.mjs';
 // Candidate lookup runs on the device. Only source identifiers and a closed
 // set of research angles are used to reconstruct a question at the cloud boundary.
 import {mentionedConcepts,selectedConcepts} from './question-concepts.mjs';
-import {customsPassage} from './customs-edition.mjs';
+import {customsPassage,hasCustomsPassage} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
 import {loadTradeReading,suggestTradeReadings} from './intake-trade-reading.mjs';
 
@@ -52,7 +52,7 @@ export function questionCandidates(library,original,parts,reference=null){
   if(!reference||reference.unavailable||reference.state)return [];
   for(const item of reference.multi?reference.refs:[reference]){
    if(item.jurisdiction!=='MX-FED')return [];
-   if((item.lawId==='MX-FED-LADUA'||item.titleKey==='ley aduanera')&&['36','36-A','64','65'].includes(item.articleId)){
+   if((item.lawId==='MX-FED-LADUA'||item.titleKey==='ley aduanera')&&hasCustomsPassage(item.articleId)){
     customs(item.articleId,60);continue;
    }
    const row=item.lawId&&library?.lookupArticle({lawId:item.lawId,articleId:item.articleId});
@@ -60,6 +60,17 @@ export function questionCandidates(library,original,parts,reference=null){
    fromLibrary(row.sourceId,60);
   }
   return ranked();
+ }
+ // Match the prior operation as well as the legal event. A product defect
+ // or a repair alone can belong to an ordinary civil or consumer dispute.
+ if(!named.ambiguous&&(!named.lawId||named.lawId==='MX-FED-LADUA')){
+  const q=normalize(original);
+  const international=/\b(?:aduan\w*|importa\w*|exporta\w*|extranjero|pedimento)\b/u.test(q);
+  if(international){
+   if(/\b(?:sustitu\w*|reemplaz\w*|defectuos\w*)\b/u.test(q)&&/\b(?:importa\w*|retorn\w*)\b/u.test(q))customs('97',75);
+   if(/\b(?:repara\w*|elabora\w*|transforma\w*)\b/u.test(q)&&/\b(?:exporta\w*|extranjero)\b/u.test(q))customs('117',75);
+   if(/\b(?:mismo estado|sin modificacion(?:es)?|sin modificar)\b/u.test(q)&&/\b(?:exporta\w*|retorn\w*)\b/u.test(q))customs('115',75);
+  }
  }
  if(!named.lawId){
   for(const [i,{ref,part,partial}] of remedySuggestions(original).entries()){

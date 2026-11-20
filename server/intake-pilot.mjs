@@ -1,3 +1,4 @@
+import {customsDirectory} from './corpus/customs-edition.mjs';
 import {remedyCatalog,remedyPeriod} from './corpus/remedy-index.mjs';
 import {maskedMatterQuestion,questionLines} from './corpus/intake-question-lines.mjs';
 import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
@@ -563,6 +564,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    }
    case 'intake.remedyPeriod':
     exactFields(payload,['date']);return remedyPeriod(payload.date);
+   case 'intake.customsDirectory':
+    exactFields(payload,[]);return customsDirectory();
    case 'intake.remedyCatalog':
     exactFields(payload,[]);return remedyCatalog();
    case 'intake.saveRemedy': {

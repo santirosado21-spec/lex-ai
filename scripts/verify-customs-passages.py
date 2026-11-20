@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 
@@ -32,6 +33,19 @@ SELECTION = {
         (47, "fracción III", "Las regalías y derechos de licencia", "incluidos en el precio pagado."),
         (47, "párrafo final", "Para la determinación del valor de transacción", "datos objetivos y cuantificables."),
     ],
+    "97": [
+        (63, "párrafo primero", "Realizada la importación definitiva de las mercancías", "distintas a las convenidas."),
+        (63, "párrafo segundo", "El retorno tendrá por objeto la sustitución", "las situaciones mencionadas."),
+        (63, "párrafo tercero", "Las mercancías sustitutas deberán llegar", "establecidas por esta Ley."),
+        (63, "párrafo cuarto", "Se podrá autorizar el retorno de las mercancías", "causas debidamente justificadas."),
+    ],
+    "115": [
+        (78, "párrafo único", "Se entiende por régimen de exportación temporal para retornar", "sin modificación alguna."),
+    ],
+    "117": [
+        (79, "párrafo primero", "Se autoriza la salida del territorio nacional de mercancías para someterse", "que establezca el Reglamento."),
+        ((79, 80), "párrafo segundo", "Al retorno de las mercancías se pagará", "clasificación arancelaria de la mercancía retornada."),
+    ],
 }
 
 
@@ -42,16 +56,45 @@ def main():
     args = parser.parse_args()
     if hashlib.sha256(args.pdf.read_bytes()).hexdigest() != SHA:
         raise SystemExit("El PDF difiere de la edición cotejada.")
-    pages = {}
+    raw = subprocess.check_output(["pdftotext", "-layout", str(args.pdf), "-"]).decode()
+    sheets = raw.split("\f")
+    # In this edition the running header ends with the house department and the
+    # footer is the physical page number. Bound cross-page quotes to the body.
+    def page_body(page):
+        text = sheets[page - 1]
+        header = "Secretaría de Servicios Parlamentarios"
+        footer = f"{page} de 220"
+        if text.count(header) != 1 or not text.rstrip().endswith(footer):
+            raise ValueError(f"Revisar encabezado o pie de la página {page}")
+        return text.split(header, 1)[1].rsplit(footer, 1)[0]
+
+    # An article begins with its printed heading, not a lower-case cross-reference.
+    heading = re.compile(r"^[ \t]*(?:ART[IÍ]CULO|Artículo) (\d+)(?:o(?=\.))?(?:\.?-([A-Z])| (bis|ter)(?: (\d+))?)?\.(?=-|\s|$)", re.M)
+    index = {}
+    for page, sheet in enumerate(sheets, 1):
+        body = re.split(r"^[ \t]*Transitorios[ \t]*$", sheet, maxsplit=1, flags=re.M | re.I)
+        for match in heading.finditer(body[0]):
+            article = "-".join(part.upper() for part in match.groups() if part)
+            if article in index:
+                raise ValueError(f"Encabezado duplicado: {article}")
+            index[article] = page
+        if len(body) > 1:
+            break
+    if len(index) != 277 or any(str(i) not in index for i in range(1, 204)) or list(index)[-1] != "203":
+        raise ValueError("Verificar manualmente el índice de la edición")
+    index_path = OUTPUT.with_name("ley-aduanera-indice.json")
+    serialized = json.dumps(index, ensure_ascii=False, indent=2) + "\n"
+    if args.write:
+        index_path.write_text(serialized, encoding="utf-8")
+    elif index_path.read_text(encoding="utf-8") != serialized:
+        raise SystemExit("El índice difiere de los encabezados impresos.")
     articles = {}
     for article, spans in SELECTION.items():
         articles[article] = []
-        for page, locator, start, stop in spans:
-            if page not in pages:
-                text = subprocess.check_output(["pdftotext", "-layout", "-f", str(page), "-l", str(page),
-                                                str(args.pdf), "-"]).decode()
-                pages[page] = " ".join(text.split())
-            text = pages[page]
+        for pages, locator, start, stop in spans:
+            pages = pages if isinstance(pages, tuple) else (pages,)
+            page = pages[0]
+            text = " ".join(" ".join(page_body(n) for n in pages).split())
             if text.count(start) != 1:
                 raise SystemExit(f"Inicio ambiguo en la página {page}")
             first = text.index(start)
@@ -59,13 +102,13 @@ def main():
             passage = text[first:end]
             if len(passage) > 850:
                 raise SystemExit(f"Revisar límites en la página {page}")
-            articles[article].append(dict(page=page, locator=locator, text=passage))
+            articles[article].append(dict(page=page, locator=locator, text=passage, **({"endPage": pages[-1]} if len(pages) > 1 else {})))
     result = json.dumps(articles, ensure_ascii=False, indent=2) + "\n"
     if args.write:
         OUTPUT.write_text(result, encoding="utf-8")
     elif OUTPUT.read_text(encoding="utf-8") != result:
         raise SystemExit("Los pasajes empaquetados difieren de la extracción.")
-    print(f"{sum(map(len, articles.values()))} pasajes cotejados en {len(pages)} páginas")
+    print(f"{sum(map(len, articles.values()))} pasajes cotejados y {len(index)} encabezados localizados")
 
 
 if __name__ == "__main__":

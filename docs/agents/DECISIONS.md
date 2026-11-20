@@ -201,3 +201,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 22:58 — codex — Conservar referencias documentales dentro de sustituciones más amplias
 
 **Por qué:** Un encabezado cubierto junto con un nombre de cliente ocultaba correctamente el primer folio y lo dejaba sin protección en un seguimiento. El mapa local conserva su identidad dentro del texto ya oculto y reconstruye las referencias rotuladas de expedientes anteriores.
+
+## 2026-11-19 23:05 — codex — Indexar la edición impresa de Ley Aduanera por página
+
+**Por qué:** El índice federal congelado omite esta ley. La navegación usa 277 encabezados del cuerpo y conserva el PDF completo. Las preguntas aceptan únicamente los pasajes cotejados y distinguen la cita del contexto del párrafo primero.
