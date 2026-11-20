@@ -1,17 +1,22 @@
 ENCARGO PARA CLAUDE/CODEX EN EL MAC DE SANTIAGO (sin nube, sin claves, sin datos reales)
 
-Rama: rejon/comercio-b-20261120 en https://github.com/santirosado21-spec/lex-ai (HEAD = el commit más reciente de esa rama; no usar main).
+Rama: rejon/comercio-b-20261120 en https://github.com/santirosado21-spec/lex-ai. Fijar el commit del paquete: COMMIT_PAQUETE = ______ (lo rellena quien entregue este texto con el SHA completo ya empujado; no usar HEAD móvil ni main).
 
-0. Verificación previa, antes de correr nada:
-   - git fetch origin && git checkout rejon/comercio-b-20261120 && git status. Informar el commit.
-   - sha256sum eval/privacy-trade/expediente-turno-oficina-b0-20261120.json eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json eval/legal-b0/*.json. Deben coincidir con docs/qa/medicion-privacidad-reserva-b0-20261120.md y docs/qa/casos-legales-valor-aduana-b0-20261120.md. Si no coinciden, parar e informar.
+Capa local verificada por lectura de código (rama 5e8e7c0, antes de este encargo): scripts/measure-intake-dialogue.mjs sólo pasa a inspectLocalDocument un fetch que hace assert de que la URL sea exactamente http://127.0.0.1:11434/api/chat (cualquier otra URL aborta); server/intake-import.mjs sólo llama esa URL con el modelo readerModel = qwen3.5:2b-q4_K_M (server/privacy/local-reader-status.mjs); en server/privacy/*.mjs, intake-sources.mjs y corpus/intake-question-lines.mjs no hay otra llamada de red (grep de fetch( y URLs). "--app=." solo indica la carpeta que importa el código. Repetir ese grep en el commit fijado antes de correr; si aparece otra URL, PARAR.
+
+0. Verificación previa, sin alterar cambios locales:
+   - git status. Si hay cambios locales, NO hacer checkout en esa carpeta ni reset/stash/clean. Usar un worktree separado: git fetch origin && git worktree add ../rejon-b0 COMMIT_PAQUETE
+   - Comprobar que COMMIT_PAQUETE es ancestro de origin/rejon/comercio-b-20261120 (git merge-base --is-ancestor COMMIT_PAQUETE origin/rejon/comercio-b-20261120). Si una rama local vieja existe, actualizarla sólo con git merge --ff-only, sin forzar. Informar el SHA.
+   - En macOS usar shasum -a 256 (sha256sum puede no estar instalado; verificar con "command -v"). shasum -a 256 eval/privacy-trade/expediente-turno-oficina-b0-20261120.json eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json eval/legal-b0/*.json
+     Deben empezar por: c6d70b4c (turno-oficina), 67698567 (ruta-incidente), 91b240bc (casos-valor-aduana), 85ff917f (rgce-transitorios). Si no coinciden, parar e informar.
    - ollama list debe mostrar qwen3.5:2b-q4_K_M. Si falta, informar; no descargar sin orden del dueño.
    - ls resources/public-library.sqlite artifacts/legal-library/exports-v1. Informar cuáles existen.
-1. Privacidad (reserva, NO ajustar el detector con estos casos):
-   npm ci && node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-turno-oficina-b0-20261120.json --app=.
-   npm ci && node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json --app=.
-   Pegar la salida completa sin editar. Contar por separado indicios completamente ocultos y hechos completamente legibles. Cero solicitudes a la nube.
-2. Base de biblioteca: SOLO si artifacts/legal-library/exports-v1 ya existe en ese Mac como fuente autorizada, correr node scripts/index-legal-library.mjs y describir el alcance generado (conteos, huella). No generar corpus desde archivos en cuarentena (resources/legal-acquisition-*.json), no adquirir nada, no inferir autorización. Si falta la fuente, informar y parar.
-3. Con la base presente, npm test completo: informar pruebas, aprobadas, fallidas, omitidas y los tests 462, 473 y 476.
-4. Los casos legales de eval/legal-b0 NO se prueban todavía en el piloto sin orden del dueño; sólo verificar huellas.
+1. Instalar una sola vez: npm ci (no repetir).
+2. Privacidad (reserva, NO ajustar el detector con estos casos):
+   node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-turno-oficina-b0-20261120.json --app=.
+   node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json --app=.
+   Pegar la salida completa sin editar. Contar por separado indicios completamente ocultos y hechos completamente legibles. Cero solicitudes a la nube. Si el script falla, informar el error textual; no modificar el script ni los casos para que pase.
+3. Base de biblioteca: SOLO si artifacts/legal-library/exports-v1 ya existe en ese Mac como fuente autorizada, correr node scripts/index-legal-library.mjs y describir el alcance (conteos, huella). No generar corpus desde archivos en cuarentena (resources/legal-acquisition-*.json), no adquirir nada, no inferir autorización. Si falta la fuente, informar y parar.
+4. Con la base presente, npm test completo, una vez: informar pruebas, aprobadas, fallidas, omitidas y los tests 462, 473 y 476. Referencia en Linux sin base: 1496 / 1454 / 3 fallidas / 39 omitidas.
+5. Casos legales (eval/legal-b0): sólo verificar huellas. No se pueden probar de forma válida todavía: falta el texto previo del Reglamento anterior al 24-02-2026 y la fecha de los avisos de Economía que activan las claves AL y C1. No inventar contexto ni ajustar el caso para que pase.
 Límites: sin push a main, sin claves en logs, sin OpenAI, sin documentos de clientes, no tocar scripts/loop/ ni landing/assets/fonts/provenance 2.json. Informar lo medido y lo no medido por separado.
