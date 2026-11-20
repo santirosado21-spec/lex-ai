@@ -1,4 +1,4 @@
-import {tradeDocumentAnchorValues} from './trade-document-structure.mjs';
+import {isProductAlias,tradeDocumentAnchorValues} from './trade-document-structure.mjs';
 import {createHash} from 'node:crypto';
 import {createPseudonymStore} from './pseudonyms.mjs';
 
@@ -15,6 +15,10 @@ export function bindReviewedDocument(review,workspaceId,matterId) {
  for(const value of tradeDocumentAnchorValues(review.restored)){
   if(registered.size>=128)break;
   if(value.length<=1024&&!value.includes('[[LEX_'))registered.add(value);
+ }
+ for(const value of review.productAliases??[]){
+  if(registered.size>=128)break;
+  if(isProductAlias(value)&&entities.some(entity=>entity.includes(value)))registered.add(value);
  }
  const vault=createPseudonymStore();
  const {mappingVersion}=vault.protect({scope,entities:[...registered],messages:[{role:'user',content:''}]});

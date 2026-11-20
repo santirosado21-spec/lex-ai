@@ -13,6 +13,10 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Ocultar un dato de una pregunta
+
+En **Consultar con una pregunta propia**, escribe la consulta y abre **Reservar datos de esta pregunta**. Selecciona una expresión en el campo de la pregunta y pulsa **Reservar selección**. Puedes reservar varias expresiones. Al pulsar **Buscar fundamentos en este equipo**, abre **Pregunta con sustituciones locales** y comprueba cada aparición. El control usa coincidencias exactas en esa pregunta. Puedes quitar una reserva antes de buscar. En **Datos originales** y en la exportación se restituye el texto para el abogado.
+
 ### Reparación en el extranjero o sustitución por defecto
 
 En **Biblioteca federal → Ley Aduanera**, elige un artículo para abrir su página en la copia local. Puedes revisar los artículos con letras y los artículos bis. El índice incluye los encabezados del cuerpo de la ley, incluso los de disposiciones derogadas.

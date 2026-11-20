@@ -1,6 +1,6 @@
 // Project the stored substitutions onto original line offsets, including multiline masks.
 // Per-document proof is checked before the result can supply synthetic cloud context.
-import {tradeDocumentAnchorValues} from '../privacy/trade-document-structure.mjs';
+import {isProductAlias,tradeDocumentAnchorValues} from '../privacy/trade-document-structure.mjs';
 import {createHash} from 'node:crypto';
 import {caseSources} from '../intake-sources.mjs';
 import {openReviewedDocument} from '../privacy/intake-document-map.mjs';
@@ -34,7 +34,10 @@ export function questionLines(saved,sourceId,transient){
   const view=openReviewedDocument(source.document,saved.firm.id,saved.entry.id);
   for(const value of tradeDocumentAnchorValues(view.original))anchors.add(value);
   if(source.id===sourceId)original=view.original;
-  for(const {value,token} of view.tokens)if(!tokens.has(value))tokens.set(value,token);
+  for(const {value,token} of view.tokens){
+   if(!tokens.has(value))tokens.set(value,token);
+   if(isProductAlias(value))anchors.add(value);
+  }
  }
  const ends=new Uint32Array(original.length),anchorEnds=new Uint32Array(original.length);
  const values=new Set([...tokens.keys(),...anchors,saved.firm.name,saved.entry.title,saved.entry.client,saved.intake.supplier]);

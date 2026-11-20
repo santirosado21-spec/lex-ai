@@ -59,3 +59,15 @@ test('spatial and event descriptions are masked while payment questions retain g
  assert.ok(visible.includes('Qué comprobante pedirías')&&visible.includes('quién asumió el seguro'));
  assert.equal(r.restored,text);
 });
+
+test('a temporal sound cue is protected and generic test descriptions stay readable',async()=>{
+ const text='La guía se selló cuando repicaron las hojas de bronce de la estación. La prueba acústica detectó una vibración en el motor.';
+ const result=await reviewIntakeDocument({text,originalHash:'a'.repeat(64),suggestions:[],fields:[]});
+ const visible=result.parts.map(p=>p.text??'***').join('');
+ assert.ok(!visible.includes('hojas de bronce')&&visible.includes('vibración en el motor'));
+ const ordinary='El informe indica la exportación temporal para transformación.';
+ const specific=ordinary.slice(0,-1)+' junto al reloj con dientes de ámbar.';
+ const selectAll=async(_s,input)=>({oraciones:JSON.parse(input).map(s=>s.id)});
+ assert.deepEqual((await reviewContextLocally(ordinary,selectAll)).ranges,[]);
+ assert.deepEqual((await reviewContextLocally(specific,selectAll)).ranges,[[0,specific.length]]);
+});

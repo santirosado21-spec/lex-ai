@@ -1,5 +1,5 @@
 import {useState,type FormEvent} from 'react';
-import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle} from 'lucide-react';
+import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle,ShieldPlus,X} from 'lucide-react';
 import IntakePermit,{type PermitHint,type PermitSelection} from './IntakePermit';
 import IntakeQuestionLines from './IntakeQuestionLines';
 import {api} from './api';
@@ -9,6 +9,8 @@ export type QuestionSelection={reviewId:string;key:string;angle:string;secondKey
 
 export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:boolean;onPermit:(selection:PermitSelection,reviewId:string)=>Promise<void>;onSelect:(selection:QuestionSelection)=>Promise<void>}){
  const [open,setOpen]=useState(false),[question,setQuestion]=useState('');
+ const [reserved,setReserved]=useState<string[]>([]);
+ const [selection,setSelection]=useState('');
  const [review,setReview]=useState<Review|null>(null),[key,setKey]=useState(''),[angle,setAngle]=useState('requisitos');
  const [busy,setBusy]=useState(false),[error,setError]=useState('');
  const [route,setRoute]=useState<'permit'|'passage'>('passage');
@@ -20,7 +22,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
  async function inspect(event:FormEvent){
   event.preventDefault();setBusy(true);setReview(null);setSecondKey('');setFactIds([]);setError('');
   try{
-   const result=await api<Review>('intake.inspectQuestion',{text:question.trim()});
+   const result=await api<Review>('intake.inspectQuestion',{text:question.trim(),...(reserved.length?{reserved}:{})});
    setReview(result);setKey(result.candidates[0]?.key??'');setRoute(result.permit&&!result.candidates[0]?.key.startsWith('ad29-')?'permit':'passage');setAngle(result.suggestedAngle);
   }catch(cause){setError(cause instanceof Error?cause.message:'No se pudo revisar la consulta local.');}
   finally{setBusy(false);}
@@ -28,7 +30,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
  async function choose(){
   if(!review)return;
   setBusy(true);setError('');
-  try{await onSelect({reviewId:review.id,key,angle,...(secondKey?{secondKey}:{}),...(factIds.length?{factIds}:{})});setOpen(false);setQuestion('');setReview(null);}
+  try{await onSelect({reviewId:review.id,key,angle,...(secondKey?{secondKey}:{}),...(factIds.length?{factIds}:{})});setOpen(false);setQuestion('');setReserved([]);setSelection('');setReview(null);}
   catch(cause){setError(cause instanceof Error?cause.message:'No se pudo preparar el mensaje.');}
   finally{setBusy(false);}
  }
@@ -36,9 +38,17 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
   <button className="rp-quiet" type="button" disabled={busy||disabled} aria-expanded={open} aria-controls="rp-question-panel" onClick={()=>setOpen(!open)}><FileSearch size={17}/>Consultar con una pregunta propia<ChevronDown size={15}/></button>
   {open&&<div id="rp-question-panel" className="rp-reveal"><form onSubmit={inspect}>
    <label htmlFor="rp-question-text">Pregunta del expediente</label>
-   <textarea id="rp-question-text" rows={3} maxLength={800} disabled={busy||disabled} placeholder="¿Qué documentos acreditan el flete y el seguro en el valor en aduana?" value={question} onChange={e=>{setQuestion(e.target.value);setReview(null);setError('');}}/>
+   <textarea onSelect={e=>setSelection(e.currentTarget.value.slice(e.currentTarget.selectionStart,e.currentTarget.selectionEnd).trim())} id="rp-question-text" rows={3} maxLength={800} disabled={busy||disabled} placeholder="¿Qué documentos acreditan el flete y el seguro en el valor en aduana?" value={question} onChange={e=>{setQuestion(e.target.value);setSelection('');setReview(null);setError('');}}/>
+   <details className="rp-details rp-reserved"><summary>Reservar datos de esta pregunta</summary>
+    <p>Selecciona una expresión en la pregunta. Rejon ocultará todas sus coincidencias exactas en la vista con sustituciones.</p>
+    <button type="button" className="rp-quiet" disabled={busy||disabled||selection.length<2||selection.length>256||reserved.includes(selection)||reserved.length>=24}
+     onClick={()=>{setReserved([...reserved,selection]);setSelection('');setReview(null);setError('');}}><ShieldPlus size={15}/>Reservar selección</button>
+    {reserved.length>0&&<ul aria-label="Datos reservados">{reserved.map(term=><li key={term}><span>{term}</span><button type="button" className="rp-quiet" disabled={busy||disabled} aria-label={'Quitar '+term}
+     onClick={()=>{setReserved(reserved.filter(s=>s!==term));setReview(null);setError('');}}><X size={15}/></button></li>)}</ul>}
+    {reserved.some(s=>!question.trim().includes(s))&&<p role="status">La pregunta cambió. Quita la expresión que ya no aparece o vuelve a escribirla.</p>}
+   </details>
    <p>La pregunta se revisa en tu equipo. Podrás cotejar los fundamentos antes de preparar un mensaje para OpenAI.</p>
-   <button className="rp-quiet" disabled={busy||disabled||question.trim().length<10}>{busy?<LoaderCircle className="rp-spin" size={16}/>:<HardDrive size={16}/>}Buscar fundamentos en este equipo</button>
+   <button className="rp-quiet" disabled={busy||disabled||question.trim().length<10||reserved.some(s=>!question.trim().includes(s))}>{busy?<LoaderCircle className="rp-spin" size={16}/>:<HardDrive size={16}/>}Buscar fundamentos en este equipo</button>
   </form>
   {error&&<p role="alert">{error}</p>}
   {review&&<div className="rp-reveal"><details className="rp-details"><summary>Pregunta con sustituciones locales · {review.count}</summary><p>{review.masked}</p>{Boolean(review.sources?.length)&&<p>Los números de los datos coinciden con los de las líneas del expediente.</p>}</details>
@@ -46,7 +56,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
     <button type="button" className="rp-quiet" aria-pressed={route==='permit'} disabled={busy||disabled} onClick={()=>setRoute('permit')}>Cotejar pedimento</button>
     <button type="button" className="rp-quiet" aria-pressed={route==='passage'} disabled={busy||disabled} onClick={()=>setRoute('passage')}>Consultar pasaje jurídico</button></div>}
    {route==='permit'&&review.permit?<IntakePermit key={review.id} hint={review.permit} disabled={busy||disabled} onSave={async selection=>{
-    await onPermit(selection,review.id);setQuestion('');setReview(null);setOpen(false);
+    await onPermit(selection,review.id);setQuestion('');setReserved([]);setSelection('');setReview(null);setOpen(false);
    }}/>:<>
    <div className="rp-question-sources"><div>
    <label htmlFor="rp-question-source">Pasaje que quieres consultar<select id="rp-question-source" disabled={busy||disabled} value={key} onChange={e=>{setKey(e.target.value);setSecondKey('');}}>{review.candidates.map(row=><option key={row.key} value={row.key}>{row.label}</option>)}</select></label>

@@ -61,6 +61,14 @@ test('question review stays on loopback, original restores only within its matte
  await rpc('save',{firm:'Despacho ficticio',client:customer,title:'Consulta de ensayo',jurisdiction:'MX-FED'});
  const inquiry=await rpc('inspectQuestion',{text:original});assert.doesNotMatch(inquiry.masked,/Empresa Ensayo Lila|X-9134/);
  assert.deepEqual(calls,[]);assert.equal(local.mock.callCount(),2);
+ const word='vidrio difuso';
+ const privateQuestion=original+' '+word+' y '+word;
+ for(const reserved of [null,[null],[word,word],['fuera de la pregunta'],['v']])
+  await assert.rejects(rpc('inspectQuestion',{text:privateQuestion,reserved}));
+ const manual=await rpc('inspectQuestion',{text:privateQuestion,reserved:[word]});
+ assert.ok(!manual.masked.includes(word));
+ const manualTask=(await rpc('addQuestion',{reviewId:manual.id,key:'aduana-65/1',angle:'documentos'})).task;
+ assert.ok(manualTask!==undefined);
  const listed=await rpc('inspectQuestion',{text:'Coteja los artículos 97 y 117 de la Ley Aduanera.'});
  assert.deepEqual(new Set(listed.candidates.map(row=>row.citationId)),new Set(['MX-FED-LADUA-97','MX-FED-LADUA-117']));
  const choice={reviewId:inquiry.id,key:'aduana-65/1',angle:'documentos'};

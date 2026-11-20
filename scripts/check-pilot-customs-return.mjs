@@ -14,7 +14,10 @@ const {customsPassage}=await mod('server/corpus/customs-edition.mjs');
 const {createIntakeGenerator}=await mod('server/intake-pilot.mjs');
 const repair=customsPassage('117').passages[1],replacement=customsPassage('97').passages[1];
 const firm='Despacho de Prueba Ceiba',client='Cliente de Prueba Coral',title='Ejercicio de devolución';
-const question='¿Qué documentos permiten distinguir el retorno de una mercancía exportada para reparación de la sustitución de un bien previamente importado por resultar defectuoso?';
+const reserve=process.argv.includes('--reservar');
+const term='luz de ciruela';
+const baseQuestion='¿Qué documentos permiten distinguir el retorno de una mercancía exportada para reparación de la sustitución de un bien previamente importado por resultar defectuoso?';
+const question=baseQuestion+(reserve?' El primer soporte dice '+term+' y el segundo dice '+term+'.':'');
 const replies=[
  {cita:repair.quote.slice(0,107),segundaCita:replacement.quote,lectura:'La reparación exige identificar los servicios prestados en el extranjero. La sustitución requiere cotejar la importación previa y la clase de la mercancía.',solicitud:'¿Qué documento identifica la mercancía sustituta?'},
  {acciones:['Comparar los documentos de importación con la descripción de la mercancía sustituta.','Verificar qué servicios se prestaron en el extranjero.']},
@@ -27,7 +30,7 @@ const seen=[],external=[],receipts=[];
 const generator=createIntakeGenerator({...(live?{}:{getApiKey:async()=>'sk-'+'s'.repeat(32)}),onReceipt:r=>receipts.push(r),fetchImpl:async(url,opts)=>{
  assert.equal(url,'https://api.openai.com/v1/chat/completions');
  const body=JSON.parse(opts.body);
- for(const word of [firm,client,title,question])assert.ok(!opts.body.includes(word));
+ for(const word of [firm,client,title,question,term])assert.ok(!opts.body.includes(word));
  for(const word of [repair.quote,repair.condition,replacement.quote,replacement.condition])assert.ok(body.messages[0].content.includes(word));
  assert.equal(body.store,false);
  const fallback=replies[count++];assert.ok(fallback);
@@ -74,8 +77,26 @@ try{
  await p.locator('#rp-law-library').screenshot({path:path.join(out,'biblioteca.png')});
  await b('Cerrar biblioteca').click();await p.locator('#intake-firm').fill(firm);await b('Continuar').click();
  await p.locator('#intake-client').fill(client);await p.locator('#intake-title').fill(title);await b('Guardar en este equipo').click();
- await b('Consultar con una pregunta propia').click();await p.getByLabel('Pregunta del expediente').fill(question);await b('Buscar fundamentos en este equipo').click();
+ await b('Consultar con una pregunta propia').click();const input=p.getByLabel('Pregunta del expediente');await input.fill(question);
+ if(reserve){
+  await p.getByText('Reservar datos de esta pregunta',{exact:true}).click();
+  await input.focus();
+  await input.evaluate((el,term)=>el.setSelectionRange(el.value.indexOf(term),el.value.indexOf(term)+term.length),term);
+  await b('Reservar selección').click();
+  await b('Quitar '+term).waitFor();
+  await input.fill(baseQuestion);
+  assert.ok(await b('Buscar fundamentos en este equipo').isDisabled());
+  await input.fill(question);
+ }
+ await b('Buscar fundamentos en este equipo').click();
  const first=p.getByLabel('Pasaje que quieres consultar');await first.waitFor({timeout:125000});
+ if(reserve){
+  const preview=p.locator('details').filter({has:p.locator('summary').filter({hasText:'Pregunta con sustituciones locales'})});
+  await preview.locator('summary').click();
+  assert.ok(!(await preview.locator('p').first().innerText()).includes(term));
+  for(const width of [320,390,768,1280]){await p.setViewportSize({width,height:900});assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+  await p.locator('.rp-question').screenshot({path:path.join(out,'reserva.png')});
+ }
  const results=await first.locator('option').evaluateAll(rows=>rows.map(row=>row.value));
  assert.deepEqual(new Set(results.slice(0,2)),new Set(['aduana-97/1','aduana-117/1']));
  await first.selectOption('aduana-117/1');await p.getByLabel('Segundo fundamento').selectOption('aduana-97/1');

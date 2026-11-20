@@ -116,3 +116,15 @@ test('a question keeps the local number of a known reference and its paragraph b
  assert.ok(local.masked.includes(ref+'?\n\n'));assert.equal(local.count,2);
  assert.ok(!local.masked.includes('CPV-904153')&&!local.masked.includes('REF-701'));
 });
+
+test('a concealed product name keeps its own marker inside a larger mask and across documents',async()=>{
+ const model='NovaFlux Aire',text='Se despachó el equipo '+model+' desde el recinto de prueba.';
+ const reviewed=await reviewIntakeDocument({text,originalHash:createHash('sha256').update(text).digest('hex'),suggestions:[model],fields:[],context:{available:true,ranges:[[0,text.length]]}});
+ const a={id:'orden',label:'Orden',document:bindReviewedDocument(reviewed,'firma','asunto')};
+ const b=await doc('El informe identifica '+model+'.','anexo',[model]);
+ const rows=[a,b].map(source=>questionLines(saved(a,b),source.id)[0]);
+ const handles=rows.map(row=>row.parts.find(part=>part.value===model)?.token);
+ assert.ok(handles[0]);assert.equal(handles[0],handles[1]);
+ assert.ok(rows[0].parts.every(part=>part.text===undefined));
+ assert.ok(rows.every(row=>!row.cloud&&!row.masked.includes(model)));
+});

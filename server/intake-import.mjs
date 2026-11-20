@@ -1,3 +1,4 @@
+import {describesEquipmentReturn} from './privacy/trade-document-structure.mjs';
 import {intakeWindows} from './privacy/intake-windows.mjs';
 import {createHash} from 'node:crypto';
 import {reviewContextLocally} from './privacy/intake-context-review.mjs';
@@ -30,7 +31,9 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
  const windows=intakeWindows(text);
  const format=review ? {...shape,required:[...shape.required,'entities'],properties:{...shape.properties,
   entities:{type:'array',maxItems:96,items:{type:'string',minLength:2,maxLength:1024}}}} : shape;
- const instruction=review ? ' En entities enumera fragmentos literales con nombres de personas, empresas, direcciones completas de cualquier país, correos, teléfonos, identificadores fiscales, cuentas, números de expediente y otros datos que identifiquen a una parte. Copia exactamente cada fragmento del documento, sin reformular. Incluye los identificadores de embarque, citas de descarga, series, lotes, buque y viaje. En entities devuelve sólo los valores identificables con el mínimo texto necesario. Conserva hechos jurídicos, mercancías genéricas y etiquetas de campo.' : '';
+ const entityScope=describesEquipmentReturn(text)
+  ?'Para cada valor pregúntate si distingue a una persona, instalación o una operación concreta entre otras. Extrae únicamente ese valor. Una acción, una pregunta, una pieza común, una reparación o el tipo de trámite por sí solos no identifican al cliente. Si un sustantivo va seguido de un folio, extrae el folio. Conserva las negaciones y los hechos técnicos.':'Conserva hechos jurídicos, mercancías genéricas y etiquetas de campo.';
+ const instruction=review ? ' En entities enumera fragmentos literales con nombres de personas, empresas, direcciones completas de cualquier país, correos, teléfonos, identificadores fiscales, cuentas, números de expediente y otros datos que identifiquen a una parte. Copia exactamente cada fragmento del documento, sin reformular. Incluye los identificadores de embarque, citas de descarga, series, lotes, buque y viaje. En entities devuelve sólo los valores identificables con el mínimo texto necesario. '+entityScope : '';
 
  async function ask(system,input,format,numPredict){
   signal?.throwIfAborted();

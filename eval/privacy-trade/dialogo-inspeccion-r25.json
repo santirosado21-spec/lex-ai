@@ -1,0 +1,9 @@
+{
+ "case":"inspeccion-transferencia","client":"Instrumentos Malva de Ensayo",
+ "entries":[
+  {"kind":"solicitud","text":"Cliente: Instrumentos Malva de Ensayo\nOrden de retorno: TRQ-64021\nSe remitió al fabricante un medidor para inspección en el extranjero.\nLa furgoneta cruzó al abrirse los surtidores que forman un abanico frente a la báscula.","private":["Instrumentos Malva de Ensayo","TRQ-64021"],"clues":["surtidores que forman un abanico frente a la báscula"],"facts":["medidor para inspección en el extranjero"]},
+  {"kind":"parte","text":"Factura: VQA-70246\nParte de servicio para TRQ-64021.\nEl taller ajustó el medidor y no cambió el sensor.\nEl repartidor dejó el embalaje donde los vecinos cuelgan espirales de esparto cada jueves.","private":["VQA-70246","TRQ-64021"],"clues":["donde los vecinos cuelgan espirales de esparto cada jueves"],"facts":["ajustó el medidor","no cambió el sensor"]},
+  {"kind":"pregunta","text":"¿Qué prueba permitiría a Instrumentos Malva de Ensayo cotejar que el medidor de TRQ-64021 volvió con su sensor original?","private":["Instrumentos Malva de Ensayo","TRQ-64021"],"clues":[],"facts":["volvió con su sensor original"]},
+  {"kind":"seguimiento","text":"¿VQA-70246 menciona el ajuste o dice que el taller entregó un aparato distinto?","private":["VQA-70246"],"clues":[],"facts":["menciona el ajuste","entregó un aparato distinto"]}
+ ]
+}

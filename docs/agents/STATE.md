@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 23:05 por codex: Rejon r24 recupera reparación y sustitución en la consulta ordinaria
+**Última actualización:** 2026-11-19 23:14 por codex: Rejon r25 protege términos de la pregunta y conserva referencias anidadas
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r25 admite reservas manuales en la pregunta, protege señales temporales de sonido y conserva referencias de producto ocultas dentro de otra sustitución. Los 38 documentos históricos conservaron sus cifras. En la reserva inédita de inspección la proyección cubrió 7/7 menciones directas, 1/2 indicios y conservó 4/6 hechos. ZIP reproducido en Chromium, seis archivos comprobados en LibreOffice y suite de 1 460 aprobadas y diez omitidas. [Medición, riesgos residuales y reproducción](../qa/privacidad-preguntas-retorno-r25.md).
 
 - r24 recupera la reparación en el extranjero y la sustitución por defecto en los dos primeros resultados. La biblioteca abre 277 encabezados de Ley Aduanera por página y el flujo de nube admite 20 pasajes seleccionados. Dos llamadas reales produjeron nota y lista después de una primera nota sin cita validada. El ZIP privado reprodujo las respuestas y los seis archivos abrieron en LibreOffice. En cada uno se cotejaron el cliente, ambas referencias y la continuación del artículo 117. Suite de 1 458 aprobadas y diez omitidas. [Informe y evidencia](../research/retorno-reparacion-aduana.md).
 
@@ -99,6 +101,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Recuperar el contexto de los documentos del mismo expediente cuando una pregunta breve cita sus folios o alude al mismo bien. En cuatro preguntas de garantía e inspección la biblioteca no ofreció el 117 en los ocho primeros resultados. Probar con expedientes que mezclen dos bienes, con cambios de pieza y de equipo completo y con reparaciones nacionales. Evaluar el razonamiento frente a los soportes y medir privacidad en una reserva nueva.
 
 - Permitir que un abogado retome una pregunta del expediente con los soportes y fuentes ya elegidos. Medir una nueva estrategia de detección contextual local en preguntas y anexos inéditos, con atención a indicios por sonidos y acontecimientos y a quién asumió o acredita una obligación. Mantener revisión independiente de la utilidad y la privacidad. Para retorno, medir en otro expediente ficticio si el flujo distingue que una pieza sustituida en un servicio de reparación puede corresponder a la misma mercancía que se exportó, y qué soporte permitiría comprobarlo.
 

@@ -2,7 +2,7 @@ import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
 import {createPseudonymStore} from './pseudonyms.mjs';
-import {tradeTermRanges,documentaryObjectRanges,formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
+import {isProductAlias,tradeTermRanges,documentaryObjectRanges,formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
 
 const incomplete=Object.freeze({available:false,reason:'No se pudo reconstruir y comprobar la vista de protección local.'});
 
@@ -53,7 +53,10 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,sugges
   needsReview ||= context.ranges.length>0||!context.available;
  }
  const view=buildReview(text,ranges,scope,needsReview,contextual.length);
- return view.available&&context?.available===false?{...view,contextUnavailable:true}:view;
+ if(!view.available)return view;
+ const hidden=view.parts.filter(part=>part.label);
+ const aliases=[...new Set([...fields,...suggestions])].filter(value=>isProductAlias(value)&&hidden.some(part=>text.slice(part.start,part.end).includes(value)));
+ return {...view,...(aliases.length?{productAliases:aliases}:{}),...(context?.available===false?{contextUnavailable:true}:{})};
 }
 
 function buildReview(text,ranges,scope,needsReview,contextualCount) {
@@ -102,5 +105,5 @@ export function addReviewSelection(review,start,end) {
   throw Error('El dato seleccionado ya está oculto.');
  const updated=buildReview(text,[...ranges,...matches],{workspaceId:'local-preview',matterId:randomUUID(),threadId:'document'},review.needsReview,review.contextualCount??0);
  if(!updated.available)throw Error('No se pudo verificar la corrección. Selecciona un fragmento más corto.');
- return review.contextUnavailable?{...updated,contextUnavailable:true}:updated;
+ return {...updated,...(review.productAliases?{productAliases:review.productAliases}:{}),...(review.contextUnavailable?{contextUnavailable:true}:{})};
 }

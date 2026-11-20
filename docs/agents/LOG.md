@@ -403,3 +403,7 @@ Probado el ZIP con la reproducción de una respuesta real a la pregunta con refe
 ## 2026-11-19 23:05 — codex — Rejon r24 recupera reparación y sustitución en la consulta ordinaria
 
 Cotejados con Poppler y PDF.js 277 encabezados y 20 pasajes. Una primera llamada real dejó la nota sin cita validada. Tras ajustar el contexto, dos llamadas reales completaron la nota y la lista. El ZIP privado reprodujo ambas respuestas, reabrió ambos borradores y exportó seis archivos Office verificados en LibreOffice. La suite pasó 1458 pruebas y omitió diez. El lanzador pasó con dos claves simuladas. Pendientes los equipos de los socios, su revisión jurídica y la privacidad de expedientes libres.
+
+## 2026-11-19 23:14 — codex — Rejon r25 protege términos de la pregunta y conserva referencias anidadas
+
+Se restituyeron los cuatro textos de cada diálogo. La reserva inédita de inspección cubrió siete de siete menciones directas, uno de dos indicios y conservó cuatro de seis expresiones técnicas. El ZIP reabrió dos borradores, reprodujo dos respuestas anteriores y exportó seis archivos verificados con LibreOffice. La suite registró 1460 aprobadas y diez omitidas. Faltan la consulta contextual entre documentos, el uso con clientes reales y la prueba en los equipos de los socios.

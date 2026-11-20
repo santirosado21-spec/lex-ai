@@ -1,0 +1,10 @@
+{
+ "case":"garantia",
+ "client":"Equipos Niebla de Ensayo",
+ "entries":[
+  {"kind":"orden","text":"Cliente: Equipos Niebla de Ensayo\nOrden de retorno: ODG-47102\nLa bomba salió del país para reparación.\nEl camión arrancó justo después del último repique del carillón de porcelana.","private":["Equipos Niebla de Ensayo","ODG-47102"],"clues":["último repique del carillón de porcelana"],"facts":["salió del país para reparación"]},
+  {"kind":"dictamen","text":"Factura: FIQ-68395\nEl informe remite a ODG-47102.\nSe cambió una válvula, pero se conservó la bomba original.\nLa prueba acústica detectó una vibración en el motor.\nLa entrega coincidió con el ensayo del coro de los timbres de cobre.","private":["FIQ-68395","ODG-47102"],"clues":["ensayo del coro de los timbres de cobre"],"facts":["Se cambió una válvula","se conservó la bomba original","prueba acústica detectó una vibración en el motor"]},
+  {"kind":"pregunta","text":"¿Qué documento permite a Equipos Niebla de Ensayo identificar si volvió la misma bomba de ODG-47102?","private":["Equipos Niebla de Ensayo","ODG-47102"],"clues":[],"facts":["identificar si volvió la misma bomba"]},
+  {"kind":"seguimiento","text":"¿La factura FIQ-68395 distingue entre el cambio de una pieza y el reemplazo del equipo completo?","private":["FIQ-68395"],"clues":[],"facts":["cambio de una pieza","reemplazo del equipo completo"]}
+ ]
+}

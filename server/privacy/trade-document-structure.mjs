@@ -158,9 +158,15 @@ const movement=/\b(?:carga|envío|embarque|mercancía|tránsito|remesa|entrega|r
 // proper name. Require a spatial construction and an architectural modifier.
 const landmark=/\b(?:frente a|junto a|detrás de|al lado de|a espaldas de|a la (?:salida|entrada) de|por|desde|hasta|en)\s*(?:l\b|\s+(?:la|el|los|las)\b)\s+((?:nave|pabellón|caseta|garita|bodega|puente|torre|chimenea|mirador|portón|patio|andén|muelle|almacén|cobertizo|aljibe|arco|embarcadero)\s+(?:del?\s+|con\s+|en forma de\s+|pintad[oa]\s+)[^.!?;\n]{1,180})/dgiu;
 const event=/\b(?:durante|tras|después de|antes de|al (?:terminar|concluir|comenzar)|coincidió con)(?:\s+(?:el paso|la clausura|el cierre|la apertura) de)?\s+(?:la|el|las|los)\s+((?:fiesta|feria|festival|desfile|velada|procesión|romería|verbena|carnaval|ceremonia)\s+(?:(?:anual|local|patronal)\s+)?de(?:l| la| las| los)?\s+[^.!?;\n]{1,180})/dgiu;
+// An observable signal can date an operation without giving a clock time.
+const audibleEvent=/\b(?:cuando|mientras|en cuanto|justo (?:antes|después) de(?:l)?|al oír(?:se)?)\s+((?:(?:se )?(?:oyó|oyeron|escuchó|escucharon|sonó|sonaron|repicó|repicaron)\b|(?:el |la |los |las )?(?:(?:primer|primera|último|última) )?(?:repique|campanada|tañido|silbido|toque|sirena|carillón)\b)[^.!?;\n]*)/dgiu;
+// A restrictive clause can identify a site through a local practice even if
+// the facility has no proper name. Require both exclusivity and a specific site.
+const sitePractice=/\bque (?:s[oó]lo |[uú]nicamente |exclusivamente )?se (?:usa|emplea|utiliza|practica|fabrica|realiza)(?:n)? (?:s[oó]lo |[uú]nicamente |exclusivamente )?en (?:es[ae]|aquel(?:la)?) (?:rampa|muelle|bodega|planta|taller|estaci[oó]n|terminal|recinto|almac[eé]n|patio)\b/iu;
+const exclusive=/\b(?:s[oó]lo|[uú]nicamente|exclusivamente)\b/iu;
 export function contextualIdentityRanges(text){
  const ranges=[];
- for(const cue of [landmark,event]){
+ for(const cue of [landmark,event,audibleEvent]){
   for(const match of text.matchAll(cue)){
    const [start]=match.indices[1];
    const stop=text.slice(start).search(/[.!?;\n]/u);
@@ -168,6 +174,11 @@ export function contextualIdentityRanges(text){
   }
  }
  for(const sentence of new Intl.Segmenter('es',{granularity:'sentence'}).segment(text)){
+  const practice=sitePractice.exec(sentence.segment);
+  if(practice&&exclusive.test(practice[0])){
+   const clause=sentence.segment.trimEnd();
+   ranges.push([sentence.index,sentence.index+clause.length]);
+  }
   if(!movement.test(sentence.segment))continue;
   for(const m of sentence.segment.matchAll(specificPlace))ranges.push(m.indices[1].map(n=>sentence.index+n));
  }
@@ -188,4 +199,15 @@ export function contextualIdentityRanges(text){
 export function tradeDocumentAnchorValues(text){
  const ranges=[...labelledIdentityRanges(text),...logisticsReferenceRanges(text)];
  return [...new Set(ranges.map(([start,end])=>text.slice(start,end)))];
+}
+
+// Select the vocabulary for the local reader only. This is not a determination of regime.
+export function describesEquipmentReturn(text){
+ return /\b(?:reparaci[oó]n|reparad[oa]s?|sustituci[oó]n|reemplazo|retorno de|cambi[oó] (?:una|la) (?:pieza|v[aá]lvula)|volvi[oó] (?:la misma|el mismo))\b/iu.test(text);
+}
+
+// Keep an already concealed branded model name addressable inside a larger
+// mask. A mixed-case word such as a manufacturer's coined name is distinctive.
+export function isProductAlias(value){
+ return typeof value==='string'&&value.length<=90&&/^\p{Lu}[\p{L}\p{N}-]*(?: [\p{L}\p{N}-]+){0,3}$/u.test(value)&&/\p{Ll}\p{Lu}/u.test(value);
 }

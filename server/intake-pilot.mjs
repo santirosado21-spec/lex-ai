@@ -455,12 +455,17 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     exactFields(payload,[]);
     return status();
    case 'intake.inspectQuestion': {
-    exactFields(payload,['text']);
+    const manual=Object.hasOwn(payload??{},'reserved');
+    exactFields(payload,manual?['text','reserved']:['text']);
     const saved=current(),text=payload.text;
     if(!saved||!store.protectedRecords)throw Error('Abre un expediente cifrado.');
     if(typeof text!=='string'||text.trim().length<10||text.length>800||/[\p{Cc}\[\]]/u.test(text.replace(/\r\n|\n|\t/gu,'')))
      throw Error('Escribe una pregunta de 10 a 800 caracteres sin marcadores.');
-    const knownIdentities=knownParties(saved);
+    const reserved=manual?payload.reserved:[];
+    if(!Array.isArray(reserved)||reserved.length>24||new Set(reserved).size!==reserved.length||
+      reserved.some(s=>typeof s!=='string'||s.length<2||s.length>256||!s.trim()||!s.isWellFormed()||!text.trim().includes(s)))
+     throw Error('Cada dato adicional debe coincidir con un fragmento de la pregunta.');
+    const knownIdentities=[...knownParties(saved),...reserved];
     const data=await inspectLocalDocument({extension:'txt',base64:Buffer.from(text).toString('base64'),review:true},{signal,knownIdentities});
     if(!data.protection?.available||data.protection.contextUnavailable)throw Error('No se completó la revisión local de la pregunta.');
     if(current()?.intake.id!==saved.intake.id)throw Error('Cambió el expediente.');
