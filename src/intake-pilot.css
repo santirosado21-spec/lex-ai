@@ -232,3 +232,7 @@
 .rp-remedy blockquote{margin:.9rem 0;padding:.2rem 0 .2rem .9rem;border-inline-start:2px solid var(--rp-line)}
 .rp-remedy select{width:100%;min-width:0}
 @media(max-width:440px){.rp-stage-list{grid-template-columns:1fr}.rp-stage-list button{display:flex;justify-content:space-between;align-items:center;min-height:2.6rem}}
+
+.rp-question-sources {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:.75rem;align-items:start}
+.rp-question-sources>div {min-width:0}
+.rp-question-sources details[open] {border-left:2px solid var(--rp-line);padding-left:.8rem}

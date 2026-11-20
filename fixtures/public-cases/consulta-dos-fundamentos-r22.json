@@ -1,0 +1,52 @@
+[
+  {
+    "sha256": "663440ae05f1e69e01fc424e3b0df6a211823b3136d3a59ad154812e16b3f831",
+    "reply": {
+      "cita": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías hasta que se den los supuestos a que se refiere la fracción I del artículo 56 de esta Ley.",
+      "segundaCita": "Se entiende por valor de transacción de las mercancías a importar, el precio pagado por las mismas, siempre que concurran todas las circunstancias a que se refiere el artículo 67 de esta Ley, y que éstas se vendan para ser exportadas a territorio nacional por compra efectuada por el importador, precio que se ajustará, en su caso, en los términos de lo dispuesto en el artículo 65 de esta Ley.",
+      "lectura": "Los hechos se contradicen sobre si el flete está incluido; la diferencia determina si esos gastos ya forman parte del precio o requieren acreditarse por separado. La factura y el contrato de transporte permitirían aclararlo.",
+      "solicitud": "¿Puede aportar la factura y el contrato de transporte que indiquen quién pagó el flete y si estaba incluido en el precio?"
+    },
+    "usage": {
+      "prompt_tokens": 520,
+      "completion_tokens": 234,
+      "total_tokens": 754,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  {
+    "sha256": "adf6560b117a5d20b271a641c8d36efd7616d6bbab2432e09a4eabcaf20f3b1d",
+    "reply": {
+      "acciones": [
+        "Cotejar la factura comercial con el comprobante de pago para verificar si el precio pagado incluye el flete.",
+        "Comparar la factura comercial con los documentos de transporte y cobro para comprobar si el flete se pagó aparte y no está incluido en el precio."
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 494,
+      "completion_tokens": 66,
+      "total_tokens": 560,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  }
+]

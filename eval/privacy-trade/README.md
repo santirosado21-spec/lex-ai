@@ -25,3 +25,9 @@ Para reproducir la evaluación, ejecuta `node scripts/check-pilot-paired-privacy
 ### Reserva r21
 
 `expedientes-reserva-r21.json` contiene seis textos ficticios en tres pares. Un modelo local propuso ejemplos. Se editaron y anotaron antes de ejecutar la evaluación. SHA-256 del archivo evaluado: `732dae0bacc1d290bf10a9d5fd0f7e9a61c5e8f5f994bbf62ed0de77a5c944b1`. La reserva ya se utilizó para comparar r20 y r21. Para medir un cambio posterior se necesita otra muestra inédita. Los resultados por documento se guardan en `artifacts/privacidad-r21/`.
+
+### Conversación libre de valoración · r22
+
+La prueba local `node scripts/measure-intake-dialogue.mjs` usa una factura, un anexo, una pregunta y un seguimiento ficticios. Un modelo local propuso el escenario. Se editaron los textos, se anotaron los identificadores, indicios y fragmentos útiles, y se congeló el archivo antes de probarlo. SHA-256 de `dialogo-valoracion-r22.json`: `d33511b584a7b1818986047aada99a8ada9590f684b2e14f5f87dff07aec38fe`. El cliente figura en el alta. Para inspeccionar cada documento, Ollama recibe las identidades que la aplicación ya conoce. El evaluador usa las anotaciones únicamente al puntuar el resultado. Las preguntas se proyectan sobre el expediente en memoria para medir un posible intercambio de texto libre. Los únicos accesos de inferencia en este ensayo son a Ollama en loopback.
+
+En este caso se restituyeron cuatro originales, se cubrieron las ocho menciones anotadas de identidades y folios y se conservaron las tres relaciones entre sus menciones. Quedaron expuestos total o parcialmente los tres indicios de lugar o acontecimiento. Cinco de siete fragmentos útiles quedaron íntegros. El seguimiento perdió texto de la petición documental y sobre quién asumió el seguro. Ninguna línea quedó habilitada para envío. Es un solo escenario de desarrollo. Una prueba posterior necesita una muestra distinta y la revisión de un abogado.

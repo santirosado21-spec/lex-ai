@@ -1,0 +1,10 @@
+{
+  "case": "flete-seguro",
+  "client": "Comercializadora Alerce de Niebla",
+  "entries": [
+    {"kind":"factura","text":"Cliente: Comercializadora Alerce de Niebla\nFactura comercial: VLT-4590-B\nEl transporte está incluido en el precio acordado.\nLas cajas entraron por la nave del reloj de doble péndulo al terminar la fiesta del soplado.","private":["Comercializadora Alerce de Niebla","VLT-4590-B"],"clues":["nave del reloj de doble péndulo","fiesta del soplado"],"facts":["El transporte está incluido en el precio acordado."]},
+    {"kind":"anexo","text":"Referencia de seguro: POL-77-C\nLa póliza corresponde a la factura VLT-4590-B.\nLa prima del seguro se pagó por separado.\nEl sello se estampó frente a la chimenea en forma de horquilla.","private":["POL-77-C","VLT-4590-B"],"clues":["chimenea en forma de horquilla"],"facts":["La prima del seguro se pagó por separado."]},
+    {"kind":"pregunta","text":"¿Debo tratar igual el flete de VLT-4590-B y el seguro de POL-77-C para determinar el valor en aduana?","private":["POL-77-C","VLT-4590-B"],"clues":[],"facts":["tratar igual el flete","y el seguro","determinar el valor en aduana"]},
+    {"kind":"seguimiento","text":"¿Qué comprobante pedirías a Comercializadora Alerce de Niebla para aclarar quién asumió el seguro de POL-77-C?","private":["Comercializadora Alerce de Niebla","POL-77-C"],"clues":[],"facts":["Qué comprobante pedirías","quién asumió el seguro"]}
+  ]
+}

@@ -193,3 +193,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 22:41 — codex — Conservar el texto libre del informe en el equipo
 
 **Por qué:** La reserva inédita de seis documentos dejó visible un acontecimiento local. El expediente recupera sus soportes al exportar y sólo ofrece al proveedor pasajes públicos o hechos de práctica verificados.
+
+## 2026-11-19 22:49 — codex — Comprobar cada cita contra el pasaje que le corresponde
+
+**Por qué:** La relación entre dos disposiciones debe conservar la procedencia y las condiciones de cada una. La primera respuesta real devolvió literales de 239 y 394 caracteres. Se admiten hasta 420 por fuente y el seguimiento exige recuperar ambas citas.

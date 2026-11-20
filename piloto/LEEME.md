@@ -13,6 +13,14 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Relacionar dos fundamentos con la factura y el contrato
+
+1. Abre un expediente ficticio. En **Documentos del expediente**, añade `piloto/factura-cotejo-ficticia.txt` y `piloto/contrato-cotejo-ficticio.txt`. Llámalos **Factura de muestra** y **Contrato de muestra**.
+2. Abre **Consultar con una pregunta propia**. Escribe «¿Qué documentos permiten cotejar el precio pagado y el flete del lote TVR-61488?» y pulsa **Buscar fundamentos en este equipo**.
+3. En el primer selector elige el artículo 65 de la Ley Aduanera, fracción I, inciso d). En **Segundo fundamento**, elige el párrafo tercero del artículo 64. Puedes abrir y leer ambos pasajes. Marca las dos afirmaciones sobre si el precio incluye el flete.
+4. Prepara el mensaje y coteja su contenido. OpenAI recibe los dos pasajes y las dos afirmaciones ficticias. El folio, los nombres de los documentos y la pregunta original se recuperan en el equipo al elegir **Datos originales**.
+5. Genera la nota y abre la lista de cotejo desde ese borrador. Verifica en los dos documentos la condición del artículo 65, los folios originales y la discrepancia. Puedes descargar ambos en Word, Excel o PowerPoint. El paquete permite volver a abrirlos con el mismo perfil, ejercicio y frase.
+
 ### Investigar una cuota compensatoria
 
 En **Biblioteca federal → Defensa comercial** puedes comparar el inicio, la preliminar y la final de la investigación AD_29-24 sobre perfiles y barras de aluminio. Cada punto abre una copia local de su página y enlaza la resolución completa. Introduce el **15 de junio de 2026**, elige la preliminar y abre el **punto 298**. Guarda el punto y prepara la lista de cotejo. Al mostrar **Datos originales** verás la fecha y la necesidad de verificar actos intermedios.

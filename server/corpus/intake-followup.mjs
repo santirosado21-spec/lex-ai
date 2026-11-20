@@ -58,37 +58,51 @@ function sourceContext(source){
   tradeReadingEnvelope(source);
   return {refs:source.refs,facts:[]};
  }
- return {refs:[checkedResearchReference(source)],facts:source.caseFacts?questionFactTexts(source.caseFacts):[]};
+ const ref=checkedResearchReference(source);
+ return {refs:source.refs??[ref],facts:source.caseFacts?questionFactTexts(source.caseFacts):[]};
+}
+
+// Some provisions must travel with the complete paragraph selected in the note.
+function requiredQuote(source,ref,index){
+ if(source.sources)return source.sources[index]?.body;
+ if(source.selection&&source.references||ref.remedy)return ref.text;
+ return source.body;
 }
 
 // Recover only whole quotation lines present in a fresh, model-generated note.
 // Reconstruct outbound text from the pinned source, never from the draft string.
 export function quotedRanges(source,draft){
  const {refs}=sourceContext(source);
- const whole=Boolean(source?.selection&&source?.references||source?.ref?.remedy);
  const lines=draft.split('\n');
  const ranges=[];
  for(const [index,ref] of refs.entries()){
   const heading=lines.findIndex(line=>line.includes('['+ref.id+']'));
-  const line=lines[heading+1];
-  const start=heading<0||!line||(whole?line!==ref.text:line.length<24||line.length>420)?-1:ref.text.indexOf(line);
-  if(start>=0)ranges.push({index,start,length:line.length,sha:digest(line)});
+  if(heading<0)continue;
+  const full=requiredQuote(source,ref,index);
+  const after=lines.slice(heading+1).join('\n');
+  const quote=full??lines[heading+1];
+  if(!quote||full&&after!==full&&!after.startsWith(full+'\n'))continue;
+  if(!full&&(quote.length<24||quote.length>420))continue;
+  const start=ref.text.indexOf(quote);
+  if(start>=0)ranges.push({index,start,length:quote.length,sha:digest(quote)});
+
  }
- return ranges;
+ return source?.sources&&ranges.length!==refs.length?[]:ranges;
 }
 
 export function prepareFollowup(source,ranges,form,focus=[],prior){
  if(!isFollowupForm(form))throw Error('Selecciona el documento de seguimiento.');
  const {refs,facts}=sourceContext(source);
- if(!Array.isArray(ranges)||!ranges.length||ranges.length>refs.length)throw Error('La nota necesita una cita cotejada antes del seguimiento.');
+ if(!Array.isArray(ranges)||!ranges.length||ranges.length>refs.length||source?.sources&&(ranges.length!==refs.length||ranges.some((r,i)=>r.index!==i)))throw Error('La nota necesita una cita cotejada antes del seguimiento.');
  const quotes=ranges.map(({index,start,length,sha})=>{
-  const ref=refs[index];
+  const ref=refs[index],passage=source.sources?.[index];
   if(!Number.isSafeInteger(index)||!ref||!Number.isSafeInteger(start)||start<0||
-     !Number.isSafeInteger(length)||(source?.selection&&source?.references||source?.ref?.remedy?start!==0||length!==ref.text.length:length<24||length>420)||start+length>ref.text.length)throw Error('La cita de la nota cambió.');
+     !Number.isSafeInteger(length)||length<1||start+length>ref.text.length)throw Error('La cita de la nota cambió.');
   const quote=ref.text.slice(start,start+length);
-  if(digest(quote)!==sha)throw Error('La cita de la nota cambió.');
+  const full=requiredQuote(source,ref,index);
+  if((full?quote!==full:length<24||length>420)||digest(quote)!==sha)throw Error('La cita de la nota cambió.');
   const choice=source.variants?source.choices.find(item=>item.source===ref.id&&item.quote===quote):source.choices?.[index]?.find(item=>item.quote===quote);
-  const condition=choice?.condition??source.condition;
+  const condition=passage?passage.condition:choice?.condition??source.condition;
   if(condition&&!ref.text.includes(condition))throw Error('La condición del pasaje requiere cotejo.');
   return {ref,quote,condition,locator:choice?.locator};
  });

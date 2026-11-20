@@ -79,7 +79,7 @@ function localQuestion(intake,task){
  if(intake.questions?.[task])return intake.questions[task];
  const follow=intake.followups?.[task];
  const basis=follow?.basisTask??follow?.parent;
- return follow?.form==='control'&&(intake.permits?.[basis]||intake.research?.[basis]?.sourceId?.startsWith('ad29-'))?intake.questions?.[basis]:null;
+ return follow?.form==='control'?intake.questions?.[basis]:null;
 }
 function draftText(value,doc,evidence,question,permit) {
  const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...(Array.isArray(doc)?doc:[doc]).flatMap(documentTokens).map(item=>item.token)]);
@@ -87,9 +87,9 @@ function draftText(value,doc,evidence,question,permit) {
  if(question)allowed.add('[[CONSULTA]]');
  if(evidence)allowed.add('[[SOPORTE]]');
  const unrecognized=typeof value==='string' ? value.replace(/\[\[[^\[\]]+\]\]/g,token=>allowed.has(token)?'':token) : '';
- if (typeof value!=='string' || value.length>1800 || !value.includes('[[CLIENTE]]') ||
+ if (typeof value!=='string' || value.length>8000 || !value.includes('[[CLIENTE]]') ||
      !value.includes('[[ASUNTO]]') || /\[\[|\]\]|[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(unrecognized)) {
-  throw new Error('El borrador debe conservar [[CLIENTE]] y [[ASUNTO]], con los marcadores de este expediente, con un máximo de 1800 caracteres.');
+  throw new Error('El borrador debe conservar [[CLIENTE]] y [[ASUNTO]], con los marcadores de este expediente, con un máximo de 8000 caracteres.');
  }
  return value;
 }
@@ -297,7 +297,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if (archived) return {id,...archived};
     try {
      const note=sourceFor(selection,saved);
-     return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
+     return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
    })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
@@ -474,7 +474,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
     return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,permit,sources:caseSources(saved.intake).map(sourceSummary),
-     candidates:candidates.map(({key,label,locator,text,partial})=>({key,label,locator,text,partial}))};
+     candidates:candidates.map(({key,citationId,label,locator,text,partial})=>({key,citationId,label,locator,text,partial}))};
    }
    case 'intake.questionLines': {
     exactFields(payload,['reviewId','sourceId']);
@@ -486,16 +486,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    }
    case 'intake.addQuestion': {
     const usesFacts=Object.hasOwn(payload??{},'factIds');
-    exactFields(payload,usesFacts?['reviewId','key','angle','factIds']:['reviewId','key','angle']);
+    const paired=Object.hasOwn(payload??{},'secondKey');
+    exactFields(payload,['reviewId','key','angle',...(usesFacts?['factIds']:[]),...(paired?['secondKey']:[])]);
     const {reviewId,key,angle}=payload,saved=current(),review=pendingQuestions.get(reviewId);
     if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id||typeof angle!=='string'||!Object.hasOwn(angles,angle))
      throw Error('Vuelve a revisar la pregunta en este expediente.');
     const choice=review.candidates.find(row=>row.key===key);
     if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
-    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(choice.source.startsWith('ad29-')&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
+    const other=paired?review.candidates.find(row=>row.key===payload.secondKey):null;
+    if(paired&&(!other||other.citationId===choice.citationId))throw Error('Selecciona otra disposición que aparezca en la revisión.');
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(other?{second:{sourceId:other.source,part:other.part}}:{}),...((choice.source.startsWith('ad29-')||other?.source.startsWith('ad29-'))&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
     if(usesFacts&&(!Array.isArray(payload.factIds)||!payload.factIds.length||payload.factIds.length>4||new Set(payload.factIds).size!==payload.factIds.length||
        !payload.factIds.every(id=>review.factIds.includes(id))))throw Error('Elige los hechos que aparecen en la revisión de esta pregunta.');
-    const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
+    const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(other?'-con-'+other.source+'-'+other.part:'')+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
     if(!Object.hasOwn(intake.research??{},task)){
      if(Object.keys(intake.research??{}).length>=48)throw Error('El expediente admite 48 pasajes de trabajo.');
      sourceFor(selection,saved);

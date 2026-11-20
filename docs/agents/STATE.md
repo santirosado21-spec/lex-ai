@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 22:41 por codex: Piloto r21 de Rejon y seguimiento oficial SNICE
+**Última actualización:** 2026-11-19 22:49 por codex: Dos fundamentos y una conversación libre de valoración probados en Rejon
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,10 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r22 permite cotejar dos disposiciones en una pregunta y retomar ambas citas en la lista interna. Dos llamadas reales con hechos ficticios, 1 014 tokens de entrada y 300 de salida. El ZIP reprodujo las respuestas, recuperó los dos soportes y reabrió los dos borradores. Se comprobaron en LibreOffice los seis archivos. Suite JS con 1 452 aprobadas y diez omitidas. Ver `artifacts/consulta-r22/`.
+
+- Ensayo local de conversación libre sobre flete y seguro con una factura, un anexo y dos preguntas. Las ocho menciones directas quedaron cubiertas y los tres valores conservaron el mismo alias. Ninguno de los tres indicios indirectos quedó totalmente oculto. Se conservaron cinco de siete frases útiles, se restituyeron cuatro textos y no se hizo ninguna solicitud a la nube en este ensayo. Ver `eval/privacy-trade/dialogo-valoracion-r22.json` y `scripts/measure-intake-dialogue.mjs`.
 
 - r21 permite cancelar la lectura local, revisar escritos de hasta 60 000 caracteres por bloques y elegir soportes por número de línea o por texto. El ZIP se probó en este Mac con un informe ficticio de 11 726 caracteres, tres solicitudes simuladas, seis archivos de Office y tres reaperturas. La reserva inédita ocultó 6/6 identificadores y 5/6 indicios, y conservó 7/8 expresiones técnicas. La suite pasó con 1 451 pruebas y diez omitidas con antiword disponible. Ver `artifacts/privacidad-r21/`.
 
@@ -89,6 +93,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Resolver las omisiones en referencias a acontecimientos y lugares descritos por atributos, y la pérdida de la pregunta cuando contiene una parte conocida. Usar nuevos diálogos de valoración con contradicciones y calificarlos antes de ampliar el envío de texto libre. Para el cotejo de fundamentos, obtener revisión de Lorenzo o Pedro sobre el razonamiento, la vigencia y las preguntas documentales.
 
 - Medir la identificación indirecta por acontecimientos locales en otra reserva inédita, con revisión humana de los hechos técnicos. Verificar la cuenta real de Lorenzo y el recorrido en los equipos físicos de los socios. El inventario de SNICE requiere cotejar cambios con el cuerpo del DOF y fechas de la operación.
 

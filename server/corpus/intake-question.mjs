@@ -27,7 +27,7 @@ export function questionCandidates(library,original,parts,reference=null){
   const key=source+'/'+part;
   score+=4*selectedConcepts(focus,text).length;
   if((candidates.get(key)?.score??-1)>=score)return;
-  candidates.set(key,{key,source,part,title:ref.title,label:'Art. '+ref.article+' · '+(section||'pasaje '+(part+1))+' · '+ref.title,locator:ref.locator,text,score,partial});
+  candidates.set(key,{key,citationId:ref.id,source,part,title:ref.title,label:'Art. '+ref.article+' · '+(section||'pasaje '+(part+1))+' · '+ref.title,locator:ref.locator,text,score,partial});
  };
  function fromLibrary(source,priority,partial=false){
   const first=loadResearchPassage(library,source,0);
@@ -64,7 +64,7 @@ export function questionCandidates(library,original,parts,reference=null){
  if(!named.lawId){
   for(const [i,{ref,part,partial}] of remedySuggestions(original).entries()){
    const key=ref.sourceId+'/'+part;
-   candidates.set(key,{key,source:ref.sourceId,part,title:ref.title,label:ref.title+' · punto '+part,locator:ref.locator,text:ref.text,score:100-i,partial});
+   candidates.set(key,{key,citationId:ref.id,source:ref.sourceId,part,title:ref.title,label:ref.title+' · punto '+part,locator:ref.locator,text:ref.text,score:100-i,partial});
   }
  }
  // Fixed trade topics can be recognised locally even when a whole sentence

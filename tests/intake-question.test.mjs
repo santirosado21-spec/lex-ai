@@ -83,3 +83,23 @@ test('question review stays on loopback, original restores only within its matte
   assert.ok(!(await readFile(path.join(dir,entry.name))).includes(Buffer.from(customer)));
  }
 });
+
+test('each citation in a two-source opinion must come from its assigned provision and is carried forward with its own conditions',()=>{
+ const primary=customsPassage('64').passages[2],secondary=customsPassage('65').passages[1];
+ const request={sourceId:'aduana-64',part:2,angle:'documentos',second:{sourceId:'aduana-65',part:1}};
+ const source=questionPassage(null,request);
+ const reply={cita:primary.quote.slice(0,75),segundaCita:secondary.quote.slice(0,67),lectura:'El importe pagado debe cotejarse con el soporte de transporte para identificar un posible ajuste.',solicitud:'¿Quién pagó el transporte y cómo se acredita?'};
+ const note=renderResearchNote(JSON.stringify(reply),source);
+ const ranges=quotedRanges(source,note);
+ assert.equal(ranges.length,2);
+ const follow=prepareFollowup(source,ranges,'control');
+ assert.deepEqual(follow.refs.map(r=>r.id),['MX-FED-LADUA-64','MX-FED-LADUA-65']);
+ assert.equal(follow.quotes[0].condition,undefined);assert.equal(follow.quotes[1].condition,secondary.condition);
+ assert.ok(note.includes(secondary.condition)&&follow.prompt.includes(secondary.condition));
+ for(const change of [{cita:reply.segundaCita},{segundaCita:reply.cita},{lectura:''},{solicitud:''},{extra:'disposición ajena'}]){
+  const invalid=renderResearchNote(JSON.stringify({...reply,...change}),source);
+  assert.match(invalid,/Fundamento pendiente/);assert.deepEqual(quotedRanges(source,invalid),[]);
+ }
+ for(const wrong of [[ranges[0]],[ranges[1],ranges[0]],[ranges[1],ranges[1]]])assert.throws(()=>prepareFollowup(source,wrong,'control'));
+ assert.throws(()=>questionPassage(null,{...request,second:{sourceId:'aduana-64',part:1}}));
+});

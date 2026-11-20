@@ -391,3 +391,7 @@ Tres pares de defensa comercial, pigmentos y origen; muestra anotada antes de ej
 ## 2026-11-19 22:41 — codex — Piloto r21 de Rejon y seguimiento oficial SNICE
 
 Probados en este Mac el ZIP, la cancelación y lectura de un informe ficticio de 11726 caracteres, tres solicitudes simuladas, seis archivos abiertos en LibreOffice y tres reaperturas. Suite de 1451 aprobadas y diez omitidas. Reserva de seis documentos con 6 de 6 identificadores, 5 de 6 indicios y 7 de 8 expresiones jurídicas. Histórico SNICE con 843 filas fechadas y 814 con código DOF. Pendientes el diálogo general, la cuenta real de Lorenzo, la aceptación jurídica y los equipos de los socios.
+
+## 2026-11-19 22:49 — codex — Dos fundamentos y una conversación libre de valoración probados en Rejon
+
+Dos respuestas reales con 1014 tokens de entrada y 300 de salida. Se probó la repetición en el ZIP, seis exportaciones con LibreOffice, dos reaperturas y el lanzador con respaldo simulado. Suite JS de 1452 aprobadas y diez omitidas. En un diálogo ficticio local quedaron expuestos tres indicios indirectos y se perdieron dos frases útiles. Sin clientes reales ni validación jurídica independiente.

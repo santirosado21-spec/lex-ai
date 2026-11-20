@@ -171,7 +171,7 @@ export default function IntakePilot() {
     if(editText===null||!element)return;
     const start=element.selectionStart,end=element.selectionEnd;
     const next=editText.slice(0,start)+item.token+editText.slice(end);
-    if(next.length>1800){setError('El marcador superaría los 1800 caracteres del borrador.');return;}
+    if(next.length>8000){setError('El marcador superaría los 8000 caracteres del borrador.');return;}
     setEditText(next);clearFeedback();
     requestAnimationFrame(()=>{element.focus();element.setSelectionRange(start+item.token.length,start+item.token.length);});
   }
@@ -316,9 +316,9 @@ export default function IntakePilot() {
             </section>}
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':task?.startsWith('pedimento-')?'Ficha del pedimento':task?.startsWith('ad29-')?'Ficha de defensa comercial':task?.startsWith('nico-')?'Ficha de identificación comercial':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
-              <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
+              <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={8000} rows={6}/></label>
               {pilot?.hasDocument&&<IntakeCaseDocument sources={pilot.sources} insert={insertDatum}/>}
-              <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/1800</small>
+              <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/8000</small>
               <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
             </div>:<>
             <div className="rp-switch" aria-label="Vista del borrador" role="group"><button aria-pressed={!restored} disabled={busy} onClick={()=>setRestored('')}>{activeTask.localOnly?<HardDrive size={14}/>:<Cloud size={14}/>} Con marcadores</button><button aria-pressed={Boolean(restored)} disabled={busy} onClick={()=>void reveal()}><HardDrive size={14}/> Datos originales</button></div>
