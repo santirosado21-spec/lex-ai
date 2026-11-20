@@ -347,3 +347,7 @@ Dos seguimientos de valoración y dos turnos del ejercicio de origen generados c
 ## 2026-11-19 19:24 — codex — Rejon r13 coteja y exporta la edición NICO de abril de 2024
 
 La reconstrucción de las claves de tres acuerdos coincide con las 11507 combinaciones de 8134 fracciones del SNICE de abril de 2024. Índice reproducido idéntico. Se verificaron 103 pruebas dirigidas, búsqueda en cuatro anchos, apertura de fuente local, guardado de opciones distintas, reapertura cifrada y cuatro descargas desde el navegador del ZIP. LibreOffice abrió los cuatro archivos. El lanzador se probó dos veces en este Mac con respaldo simulado. El catálogo histórico no resuelve vigencia por operación. Quedan la aceptación jurídica y los equipos de los socios.
+
+## 2026-11-19 19:37 — codex — Rejon r14.2 admite preguntas propias con búsqueda y restitución locales
+
+Pregunta sintética libre procesada por Ollama y sustitución local, consulta pública mostrada y enviada a OpenAI, 290 tokens de entrada y 63 de salida. Se restituyeron pregunta, cliente y asunto tras reabrir. En r14.2 se repitió desde el ZIP la respuesta capturada comprobando la huella del mensaje, cuatro anchos y tres exportaciones. En ocho casos de desarrollo siete fuentes esperadas quedaron primeras; un artículo inexistente produjo abstención. Ninguna de diez cadenas anotadas quedó visible. Suite completa de JS con Antiword local: 1429 aprobadas, cero fallos, diez omitidas. Siguen pendientes evaluación inédita, aptitud general de privacidad, revisión de abogado y equipos de los socios.

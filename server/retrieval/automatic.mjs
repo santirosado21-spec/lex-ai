@@ -1,9 +1,9 @@
 import {openFragmentIndex, lexicalTerms} from './search.mjs';
 import {rewriteQuery} from './query.mjs';
 import {splitArticle, verifyFragment} from './fragments.mjs';
-import {expandQuery} from './thesaurus.mjs';
+import {expandQuery,verifiedConceptSources} from './thesaurus.mjs';
 import {fold} from './areas.mjs';
-import {TITLES, stripLawTitles} from './references.mjs';
+import {TITLES, stripLawTitles,extractReference} from './references.mjs';
 
 /** Same public source IDs as the service's citation resolver. Never opens a
  * private store, builds an index, downloads a model, or broadens jurisdiction. */
@@ -19,7 +19,13 @@ export function retrievePublic({question, recentTurns, jurisdiction, library, fa
   catch (error) {
     // An optional derived index may be absent in packaged installations. Any
     // corruption/incompatible schema must surface instead of hiding a failure.
-    if (error.code === 'ERR_SQLITE_ERROR' && /unable to open database file/.test(error.message)) return safeFallback;
+    if (error.code === 'ERR_SQLITE_ERROR' && /unable to open database file/.test(error.message)){
+      if(safeFallback.length||request.reference||request.reason!=='standalone')return safeFallback;
+      const named=extractReference(question);
+      if(named.ambiguous||named.article||(!named.lawId&&/\b(?:ley|c[oó]digo|reglamento) (?:de|del)\b/iu.test(question)))return safeFallback;
+      return verifiedConceptSources(library,question,{jurisdiction,areas:request.areas,lawId:named.lawId})
+        .slice(0,6).map(source=>({...source,preferredPassage:choosePassage(source,question)}));
+    }
     throw error;
   }
   try {

@@ -68,3 +68,11 @@ Puedes preparar estos seguimientos desde una lectura de comercio, un pasaje eleg
 En **Biblioteca federal → Catálogo NICO**, busca `0901.21.99`. La edición informativa del SNICE de abril de 2024 muestra dos opciones. La fila 777 corresponde a `01` y la fila 778 a `99`. Abre la página local del DOF para revisar también la anotación sobre cápsulas. Desde **Tarifa arancelaria**, el botón **Consultar NICO** lleva directamente a las opciones de la fracción.
 
 En un ejercicio cifrado, guarda cada opción por separado. Puedes revisar la ficha con los datos originales y exportarla a Word, Excel o PowerPoint. **Comparar fichas guardadas en Excel** reúne los NICO del expediente con sus fuentes y conserva los ceros iniciales. Antes de usar una clave en un pedimento, comprueba la publicación y los transitorios aplicables en la fecha de la operación.
+
+### Investigar una pregunta del expediente
+
+En un ejercicio cifrado, abre **Consultar con una pregunta propia**. Escribe una pregunta ficticia de hasta 800 caracteres. Puedes probar «¿Qué documentos permiten a Envases Ágata Ficticia comprobar el flete y los seguros del embarque CJ-58207 en el valor en aduana?». El modelo local necesita estar disponible en Ollama.
+
+1. Pulsa **Buscar fundamentos en este equipo**. Revisa la pregunta con sustituciones y las fuentes candidatas. Para el ejemplo, abre la fracción I, inciso d), del artículo 65 de la Ley Aduanera. La copia consultada identifica su edición.
+2. Elige el enfoque y pulsa **Preparar mensaje para revisión**. La pantalla muestra el texto que se enviaría. Contiene el pasaje público, su referencia, el enfoque y los conceptos jurídicos reconocidos en la pregunta y en la fuente. La redacción original permanece en el expediente local.
+3. Pulsa **Enviar y generar borrador**. Revisa la cita y la pregunta documental propuesta. En **Datos originales**, la nota recupera la pregunta del abogado, el cliente y el asunto. Puedes quitar el marcador `[[CONSULTA]]` si prefieres exportar el borrador sin la pregunta original. Word, Excel y PowerPoint se generan en el equipo.

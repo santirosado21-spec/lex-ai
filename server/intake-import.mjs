@@ -20,7 +20,7 @@ function documentaryTitle(candidate,source){
 const exactSpan = (value, source) => typeof value === 'string' && value.trim() && value.length <= 200 &&
  !/[\p{Cc}\[\]]/u.test(value) && source.includes(value.trim()) ? value.trim() : '';
 
-export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch} = {}) {
+export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, knownIdentities=[]} = {}) {
  const review=payload?.review===true;
  if (!payload || Object.keys(payload).some(key=>!['base64','extension','review'].includes(key)) ||
      (Object.hasOwn(payload,'review') && !review) || Object.keys(payload).length !== (review?3:2) || !['pdf','docx','txt','md'].includes(payload.extension) ||
@@ -53,7 +53,7 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch} 
  if (!review) return data;
  const context=await reviewContextLocally(text,ask,signal);
  const protection=await reviewIntakeDocument({text,context,originalHash:createHash('sha256').update(bytes).digest('hex'),
-  suggestions:fields?.entities,fields:[data.client,data.title,data.supplier??''],signal});
+  suggestions:fields?.entities,fields:[data.client,data.title,data.supplier??'',...knownIdentities.filter(value=>typeof value==='string'&&value.length>=2&&text.includes(value))],signal});
  if(protection.available&&titleCandidate&&!data.title)protection.needsReview=true;
  return {...data,protection};
 }

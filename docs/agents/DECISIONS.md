@@ -161,3 +161,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:24 — codex — Conservar edición y NICO de dos dígitos al citar y exportar
 
 **Por qué:** Varias opciones comparten fracción. El libro informativo aporta la descripción y su fila. La clave queda reconciliada con el artículo de creación del DOF. Sólo las descripciones literales cotejadas y de longitud suficiente habilitan un seguimiento. El PDF local permite revisar anotaciones y transitorios.
+
+## 2026-11-19 19:37 — codex — Restituir la pregunta original en el equipo y conservar íntegros los pasajes aduaneros delimitados
+
+**Por qué:** Las preguntas del abogado pueden contener identificadores y relaciones privadas. La nube recibe un mensaje reconstruido con fuente pública cotejada, conceptos y enfoque. La respuesta de prueba omitió el final de un inciso. Al citar esa unidad el producto recupera el pasaje completo y la condición del encabezado desde la copia local.

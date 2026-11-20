@@ -1,3 +1,5 @@
+import {selectedConcepts} from './question-concepts.mjs';
+import {customsPassage} from './customs-edition.mjs';
 import {nicoRow,nicoReference} from './nico-index.mjs';
 // The browser chooses a row and a passage. The local service reads every outbound
 // character from the pinned public index. Search terms and matter fields stay local.
@@ -7,6 +9,11 @@ import {getPinnedPublicSource} from '../public-library.mjs';
 import {proposedQuestions} from './trade-pilot-grounding.mjs';
 
 const indexHash = 'ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588';
+export const angles=Object.freeze({
+ requisitos:'Requisitos para aplicar la disposición',
+ excepciones:'Excepciones y condiciones de aplicación',
+ documentos:'Documentos para acreditar los hechos',
+});
 const verified = new WeakSet();
 
 export function loadResearchPassage(library, sourceId, part) {
@@ -45,6 +52,23 @@ export function loadResearchPassage(library, sourceId, part) {
   return note;
 }
 
+export function questionPassage(library,{sourceId,part,angle,concepts=[]}){
+ if(!Object.hasOwn(angles,angle))throw Error('Selecciona el enfoque jurídico.');
+ let ref,condition,body;
+ if(/^aduana-(?:36|36-A|64|65)$/u.test(sourceId)){
+  const article=sourceId.slice(7),source=customsPassage(article);
+  if(!Number.isInteger(part)||part<0||part>=source.passages.length)throw Error('Pasaje aduanero inválido.');
+  const passage=source.passages[part];
+  condition=passage.condition;body=passage.quote;
+  ref=Object.freeze({...source.ref,text:passage.quote+(condition?'\n\n'+condition:''),locator:passage.locator+' · '+source.ref.locator});
+ }else ref=loadResearchPassage(library,sourceId,part).ref;
+ const labels=selectedConcepts(concepts,ref.text);
+ const focus=labels.length?' · '+labels.join(', '):'';
+ const title=angles[angle]+' · '+ref.title+' · art. '+ref.article;
+ const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. Devuelve JSON con cita (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'');
+ const note=Object.freeze({title,ref,body,condition,angle,prompt});verified.add(note);return note;
+}
+
 // A follow-up receives only an independently extracted description with a checked source location.
 export function tariffResearch(code,page){
  const hit=tariffResult(code,page);
@@ -77,12 +101,15 @@ export function renderResearchNote(raw, note) {
   try { result = JSON.parse(raw); } catch { result = null; }
   const quote = typeof result?.cita === 'string' ? result.cita.trim() : null;
   const valid = typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
-    !quote.includes('[[') && !quote.includes(']]') && note.ref.text.includes(quote) &&
+    !quote.includes('[[') && !quote.includes(']]') && (note.body??note.ref.text).includes(quote) &&
     Object.keys(result).every(key=>['cita','solicitud'].includes(key));
   const question = valid ? proposedQuestions(result.solicitud) : '';
-  const basis = valid ? 'Cita documental [' + note.ref.id + ']\n' + quote :
+  // A verified substring can stop before a time limit or an exception. For
+  // manually delimited customs provisions, print the entire selected provision.
+  const fullQuote=note.body??quote;
+  const basis = valid ? 'Cita documental [' + note.ref.id + ']\n' + fullQuote :
     'Fundamento pendiente. El modelo no devolvió una cita verificable en el pasaje seleccionado.';
-  return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + basis +
+  return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + (note.angle?'Consulta del abogado\n[[CONSULTA]]\n\n'+angles[note.angle]+'\n':'') + basis + (valid&&note.condition?'\nCondición del encabezado\n'+note.condition:'') +
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     '\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.';
 }

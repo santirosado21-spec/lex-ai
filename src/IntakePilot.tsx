@@ -1,3 +1,4 @@
+import IntakeQuestion from './IntakeQuestion';
 import IntakeNico from './IntakeNico';
 import IntakeTariff from './IntakeTariff';
 import {useEffect, useRef, useState, type FormEvent} from 'react';
@@ -28,7 +29,7 @@ const formats = [
 
 function MarkedText({text}:{text:string}) {
   return <>{text.split(/(\[\[(?:[A-Z_][A-Z_0-9]*|DATO_\d+_[a-f0-9]{12})\]\])/g).map((part,index)=>
-    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part==='[[SOPORTE]]'?'Fragmento del soporte':part.startsWith('[[DATO_')?'Dato '+part.split('_')[1]:part}</mark> : part)}</>;
+    part.startsWith('[[') && part.endsWith(']]') ? <mark key={index}>{part==='[[CONSULTA]]'?'Pregunta del abogado':part==='[[SOPORTE]]'?'Fragmento del soporte':part.startsWith('[[DATO_')?'Dato '+part.split('_')[1]:part}</mark> : part)}</>;
 }
 
 export default function IntakePilot() {
@@ -117,6 +118,11 @@ export default function IntakePilot() {
     const result=await api<{task:Task;status:PilotStatus}>(action,payload);
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
     setLibraryOpen(false);setNotice('Ficha guardada en el expediente.');heading.current?.focus();
+  }
+  async function chooseQuestion(selection:{reviewId:string;key:string;angle:string}){
+    const result=await api<{task:Task;status:PilotStatus}>('intake.addQuestion',selection);
+    setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
+    setNotice('Consulta preparada. Revisa el mensaje que recibirá OpenAI.');
   }
   async function choosePassage(sourceId:string,part:number) {
     const result=await api<{task:Task;status:PilotStatus}>('intake.addPassage',{sourceId,part});
@@ -249,6 +255,7 @@ export default function IntakePilot() {
         </div>}
         {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
+          {pilot?.protectedRecords&&<IntakeQuestion disabled={busy||editText!==null} onSelect={chooseQuestion}/>}
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?'Contrastar '+item.comparison.title.toLowerCase():item.title}</option>)}
           </select></label>

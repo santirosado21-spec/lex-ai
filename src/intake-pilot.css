@@ -187,3 +187,11 @@
 .rp-tariff dl{display:flex;flex-wrap:wrap;gap:.65rem 2rem}
 .rp-tariff dd{margin:0;font-variant-numeric:tabular-nums}
 .rp-tariff .rp-actions a{display:inline-flex;align-items:center;gap:.35rem;min-height:42px}
+
+.rp-question{border-bottom:1px solid var(--rp-line);padding:.25rem 0 1rem;margin-bottom:1rem;min-width:0}
+.rp-question form,.rp-question [id="rp-question-panel"]>.rp-reveal{display:grid;gap:.7rem;margin-top:1rem}
+.rp-question textarea,.rp-question select{max-width:100%;min-width:0;width:100%}
+.rp-question textarea{resize:vertical;min-height:5rem}
+.rp-question button{justify-self:start}
+.rp-question p{margin:.2rem 0;line-height:1.5;overflow-wrap:anywhere}
+.rp-question .rp-details p{padding:.5rem 0;white-space:pre-wrap}

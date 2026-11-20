@@ -80,7 +80,7 @@ export function prepareFollowup(source,ranges,form,focus=[]){
   const quote=ref.text.slice(start,start+length);
   if(digest(quote)!==sha)throw Error('La cita de la nota cambió.');
   const choice=source.choices?.[index]?.find(item=>item.quote===quote);
-  const condition=choice?.condition;
+  const condition=choice?.condition??source.condition;
   if(condition&&!ref.text.includes(condition))throw Error('La condición del pasaje requiere cotejo.');
   return {ref,quote,condition,locator:choice?.locator};
  });

@@ -12,8 +12,12 @@ const chunks=[{id:'chunk_a',text:doc.text}];
 const request=()=>({scope:a,document:doc,bytes,chunks,expectedRevision:0});
 const code=expected=>error=>error.code===expected;
 
-test('matrix enumerates every current store method and keeps parity gate closed',()=>{
- const source=readFileSync(new URL('../server/store.mjs',import.meta.url),'utf8');const names=[...source.matchAll(/^    (\w+)\(/gm)].map(m=>m[1]);assert.deepEqual(VAULT_STORE_PARITY.map(r=>r.api).sort(),names.sort());assert.equal(VAULT_PARITY_COMPLETE,false);assert.ok(VAULT_STORE_PARITY.some(r=>r.status==='not-implemented'));assert.equal(new Set(VAULT_STORE_PARITY.map(r=>r.api)).size,names.length);assert.ok(VAULT_REMOVED_ESCAPES.db);
+test('matrix enumerates every current store method and keeps parity gate closed',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'rejon-vault-api-'));
+ const store=createStore(dir);
+ t.after(()=>{store.close();rmSync(dir,{recursive:true,force:true});});
+ const names=Object.keys(store).filter(key=>typeof store[key]==='function');
+ assert.deepEqual(VAULT_STORE_PARITY.map(r=>r.api).sort(),names.sort());assert.equal(VAULT_PARITY_COMPLETE,false);assert.ok(VAULT_STORE_PARITY.some(r=>r.status==='not-implemented'));assert.equal(new Set(VAULT_STORE_PARITY.map(r=>r.api)).size,names.length);assert.ok(VAULT_REMOVED_ESCAPES.db);
 });
 test('vault README current matrix counts agree with the code parity gate',()=>{
  const readme=readFileSync(new URL('../crates/lex-vault/README.md',import.meta.url),'utf8');const documented=[...readme.matchAll(/\*\*(\d+) supported-core \/ (\d+) partial \/ (\d+) not-implemented\*\*/g)].map(m=>m.slice(1).map(Number));assert.ok(documented.length>=1,'vault README must state the current matrix counts');const latest=documented[documented.length-1];

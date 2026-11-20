@@ -1,0 +1,15 @@
+{
+  "promptSha256": "c298b612c8f9a71aa605e96b4df4d9ceb5c128bed705bef55214ffa50ee80619",
+  "receipt": {
+    "requestedModel": "gpt-6-luna",
+    "observedModel": "gpt-6-luna",
+    "usage": {
+      "promptTokens": 290,
+      "completionTokens": 63
+    }
+  },
+  "response": {
+    "cita": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías",
+    "solicitud": "¿Qué documentos acreditan los gastos de transporte y el seguro de la mercancía?"
+  }
+}

@@ -1,3 +1,4 @@
+import {getPinnedPublicSource} from '../public-library.mjs';
 import vocabulary from '../../resources/legal-thesaurus.json' with {type: 'json'};
 
 const fold = value => String(value).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -15,4 +16,20 @@ export function expandQuery(query, {jurisdiction, areas} = {}) {
       // Never turn a federal vocabulary association into a state authority.
       anchors: entry.provenance.filter(source => source.jurisdiction === jurisdiction)})),
   };
+}
+
+// In a local installation the optional fragment index may be absent. Resolve
+// editorial vocabulary against the exact public snapshot it was built from.
+export function verifiedConceptSources(library,query,{jurisdiction,areas,lawId}){
+ if(library?.status?.().indexSha256!==vocabulary.source.sha256)return [];
+ const sources=new Map();
+ for(const concept of expandQuery(query,{jurisdiction,areas}).concepts){
+  for(const anchor of concept.anchors){
+   if(sources.has(anchor.sourceId)||(lawId&&anchor.lawId!==lawId))continue;
+   const row=getPinnedPublicSource(library,vocabulary.source.sha256,anchor.sourceId);
+   if(row&&row.lawId===anchor.lawId&&row.article===anchor.article&&row.jurisdiction===jurisdiction&&
+      row.textSha256===anchor.textSha256&&row.pdfSha256===anchor.pdfSha256)sources.set(row.sourceId,row);
+  }
+ }
+ return [...sources.values()];
 }

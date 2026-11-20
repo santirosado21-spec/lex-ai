@@ -398,7 +398,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
 
   const timeBilling=registerTimeBilling({requireWorkspace,matter,listMatters,clock:plannerNow},store);
   const intake=intakePilot
-    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,generate:intakeGenerate??createIntakeGenerator()})
+    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,generate:intakeGenerate??createIntakeGenerator()})
     :null;
   async function dispatch(action,p={},{signal}={}) {
     if(typeof action==='string'&&action.startsWith('intake.')){

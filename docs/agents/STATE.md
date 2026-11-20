@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 19:24 por codex: decisión — Conservar edición y NICO de dos dígitos al citar y exportar
+**Última actualización:** 2026-11-19 19:37 por codex: decisión — Restituir la pregunta original en el equipo y conservar íntegros los pasajes aduaneros del
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r14.2 permite iniciar la investigación con una pregunta del expediente, seleccionar fuente y enfoque, revisar la solicitud pública y restituir la pregunta al exportar. El ZIP se probó en este Mac. Evidencia en `artifacts/consulta-r14/`, incluida una llamada real, la repetición de su respuesta, tres exportaciones Office y ocho preguntas de desarrollo. Suite de JS 1429 aprobadas, 10 omitidas, 0 fallos.
 
 - r13 incorpora 11,507 NICO de 8,134 fracciones, consultables por ocho o diez dígitos y por descripción. El paquete privado, el navegador, la restauración y los tres formatos Office se comprobaron en este Mac. La edición del SNICE es de abril de 2024. Evidencia local en `artifacts/nico-r13/`.
 
@@ -65,6 +67,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Probar preguntas inéditas con hechos contradictorios y más de una fuente. Medir si el abogado puede verificar cada condición y fecha de aplicación en el documento exportado. La investigación actual envía a la nube una pregunta pública reconstruida. Sigue pendiente la validación de un diálogo general sobre el contexto seudonimizado, la segunda cuenta real y los equipos de Lorenzo y Pedro.
 
 - Cotejar publicaciones posteriores y anotar vigencia por operación. Validar con el abogado una selección de fracción y NICO que dependa de una anotación. Ampliar los ensayos de privacidad con expedientes sintéticos nuevos y registrar la prueba del piloto en los equipos de los socios.
 

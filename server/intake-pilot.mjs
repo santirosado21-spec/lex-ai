@@ -1,3 +1,5 @@
+import {mentionedConcepts} from './corpus/question-concepts.mjs';
+import {questionCandidates} from './corpus/intake-question.mjs';
 import {searchNico,nicoRow,nicoReference,nicoEdition} from './corpus/nico-index.mjs';
 import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
 import {focusFromInstruction,isFollowupForm,quotedRanges,prepareFollowup,followupEnvelope,renderFollowup} from './corpus/intake-followup.mjs';
@@ -9,7 +11,7 @@ import {randomUUID} from 'node:crypto';
 import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
-import {nicoResearch,tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
+import {angles,questionPassage,nicoResearch,tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
 import {getPilotTradeScenario} from './pilot-trade-scenario.mjs';
@@ -62,8 +64,9 @@ function exportCitations(references){
   status:'Referencia de consulta, aplicación al asunto pendiente de revisión'}));
 }
 
-function draftText(value,doc,evidence) {
+function draftText(value,doc,evidence,question) {
  const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...documentTokens(doc).map(item=>item.token)]);
+ if(question)allowed.add('[[CONSULTA]]');
  if(evidence)allowed.add('[[SOPORTE]]');
  const unrecognized=typeof value==='string' ? value.replace(/\[\[[^\[\]]+\]\]/g,token=>allowed.has(token)?'':token) : '';
  if (typeof value!=='string' || value.length>1800 || !value.includes('[[CLIENTE]]') ||
@@ -130,13 +133,14 @@ export function createIntakeGenerator({
  return generate;
 }
 
-export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary}) {
+export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference}) {
  let articles;
  try { articles=tradeArticles(publicLibrary); } catch { articles=null; }
  const tradeReferences=articles?[...articles,...supportingReferences]:[];
  let pending=false;
  let latestReview=null;
  let inspectionRevision=0;
+ const pendingQuestions=new Map();
  const current = () => {
   const firm=workspace();
   const intake=firm && store.get('intake-pilot',`intake-${firm.id}`);
@@ -145,7 +149,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   if (entry.workspaceId!==intake.workspaceId) throw new Error('El asunto no corresponde al piloto.');
   return {firm,entry,intake};
  };
- const sourceFor = selection => loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
+ const sourceFor = selection => selection.angle?questionPassage(publicLibrary,selection):loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
  const noteFor = (intake,task) => {
   const selection=intake?.research?.[task];
   return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection) : null;
@@ -349,6 +353,47 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    case 'intake.status':
     exactFields(payload,[]);
     return status();
+   case 'intake.inspectQuestion': {
+    exactFields(payload,['text']);
+    const saved=current(),text=payload.text;
+    if(!saved||!store.protectedRecords)throw Error('Abre un expediente cifrado.');
+    if(typeof text!=='string'||text.trim().length<10||text.length>800||/[\p{Cc}\[\]]/u.test(text.replace(/\r\n|\n|\t/gu,'')))
+     throw Error('Escribe una pregunta de 10 a 800 caracteres sin marcadores.');
+    const knownIdentities=[saved.firm.name,saved.entry.client,saved.entry.title,saved.intake.supplier,
+     ...(saved.intake.document?.snapshot.entries??[]).map(entry=>entry.text)];
+    const data=await inspectLocalDocument({extension:'txt',base64:Buffer.from(text).toString('base64'),review:true},{signal,knownIdentities});
+    if(!data.protection?.available||data.protection.contextUnavailable)throw Error('No se completó la revisión local de la pregunta.');
+    if(current()?.intake.id!==saved.intake.id)throw Error('Cambió el expediente.');
+    const review=data.protection,document=bindReviewedDocument(review,saved.firm.id,saved.entry.id);
+    const restored=openReviewedDocument(document,saved.firm.id,saved.entry.id);
+    if(restored.original!==text.replace(/\r\n/gu,'\n').trim())throw Error('La pregunta no se pudo restituir.');
+    const candidates=questionCandidates(publicLibrary,restored.original,review.parts,explicitArticleReference?.(restored.original,'MX-FED'));
+    if(!candidates.length)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
+    const id=randomUUID();
+    if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
+    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,concepts:mentionedConcepts(restored.original).map(c=>c.id)});
+    const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
+      /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
+    return {id,masked:restored.masked,count:review.count,suggestedAngle,
+     candidates:candidates.map(({key,label,locator,text,partial})=>({key,label,locator,text,partial}))};
+   }
+   case 'intake.addQuestion': {
+    exactFields(payload,['reviewId','key','angle']);
+    const {reviewId,key,angle}=payload,saved=current(),review=pendingQuestions.get(reviewId);
+    if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id||typeof angle!=='string'||!Object.hasOwn(angles,angle))
+     throw Error('Vuelve a revisar la pregunta en este expediente.');
+    const choice=review.candidates.find(row=>row.key===key);
+    if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts};
+    const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part;
+    if(!Object.hasOwn(intake.research??{},task)){
+     if(Object.keys(intake.research??{}).length>=48)throw Error('El expediente admite 48 pasajes de trabajo.');
+     sourceFor(selection);
+     store.put('intake-pilot',{...intake,research:{...intake.research,[task]:selection},
+      questions:{...intake.questions,[task]:review.document}});
+    }
+    return {task,status:status()};
+   }
    case 'intake.readPassage':
    case 'intake.addPassage': {
     exactFields(payload,['sourceId','part']);
@@ -511,7 +556,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(practice)text=renderProtectedCase(raw,practice);
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
-     const answer=draftText(text,(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence);
+     const answer=draftText(text,(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence,saved.intake.questions?.[task]);
      const parentSource=reading||practice||research;
      const ranges=store.protectedRecords&&parentSource?quotedRanges(parentSource,answer):[];
      signal?.throwIfAborted();
@@ -543,7 +588,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
      const basis=firstBasis(saved,task);
-     const drafts={...intake.drafts,[task]:draftText(text,intake.document,intake.researchHistory?.[task]?.evidence)};
+     const drafts={...intake.drafts,[task]:draftText(text,intake.document,intake.researchHistory?.[task]?.evidence,intake.questions?.[task])};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks,...(basis.length?{followupBasis:{...intake.followupBasis,[task]:basis}}:{})});
      store.audit('intake.local.edit',entry.id);
@@ -562,8 +607,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const {firm,entry,intake}=saved;
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
     const evidence=intake.researchHistory?.[task]?.evidence;
-    const text=draftText(intake.drafts[task],intake.document,evidence);
+    const question=intake.questions?.[task];
+    const text=draftText(intake.drafts[task],intake.document,evidence,question);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
+    if(question&&text.includes('[[CONSULTA]]'))originals.set('[[CONSULTA]]',openReviewedDocument(question,firm.id,entry.id).original);
     if(evidence)originals.set('[[SOPORTE]]',[evidence,...(evidence.additional??[])].map(row=>'Línea '+row.line+' del texto extraído · '+row.excerpt).join('\n'));
     if(text.includes('[[DATO_')){
      for(const item of openReviewedDocument(intake.document,firm.id,entry.id).tokens)originals.set(item.token,item.value);
