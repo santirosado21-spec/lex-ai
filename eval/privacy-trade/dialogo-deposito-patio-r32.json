@@ -1,0 +1,48 @@
+{
+  "case": "deposito-patio-sintetico-r32",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "declaracion",
+      "text": "El cargamento arribó al puerto, un espectáculo de grúas moviéndose bajo el sol inclemente. Se verificó la documentación relativa a la devolución de envases, cotejando el folio NMK-78051. Se constató que el depósito inicial fue devuelto íntegramente al exportador, cumpliendo con los términos acordados.",
+      "private": [
+        "NMK-78051"
+      ],
+      "clues": [
+        "grúas moviéndose bajo el sol inclemente"
+      ],
+      "facts": [
+        "devolución de envases",
+        "el depósito inicial fue devuelto íntegramente al exportador"
+      ]
+    },
+    {
+      "kind": "inspeccion",
+      "text": "En la zona de almacenamiento, donde el aire olía a salitre y maquinaria pesada, se revisó el inventario de embalajes. El folio NMK-78051 fue clave para confirmar la recepción de los contenedores vacíos. Se comprobó que la tarifa de flete internacional se aplicó correctamente en la factura comercial.",
+      "private": [
+        "NMK-78051"
+      ],
+      "clues": [
+        "el aire olía a salitre y maquinaria pesada"
+      ],
+      "facts": [
+        "inventario de embalajes",
+        "recepción de los contenedores vacíos",
+        "tarifa de flete internacional se aplicó correctamente en la factura comercial"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "Tras la inspección en el patio de maniobras, un lugar lleno de actividad constante, se solicitó el comprobante de la transacción. El folio NMK-78051 respalda la reclamación sobre el cobro del depósito. ¿Se efectuó la anulación del cargo por garantía en el sistema aduanero?",
+      "private": [
+        "NMK-78051"
+      ],
+      "clues": [],
+      "facts": [
+        "comprobante de la transacción",
+        "reclamación sobre el cobro del depósito",
+        "anulación del cargo por garantía"
+      ]
+    }
+  ]
+}

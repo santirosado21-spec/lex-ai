@@ -1,3 +1,4 @@
+import {emptyLocalReading} from './helpers/local-reader.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
@@ -30,7 +31,7 @@ test('sealed originals, two conflicting documents, scoped follows and reversible
  t.after(()=>{globalThis.fetch=native;});
  globalThis.fetch=async(url,options)=>{
   assert.equal(url,'http://127.0.0.1:11434/api/chat');
-  return Response.json({message:{content:JSON.stringify(JSON.parse(options.body).format.properties.oraciones?{oraciones:[]}:{client:'',title:'',documentKind:'otro',entities:[]})}});
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(JSON.parse(options.body).format.properties))}});
  };
  const files=await Promise.all(['factura-cotejo-ficticia','contrato-cotejo-ficticio'].map(n=>readFile('piloto/'+n+'.txt')));
  const review=bytes=>call('inspectSource',{extension:'txt',base64:bytes.toString('base64'),review:true});

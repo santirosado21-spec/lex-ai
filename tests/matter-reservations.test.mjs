@@ -1,3 +1,4 @@
+import {emptyLocalReading} from './helpers/local-reader.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,readdir,rm} from 'node:fs/promises';
@@ -21,7 +22,7 @@ test('case reservations apply to earlier documents, new queries and actual dispa
  t.after(async()=>{await app?.close();await rm(dir,{recursive:true,force:true});});
  t.mock.method(globalThis,'fetch',async(url,options)=>{
   assert.equal(url,'http://127.0.0.1:11434/api/chat');const shape=JSON.parse(options.body).format.properties;
-  return Response.json({message:{content:JSON.stringify(shape.oraciones?{oraciones:[]}:{entities:[],client:'',title:'',documentKind:'otro'})}});
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(shape))}});
  });
  app=await start();const rpc=(n,p={})=>app.service.dispatch('intake.'+n,p);
  await assert.rejects(rpc('reserveTerm',{text:'sin asunto',revision:0}));
@@ -56,4 +57,27 @@ test('case reservations apply to earlier documents, new queries and actual dispa
  await rpc('removeReservation',{id:list.rows[1].id,revision:2});
  await rpc('draft',{task:target.id});assert.equal(requests,1);
  for(const item of await readdir(dir,{withFileTypes:true}))if(item.isFile())assert.ok(!(await readFile(path.join(dir,item.name))).includes(Buffer.from('ámbar pálido')));
+});
+
+test('the saved document viewer rechecks later identities while preserving the original spelling after reopening',async t=>{
+ const dir=await mkdtemp(path.join(tmpdir(),'rejon-identidades-'));
+ let app;
+ const start=()=>startServer({dataDir:dir,autoInitialize:false,intakePilot:true,pilotPassphrase:Buffer.from('clave de prueba para dos minutas')});
+ t.after(async()=>{await app?.close();await rm(dir,{recursive:true,force:true});});
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  assert.equal(url,'http://127.0.0.1:11434/api/chat');
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(JSON.parse(options.body).format.properties))}});
+ });
+ app=await start();const rpc=(name,payload)=>app.service.dispatch('intake.'+name,payload);
+ await rpc('save',{firm:'Despacho de laboratorio',client:'Importador ficticio',title:'Ensayo',jurisdiction:'MX-FED'});
+ async function attach(text,label){
+  const review=await rpc('inspectSource',{extension:'txt',base64:Buffer.from(text).toString('base64'),review:true});
+  const {id}=await rpc('addSource',{reviewId:review.reviewId,label});return id;
+ }
+ const first='Se entregó la nota a mavía   de oro para cotejarla.';
+ const id=await attach(first,'Primera');assert.ok((await rpc('readDocument',{id})).masked.includes('mavía'));
+ await attach('Cliente: Mavia de Oro','Segunda');
+ const match=await rpc('readDocument',{id});assert.equal(match.original,first);assert.ok(!match.masked.includes('mavía'));
+ await app.close();app=await start();
+ assert.deepEqual((await rpc('readDocument',{id})).masked,match.masked);
 });

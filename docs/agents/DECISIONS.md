@@ -229,3 +229,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-20 00:18 — codex — Conservar el renglón del tratado y sus notas al investigar por fracción
 
 **Por qué:** Las ediciones arancelarias difieren y algunas fracciones tienen una regla propia. La consulta por código conserva la página, el contexto y la fecha de la edición. Los renglones con llamadas al pie permanecen disponibles para cotejo en el PDF.
+
+## 2026-11-20 00:34 — codex — Revisión local de indicios en narraciones comerciales
+
+**Por qué:** Acotar la revisión a fragmentos verificables del texto protege el contexto del embarque sin dar al modelo autoridad para cambiar el original. Las minutas propias aportan evidencia local en la nota restaurada.

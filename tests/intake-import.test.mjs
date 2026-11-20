@@ -1,3 +1,4 @@
+import {emptyLocalReading} from './helpers/local-reader.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {inspectLocalDocument} from '../server/intake-import.mjs';
@@ -51,7 +52,7 @@ test('local review masks repeated literals and rule-only email, restores the ful
 
 test('a copied narrative is not a title and a truncated model reply cannot produce a reviewed document',async()=>{
  const convert=(text,title,extra={})=>inspectLocalDocument({extension:'txt',review:true,base64:Buffer.from(text).toString('base64')},{
-  fetchImpl:async()=>Response.json({message:{content:JSON.stringify({client:'',title,documentKind:'otro',entities:[]})},...extra}),
+  fetchImpl:async(_url,opts)=>Response.json({message:{content:JSON.stringify(emptyLocalReading(JSON.parse(opts.body).format.properties,{title}))},...extra}),
  });
  const text='Se requiere factura comercial para el lote TG-9314.';
  const read=await convert(text,text);

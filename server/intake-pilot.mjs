@@ -508,10 +508,11 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const saved=current();
     const doc=selected?caseSources(saved?.intake).find(row=>row.id===payload.id)?.document:saved?.intake.document;
     const view=openReviewedDocument(doc,saved?.firm.id,saved?.entry.id);
-    if(!saved.intake.reservations?.length)return view;
     const id=selected?payload.id:caseSources(saved.intake)[0].id;
     const lines=view.original.split('\n');
-    for(const row of questionLines(saved,id))lines[row.evidence.line-1]=row.masked;
+    const labels=new Map(view.tokens.map(({value,label})=>[value,label]));
+    for(const row of questionLines(saved,id))lines[row.evidence.line-1]=row.parts.map(part=>
+     part.text??('〔'+(labels.get(part.value)??'Dato oculto')+'〕')).join('');
     return {...view,masked:lines.join('\n')};
    }
    case 'intake.status':

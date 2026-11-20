@@ -128,3 +128,12 @@ test('a concealed product name keeps its own marker inside a larger mask and acr
  assert.ok(rows[0].parts.every(part=>part.text===undefined));
  assert.ok(rows.every(row=>!row.cloud&&!row.masked.includes(model)));
 });
+
+test('later matter identities protect older orthographic variants without changing their local evidence',async()=>{
+ const variant='mavía   de oro';const a=await doc('Se entregó a '+variant+' el recado.','a');
+ const b=await doc('Cliente: Mavia de Oro','b',['Mavia de Oro']);
+ const before=questionLines(saved(a),'a')[0],after=questionLines(saved(a,b),'a')[0];
+ assert.ok(before.masked.includes(variant));assert.ok(!after.masked.includes(variant));
+ assert.equal(after.evidence.excerpt,'Se entregó a '+variant+' el recado.');
+ assert.notEqual(before.id,after.id);assert.equal(after.cloud,false);
+});

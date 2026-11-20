@@ -19,6 +19,12 @@ Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuen
 
 En **Consultar con una pregunta propia**, escribe la consulta y abre **Reservar datos de esta pregunta**. Selecciona una expresión en el campo de la pregunta y pulsa **Reservar selección**. Puedes reservar varias expresiones. Al pulsar **Buscar fundamentos en este equipo**, abre **Pregunta con sustituciones locales** y comprueba cada aparición. El control usa coincidencias exactas en esa pregunta. Puedes quitar una reserva antes de buscar. En **Datos originales** y en la exportación se restituye el texto para el abogado.
 
+### Revisar dos minutas de café en el equipo
+
+En un asunto ficticio, abre **Documentos del expediente → Añadir documento** y elige `piloto/minutas-cafe-ficticias.txt`. Abre **Revisar protección local**. Las flechas recorren cada aparición y la resaltan en el texto. Con **Ver texto restituido** puedes cotejar qué cubre esa misma sustitución. Comprueba el folio, el rastro físico y la procedencia. Revisa también que se conserven el estado del grano y la operación descrita.
+
+Guarda el documento con el nombre **Minutas de trabajo**. En la biblioteca, abre el renglón **09.01** del Anexo 4-B y prepara una consulta. En **Elegir líneas de mis documentos**, selecciona las dos minutas. El mensaje que se muestra antes del envío contiene el fundamento público. Al recuperar **Datos originales**, la nota incluye las líneas y el folio del expediente. Descárgala en Word, Excel o PowerPoint.
+
 ### Localizar reglas de origen por mercancía
 
 Abre **Biblioteca federal → Reglas por producto**. Escribe **0902.30** para abrir el intervalo donde figura esa subpartida, o elige un capítulo. Los vínculos abren la página del Diario Oficial en el equipo. También puedes empezar en **Tarifa arancelaria**, buscar una descripción y pulsar **Buscar regla de origen T-MEC**. La tarifa y el tratado muestran la fecha de sus respectivas ediciones.

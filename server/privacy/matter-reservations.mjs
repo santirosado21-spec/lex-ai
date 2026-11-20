@@ -1,11 +1,15 @@
 // Normalize for comparison only. Offsets always point back to complete original
 // code points and their combining marks. Whitespace can change during extraction.
 function folded(text){
- return text.normalize('NFD').toUpperCase().replace(/\p{M}/gu,'').replace(/\s+/gu,' ');
+ return text.normalize('NFD').toUpperCase().replace(/\p{M}/gu,'').replace(/[‐‑‒–﹣－]/gu,'-').replace(/\s+/gu,' ');
 }
 export function reservationKey(text){return folded(text).trim();}
 export function reservedRanges(text,rows){
- if(!hasReservedText(text,rows))return [];
+ const keys=new Set((rows??[]).map(row=>reservationKey(row.text)).filter(Boolean));
+ if(!keys.size||!text)return [];
+ const normalized=folded(text);
+ for(const key of keys)if(!normalized.includes(key))keys.delete(key);
+ if(!keys.size)return [];
  const starts=[],ends=[];let value='';
  for(const unit of text.matchAll(/\s+|\P{M}\p{M}*|\p{M}+/gu)){
   const piece=folded(unit[0]);
@@ -13,9 +17,7 @@ export function reservedRanges(text,rows){
   for(let i=0;i<piece.length;i++){starts.push(unit.index);ends.push(unit.index+unit[0].length);}
  }
  const last=new Uint32Array(value.length);
- for(const row of rows){
-  const key=reservationKey(row.text);
-  if(!key)continue;
+ for(const key of keys){
   for(let i=value.indexOf(key);i>=0;i=value.indexOf(key,i+1))last[i]=Math.max(last[i],i+key.length);
  }
  const ranges=[];

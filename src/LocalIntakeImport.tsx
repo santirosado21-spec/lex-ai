@@ -1,10 +1,37 @@
 import {useEffect, useRef, useState} from 'react';
-import {FileInput} from 'lucide-react';
+import {ChevronLeft,ChevronRight,FileInput} from 'lucide-react';
 import {api, fileBase64} from './api';
 
 type Protection = {available:false;reason:string}|{available:true;count:number;needsReview:boolean;contextualCount?:number;contextUnavailable?:boolean;parts:({text:string}|{label:string;start:number;end:number})[];restored:string};
-type Extract = {reviewedWindows?:number;reviewId?:string;protection?:Protection;scenarioId?:string;supplier?:string;scenarioPreview?:string;client:string;title:string;documentKind:'pedimento'|'factura'|'contrato'|'otro'};
-export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange,onReplace,ciphered,attachment=false}:{attachment?:boolean;ciphered?:boolean;onReplace:()=>void;onReviewChange:(id:string,hasCorrections:boolean)=>void;onExtract:(data:Extract)=>void;onBusyChange?:(busy:boolean)=>void}) {
+type IntakeExtract = {reviewedWindows?:number;reviewId?:string;protection?:Protection;scenarioId?:string;supplier?:string;scenarioPreview?:string;client:string;title:string;documentKind:'pedimento'|'factura'|'contrato'|'otro'};
+function ProtectionText({review,original}:{review:Extract<Protection,{available:true}>;original:boolean}) {
+ const [current,setCurrent]=useState(0);
+ const box=useRef<HTMLPreElement>(null);
+ const marks=review.parts.flatMap((part,index)=>'label' in part?[index]:[]);
+ const position=Math.min(current,marks.length-1);
+ const activePart=marks[position];
+ useEffect(()=>{
+  const container=box.current,mark=container?.querySelector('[aria-current="true"]');
+  if(!container||!mark)return;
+  const details=container.closest('details');
+  const reveal=()=>{
+   if(details&&!details.open)return;
+   const outer=container.getBoundingClientRect(),inner=mark.getBoundingClientRect();
+   if(inner.top<outer.top||inner.bottom>outer.bottom)container.scrollTop+=inner.top-outer.top-12;
+  };
+  reveal();details?.addEventListener('toggle',reveal);
+  return ()=>details?.removeEventListener('toggle',reveal);
+ },[activePart,original,review]);
+ return <>
+  {marks.length>0&&<div className="rp-substitutions" role="group" aria-label="Recorrer sustituciones">
+   <span aria-live="polite">Sustitución {position+1} de {marks.length}</span>
+   <button className="rp-quiet" type="button" aria-label="Sustitución anterior" disabled={position<=0} onClick={()=>setCurrent(position-1)}><ChevronLeft size={17}/></button>
+   <button className="rp-quiet" type="button" aria-label="Sustitución siguiente" disabled={position>=marks.length-1} onClick={()=>setCurrent(position+1)}><ChevronRight size={17}/></button>
+  </div>}
+  <pre tabIndex={0} aria-label={original?'Texto restituido en este equipo':'Texto con sustituciones'} ref={box} className={original?undefined:'rp-masked'}>{review.parts.map((part,i)=>'label' in part?<mark key={i} aria-current={i===activePart?'true':undefined}>{original?review.restored.slice(part.start,part.end):part.label}</mark>:part.text)}</pre>
+ </>;
+}
+export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange,onReplace,ciphered,attachment=false}:{attachment?:boolean;ciphered?:boolean;onReplace:()=>void;onReviewChange:(id:string,hasCorrections:boolean)=>void;onExtract:(data:IntakeExtract)=>void;onBusyChange?:(busy:boolean)=>void}) {
  const picker=useRef<HTMLInputElement>(null);
  const reading=useRef<AbortController|null>(null);
  useEffect(()=>()=>{reading.current?.abort();},[]);
@@ -34,9 +61,9 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
   setLiteral('');onReplace();setReviewId(undefined);setCanUndo(false);setCorrecting(false);
   setPreview('');setProtection(undefined);setShowOriginal(false);onBusyChange?.(true);setBusy(true);setMessage('Leyendo en este equipo…');
   try {
-   const data=file?await api<Extract>(attachment?'intake.inspectSource':'intake.inspectLocal',{
+   const data=file?await api<IntakeExtract>(attachment?'intake.inspectSource':'intake.inspectLocal',{
     extension:file.name.split('.').pop()?.toLowerCase(),base64:await fileBase64(file),review:true,
-   },controller.signal):await api<Extract>('intake.createPractice',{},controller.signal);
+   },controller.signal):await api<IntakeExtract>('intake.createPractice',{},controller.signal);
    controller.signal.throwIfAborted();
    setReviewId(data.reviewId);setProtection(data.protection);setPreview(data.scenarioPreview??'');onExtract(data);const progress=data.reviewedWindows?'Se leyeron '+data.reviewedWindows+' bloques en este equipo. ':'';setMessage(data.protection?.available===false?'':progress+(attachment?'Revisa las sustituciones antes de guardar el documento.':'Revisa los campos y completa los que quedaron vacíos.'));
   } catch (error) {setMessage(controller.signal.aborted?'Lectura cancelada.':error instanceof Error ? error.message : 'No se pudo leer el documento.');}
@@ -83,7 +110,7 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
      <label>O escribe el fragmento exacto<input type="text" autoComplete="off" spellCheck={false} value={literal} maxLength={256} onChange={e=>setLiteral(e.target.value)}/></label>
      <button type="button" className="secondary" disabled={busy} onClick={()=>void revise()}>Ocultar coincidencias exactas</button></div>}
    </div>}
-   <pre className={showOriginal?undefined:'rp-masked'}>{protection.parts.map((part,i)=>'label' in part?<mark key={i}>{showOriginal?protection.restored.slice(part.start,part.end):part.label}</mark>:part.text)}</pre>
+   <ProtectionText review={protection} original={showOriginal}/>
   </details>}
   {protection&&!protection.available&&<p role="status">{protection.reason}</p>}
   {preview&&!canUndo&&<details><summary>Ver el caso ficticio con identidades sustituidas</summary><pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{preview}</pre></details>}

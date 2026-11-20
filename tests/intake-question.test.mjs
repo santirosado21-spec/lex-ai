@@ -1,3 +1,4 @@
+import {emptyLocalReading} from './helpers/local-reader.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {mkdtemp,rm,readFile,readdir} from 'node:fs/promises';
@@ -56,7 +57,7 @@ test('question review stays on loopback, original restores only within its matte
  app=await start();const rpc=(name,payload)=>app.service.dispatch('intake.'+name,payload);
  const local=t.mock.method(globalThis,'fetch',async(url,opts)=>{
   assert.equal(url,'http://127.0.0.1:11434/api/chat');const req=JSON.parse(opts.body);
-  return Response.json({message:{content:JSON.stringify(req.format.properties.entities?{entities:[],documentKind:'otro',client:'',title:''}:{oraciones:[]})}});
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(req.format.properties))}});
  });
  await rpc('save',{firm:'Despacho ficticio',client:customer,title:'Consulta de ensayo',jurisdiction:'MX-FED'});
  const inquiry=await rpc('inspectQuestion',{text:original});assert.doesNotMatch(inquiry.masked,/Empresa Ensayo Lila|X-9134/);
@@ -147,7 +148,7 @@ test('manual search uses reviewed lines in this matter and keeps the private doc
  t.mock.method(globalThis,'fetch',async(url,opts)=>{
   assert.equal(url,'http://127.0.0.1:11434/api/chat');
   const shape=JSON.parse(opts.body).format.properties;
-  return Response.json({message:{content:JSON.stringify(shape.oraciones?{oraciones:[]}:{entities:[],documentKind:'otro',client:'',title:''})}});
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(shape))}});
  });
  const rpc=(name,payload)=>app.service.dispatch('intake.'+name,payload);
  await rpc('save',{firm:'Despacho de Ensayo',client:'Cliente de Ensayo',title:'Prueba de líneas',jurisdiction:'MX-FED'});

@@ -1,0 +1,53 @@
+{
+  "case": "embalaje-valor-sintetico-r32",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "informe",
+      "text": "Se ha iniciado la revisión del valor en aduana debido a la naturaleza del embalaje retornable. El folio VTL-63428 documenta que el costo del envase fue asumido por el importador, sujeto a una condición de reembolso posterior al uso. Se reportó un incidente inusual cerca del patio de descarga, y se observó un residuo fibroso específico en las unidades.",
+      "private": [
+        "VTL-63428"
+      ],
+      "clues": [
+        "incidente inusual cerca del patio de descarga",
+        "residuo fibroso específico en las unidades"
+      ],
+      "facts": [
+        "revisión del valor en aduana",
+        "embalaje retornable",
+        "costo del envase fue asumido por el importador",
+        "condición de reembolso posterior al uso"
+      ]
+    },
+    {
+      "kind": "anexo",
+      "text": "Adjunto se detalla el registro fotográfico correspondiente al folio VTL-63428. Este material muestra claramente el mismo material orgánico, identificado como un fragmento de corteza, encontrado en las cajas al llegar a la instalación de Puerto Escondido. Esto soporta la alegación de manipulación.",
+      "private": [
+        "VTL-63428"
+      ],
+      "clues": [
+        "fragmento de corteza",
+        "instalación de Puerto Escondido"
+      ],
+      "facts": [
+        "registro fotográfico",
+        "alegación de manipulación"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "¿Cómo se concilian las pruebas del folio VTL-63428, específicamente el residuo fibroso, con la declaración de valor, considerando que el embalaje se recuperará y se aplicará una tasa de depreciación del 15% sobre el costo original?",
+      "private": [
+        "VTL-63428"
+      ],
+      "clues": [
+        "residuo fibroso"
+      ],
+      "facts": [
+        "declaración de valor",
+        "el embalaje se recuperará",
+        "tasa de depreciación del 15% sobre el costo original"
+      ]
+    }
+  ]
+}

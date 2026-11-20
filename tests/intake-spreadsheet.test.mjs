@@ -1,3 +1,4 @@
+import {emptyLocalReading} from './helpers/local-reader.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import ExcelJS from 'exceljs';
@@ -31,7 +32,7 @@ test('the local Excel reader preserves visible coordinates, number formats and s
   assert.equal(url,'http://127.0.0.1:11434/api/chat');
   const body=JSON.parse(opts.body);
   for(const secret of ['Secreto de ensayo','Anotación interna','example.invalid','Omitir','SUM('])assert.ok(!opts.body.includes(secret));
-  return Response.json({message:{content:JSON.stringify(body.format.properties.oraciones?{oraciones:[]}:{client:'',title:'',documentKind:'otro',entities:[]})}});
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(body.format.properties))}});
  }});
  assert.equal(data.protection.restored,expected);
 });

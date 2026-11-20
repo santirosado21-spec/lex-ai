@@ -1,3 +1,4 @@
+import {describesShipmentNarrative} from './privacy/origin-evidence.mjs';
 import {readerModel} from './privacy/local-reader-status.mjs';
 import {reservedRanges} from './privacy/matter-reservations.mjs';
 import {describesEquipmentReturn} from './privacy/trade-document-structure.mjs';
@@ -13,6 +14,9 @@ const shape = {
  type: 'object', additionalProperties: false, required: ['client', 'title', 'documentKind'],
  properties: {client: {type:'string'}, title: {type:'string'}, documentKind: {type:'string', enum:kinds}},
 };
+const narrativeGroups=['personas','empresas','lugares','referencias','contactos','otrosIdentificadores'];
+const literalList={type:'array',maxItems:96,items:{type:'string',minLength:2,maxLength:1024}};
+const narrativeInstruction='Extrae sólo coincidencias textuales. Usa personas para nombres propios, empresas para nombres comerciales o razones sociales, lugares para ubicaciones concretas, referencias para folios, series, cuentas e identificadores de personas u operaciones, contactos para teléfonos, correos y domicilios, y otrosIdentificadores para los demás valores que individualizan una operación. Devuelve una lista vacía en cada categoría ausente. La clase de mercancía, el proceso, el papel contractual y el concepto del gasto son hechos del asunto. Ejemplo: en «el pedido RP-1216 ampara lámina de Acero Límite», la referencia es «RP-1216» y la empresa es «Acero Límite». Extrae sólo valores del texto recibido.';
 function documentaryTitle(candidate,source){
  if(!candidate)return '';
  const labelled=Array.from(source.matchAll(/(?:^|[.\n;]\s*)(?:asunto|t[ií]tulo|subject|re)\s*:\s*([^\n]+)/gimu),m=>m[1].trim());
@@ -31,11 +35,13 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
      typeof payload.base64 !== 'string') throw new Error('Elige un PDF, DOCX, XLSX, TXT o Markdown.');
  const {text,bytes} = await extractDocument('entrada.' + payload.extension, payload.base64, {spreadsheet:true});
  const windows=intakeWindows(text);
- const format=review ? {...shape,required:[...shape.required,'entities'],properties:{...shape.properties,
-  entities:{type:'array',maxItems:96,items:{type:'string',minLength:2,maxLength:1024}}}} : shape;
+ const narrative=review&&describesShipmentNarrative(text)&&!describesEquipmentReturn(text);
+ const groups=narrative?narrativeGroups:['entities'];
+ const format=review?{...shape,required:[...shape.required,...groups],properties:{
+  ...shape.properties,...Object.fromEntries(groups.map(name=>[name,literalList]))}}:shape;
  const entityScope=describesEquipmentReturn(text)
   ?'Para cada valor pregúntate si distingue a una persona, instalación o una operación concreta entre otras. Extrae únicamente ese valor. Una acción, una pregunta, una pieza común, una reparación o el tipo de trámite por sí solos no identifican al cliente. Si un sustantivo va seguido de un folio, extrae el folio. Conserva las negaciones y los hechos técnicos.':'Conserva hechos jurídicos, mercancías genéricas y etiquetas de campo.';
- const instruction=review ? ' En entities enumera fragmentos literales con nombres de personas, empresas, direcciones completas de cualquier país, correos, teléfonos, identificadores fiscales, cuentas, números de expediente y otros datos que identifiquen a una parte. Copia exactamente cada fragmento del documento, sin reformular. Incluye los identificadores de embarque, citas de descarga, series, lotes, buque y viaje. En entities devuelve sólo los valores identificables con el mínimo texto necesario. '+entityScope : '';
+ const instruction=!review?'':narrative?' '+narrativeInstruction:' En entities enumera fragmentos literales con nombres de personas, empresas, direcciones completas de cualquier país, correos, teléfonos, identificadores fiscales, cuentas, números de expediente y otros datos que identifiquen a una parte. Copia exactamente cada fragmento del documento, sin reformular. Incluye los identificadores de embarque, citas de descarga, series, lotes, buque y viaje. En entities devuelve sólo los valores identificables con el mínimo texto necesario. '+entityScope;
 
  async function ask(system,input,format,numPredict){
   signal?.throwIfAborted();
@@ -63,12 +69,15 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
  const literalClients=new Set(readings.map(r=>exactSpan(r.fields?.client,r.window)).filter(Boolean));
  const client=literalClients.size===1?[...literalClients][0]:'';
  const extraIdentities=readings.slice(1).flatMap(r=>[exactSpan(r.fields?.client,r.window),documentaryTitle(exactSpan(r.fields?.title,r.window),r.window)]).filter(Boolean);
- const validSuggestions=readings.every(r=>Array.isArray(r.fields?.entities)&&r.fields.entities.length<=96);
- const suggestions=validSuggestions?[...new Set(readings.flatMap(r=>r.fields.entities))]:null;
+ const lists=readings.map(({fields})=>groups.map(group=>fields?.[group]));
+ const validSuggestions=lists.every(row=>row.every(list=>Array.isArray(list)&&list.every(x=>typeof x==='string'))&&row.flat().length<=96);
+ const suggestions=validSuggestions?[...new Set(lists.flat(2))]:null;
  const data={...(matched ? {scenarioId:matched.scenarioId,scenarioPreview:matched.preview,supplier:text.split('\n')[3].slice('Proveedor: '.length)} : {}),client,title:documentaryTitle(titleCandidate,text),documentKind:matched ? 'factura' : kinds.includes(fields?.documentKind) ? fields.documentKind : 'otro'};
  if (!review) return data;
- const protection=await reviewIntakeDocument({text,context:{ranges:reservedRanges(text,reservations),available:true},contextReviewer:parts=>reviewContextLocally(text,ask,signal,parts),originalHash:createHash('sha256').update(bytes).digest('hex'),
-  suggestions,suggestionBatches:windows.length,fields:[...literalClients,...extraIdentities,data.title,data.supplier??'',...knownIdentities.filter(value=>typeof value==='string'&&value.length>=2&&text.includes(value))],signal});
+ const known=knownIdentities.filter(value=>typeof value==='string'&&value.trim().length>=2);
+ const priorRanges=reservedRanges(text,[...reservations,...known.map(value=>({text:value}))]);
+ const protection=await reviewIntakeDocument({text,context:{ranges:priorRanges,available:true},contextReviewer:parts=>reviewContextLocally(text,ask,signal,parts),originalHash:createHash('sha256').update(bytes).digest('hex'),
+  suggestions,suggestionBatches:windows.length,fields:[...literalClients,...extraIdentities,data.title,data.supplier??'',...known.filter(value=>text.includes(value))],signal});
  if(protection.available&&titleCandidate&&!data.title)protection.needsReview=true;
  return {...data,protection,...(windows.length>1?{reviewedWindows:windows.length}:{})};
 }

@@ -1,3 +1,4 @@
+import {needsShipmentContext,reviewShipmentContext} from './shipment-context.mjs';
 import {describesOriginEvidence,originReviewUnits,isMaterialField} from './origin-evidence.mjs';
 import {describesEquipmentReturn} from './trade-document-structure.mjs';
 // Local model sees numbered sentences. It can add protection only by selecting
@@ -37,7 +38,7 @@ function contextStart(segment,protectedSpans){
 }
 
 export async function reviewContextLocally(text,ask,signal,parts=[]){
- const origin=describesOriginEvidence(text);
+ const origin=describesOriginEvidence(text),shipment=needsShipmentContext(text);
  const originScope='En certificados o consultas de origen distingue cada indicio reconocible de la composición ordinaria. Una huella física, un dibujo distintivo del envase, una referencia ambiental o un hito permiten reconocer el sitio. Una fibra, una resina, un proceso industrial o la pregunta sobre los documentos de origen por sí solos no son indicios. ';
  const instruction=contextTask+(describesEquipmentReturn(text)?returnScope:origin?originScope:generalScope)+responseFormat;
  const segments=Array.from(new Intl.Segmenter('es',{granularity:'sentence'}).segment(text),
@@ -66,6 +67,7 @@ export async function reviewContextLocally(text,ask,signal,parts=[]){
   if(!result||Object.keys(result).length!==1||!Array.isArray(result.oraciones)||result.oraciones.length>batch.length||
      new Set(result.oraciones).size!==result.oraciones.length||!result.oraciones.every(id=>allowed.has(id)))throw Error('Resultado ambiguo.');
   for(const id of result.oraciones)if(!routineIds.has(id))ranges.push([contextStart(allowed.get(id),protectedSpans),ends.get(id)]);
+  if(shipment)ranges.push(...await reviewShipmentContext(batch,ask));
  }
  try{
   for(const sentence of segments){

@@ -17,7 +17,8 @@ const series=new RegExp('(?:^|[.!?\\n])[ \\t]*(?:(?:nombres de (?:los |las )?)?(
  caption+'(?:(?:[ \\t]*[,;|][ \\t]*|[ \\t]+(?:y|e)[ \\t]+)'+caption+')*)[ \\t]*(?=[.!?\\n]|$)','dgiu');
 
 export function formCaptionRanges(text) {
- return [...text.matchAll(captionLine),...text.matchAll(series)].map(match=>match.indices[1]);
+ const heading=/^(certificado de origen|declaración de proveedor|registro de producción)[ \t]*[-–][ \t]*(?=lote\b|folio\b|insumo\b)/gdimu;
+ return [...text.matchAll(captionLine),...text.matchAll(series),...text.matchAll(heading)].map(match=>match.indices[1]);
 }
 
 // An abbreviation or an interior number can continue a postal address. Start a
@@ -129,6 +130,11 @@ const appointment=new RegExp(String.raw`(?:cita de (?:carga|descarga|entrega)|de
 
 export function logisticsReferenceRanges(text){
  const values=new Set();
+ // Standalone case references often introduce a note without a field label.
+ const leading=/^(?:[ \t]*)([A-Z]{2,8}(?:[-‐‑–]\d{2,8})*[-‐‑–]\d{4,12})(?=[.:;]\s|\s*$)/gmu;
+ for(const match of text.matchAll(leading)){
+  if(!/^(?:ISO|IEC|ASTM|NOM|NMX|DOF|DIN)[-‐‑–]/u.test(match[1]))values.add(match[1]);
+ }
  for(const match of text.matchAll(documentHeading))if(/\d/u.test(match[1]))values.add(match[1]);
  for(const match of text.matchAll(referenceLabel)){
   const value=match[1];

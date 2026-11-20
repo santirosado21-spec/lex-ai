@@ -46,7 +46,11 @@ export function questionLines(saved,sourceId,transient){
  for(const value of values){
   if(typeof value==='string'&&value.trim())occurrences(original,value,(start,end)=>{ends[start]=Math.max(ends[start],end);if(anchors.has(value))anchorEnds[start]=Math.max(anchorEnds[start],end);});
  }
- for(const [a,b] of reservedRanges(original,saved.intake.reservations))ends[a]=Math.max(ends[a],b);
+ // Reproject older sources when a later document discloses a spelling variant.
+ // Keep the matched original in the local view; never restore a different form.
+ const known=[...values].filter(value=>typeof value==='string'&&value.trim().length>=2);
+ const prior=[...(saved.intake.reservations??[]),...known.map(text=>({text}))];
+ for(const [a,b] of reservedRanges(original,prior))ends[a]=Math.max(ends[a],b);
  const merged=[];
  for(let start=0;start<ends.length;start++){
   if(!ends[start])continue;

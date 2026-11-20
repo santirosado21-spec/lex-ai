@@ -427,3 +427,7 @@ Cinco solicitudes reales con material ficticio o público y la clave principal. 
 ## 2026-11-20 00:18 — codex — Anexo 4-B integrado en el piloto privado r31.1
 
 Se comprobaron 1032 ubicaciones y 507 extractos en el tratado publicado. Se reabrieron dos asuntos desde el ZIP y se cotejaron seis salidas Office. Suite de 1480 aprobadas y diez omitidas. En tres textos ficticios de café se protegieron tres apariciones del folio y cero de tres indicios físicos o geográficos. Cuatro de ocho hechos se conservaron. Ver docs/qa/reglas-producto-tmec-r31.md.
+
+## 2026-11-20 00:34 — codex — Rejon r32.1 probado con minutas y edición
+
+El paquete local pasó cuatro recorridos con respuestas grabadas, doce exportaciones abiertas y 1486 pruebas aprobadas. Los 38 documentos históricos se restituyeron. Se cubrieron 35 de 35 identificadores y 31 de 32 indicios. Se conservaron 47 de 50 hechos. Siguen pendientes el ensayo real con Lorenzo y Pedro, Windows y un equipo de 8 GB.

@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-20 00:18 por codex: Anexo 4-B integrado en el piloto privado r31.1
+**Última actualización:** 2026-11-20 00:34 por codex. Piloto local r32.1 verificado con edición y restitución de minutas.
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r32.1 comprueba el recorrido de dos minutas de café desde la importación hasta la edición con marcador, reapertura y exportación. Se cotejaron doce archivos en LibreOffice. Los 38 documentos históricos se restituyeron íntegros. La cobertura fue de 35/35 identificadores y 31/32 indicios. Se conservaron 47/50 hechos. Las nuevas mediciones y sus límites figuran en el [informe de privacidad y edición](../qa/privacidad-contextual-y-edicion-r32.md).
 
 - r31.1 añade 1 032 referencias del Anexo 4-B y 507 extractos con código y página cotejados. La prueba del ZIP recuperó las notas de cacao y café y sus seis archivos en LibreOffice. La reserva inédita de café cubrió 3/3 folios y 0/3 indicios, conservó 4/8 hechos y se restituyó entera. [Resultados y límites](../qa/reglas-producto-tmec-r31.md).
 
@@ -111,6 +113,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Contrastar en documentos nuevos las descripciones de patios y embalajes que aún permiten reconocer el lugar, y la pérdida de información sobre un envío por la siguiente ruta. Medir los dos efectos antes de cambiar los criterios. Probar con los socios el recorrido de edición y restitución con datos ficticios.
 
 - Medir y mejorar el tratamiento de indicios de lugar y señales físicas repetidos con otras palabras en expedientes propios. Contrastar otras medidas locales con la reserva inédita de café. Para origen, comprobar cambios y correspondencias por fecha, notas de sección extensas y reglas con varias alternativas en asuntos nuevos.
 

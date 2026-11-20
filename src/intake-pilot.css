@@ -291,3 +291,11 @@
 @media(prefers-reduced-motion:no-preference){
   .rp-origin-provisions[open] > div {animation:rp-enter .2s ease-out both}
 }
+
+.rp-private-review .rp-substitutions {display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-top:.75rem}
+.rp-substitutions span {margin-inline-end:.4rem;color:var(--rp-muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+.rp-private-review .rp-substitutions button {min-width:2.3rem;min-height:2.3rem;justify-content:center;padding:.3rem}
+.rp-private-review mark[aria-current=true] {background:#18483e;color:white;outline:2px solid #18483e;outline-offset:1px}
+@media(prefers-reduced-motion:no-preference){
+ .rp-private-review mark {transition:background-color .14s ease,color .14s ease}
+}
