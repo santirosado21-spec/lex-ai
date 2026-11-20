@@ -18,7 +18,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
   event.preventDefault();setBusy(true);setReview(null);setFactIds([]);setError('');
   try{
    const result=await api<Review>('intake.inspectQuestion',{text:question.trim()});
-   setReview(result);setKey(result.candidates[0]?.key??'');setRoute(result.permit?'permit':'passage');setAngle(result.suggestedAngle);
+   setReview(result);setKey(result.candidates[0]?.key??'');setRoute(result.permit&&!result.candidates[0]?.key.startsWith('ad29-')?'permit':'passage');setAngle(result.suggestedAngle);
   }catch(cause){setError(cause instanceof Error?cause.message:'No se pudo revisar la consulta local.');}
   finally{setBusy(false);}
  }

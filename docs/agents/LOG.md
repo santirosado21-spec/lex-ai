@@ -379,3 +379,7 @@ Probados la pregunta y dos originales ficticios en Chromium, el ZIP extraído y 
 ## 2026-11-19 21:02 — codex — Captura oficial de tres etapas de una investigación antidumping
 
 AD_29-24: tres fichas de publicación y tres textos del SIDOF verificados en investigación. La preliminar fija cuatro meses y la final entra en vigor el 05/09/2026. Falta cotejo con edición digitalizada, actos intermedios y posteriores, prueba con operaciones y revisión profesional. Sin conexión al generador del piloto.
+
+## 2026-11-19 21:12 — codex — Rejon r20 incorpora las tres etapas del expediente antidumping a consulta, cotejo y Office
+
+Se cruzaron once pasajes de los tres PDF del DOF con el HTML. El ZIP reabrió tres notas y exportó seis archivos. En el asunto ficticio se restituyeron folio, líneas técnicas y fecha; se contrastaron tres mensajes con transporte simulado. LibreOffice verificó el texto impreso en seis archivos. Lanzador macOS con cuentas simuladas y regresión del pedimento aprobados. Suite JS: 1,448 aprobadas, 10 omitidas. Sin cargo nuevo, dictamen humano ni comprobación de actos intermedios.

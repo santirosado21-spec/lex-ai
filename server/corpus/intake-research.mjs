@@ -1,3 +1,4 @@
+import {remedyReference} from './remedy-index.mjs';
 import {questionFactTexts} from './intake-question-facts.mjs';
 import {selectedConcepts} from './question-concepts.mjs';
 import {customsPassage} from './customs-edition.mjs';
@@ -56,7 +57,9 @@ export function loadResearchPassage(library, sourceId, part) {
 export function questionPassage(library,{sourceId,part,angle,concepts=[]},caseFacts){
  if(!Object.hasOwn(angles,angle))throw Error('Selecciona el enfoque jurídico.');
  let ref,condition,body;
- if(/^aduana-(?:36|36-A|64|65)$/u.test(sourceId)){
+ if(typeof sourceId==='string'&&sourceId.startsWith('ad29-')){
+  ref=remedyReference(sourceId,part);body=ref.text;
+ }else if(/^aduana-(?:36|36-A|64|65)$/u.test(sourceId)){
   const article=sourceId.slice(7),source=customsPassage(article);
   if(!Number.isInteger(part)||part<0||part>=source.passages.length)throw Error('Pasaje aduanero inválido.');
   const passage=source.passages[part];
@@ -65,12 +68,12 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[]},caseFa
  }else ref=loadResearchPassage(library,sourceId,part).ref;
  const labels=selectedConcepts(concepts,ref.text);
  const focus=labels.length?' · '+labels.join(', '):'';
- const title=angles[angle]+' · '+ref.title+' · art. '+ref.article;
+ const title=angles[angle]+' · '+ref.title+(ref.remedy?'':' · art. '+ref.article);
  const facts=caseFacts?questionFactTexts(caseFacts):[];
  const responseSpec=facts.length?'En lectura explica en una o dos oraciones qué permiten comprobar los hechos o qué contradicción requiere aclaración. Escribe de 40 a 300 caracteres sin cifras, nombres, nuevas citas o conclusiones de cumplimiento. Si los hechos no guardan relación con el pasaje, abstente. Devuelve JSON con lectura, cita':'Devuelve JSON con cita';
  const factBlock=facts.length?'\n\nHechos del ejercicio elegidos por el abogado\n'+facts.map((fact,i)=>'H'+(i+1)+' · '+fact).join('\n'):'';
  const markerRule=caseFacts?.aliases.length?' En la lectura vincula el pago o la comprobación con al menos una referencia de los hechos. Copia literalmente su marcador, incluidos los corchetes. Si no puedes vincularlos al pasaje, abstente.':'';
- const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'')+factBlock+markerRule;
+ const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(ref.remedy?'\nCotejo de alcance y vigencia: '+ref.summary:'')+(condition?'\nCondición del encabezado\n'+condition:'')+factBlock+markerRule;
  const note=Object.freeze({title,ref,body,condition,angle,prompt,...(caseFacts?{caseFacts}:{})});verified.add(note);return note;
 }
 
@@ -91,6 +94,11 @@ export function nicoResearch(code,nico){
  return note;
 }
 
+export function remedyResearch(source,point){
+ const note=Object.freeze({ref:remedyReference(source,point)});
+ verified.add(note);
+ return note;
+}
 export function checkedResearchReference(note) {
   if (!verified.has(note)) throw Error('Pasaje sin procedencia verificada.');
   return note.ref;
@@ -129,5 +137,5 @@ export function renderResearchNote(raw, note) {
     (valid&&hasFacts?'\n\nLectura preliminar de OpenAI\n'+localReading:'')+
     (note.caseFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
-    '\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.';
+    (note.ref.remedy?'\n\n'+note.ref.summary:'\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.');
 }

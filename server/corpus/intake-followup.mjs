@@ -65,13 +65,13 @@ function sourceContext(source){
 // Reconstruct outbound text from the pinned source, never from the draft string.
 export function quotedRanges(source,draft){
  const {refs}=sourceContext(source);
- const permit=Boolean(source?.selection&&source?.references);
+ const whole=Boolean(source?.selection&&source?.references||source?.ref?.remedy);
  const lines=draft.split('\n');
  const ranges=[];
  for(const [index,ref] of refs.entries()){
   const heading=lines.findIndex(line=>line.includes('['+ref.id+']'));
   const line=lines[heading+1];
-  const start=heading<0||!line||(permit?line!==ref.text:line.length<24||line.length>420)?-1:ref.text.indexOf(line);
+  const start=heading<0||!line||(whole?line!==ref.text:line.length<24||line.length>420)?-1:ref.text.indexOf(line);
   if(start>=0)ranges.push({index,start,length:line.length,sha:digest(line)});
  }
  return ranges;
@@ -84,7 +84,7 @@ export function prepareFollowup(source,ranges,form,focus=[],prior){
  const quotes=ranges.map(({index,start,length,sha})=>{
   const ref=refs[index];
   if(!Number.isSafeInteger(index)||!ref||!Number.isSafeInteger(start)||start<0||
-     !Number.isSafeInteger(length)||(source?.selection&&source?.references?start!==0||length!==ref.text.length:length<24||length>420)||start+length>ref.text.length)throw Error('La cita de la nota cambió.');
+     !Number.isSafeInteger(length)||(source?.selection&&source?.references||source?.ref?.remedy?start!==0||length!==ref.text.length:length<24||length>420)||start+length>ref.text.length)throw Error('La cita de la nota cambió.');
   const quote=ref.text.slice(start,start+length);
   if(digest(quote)!==sha)throw Error('La cita de la nota cambió.');
   const choice=source.variants?source.choices.find(item=>item.source===ref.id&&item.quote===quote):source.choices?.[index]?.find(item=>item.quote===quote);
@@ -104,7 +104,7 @@ export function prepareFollowup(source,ranges,form,focus=[],prior){
   'Devuelve JSON con una sola clave "acciones", una lista de dos oraciones en español de hasta 200 caracteres cada una. ';
  const instruction=period?(form==='carta'?'Prepara opciones de petición al cliente. Inicia cada oración con «Solicitamos» o «Por favor».':'Prepara opciones de cotejo interno. Inicia cada oración con «Cotejar», «Verificar», «Comparar», «Revisar» o «Identificar».'):spec.instruction;
  const prompt='Continúa el trabajo de la nota anterior. '+instruction+(names.length?' Menciona literalmente cada tipo de documento seleccionado por el abogado al menos una vez en las acciones: '+names.join(' y ')+'.':'')+' '+schema+'Limita el texto a solicitudes de documentos o tareas de cotejo. Evita nombres, identificadores, cifras, citas nuevas, plazos y conclusiones jurídicas.\n\nFundamentos seleccionados en el primer borrador\n'+
-  quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n\n')+
+  quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n\n')+
   (facts.length?'\n\nHechos del ejercicio con sustituciones locales\n'+facts.join('\n'):'')+previous;
  const localContext=source.localTokens?['Proveedor registrado · '+source.localTokens.find(item=>item.publicToken===source.provider).localToken,
   ...facts.map(fact=>fact.replace(/\[\[PARTE_\d+\]\]/gu,marker=>source.localTokens.find(item=>item.publicToken===marker).localToken))].join('\n'):'';
@@ -140,7 +140,7 @@ export function renderFollowup(raw,note,{evidence=false}={}){
     new Set(actions.map(a=>a.toLowerCase().replace(/[\p{P}\s]/gu,''))).size!==2)
   throw Error('La revisión requiere dos acciones documentales completas. Se conserva el primer borrador.');
  const spec=forms[note.form];
- const basis=note.quotes.map(({ref,quote,locator,condition})=>'['+ref.id+']'+(locator?' · '+locator:'')+'\n'+quote+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n');
+ const basis=note.quotes.map(({ref,quote,locator,condition})=>'['+ref.id+']'+(locator?' · '+locator:'')+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n');
  return [note.form==='carta'?'Asunto · [[ASUNTO]]\n\nA la atención de [[CLIENTE]]':spec.title+' para [[CLIENTE]] · [[ASUNTO]]',
   spec.intro,actions.map((a,i)=>(i+1)+'. '+a).join('\n'),
   ...(note.localContext&&note.form==='control'?[note.localContext]:[]),

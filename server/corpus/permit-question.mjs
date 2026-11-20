@@ -9,7 +9,7 @@ const calendar=(year,month,day)=>{
  return Number.isFinite(timestamp)&&new Date(timestamp).toISOString().slice(0,10)===value?value:'';
 };
 const regimes=['Importación temporal','Importación definitiva','Depósito fiscal','Elaboración, transformación o reparación en recinto fiscalizado','Recinto fiscalizado estratégico'];
-function dates(text){
+export function operationDate(text){
  const pattern=/\b(?:(\d{4})-(\d{2})-(\d{2})|(\d{1,2}) (?:de )?(\p{L}+) (?:de |del )?(\d{4})|(\d{1,2})\/(\d{1,2})\/(\d{4}))\b/gu;
  const choices=[];
  for(const match of text.matchAll(pattern)){
@@ -58,7 +58,7 @@ export function permitQuestionHint(question,known=[]){
  const query=codes.length?unique(codes):commodity;
  const alternative=/\b(?:temporal|definitiva)\s+(?:o|y)\s+(?:(?:importacion|la)\s+)?(?:temporal|definitiva)\b/u.test(text);
  const regime=alternative?'':unique(regimes.filter(s=>text.includes(fold(s))));
- return {date:dates(text),query,classification:classificationIn(text),regime,sugar:sugar&&!metals&&query==='C1'};
+ return {date:operationDate(text),query,classification:classificationIn(text),regime,sugar:sugar&&!metals&&query==='C1'};
 }
 
 // Only named fields are candidates. Keep conflicting values visible for review.
@@ -73,7 +73,7 @@ export function documentPermitFields(sources){
    const name=fold(m[1].trim()),value=m[2].trim();
    let field,parsed,endLine;
    if(/^(?:fecha (?:de |del |de la )(?:operacion|despacho|importacion))$/u.test(name)){
-    field='date';parsed=dates('operacion: '+fold(value));
+    field='date';parsed=operationDate('operacion: '+fold(value));
    }else if(/^(?:clave (?:del? |de )?(?:permiso|aviso|regulacion|rrna)|rrna)$/u.test(name)){
     field='query';parsed=/^[a-z][a-z0-9]$/iu.test(value)?value.toUpperCase():'';
    }else if(/^(?:fraccion(?: arancelaria)?(?: (?:y|con) nico)?)$/u.test(name)){

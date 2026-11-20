@@ -13,6 +13,12 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Investigar una cuota compensatoria
+
+En **Biblioteca federal → Defensa comercial** puedes comparar el inicio, la preliminar y la final de la investigación AD_29-24 sobre perfiles y barras de aluminio. Cada punto abre una copia local de su página y enlaza la resolución completa. Introduce el **15 de junio de 2026**, elige la preliminar y abre el **punto 298**. Guarda el punto y prepara la lista de cotejo. Al mostrar **Datos originales** verás la fecha y la necesidad de verificar actos intermedios.
+
+Para probar una exclusión técnica, añade `piloto/perfil-escalera-ficticio.txt` al expediente con el nombre **Ficha del taller**. Escribe «¿Qué exclusión antidumping se revisa para los perfiles de aluminio de escaleras de la operación del 7 de octubre de 2026?». Abre el punto 156. En **Elegir líneas de mis documentos**, selecciona el uso declarado y el tratamiento informado. Elige **Excepciones y condiciones de aplicación**. Revisa el mensaje antes de enviarlo. La nota recupera el folio y la evidencia del taller al mostrar los originales. El abogado debe cotejar también la dureza, los filos y las tolerancias de rectitud. Los valores de ese ejemplo se mantienen en el equipo.
+
 ### Primera prueba con los socios · dos fechas para un mismo pedimento
 
 1. Crea un ejercicio ficticio con el cliente **Forja de Ensayo**. Desde **Documentos del expediente** añade por separado `piloto/pedimento-aluminio-ficticio.txt` y `piloto/rectificacion-aluminio-ficticia.txt`. Dales los nombres **Ficha comercial** y **Rectificación de muestra**.

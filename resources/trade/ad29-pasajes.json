@@ -1,0 +1,127 @@
+[
+  {
+    "id": "inicio",
+    "title": "Inicio",
+    "published": "2025-03-05",
+    "effective": "2025-03-06",
+    "url": "https://sidof.segob.gob.mx/notas/docFuente/5750993",
+    "editionUrl": "https://sidof.segob.gob.mx/notas/getNewsletter/05-03-2025/Matutina/319762",
+    "editionSha256": "da72ad4a72bf0d6b0c0af43e98abe55c6db152cba23c594cbb1fc1e40c671b5b",
+    "pages": {
+      "81": {
+        "file": "ad29-inicio-81.pdf",
+        "sha256": "44d48bcf050b7e9da45ac7adfbed4888a1c45fb181fa9a0d423e965fe1e71b0c"
+      }
+    },
+    "points": [
+      {
+        "point": 183,
+        "label": "Apertura de la investigación",
+        "page": 81,
+        "text": "Se acepta la solicitud de parte interesada y se declara el inicio de la investigación antidumping sobre las importaciones de perfiles y barras de aluminio, incluidas las definitivas y temporales, originarias de China, independientemente del país de procedencia, que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra."
+      },
+      {
+        "point": 191,
+        "label": "Entrada en vigor",
+        "page": 81,
+        "text": "La presente Resolución entrará en vigor el día siguiente de su publicación en el DOF."
+      }
+    ]
+  },
+  {
+    "id": "preliminar",
+    "title": "Preliminar",
+    "published": "2025-12-29",
+    "effective": "2025-12-30",
+    "url": "https://sidof.segob.gob.mx/notas/docFuente/5777408",
+    "editionUrl": "https://sidof.segob.gob.mx/notas/getNewsletter/29-12-2025/Matutina/324908",
+    "editionSha256": "fd123a6c4528a24c0cf8fd619e8dac6fcdaee6055574ab43e7650569d5629c7a",
+    "pages": {
+      "265": {
+        "file": "ad29-preliminar-265.pdf",
+        "sha256": "30d1c5673a9e4cfce8be5e9975c144e95966b8fd3c79940dfcf5a285584b4aa5"
+      }
+    },
+    "points": [
+      {
+        "point": 296,
+        "label": "Cuota provisional",
+        "page": 265,
+        "text": "Continúa el procedimiento administrativo de investigación en materia de prácticas desleales de comercio internacional, en su modalidad de discriminación de precios, y se impone la cuota compensatoria provisional de 1.55 dólares por kilogramo a las importaciones de perfiles y barras de aluminio originarias de China, independientemente del país de procedencia, incluidas las definitivas y temporales, que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra."
+      },
+      {
+        "point": 298,
+        "label": "Duración de la provisional",
+        "page": 265,
+        "text": "Con fundamento en el artículo 7.4 del Acuerdo Antidumping, la vigencia de la cuota compensatoria provisional establecida en el punto 296 de la presente Resolución, será de cuatro meses contados a partir del día que entre en vigor la presente Resolución."
+      },
+      {
+        "point": 301,
+        "label": "Prueba de otro origen",
+        "page": 265,
+        "text": "De acuerdo con lo dispuesto en el artículo 66 de la LCE, las importadoras que conforme a esta Resolución deban pagar la cuota compensatoria provisional, no estarán obligadas a su pago si comprueban que el país de origen de la mercancía es distinto a China."
+      },
+      {
+        "point": 306,
+        "label": "Entrada en vigor",
+        "page": 265,
+        "text": "La presente Resolución entrará en vigor al día siguiente de su publicación en el DOF."
+      }
+    ]
+  },
+  {
+    "id": "final",
+    "title": "Final",
+    "published": "2026-09-04",
+    "effective": "2026-09-05",
+    "url": "https://sidof.segob.gob.mx/notas/docFuente/5797943",
+    "editionUrl": "https://sidof.segob.gob.mx/notas/getNewsletter/04-09-2026/Matutina/329465",
+    "editionSha256": "7dd68c1281ed4b97c6255d99afc866846dc2162aea5b73143d922ad14d121e51",
+    "pages": {
+      "78": {
+        "file": "ad29-final-78.pdf",
+        "sha256": "43079b016d077c49c052cd4bf10fce0963a01200d5a6de121c994769c5a6dd0e"
+      },
+      "103": {
+        "file": "ad29-final-103.pdf",
+        "sha256": "9677b8393800b4f28b483f77f05e56665f37af78574ef2caa32ce1d39fd2ae56"
+      },
+      "136": {
+        "file": "ad29-final-136.pdf",
+        "sha256": "dea0f6fff6bf57382e74b0f9ddb3e150d952434113feb6aa9cf6927f641b313d"
+      }
+    },
+    "points": [
+      {
+        "point": 3,
+        "label": "Producto investigado",
+        "page": 78,
+        "text": "El producto objeto de investigación son los perfiles no huecos o sólidos de aluminio y barras de aluminio, de cualquier dimensión, forma o figura, con acabados —como pintura o anodizado— o sin acabados. El nombre genérico o comercial con el que se conoce al producto objeto de investigación es perfiles y barras de aluminio."
+      },
+      {
+        "point": 156,
+        "label": "Características de los perfiles excluidos",
+        "page": 103,
+        "text": "Conforme a lo señalado en los puntos 153 a 155 de la presente Resolución, la Secretaría observó que, de acuerdo con los medios de prueba proporcionados por Truper, estos tienen características no similares a los perfiles destinados a uso arquitectónico, ya que incluyen un proceso de templado para darle una mayor resistencia al aluminio, lo cual no se observa en los perfiles objeto de investigación. Por tanto, la Secretaría determinó que las importaciones de perfiles no huecos para utilizarse en la fabricación de herramientas, escaleras y niveles, no forman parte de la cobertura del producto objeto de investigación bajo las siguientes características: fabricados con aluminio templado T5 o T6; que cuenten con una dureza de entre 13 y 16 PW, 68 – 73 HB y/o 13 – 15 PW; especificación “matar filos a 0.25 mm”, y tolerancias de rectitud de 0.12 mm a lo largo y 0.15 mm a lo ancho."
+      },
+      {
+        "point": 381,
+        "label": "Cuota definitiva",
+        "page": 136,
+        "text": "Se declara concluido el procedimiento administrativo de investigación en materia de prácticas desleales de comercio internacional, en su modalidad de discriminación de precios, y se impone una cuota compensatoria definitiva de 1.58 dólares estadounidenses por kilogramo a las importaciones de perfiles y barras de aluminio originarias de China, independientemente del país de procedencia, incluidas las definitivas y temporales que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra."
+      },
+      {
+        "point": 383,
+        "label": "Prueba de otro origen",
+        "page": 136,
+        "text": "De acuerdo con lo dispuesto en el artículo 66 de la LCE, los importadores que conforme a esta Resolución deban pagar las cuotas compensatorias definitivas, no estarán obligados a su pago si comprueban que el país de origen de la mercancía es distinto a China."
+      },
+      {
+        "point": 386,
+        "label": "Entrada en vigor",
+        "page": 136,
+        "text": "La presente Resolución entrará en vigor al día siguiente de su publicación en el DOF."
+      }
+    ]
+  }
+]

@@ -1,9 +1,10 @@
+import {remedyCatalog,remedyPeriod} from './corpus/remedy-index.mjs';
 import {questionLines} from './corpus/intake-question-lines.mjs';
 import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
 import {questionCandidates} from './corpus/intake-question.mjs';
-import {permitQuestionHint,documentPermitFields,permitFieldCitations} from './corpus/permit-question.mjs';
+import {operationDate,permitQuestionHint,documentPermitFields,permitFieldCitations} from './corpus/permit-question.mjs';
 import {searchPermits,permitNote} from './corpus/pedimento-index.mjs';
 import {searchNico,nicoRow,nicoReference,nicoEdition} from './corpus/nico-index.mjs';
 import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
@@ -16,7 +17,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
-import {angles,questionPassage,nicoResearch,tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
+import {angles,questionPassage,remedyResearch,nicoResearch,tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
 import {getPilotTradeScenario} from './pilot-trade-scenario.mjs';
@@ -69,16 +70,16 @@ function exportCitations(references){
   status:'Referencia de consulta, aplicación al asunto pendiente de revisión'}));
 }
 
-function localPermitControl(intake,task){
- if(intake.permits?.[task])return intake.permits[task];
+function localOperationControl(intake,task){
  const follow=intake.followups?.[task];
- return follow?.form==='control'?intake.permits?.[follow.basisTask??follow.parent]:null;
+ const basis=follow?.form==='control'?(follow.basisTask??follow.parent):task;
+ return intake.permits?.[basis]??(intake.remedies?.[basis]?.date?intake.remedies[basis]:intake.research?.[basis]?.remedyReview);
 }
 function localQuestion(intake,task){
  if(intake.questions?.[task])return intake.questions[task];
  const follow=intake.followups?.[task];
  const basis=follow?.basisTask??follow?.parent;
- return follow?.form==='control'&&intake.permits?.[basis]?intake.questions?.[basis]:null;
+ return follow?.form==='control'&&(intake.permits?.[basis]||intake.research?.[basis]?.sourceId?.startsWith('ad29-'))?intake.questions?.[basis]:null;
 }
 function draftText(value,doc,evidence,question,permit) {
  const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...(Array.isArray(doc)?doc:[doc]).flatMap(documentTokens).map(item=>item.token)]);
@@ -240,6 +241,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    if(note.id!==(saved.intake.researchHistory?.[parent]?.permitSourceId??parent))throw Error('La ficha procede de otra edición del Anexo 22.');
    return note;
   }
+  const remedy=saved.intake.remedies?.[parent];
+  if(remedy)return remedyResearch(remedy.sourceId,remedy.point);
   const nico=saved.intake.nicos?.[parent];
   if(nico){
    if(nico.edition!==nicoEdition)throw Error('La ficha pertenece a otra edición del NICO.');
@@ -296,7 +299,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const note=sourceFor(selection,saved);
      return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
-   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
+   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
  };
 
@@ -465,7 +468,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const id=randomUUID();
     if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
     const facts=availableQuestionFacts(saved).map(({id,text,evidence})=>({id,text,label:evidence.sourceLabel,line:evidence.line}));
-    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,permit,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
+    const defenseDate=candidates.some(row=>row.source.startsWith('ad29-'))?operationDate(restored.original.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase()):'';
+    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,permit,defenseDate,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
@@ -488,7 +492,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      throw Error('Vuelve a revisar la pregunta en este expediente.');
     const choice=review.candidates.find(row=>row.key===key);
     if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
-    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(usesFacts?{factIds:payload.factIds}:{})};
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(choice.source.startsWith('ad29-')&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
     if(usesFacts&&(!Array.isArray(payload.factIds)||!payload.factIds.length||payload.factIds.length>4||new Set(payload.factIds).size!==payload.factIds.length||
        !payload.factIds.every(id=>review.factIds.includes(id))))throw Error('Elige los hechos que aparecen en la revisión de esta pregunta.');
     const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
@@ -547,6 +551,30 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     });
     latestReview=null;
     return savedStatus;
+   }
+   case 'intake.remedyPeriod':
+    exactFields(payload,['date']);return remedyPeriod(payload.date);
+   case 'intake.remedyCatalog':
+    exactFields(payload,[]);return remedyCatalog();
+   case 'intake.saveRemedy': {
+    const dated=Object.hasOwn(payload??{},'date');
+    exactFields(payload,dated?['sourceId','point','date']:['sourceId','point']);
+    const period=dated?remedyPeriod(payload.date):null;
+    const {sourceId,point}=payload,note=remedyResearch(sourceId,point),{ref}=note;
+    const id=sourceId+'-'+point+(dated?'-'+payload.date:'');
+    return store.transaction(()=>{
+     const saved=current();
+     if(!saved||!store.protectedRecords)throw Error('Abre un expediente cifrado para guardar la fuente.');
+     const {intake}=saved;
+     if(!Object.hasOwn(intake.drafts,id)){
+      const text=draftText(['Defensa comercial para [[CLIENTE]] · [[ASUNTO]]',ref.title,ref.locator+' ['+ref.id+']\n'+ref.text,ref.summary,...(dated?['Cotejo local de la operación\n[[COTEJO]]']:[])].join('\n\n'),null,null,null,dated);
+      store.put('intake-pilot',{...intake,remedies:{...intake.remedies,[id]:{sourceId,point,...(dated?{date:payload.date}:{})}},drafts:{...intake.drafts,[id]:text},
+       researchHistory:{...intake.researchHistory,[id]:{title:ref.title+(dated?' · '+payload.date:''),localOnly:true,references:[ref],...(dated?{localReview:'Fecha consultada · '+payload.date+'\n'+period.message}:{})}},
+       followupBasis:{...intake.followupBasis,[id]:quotedRanges(note,text)}});
+      store.audit('intake.local.remedy',saved.entry.id);
+     }
+     return {task:id,status:status()};
+    });
    }
    case 'intake.searchPermits':
     exactFields(payload,['query','date']);
@@ -692,9 +720,9 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(practice)text=renderProtectedCase(raw,practice);
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
-     const permit=localPermitControl(saved.intake,task);
+     const permit=localOperationControl(saved.intake,task);
      const question=localQuestion(saved.intake,task);
-     if(permit&&question)text+='\n\nPregunta del expediente\n[[CONSULTA]]';
+     if(continuation?.form==='control'&&question)text+='\n\nPregunta del expediente\n[[CONSULTA]]';
      if(permit)text+='\n\nCotejo local de la operación\n[[COTEJO]]';
      const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,question,permit);
      const parentSource=continuation?followupSource(saved,continuation.basisTask??continuation.parent):comparison?.packet||reading||practice||research;
@@ -728,7 +756,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
      const basis=firstBasis(saved,task);
-     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,localQuestion(intake,task),localPermitControl(intake,task))};
+     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,localQuestion(intake,task),localOperationControl(intake,task))};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks,...(basis.length?{followupBasis:{...intake.followupBasis,[task]:basis}}:{})});
      store.audit('intake.local.edit',entry.id);
@@ -748,14 +776,14 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
     const evidence=intake.researchHistory?.[task]?.evidence;
     const question=localQuestion(intake,task);
-    const permit=localPermitControl(intake,task);
+    const permit=localOperationControl(intake,task);
     const text=draftText(intake.drafts[task],caseSources(intake).map(s=>s.document),evidence,question,permit);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
     if(permit&&text.includes('[[COTEJO]]')){
      const origin=intake.followups?.[task];
      const basis=origin?.basisTask??origin?.parent??task;
-     const archived=intake.researchHistory?.[basis]?.localReview;
-     if(typeof archived!=='string')throw Error('Falta el cotejo guardado del pedimento.');
+     const archived=intake.researchHistory?.[basis]?.localReview??intake.research?.[basis]?.remedyReview;
+     if(typeof archived!=='string')throw Error('Falta el cotejo guardado de la operación.');
      originals.set('[[COTEJO]]',archived);
     }
     if(question&&text.includes('[[CONSULTA]]'))originals.set('[[CONSULTA]]',openReviewedDocument(question,firm.id,entry.id).original);

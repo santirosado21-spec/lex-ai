@@ -185,3 +185,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 21:02 — codex — Confirmar la mercancía para C1 de Economía y la fecha documental para el cotejo
 
 **Por qué:** La clave C1 tiene usos distintos. Elegir la autoridad no acredita que sean productos del numeral 8 TER. Dos fechas distintas del mismo expediente producen pasos de revisión distintos. El abogado elige el supuesto y la fuente; la ficha y la lista conservan su decisión en el expediente cifrado.
+
+## 2026-11-19 21:12 — codex — Conservar el punto técnico completo y el intervalo documental pendiente
+
+**Por qué:** La excepción del punto 156 de AD_29-24 incluye uso y varias características. Una cita corta puede omitir tolerancias decisivas. La preliminar sólo fija cuatro meses; los tres actos cotejados no resuelven todos los días hasta la definitiva. Se conserva el texto de la fuente y el cotejo temporal local al exportar.

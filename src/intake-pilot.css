@@ -224,3 +224,11 @@
 .rp-permit-support{margin:.9rem 0;border-block:1px solid var(--rp-line);padding:.7rem 0}
 .rp-permit-support label{margin:.65rem 0}
 .rp-permit-support select{width:100%;min-width:0}
+.rp-stage-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin:1rem 0}
+.rp-stage-list button{display:grid;gap:.22rem;text-align:start;min-height:3.3rem;padding:.55rem .65rem;color:var(--rp-ink);background:transparent;border:1px solid var(--rp-line);border-radius:5px;font:inherit;cursor:pointer}
+.rp-shell .rp-remedy .rp-stage-list button[aria-pressed=true]{background:var(--rp-ink);color:var(--rp-panel);border-color:var(--rp-ink)}
+.rp-stage-list time{font-size:.77em}
+.rp-remedy article>a{display:inline-flex;align-items:center;gap:.35rem;margin:.4rem 1rem .4rem 0}
+.rp-remedy blockquote{margin:.9rem 0;padding:.2rem 0 .2rem .9rem;border-inline-start:2px solid var(--rp-line)}
+.rp-remedy select{width:100%;min-width:0}
+@media(max-width:440px){.rp-stage-list{grid-template-columns:1fr}.rp-stage-list button{display:flex;justify-content:space-between;align-items:center;min-height:2.6rem}}

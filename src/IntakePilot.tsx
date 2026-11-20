@@ -1,3 +1,4 @@
+import IntakeRemedy from './IntakeRemedy';
 import IntakeSourceFiles,{type CaseSource} from './IntakeSourceFiles';
 import IntakeQuestion,{type QuestionSelection} from './IntakeQuestion';
 import IntakePermit, {type PermitSelection} from './IntakePermit';
@@ -14,7 +15,7 @@ import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}` | `tarifa-${string}` | `nico-${string}` | `pedimento-${string}`;
+type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}` | `tarifa-${string}` | `nico-${string}` | `pedimento-${string}` | `ad29-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type SupportLine={line:number;excerpt:string;sourceId?:string;sourceLabel?:string};
@@ -41,7 +42,7 @@ export default function IntakePilot() {
   const [worksheetDirty,setWorksheetDirty]=useState(false);
   const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
-  const [libraryView,setLibraryView]=useState<'leyes'|'tarifa'|'nico'|'pedimento'>('leyes');
+  const [libraryView,setLibraryView]=useState<'leyes'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
   const [nicoQuery,setNicoQuery]=useState('');
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
@@ -118,7 +119,7 @@ export default function IntakePilot() {
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
     finally {setActivity(null);}
   }
-  async function saveReference(action:'intake.addTariff'|'intake.addNico'|'intake.savePermit',payload:(PermitSelection&{reviewId?:string})|{code:string;page:number}|{code:string;nico:string}) {
+  async function saveReference(action:'intake.addTariff'|'intake.addNico'|'intake.savePermit'|'intake.saveRemedy',payload:(PermitSelection&{reviewId?:string})|{code:string;page:number}|{code:string;nico:string}|{sourceId:string;point:number;date?:string}) {
     const result=await api<{task:Task;status:PilotStatus}>(action,payload);
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
     setLibraryOpen(false);setNotice('Ficha guardada en el expediente.');heading.current?.focus();
@@ -215,8 +216,9 @@ export default function IntakePilot() {
     <button className="rp-quiet" aria-pressed={libraryView==='leyes'} onClick={()=>setLibraryView('leyes')}>Leyes federales</button>
     <button className="rp-quiet" aria-pressed={libraryView==='tarifa'} onClick={()=>setLibraryView('tarifa')}>Tarifa arancelaria</button>
     <button className="rp-quiet" aria-pressed={libraryView==='nico'} onClick={()=>{setNicoQuery('');setLibraryView('nico');}}>Catálogo NICO</button>
-    <button className="rp-quiet" aria-pressed={libraryView==='pedimento'} onClick={()=>setLibraryView('pedimento')}>Claves del pedimento</button></div>
-    {libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
+    <button className="rp-quiet" aria-pressed={libraryView==='pedimento'} onClick={()=>setLibraryView('pedimento')}>Claves del pedimento</button>
+    <button className="rp-quiet" aria-pressed={libraryView==='defensa'} onClick={()=>setLibraryView('defensa')}>Defensa comercial</button></div>
+    {libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
       <aside className="rp-context">
         <div className="rp-image"><img src="/brand/lex-cover.webp" alt=""/></div>
@@ -312,7 +314,7 @@ export default function IntakePilot() {
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>
               {!comparison?.cached&&pilot?.cloudUsage?.remaining===0&&<p className="rp-availability">Se usaron los tres envíos de esta sesión. Puedes seguir trabajando con el expediente y los borradores guardados.</p>}
             </section>}
-          {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':task?.startsWith('pedimento-')?'Ficha del pedimento':task?.startsWith('nico-')?'Ficha de identificación comercial':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
+          {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':task?.startsWith('pedimento-')?'Ficha del pedimento':task?.startsWith('ad29-')?'Ficha de defensa comercial':task?.startsWith('nico-')?'Ficha de identificación comercial':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
               <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
               {pilot?.hasDocument&&<IntakeCaseDocument sources={pilot.sources} insert={insertDatum}/>}
@@ -328,7 +330,7 @@ export default function IntakePilot() {
               <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('carta')}>Preparar solicitud al cliente</button>
               <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('control')}>Preparar lista de cotejo</button>
             </div></section>}
-            {activeTask.localOnly&&!task?.startsWith('pedimento-')&&<button className="rp-quiet" disabled={busy} onClick={()=>void exportTariffs()}><Table2 size={16}/>Comparar fichas guardadas en Excel</button>}
+            {activeTask.localOnly&&(task?.startsWith('tarifa-')||task?.startsWith('nico-'))&&<button className="rp-quiet" disabled={busy} onClick={()=>void exportTariffs()}><Table2 size={16}/>Comparar fichas guardadas en Excel</button>}
             <h3>Exportar con datos originales</h3><div className="rp-formats" aria-label="Formato del archivo" role="group">{formats.map(({id,name,Icon})=><button key={id} aria-pressed={format===id} disabled={busy} onClick={()=>setFormat(id)}><Icon size={16}/>{name}</button>)}</div>
             <button className="rp-primary" disabled={busy} onClick={()=>void exportDraft()}><ArrowDownToLine size={16}/>{activity==='export'?'Generando archivo…':'Descargar .'+format}</button></>}
           </section>}

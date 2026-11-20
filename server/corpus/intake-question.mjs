@@ -1,3 +1,4 @@
+import {remedySuggestions} from './remedy-index.mjs';
 import {extractReference} from '../retrieval/references.mjs';
 import {verifiedConceptSources} from '../retrieval/thesaurus.mjs';
 import {requestedLegalJurisdiction} from '../assistant-router.mjs';
@@ -59,6 +60,12 @@ export function questionCandidates(library,original,parts,reference=null){
    fromLibrary(row.sourceId,60);
   }
   return ranked();
+ }
+ if(!named.lawId){
+  for(const [i,{ref,part,partial}] of remedySuggestions(original).entries()){
+   const key=ref.sourceId+'/'+part;
+   candidates.set(key,{key,source:ref.sourceId,part,title:ref.title,label:ref.title+' · punto '+part,locator:ref.locator,text:ref.text,score:100-i,partial});
+  }
  }
  // Fixed trade topics can be recognised locally even when a whole sentence
  // was masked. Their private evidence and the search terms never enter the request.
