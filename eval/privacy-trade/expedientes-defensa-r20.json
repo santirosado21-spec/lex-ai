@@ -1,0 +1,23 @@
+[
+  {
+    "id": "perfil-templado",
+    "documents": [
+      {"text":"Folio 45B: El perfil de escalera recibió tratamiento T6. La pieza lleva la marca del taller del campanario azul. Falta el ensayo de dureza.","private":["45B"],"clues":["taller del campanario azul"],"facts":["El perfil de escalera recibió tratamiento T6.","Falta el ensayo de dureza."]},
+      {"text":"Folio 45B: El control de rectitud se realizó frente al antiguo horno de las siete bocas. El certificado omite la tolerancia a lo ancho.","private":["45B"],"clues":["antiguo horno de las siete bocas"],"facts":["control de rectitud","El certificado omite la tolerancia a lo ancho."]}
+    ]
+  },
+  {
+    "id": "embarque-pigmentos",
+    "documents": [
+      {"text":"Folio 11A: La factura consigna FOB Puerto Esmeralda. El manifiesto indica una concentración de óxido de titanio superior al 98.5%.","private":["11A"],"clues":["Puerto Esmeralda"],"facts":["FOB","una concentración de óxido de titanio superior al 98.5%"]},
+      {"text":"Folio 11A: Falta la certificación de origen para el lote. El transportista recogió la carga en el único patio morado de la sierra baja.","private":["11A"],"clues":["único patio morado de la sierra baja"],"facts":["Falta la certificación de origen para el lote."]}
+    ]
+  },
+  {
+    "id": "prueba-origen",
+    "documents": [
+      {"text":"Folio 72C: El proveedor declara una etapa de fundición. La bitácora menciona el turno de la procesión de la cuenca ámbar. No se recibió el registro de insumos.","private":["72C"],"clues":["turno de la procesión de la cuenca ámbar"],"facts":["El proveedor declara una etapa de fundición.","No se recibió el registro de insumos."]},
+      {"text":"Folio 72C: El informe técnico menciona un marcador mineral exclusivo de la mina del silbato de sal. Queda pendiente acreditar la procedencia de la materia prima.","private":["72C"],"clues":["mina del silbato de sal"],"facts":["Queda pendiente acreditar la procedencia de la materia prima."]}
+    ]
+  }
+]

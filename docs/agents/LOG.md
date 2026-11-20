@@ -383,3 +383,7 @@ AD_29-24: tres fichas de publicación y tres textos del SIDOF verificados en inv
 ## 2026-11-19 21:12 — codex — Rejon r20 incorpora las tres etapas del expediente antidumping a consulta, cotejo y Office
 
 Se cruzaron once pasajes de los tres PDF del DOF con el HTML. El ZIP reabrió tres notas y exportó seis archivos. En el asunto ficticio se restituyeron folio, líneas técnicas y fecha; se contrastaron tres mensajes con transporte simulado. LibreOffice verificó el texto impreso en seis archivos. Lanzador macOS con cuentas simuladas y regresión del pedimento aprobados. Suite JS: 1,448 aprobadas, 10 omitidas. Sin cargo nuevo, dictamen humano ni comprobación de actos intermedios.
+
+## 2026-11-19 21:13 — codex — Seis documentos nuevos miden protección y pérdida de contexto en r20
+
+Tres pares de defensa comercial, pigmentos y origen; muestra anotada antes de ejecutar. Seis de seis originales restituidos, seis de seis apariciones de folios, cinco de seis indicios contextuales y cuatro de diez expresiones útiles conservadas. La revisión conjunta no mejoró el resultado de estos casos. Cero líneas literales elegibles para la nube. El indicio residual apunta a una mina distintiva. Es material de desarrollo; sigue pendiente la aceptación.

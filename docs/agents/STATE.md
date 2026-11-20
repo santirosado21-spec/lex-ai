@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 21:12 por codex: decisión — Conservar el punto técnico completo y el intervalo documental pendiente
+**Última actualización:** 2026-11-19 21:13 por codex: Seis documentos nuevos miden protección y pérdida de contexto en r20
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- Una nueva evaluación de privacidad de r20 con seis textos ficticios restituyó los seis y cubrió las seis apariciones de folios. Ocultó cinco de seis indicios y dejó íntegras cuatro de diez expresiones útiles. Cero líneas habilitadas para la nube. Ver `eval/privacy-trade/expedientes-defensa-r20.json` y `artifacts/defensa-r20/medicion-privacidad.json`.
 
 - r20 lleva AD_29-24 a la biblioteca y a las preguntas del expediente. Once puntos de tres resoluciones se cotejaron en el HTML y en los PDF completos del DOF. En el ZIP se probaron dos ejercicios, tres solicitudes con transporte simulado, tres reaperturas y seis archivos impresos con LibreOffice. El lanzador macOS pasó con dos claves simuladas. La suite JS registró 1,448 aprobadas y diez omitidas. Ver `artifacts/defensa-r20/`.
 
@@ -83,6 +85,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Separar la ocultación de un entorno distintivo de los hechos sobre tratamiento, dureza, rectitud y comprobantes. Identificar en qué paso se pierden y medir cambios contra ejemplos inéditos usando el importador local. Las solicitudes de la práctica seguirán conservando la evidencia libre en el equipo.
 
 - Para AD_29-24, buscar actos intermedios y posteriores y validar las exclusiones con un abogado. Medir la conservación de características técnicas y la ocultación de indicios en nuevos documentos de defensa comercial antes de ampliar el contenido libre que puede salir del equipo.
 
