@@ -1,0 +1,49 @@
+{
+  "case": "insumos-cafe-sinteticos-r31",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "proveedor",
+      "text": "CGS-82946. Minuta de recepción. Se constató la llegada de sacos de grano verde, exhibiendo una ligera capa de ceniza volcánica, indicativo de origen en la región del altiplano. Se requiere cotejo arancelario.",
+      "private": [
+        "CGS-82946"
+      ],
+      "clues": [
+        "ligera capa de ceniza volcánica",
+        "origen en la región del altiplano"
+      ],
+      "facts": [
+        "sacos de grano verde",
+        "Se requiere cotejo arancelario"
+      ]
+    },
+    {
+      "kind": "recepcion",
+      "text": "CGS-82946. Minuta de cotejo. El lote presenta granos con defectos de coloración, sugiriendo un proceso de secado particular. Se debe verificar la subpartida para exportación de café tostado.",
+      "private": [
+        "CGS-82946"
+      ],
+      "clues": [],
+      "facts": [
+        "granos con defectos de coloración",
+        "sugiriendo un proceso de secado particular",
+        "subpartida para exportación de café tostado"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "CGS-82946. Pregunta del asesor legal. ¿Bajo qué capítulo arancelario se clasifica el insumo de café, considerando su estado de procesamiento y la presencia de residuos minerales?",
+      "private": [
+        "CGS-82946"
+      ],
+      "clues": [
+        "presencia de residuos minerales"
+      ],
+      "facts": [
+        "capítulo arancelario",
+        "insumo de café",
+        "estado de procesamiento"
+      ]
+    }
+  ]
+}

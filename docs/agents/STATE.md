@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-20 00:08 por codex: Piloto privado r30.1 de Rejon para certificaciones de origen
+**Última actualización:** 2026-11-20 00:18 por codex: Anexo 4-B integrado en el piloto privado r31.1
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r31.1 añade 1 032 referencias del Anexo 4-B y 507 extractos con código y página cotejados. La prueba del ZIP recuperó las notas de cacao y café y sus seis archivos en LibreOffice. La reserva inédita de café cubrió 3/3 folios y 0/3 indicios, conservó 4/8 hechos y se restituyó entera. [Resultados y límites](../qa/reglas-producto-tmec-r31.md).
 
 - r30.1 permite cotejar en el equipo las cantidades de productores en dos celdas elegidas por el abogado. Tres libros propios ficticios produjeron la misma solicitud pública y tres resultados locales distintos. En dos certificaciones de práctica el modelo de nube citó ambos soportes y el equipo restituyó el folio. [Ejercicios, mediciones y límites](../qa/cotejo-productores-r30.md).
 
@@ -109,6 +111,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Medir y mejorar el tratamiento de indicios de lugar y señales físicas repetidos con otras palabras en expedientes propios. Contrastar otras medidas locales con la reserva inédita de café. Para origen, comprobar cambios y correspondencias por fecha, notas de sección extensas y reglas con varias alternativas en asuntos nuevos.
 
 - Prioridad de privacidad. La muestra de empaque usada en desarrollo pasó a 4/4 indicios cubiertos. En el expediente nuevo de amarre e incidencia vial se cubrieron 2/4 indicios y se conservaron 3/7 hechos. Preparar otro expediente ficticio antes de modificar el detector. Medir por separado la ocultación de sucesos y procedencias, y la conservación de los hechos técnicos. El cotejo de hojas propias mantiene las dos celdas, sus cantidades y el resultado en el equipo.
 - Prioridad jurídica: medir en asuntos inéditos cómo responde a preguntas con varias obligaciones o excepciones del mismo artículo. Ampliar el cotejo del reglamento con reglas, disposiciones transitorias y cambios de vigencia por fecha de operación. La autoridad profesional y las pruebas en las cuentas y equipos de los socios siguen pendientes.

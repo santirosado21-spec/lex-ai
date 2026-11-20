@@ -1,3 +1,4 @@
+import {productOriginId,productOriginSuggestions,requestsProductOrigin} from './product-origin.mjs';
 import {requestsOriginAnnex,originAnnexSuggestions} from './origin-annex.mjs';
 import {regulationSearch,chooseRegulationFocus} from './regulation-search.mjs';
 import {remedySuggestions} from './remedy-index.mjs';
@@ -78,6 +79,13 @@ export function questionCandidates(library,original,parts,reference=null,context
    const row=item.lawId&&library?.lookupArticle({lawId:item.lawId,articleId:item.articleId});
    if(!row)return [];
    fromLibrary(row.sourceId,60);
+  }
+  return ranked();
+ }
+ if(requestsProductOrigin(original)){
+  for(const {ref,part} of productOriginSuggestions(original)){
+   const key=productOriginId+'/'+part;
+   candidates.set(key,{key,source:productOriginId,part,citationId:ref.id,title:ref.title,label:ref.title,locator:ref.locator,text:ref.text,score:130,partial:false});
   }
   return ranked();
  }

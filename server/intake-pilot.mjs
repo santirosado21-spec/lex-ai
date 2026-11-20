@@ -1,3 +1,4 @@
+import {productOriginLookup} from './corpus/product-origin.mjs';
 import {localReaderStatus} from './privacy/local-reader-status.mjs';
 import {originAnnexDirectory,originAnnexId} from './corpus/origin-annex.mjs';
 import {regulationSearch} from './corpus/regulation-search.mjs';
@@ -671,6 +672,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     return regulationSearch(payload.text);
    case 'intake.readerStatus':
     exactFields(payload,[]);return localReaderStatus({signal});
+   case 'intake.productOrigin':
+    exactFields(payload,['query']);return productOriginLookup(payload.query);
    case 'intake.originAnnex':
     exactFields(payload,[]);return originAnnexDirectory();
    case 'intake.regulationDirectory':

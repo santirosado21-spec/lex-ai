@@ -19,6 +19,12 @@ Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuen
 
 En **Consultar con una pregunta propia**, escribe la consulta y abre **Reservar datos de esta pregunta**. Selecciona una expresión en el campo de la pregunta y pulsa **Reservar selección**. Puedes reservar varias expresiones. Al pulsar **Buscar fundamentos en este equipo**, abre **Pregunta con sustituciones locales** y comprueba cada aparición. El control usa coincidencias exactas en esa pregunta. Puedes quitar una reserva antes de buscar. En **Datos originales** y en la exportación se restituye el texto para el abogado.
 
+### Localizar reglas de origen por mercancía
+
+Abre **Biblioteca federal → Reglas por producto**. Escribe **0902.30** para abrir el intervalo donde figura esa subpartida, o elige un capítulo. Los vínculos abren la página del Diario Oficial en el equipo. También puedes empezar en **Tarifa arancelaria**, buscar una descripción y pulsar **Buscar regla de origen T-MEC**. La tarifa y el tratado muestran la fecha de sus respectivas ediciones.
+
+En un expediente ficticio, busca **0901.21**, despliega **Leer renglón 09.01** y elige **Consultar 09.01**. Puedes revisar la pregunta, el texto de la regla y las notas antes del envío. Para examinar cacao, busca **1806.10.01** y elige **Consultar la subpartida 1806.10**. La ficha incluye la tabla de correspondencias mexicanas y la excepción de minimis. Revisa vigencia y equivalencias para la fecha de la operación antes de utilizar una conclusión. La nota se recupera y se exporta desde el expediente.
+
 ### Reparación en el extranjero o sustitución por defecto
 
 En **Biblioteca federal → Ley Aduanera**, elige un artículo para abrir su página en la copia local. Puedes revisar los artículos con letras y los artículos bis. El índice incluye los encabezados del cuerpo de la ley, incluso los de disposiciones derogadas.

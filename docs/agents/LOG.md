@@ -423,3 +423,7 @@ Se integraron los nueve numerales del anexo del capítulo 5 y su PDF oficial. Po
 ## 2026-11-20 00:08 — codex — Piloto privado r30.1 de Rejon para certificaciones de origen
 
 Cinco solicitudes reales con material ficticio o público y la clave principal. En el ZIP del piloto se reabrieron cinco asuntos y se cotejaron quince exportaciones con LibreOffice. Suite con 1477 aprobadas y diez omitidas. Respaldo con dos claves simuladas. En la muestra inédita se cubrieron dos de cuatro indicios y se conservaron tres de siete hechos. Revisión humana y segunda cuenta real pendientes. Detalle en docs/qa/cotejo-productores-r30.md.
+
+## 2026-11-20 00:18 — codex — Anexo 4-B integrado en el piloto privado r31.1
+
+Se comprobaron 1032 ubicaciones y 507 extractos en el tratado publicado. Se reabrieron dos asuntos desde el ZIP y se cotejaron seis salidas Office. Suite de 1480 aprobadas y diez omitidas. En tres textos ficticios de café se protegieron tres apariciones del folio y cero de tres indicios físicos o geográficos. Cuatro de ocho hechos se conservaron. Ver docs/qa/reglas-producto-tmec-r31.md.

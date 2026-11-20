@@ -1,3 +1,4 @@
+import {productOriginAttachment} from './corpus/product-origin.mjs';
 import {originAnnexAttachment} from './corpus/origin-annex.mjs';
 import {remedyAttachment} from './corpus/remedy-index.mjs';
 import {pedimentoAttachment} from './corpus/pedimento-index.mjs';
@@ -131,7 +132,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     res.end(bytes);return;
    }
    if(intakePilot&&pathname.startsWith('/fuentes/')){
-    const attachment=nicoAttachment(pathname)??pedimentoAttachment(pathname)??remedyAttachment(pathname)??originAnnexAttachment(pathname);
+    const attachment=nicoAttachment(pathname)??pedimentoAttachment(pathname)??remedyAttachment(pathname)??originAnnexAttachment(pathname)??productOriginAttachment(pathname);
     if(attachment){
      res.writeHead(200,{'Content-Type':attachment.type,'Content-Length':attachment.bytes.length,
       ...(attachment.name?{'Content-Disposition':'attachment; filename="'+attachment.name+'"'}:{})});

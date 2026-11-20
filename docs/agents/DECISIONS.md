@@ -225,3 +225,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-20 00:07 — codex — Cotejar cantidades de hojas propias en el equipo
 
 **Por qué:** La misma petición con tres supuestos públicos sirve para las tres respuestas posibles. El expediente conserva los valores, la selección y la recomendación aplicable. Los libros de práctica con hechos habilitados para nube se acreditan por huellas y lectura local.
+
+## 2026-11-20 00:18 — codex — Conservar el renglón del tratado y sus notas al investigar por fracción
+
+**Por qué:** Las ediciones arancelarias difieren y algunas fracciones tienen una regla propia. La consulta por código conserva la página, el contexto y la fecha de la edición. Los renglones con llamadas al pie permanecen disponibles para cotejo en el PDF.
