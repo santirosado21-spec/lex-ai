@@ -1,3 +1,4 @@
+import {questionFactTexts} from './intake-question-facts.mjs';
 import {selectedConcepts} from './question-concepts.mjs';
 import {customsPassage} from './customs-edition.mjs';
 import {nicoRow,nicoReference} from './nico-index.mjs';
@@ -52,7 +53,7 @@ export function loadResearchPassage(library, sourceId, part) {
   return note;
 }
 
-export function questionPassage(library,{sourceId,part,angle,concepts=[]}){
+export function questionPassage(library,{sourceId,part,angle,concepts=[]},caseFacts){
  if(!Object.hasOwn(angles,angle))throw Error('Selecciona el enfoque jurídico.');
  let ref,condition,body;
  if(/^aduana-(?:36|36-A|64|65)$/u.test(sourceId)){
@@ -65,8 +66,11 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[]}){
  const labels=selectedConcepts(concepts,ref.text);
  const focus=labels.length?' · '+labels.join(', '):'';
  const title=angles[angle]+' · '+ref.title+' · art. '+ref.article;
- const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. Devuelve JSON con cita (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'');
- const note=Object.freeze({title,ref,body,condition,angle,prompt});verified.add(note);return note;
+ const facts=caseFacts?questionFactTexts(caseFacts):[];
+ const responseSpec=facts.length?'En lectura explica en una o dos oraciones qué permiten comprobar los hechos o qué contradicción requiere aclaración. Escribe de 40 a 300 caracteres sin cifras, nombres, nuevas citas o conclusiones de cumplimiento. Si los hechos no guardan relación con el pasaje, abstente. Devuelve JSON con lectura, cita':'Devuelve JSON con cita';
+ const factBlock=facts.length?'\n\nHechos del ejercicio elegidos por el abogado\n'+facts.map((fact,i)=>'H'+(i+1)+' · '+fact).join('\n'):'';
+ const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'')+factBlock;
+ const note=Object.freeze({title,ref,body,condition,angle,prompt,...(caseFacts?{caseFacts}:{})});verified.add(note);return note;
 }
 
 // A follow-up receives only an independently extracted description with a checked source location.
@@ -100,16 +104,25 @@ export function renderResearchNote(raw, note) {
   let result;
   try { result = JSON.parse(raw); } catch { result = null; }
   const quote = typeof result?.cita === 'string' ? result.cita.trim() : null;
-  const valid = typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
+  const observation=typeof result?.lectura==='string'?result.lectura.trim():'';
+  const hasFacts=Boolean(note.caseFacts);
+  const goodObservation=observation.length>=40&&observation.length<=300&&/^[\p{L}\p{M} ,.:;¿?()«»“”–-]+$/u.test(observation);
+  const proposed=proposedQuestions(result?.solicitud);
+  const valid = (!hasFacts||(goodObservation&&proposed))&&typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
     !quote.includes('[[') && !quote.includes(']]') && (note.body??note.ref.text).includes(quote) &&
-    Object.keys(result).every(key=>['cita','solicitud'].includes(key));
-  const question = valid ? proposedQuestions(result.solicitud) : '';
+    Object.keys(result).every(key=>(hasFacts?['cita','solicitud','lectura']:['cita','solicitud']).includes(key));
+  const question = valid ? proposed : '';
   // A verified substring can stop before a time limit or an exception. For
   // manually delimited customs provisions, print the entire selected provision.
   const fullQuote=note.body??quote;
   const basis = valid ? 'Cita documental [' + note.ref.id + ']\n' + fullQuote :
+    result?.abstener===true?'Fundamento pendiente. OpenAI indicó que el pasaje no basta para responder. Puedes revisar otra fuente.':
+    hasFacts?'Fundamento pendiente. La respuesta necesita una lectura, una cita comprobable y una pregunta documental.':
     'Fundamento pendiente. El modelo no devolvió una cita verificable en el pasaje seleccionado.';
   return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + (note.angle?'Consulta del abogado\n[[CONSULTA]]\n\n'+angles[note.angle]+'\n':'') + basis + (valid&&note.condition?'\nCondición del encabezado\n'+note.condition:'') +
+    (note.caseFacts?.discrepancy?'\n\nDiscrepancia entre soportes\n'+note.caseFacts.discrepancy:'')+
+    (valid&&hasFacts?'\n\nLectura preliminar de OpenAI\n'+observation:'')+
+    (hasFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     '\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.';
 }

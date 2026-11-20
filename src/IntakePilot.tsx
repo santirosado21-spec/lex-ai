@@ -1,5 +1,5 @@
 import IntakeSourceFiles,{type CaseSource} from './IntakeSourceFiles';
-import IntakeQuestion from './IntakeQuestion';
+import IntakeQuestion,{type QuestionSelection} from './IntakeQuestion';
 import IntakeNico from './IntakeNico';
 import IntakeTariff from './IntakeTariff';
 import {useEffect, useRef, useState, type FormEvent} from 'react';
@@ -18,7 +18,7 @@ type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type SupportLine={line:number;excerpt:string;sourceId?:string;sourceLabel?:string};
 type TaskInfo = {
-  id: Task; parent?:Task; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
+  id: Task; parent?:Task; usesFacts?:boolean; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
   comparison?:{subject:string;group?:string;archived?:boolean;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
@@ -122,7 +122,7 @@ export default function IntakePilot() {
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
     setLibraryOpen(false);setNotice('Ficha guardada en el expediente.');heading.current?.focus();
   }
-  async function chooseQuestion(selection:{reviewId:string;key:string;angle:string}){
+  async function chooseQuestion(selection:QuestionSelection){
     const result=await api<{task:Task;status:PilotStatus}>('intake.addQuestion',selection);
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
     setNotice('Consulta preparada. Revisa el mensaje que recibirá OpenAI.');
@@ -176,16 +176,15 @@ export default function IntakePilot() {
   async function saveEdit() {
     if (busy || !task || editText===null) return;
     clearFeedback();
-    const validatedText=activeTask?.evidence?editText.replaceAll('[[SOPORTE]]',''):editText;
-    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]') || /\[\[|\]\]/.test(validatedText.replace(/\[\[(?:CLIENTE|ASUNTO|DATO_[1-9]\d{0,2}_[a-f0-9]{12})\]\]/g,''))) {
-      setError('Conserva los marcadores [[CLIENTE]] y [[ASUNTO]] y usa los datos del soporte de este expediente.');
+    if (!editText.includes('[[CLIENTE]]') || !editText.includes('[[ASUNTO]]')) {
+      setError('Conserva los marcadores [[CLIENTE]] y [[ASUNTO]] para restituir los datos del expediente.');
       return;
     }
     setActivity('edit');
     try {
       setPilot(await api<PilotStatus>('intake.edit',{task,text:editText}));
       setEditText(null); setNotice('Cambios guardados en este equipo.');
-    } catch {setError('No se pudo guardar la edición. Tus cambios siguen abiertos.');}
+    } catch(cause) {setError(cause instanceof Error?cause.message:'No se pudo guardar la edición. Tus cambios siguen abiertos.');}
     finally {setActivity(null);}
   }
   async function exportTariffs(){
@@ -273,7 +272,7 @@ export default function IntakePilot() {
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?(item.comparison.archived?'Cotejo guardado · '+item.title:'Contrastar '+item.comparison.title.toLowerCase()):item.title}</option>)}
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
-          {activeTask.parent&&<div className="rp-followup"><button type="button" className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setSelected(activeTask.parent!);setRestored('');clearFeedback();}}><ChevronLeft size={15}/> Volver al primer borrador</button><p>La consulta retoma las citas del primer borrador. Las ediciones que escribiste permanecen en tu equipo.</p></div>}
+          {activeTask.parent&&<div className="rp-followup"><button type="button" className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setSelected(activeTask.parent!);setRestored('');clearFeedback();}}><ChevronLeft size={15}/> {activeTask.parent.startsWith('revision-')?'Volver al documento anterior':'Volver al primer borrador'}</button><p>La consulta retoma las citas del primer borrador. Las ediciones que escribiste permanecen en tu equipo.</p></div>}
           {task==='lectura-clasificacion'&&<button className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setLibraryView('tarifa');setLibraryOpen(true);}}>Buscar fracción en la tarifa</button>}
           {comparison&&<section className="rp-comparison" aria-label="Contraste del expediente">
             {activeTask.evidence?.sourceLabel&&<p className="rp-pair-summary">{[...new Set([activeTask.evidence.sourceLabel,...(activeTask.evidence.additional??[]).map(row=>row.sourceLabel)].filter(Boolean))].join(' · ')}</p>}
@@ -287,7 +286,7 @@ export default function IntakePilot() {
            try{downloadFile(await api<{name:string;base64:string;mime:string}>('intake.exportSourceComparison',{}));setNotice('Cruce documental generado en este equipo.');}
            catch(cause){setError(cause instanceof Error?cause.message:'No se pudo exportar el cotejo.');}finally{setActivity(null);}
           }}><Table2 size={16}/>Descargar cruce documental en Excel</button>}
-          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.parent||activeTask.localOnly?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
+          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.usesFacts||activeTask.parent||activeTask.localOnly?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
             <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
             <blockquote>{activeTask.evidence.sourceLabel&&<strong>{activeTask.evidence.sourceLabel} · línea {activeTask.evidence.line}<br/></strong>}{activeTask.evidence.excerpt}</blockquote>
             {activeTask.evidence.additional?.map(row=><blockquote key={(row.sourceId??'')+'-'+row.line}>{row.sourceLabel&&<strong>{row.sourceLabel} · </strong>}Línea {row.line} · {row.excerpt}</blockquote>)}
@@ -303,7 +302,7 @@ export default function IntakePilot() {
           {activeTask.evidence&&!activeTask.preview&&!activeTask.localOnly&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
           {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
           {activeTask.localOnly?null:draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> {comparison?'Ver la consulta común del tema':'Ver el mensaje enviado'}</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
-            <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>{activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
+            <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>{activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):activeTask.usesFacts?'La consulta incluye el pasaje jurídico y los hechos de práctica que elegiste. Puedes revisar el envío completo.':'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>

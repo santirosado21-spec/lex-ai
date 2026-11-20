@@ -1,3 +1,4 @@
+import {questionFactTexts} from './intake-question-facts.mjs';
 import {comparisonEnvelope} from './intake-comparison.mjs';
 // Build the next turn from sources checked again on this machine. User edits,
 // supporting lines, client names, and original filenames stay out of the request.
@@ -55,7 +56,7 @@ function sourceContext(source){
   tradeReadingEnvelope(source);
   return {refs:source.refs,facts:[]};
  }
- return {refs:[checkedResearchReference(source)],facts:[]};
+ return {refs:[checkedResearchReference(source)],facts:source.caseFacts?questionFactTexts(source.caseFacts):[]};
 }
 
 // Recover only whole quotation lines present in a fresh, model-generated note.
@@ -73,7 +74,7 @@ export function quotedRanges(source,draft){
  return ranges;
 }
 
-export function prepareFollowup(source,ranges,form,focus=[]){
+export function prepareFollowup(source,ranges,form,focus=[],prior){
  if(!isFollowupForm(form))throw Error('Selecciona el documento de seguimiento.');
  const {refs,facts}=sourceContext(source);
  if(!Array.isArray(ranges)||!ranges.length||ranges.length>refs.length)throw Error('La nota necesita una cita cotejada antes del seguimiento.');
@@ -89,12 +90,18 @@ export function prepareFollowup(source,ranges,form,focus=[]){
   return {ref,quote,condition,locator:choice?.locator};
  });
  const spec=forms[form],names=focusNames(focus);
+ let previous='';
+ if(prior){
+  if(!isFollowupForm(prior.form))throw Error('No se pudo cotejar el turno anterior.');
+  const previousFocus=focusNames(prior.focus??[]);
+  previous='\n\nTurno anterior\n'+forms[prior.form].title+(previousFocus.length?' · '+previousFocus.join(' y '):'')+'.';
+ }
  const prompt='Continúa el trabajo de la nota anterior. '+spec.instruction+(names.length?' Menciona literalmente cada tipo de documento seleccionado por el abogado al menos una vez en las acciones: '+names.join(' y ')+'.':'')+' Devuelve JSON con una sola clave "acciones", una lista de dos oraciones en español de hasta 200 caracteres cada una. Limita el texto a solicitudes de documentos o tareas de cotejo. Evita nombres, identificadores, cifras, citas nuevas, plazos y conclusiones jurídicas.\n\nFundamentos seleccionados en el primer borrador\n'+
   quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n\n')+
-  (facts.length?'\n\nHechos del ejercicio con sustituciones locales\n'+facts.join('\n'):'');
+  (facts.length?'\n\nHechos del ejercicio con sustituciones locales\n'+facts.join('\n'):'')+previous;
  const localContext=source.localTokens?['Proveedor registrado · '+source.localTokens.find(item=>item.publicToken===source.provider).localToken,
   ...facts.map(fact=>fact.replace(/\[\[PARTE_\d+\]\]/gu,marker=>source.localTokens.find(item=>item.publicToken===marker).localToken))].join('\n'):'';
- const result=Object.freeze({localContext,focus:Object.freeze(names),form,title:spec.title+(names.length?' · '+names.join(' y '):''),prompt,quotes:Object.freeze(quotes.map(Object.freeze)),refs:Object.freeze(quotes.map(q=>q.ref)),synthetic:facts.length>0});
+ const result=Object.freeze({localContext,discrepancy:source.caseFacts?.discrepancy,focus:Object.freeze(names),form,title:spec.title+(names.length?' · '+names.join(' y '):''),prompt,quotes:Object.freeze(quotes.map(Object.freeze)),refs:Object.freeze(quotes.map(q=>q.ref)),synthetic:facts.length>0});
  trusted.add(result);
  return result;
 }
@@ -118,6 +125,7 @@ export function renderFollowup(raw,note,{evidence=false}={}){
  return [note.form==='carta'?'Asunto · [[ASUNTO]]\n\nA la atención de [[CLIENTE]]':spec.title+' para [[CLIENTE]] · [[ASUNTO]]',
   spec.intro,actions.map((a,i)=>(i+1)+'. '+a).join('\n'),
   ...(note.localContext&&note.form==='control'?[note.localContext]:[]),
+  ...(note.discrepancy&&note.form==='control'?[note.discrepancy]:[]),
   ...(evidence&&note.form==='control'?['Soporte del expediente\n[[SOPORTE]]']:[]),
   'Fundamento de la revisión\n'+basis].join('\n\n');
 }

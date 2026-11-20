@@ -169,3 +169,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:47 — codex — Conservar los originales adjuntos por expediente y exigir selección expresa del par documental
 
 **Por qué:** La misma empresa puede tener operaciones distintas. El abogado identifica el par. El sistema conserva los originales cifrados, las líneas y la versión del cotejo. La respuesta pública sobre el mismo tema puede reutilizarse sin enviar identidades ni fragmentos privados.
+
+## 2026-11-19 20:17 — codex — Vincular los hechos de práctica y las fuentes de cada turno sin reenviar la edición privada
+
+**Por qué:** El abogado elige qué hechos verificados hacen falta para su pregunta. El servicio recompone esos hechos y las citas en el equipo para cada turno. Una corrección privada no se convierte en material de nube. Una discrepancia inequívoca del flete se señala también localmente porque el comentario del modelo puede dejarla implícita.

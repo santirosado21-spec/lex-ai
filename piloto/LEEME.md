@@ -84,3 +84,11 @@ En un ejercicio cifrado, abre **Consultar con una pregunta propia**. Escribe una
 3. Lee el **Mensaje para OpenAI**. La consulta contiene las hipótesis públicas y sus fundamentos. El abogado elige la hipótesis y resuelve la discrepancia en el expediente local. Genera la nota y pulsa **Datos originales**. Word, Excel y PowerPoint recuperan los dos fragmentos. Al retirar `[[SOPORTE]]` de la nota también se retiran del anexo de Excel. Puedes cambiar de par y volver a un cotejo guardado.
 
 Para esta prueba, Santiago puede cotejar los archivos originales y la vista del envío, Lorenzo puede revisar la fuente jurídica y Pedro puede abrir las tres exportaciones. Cada uno usa su ejercicio ficticio en su propio equipo.
+
+### Investigar con hechos del ejercicio y continuar la conversación
+
+Adjunta la factura y el contrato de cotejo del ejemplo anterior. Abre **Consultar con una pregunta propia** y pregunta qué documentos permiten comprobar el flete en el valor en aduana. Selecciona el pasaje del artículo 65, fracción I, inciso d), y marca las dos afirmaciones bajo **Hechos para incluir en la consulta**. Una dice que el precio incluye el flete y la otra, que lo excluye. Las casillas empiezan vacías. Revisa el mensaje completo antes de generar la nota.
+
+La nota muestra la lectura provisional de OpenAI, la cita comprobada y la pregunta documental. En **Datos originales** puedes cotejar los folios y las líneas de ambos documentos. Puedes editar la nota y conservar esa edición en el equipo. Desde **Continuar desde esta nota**, solicita al cliente la factura y el contrato. Desde esa carta, prepara una lista interna para cotejar la factura y el comprobante de pago. En el tercer mensaje verás los hechos elegidos, el fundamento y los tipos de documento del turno anterior. La carta omite los extractos privados. La lista interna los recupera al exportar. Cada generación nueva usa una solicitud de la sesión.
+
+El envío de hechos se habilita para cláusulas verificadas de los ejemplos ficticios incluidos y para hechos del documento de práctica generado en el equipo. Un archivo modificado o propio mantiene disponibles la investigación por pasajes públicos y las herramientas locales. El texto libre del archivo y los comentarios de edición permanecen en el expediente.

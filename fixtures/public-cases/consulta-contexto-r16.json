@@ -1,0 +1,28 @@
+[
+  {
+    "sha256": "14793bcfba5d55af0b06c5a912c376578f7948e79524eb93bcf079991f12cdbc",
+    "response": {
+      "lectura": "El pasaje permite comprobar si el flete se incurrió con motivo del transporte de las mercancías y si estaba incluido en el precio pagado, dato necesario para aclarar los hechos sobre ese gasto.",
+      "cita": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías",
+      "solicitud": "¿Qué factura o comprobante acredita el flete y si estaba incluido en el precio pagado?"
+    }
+  },
+  {
+    "sha256": "3ac2d031d860176c503e419784a4ad11547316777daf0e976fddf38ccafb98f8",
+    "response": {
+      "acciones": [
+        "Solicitamos la factura comercial para cotejar si el precio pagado incluye el flete.",
+        "Por favor, compartan el contrato para cotejar quién asume el flete y si está incluido en el precio pagado."
+      ]
+    }
+  },
+  {
+    "sha256": "3bbc3f64404f1408423873fe2b3413b7c3d9ab796adc075825663b03991defc4",
+    "response": {
+      "acciones": [
+        "Cotejar la factura comercial con el comprobante de pago para comprobar que el precio pagado corresponde al consignado en la factura.",
+        "Verificar en la factura comercial y el comprobante de pago si el flete está incluido en el precio pagado."
+      ]
+    }
+  }
+]

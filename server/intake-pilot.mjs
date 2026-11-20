@@ -1,3 +1,4 @@
+import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
 import {questionCandidates} from './corpus/intake-question.mjs';
@@ -8,7 +9,7 @@ import {comparisonSource,comparisonsFor,comparisonEnvelope,readComparisonReply,r
 import {hasTradeWorksheet,tradeWorksheet,revisedWorksheetRow,worksheetSummary,worksheetProposals} from './intake-trade-worksheet.mjs';
 import {suggestTradeReadings,loadTradeReading,tradeReadingEnvelope,renderTradeReading} from './corpus/intake-trade-reading.mjs';
 import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
-import {randomUUID} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
 import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
@@ -105,7 +106,7 @@ export function createIntakeGenerator({
  });
  const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading,comparison,followup}={}) => {
   const envelope=followup?followupEnvelope(followup):comparison?comparisonEnvelope(comparison):reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
-  const gate=gateFor(practice||research||reading||comparison||followup ? canonicalJson(envelope) : null,research||reading||comparison||(followup&&!followup.synthetic)?'public':'synthetic');
+  const gate=gateFor(practice||research||reading||comparison||followup ? canonicalJson(envelope) : null,(research&&!research.caseFacts)||reading||comparison||(followup&&!followup.synthetic)?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   if(active)throw Error('Hay una consulta en curso.');
@@ -150,10 +151,11 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   if (entry.workspaceId!==intake.workspaceId) throw new Error('El asunto no corresponde al piloto.');
   return {firm,entry,intake};
  };
- const sourceFor = selection => selection.angle?questionPassage(publicLibrary,selection):loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
- const noteFor = (intake,task) => {
+ const sourceFor = (selection,saved) => selection.angle?questionPassage(publicLibrary,selection,selection.factIds?selectQuestionFacts(saved,selection.factIds):null):loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
+ const noteFor = (saved,task) => {
+  const intake=saved?.intake;
   const selection=intake?.research?.[task];
-  return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection) : null;
+  return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection,saved) : null;
  };
  const practiceFor = saved=>prepareProtectedCase(saved.intake.practiceSeed,saved.intake.document,saved.firm.id,saved.entry.id,publicLibrary);
  const practiceTask = saved=>{
@@ -230,12 +232,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   }
   if(parent==='case-note')return practiceFor(saved);
   if(parent.startsWith('lectura-'))return readingFor(parent);
-  return noteFor(saved.intake,parent);
+  return noteFor(saved,parent);
  };
- const followupFor=(saved,selection)=>prepareFollowup(followupSource(saved,selection.parent),selection.ranges,selection.form,selection.focus);
+ const followupFor=(saved,selection)=>{
+  const prior=saved.intake.followups?.[selection.parent];
+  return prepareFollowup(followupSource(saved,selection.basisTask??selection.parent),selection.ranges,selection.form,selection.focus,prior);
+ };
  const firstBasis=(saved,task)=>{
   const {intake}=saved;
   if(Object.hasOwn(intake.followupBasis??{},task))return intake.followupBasis[task];
+  if(store.protectedRecords&&Object.hasOwn(intake.drafts,task)&&Object.hasOwn(intake.followups??{},task)&&!intake.editedTasks?.includes(task)){
+   const old=intake.followups[task];
+   try{return quotedRanges(followupSource(saved,old.basisTask??old.parent),intake.drafts[task]);}catch{return [];}
+  }
   if(!store.protectedRecords||!Object.hasOwn(intake.drafts,task)||intake.editedTasks?.includes(task)||
      !(task==='case-note'||task.startsWith('lectura-')||intake.researchHistory?.[task]?.comparison||Object.hasOwn(intake.research??{},task)))return [];
   try{return quotedRanges(followupSource(saved,task),intake.drafts[task]);}catch{return [];}
@@ -263,8 +272,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const archived=saved.intake.researchHistory?.[id];
     if (archived) return {id,...archived};
     try {
-     const note=sourceFor(selection);
-     return {id,title:note.title,preview:note.prompt,references:[note.ref]};
+     const note=sourceFor(selection,saved);
+     return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:true}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
    })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
@@ -432,24 +441,29 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if(!candidates.length)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
     const id=randomUUID();
     if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
-    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,concepts:mentionedConcepts(restored.original).map(c=>c.id)});
+    const facts=availableQuestionFacts(saved).map(({id,text,evidence})=>({id,text,label:evidence.sourceLabel,line:evidence.line}));
+    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
-    return {id,masked:restored.masked,count:review.count,suggestedAngle,
+
+    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,
      candidates:candidates.map(({key,label,locator,text,partial})=>({key,label,locator,text,partial}))};
    }
    case 'intake.addQuestion': {
-    exactFields(payload,['reviewId','key','angle']);
+    const usesFacts=Object.hasOwn(payload??{},'factIds');
+    exactFields(payload,usesFacts?['reviewId','key','angle','factIds']:['reviewId','key','angle']);
     const {reviewId,key,angle}=payload,saved=current(),review=pendingQuestions.get(reviewId);
     if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id||typeof angle!=='string'||!Object.hasOwn(angles,angle))
      throw Error('Vuelve a revisar la pregunta en este expediente.');
     const choice=review.candidates.find(row=>row.key===key);
     if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
-    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts};
-    const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part;
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(usesFacts?{factIds:payload.factIds}:{})};
+    if(usesFacts&&(!Array.isArray(payload.factIds)||!payload.factIds.length||payload.factIds.length>4||new Set(payload.factIds).size!==payload.factIds.length||
+       !payload.factIds.every(id=>review.factIds.includes(id))))throw Error('Elige los hechos que aparecen en la revisión de esta pregunta.');
+    const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
     if(!Object.hasOwn(intake.research??{},task)){
      if(Object.keys(intake.research??{}).length>=48)throw Error('El expediente admite 48 pasajes de trabajo.');
-     sourceFor(selection);
+     sourceFor(selection,saved);
      store.put('intake-pilot',{...intake,research:{...intake.research,[task]:selection},
       questions:{...intake.questions,[task]:review.document}});
     }
@@ -577,10 +591,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
        !firstBasis(saved,task).length)throw Error('Elige una nota con un fundamento cotejado.');
     const {intake}=saved;
     const focus=scoped?focusFromInstruction(payload.instruction):[];
-    const id=['revision',form,...focus,task].join('-');
+    const prior=intake.followups?.[task],basisTask=prior?.basisTask??prior?.parent??task;
+    const identity=[form,...focus,task].join('-');
+    const id='revision-'+(prior?form+'-'+createHash('sha256').update(identity).digest('hex').slice(0,32):identity);
     if(!Object.hasOwn(intake.followups??{},id)){
      if(Object.keys(intake.followups??{}).length>=96)throw Error('Este expediente ya contiene 96 documentos de seguimiento.');
-     const selection={parent:task,form,focus,ranges:firstBasis(saved,task),parentTitle:intake.researchHistory[task].title};
+     const selection={parent:task,form,focus,ranges:firstBasis(saved,task),parentTitle:intake.researchHistory[basisTask].title,...(prior?{basisTask}:{})};
      followupFor(saved,selection);
      store.put('intake-pilot',{...intake,followups:{...intake.followups,[id]:selection}});
     }
@@ -601,13 +617,13 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     pending=true;
     try {
      if (task==='trade' && !articles) throw new Error('La edición de los artículos necesita una revisión.');
-     const research=noteFor(saved.intake,task);
+     const research=noteFor(saved,task);
      const practice=task==='case-note'?practiceFor(saved):null;
      const reading=selection?readingFor(task):null;
      let matrix=comparison?saved.intake.comparisonReplies?.[comparison.subject]:null;
      const reuse=comparison&&matrix?.digest===comparison.packet.digest;
      const followup=continuation?followupFor(saved,continuation):null;
-     const followEvidence=continuation?.form==='control'?saved.intake.researchHistory?.[continuation.parent]?.evidence:null;
+     const followEvidence=continuation?.form==='control'?saved.intake.researchHistory?.[continuation.basisTask??continuation.parent]?.evidence:null;
      const raw=reuse?null:await generate(task,{followup,comparison:comparison?.packet,reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
      if(comparison&&!reuse)matrix=readComparisonReply(raw,comparison.packet);
      let text=raw;
@@ -617,8 +633,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(practice)text=renderProtectedCase(raw,practice);
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
-     const answer=draftText(text,(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence,saved.intake.questions?.[task]);
-     const parentSource=comparison?.packet||reading||practice||research;
+     const answer=draftText(text,(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task]);
+     const parentSource=continuation?followupSource(saved,continuation.basisTask??continuation.parent):comparison?.packet||reading||practice||research;
      const ranges=store.protectedRecords&&parentSource?quotedRanges(parentSource,answer):[];
      signal?.throwIfAborted();
      store.transaction(()=>{
@@ -629,8 +645,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
       if(source){
        const title=followup?followup.title+' · '+continuation.parentTitle:comparison?.title??source.title;
        const references=source.refs??[source.ref];
-       const evidence=followEvidence??comparison?.evidence??selection?.evidence;
-       const note={title,preview:source.prompt,references,...(evidence?{evidence}:{}),
+       const evidence=followEvidence??comparison?.evidence??selection?.evidence??research?.caseFacts?.evidence;
+       const note={title,preview:source.prompt,references,...(research?.caseFacts?{usesFacts:true}:{}),...(evidence?{evidence}:{}),
         ...(comparison?{comparison:comparisonInfo(comparison)}:{})};
        snapshot={researchHistory:{...intake.researchHistory,[task]:note}};
       }
@@ -680,7 +696,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const hasSupplier=task==='trade' && intake.scenarioId==='factura-origen-v1' && intake.supplier;
     const restored=hasSupplier?draft+'\n\nProveedor registrado: '+intake.supplier:draft;
     const origin=intake.followups?.[task];
-    const controlTask=origin?.form==='control'?origin.parent:task;
+    const controlTask=origin?.form==='control'?(origin.basisTask??origin.parent):task;
     const sheet=hasTradeWorksheet(controlTask)?tradeWorksheet(controlTask,intake.worksheets?.[controlTask]):null;
     const appendix=sheet?worksheetSummary(sheet):'';
     const withWorksheet=appendix?restored+'\n\n'+appendix:restored;

@@ -62,6 +62,8 @@ test('question review stays on loopback, original restores only within its matte
  const inquiry=await rpc('inspectQuestion',{text:original});assert.doesNotMatch(inquiry.masked,/Empresa Ensayo Lila|X-9134/);
  assert.deepEqual(calls,[]);assert.equal(local.mock.callCount(),2);
  const choice={reviewId:inquiry.id,key:'aduana-65/1',angle:'documentos'};
+ assert.deepEqual(inquiry.facts,[]);
+ for(const factIds of [[],['H1'],[original],null])await assert.rejects(rpc('addQuestion',{...choice,factIds}));
  await assert.rejects(rpc('addQuestion',{...choice,prompt:original}));
  await assert.rejects(rpc('addQuestion',{...choice,key:'source invented'}));
  const {task,status}=await rpc('addQuestion',choice);

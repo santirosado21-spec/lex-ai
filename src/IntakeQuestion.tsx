@@ -2,16 +2,17 @@ import {useState,type FormEvent} from 'react';
 import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle} from 'lucide-react';
 import {api} from './api';
 
-type Review={id:string;masked:string;count:number;suggestedAngle:string;candidates:{key:string;label:string;locator:string;text:string;partial:boolean}[]};
-type Selection={reviewId:string;key:string;angle:string};
+type Review={id:string;facts?:{id:string;text:string;label:string;line:number}[];masked:string;count:number;suggestedAngle:string;candidates:{key:string;label:string;locator:string;text:string;partial:boolean}[]};
+export type QuestionSelection={reviewId:string;key:string;angle:string;factIds?:string[]};
 
-export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onSelect:(selection:Selection)=>Promise<void>}){
+export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onSelect:(selection:QuestionSelection)=>Promise<void>}){
  const [open,setOpen]=useState(false),[question,setQuestion]=useState('');
  const [review,setReview]=useState<Review|null>(null),[key,setKey]=useState(''),[angle,setAngle]=useState('requisitos');
  const [busy,setBusy]=useState(false),[error,setError]=useState('');
+ const [factIds,setFactIds]=useState<string[]>([]);
  const candidate=review?.candidates.find(row=>row.key===key);
  async function inspect(event:FormEvent){
-  event.preventDefault();setBusy(true);setReview(null);setError('');
+  event.preventDefault();setBusy(true);setReview(null);setFactIds([]);setError('');
   try{
    const result=await api<Review>('intake.inspectQuestion',{text:question.trim()});
    setReview(result);setKey(result.candidates[0].key);setAngle(result.suggestedAngle);
@@ -21,7 +22,7 @@ export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onS
  async function choose(){
   if(!review)return;
   setBusy(true);setError('');
-  try{await onSelect({reviewId:review.id,key,angle});setOpen(false);setQuestion('');setReview(null);}
+  try{await onSelect({reviewId:review.id,key,angle,...(factIds.length?{factIds}:{})});setOpen(false);setQuestion('');setReview(null);}
   catch(cause){setError(cause instanceof Error?cause.message:'No se pudo preparar el mensaje.');}
   finally{setBusy(false);}
  }
@@ -38,6 +39,10 @@ export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onS
    <label htmlFor="rp-question-source">Pasaje que quieres consultar<select id="rp-question-source" disabled={busy||disabled} value={key} onChange={e=>setKey(e.target.value)}>{review.candidates.map(row=><option key={row.key} value={row.key}>{row.label}</option>)}</select></label>
    {candidate?.partial&&<p>Este pasaje coincide con un término aislado. Comprueba si también aborda el resto de tu pregunta.</p>}
    {candidate&&<details className="rp-details" key={key}><summary>Leer el pasaje seleccionado</summary><p>{candidate.locator}</p><p>{candidate.text}</p></details>}
+   {Boolean(review.facts?.length)&&<fieldset className="rp-question-facts"><legend>Hechos para incluir en la consulta</legend>
+    <p>Elige afirmaciones de la misma operación para que OpenAI las considere. Los nombres de los documentos y sus líneas se conservan en tu equipo.</p>
+    {review.facts?.map(fact=><label key={fact.id}><input type="checkbox" checked={factIds.includes(fact.id)} disabled={disabled||busy||(!factIds.includes(fact.id)&&factIds.length>=4)} onChange={e=>setFactIds(e.target.checked?[...factIds,fact.id]:factIds.filter(id=>id!==fact.id))}/><span>{fact.text}<small>{fact.label} · línea {fact.line}</small></span></label>)}
+   </fieldset>}
    <label htmlFor="rp-question-angle">Enfoque jurídico<select id="rp-question-angle" disabled={busy||disabled} value={angle} onChange={e=>setAngle(e.target.value)}><option value="requisitos">Requisitos para aplicar la disposición</option><option value="excepciones">Excepciones y condiciones de aplicación</option><option value="documentos">Documentos para acreditar los hechos</option></select></label>
    <button type="button" className="rp-primary" disabled={busy||disabled} onClick={()=>void choose()}>Preparar mensaje para revisión<ArrowRight size={16}/></button>
   </div>}</div>}
