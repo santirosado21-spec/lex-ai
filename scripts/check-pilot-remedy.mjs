@@ -1,6 +1,6 @@
 // Verify local research, the public cloud boundary and native Office downloads.
 import assert from 'node:assert/strict';
-import {mkdtemp,mkdir,rm,writeFile} from 'node:fs/promises';
+import {mkdtemp,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -12,6 +12,11 @@ const mod=name=>import(pathToFileURL(path.join(root,name)));
 const {startServer}=await mod('server/main.mjs'),{createIntakeGenerator}=await mod('server/intake-pilot.mjs');
 const {remedyCatalog}=await mod('server/corpus/remedy-index.mjs');
 const technical=remedyCatalog()[2].points.find(p=>p.number===156);
+const long=process.argv.includes('--informe');
+const originalPath=path.join(root,'piloto',long?'informe-perfiles-extenso-ficticio.txt':'perfil-escalera-ficticio.txt');
+const original=await readFile(originalPath);
+const lines=original.toString('utf8').trimEnd().split('\n');
+const evidenceLines=['Uso declarado:','Tratamiento informado:'].map(label=>lines.findIndex(row=>row.startsWith(label))+1);
 const question='¿Qué exclusión antidumping se revisa para los perfiles de aluminio de escaleras de la operación del 7 de octubre de 2026 del folio TBR-48721 de Laminadora de Ensayo?';
 const texts=[],external=[],errors=[],tasks=[];
 let preview;
@@ -83,15 +88,40 @@ try{
  const gap=await reveal('acto intermedio');assert.ok(gap.includes('2026-06-15'));await files('intervalo');
  tasks.push({id:await p.locator('#intake-task').inputValue(),text:gap});
  await b('Documentos del expediente (0)').click();await b('Añadir documento').click();
- await p.locator('input[type=file]').setInputFiles(path.join(root,'piloto/perfil-escalera-ficticio.txt'));
- await p.getByText(/Revisar protección local/).waitFor({timeout:125000});await p.getByLabel('Nombre en el expediente').fill('Ficha del taller');
- await b('Guardar documento en este equipo').click();await b('Documentos del expediente (1)').click();
+ if(long){
+  const started=p.waitForRequest(request=>request.url().endsWith('/api')&&request.postDataJSON()?.action==='intake.inspectSource');
+  await p.locator('input[type=file]').setInputFiles(originalPath);await started;
+  await b('Cancelar lectura').click();await p.getByText('Lectura cancelada.',{exact:true}).waitFor();
+  assert.ok(await b('Guardar documento en este equipo').isDisabled());
+ }
+ const reading=p.waitForResponse(response=>response.url().endsWith('/api')&&response.request().postDataJSON()?.action==='intake.inspectSource',{timeout:300000});
+ await p.locator('input[type=file]').setInputFiles(originalPath);
+ const inspection=await (await reading).json();
+ assert.ok(inspection.protection?.available,inspection.error??inspection.protection?.reason??'Falta la revisión');
+ assert.ok(inspection.reviewId&&!inspection.protection.contextUnavailable,'Lectura local incompleta');
+ await p.getByText(/Revisar protección local/).waitFor({timeout:125000});if(long){await p.getByText(/Se leyeron [2-9] bloques en este equipo/).waitFor();}
+ await p.getByLabel('Nombre en el expediente').fill('Ficha del taller');
+ await b('Guardar documento en este equipo').click();await b('Documentos del expediente (1)').waitFor();
+ if(long){
+  const downloading=p.waitForEvent('download');await b('Descargar .txt').click();
+  const savedPath=await(await downloading).path();assert.deepEqual(await readFile(savedPath),original);
+ }
+ await b('Documentos del expediente (1)').click();
  await b('Consultar con una pregunta propia').click();await p.getByLabel('Pregunta del expediente').fill(question);
  await b('Buscar fundamentos en este equipo').click();const selector=p.getByLabel('Pasaje que quieres consultar');
  await selector.waitFor({timeout:125000});assert.ok((await selector.inputValue()).endsWith('/156'));
  await b('Elegir líneas de mis documentos').click();
  const supports=p.locator('.rp-question-lines');
- for(const number of [2,3])await supports.getByRole('checkbox',{name:new RegExp('Ficha del taller · línea '+number+' · Sólo en este equipo')}).check();
+ for(const number of evidenceLines){
+  if(long)await supports.getByRole('searchbox').fill('#'+number);
+  await supports.getByRole('checkbox',{name:new RegExp('Ficha del taller · línea '+number+' · Sólo en este equipo')}).check();
+ }
+ if(long){
+  await supports.getByRole('searchbox').fill('término sin coincidencia');
+  assert.equal(await supports.getByRole('checkbox',{checked:true}).count(),2);
+  await supports.getByRole('searchbox').fill('rectitud');
+  await supports.screenshot({path:path.join(out,'buscar-lineas.png')});
+ }
  await p.getByLabel('Enfoque jurídico').selectOption('excepciones');await b('Preparar mensaje para revisión').click();
  await send('0.15 mm a lo ancho.');const result=await reveal(question);
  assert.ok(result.includes('TAL-47315')&&result.includes('pendientes el ensayo de dureza')&&result.includes('Fecha consultada · 2026-10-07')&&result.includes(technical.text)&&result.includes('¿Qué ficha técnica acredita la dureza del perfil?'));await files('exclusion');
@@ -101,6 +131,6 @@ try{
  await app.close();app=await start();await open();
  for(const t of tasks){await p.locator('#intake-task').selectOption(t.id);assert.equal(await reveal('Laminadora de Ensayo'),t.text);}
  assert.equal(texts.length,3);assert.deepEqual(external,[]);assert.deepEqual(errors,[]);
- await writeFile(path.join(out,'resultado.json'),JSON.stringify({tasks,texts,external,errors,realOpenAICalls:0},null,2));
+ await writeFile(path.join(out,'resultado.json'),JSON.stringify({tasks,texts,external,errors,realOpenAICalls:0,characters:original.toString('utf8').trim().length,evidenceLines},null,2));
  console.log('Dos casos, tres mensajes contrastados con el transporte simulado, seis archivos y tres reaperturas.');
 }finally{await browser.close();await app?.close();await rm(dataDir,{recursive:true,force:true});}

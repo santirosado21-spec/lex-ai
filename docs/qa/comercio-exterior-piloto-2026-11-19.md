@@ -347,3 +347,15 @@ El piloto abre once pasajes de las tres resoluciones del expediente AD_29-24. El
 El ejemplo de junio muestra cómo documentar ese intervalo. El ejemplo de octubre pregunta por un perfil para escaleras. La consulta recupera el punto 156 y la nota conserva todas las características técnicas de su exclusión aunque el modelo seleccione una cita más corta. El panel identifica el producto en el punto 3 y ofrece el enlace al expediente de perfiles huecos para quien necesite investigar ese supuesto.
 
 En el recorrido de navegador se revisaron los mensajes en español y se compararon con los cuerpos recibidos por un transporte de OpenAI simulado. El cliente, los folios y las fechas consultadas quedaron en el equipo. El ensayo verifica la integración y la restitución. La calidad de una respuesta nueva del proveedor sobre este expediente y la aplicabilidad a operaciones reales requieren pruebas adicionales.
+
+## Lectura de informes largos y evaluación de privacidad · r21
+
+Un informe ficticio de 11 726 caracteres pasó por Ollama en dos bloques. En el navegador se recuperó el archivo original byte por byte, se eligieron las líneas 71 y 72 y se preparó una nota con el punto 156 de la resolución final de AD_29-24. Tres envíos al transporte simulado coincidieron con la vista previa. Se produjeron seis archivos Office y se reabrieron tres borradores. Una prueba con respuestas locales simuladas verificó además la restitución de un documento de más de 55 000 caracteres. Las mediciones corresponden a este Mac.
+
+| Prueba con Ollama | Documentos | Identificadores ocultos | Indicios indirectos ocultos | Expresiones útiles conservadas |
+| --- | ---: | ---: | ---: | ---: |
+| Casos de r20 que motivaron el cambio | 6 | 6/6 | 6/6 | 10/10 |
+| Seis textos inéditos, congelados antes del ajuste | 6 | 6/6 | 5/6 | 7/8 |
+| Tres colecciones de regresión anteriores | 26 | 23/23 | 19/20 | 31/32 |
+
+En los seis casos de desarrollo, r20 había cubierto 5/6 indicios y conservado 4/10 expresiones. En la reserva nueva, ambas versiones dieron el mismo resultado. Quedó visible una referencia a un desfile local y se perdió «La lámina llegó». Se restituyeron los 38 originales. El piloto ofreció cero líneas de estos archivos para envío al proveedor. Estos resultados respaldan el ensayo con material ficticio. Quedan pendientes la evaluación jurídica por los socios, la prueba en sus equipos y la detección de combinaciones de datos que permitan identificar a un cliente.

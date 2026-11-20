@@ -387,3 +387,7 @@ Se cruzaron once pasajes de los tres PDF del DOF con el HTML. El ZIP reabrió tr
 ## 2026-11-19 21:13 — codex — Seis documentos nuevos miden protección y pérdida de contexto en r20
 
 Tres pares de defensa comercial, pigmentos y origen; muestra anotada antes de ejecutar. Seis de seis originales restituidos, seis de seis apariciones de folios, cinco de seis indicios contextuales y cuatro de diez expresiones útiles conservadas. La revisión conjunta no mejoró el resultado de estos casos. Cero líneas literales elegibles para la nube. El indicio residual apunta a una mina distintiva. Es material de desarrollo; sigue pendiente la aceptación.
+
+## 2026-11-19 22:41 — codex — Piloto r21 de Rejon y seguimiento oficial SNICE
+
+Probados en este Mac el ZIP, la cancelación y lectura de un informe ficticio de 11726 caracteres, tres solicitudes simuladas, seis archivos abiertos en LibreOffice y tres reaperturas. Suite de 1451 aprobadas y diez omitidas. Reserva de seis documentos con 6 de 6 identificadores, 5 de 6 indicios y 7 de 8 expresiones jurídicas. Histórico SNICE con 843 filas fechadas y 814 con código DOF. Pendientes el diálogo general, la cuenta real de Lorenzo, la aceptación jurídica y los equipos de los socios.

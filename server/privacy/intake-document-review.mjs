@@ -2,18 +2,18 @@ import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
 import {createPseudonymStore} from './pseudonyms.mjs';
-import {documentaryObjectRanges,formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
+import {tradeTermRanges,documentaryObjectRanges,formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
 
 const incomplete=Object.freeze({available:false,reason:'No se pudo reconstruir y comprobar la vista de protección local.'});
 
 // Local review of extracted text. The temporary map belongs only to this call.
 // The returned view contains originals and is never a cloud request.
-export async function reviewIntakeDocument({text,originalHash,suggestions,fields,signal,context,contextReviewer}) {
- if (text.includes('[[LEX_') || !Array.isArray(suggestions) || suggestions.length>96) return incomplete;
+export async function reviewIntakeDocument({text,originalHash,suggestions,suggestionBatches=1,fields,signal,context,contextReviewer}) {
+ if (text.includes('[[LEX_') || !Array.isArray(suggestions) || suggestions.length>Math.min(96*suggestionBatches,768)) return incomplete;
  const scope={workspaceId:'local-preview',matterId:randomUUID(),threadId:'document'};
  const registry=createProvenanceRegistry();
  const pieces=detectorSegments(text);
- if(pieces.length>256)return incomplete;
+ if(pieces.length>256)return {available:false,reason:'La revisión local admite hasta 256 segmentos por documento. Divide el archivo e importa cada parte.'};
  const segments=pieces.map((piece,i)=>({id:'s'+i,path:'content',text:piece.text}));
  const offsets=new Map(segments.map((segment,i)=>[segment.id,pieces[i].start]));
  const captions=formCaptionRanges(text);
@@ -30,13 +30,18 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,fields
   if(detection.category==='person'&&isCaption(start,end))continue;
   ranges.push([start,end]);
  }
- const fieldValues=new Set(fields),objects=documentaryObjectRanges(text);
+ const fieldValues=new Set(fields),objects=[...documentaryObjectRanges(text),...tradeTermRanges(text)];
  for (const value of new Set([...fields,...suggestions])) {
   if (value==='') continue;
   if (typeof value!=='string'||value.trim().length<2||value.length>1024||!text.includes(value)) {needsReview=true;continue;}
   for(let start=text.indexOf(value);start!==-1;start=text.indexOf(value,start+value.length)) {
    const end=start+value.length;
-   if(fieldValues.has(value)||(!isCaption(start,end)&&!objects.some(([a,b])=>a===start&&b===end)))ranges.push([start,end]);
+   if(fieldValues.has(value)){ranges.push([start,end]);continue;}
+   if(isCaption(start,end)||objects.some(([a,b])=>a===start&&b===end))continue;
+   // In an Incoterm followed by a named place, retain the code and protect the entire destination.
+   const term=objects.find(([a,b])=>a===start&&b<end&&/^[A-Z]{3}$/u.test(text.slice(a,b))&&/\s/u.test(text[b]));
+   const privateStart=term?term[1]+text.slice(term[1],end).match(/^\s*/u)[0].length:start;
+   if(privateStart<end)ranges.push([privateStart,end]);
   }
  }
  if(contextReviewer){
@@ -60,7 +65,7 @@ function buildReview(text,ranges,scope,needsReview,contextualCount) {
   else merged.push([start,end]);
  }
  const entities=[...new Set(merged.map(([start,end])=>text.slice(start,end)))];
- if (entities.length>128||entities.some(value=>value.length>1024)) return incomplete;
+ if (entities.length>128||entities.some(value=>value.length>1024)) return {available:false,reason:'La revisión excede el límite de 128 datos distintos o de 1 024 caracteres por sustitución. Divide el archivo en secciones más cortas.'};
  try {
   const vault=createPseudonymStore();
   const {mappingVersion}=vault.protect({scope,entities,messages:[{role:'user',content:''}]});
@@ -77,7 +82,7 @@ function buildReview(text,ranges,scope,needsReview,contextualCount) {
   }
   if(cursor<text.length) parts.push({text:text.slice(cursor)});
   protectedText+=text.slice(cursor);
-  const restored=vault.restore({scope,mappingVersion,text:protectedText});
+  const restored=vault.restoreReviewedDocument({scope,mappingVersion,text:protectedText});
   if(privacyTextHash(restored)!==privacyTextHash(text)) return incomplete;
   return {available:true,parts,restored,count:merged.length,needsReview,contextualCount};
  } catch {return incomplete;}

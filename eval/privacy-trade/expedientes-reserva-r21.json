@@ -1,0 +1,11 @@
+[
+  {"id":"lamina","documents":[
+    {"text":"Folio 47B: La lámina llegó con un sello reservado al embarcadero de las tres espigas. Se verificó la integridad del embalaje.","private":["47B"],"clues":["embarcadero de las tres espigas"],"facts":["La lámina llegó","Se verificó la integridad del embalaje."]},
+    {"text":"Folio 47B: El embalaje presentaba marcas de abrasión. Se recibió junto al viejo aljibe del pez dorado. Queda pendiente el parte de daños.","private":["47B"],"clues":["viejo aljibe del pez dorado"],"facts":["El embalaje presentaba marcas de abrasión.","Queda pendiente el parte de daños."]}]},
+  {"id":"ensayo-quimico","documents":[
+    {"text":"Muestra: MXQ-39154. El espectrómetro registró un silicato raro vinculado exclusivamente con la cantera de los faroles verdes. La muestra fue sometida a titulación volumétrica.","private":["MXQ-39154"],"clues":["cantera de los faroles verdes"],"facts":["La muestra fue sometida a titulación volumétrica."]},
+    {"text":"La muestra MXQ-39154 se envió durante el desfile anual de los hornos gemelos. Se midió el pH con un potenciómetro calibrado.","private":["MXQ-39154"],"clues":["desfile anual de los hornos gemelos"],"facts":["Se midió el pH con un potenciómetro calibrado."]}]},
+  {"id":"transporte","documents":[
+    {"text":"Guía: GTR-71954. El manifiesto lleva el sello inconfundible de la única caseta con techo de cobre. Se selló el contenedor con un precinto numerado.","private":["GTR-71954"],"clues":["única caseta con techo de cobre"],"facts":["Se selló el contenedor con un precinto numerado."]},
+    {"text":"Guía: GTR-71954. La entrega se descargó tras la bóveda de piedra volcánica del andén circular. Falta el acuse firmado por el transportista.","private":["GTR-71954"],"clues":["bóveda de piedra volcánica del andén circular"],"facts":["Falta el acuse firmado por el transportista."]}]}
+]

@@ -19,6 +19,12 @@ En **Biblioteca federal → Defensa comercial** puedes comparar el inicio, la pr
 
 Para probar una exclusión técnica, añade `piloto/perfil-escalera-ficticio.txt` al expediente con el nombre **Ficha del taller**. Escribe «¿Qué exclusión antidumping se revisa para los perfiles de aluminio de escaleras de la operación del 7 de octubre de 2026?». Abre el punto 156. En **Elegir líneas de mis documentos**, selecciona el uso declarado y el tratamiento informado. Elige **Excepciones y condiciones de aplicación**. Revisa el mensaje antes de enviarlo. La nota recupera el folio y la evidencia del taller al mostrar los originales. El abogado debe cotejar también la dureza, los filos y las tolerancias de rectitud. Los valores de ese ejemplo se mantienen en el equipo.
 
+### Revisar un informe largo
+
+Añade `piloto/informe-perfiles-extenso-ficticio.txt` con el nombre **Ficha del taller**. Ollama lee por bloques en el equipo. Puedes cancelar la lectura antes de guardar. Abre **Revisar protección local** y verifica las sustituciones. En la pregunta sobre los perfiles de escalera, abre **Elegir líneas de mis documentos**. Busca **#71** y **#72** para seleccionar el uso declarado y el tratamiento informado. También puedes buscar por palabras. Al cambiar la búsqueda, las líneas seleccionadas siguen visibles. Compara el original descargado con el archivo que añadiste.
+
+El límite es de 60 000 caracteres de texto extraído y 10 MB por archivo. Los escritos con más de 128 valores distintos que ocultar o sustituciones individuales de más de 1 024 caracteres pueden requerir que dividas el archivo. La aplicación indica si la segunda lectura quedó incompleta. Verifica los hechos técnicos y las referencias indirectas antes de guardar.
+
 ### Primera prueba con los socios · dos fechas para un mismo pedimento
 
 1. Crea un ejercicio ficticio con el cliente **Forja de Ensayo**. Desde **Documentos del expediente** añade por separado `piloto/pedimento-aluminio-ficticio.txt` y `piloto/rectificacion-aluminio-ficticia.txt`. Dales los nombres **Ficha comercial** y **Rectificación de muestra**.

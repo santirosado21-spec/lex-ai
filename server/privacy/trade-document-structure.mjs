@@ -44,6 +44,31 @@ export function documentaryObjectRanges(text){
  return [...text.matchAll(object),...text.matchAll(subject)].filter(m=>m[1]===m[1].toLocaleLowerCase('es')).map(m=>m.indices[1]);
 }
 
+// Match a technical expression only in its ordinary grammatical role. Never
+// subtract it from a known identity, address, contextual clue or other detector.
+const processSubject=/\b(?:el|la) (proveedor|importador|fabricante|transportista|exportador|comprador|vendedor) (?:declara|indica|acredita|confirma|entrega|adjunta)\b/dgiu;
+const processObject=/\b(?:declara|incluye|documenta|acredita|describe) (?:un[ao]? |l[ao]s? )?(etapa de (?:fundición|extrusión|laminación|templado|ensamble|soldadura))(?=[.,;]|$)/dgu;
+const proofObject=/\b(?:no se recibió|falta|se adjuntó|se verificó|se entregó) (?:el|la) (registro de (?:insumos|producción|ensayos)|ensayo de (?:dureza|tracción)|certificación de origen|acuse firmado)(?=[.,;]| para el lote[.]|$)/dgiu;
+const batchNoun=/\b(?:certificación de origen|comprobante de pago|ficha técnica) para el (lote)(?=[.]|$)/dgu;
+const workpiece=/\b(?:el|un) ((?:perfil|larguero|tramo) de (?:escalera|aluminio|acero)) (?:recibió|presenta|requiere|tiene) (?:tratamiento|templado|acabado)\b/dgiu;
+const temper=/\b(?:tratamiento(?: térmico)?|templado|temple) (T[1-9](?:0)?)(?=[,. ;]|$)/dgu;
+const incoterm=/\b(?:[Ii]ncoterm(?:s)?\s*[: ]|[Ff]actura (?:consigna|indica|establece) |[Cc]ondición de entrega\s*:\s*)\s*((?:EXW|FCA|FAS|FOB|CFR|CIF|CPT|CIP|DAP|DPU|DDP))(?=\s|[.,;]|$)/dgu;
+export function tradeTermRanges(text){
+ const ranges=[];
+ for(const pattern of [processSubject,processObject,proofObject,batchNoun,workpiece,temper,incoterm]){
+  for(const match of text.matchAll(pattern)){
+   const [a,b]=match.indices[1];
+   // A capitalised label may be a name. Temper and Incoterm codes are uppercase by convention.
+   if(pattern!==temper&&pattern!==incoterm&&match[1]!==match[1].toLocaleLowerCase('es'))continue;
+   ranges.push([a,b]);
+  }
+ }
+ return ranges;
+}
+
+// Language that singles out one physical source is itself an indirect identifier.
+const distinctiveOrigin=/\b(?:exclusiv[oa]s? del?|privativ[oa]s? del?|reservad[oa]s? (?:al?|para)|(?:asociad[oa]s?|vinculad[oa]s?) (?:única|exclusiva)mente (?:al?|con))\s+(?:la |el |las |los )?(?:mina|cantera|yacimiento|muelle|embarcadero|terminal|planta|fábrica|taller|laboratorio|estación|recinto|aduana|bodega|caseta)\b/giu;
+
 // Commercial address fields can continue over several PDF lines. Require an
 // address field or a street-and-number pattern, plus a nearby postal code
 // for an unlabelled block. Keep offsets in the extracted UTF-16 string.
@@ -131,7 +156,7 @@ export function contextualIdentityRanges(text){
   if(!movement.test(sentence.segment))continue;
   for(const m of sentence.segment.matchAll(specificPlace))ranges.push(m.indices[1].map(n=>sentence.index+n));
  }
- for(const cue of [exclusiveParty,facility]){
+ for(const cue of [exclusiveParty,facility,distinctiveOrigin]){
   for(const match of text.matchAll(cue)){
    const start=match.index;
    const tail=text.slice(start+match[0].length);

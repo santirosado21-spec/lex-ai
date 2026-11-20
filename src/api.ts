@@ -33,8 +33,8 @@ async function request(path: string, body: unknown, signal?: AbortSignal) {
   }
   return response;
 }
-export async function api<T = unknown>(action: string, payload: unknown = {}): Promise<T> {
-  try { return await (await request('/api', { action, payload })).json() as T; }
+export async function api<T = unknown>(action: string, payload: unknown = {}, signal?: AbortSignal): Promise<T> {
+  try { return await (await request('/api', { action, payload }, signal)).json() as T; }
   catch (error) {
     // Keep runtime diagnostics out of product UI, including errors thrown during setup.
     if (action.startsWith('engine.')) throw new Error('No se pudo completar la operación de Rejon.AI. Actualiza el estado y vuelve a intentarlo.');

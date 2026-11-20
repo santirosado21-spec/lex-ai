@@ -10,6 +10,19 @@ const routine=new RegExp('^(?:(?:carta de porte|contrato de transporte|factura c
  '(?:el recibo|la factura|el contrato) atribuye al (?:comprador|vendedor|importador) el pago del (?:flete|transporte|seguro) relacionado con '+marker+'|'+
  'se adjunta (?:la carta de porte|la factura|el contrato) '+marker+')[.]?$','iu');
 
+// Preserve a generic test description before a location. The selected context
+// still covers the complete spatial clause. A leading folio must already be masked.
+const testAtPlace=/^\s*(?:folio\s+([\p{L}\d./_-]+)\s*:\s*)?(?:el|la) (?:control de (?:rectitud|dureza|calidad)|ensayo de (?:dureza|tracción|composición)|prueba de (?:dureza|resistencia)) se (?:realizó|practicó|efectuó)\s+(?=(?:frente al?|junto al?|detrás del?|al lado del?|en (?:el|la))\b)/diu;
+function contextStart(segment,protectedSpans){
+ const match=testAtPlace.exec(segment.text);
+ if(!match)return segment.id;
+ if(match[1]){
+  const [a,b]=match.indices[1];
+  if(!protectedSpans.some(p=>p.start<=segment.id+a&&p.end>=segment.id+b))return segment.id;
+ }
+ return segment.id+match[0].length;
+}
+
 export async function reviewContextLocally(text,ask,signal,parts=[]){
  const segments=Array.from(new Intl.Segmenter('es',{granularity:'sentence'}).segment(text),
   s=>({id:s.index,text:s.segment.trimEnd()})).filter(s=>s.text.trim());
@@ -36,7 +49,7 @@ export async function reviewContextLocally(text,ask,signal,parts=[]){
   const result=await ask(instructions,JSON.stringify(batch),format,256);
   if(!result||Object.keys(result).length!==1||!Array.isArray(result.oraciones)||result.oraciones.length>batch.length||
      new Set(result.oraciones).size!==result.oraciones.length||!result.oraciones.every(id=>allowed.has(id)))throw Error('Resultado ambiguo.');
-  for(const id of result.oraciones)if(!routineIds.has(id))ranges.push([id,ends.get(id)]);
+  for(const id of result.oraciones)if(!routineIds.has(id))ranges.push([contextStart(allowed.get(id),protectedSpans),ends.get(id)]);
  }
  try{
   for(const sentence of segments){

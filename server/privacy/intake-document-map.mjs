@@ -14,7 +14,7 @@ export function bindReviewedDocument(review,workspaceId,matterId) {
  const snapshot=vault.exportSnapshot({scope});
  const marker=new Map(snapshot.entries.map(entry=>[entry.text,entry.marker]));
  const protectedText=review.parts.map(part=>part.label?marker.get(review.restored.slice(part.start,part.end)):part.text).join('');
- if(vault.restore({scope,mappingVersion,text:protectedText})!==review.restored)throw Error('No se pudo verificar la restitución del documento.');
+ if(vault.restoreReviewedDocument({scope,mappingVersion,text:protectedText})!==review.restored)throw Error('No se pudo verificar la restitución del documento.');
  return {snapshot,protectedText,sha256:digest(review.restored),needsReview:review.needsReview};
 }
 
@@ -27,7 +27,7 @@ export function openReviewedDocument(doc,workspaceId,matterId) {
  const scope=scopeFor(workspaceId,matterId);
  const vault=createPseudonymStore();
  const {mappingVersion}=vault.importSnapshot({scope,snapshot:doc.snapshot});
- const restore=text=>vault.restore({scope,mappingVersion,text});
+ const restore=text=>vault.restoreReviewedDocument({scope,mappingVersion,text});
  const original=restore(doc.protectedText);
  if(digest(original)!==doc.sha256)throw Error('No se pudo verificar el texto guardado.');
  const tokens=documentTokens(doc);

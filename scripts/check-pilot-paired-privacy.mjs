@@ -1,9 +1,13 @@
 // Synthetic local evaluation. Every occurrence is uniquely annotated in each document.
 import {readFile} from 'node:fs/promises';
-import {inspectLocalDocument} from '../server/intake-import.mjs';
-import {bindReviewedDocument,openReviewedDocument} from '../server/privacy/intake-document-map.mjs';
-import {questionLines} from '../server/corpus/intake-question-lines.mjs';
-const file=process.argv[2]??'eval/privacy-trade/expedientes-pareados-dev.json';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const root=path.resolve(process.argv.find(s=>s.startsWith('--app='))?.slice(6)??'.');
+const runtime=name=>import(pathToFileURL(path.join(root,name)));
+const {inspectLocalDocument}=await runtime('server/intake-import.mjs');
+const {bindReviewedDocument,openReviewedDocument}=await runtime('server/privacy/intake-document-map.mjs');
+const {questionLines}=await runtime('server/corpus/intake-question-lines.mjs');
+const file=process.argv.slice(2).find(s=>!s.startsWith('--'))??'eval/privacy-trade/expedientes-pareados-dev.json';
 const bundles=JSON.parse(await readFile(file,'utf8'));
 const counters=()=>({documents:0,private:0,covered:0,clues:0,hidden:0,facts:0,intact:0,pairs:0,pairsWithResidualClues:0,pairsWithoutReview:0});
 const totals={individual:counters(),joint:counters(),restored:0,completed:0,offeredCloudLines:0};

@@ -1,0 +1,73 @@
+Informe ficticio de revisión documental de perfiles para escalera
+Cliente: Laminadora de Ensayo
+Lote: TAL-47315
+Este ejercicio reúne las observaciones del taller y la transcripción de pasajes del expediente público AD_29-24. Las observaciones describen material ficticio.
+Cuaderno del taller
+En cada estación se inspeccionaron cinco piezas. Se registró la condición del soporte recibido. El responsable de la revisión conservará por separado cualquier conclusión sobre la operación.
+Estación de recepción.
+En la primera pieza se revisaron el embalaje y la etiqueta exterior. Para cerrar la observación de recepción todavía se requiere el comprobante de recepción.
+En la segunda pieza se revisaron el embalaje y la etiqueta exterior. Para cerrar la observación de recepción todavía se requiere el comprobante de recepción.
+En la tercera pieza se revisaron el embalaje y la etiqueta exterior. Para cerrar la observación de recepción todavía se requiere el comprobante de recepción.
+En la cuarta pieza se revisaron el embalaje y la etiqueta exterior. Para cerrar la observación de recepción todavía se requiere el comprobante de recepción.
+En la quinta pieza se revisaron el embalaje y la etiqueta exterior. Para cerrar la observación de recepción todavía se requiere el comprobante de recepción.
+Estación de preparación.
+En la primera pieza se revisaron la orden de corte y el dibujo técnico. Para cerrar la observación de preparación todavía se requiere la revisión firmada del dibujo.
+En la segunda pieza se revisaron la orden de corte y el dibujo técnico. Para cerrar la observación de preparación todavía se requiere la revisión firmada del dibujo.
+En la tercera pieza se revisaron la orden de corte y el dibujo técnico. Para cerrar la observación de preparación todavía se requiere la revisión firmada del dibujo.
+En la cuarta pieza se revisaron la orden de corte y el dibujo técnico. Para cerrar la observación de preparación todavía se requiere la revisión firmada del dibujo.
+En la quinta pieza se revisaron la orden de corte y el dibujo técnico. Para cerrar la observación de preparación todavía se requiere la revisión firmada del dibujo.
+Estación de corte.
+En la primera pieza se revisaron el registro del perfil y la longitud nominal. Para cerrar la observación de corte todavía se requiere el croquis de los extremos.
+En la segunda pieza se revisaron el registro del perfil y la longitud nominal. Para cerrar la observación de corte todavía se requiere el croquis de los extremos.
+En la tercera pieza se revisaron el registro del perfil y la longitud nominal. Para cerrar la observación de corte todavía se requiere el croquis de los extremos.
+En la cuarta pieza se revisaron el registro del perfil y la longitud nominal. Para cerrar la observación de corte todavía se requiere el croquis de los extremos.
+En la quinta pieza se revisaron el registro del perfil y la longitud nominal. Para cerrar la observación de corte todavía se requiere el croquis de los extremos.
+Estación de conformado.
+En la primera pieza se revisaron la forma de la sección y el acabado superficial. Para cerrar la observación de conformado todavía se requiere la ficha de fabricación.
+En la segunda pieza se revisaron la forma de la sección y el acabado superficial. Para cerrar la observación de conformado todavía se requiere la ficha de fabricación.
+En la tercera pieza se revisaron la forma de la sección y el acabado superficial. Para cerrar la observación de conformado todavía se requiere la ficha de fabricación.
+En la cuarta pieza se revisaron la forma de la sección y el acabado superficial. Para cerrar la observación de conformado todavía se requiere la ficha de fabricación.
+En la quinta pieza se revisaron la forma de la sección y el acabado superficial. Para cerrar la observación de conformado todavía se requiere la ficha de fabricación.
+Estación de temple.
+En la primera pieza se revisaron el tratamiento declarado y la orden de horno. Para cerrar la observación de temple todavía se requiere la constancia de tratamiento.
+En la segunda pieza se revisaron el tratamiento declarado y la orden de horno. Para cerrar la observación de temple todavía se requiere la constancia de tratamiento.
+En la tercera pieza se revisaron el tratamiento declarado y la orden de horno. Para cerrar la observación de temple todavía se requiere la constancia de tratamiento.
+En la cuarta pieza se revisaron el tratamiento declarado y la orden de horno. Para cerrar la observación de temple todavía se requiere la constancia de tratamiento.
+En la quinta pieza se revisaron el tratamiento declarado y la orden de horno. Para cerrar la observación de temple todavía se requiere la constancia de tratamiento.
+Estación de ensayo.
+En la primera pieza se revisaron la identificación de la probeta y el método empleado. Para cerrar la observación de ensayo todavía se requiere el informe firmado del laboratorio.
+En la segunda pieza se revisaron la identificación de la probeta y el método empleado. Para cerrar la observación de ensayo todavía se requiere el informe firmado del laboratorio.
+En la tercera pieza se revisaron la identificación de la probeta y el método empleado. Para cerrar la observación de ensayo todavía se requiere el informe firmado del laboratorio.
+En la cuarta pieza se revisaron la identificación de la probeta y el método empleado. Para cerrar la observación de ensayo todavía se requiere el informe firmado del laboratorio.
+En la quinta pieza se revisaron la identificación de la probeta y el método empleado. Para cerrar la observación de ensayo todavía se requiere el informe firmado del laboratorio.
+Estación de rectitud.
+En la primera pieza se revisaron la referencia longitudinal y el plano de apoyo. Para cerrar la observación de rectitud todavía se requiere la hoja de medición transversal.
+En la segunda pieza se revisaron la referencia longitudinal y el plano de apoyo. Para cerrar la observación de rectitud todavía se requiere la hoja de medición transversal.
+En la tercera pieza se revisaron la referencia longitudinal y el plano de apoyo. Para cerrar la observación de rectitud todavía se requiere la hoja de medición transversal.
+En la cuarta pieza se revisaron la referencia longitudinal y el plano de apoyo. Para cerrar la observación de rectitud todavía se requiere la hoja de medición transversal.
+En la quinta pieza se revisaron la referencia longitudinal y el plano de apoyo. Para cerrar la observación de rectitud todavía se requiere la hoja de medición transversal.
+Estación de despacho.
+En la primera pieza se revisaron la descripción del embalaje y la lista de empaque. Para cerrar la observación de despacho todavía se requiere el acuse del destinatario.
+En la segunda pieza se revisaron la descripción del embalaje y la lista de empaque. Para cerrar la observación de despacho todavía se requiere el acuse del destinatario.
+En la tercera pieza se revisaron la descripción del embalaje y la lista de empaque. Para cerrar la observación de despacho todavía se requiere el acuse del destinatario.
+En la cuarta pieza se revisaron la descripción del embalaje y la lista de empaque. Para cerrar la observación de despacho todavía se requiere el acuse del destinatario.
+En la quinta pieza se revisaron la descripción del embalaje y la lista de empaque. Para cerrar la observación de despacho todavía se requiere el acuse del destinatario.
+Anexo de consulta. Puntos seleccionados del Diario Oficial de la Federación.
+Resolución inicio del 2025-03-05.
+Punto 183. Se acepta la solicitud de parte interesada y se declara el inicio de la investigación antidumping sobre las importaciones de perfiles y barras de aluminio, incluidas las definitivas y temporales, originarias de China, independientemente del país de procedencia, que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra.
+Punto 191. La presente Resolución entrará en vigor el día siguiente de su publicación en el DOF.
+Resolución preliminar del 2025-12-29.
+Punto 296. Continúa el procedimiento administrativo de investigación en materia de prácticas desleales de comercio internacional, en su modalidad de discriminación de precios, y se impone la cuota compensatoria provisional de 1.55 dólares por kilogramo a las importaciones de perfiles y barras de aluminio originarias de China, independientemente del país de procedencia, incluidas las definitivas y temporales, que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra.
+Punto 298. Con fundamento en el artículo 7.4 del Acuerdo Antidumping, la vigencia de la cuota compensatoria provisional establecida en el punto 296 de la presente Resolución, será de cuatro meses contados a partir del día que entre en vigor la presente Resolución.
+Punto 301. De acuerdo con lo dispuesto en el artículo 66 de la LCE, las importadoras que conforme a esta Resolución deban pagar la cuota compensatoria provisional, no estarán obligadas a su pago si comprueban que el país de origen de la mercancía es distinto a China.
+Punto 306. La presente Resolución entrará en vigor al día siguiente de su publicación en el DOF.
+Resolución final del 2026-09-04.
+Punto 3. El producto objeto de investigación son los perfiles no huecos o sólidos de aluminio y barras de aluminio, de cualquier dimensión, forma o figura, con acabados —como pintura o anodizado— o sin acabados. El nombre genérico o comercial con el que se conoce al producto objeto de investigación es perfiles y barras de aluminio.
+Punto 156. Conforme a lo señalado en los puntos 153 a 155 de la presente Resolución, la Secretaría observó que, de acuerdo con los medios de prueba proporcionados por Truper, estos tienen características no similares a los perfiles destinados a uso arquitectónico, ya que incluyen un proceso de templado para darle una mayor resistencia al aluminio, lo cual no se observa en los perfiles objeto de investigación. Por tanto, la Secretaría determinó que las importaciones de perfiles no huecos para utilizarse en la fabricación de herramientas, escaleras y niveles, no forman parte de la cobertura del producto objeto de investigación bajo las siguientes características: fabricados con aluminio templado T5 o T6; que cuenten con una dureza de entre 13 y 16 PW, 68 – 73 HB y/o 13 – 15 PW; especificación “matar filos a 0.25 mm”, y tolerancias de rectitud de 0.12 mm a lo largo y 0.15 mm a lo ancho.
+Punto 381. Se declara concluido el procedimiento administrativo de investigación en materia de prácticas desleales de comercio internacional, en su modalidad de discriminación de precios, y se impone una cuota compensatoria definitiva de 1.58 dólares estadounidenses por kilogramo a las importaciones de perfiles y barras de aluminio originarias de China, independientemente del país de procedencia, incluidas las definitivas y temporales que ingresan a través de las fracciones arancelarias 7604.10.02, 7604.10.99, 7604.29.01, 7604.29.02 y 7604.29.99 de la TIGIE, o por cualquier otra.
+Punto 383. De acuerdo con lo dispuesto en el artículo 66 de la LCE, los importadores que conforme a esta Resolución deban pagar las cuotas compensatorias definitivas, no estarán obligados a su pago si comprueban que el país de origen de la mercancía es distinto a China.
+Punto 386. La presente Resolución entrará en vigor al día siguiente de su publicación en el DOF.
+Conclusión técnica pendiente de verificación.
+Uso declarado: larguero para una escalera plegable del lote TAL-47315.
+Tratamiento informado: T6. La ficha recibida deja pendientes el ensayo de dureza y las tolerancias de rectitud.
+Origen declarado por el proveedor: pendiente de constancia.

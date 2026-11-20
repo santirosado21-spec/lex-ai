@@ -1,3 +1,4 @@
+import {maxIntakeChars} from './intake-windows.mjs';
 // H3 synthetic-only memory prototype. No detector, disk persistence or encryption.
 import {randomUUID} from 'node:crypto';
 import {canonicalJson} from '../canonical-json.mjs';
@@ -84,6 +85,29 @@ export function createPseudonymStore() {
   if (!opaqueId(mappingVersion) || mappingVersion !== state.activeVersion) fail('stale_version');
   return state;
  };
+ const decode=(input,encodedLimit,decodedLimit)=>{
+   const request = clone(input);
+   if (!keys(request,['scope','text','mappingVersion']) || typeof request.text !== 'string' || request.text.length > encodedLimit) fail('invalid_request');
+   const state = active(request.scope,request.mappingVersion), entries = state.versions.get(state.activeVersion);
+   const byMarker = new Map(entries.map(entry => [entry.marker,entry.text]));
+   let cursor = 0, result = '';
+   while (cursor < request.text.length) {
+    const start = request.text.indexOf(PREFIX,cursor);
+    if (start === -1) { result += request.text.slice(cursor); break; }
+    result += request.text.slice(cursor,start);
+    const end = request.text.indexOf(']]',start + PREFIX.length);
+    if (end === -1) fail('unknown_marker');
+    const marker = request.text.slice(start,end + 2);
+    if (!byMarker.has(marker)) fail('unknown_marker');
+    result += byMarker.get(marker);
+    if(result.length>decodedLimit)fail('capacity');
+    cursor = end + 2;
+   }
+   // A truncated reserved prefix must not be rendered as an unfinished marker.
+   for (let size = 1; size < PREFIX.length; size++) if (request.text.endsWith(PREFIX.slice(0,size))) fail('unknown_marker');
+   if (result.length > decodedLimit) fail('capacity');
+   return result;
+ };
  const api = {
   protect(input) {
    const request = clone(input);
@@ -116,27 +140,9 @@ export function createPseudonymStore() {
    matters.set(key,state);
    return {messages,mappingVersion:state.activeVersion,provenance:request.provenance ?? null};
   },
-  restore(input) {
-   const request = clone(input);
-   if (!keys(request,['scope','text','mappingVersion']) || typeof request.text !== 'string' || request.text.length > MAX_RESPONSE) fail('invalid_request');
-   const state = active(request.scope,request.mappingVersion), entries = state.versions.get(state.activeVersion);
-   const byMarker = new Map(entries.map(entry => [entry.marker,entry.text]));
-   let cursor = 0, result = '';
-   while (cursor < request.text.length) {
-    const start = request.text.indexOf(PREFIX,cursor);
-    if (start === -1) { result += request.text.slice(cursor); break; }
-    result += request.text.slice(cursor,start);
-    const end = request.text.indexOf(']]',start + PREFIX.length);
-    if (end === -1) fail('unknown_marker');
-    const marker = request.text.slice(start,end + 2);
-    if (!byMarker.has(marker)) fail('unknown_marker');
-    result += byMarker.get(marker); cursor = end + 2;
-   }
-   // A truncated reserved prefix must not be rendered as an unfinished marker.
-   for (let size = 1; size < PREFIX.length; size++) if (request.text.endsWith(PREFIX.slice(0,size))) fail('unknown_marker');
-   if (result.length > MAX_RESPONSE) fail('capacity');
-   return result;
-  },
+  restore(input) {return decode(input,MAX_RESPONSE,MAX_RESPONSE);},
+  // Only local, checksum-verified input documents use this larger limit.
+  restoreReviewedDocument(input) {return decode(input,token('0'.repeat(32),'0'.repeat(32)).length*maxIntakeChars,maxIntakeChars);},
   async *restoreStream({scope,mappingVersion,chunks,signal}) {
    if (signal !== undefined && !(signal instanceof AbortSignal)) fail('invalid_request');
    const checkAbort = () => { if (signal?.aborted) fail('cancelled'); };

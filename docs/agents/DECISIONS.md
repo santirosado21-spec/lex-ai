@@ -189,3 +189,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 21:12 — codex — Conservar el punto técnico completo y el intervalo documental pendiente
 
 **Por qué:** La excepción del punto 156 de AD_29-24 incluye uso y varias características. Una cita corta puede omitir tolerancias decisivas. La preliminar sólo fija cuatro meses; los tres actos cotejados no resuelven todos los días hasta la definitiva. Se conserva el texto de la fuente y el cotejo temporal local al exportar.
+
+## 2026-11-19 22:41 — codex — Conservar el texto libre del informe en el equipo
+
+**Por qué:** La reserva inédita de seis documentos dejó visible un acontecimiento local. El expediente recupera sus soportes al exportar y sólo ofrece al proveedor pasajes públicos o hechos de práctica verificados.

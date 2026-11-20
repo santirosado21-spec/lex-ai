@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 21:13 por codex: Seis documentos nuevos miden protección y pérdida de contexto en r20
+**Última actualización:** 2026-11-19 22:41 por codex: Piloto r21 de Rejon y seguimiento oficial SNICE
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,10 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r21 permite cancelar la lectura local, revisar escritos de hasta 60 000 caracteres por bloques y elegir soportes por número de línea o por texto. El ZIP se probó en este Mac con un informe ficticio de 11 726 caracteres, tres solicitudes simuladas, seis archivos de Office y tres reaperturas. La reserva inédita ocultó 6/6 identificadores y 5/6 indicios, y conservó 7/8 expresiones técnicas. La suite pasó con 1 451 pruebas y diez omitidas con antiword disponible. Ver `artifacts/privacidad-r21/`.
+
+- El histórico oficial del SNICE produjo 843 filas fechadas y una fila pendiente. En 814 filas se reconoció al menos un código DOF. Las tres coincidencias literales de perfiles y barras de aluminio tienen los códigos publicados para AD_29-24. El índice es de descubrimiento y necesita verificación normativa. Ver `scripts/index-snice-publications.py` y `docs/research/defensa-comercial-AD_29-24.md`.
 
 - Una nueva evaluación de privacidad de r20 con seis textos ficticios restituyó los seis y cubrió las seis apariciones de folios. Ocultó cinco de seis indicios y dejó íntegras cuatro de diez expresiones útiles. Cero líneas habilitadas para la nube. Ver `eval/privacy-trade/expedientes-defensa-r20.json` y `artifacts/defensa-r20/medicion-privacidad.json`.
 
@@ -86,7 +90,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Separar la ocultación de un entorno distintivo de los hechos sobre tratamiento, dureza, rectitud y comprobantes. Identificar en qué paso se pierden y medir cambios contra ejemplos inéditos usando el importador local. Las solicitudes de la práctica seguirán conservando la evidencia libre en el equipo.
+- Medir la identificación indirecta por acontecimientos locales en otra reserva inédita, con revisión humana de los hechos técnicos. Verificar la cuenta real de Lorenzo y el recorrido en los equipos físicos de los socios. El inventario de SNICE requiere cotejar cambios con el cuerpo del DOF y fechas de la operación.
 
 - Para AD_29-24, buscar actos intermedios y posteriores y validar las exclusiones con un abogado. Medir la conservación de características técnicas y la ocultación de indicios en nuevos documentos de defensa comercial antes de ampliar el contenido libre que puede salir del equipo.
 
