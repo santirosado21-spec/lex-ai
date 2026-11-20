@@ -1,0 +1,28 @@
+[
+  {
+    "sha256": "b8080a8dcc23c107dfe3c06e391f09ac72d2c21bd88945197894194e541e15e8",
+    "private": [
+      "OCE-41857"
+    ],
+    "cells": [
+      "B2",
+      "B3"
+    ],
+    "question": "¿Qué debe aclararse sobre los productores del folio OCE-41857 conforme al numeral 4 del Anexo 5-A del T-MEC?",
+    "fileSha256": "2ca3a9205790eef62cca542025e91cb44b6d2779362357b8303c2d5a5d12b3ee",
+    "questionStem": "¿Qué debe aclararse sobre los productores del folio OCE-41857"
+  },
+  {
+    "sha256": "8cac452195fbb859fa656e8040170226da77cd0a73876e890ea068fffea219ee",
+    "private": [
+      "OCE-63942"
+    ],
+    "cells": [
+      "B2",
+      "B3"
+    ],
+    "question": "¿Qué debe aclararse sobre los productores del folio OCE-63942 conforme al numeral 4 del Anexo 5-A del T-MEC?",
+    "fileSha256": "a13fe352b87c9e32967e6e0224820c8d4e96cb02f8daad86c9004319f0db7e3f",
+    "questionStem": "¿Qué debe aclararse sobre los productores del folio OCE-63942"
+  }
+]

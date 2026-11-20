@@ -23,7 +23,7 @@ type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type SupportLine={line:number;excerpt:string;sourceId?:string;sourceLabel?:string};
 type TaskInfo = {
-  id: Task; reservationConflict?:boolean; parent?:Task; usesFacts?:boolean;aliasedQuestion?:boolean;publicQuestion?:string;localLines?:number; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
+  id: Task; compareProducers?:boolean; reservationConflict?:boolean; parent?:Task; usesFacts?:boolean;aliasedQuestion?:boolean;publicQuestion?:string;localLines?:number; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
   comparison?:{subject:string;group?:string;archived?:boolean;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
@@ -272,7 +272,7 @@ export default function IntakePilot() {
         {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
           {pilot?.protectedRecords&&<IntakeReservations count={pilot.reservationCount??0} disabled={busy||editText!==null} onSave={async(action,payload)=>setPilot(await api<PilotStatus>(action,payload))}/>}
-          {pilot?.protectedRecords&&<IntakeSourceFiles sources={pilot.sources??[]} pair={pilot.comparisonPair??null} disabled={busy||editText!==null}
+          {pilot?.protectedRecords&&<IntakeSourceFiles onAsk={text=>setArticleInquiry({text})} sources={pilot.sources??[]} pair={pilot.comparisonPair??null} disabled={busy||editText!==null}
            onSave={async(reviewId,label)=>{const result=await api<{status:PilotStatus;duplicate:boolean}>('intake.addSource',{reviewId,label});setPilot(result.status);setRestored('');return result.duplicate;}}
            onCompare={async ids=>{
             const next=await api<PilotStatus>('intake.compareSources',{ids});
@@ -321,7 +321,7 @@ export default function IntakePilot() {
             <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>
                {activeTask.publicQuestion&&<blockquote className="rp-outgoing-question"><MarkedText text={activeTask.publicQuestion}/></blockquote>}
                {activeTask.aliasedQuestion===false&&<p className="rp-reading-summary">La pregunta original se recupera en tu equipo. OpenAI recibe el enfoque jurídico y las referencias que aparecen en el mensaje.</p>}
-               {activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):activeTask.localLines&&!activeTask.usesFacts?'La consulta contiene el pasaje y el enfoque jurídico. Las líneas seleccionadas se incorporan al recuperar los datos en tu equipo.':activeTask.aliasedQuestion?'OpenAI recibirá tu pregunta con las referencias sustituidas, las líneas de práctica elegidas y el fundamento jurídico.':activeTask.usesFacts?'La consulta incluye el pasaje jurídico y los hechos de práctica que elegiste. Puedes revisar el envío completo.':'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
+               {activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):activeTask.compareProducers?'OpenAI recibirá el numeral público y tres hipótesis. Las cantidades y el resultado del cotejo se calculan en este equipo.':activeTask.localLines&&!activeTask.usesFacts?'La consulta contiene el pasaje y el enfoque jurídico. Las líneas seleccionadas se incorporan al recuperar los datos en tu equipo.':activeTask.aliasedQuestion?'OpenAI recibirá tu pregunta con las referencias sustituidas, las líneas de práctica elegidas y el fundamento jurídico.':activeTask.usesFacts?'La consulta incluye el pasaje jurídico y los hechos de práctica que elegiste. Puedes revisar el envío completo.':'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
                 {activeTask.usesFacts&&Boolean(activeTask.localLines)&&<p>Las líneas marcadas «Sólo en este equipo» se añadirán al exportar.</p>}
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}

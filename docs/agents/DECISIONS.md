@@ -221,3 +221,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 23:52 — codex — Conservar las celdas aportadas por el abogado en su equipo
 
 **Por qué:** En los documentos de Excel se revisan los valores visibles y los resultados guardados con su dirección. El archivo original se conserva cifrado cuando se adjunta al expediente. El proveedor recibe una consulta reconstruida desde la fuente pública. La muestra de empaque sigue presentando riesgo de identificación indirecta.
+
+## 2026-11-20 00:07 — codex — Cotejar cantidades de hojas propias en el equipo
+
+**Por qué:** La misma petición con tres supuestos públicos sirve para las tres respuestas posibles. El expediente conserva los valores, la selección y la recomendación aplicable. Los libros de práctica con hechos habilitados para nube se acreditan por huellas y lectura local.

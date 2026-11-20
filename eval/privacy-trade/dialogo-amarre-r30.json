@@ -1,0 +1,49 @@
+{
+  "case": "amarre-sintetico-r30",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "certificado",
+      "text": "Folio: EX-2024-98765. Se certifica que el lote de aguacate Hass, proveniente de Michoacán, cumple con las normativas fitosanitarias mexicanas vigentes. Se constata que el envío incluye productos de al menos veinte productores registrados y que la documentación soporta la trazabilidad completa desde el huerto hasta el puerto. Este documento avala la calidad y origen legal de la mercancía para su exportación.",
+      "private": [
+        "EX-2024-98765"
+      ],
+      "clues": [
+        "proveniente de Michoacán"
+      ],
+      "facts": [
+        "lote de aguacate Hass",
+        "al menos veinte productores registrados",
+        "documentación soporta la trazabilidad completa"
+      ]
+    },
+    {
+      "kind": "bitacora",
+      "text": "Folio: EX-2024-98765. El embarque fue cargado en el muelle 4, observándose que la carga estaba apilada en contenedores refrigerados con un patrón de amarre distintivo de malla azul. Durante la inspección, se registró un incidente menor: un camión de reparto local tuvo que detenerse brevemente debido a la caída de un poste de luz en la avenida adyacente al puerto.",
+      "private": [
+        "EX-2024-98765"
+      ],
+      "clues": [
+        "muelle 4",
+        "patrón de amarre distintivo de malla azul",
+        "caída de un poste de luz en la avenida adyacente al puerto"
+      ],
+      "facts": [
+        "contenedores refrigerados"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "Folio: EX-2024-98765. ¿Podría confirmar si la constancia de origen emitida corresponde a un volumen superior a cien toneladas métricas, considerando la diversidad de productores involucrados?",
+      "private": [
+        "EX-2024-98765"
+      ],
+      "clues": [],
+      "facts": [
+        "constancia de origen emitida",
+        "volumen superior a cien toneladas métricas",
+        "diversidad de productores involucrados"
+      ]
+    }
+  ]
+}

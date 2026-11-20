@@ -8,6 +8,15 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
  const picker=useRef<HTMLInputElement>(null);
  const reading=useRef<AbortController|null>(null);
  useEffect(()=>()=>{reading.current?.abort();},[]);
+ const [reader,setReader]=useState<'checking'|'ready'|'missing'|'offline'|'unknown'>('checking');
+ const [check,setCheck]=useState(0);
+ useEffect(()=>{
+  const controller=new AbortController();setReader('checking');
+  api<{state:'ready'|'missing'|'offline'|'unknown'}>('intake.readerStatus',{},controller.signal)
+   .then(result=>{if(!controller.signal.aborted)setReader(result.state);})
+   .catch(()=>{if(!controller.signal.aborted)setReader('unknown');});
+  return ()=>controller.abort();
+ },[check]);
  const [spreadsheet,setSpreadsheet]=useState(false);
  const [preview,setPreview]=useState('');
  const [protection,setProtection]=useState<Protection>();
@@ -56,7 +65,11 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
   <button type="button" className="secondary" disabled={busy} onClick={()=>picker.current?.click()}><FileInput size={16} aria-hidden="true"/> Leer documento ficticio en este equipo</button>
   {ciphered&&<button type="button" className="rp-quiet" disabled={busy} onClick={()=>void inspect()}>Crear documento de práctica</button>}
   {busy&&reading.current&&<button type="button" className="rp-quiet" onClick={()=>reading.current?.abort()}>Cancelar lectura</button>}
-  <small>PDF, Word, Excel (.xlsx) o texto · hasta 60 000 caracteres · requiere Ollama local</small>
+  <small>PDF, Word, Excel (.xlsx) o texto · hasta 60 000 caracteres</small>
+  <div className="rp-reader-status" aria-live="polite">{reader==='ready'?<small>Lector local instalado · Ollama disponible</small>:
+   reader==='checking'?<small>Comprobando el lector de este equipo…</small>:<>
+    <small>{reader==='offline'?'Abre Ollama en este equipo para leer archivos.':reader==='missing'?<>Instala el lector en Ollama con <code>ollama pull qwen3.5:2b-q4_K_M</code>.</>:'Ollama no pudo confirmar los modelos disponibles.'}</small>
+    <button type="button" className="rp-quiet" disabled={busy} onClick={()=>setCheck(n=>n+1)}>Volver a comprobar el lector</button></>}</div>
   {spreadsheet&&<small>Excel muestra los valores de celdas visibles con su hoja y dirección. Las fórmulas usan el resultado guardado. Comentarios, imágenes y celdas ocultas quedan fuera de esta lectura.</small>}
   {protection?.available&&<details className="rp-private-review"><summary>Revisar protección local · {protection.count} sustituciones</summary>
    <p>Comprueba nombres, direcciones e identificadores que sigan visibles. {attachment?'El archivo y el texto revisado se guardan en el expediente cifrado.':'Puedes conservar el texto en el expediente cifrado al guardar el alta.'}</p>

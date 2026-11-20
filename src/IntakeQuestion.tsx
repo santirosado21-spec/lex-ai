@@ -14,7 +14,7 @@ const contextText:Record<Context['state'],string>={
  domestic:'Hay una mención de trabajo nacional o de una salida que no se realizó. Comprueba el lugar de la intervención.',
 };
 type Review={id:string;context?:Context|null;permit?:PermitHint;sources?:{id:string;label:string}[];facts?:{id:string;text:string;label:string;line:number}[];masked:string;count:number;suggestedAngle:string;candidates:{key:string;citationId:string;label:string;locator:string;text:string;partial:boolean}[]};
-export type QuestionSelection={reviewId:string;key:string;angle:string;secondKey?:string;factIds?:string[]};
+export type QuestionSelection={reviewId:string;key:string;angle:string;secondKey?:string;factIds?:string[];compareProducers?:true};
 
 export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRevision,articleInquiry}:{articleInquiry?:{text:string};disabled:boolean;reservationRevision:number;onPermit:(selection:PermitSelection,reviewId:string)=>Promise<void>;onSelect:(selection:QuestionSelection)=>Promise<void>}){
  const [open,setOpen]=useState(false),[question,setQuestion]=useState('');
@@ -68,10 +68,10 @@ export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRe
   }catch(e){setError(e instanceof Error?e.message:'No se pudo buscar con los soportes.');}
   finally{setBusy(false);}
  }
- async function choose(){
+ async function choose(producerLines?:string[]){
   if(!review)return;
   setBusy(true);setError('');
-  try{await onSelect({reviewId:review.id,key,angle,...(secondKey?{secondKey}:{}),...(factIds.length?{factIds}:{})});setOpen(false);setQuestion('');setReserved([]);setSelection('');setReview(null);}
+  try{await onSelect({reviewId:review.id,key,angle,...(secondKey?{secondKey}:{}),...(producerLines?{compareProducers:true,factIds:producerLines}:factIds.length?{factIds}:{})});setOpen(false);setQuestion('');setReserved([]);setSelection('');setReview(null);}
   catch(cause){setError(cause instanceof Error?cause.message:'No se pudo preparar el mensaje.');}
   finally{setBusy(false);}
  }
@@ -119,7 +119,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRe
     <p>Elige afirmaciones de la misma operación para que OpenAI las considere. Los nombres de los documentos y sus líneas se conservan en tu equipo.</p>
     {review.facts?.map(fact=><label key={fact.id}><input type="checkbox" checked={factIds.includes(fact.id)} disabled={disabled||busy||(!factIds.includes(fact.id)&&factIds.length>=4)} onChange={e=>setFactIds(e.target.checked?[...factIds,fact.id]:factIds.filter(id=>id!==fact.id))}/><span>{fact.text}<small>{fact.label} · línea {fact.line}</small></span></label>)}
    </fieldset>}
-   <IntakeQuestionLines reviewId={review.id} sources={review.sources??[]} selected={factIds} disabled={busy||disabled} onChange={setFactIds}/>
+   <IntakeQuestionLines onCompareProducers={candidate?.citationId==='TMEC-5A-4'&&!secondKey&&!stale?ids=>void choose(ids):undefined} reviewId={review.id} sources={review.sources??[]} selected={factIds} disabled={busy||disabled} onChange={setFactIds}/>
    {lineIds.length>0&&<button type="button" className="rp-quiet" disabled={busy||disabled} onClick={()=>void refine()}><FileSearch size={15}/>Buscar fundamentos con las líneas elegidas</button>}
    {stale&&<p role="status">Cambiaste los soportes. Repite la búsqueda con las líneas actuales o con la pregunta sola.</p>}
    <label htmlFor="rp-question-angle">Enfoque jurídico<select id="rp-question-angle" disabled={busy||disabled} value={angle} onChange={e=>setAngle(e.target.value)}><option value="requisitos">Requisitos para aplicar la disposición</option><option value="excepciones">Excepciones y condiciones de aplicación</option><option value="documentos">Documentos para acreditar los hechos</option></select></label>

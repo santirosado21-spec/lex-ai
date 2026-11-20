@@ -260,3 +260,11 @@
 .rp-origin-annex blockquote{margin:.65rem 0 0;max-width:70ch;line-height:1.65;overflow-wrap:anywhere}
 .rp-origin-annex .rp-actions{align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
 .rp-origin-annex>small{display:block;color:var(--rp-ink);line-height:1.5}
+
+.rp-producer-comparison{margin-top:1rem;border-top:1px solid var(--rp-line);padding-top:1rem;min-width:0}
+.rp-producer-comparison h4{margin:0;color:var(--rp-ink);font-size:1.05rem}
+.rp-producer-comparison select{width:100%;max-width:100%}
+.rp-producer-comparison p{overflow-wrap:anywhere}
+
+.rp-reader-status{display:flex;align-items:center;gap:.4rem .8rem;flex-wrap:wrap}
+.rp-reader-status code{overflow-wrap:anywhere}

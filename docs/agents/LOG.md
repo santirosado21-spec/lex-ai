@@ -419,3 +419,7 @@ PDF oficial idéntico al archivo empaquetado. Dos extractores cotejaron 282 art�
 ## 2026-11-19 23:52 — codex — Rejon r29: Anexo 5-A y celdas Excel en el expediente
 
 Se integraron los nueve numerales del anexo del capítulo 5 y su PDF oficial. Poppler y PDF.js coincidieron en las nueve extracciones. Una consulta pública real usó 335 tokens de entrada y 100 de salida. Un libro sintético se restituyó byte a byte. Se verificaron dos recorridos desde el ZIP y seis exportaciones en LibreOffice. Suite de 1473 aprobadas y diez omitidas. En otro expediente de empaque el lector local cubrió sólo uno de cuatro indicios. Pendientes la prueba de los socios, la segunda cuenta real, Windows y 8 GB.
+
+## 2026-11-20 00:08 — codex — Piloto privado r30.1 de Rejon para certificaciones de origen
+
+Cinco solicitudes reales con material ficticio o público y la clave principal. En el ZIP del piloto se reabrieron cinco asuntos y se cotejaron quince exportaciones con LibreOffice. Suite con 1477 aprobadas y diez omitidas. Respaldo con dos claves simuladas. En la muestra inédita se cubrieron dos de cuatro indicios y se conservaron tres de siete hechos. Revisión humana y segunda cuenta real pendientes. Detalle en docs/qa/cotejo-productores-r30.md.

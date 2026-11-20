@@ -1,3 +1,4 @@
+import {certifiedWorkbook} from './corpus/practice-workbook.mjs';
 import {tradeDocumentAnchorValues} from './privacy/trade-document-structure.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {bindReviewedDocument,openReviewedDocument} from './privacy/intake-document-map.mjs';
@@ -10,8 +11,10 @@ export function caseSources(intake){
  if(!intake?.document)return [];
  return [{...(intake.primarySource??{id:'principal',label:primaryLabels[intake.documentKind]??'Soporte inicial'}),document:intake.document},...(intake.supports??[])];
 }
-export function sourceSummary({id,label,extension,byteHash}){
- return {id,label,extension:extension??null,hasFile:Boolean(byteHash)};
+export function sourceSummary(source){
+ const {id,label,extension,byteHash}=source;
+ const certificate=certifiedWorkbook(source);
+ return {id,label,extension:extension??null,hasFile:Boolean(byteHash),...(certificate?{practiceQuestion:certificate.question}:{})};
 }
 export function knownParties(saved){
  return [saved.firm.name,saved.entry.client,saved.entry.title,saved.intake.supplier,
@@ -27,7 +30,7 @@ export function addCaseSource(store,saved,review,label){
  const duplicate=sources.find(row=>row.byteHash===byteHash);
  if(duplicate)return {id:duplicate.id,duplicate:true};
  const document=bindReviewedDocument(review.protection,firm.id,entry.id);
- const info={id:randomUUID(),label:label.trim(),byteHash,extension:review.extension};
+ const info={id:randomUUID(),label:label.trim(),byteHash,extension:review.extension,...(review.extension==='xlsx'?{contextComplete:!review.protection.contextUnavailable}:{})};
  const original={id:info.id,matterId:entry.id,workspaceId:firm.id,base64:review.base64};
  store.put('intake-source',original);
  const next=intake.document?{supports:[...(intake.supports??[]),{...info,document}]}:

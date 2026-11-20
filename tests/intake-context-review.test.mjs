@@ -100,3 +100,10 @@ test('origin review separates visible technical composition from marked and rese
  const field=await reviewIntakeDocument({text,originalHash:'c'.repeat(64),suggestions:[],fields:['Fibra de vidrio']});
  assert.ok(!field.parts.map(p=>p.text??'***').join('').includes('Fibra de vidrio'));
 });
+
+test('a visual emblem can identify a shipment while the reason for a legal ruling remains readable',async()=>{
+ const {originContextRanges}=await import('../server/privacy/origin-evidence.mjs');
+ const text='El motivo de la resolución fue la falta de pruebas. El perito anotó el emblema de las golondrinas blancas.';
+ const spans=originContextRanges(text).map(([a,b])=>text.slice(a,b));
+ assert.deepEqual(spans,['emblema de las golondrinas blancas']);
+});

@@ -1,3 +1,4 @@
+import {certifiedWorkbook,workbookCellParts} from './practice-workbook.mjs';
 import {reservedRanges} from '../privacy/matter-reservations.mjs';
 // Project the stored substitutions onto original line offsets, including multiline masks.
 // Per-document proof is checked before the result can supply synthetic cloud context.
@@ -66,6 +67,12 @@ export function questionLines(saved,sourceId,transient){
   }
   if(cursor<end)slices.push([cursor,end]);
  }
+ const workbook=certifiedWorkbook(selected);
+ const workbookCovered=workbook?.private.every(value=>{
+  let found=false,covered=true;
+  occurrences(original,value,(a,b)=>{found=true;covered&&=merged.some(([first,last])=>first<=a&&last>=b);});
+  return found&&covered;
+ });
  const certified=certificates.get(sha(original.split('\n').filter(s=>s.trim()).join('\n')));
  let attested=Boolean(certified);
  for(const value of certified??[]){
@@ -86,10 +93,11 @@ export function questionLines(saved,sourceId,transient){
   const masked=parts.map(p=>p.text??(p.token?'〔Dato '+numbers.get(p.value)+'〕':'〔Dato oculto〕')).join('');
   const visible=parts.map(p=>p.text??' ').join(' ');
   // Keep identity fields and entirely masked lines available for local use.
-  const cloud=attested&&text.length<=420&&!/^[^.!?]{1,45}:/.test(text)&&
+  const cell=workbookCovered?workbookCellParts(workbook,text,parts):null;
+  const cloud=Boolean(cell)||attested&&text.length<=420&&!/^[^.!?]{1,45}:/.test(text)&&
    (visible.match(/\p{L}{2,}/gu)?.length??0)>=3;
   if(text.trim())lines.push({id:'line:'+selected.id+'/'+(n+1)+'-'+sha(JSON.stringify([parts,cloud])).slice(0,20),
-   masked,cloud,parts,evidence:{sourceId:selected.id,sourceLabel:'Documento '+(index+1)+' · '+selected.label,line:n+1,excerpt:text}});
+   masked,cloud,parts,...(cell?{cell}:{}),evidence:{sourceId:selected.id,sourceLabel:'Documento '+(index+1)+' · '+selected.label,line:n+1,excerpt:text}});
   start=end+1;
  }
  return lines;

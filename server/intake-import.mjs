@@ -1,3 +1,4 @@
+import {readerModel} from './privacy/local-reader-status.mjs';
 import {reservedRanges} from './privacy/matter-reservations.mjs';
 import {describesEquipmentReturn} from './privacy/trade-document-structure.mjs';
 import {intakeWindows} from './privacy/intake-windows.mjs';
@@ -41,7 +42,7 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
   const deadline=AbortSignal.timeout(120000),combined=signal?AbortSignal.any([signal,deadline]):deadline;
   const result=await fetchImpl('http://127.0.0.1:11434/api/chat',{
    method:'POST',redirect:'error',signal:combined,headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({model:'qwen3.5:2b-q4_K_M',stream:false,think:false,format,keep_alive:'30s',
+   body:JSON.stringify({model:readerModel,stream:false,think:false,format,keep_alive:'30s',
     options:{temperature:0,num_predict:numPredict,num_ctx:8192},messages:[{role:'system',content:system},{role:'user',content:input}]}),
   });
   if(!result.ok)throw Error();

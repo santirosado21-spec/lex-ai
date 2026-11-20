@@ -5,9 +5,10 @@ import {api} from './api';
 const fold=(s:string)=>s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
 type Source={id:string;label:string};
 type Row={id:string;text:string;cloud:boolean;label:string;line:number};
-type Props={reviewId:string;sources:Source[];selected:string[];disabled:boolean;onChange:(ids:string[])=>void};
-export default function IntakeQuestionLines({reviewId,sources,selected,disabled,onChange}:Props){
+type Props={onCompareProducers?:(ids:string[])=>void;reviewId:string;sources:Source[];selected:string[];disabled:boolean;onChange:(ids:string[])=>void};
+export default function IntakeQuestionLines({reviewId,sources,selected,disabled,onChange,onCompareProducers}:Props){
  const [open,setOpen]=useState(false),[source,setSource]=useState(sources[0]?.id??'');
+ const [certification,setCertification]=useState('');
  const [page,setPage]=useState(0),[filter,setFilter]=useState('');
  const [cache,setCache]=useState<Record<string,Row[]>>({}),[busy,setBusy]=useState(false),[error,setError]=useState('');
  async function load(id:string){
@@ -23,6 +24,10 @@ export default function IntakeQuestionLines({reviewId,sources,selected,disabled,
  const matches=term?rows.filter(r=>num?r.line===Number(num[1]):fold(r.text).includes(term)):rows;
  const visible=matches.slice(start,start+pageSize),onPage=new Set(visible.map(row=>row.id));
  const hiddenSelected=Object.values(cache).flat().filter(row=>!onPage.has(row.id)&&selected.includes(row.id));
+ const chosen=Object.values(cache).flat().filter(row=>selected.includes(row.id));
+ const certificate=chosen.find(row=>row.id===certification);
+ const register=chosen.find(row=>row.id!==certification);
+ const describe=(row:Row)=>row.label+' · línea '+row.line+' · '+row.text;
  return <section className="rp-question-lines">
   <button type="button" className="rp-quiet" aria-expanded={open} disabled={disabled||busy} onClick={()=>{setOpen(!open);if(!open)void load(source);}}><FileText size={15}/>Elegir líneas de mis documentos</button>
   {open&&<fieldset className="rp-question-facts rp-reveal"><legend>Soportes para esta nota</legend>
@@ -41,6 +46,14 @@ export default function IntakeQuestionLines({reviewId,sources,selected,disabled,
     <small>{start+1}–{Math.min(start+pageSize,matches.length)} de {matches.length}</small>
     <button type="button" className="rp-quiet" disabled={busy||disabled||start+pageSize>=matches.length} onClick={()=>setPage(page+1)}>Siguientes</button>
    </nav>}
+   {onCompareProducers&&selected.length===2&&chosen.length===2&&<div className="rp-producer-comparison">
+    <h4>Cotejar productores en este equipo</h4>
+    <p>Elige dos líneas de la misma operación con la cantidad declarada. Las dos líneas permanecen en tu equipo. OpenAI prepara tres recomendaciones y Rejon selecciona la que corresponde a las cantidades.</p>
+    <label htmlFor="rp-certification-line">Línea de la certificación</label><select id="rp-certification-line" value={certificate?.id??''} disabled={disabled||busy} onChange={e=>setCertification(e.target.value)}>
+     <option value="">Elige la certificación</option>{chosen.map(row=><option key={row.id} value={row.id}>{describe(row)}</option>)}</select>
+    {certificate&&register&&<p>Línea del registro · {describe(register)}</p>}
+    <button type="button" className="rp-quiet" disabled={!certificate||!register||busy||disabled} onClick={()=>{if(certificate&&register)onCompareProducers([certificate.id,register.id]);}}>Preparar cotejo de cantidades</button>
+   </div>}
   </fieldset>}
  </section>;
 }

@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 23:52 por codex: decisión — Conservar las celdas aportadas por el abogado en su equipo
+**Última actualización:** 2026-11-20 00:08 por codex: Piloto privado r30.1 de Rejon para certificaciones de origen
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r30.1 permite cotejar en el equipo las cantidades de productores en dos celdas elegidas por el abogado. Tres libros propios ficticios produjeron la misma solicitud pública y tres resultados locales distintos. En dos certificaciones de práctica el modelo de nube citó ambos soportes y el equipo restituyó el folio. [Ejercicios, mediciones y límites](../qa/cotejo-productores-r30.md).
 
 - r29 incorpora el capítulo 5 del T-MEC y sus nueve elementos del Anexo 5-A, matrices XLSX con dirección de celda y un caso ficticio de productor. En OpenAI se verificó un envío público con la clave principal y la restitución local de dos celdas. En el ZIP se reabrieron dos notas y se imprimieron seis archivos. Suite de 1 473 aprobadas y diez omitidas. [Medición y fuentes](../qa/origen-matriz-r29.md).
 
@@ -108,7 +110,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Prioridad de privacidad: en el caso de origen usado para desarrollar r29 se ocultaron 5/5 indicios. En un expediente adicional de empaque sólo se ocultó 1/4 y se conservaron 5/7 hechos. Revisar cómo el modelo trata una descripción física e indirecta repetida con otras palabras. Preparar otra muestra antes del siguiente cambio. Las celdas de hojas propias y cualquier texto libre siguen en el equipo.
+- Prioridad de privacidad. La muestra de empaque usada en desarrollo pasó a 4/4 indicios cubiertos. En el expediente nuevo de amarre e incidencia vial se cubrieron 2/4 indicios y se conservaron 3/7 hechos. Preparar otro expediente ficticio antes de modificar el detector. Medir por separado la ocultación de sucesos y procedencias, y la conservación de los hechos técnicos. El cotejo de hojas propias mantiene las dos celdas, sus cantidades y el resultado en el equipo.
 - Prioridad jurídica: medir en asuntos inéditos cómo responde a preguntas con varias obligaciones o excepciones del mismo artículo. Ampliar el cotejo del reglamento con reglas, disposiciones transitorias y cambios de vigencia por fecha de operación. La autoridad profesional y las pruebas en las cuentas y equipos de los socios siguen pendientes.
 
 - Medir en expedientes ficticios inéditos si se identifican operaciones con folios compartidos, referencias cruzadas y descripciones indirectas del equipo. Obtener cotejo jurídico de socios, probar el respaldo con su cuenta real y completar la actualización de las fuentes prioritarias por fecha de operación.

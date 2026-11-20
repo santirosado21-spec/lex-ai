@@ -1,5 +1,7 @@
 # Perfil de comercio internacional: del becario al asociado y cobertura de Rejon (2026-11-18)
 
+**Actualización del piloto local al 20 de noviembre.** El inventario del 18 de noviembre que aparece abajo conserva el estado de aquella revisión. Desde entonces, el piloto incorporó un índice por artículo de la Ley Aduanera, búsqueda en su Reglamento y el capítulo 5 del T-MEC. El ejercicio de certificación permite cotejar dos soportes, revisar la cita y recuperar la nota en Office. La evaluación de vigencia para una operación concreta y las reglas de origen específicas de cada producto siguen pendientes. [Ley Aduanera](../research/retorno-reparacion-aduana.md) · [Reglamento](reglamento-aduanero-completo-r28.md) · [Certificación de origen](cotejo-productores-r30.md).
+
 Origen: nota de voz del usuario (8:36): enfocar Rejon en comercio internacional, cubriendo tareas de becario a asociado. El nombre del despacho se conserva como transcrito ("DLA"); no se resolvió ni se investigó su identidad.
 
 Alcance y límites: es un mapa de trabajo, no una validación. Las tareas salen de páginas públicas de despachos mexicanos y perfiles profesionales (fuentes al final); no son una descripción del despacho del usuario ni de su práctica. No se midió ninguna capacidad de Rejon en estas tareas con un modelo real: lo que sigue compara lo que existe en el código y la biblioteca con lo que el trabajo exige. Revisión, redacción y los demás flujos no son excluyentes.
