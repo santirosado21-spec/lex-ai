@@ -218,3 +218,9 @@
 .rp-permit .rp-permit-timing{font-weight:600;margin:0 0 .6rem}
 .rp-permit-verdict details{margin:.75rem 0}
 .rp-permit details summary{cursor:pointer}
+.rp-question .rp-permit{margin:1rem 0}
+.rp-question .rp-permit h2{font-size:clamp(1.6rem,4vw,2.15rem)}
+.rp-question .rp-permit form{display:flex}
+.rp-permit-support{margin:.9rem 0;border-block:1px solid var(--rp-line);padding:.7rem 0}
+.rp-permit-support label{margin:.65rem 0}
+.rp-permit-support select{width:100%;min-width:0}

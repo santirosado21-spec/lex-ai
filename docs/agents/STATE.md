@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 20:51 por codex: Rejon r18 coteja las claves del pedimento y conserva el periodo correcto en Office
+**Última actualización:** 2026-11-19 21:02 por codex: decisión — Confirmar la mercancía para C1 de Economía y la fecha documental para el cotejo
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r19 abre el cotejo del pedimento desde una pregunta y conserva la línea documental de la fecha, la clave, el régimen y la fracción con NICO. En Chromium se probaron dos fechas, cuatro anchos y la reapertura. Las dos solicitudes reprodujeron exactamente la misma llamada pública de r18. LibreOffice abrió e imprimió los seis archivos de ambos recorridos, también desde el ZIP. Lanzador macOS con cuentas simuladas. Suite JS con 1,445 aprobadas y diez omitidas. Evidencia en `artifacts/pregunta-r19/`.
 
 - r18 integra el apéndice 9 del Anexo 22 en el piloto local. Se cotejaron las 39 descripciones y su página física con dos extractores. Se capturaron las fechas de captura y declaración de aluminio y azúcar y las tablas de 47 y 12 pares de fracción y NICO. En la segunda de dos llamadas reales, OpenAI redactó las opciones por periodo y el equipo eligió la de captura para el 21 de mayo. La prueba verificó tres exportaciones, cuatro anchos, movimiento reducido, reapertura del expediente y el ZIP en este Mac. Suite JS con 1442 aprobadas y 10 omitidas. Evidencia en `artifacts/pedimento-r18/`.
 
@@ -78,7 +80,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Conectar la pregunta libre del abogado con fuentes por fecha, autoridad y mercancía. Medir en expedientes ficticios inéditos si la protección local preserva los hechos y las relaciones entre partes necesarios para una conversación de varias vueltas. Revisar la respuesta frente a los documentos con un abogado independiente. Para los equipos de los socios y la segunda cuenta real sigue pendiente la prueba física.
+- Ampliar el cotejo por fecha, autoridad y mercancía a otros supuestos y probar preguntas con operaciones múltiples. Medir en expedientes ficticios inéditos si la protección local preserva los hechos y las relaciones entre partes necesarios para una conversación de varias vueltas. Revisar la respuesta frente a los documentos con un abogado independiente. Para los equipos de los socios y la segunda cuenta real sigue pendiente la prueba física.
 
 - Evaluar en documentos nuevos los indicios formados por oficina, turno y otras circunstancias compartidas. Recoger un juicio independiente de abogados sobre hechos jurídicos ocultos y riesgo de reidentificación. Para continuar el corpus de pedimentos, cotejar los transitorios de otros apéndices y probar con nuevas operaciones el alcance de las claves del apéndice 9.
 

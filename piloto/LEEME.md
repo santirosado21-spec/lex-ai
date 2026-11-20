@@ -13,6 +13,16 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Primera prueba con los socios · dos fechas para un mismo pedimento
+
+1. Crea un ejercicio ficticio con el cliente **Forja de Ensayo**. Desde **Documentos del expediente** añade por separado `piloto/pedimento-aluminio-ficticio.txt` y `piloto/rectificacion-aluminio-ficticia.txt`. Dales los nombres **Ficha comercial** y **Rectificación de muestra**.
+2. Abre **Consultar con una pregunta propia**. Escribe «¿Qué aviso de aluminio debe revisar Forja de Ensayo en el pedimento del folio QRA-88277?» y pulsa **Buscar fundamentos en este equipo**.
+3. En **Usar campos de los documentos del expediente**, compara las dos fechas. Para el primer recorrido selecciona el 21 de mayo en la ficha comercial. Elige también su clave, fracción con NICO y régimen. Pulsa **Buscar clave**, **Revisar SE AL** y **Guardar ficha del pedimento**. Abre la publicación que respalda la ficha.
+4. Pulsa **Preparar lista de cotejo**. Puedes leer el mensaje completo antes de decidir si consumes una solicitud de OpenAI. Al generar, abre **Datos originales**. El cliente, el folio y el documento que elegiste deben aparecer junto a la referencia jurídica. Comprueba el resultado en Word, Excel o PowerPoint.
+5. Repite la misma pregunta con el 26 de mayo que figura en la rectificación. La primera lista pide verificar si se solicitó el aviso. La segunda pide cotejar su número en el pedimento cuando corresponda por mercancía y régimen. La elección de la fecha para un asunto concreto corresponde al abogado.
+
+Para revisar la clave C1, selecciona la autoridad. La ficha de Economía abre con la descripción general. Activa el supuesto de azúcar si la mercancía corresponde al numeral 8 TER.
+
 ### Corregir una sustitución antes de guardar
 
 Al importar un documento ficticio, abre **Revisar protección local** y lee las sustituciones. Comprueba si un turno, un lugar, un acontecimiento o la combinación de varios datos permite reconocer a alguien. En **Ocultar otro dato** puedes seleccionar el fragmento en el original o escribirlo exactamente. **Ocultar coincidencias exactas** cubre sus repeticiones, con las mismas mayúsculas y acentos. Puedes deshacer la última corrección. Al guardar el soporte, la corrección queda en el expediente cifrado y el original sigue disponible para la exportación. Estas correcciones se hacen durante el alta. El texto libre de un documento importado permanece en el equipo.

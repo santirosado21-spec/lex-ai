@@ -181,3 +181,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 20:51 — codex — Seleccionar el periodo del trámite en el equipo a partir de alternativas públicas
 
 **Por qué:** La primera generación pidió comprobar una declaración anterior al hito aplicable. El proveedor recibe las fuentes y las cuatro opciones de redacción; la fecha y la clasificación de la operación permanecen locales. El expediente conserva la lectura temporal para exportarla tras reabrir.
+
+## 2026-11-19 21:02 — codex — Confirmar la mercancía para C1 de Economía y la fecha documental para el cotejo
+
+**Por qué:** La clave C1 tiene usos distintos. Elegir la autoridad no acredita que sean productos del numeral 8 TER. Dos fechas distintas del mismo expediente producen pasos de revisión distintos. El abogado elige el supuesto y la fuente; la ficha y la lista conservan su decisión en el expediente cifrado.

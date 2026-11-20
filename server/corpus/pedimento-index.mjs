@@ -96,11 +96,14 @@ function materialScope(classification,regime,sugar){
  parts.push(regime?regime+' · '+(sugar?(regime==='Importación definitiva'?'Figura en el numeral 8 TER revisado.':'El numeral 8 TER revisado indica importación definitiva.'):regime==='Otro régimen'?'Fuera de los cinco regímenes enumerados en el numeral revisado.':'Figura entre los regímenes enumerados en el numeral revisado.'):'Falta identificar el régimen de la operación.');
  return parts.join('\n');
 }
-export function permitNote({code,agency,date,classification,regime}){
+export function permitNote({code,agency,date,classification,regime,scope}){
  const row=rowsAt(date).get(agency+'/'+code);
  if(!row||row.agency!==agency||row.code!==code)throw Error('Selecciona la clave y su autoridad.');
  const aluminum=agency==='SE'&&code==='AL';
- const sugar=agency==='SE'&&code==='C1'&&date>='2026-05-28';
+ const canCheckSugar=agency==='SE'&&code==='C1'&&date>='2026-05-28';
+ if(scope!==undefined&&(!canCheckSugar||!['general','azucar'].includes(scope)))throw Error('Selecciona el supuesto de la clave C1.');
+ // Saved r18 selections implicitly used the sugar assessment. New forms send the chosen scope.
+ const sugar=canCheckSugar&&scope!=='general';
  if(!aluminum&&!sugar&&(classification!==''||regime!==''))throw Error('Ese cotejo de alcance no corresponde a la clave elegida.');
  const detail=aluminum||sugar?materialScope(classification,regime,sugar):'';
  const sugarStage=date<'2026-08-31'?'La fecha precede a la apertura de captura del 31 de agosto.':
@@ -109,7 +112,7 @@ export function permitNote({code,agency,date,classification,regime}){
  const stage=aluminum?aluminumStatus(date):sugar?'Para la ampliación de C1 a azúcar y preparaciones del numeral 8 TER. '+sugarStage+' Coteja fracción, NICO, acotación y régimen en el acuerdo de mayo.':'Última descripción publicada localizada hasta la fecha indicada. Coteja el transitorio y el régimen aplicables.';
  const main=ref('RGCE-A9-'+agency+'-'+code+'-'+row.date,'Anexo 22 · '+agency+' · '+code,'Apéndice 9 · '+row.agencyName+' · '+row.date+' · PDF p. '+row.page,row.url,row.text,row.localUrl);
  const references=Object.freeze(aluminum?[main,...aluminumSources]:sugar?[main,...sugarSources]:[main]);
- const selection={code,agency,date,classification,regime};
+ const selection={code,agency,date,classification,regime,...(scope!==undefined?{scope}:{})};
  const id='pedimento-'+sha(JSON.stringify([selection,indexHash,aluminum?aluminumHash:'',references,stage,detail])).slice(0,24);
  const dates=aluminum?['2026-05-18','2026-05-25']:sugar?['2026-08-31','2026-09-28']:null;
  const period=dates?(date<dates[0]?'antes':date<dates[1]?'captura':'declaracion'):null;

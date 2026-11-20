@@ -3,6 +3,7 @@ import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-questi
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
 import {questionCandidates} from './corpus/intake-question.mjs';
+import {permitQuestionHint,documentPermitFields,permitFieldCitations} from './corpus/permit-question.mjs';
 import {searchPermits,permitNote} from './corpus/pedimento-index.mjs';
 import {searchNico,nicoRow,nicoReference,nicoEdition} from './corpus/nico-index.mjs';
 import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
@@ -72,6 +73,12 @@ function localPermitControl(intake,task){
  if(intake.permits?.[task])return intake.permits[task];
  const follow=intake.followups?.[task];
  return follow?.form==='control'?intake.permits?.[follow.basisTask??follow.parent]:null;
+}
+function localQuestion(intake,task){
+ if(intake.questions?.[task])return intake.questions[task];
+ const follow=intake.followups?.[task];
+ const basis=follow?.basisTask??follow?.parent;
+ return follow?.form==='control'&&intake.permits?.[basis]?intake.questions?.[basis]:null;
 }
 function draftText(value,doc,evidence,question,permit) {
  const allowed=new Set(['[[CLIENTE]]','[[ASUNTO]]',...(Array.isArray(doc)?doc:[doc]).flatMap(documentTokens).map(item=>item.token)]);
@@ -230,7 +237,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   const permit=saved.intake.permits?.[parent];
   if(permit){
    const note=permitNote(permit);
-   if(note.id!==parent)throw Error('La ficha procede de otra edición del Anexo 22.');
+   if(note.id!==(saved.intake.researchHistory?.[parent]?.permitSourceId??parent))throw Error('La ficha procede de otra edición del Anexo 22.');
    return note;
   }
   const nico=saved.intake.nicos?.[parent];
@@ -452,15 +459,17 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const restored=openReviewedDocument(document,saved.firm.id,saved.entry.id);
     if(restored.original!==text.replace(/\r\n/gu,'\n').trim())throw Error('La pregunta no se pudo restituir.');
     const candidates=questionCandidates(publicLibrary,restored.original,review.parts,explicitArticleReference?.(restored.original,'MX-FED'));
-    if(!candidates.length)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
+    const permit=permitQuestionHint(restored.original,[saved.firm.name,saved.entry.client,saved.entry.title,saved.intake.supplier]);
+    if(permit)permit.supports=documentPermitFields(openedCaseSources(saved));
+    if(!candidates.length&&!permit)throw Error('No se encontró un pasaje. Añade el concepto jurídico o consulta la biblioteca federal.');
     const id=randomUUID();
     if(pendingQuestions.size>=8)pendingQuestions.delete(pendingQuestions.keys().next().value);
     const facts=availableQuestionFacts(saved).map(({id,text,evidence})=>({id,text,label:evidence.sourceLabel,line:evidence.line}));
-    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
+    pendingQuestions.set(id,{matter:saved.entry.id,document,candidates,permit,factIds:facts.map(f=>f.id),concepts:mentionedConcepts(restored.original).map(c=>c.id)});
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
-    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,sources:caseSources(saved.intake).map(sourceSummary),
+    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,permit,sources:caseSources(saved.intake).map(sourceSummary),
      candidates:candidates.map(({key,label,locator,text,partial})=>({key,label,locator,text,partial}))};
    }
    case 'intake.questionLines': {
@@ -544,17 +553,23 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     return searchPermits(payload.query,payload.date);
    case 'intake.inspectPermit':
    case 'intake.savePermit': {
-    exactFields(payload,['code','agency','date','classification','regime']);
+    const fromQuestion=action==='intake.savePermit'&&Object.hasOwn(payload??{},'reviewId');
+    exactFields(payload,['code','agency','date','classification','regime',...(Object.hasOwn(payload??{},'scope')?['scope']:[]),...(fromQuestion?['reviewId',...(Object.hasOwn(payload,'picks')?['picks']:[])]:[])]);
     const note=permitNote(payload);
     if(action==='intake.inspectPermit')return {stage:note.stage,detail:note.detail,references:note.references};
     return store.transaction(()=>{
      const saved=current();
      if(!saved||!store.protectedRecords)throw Error('Abre un expediente cifrado para guardar la ficha.');
-     const {intake}=saved,id=note.id;
+     const review=fromQuestion?pendingQuestions.get(payload.reviewId):null;
+     if(fromQuestion&&(!review?.permit||review.matter!==saved.entry.id))throw Error('Vuelve a revisar la pregunta en este expediente.');
+     const citations=review?permitFieldCitations(review.permit.supports,payload.picks??[],note.selection):[];
+     const evidenceId=citations.length?'-'+createHash('sha256').update(JSON.stringify(citations)).digest('hex').slice(0,20):'';
+     const {intake}=saved,id=review?note.id+'-'+payload.reviewId+evidenceId:note.id;
      if(!Object.hasOwn(intake.drafts,id)){
-      const text=draftText(note.text,null,null,null,note.selection),ranges=quotedRanges(note,text);
-      store.put('intake-pilot',{...intake,permits:{...intake.permits,[id]:note.selection},drafts:{...intake.drafts,[id]:text},
-       researchHistory:{...intake.researchHistory,[id]:{title:note.title,localOnly:true,references:note.references,localReview:['Fecha de la operación · '+payload.date,note.stage,note.detail].filter(Boolean).join('\n')}},
+      const text=draftText((review?'Pregunta del expediente\n[[CONSULTA]]\n\n':'')+note.text,null,null,review?.document,note.selection);
+      const ranges=quotedRanges(note,text);
+      store.put('intake-pilot',{...intake,...(review?{questions:{...intake.questions,[id]:review.document}}:{}),permits:{...intake.permits,[id]:note.selection},drafts:{...intake.drafts,[id]:text},
+       researchHistory:{...intake.researchHistory,[id]:{title:note.title,localOnly:true,references:note.references,...(review?{permitSourceId:note.id}:{}),localReview:['Fecha de la operación · '+payload.date,note.stage,note.detail,...citations].filter(Boolean).join('\n')}},
        followupBasis:{...intake.followupBasis,[id]:ranges}});
       store.audit('intake.local.permit',saved.entry.id);
      }
@@ -678,8 +693,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
      const permit=localPermitControl(saved.intake,task);
+     const question=localQuestion(saved.intake,task);
+     if(permit&&question)text+='\n\nPregunta del expediente\n[[CONSULTA]]';
      if(permit)text+='\n\nCotejo local de la operación\n[[COTEJO]]';
-     const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task],permit);
+     const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,question,permit);
      const parentSource=continuation?followupSource(saved,continuation.basisTask??continuation.parent):comparison?.packet||reading||practice||research;
      const ranges=store.protectedRecords&&parentSource?quotedRanges(parentSource,answer):[];
      signal?.throwIfAborted();
@@ -711,7 +728,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      if (!saved || !Object.hasOwn(saved.intake.drafts,task)) throw new Error('Genera primero el borrador.');
      const {intake,entry}=saved;
      const basis=firstBasis(saved,task);
-     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,intake.questions?.[task],localPermitControl(intake,task))};
+     const drafts={...intake.drafts,[task]:draftText(text,caseSources(intake).map(s=>s.document),intake.researchHistory?.[task]?.evidence,localQuestion(intake,task),localPermitControl(intake,task))};
      const editedTasks=Array.from(new Set([...(intake.editedTasks??[]),task]));
      store.put('intake-pilot',{...intake,drafts,editedTasks,...(basis.length?{followupBasis:{...intake.followupBasis,[task]:basis}}:{})});
      store.audit('intake.local.edit',entry.id);
@@ -730,7 +747,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const {firm,entry,intake}=saved;
     const values={CLIENTE:entry.client,ASUNTO:entry.title};
     const evidence=intake.researchHistory?.[task]?.evidence;
-    const question=intake.questions?.[task];
+    const question=localQuestion(intake,task);
     const permit=localPermitControl(intake,task);
     const text=draftText(intake.drafts[task],caseSources(intake).map(s=>s.document),evidence,question,permit);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);

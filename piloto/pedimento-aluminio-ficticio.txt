@@ -1,0 +1,7 @@
+Operación ficticia para práctica de comercio exterior
+Fecha de operación: 2026-05-21
+Fracción arancelaria: 7616.99.99
+NICO: 91
+Régimen: Depósito fiscal
+Clave de permiso: AL
+Folio de contrato: QRA-88277

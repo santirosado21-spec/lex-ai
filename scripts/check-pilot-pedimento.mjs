@@ -41,7 +41,7 @@ try{
  await date.fill('2026-09-24');await query.fill('C1');await b('Buscar clave').click();
  const cards=p.locator('.rp-tariff article');await cards.nth(1).waitFor();assert.equal(await cards.count(),2);
  await p.getByText('Comparar con la descripción anterior').click();await cards.first().getByRole('link',{name:/PDF 2026-01-15/}).waitFor();
- await b('Revisar SE C1').click();await cards.first().getByText(/precede a la declaración obligatoria/).waitFor();
+ await b('Revisar SE C1').click();await p.getByLabel('Supuesto que quieres cotejar').selectOption('azucar');await cards.first().getByText(/precede a la declaración obligatoria/).waitFor();
  await date.fill('2026-05-25');await query.fill('AL');await b('Buscar clave').click();await b('Revisar SE AL').click();
  await cards.first().getByText(/Desde el 25 de mayo/).waitFor();
  await date.fill('2026-05-21');await b('Buscar clave').click();await b('Revisar SE AL').click();

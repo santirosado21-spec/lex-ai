@@ -371,3 +371,7 @@ Extracción reproducida desde el HTML del SAT de 19 de noviembre de 2026. Ocho e
 ## 2026-11-19 20:51 — codex — Rejon r18 coteja las claves del pedimento y conserva el periodo correcto en Office
 
 Dos consultas reales con material público y un asunto ficticio, 1249 tokens en total. En el recorrido corregido se restituyeron el 21 de mayo de 2026, la fracción, el NICO y el régimen sólo en el equipo. El ZIP repitió el mismo mensaje y abrió los tres formatos en LibreOffice. El lanzador abrió dos veces y el respaldo se probó con credenciales simuladas. No se midió en los equipos de los socios.
+
+## 2026-11-19 21:02 — codex — Rejon r19 conserva la fuente elegida del despacho en los tres formatos
+
+Probados la pregunta y dos originales ficticios en Chromium, el ZIP extraído y el lanzador de macOS con cuentas simuladas. Ambas solicitudes coincidieron byte por byte con la llamada pública anterior. Se imprimieron en LibreOffice los seis archivos en cada instalación. Suite de JavaScript: 1445 aprobadas, diez omitidas, cero fallos. Faltan validación profesional, segundo acceso real y equipos físicos de los socios.

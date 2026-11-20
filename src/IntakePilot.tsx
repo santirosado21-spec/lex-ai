@@ -118,7 +118,7 @@ export default function IntakePilot() {
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
     finally {setActivity(null);}
   }
-  async function saveReference(action:'intake.addTariff'|'intake.addNico'|'intake.savePermit',payload:PermitSelection|{code:string;page:number}|{code:string;nico:string}) {
+  async function saveReference(action:'intake.addTariff'|'intake.addNico'|'intake.savePermit',payload:(PermitSelection&{reviewId?:string})|{code:string;page:number}|{code:string;nico:string}) {
     const result=await api<{task:Task;status:PilotStatus}>(action,payload);
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
     setLibraryOpen(false);setNotice('Ficha guardada en el expediente.');heading.current?.focus();
@@ -269,7 +269,7 @@ export default function IntakePilot() {
             else if(next.tasks[0])setSelected(next.tasks[0].id);
             setNotice(!ids.length?'Se restableció el soporte inicial.':match?'Cotejo preparado. Revisa las líneas y la hipótesis.':'Los documentos seleccionados no tienen un tema de cotejo en común.');
            }}/>}
-          {pilot?.protectedRecords&&<IntakeQuestion disabled={busy||editText!==null} onSelect={chooseQuestion}/>}
+          {pilot?.protectedRecords&&<IntakeQuestion disabled={busy||editText!==null} onSelect={chooseQuestion} onPermit={(selection,reviewId)=>saveReference('intake.savePermit',{...selection,reviewId})}/>}
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?(item.comparison.archived?'Cotejo guardado · '+item.title:'Contrastar '+item.comparison.title.toLowerCase()):item.title}</option>)}
           </select></label>
