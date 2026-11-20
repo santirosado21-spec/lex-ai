@@ -195,3 +195,11 @@
 .rp-question button{justify-self:start}
 .rp-question p{margin:.2rem 0;line-height:1.5;overflow-wrap:anywhere}
 .rp-question .rp-details p{padding:.5rem 0;white-space:pre-wrap}
+.rp-source-files{border-bottom:1px solid var(--rp-line);padding:.25rem 0 .85rem;margin-bottom:.65rem}
+.rp-source-files ol{padding-inline-start:1.6rem}
+.rp-source-files li{margin:.5rem 0;overflow-wrap:anywhere}
+.rp-source-files li button,.rp-source-files li small{margin-inline-start:.7rem}
+.rp-source-files fieldset,.rp-source-add{margin:1rem 0 0;padding:.8rem;border:1px solid var(--rp-line);border-radius:6px;min-width:0}
+.rp-source-files legend{font-weight:600}
+.rp-source-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.75rem}
+.rp-source-pair select{max-width:100%}

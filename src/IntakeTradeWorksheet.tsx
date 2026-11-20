@@ -4,7 +4,7 @@ import {api,downloadFile} from './api';
 
 type Values={status:string;amount:string;currency:string;reference:string;note:string};
 type Row=Values&{id:string;base:string;revision:number;label:string;check:string;source:string};
-type Proposal={line:number;excerpt:string;reference:string;amount?:string;currency?:string};
+type Proposal={line:number;sourceId?:string;sourceLabel?:string;excerpt:string;reference:string;amount?:string;currency?:string};
 type Sheet={proposals:Record<string,Proposal[]>;title:string;monetary:boolean;statuses:string[];rows:Row[]};
 const valuesOf=({status,amount,currency,reference,note}:Row):Values=>({status,amount,currency,reference,note});
 
@@ -71,9 +71,9 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
    <p>{row.check} <small>{row.source}</small></p>
    {proposal&&<div className="rp-proposal">
     {candidates.length>1&&<label>Coincidencia del documento<select value={candidate} onChange={e=>setCandidate(Number(e.target.value))}>
-     {candidates.map((p,i)=><option key={p.line} value={i}>Línea {p.line}</option>)}
+     {candidates.map((p,i)=><option key={(p.sourceId??'')+'-'+p.line} value={i}>{p.sourceLabel&&p.sourceLabel+' · '}Línea {p.line}</option>)}
     </select></label>}
-    <small>Texto extraído · línea {proposal.line}</small><blockquote>{proposal.excerpt}</blockquote>
+    <small>{proposal.sourceLabel??'Texto extraído'} · línea {proposal.line}</small><blockquote>{proposal.excerpt}</blockquote>
     <button type="button" className="rp-quiet" onClick={()=>revise({reference:proposal.reference,...(proposal.amount?{amount:proposal.amount,currency:proposal.currency}:{})})}>Usar dato del soporte</button>
    </div>}
    <div className="rp-sheet-fields">

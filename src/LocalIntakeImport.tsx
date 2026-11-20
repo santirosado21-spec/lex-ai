@@ -4,7 +4,7 @@ import {api, fileBase64} from './api';
 
 type Protection = {available:false;reason:string}|{available:true;count:number;needsReview:boolean;contextualCount?:number;contextUnavailable?:boolean;parts:({text:string}|{label:string;start:number;end:number})[];restored:string};
 type Extract = {reviewId?:string;protection?:Protection;scenarioId?:string;supplier?:string;scenarioPreview?:string;client:string;title:string;documentKind:'pedimento'|'factura'|'contrato'|'otro'};
-export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange,onReplace,ciphered}:{ciphered?:boolean;onReplace:()=>void;onReviewChange:(id:string,hasCorrections:boolean)=>void;onExtract:(data:Extract)=>void;onBusyChange?:(busy:boolean)=>void}) {
+export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange,onReplace,ciphered,attachment=false}:{attachment?:boolean;ciphered?:boolean;onReplace:()=>void;onReviewChange:(id:string,hasCorrections:boolean)=>void;onExtract:(data:Extract)=>void;onBusyChange?:(busy:boolean)=>void}) {
  const picker=useRef<HTMLInputElement>(null);
  const [preview,setPreview]=useState('');
  const [protection,setProtection]=useState<Protection>();
@@ -20,10 +20,10 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
   setLiteral('');onReplace();setReviewId(undefined);setCanUndo(false);setCorrecting(false);
   setPreview('');setProtection(undefined);setShowOriginal(false);onBusyChange?.(true);setBusy(true);setMessage('Leyendo en este equipo…');
   try {
-   const data=file?await api<Extract>('intake.inspectLocal',{
+   const data=file?await api<Extract>(attachment?'intake.inspectSource':'intake.inspectLocal',{
     extension:file.name.split('.').pop()?.toLowerCase(),base64:await fileBase64(file),review:true,
    }):await api<Extract>('intake.createPractice');
-   setReviewId(data.reviewId);setProtection(data.protection);setPreview(data.scenarioPreview??'');onExtract(data);setMessage('Revisa los campos y completa los que quedaron vacíos.');
+   setReviewId(data.reviewId);setProtection(data.protection);setPreview(data.scenarioPreview??'');onExtract(data);setMessage(attachment?'Revisa las sustituciones antes de guardar el documento.':'Revisa los campos y completa los que quedaron vacíos.');
   } catch (error) {setMessage(error instanceof Error ? error.message : 'No se pudo leer el documento.');}
   finally {onBusyChange?.(false);setBusy(false);if(picker.current)picker.current.value='';}
  }
@@ -51,7 +51,7 @@ export default function LocalIntakeImport({onExtract,onBusyChange,onReviewChange
   {ciphered&&<button type="button" className="rp-quiet" disabled={busy} onClick={()=>void inspect()}>Crear documento de práctica</button>}
   <small>PDF, Word o texto · hasta 8 000 caracteres · requiere Ollama local</small>
   {protection?.available&&<details className="rp-private-review"><summary>Revisar protección local · {protection.count} sustituciones</summary>
-   <p>Comprueba nombres, direcciones e identificadores que sigan visibles. Puedes conservar el texto en el expediente cifrado al guardar el alta.</p>
+   <p>Comprueba nombres, direcciones e identificadores que sigan visibles. {attachment?'El archivo y el texto revisado se guardan en el expediente cifrado.':'Puedes conservar el texto en el expediente cifrado al guardar el alta.'}</p>
    {protection.contextUnavailable&&<p role="status">La segunda lectura local quedó incompleta. Revisa también turnos, lugares y acontecimientos que identifiquen el asunto.</p>}
    {protection.needsReview&&<p role="status">{protection.contextualCount?'Comprueba las descripciones de personas o lugares que podrían identificar la operación. Se ocultó el contexto de esas descripciones.':'Hay datos ambiguos que requieren revisión.'}</p>}
    <button type="button" className="secondary" aria-pressed={showOriginal} onClick={()=>setShowOriginal(!showOriginal)}>{showOriginal?'Ver sustituciones':'Ver texto restituido'}</button>

@@ -1,3 +1,4 @@
+import {comparisonEnvelope} from './intake-comparison.mjs';
 // Build the next turn from sources checked again on this machine. User edits,
 // supporting lines, client names, and original filenames stay out of the request.
 import {createHash} from 'node:crypto';
@@ -47,6 +48,9 @@ function sourceContext(source){
   protectedCaseEnvelope(source);
   return {refs:[source.ref],facts:source.facts};
  }
+ if(source?.variants){
+  comparisonEnvelope(source);return {refs:source.refs,facts:[]};
+ }
  if(source?.choices){
   tradeReadingEnvelope(source);
   return {refs:source.refs,facts:[]};
@@ -79,7 +83,7 @@ export function prepareFollowup(source,ranges,form,focus=[]){
      !Number.isSafeInteger(length)||length<24||length>420||start+length>ref.text.length)throw Error('La cita de la nota cambió.');
   const quote=ref.text.slice(start,start+length);
   if(digest(quote)!==sha)throw Error('La cita de la nota cambió.');
-  const choice=source.choices?.[index]?.find(item=>item.quote===quote);
+  const choice=source.variants?source.choices.find(item=>item.source===ref.id&&item.quote===quote):source.choices?.[index]?.find(item=>item.quote===quote);
   const condition=choice?.condition??source.condition;
   if(condition&&!ref.text.includes(condition))throw Error('La condición del pasaje requiere cotejo.');
   return {ref,quote,condition,locator:choice?.locator};

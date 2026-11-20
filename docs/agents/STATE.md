@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 19:37 por codex: decisión — Restituir la pregunta original en el equipo y conservar íntegros los pasajes aduaneros del
+**Última actualización:** 2026-11-19 19:47 por codex: Rejon r15 coteja dos documentos de comercio exterior y restituye sus referencias
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r15 conserva originales adjuntos en el expediente cifrado y coteja dos documentos de una misma operación. La factura TXT y el contrato Word produjeron evidencia distinta del flete. La nota y la matriz se abrieron en LibreOffice. Se verificó la restitución de ambos folios en los PDF obtenidos de Word, Excel, PowerPoint y la matriz previa. Reproducción del cuerpo público anterior, sin consumo adicional. Evidencia privada en `artifacts/documentos-r15/`.
 
 - r14.2 permite iniciar la investigación con una pregunta del expediente, seleccionar fuente y enfoque, revisar la solicitud pública y restituir la pregunta al exportar. El ZIP se probó en este Mac. Evidencia en `artifacts/consulta-r14/`, incluida una llamada real, la repetición de su respuesta, tres exportaciones Office y ocho preguntas de desarrollo. Suite de JS 1429 aprobadas, 10 omitidas, 0 fallos.
 
@@ -67,6 +69,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Evaluar con Lorenzo y Pedro si pueden resolver o dejar pendiente una discrepancia realista usando los dos originales ficticios, la fecha de la operación y la cita. Validar cobertura de identificadores indirectos en documentos independientes y los equipos de 8 GB antes de ampliar a asuntos de clientes.
 
 - Probar preguntas inéditas con hechos contradictorios y más de una fuente. Medir si el abogado puede verificar cada condición y fecha de aplicación en el documento exportado. La investigación actual envía a la nube una pregunta pública reconstruida. Sigue pendiente la validación de un diálogo general sobre el contexto seudonimizado, la segunda cuenta real y los equipos de Lorenzo y Pedro.
 

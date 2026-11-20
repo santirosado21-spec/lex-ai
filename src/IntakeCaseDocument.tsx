@@ -1,29 +1,33 @@
 import {useState} from 'react';
 import {FileText} from 'lucide-react';
+import type {CaseSource} from './IntakeSourceFiles';
 import {api} from './api';
 
 export type CaseDatum={token:string;label:string;value:string};
 type StoredDocument={masked:string;original:string;needsReview:boolean;tokens:CaseDatum[]};
 
-export default function IntakeCaseDocument({insert}:{insert?:(datum:CaseDatum)=>void}) {
+export default function IntakeCaseDocument({insert,sources=[]}:{sources?:CaseSource[];insert?:(datum:CaseDatum)=>void}) {
  const [doc,setDoc]=useState<StoredDocument|null>(null);
  const [open,setOpen]=useState(false);
  const [original,setOriginal]=useState(false);
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState('');
  const [selected,setSelected]=useState('');
+ const [source,setSource]=useState('');
+ async function load(id:string){
+  setBusy(true);setError('');setDoc(null);setOriginal(false);setSelected('');
+  try{const data=await api<StoredDocument>('intake.readDocument',id?{id}:{});setDoc(data);setSelected(data.tokens[0]?.token??'');setOpen(true);setSource(id);}
+  catch{setError('El soporte guardado no se pudo verificar en este equipo.');}
+  finally{setBusy(false);}
+ }
  async function toggle(){
   if(open){setOpen(false);setOriginal(false);setDoc(null);setSelected('');return;}
-  setBusy(true);setError('');
-  try {
-   const data=await api<StoredDocument>('intake.readDocument');
-   setDoc(data);setSelected(data.tokens[0]?.token??'');setOpen(true);
-  } catch{setError('El soporte guardado no se pudo verificar en este equipo.');}
-  finally{setBusy(false);}
+  await load(sources[0]?.id??'');
  }
  return <section className="rp-case-document">
   <button type="button" className="rp-quiet" aria-expanded={open} disabled={busy} onClick={()=>void toggle()}><FileText size={16}/>{busy?'Abriendo soporte…':open?'Cerrar soporte':'Consultar soporte local'}</button>
   {error&&<p role="alert">{error}</p>}
+  {open&&sources.length>1&&<label>Soporte que quieres leer<select value={source} disabled={busy} onChange={e=>void load(e.target.value)}>{sources.map((s,i)=><option value={s.id} key={s.id}>{i+1} · {s.label}</option>)}</select></label>}
   {open&&doc&&<div className="rp-private-review">
    <button type="button" className="secondary" aria-pressed={original} onClick={()=>setOriginal(!original)}>{original?'Ver sustituciones':'Ver texto restituido'}</button>
    <pre>{original?doc.original:doc.masked}</pre>

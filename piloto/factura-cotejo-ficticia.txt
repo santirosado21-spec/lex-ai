@@ -1,0 +1,4 @@
+Cliente: Importadora Lirio de Ensayo
+Factura comercial: FM-38214
+El precio pagado incluye el flete. Ref. FM-38214.
+Flete: USD 625.30

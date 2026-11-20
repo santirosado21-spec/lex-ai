@@ -1,0 +1,17 @@
+{
+  "sha256": "d9d90568cb0296e7918404422cdb844229a5303c6e37e6d6a0491ed67a8bf51f",
+  "response": {
+    "incluido": {
+      "pasaje": "P1",
+      "pregunta": "¿Qué documento acredita que el flete estaba incluido en el precio pagado por las mercancías?"
+    },
+    "excluido": {
+      "pasaje": "P2",
+      "pregunta": "¿Qué documento identifica los gastos de transporte a cargo del importador que no aparecen en el precio pagado?"
+    },
+    "pendiente": {
+      "pasaje": "P3",
+      "pregunta": "¿Qué documento proporciona datos objetivos y cuantificables para aclarar el tratamiento del flete en el precio pagado?"
+    }
+  }
+}

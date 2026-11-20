@@ -4,7 +4,8 @@ import {chmodSync,existsSync,lstatSync} from 'node:fs';
 import path from 'node:path';
 
 export const PILOT_VAULT_FILE='rejon-protegido.sqlite';
-const kinds=new Set(['workspace','matter','intake-pilot']);
+const legacyKinds=new Set(['workspace','matter','intake-pilot']);
+const kinds=new Set([...legacyKinds,'intake-source']);
 const formatId=0x524a5031;
 const invalid=()=>new Error('No se pudo abrir el expediente cifrado. Revisa la frase local y la integridad de la copia.');
 
@@ -44,7 +45,7 @@ function copyLegacy(file,put,writeAudit) {
   for(const row of old.prepare('SELECT id,kind,matter_id,payload FROM records ORDER BY rowid').iterate()){
    let entity;
    try{entity=JSON.parse(row.payload);}catch{throw Error('No se pudo leer un registro en la copia anterior.');}
-   if(!kinds.has(row.kind)||entity.id!==row.id||(entity.matterId??null)!==row.matter_id)throw Error('La copia anterior incluye registros fuera del formato del piloto.');
+   if(!legacyKinds.has(row.kind)||entity.id!==row.id||(entity.matterId??null)!==row.matter_id)throw Error('La copia anterior incluye registros fuera del formato del piloto.');
    put(row.kind,entity);
   }
   for(const row of old.prepare('SELECT id,action,entity_id,created_at FROM audit ORDER BY rowid').iterate())writeAudit(row.id,row.action,row.entity_id,row.created_at);

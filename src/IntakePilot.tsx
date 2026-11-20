@@ -1,3 +1,4 @@
+import IntakeSourceFiles,{type CaseSource} from './IntakeSourceFiles';
 import IntakeQuestion from './IntakeQuestion';
 import IntakeNico from './IntakeNico';
 import IntakeTariff from './IntakeTariff';
@@ -15,12 +16,13 @@ import './intake-pilot.css';
 type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}` | `tarifa-${string}` | `nico-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
+type SupportLine={line:number;excerpt:string;sourceId?:string;sourceLabel?:string};
 type TaskInfo = {
-  id: Task; parent?:Task; localOnly?:boolean; title: string; preview?: string; evidence?:{line:number;excerpt:string;additional?:{line:number;excerpt:string}[]};
-  comparison?:{subject:string;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
+  id: Task; parent?:Task; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
+  comparison?:{subject:string;group?:string;archived?:boolean;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
-type PilotStatus = {saved: boolean; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; followupParents?:Task[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean;sources?:CaseSource[];comparisonPair?:string[]|null; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; followupParents?:Task[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -63,7 +65,8 @@ export default function IntakePilot() {
   const activeTask = pilot?.tasks.find(item=>item.id===selected) ?? pilot?.tasks[0];
   const task = activeTask?.id;
   const comparison=activeTask?.comparison;
-  const taskList=pilot?.tasks.filter(item=>!item.comparison||(item.comparison.subject===comparison?.subject?item.id===task:item.comparison.suggested));
+  const group=(item:TaskInfo['comparison'])=>item?.group??item?.subject;
+  const taskList=pilot?.tasks.filter(item=>!item.comparison||item.id===task||item.comparison.archived||(group(item.comparison)!==group(comparison)&&item.comparison.suggested));
   const draft = task && pilot?.drafts[task];
   const busy = activity!==null || inspecting || worksheetDirty;
   const stage = !saved ? 0 : draft ? 2 : 1;
@@ -255,27 +258,43 @@ export default function IntakePilot() {
         </div>}
         {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
+          {pilot?.protectedRecords&&<IntakeSourceFiles sources={pilot.sources??[]} pair={pilot.comparisonPair??null} disabled={busy||editText!==null}
+           onSave={async(reviewId,label)=>{const result=await api<{status:PilotStatus;duplicate:boolean}>('intake.addSource',{reviewId,label});setPilot(result.status);setRestored('');return result.duplicate;}}
+           onCompare={async ids=>{
+            const next=await api<PilotStatus>('intake.compareSources',{ids});
+            setPilot(next);setRestored('');clearFeedback();
+            const match=next.tasks.find(item=>item.comparison?.suggested&&!item.comparison.archived);
+            if(match)setSelected(match.id);
+            else if(next.tasks[0])setSelected(next.tasks[0].id);
+            setNotice(!ids.length?'Se restableció el soporte inicial.':match?'Cotejo preparado. Revisa las líneas y la hipótesis.':'Los documentos seleccionados no tienen un tema de cotejo en común.');
+           }}/>}
           {pilot?.protectedRecords&&<IntakeQuestion disabled={busy||editText!==null} onSelect={chooseQuestion}/>}
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
-            {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?'Contrastar '+item.comparison.title.toLowerCase():item.title}</option>)}
+            {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?(item.comparison.archived?'Cotejo guardado · '+item.title:'Contrastar '+item.comparison.title.toLowerCase()):item.title}</option>)}
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
           {activeTask.parent&&<div className="rp-followup"><button type="button" className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setSelected(activeTask.parent!);setRestored('');clearFeedback();}}><ChevronLeft size={15}/> Volver al primer borrador</button><p>La consulta retoma las citas del primer borrador. Las ediciones que escribiste permanecen en tu equipo.</p></div>}
           {task==='lectura-clasificacion'&&<button className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setLibraryView('tarifa');setLibraryOpen(true);}}>Buscar fracción en la tarifa</button>}
           {comparison&&<section className="rp-comparison" aria-label="Contraste del expediente">
+            {activeTask.evidence?.sourceLabel&&<p className="rp-pair-summary">{[...new Set([activeTask.evidence.sourceLabel,...(activeTask.evidence.additional??[]).map(row=>row.sourceLabel)].filter(Boolean))].join(' · ')}</p>}
             <label htmlFor="rp-variant">Hipótesis que quieres contrastar<select id="rp-variant" disabled={busy||editText!==null} value={task} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
-             {pilot?.tasks.filter(item=>item.comparison?.subject===comparison.subject).map(item=><option key={item.id} value={item.id}>{item.comparison?.label}</option>)}
+             {pilot?.tasks.filter(item=>group(item.comparison)===group(comparison)).map(item=><option key={item.id} value={item.id}>{item.comparison?.label}</option>)}
             </select></label>
-            <p>{comparison.conflicting?'El soporte contiene indicios contradictorios.':('Sugerencia local: '+comparison.suggestedLabel+'.')} Revisa las líneas del soporte antes de usar el borrador.</p>
+            <p>{comparison.conflicting?(activeTask.evidence?.sourceId?'Los documentos contienen afirmaciones incompatibles.':'El soporte contiene indicios contradictorios.'):('Sugerencia local: '+comparison.suggestedLabel+'.')} Revisa las líneas del soporte antes de usar el borrador.</p>
           </section>}
+          {pilot?.comparisonPair&&comparison&&!comparison.archived&&<button className="rp-quiet" disabled={busy} onClick={async()=>{
+           clearFeedback();setActivity('export');
+           try{downloadFile(await api<{name:string;base64:string;mime:string}>('intake.exportSourceComparison',{}));setNotice('Cruce documental generado en este equipo.');}
+           catch(cause){setError(cause instanceof Error?cause.message:'No se pudo exportar el cotejo.');}finally{setActivity(null);}
+          }}><Table2 size={16}/>Descargar cruce documental en Excel</button>}
           {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.parent||activeTask.localOnly?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
             <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
-            <blockquote>{activeTask.evidence.excerpt}</blockquote>
-            {activeTask.evidence.additional?.map(row=><blockquote key={row.line}>Línea {row.line} · {row.excerpt}</blockquote>)}
+            <blockquote>{activeTask.evidence.sourceLabel&&<strong>{activeTask.evidence.sourceLabel} · línea {activeTask.evidence.line}<br/></strong>}{activeTask.evidence.excerpt}</blockquote>
+            {activeTask.evidence.additional?.map(row=><blockquote key={(row.sourceId??'')+'-'+row.line}>{row.sourceLabel&&<strong>{row.sourceLabel} · </strong>}Línea {row.line} · {row.excerpt}</blockquote>)}
           </details>}
           {(task==='lectura-valoracion'||task==='lectura-pedimento')&&editText===null&&<IntakeTradeWorksheet key={task} task={task} disabled={activity!==null}
             onDirty={setWorksheetDirty} onSave={()=>{setRestored('');clearFeedback();}}/>}
-          {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument/>}
+          {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument sources={pilot.sources}/>}
           {activeTask.references?.length ? <details className="rp-details" key={'sources-'+task}><summary><BookOpen size={16}/> Fuentes de consulta ({activeTask.references.length})</summary>
             <ul>{activeTask.references.map(source=><li key={source.id}><a href={source.url} rel="noreferrer" target="_blank">{source.title} <ExternalLink size={12}/></a><p>{source.locator} · {source.summary}</p>
                 {source.localUrl&&<p><a href={source.localUrl} target="_blank" rel="noreferrer">Abrir la página en la copia local</a> · <a href={source.historyUrl} target="_blank" rel="noreferrer">Historial de reformas</a></p>}
@@ -293,7 +312,7 @@ export default function IntakePilot() {
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':task?.startsWith('nico-')?'Ficha de identificación comercial':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
               <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
-              {pilot?.hasDocument&&<IntakeCaseDocument insert={insertDatum}/>}
+              {pilot?.hasDocument&&<IntakeCaseDocument sources={pilot.sources} insert={insertDatum}/>}
               <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/1800</small>
               <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
             </div>:<>

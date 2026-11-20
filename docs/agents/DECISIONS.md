@@ -165,3 +165,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:37 — codex — Restituir la pregunta original en el equipo y conservar íntegros los pasajes aduaneros delimitados
 
 **Por qué:** Las preguntas del abogado pueden contener identificadores y relaciones privadas. La nube recibe un mensaje reconstruido con fuente pública cotejada, conceptos y enfoque. La respuesta de prueba omitió el final de un inciso. Al citar esa unidad el producto recupera el pasaje completo y la condición del encabezado desde la copia local.
+
+## 2026-11-19 19:47 — codex — Conservar los originales adjuntos por expediente y exigir selección expresa del par documental
+
+**Por qué:** La misma empresa puede tener operaciones distintas. El abogado identifica el par. El sistema conserva los originales cifrados, las líneas y la versión del cotejo. La respuesta pública sobre el mismo tema puede reutilizarse sin enviar identidades ni fragmentos privados.

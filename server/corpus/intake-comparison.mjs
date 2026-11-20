@@ -82,12 +82,17 @@ function packetFor(subject){
  packets.set(subject,packet);trusted.add(packet);return packet;
 }
 
+export function comparisonSource(subject){
+ if(!Object.hasOwn(subjects,subject))throw Error('Tema de cotejo desconocido.');
+ return packetFor(subject);
+}
+
 export function comparisonEnvelope(packet){
  if(!trusted.has(packet))throw Error('El contraste carece de una fuente cotejada.');
  return {version:1,responseFormat:'json',messages:[{role:'user',content:packet.prompt}]};
 }
 
-function findEvidence(original,spec){
+function evidenceLines(original,spec){
  const lines=[];
  original.split('\n').forEach((line,index)=>{
   const norm=normal(line);
@@ -102,20 +107,32 @@ function findEvidence(original,spec){
   const excerpt=line.trim().length<=360?line.trim():relevant.length?relevant.join('. '):clauses.find(c=>spec.trigger.test(normal(c)))??line;
   lines.push({line:index+1,excerpt:[...excerpt].slice(0,360).join(''),yes,no,uncertain});
  });
- if(!lines.length)return null;
- const positive=lines.find(l=>l.yes),negative=lines.find(l=>l.no),ambiguous=lines.find(l=>l.uncertain);
+ return lines;
+}
+
+function findEvidence(documents,spec){
+ const paired=documents.length===2;
+ const groups=documents.map(({original,id,label})=>evidenceLines(original,spec).map(row=>
+  paired?{...row,sourceId:id,sourceLabel:label}:row));
+ if(!groups.length||groups.some(group=>!group.length))return null;
+ const lines=groups.flat(),positive=lines.find(l=>l.yes),negative=lines.find(l=>l.no);
+ const ambiguous=lines.find(l=>l.uncertain)||groups.some(g=>!g.some(l=>l.yes||l.no));
  const conflicting=Boolean(positive&&negative);
  const variant=conflicting||ambiguous?2:positive?0:negative?1:2;
- const selected=[...new Set([positive,negative,ambiguous].filter(Boolean))];
- if(!selected.length)selected.push(lines[0]);
- const evidence=selected.slice(0,3).sort((a,b)=>a.line-b.line).map(({line,excerpt})=>({line,excerpt}));
+ const evidence=groups.flatMap(group=>{
+  const selected=new Set([group.find(l=>l.yes),group.find(l=>l.no),group.find(l=>l.uncertain)].filter(Boolean));
+  if(!selected.size)selected.add(group[0]);
+  return [...selected].sort((a,b)=>a.line-b.line).map(({yes,no,uncertain,...row})=>row);
+ });
  return {variant,conflicting,evidence};
 }
 
 export function comparisonsFor(original){
+ const documents=typeof original==='string'?[{original}]:original;
+ const group=documents.length===2?'-'+createHash('sha256').update(JSON.stringify(documents.map(d=>d.id).sort())).digest('hex').slice(0,24):'';
  const notes=[];
  for(const [subject,spec] of Object.entries(subjects)){
-  const match=findEvidence(original,spec);
+  const match=findEvidence(documents,spec);
   if(!match)continue;
   let packet;
   try{packet=packetFor(subject);}catch{continue;} // Other local work stays available when the pinned edition is missing.
@@ -123,7 +140,7 @@ export function comparisonsFor(original){
    const suggested=packet.variants[match.variant].id;
    const title=packet.title+' · '+variant.label;
    const source=match.evidence[0];
-   notes.push({id:'contraste-'+subject+'-'+variant.id,title,subject,variant,packet,
+   notes.push({id:'contraste-'+subject+'-'+variant.id+group,group:subject+group,title,subject,variant,packet,
     suggested:variant.id===suggested,suggestedLabel:packet.variants[match.variant].label,conflicting:match.conflicting,
     evidence:{...source,additional:match.evidence.slice(1)}});
   }

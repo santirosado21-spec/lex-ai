@@ -24,7 +24,7 @@ function blocks(text, limit) {
   return chunks;
 }
 
-async function workbook({firm, matter, answer, worksheet, tariffs=[], nicos=[]}, task) {
+async function workbook({firm, matter, answer, worksheet, tariffs=[], nicos=[], support=[]}, task) {
   const {default: ExcelJS} = await import('exceljs');
   const book = new ExcelJS.Workbook();
   book.creator = 'Rejon.AI';
@@ -70,6 +70,18 @@ async function workbook({firm, matter, answer, worksheet, tariffs=[], nicos=[]},
       row.getCell(3).dataValidation = {type: 'list', allowBlank: true, formulae: ['"Por revisar,Solicitado,Recibido,Revisado,No aplica"']};
     }
     evidence.autoFilter = 'A1:E' + evidence.rowCount;
+  }
+  if(support.length){
+    const table=book.addWorksheet('Cruce de soportes',{pageSetup,views:[{state:'frozen',ySplit:1}]});
+    const hasTopics=support.some(row=>row.topic);
+    table.columns=(hasTopics?[38,14,92,34]:[38,14,92]).map(width=>({width}));
+    styleHeader(table.addRow(['Documento del expediente','Línea del texto','Fragmento cotejado',...(hasTopics?['Tema de cotejo']:[])]));
+    for(const item of support){
+      const row=table.addRow([item.sourceLabel,item.line,item.excerpt,...(hasTopics?[item.topic]:[])]);
+      row.alignment={vertical:'middle',wrapText:true};
+      row.height=Math.max(42,18*Math.ceil(item.excerpt.length/76),18*Math.ceil(item.sourceLabel.length/28));
+    }
+    table.autoFilter='A1:'+(hasTopics?'D':'C')+table.rowCount;
   }
   if(tariffs.length){
     const table=book.addWorksheet('Tarifa consultada',{pageSetup,views:[{state:'frozen',ySplit:1,xSplit:1}]});
