@@ -439,3 +439,7 @@ Rama local `rejon/comercio-b-20261120` sobre `local/comercio-piloto-20261119` (4
 ## 2026-11-20 05:43 — rejon-dev — Conciliación NICO abril 2024 con acuerdo y reformas
 
 El conjunto de pares fracción/NICO del XLSX informativo de abril de 2024 coincide exactamente con el acuerdo del 22-ago-2022 (11 469) más la reforma de 30-jun-2023 (+53, −18) y la de 22-mar-2024 (+6, −3): 11 507 = 11 507, diferencias 0/0. No se compararon descripciones ni anotaciones ni reformas posteriores. Script `scripts/reconcile-nico-abril24.py`; informe `docs/qa/conciliacion-nico-abril24-20261120.md`.
+
+## 2026-11-20 05:47 — rejon-dev — Vigencia del Reglamento aduanero por fecha de operación
+
+La edición del Reglamento (última reforma DOF 23-02-2026) trae marcas de esa única reforma en 138 de 282 artículos, añade 33 artículos y deroga 10. La biblioteca sólo tiene el texto vigente; para operaciones anteriores al 24-02-2026 no hay versión previa y el piloto sólo avisa de forma genérica. Sin cambio de código. Casos inéditos con varias excepciones y Anexo 22 por fecha siguen sin medir. Ver docs/qa/reglamento-vigencia-por-fecha-20261120.md.

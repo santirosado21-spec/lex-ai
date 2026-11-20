@@ -12,6 +12,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- Reglamento aduanero: sólo texto vigente (reforma DOF 23-02-2026 en 138 de 282 artículos); falta versión previa para operaciones anteriores al 24-02-2026 y el piloto sólo avisa de forma genérica. Ver `docs/qa/reglamento-vigencia-por-fecha-20261120.md`.
+
 - Conciliación NICO abril 2024: 11 507 pares coinciden exactamente con el acuerdo de 2022 y sus dos reformas; descripciones, anotaciones y reformas posteriores sin comparar. Ver `docs/qa/conciliacion-nico-abril24-20261120.md`.
 
 - Línea base en Linux de la rama del piloto: build correcto, 1 454 de 1 496 pruebas aprobadas y 3 fallidas por falta del artefacto local `public-library.sqlite`. Dos expedientes ficticios de privacidad (turno y oficina; ruta e incidente vial) están anotados y con huella pero **sin medir**: falta el modelo local. Ver `docs/qa/medicion-privacidad-reserva-b0-20261120.md`.
