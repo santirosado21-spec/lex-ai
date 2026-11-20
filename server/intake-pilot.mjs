@@ -1,5 +1,5 @@
 import {remedyCatalog,remedyPeriod} from './corpus/remedy-index.mjs';
-import {questionLines} from './corpus/intake-question-lines.mjs';
+import {maskedMatterQuestion,questionLines} from './corpus/intake-question-lines.mjs';
 import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
@@ -167,11 +167,16 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   if (entry.workspaceId!==intake.workspaceId) throw new Error('El asunto no corresponde al piloto.');
   return {firm,entry,intake};
  };
- const sourceFor = (selection,saved) => selection.angle?questionPassage(publicLibrary,selection,selection.factIds?selectQuestionFacts(saved,selection.factIds):null):loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
+ const sourceFor = (selection,saved,question,reviewing=false) => {
+  if(!selection.angle)return loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
+  const facts=selection.factIds?selectQuestionFacts(saved,selection.factIds,(selection.aliasedQuestion||reviewing)?question:null):null;
+  if(selection.aliasedQuestion&&!facts?.inquiry)throw Error('Las referencias de la pregunta cambiaron. Vuelve a revisar los soportes.');
+  return questionPassage(publicLibrary,selection,facts);
+ };
  const noteFor = (saved,task) => {
   const intake=saved?.intake;
   const selection=intake?.research?.[task];
-  return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection,saved) : null;
+  return selection && Object.hasOwn(intake.research,task) ? sourceFor(selection,saved,intake.questions?.[task]) : null;
  };
  const practiceFor = saved=>prepareProtectedCase(saved.intake.practiceSeed,saved.intake.document,saved.firm.id,saved.entry.id,publicLibrary);
  const practiceTask = saved=>{
@@ -294,10 +299,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    editedTasks:saved?.intake.editedTasks??[],
    tasks:[practiceTask(saved)].filter(Boolean).concat(readingTasks(saved),Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(comparisonTasks(saved)).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
     const archived=saved.intake.researchHistory?.[id];
-    if (archived) return {id,...archived};
+    if (archived) return {id,...archived,...(selection.angle?{aliasedQuestion:!!archived.aliasedQuestion}:{})};
     try {
-     const note=sourceFor(selection,saved);
-     return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
+     const note=sourceFor(selection,saved,saved.intake.questions?.[id]);
+     return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(selection.angle?{aliasedQuestion:!!note.caseFacts?.inquiry,publicQuestion:note.caseFacts?.inquiry}:{}),...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
    })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
@@ -473,7 +478,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
-    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,permit,sources:caseSources(saved.intake).map(sourceSummary),
+    return {id,...maskedMatterQuestion(saved,document,'consulta-'+id,restored.original),suggestedAngle,facts,permit,sources:caseSources(saved.intake).map(sourceSummary),
      candidates:candidates.map(({key,citationId,label,locator,text,partial})=>({key,citationId,label,locator,text,partial}))};
    }
    case 'intake.questionLines': {
@@ -501,7 +506,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const task='research-'+reviewId+'-'+angle+'-'+choice.source+'-'+choice.part+(other?'-con-'+other.source+'-'+other.part:'')+(usesFacts?'-'+createHash('sha256').update(JSON.stringify(payload.factIds.slice().sort())).digest('hex').slice(0,20):'');
     if(!Object.hasOwn(intake.research??{},task)){
      if(Object.keys(intake.research??{}).length>=48)throw Error('El expediente admite 48 pasajes de trabajo.');
-     sourceFor(selection,saved);
+     const note=sourceFor(selection,saved,review.document,true);
+     if(note.caseFacts?.inquiry)selection.aliasedQuestion=true;
      store.put('intake-pilot',{...intake,research:{...intake.research,[task]:selection},
       questions:{...intake.questions,[task]:review.document}});
     }
@@ -740,7 +746,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
        const title=followup?followup.title+' · '+continuation.parentTitle:comparison?.title??source.title;
        const references=source.refs??[source.ref];
        const evidence=followEvidence??comparison?.evidence??selection?.evidence??research?.caseFacts?.evidence;
-       const note={title,preview:source.prompt,references,...(research?.caseFacts?{usesFacts:!!research.caseFacts.texts.length,localLines:research.caseFacts.localCount}:{}),...(evidence?{evidence}:{}),
+       const note={title,preview:source.prompt,references,...(research?.angle?{aliasedQuestion:!!research.caseFacts?.inquiry,publicQuestion:research.caseFacts?.inquiry}:{}),...(research?.caseFacts?{usesFacts:!!research.caseFacts.texts.length,localLines:research.caseFacts.localCount}:{}),...(evidence?{evidence}:{}),
         ...(comparison?{comparison:comparisonInfo(comparison)}:{})};
        snapshot={researchHistory:{...intake.researchHistory,[task]:note}};
       }
@@ -790,7 +796,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      originals.set('[[COTEJO]]',archived);
     }
     if(question&&text.includes('[[CONSULTA]]'))originals.set('[[CONSULTA]]',openReviewedDocument(question,firm.id,entry.id).original);
-    if(evidence)originals.set('[[SOPORTE]]',[evidence,...(evidence.additional??[])].map(row=>(row.sourceLabel?row.sourceLabel+' · ':'')+'Línea '+row.line+' del texto extraído · '+row.excerpt).join('\n'));
+    if(evidence)originals.set('[[SOPORTE]]',[evidence,...(evidence.additional??[])].map(row=>(row.factNumber?'H'+row.factNumber+' · ':'')+(row.sourceLabel?row.sourceLabel+' · ':'')+'Línea '+row.line+' del texto extraído · '+row.excerpt).join('\n'));
     if(text.includes('[[DATO_')){
      for(const {document} of caseSources(intake))for(const item of openReviewedDocument(document,firm.id,entry.id).tokens)originals.set(item.token,item.value);
     }

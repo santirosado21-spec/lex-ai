@@ -236,3 +236,5 @@
 .rp-question-sources {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:.75rem;align-items:start}
 .rp-question-sources>div {min-width:0}
 .rp-question-sources details[open] {border-left:2px solid var(--rp-line);padding-left:.8rem}
+
+.rp-outgoing-question {margin:.6rem 0;padding:.6rem .9rem;border-left:2px solid var(--rp-accent);line-height:1.5;overflow-wrap:anywhere}

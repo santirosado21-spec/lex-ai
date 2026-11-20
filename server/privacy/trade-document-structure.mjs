@@ -53,9 +53,13 @@ const batchNoun=/\b(?:certificación de origen|comprobante de pago|ficha técnic
 const workpiece=/\b(?:el|un) ((?:perfil|larguero|tramo) de (?:escalera|aluminio|acero)) (?:recibió|presenta|requiere|tiene) (?:tratamiento|templado|acabado)\b/dgiu;
 const temper=/\b(?:tratamiento(?: térmico)?|templado|temple) (T[1-9](?:0)?)(?=[,. ;]|$)/dgu;
 const incoterm=/\b(?:[Ii]ncoterm(?:s)?\s*[: ]|[Ff]actura (?:consigna|indica|establece) |[Cc]ondición de entrega\s*:\s*)\s*((?:EXW|FCA|FAS|FOB|CFR|CIF|CPT|CIP|DAP|DPU|DDP))(?=\s|[.,;]|$)/dgu;
+// The noun must occupy the interrogative object or payment object. Field
+// values, independent detections and longer overlapping spans still win.
+const questionProof=/¿(?:[Qq]ué|[Cc]uál) (documento|prueba|comprobante|constancia|soporte) (?:pedirías|solicitarías|exigirías|acredita|demuestra|permite)\b/dgu;
+const paymentObject=/\b(?:asumió|cubrió|pagó|liquidó|incluye) (?:el|la) (seguro|flete|transporte|prima|regalía)(?= (?:de|por|en)\b|[?.]|$)/dgu;
 export function tradeTermRanges(text){
  const ranges=[];
- for(const pattern of [processSubject,processObject,proofObject,batchNoun,workpiece,temper,incoterm]){
+ for(const pattern of [processSubject,processObject,proofObject,batchNoun,workpiece,temper,incoterm,questionProof,paymentObject]){
   for(const match of text.matchAll(pattern)){
    const [a,b]=match.indices[1];
    // A capitalised label may be a name. Temper and Incoterm codes are uppercase by convention.
@@ -150,8 +154,19 @@ const exclusiveParty=/(?<![\p{L}\p{N}])(?:[úu]nic[oa]|sol[oa]|only|sole)[ \t]+(
 const facility=/(?<![\p{L}\p{N}])(?:(?:primer[oa]?|segund[oa]|tercer[oa]?|cuart[oa]|quint[oa]|last|first|second|third)[ \t]+)?(?:m[oó]dulo|bodega|muelle|almac[eé]n|nave|patio|caseta|dock|warehouse|shed)[ \t]+(?:detr[aá]s de|al lado de|junto a|frente a|colindante con|behind|next to|beside)\b/giu;
 const specificPlace=new RegExp(String.raw`(?:^|[^\p{L}])(?:en|desde|hacia|hasta|por) (?:el |la )?((?:[Pp]uerto|[Tt]erminal|[Rr]ecinto|[Ss]ector|[Mm]uelle|[Cc]iudad) de(?:l | la | las | los | )`+nameWord+'(?:[ \t]+'+nameWord+'){0,4})','dgu');
 const movement=/\b(?:carga|envío|embarque|mercancía|tránsito|remesa|entrega|recepción|despachad[oa]|descarga)\b/iu;
+// A building can identify a shipment by appearance alone, even with no
+// proper name. Require a spatial construction and an architectural modifier.
+const landmark=/\b(?:frente a|junto a|detrás de|al lado de|a espaldas de|a la (?:salida|entrada) de|por|desde|hasta|en)\s*(?:l\b|\s+(?:la|el|los|las)\b)\s+((?:nave|pabellón|caseta|garita|bodega|puente|torre|chimenea|mirador|portón|patio|andén|muelle|almacén|cobertizo|aljibe|arco|embarcadero)\s+(?:del?\s+|con\s+|en forma de\s+|pintad[oa]\s+)[^.!?;\n]{1,180})/dgiu;
+const event=/\b(?:durante|tras|después de|antes de|al (?:terminar|concluir|comenzar)|coincidió con)(?:\s+(?:el paso|la clausura|el cierre|la apertura) de)?\s+(?:la|el|las|los)\s+((?:fiesta|feria|festival|desfile|velada|procesión|romería|verbena|carnaval|ceremonia)\s+(?:(?:anual|local|patronal)\s+)?de(?:l| la| las| los)?\s+[^.!?;\n]{1,180})/dgiu;
 export function contextualIdentityRanges(text){
  const ranges=[];
+ for(const cue of [landmark,event]){
+  for(const match of text.matchAll(cue)){
+   const [start]=match.indices[1];
+   const stop=text.slice(start).search(/[.!?;\n]/u);
+   ranges.push([start,stop<0?text.length:start+stop]);
+  }
+ }
  for(const sentence of new Intl.Segmenter('es',{granularity:'sentence'}).segment(text)){
   if(!movement.test(sentence.segment))continue;
   for(const m of sentence.segment.matchAll(specificPlace))ranges.push(m.indices[1].map(n=>sentence.index+n));
@@ -166,4 +181,11 @@ export function contextualIdentityRanges(text){
   }
  }
  return ranges;
+}
+
+// Preserve a directly labelled value as an independent reference when a
+// contextual mask also covers the surrounding sentence.
+export function tradeDocumentAnchorValues(text){
+ const ranges=[...labelledIdentityRanges(text),...logisticsReferenceRanges(text)];
+ return [...new Set(ranges.map(([start,end])=>text.slice(start,end)))];
 }

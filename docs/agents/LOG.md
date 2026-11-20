@@ -395,3 +395,7 @@ Probados en este Mac el ZIP, la cancelación y lectura de un informe ficticio de
 ## 2026-11-19 22:49 — codex — Dos fundamentos y una conversación libre de valoración probados en Rejon
 
 Dos respuestas reales con 1014 tokens de entrada y 300 de salida. Se probó la repetición en el ZIP, seis exportaciones con LibreOffice, dos reaperturas y el lanzador con respaldo simulado. Suite JS de 1452 aprobadas y diez omitidas. En un diálogo ficticio local quedaron expuestos tres indicios indirectos y se perdieron dos frases útiles. Sin clientes reales ni validación jurídica independiente.
+
+## 2026-11-19 22:58 — codex — Rejon r23 vincula preguntas a folios y mide privacidad en cuatro diálogos
+
+Probado el ZIP con la reproducción de una respuesta real a la pregunta con referencias sustituidas, tres exportaciones abiertas en LibreOffice, reapertura, dos fuentes y lanzador con respaldo simulado. La primera lectura real se rechazó por una referencia a H1 y una pregunta subsidiaria mal formada. En la reserva de retorno los ocho identificadores quedaron cubiertos, un indicio de dos y dos de seis frases útiles. Suite 1457 aprobadas y diez omitidas. Pendientes equipos de los socios, segunda cuenta real, revisión jurídica y diálogo general protegido.

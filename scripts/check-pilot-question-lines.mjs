@@ -7,13 +7,14 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {chromium} from 'playwright';
 const root=path.resolve(process.argv.find(a=>a.startsWith('--app='))?.slice(6)??'.');
+const linked=process.argv.includes('--pregunta-vinculada');
 const live=process.argv.includes('--openai'),replay=process.argv.includes('--replay');
 assert.ok(!(live&&replay));
-const out=path.resolve('artifacts/privacidad-r17',root!==path.resolve('.')?'paquete':live?'openai':replay?'replay':'simulado');await mkdir(out,{recursive:true});
+const out=path.resolve(linked?'artifacts/dialogo-r23':'artifacts/privacidad-r17',root!==path.resolve('.')?'paquete':live?'openai':replay?'replay':'simulado');await mkdir(out,{recursive:true});
 const {startServer}=await import(pathToFileURL(path.join(root,'server/main.mjs')));
 const {createIntakeGenerator}=await import(pathToFileURL(path.join(root,'server/intake-pilot.mjs')));
 const {customsPassage}=await import(pathToFileURL(path.join(root,'server/corpus/customs-edition.mjs')));
-const bodyQuote=customsPassage('65').passages[1].quote,fixture=replay?JSON.parse(await readFile('fixtures/public-cases/porte-r17.json','utf8')):null;
+const bodyQuote=customsPassage('65').passages[1].quote,fixture=replay?JSON.parse(await readFile(linked?'fixtures/public-cases/pregunta-vinculada-r23.json':'fixtures/public-cases/porte-r17.json','utf8')):null;
 const mock={lectura:'Los soportes de [[PARTE_1]] atribuyen el pago del flete a partes distintas y requieren cotejo con el recibo.',cita:bodyQuote,solicitud:'¿Qué comprobante permite identificar quién pagó el flete?'};
 const privateItems=['CPV-904153','CTR-781259','Aceros Verbena','Bambú Coral','TUR-99286','DICTAMEN-LILA','Remisión privada del vivero','carta-porte-practica'];
 let calls=0,preview='',receipt;
@@ -24,6 +25,7 @@ const generate=createIntakeGenerator({...(live?{}:{getApiKey:async()=>'sk-'+'l'.
  assert.match(preview,/comprador cubrió el flete/);assert.match(preview,/vendedor el pago del transporte/);
  const facts=preview.split('Hechos del ejercicio elegidos por el abogado\n')[1].split(' En la lectura vincula')[0];
  assert.equal((facts.match(/\[\[PARTE_1\]\]/gu)??[]).length,2);assert.doesNotMatch(facts,/H3|PARTE_2/);
+ if(linked)assert.ok(preview.includes('Pregunta del abogado con referencias sustituidas\n¿Qué comprobante acredita quién pagó el flete de [[PARTE_1]]?'));
  const sha256=createHash('sha256').update(opts.body).digest('hex');
  if(fixture)assert.equal(sha256,fixture.sha256);
  if(live){
@@ -51,7 +53,7 @@ try{
   await b('Guardar documento en este equipo').click();await b('Documentos del expediente ('+(i+1)+')').waitFor();
  }
  await b('Documentos del expediente (3)').click();await b('Consultar con una pregunta propia').click();
- const question='¿Qué documento permite a Bambú Coral Ficticio acreditar el flete en el valor en aduana?';
+ const question=linked?'¿Qué comprobante acredita quién pagó el flete de CPV-904153?':'¿Qué documento permite a Bambú Coral Ficticio acreditar el flete en el valor en aduana?';
  await p.getByLabel('Pregunta del expediente').fill(question);await b('Buscar fundamentos en este equipo').click();
  const source=p.getByLabel('Pasaje que quieres consultar');await source.waitFor({timeout:125000});await source.selectOption('aduana-65/1');
  await p.getByLabel('Enfoque jurídico').selectOption('documentos');await b('Elegir líneas de mis documentos').click();
@@ -74,10 +76,19 @@ try{
  await group.screenshot({path:path.join(out,'lineas.png')});
  assert.equal(calls,0);await b('Preparar mensaje para revisión').click();await p.getByText('Leer el mensaje completo',{exact:true}).click();
  preview=await p.locator('.rp-proof .rp-preview').innerText();const task=await p.locator('#intake-task').inputValue();
+ if(linked){
+  const explanation=p.locator('.rp-outgoing-question');
+  await explanation.waitFor();assert.ok((await explanation.innerText()).includes('¿Qué comprobante acredita quién pagó el flete'));
+  await p.locator('.rp-proof').filter({has:explanation}).screenshot({path:path.join(out,'pregunta-para-openai.png')});
+ }
  await b('Enviar y generar borrador').click();await b('Datos originales').waitFor({timeout:65000});
  const masked=await p.locator('.rp-document').innerText();assert.ok(masked.includes('Lectura preliminar de OpenAI'));
  await b('Datos originales').click();let note=p.locator('.rp-document');await note.filter({hasText:'DICTAMEN-LILA'}).waitFor();
  const restored=await note.innerText();assert.ok(restored.includes('CPV-904153')&&restored.includes('TUR-99286')&&!restored.includes('[['));
+ if(linked&&replay){
+  assert.ok(restored.includes(question)&&restored.includes('H1 · Documento 1')&&restored.includes('H2 · Documento 2'));
+  assert.ok(restored.includes('Pregunta de cotejo del despacho')&&!restored.includes('quien pago el flete de PARTE'));
+ }
  const returnedAlias=restored.split('Lectura preliminar de OpenAI\n')[1].split('\n\n')[0].includes('CPV-904153');
  assert.ok(returnedAlias);
  for(const [label,ext] of [['Word','docx'],['Excel','xlsx'],['PowerPoint','pptx']]){

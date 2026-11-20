@@ -2,11 +2,16 @@
 // evaluated after intake. There is no provider and there is no cloud dispatch.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {inspectLocalDocument} from '../server/intake-import.mjs';
-import {bindReviewedDocument,openReviewedDocument} from '../server/privacy/intake-document-map.mjs';
-import {knownParties} from '../server/intake-sources.mjs';
-import {questionLines} from '../server/corpus/intake-question-lines.mjs';
-const example=JSON.parse(await readFile(process.argv[2]??'eval/privacy-trade/dialogo-valoracion-r22.json','utf8'));
+import {resolve,join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const root=resolve(process.argv.find(a=>a.startsWith('--app='))?.slice(6)??'.');
+const runtime=p=>import(pathToFileURL(join(root,p)));
+const {inspectLocalDocument}=await runtime('server/intake-import.mjs');
+const {bindReviewedDocument,openReviewedDocument}=await runtime('server/privacy/intake-document-map.mjs');
+const {knownParties}=await runtime('server/intake-sources.mjs');
+const {questionLines}=await runtime('server/corpus/intake-question-lines.mjs');
+const file=process.argv.slice(2).find(a=>!a.startsWith('--'))??'eval/privacy-trade/dialogo-valoracion-r22.json';
+const example=JSON.parse(await readFile(file,'utf8'));
 const saved={firm:{id:'estudio',name:'Estudio ficticio'},entry:{id:example.case,title:'Ensayo local',client:example.client},intake:{supports:[]}};
 const results=[],documents=[];
 for(const [index,row] of example.entries.entries()){

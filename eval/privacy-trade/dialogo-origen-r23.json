@@ -1,0 +1,60 @@
+{
+  "case": "origen",
+  "client": "Importadora Fresnal de Ensayo",
+  "entries": [
+    {
+      "kind": "factura",
+      "text": "Cliente: Importadora Fresnal de Ensayo\nFactura: PZA-61920\nLa declaración sólo indica el país de embarque.\nSe recibió tras el paso de la procesión de los siete fuelles.",
+      "private": [
+        "Importadora Fresnal de Ensayo",
+        "PZA-61920"
+      ],
+      "clues": [
+        "procesión de los siete fuelles"
+      ],
+      "facts": [
+        "sólo indica el país de embarque"
+      ]
+    },
+    {
+      "kind": "ficha",
+      "text": "Orden: ORE-18851\nRelacionada con la factura PZA-61920.\nLa ficha identifica el proceso de fabricación.\nSe recogió a la salida del pabellón con dos veletas enfrentadas.",
+      "private": [
+        "ORE-18851",
+        "PZA-61920"
+      ],
+      "clues": [
+        "pabellón con dos veletas enfrentadas"
+      ],
+      "facts": [
+        "identifica el proceso de fabricación"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "¿Qué documento solicitarías a Importadora Fresnal de Ensayo para acreditar el origen de PZA-61920?",
+      "private": [
+        "Importadora Fresnal de Ensayo",
+        "PZA-61920"
+      ],
+      "clues": [],
+      "facts": [
+        "Qué documento solicitarías",
+        "acreditar el origen"
+      ]
+    },
+    {
+      "kind": "seguimiento",
+      "text": "¿Cómo distinguir el lugar de embarque de PZA-61920 del proceso descrito en ORE-18851?",
+      "private": [
+        "PZA-61920",
+        "ORE-18851"
+      ],
+      "clues": [],
+      "facts": [
+        "distinguir el lugar de embarque",
+        "del proceso descrito"
+      ]
+    }
+  ]
+}

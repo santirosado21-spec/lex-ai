@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 22:49 por codex: Dos fundamentos y una conversación libre de valoración probados en Rejon
+**Última actualización:** 2026-11-19 22:58 por codex: Rejon r23 vincula preguntas a folios y mide privacidad en cuatro diálogos
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,10 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r23 permite enviar una pregunta documental de pago con el folio sustituido por el mismo marcador que sus dos soportes acreditados. En una llamada real el modelo identificó que comprador y vendedor figuraban como pagadores. Se reprodujo la respuesta después de corregir el tratamiento de H1 y de su pregunta secundaria incompleta. Se restituyó el folio, se abrieron los tres formatos Office y se verificó la reapertura desde el ZIP en este Mac. Suite JS de 1 457 aprobadas y diez omitidas. Ver `artifacts/dialogo-r23/`.
+
+- En 38 documentos de regresión se cubrieron 35/35 menciones directas, 31/32 indicios y se conservaron 48/50 expresiones útiles en la proyección conjunta. En el diálogo inédito de retorno se restauraron cuatro originales y las tres referencias conservaron el mismo alias. Persistieron un indicio audible y la pérdida de cuatro de seis expresiones útiles. La biblioteca congelada carece de entradas por identificador para Ley Aduanera 97, 115 y 117. Ver `docs/research/retorno-reparacion-aduana.md`.
 
 - r22 permite cotejar dos disposiciones en una pregunta y retomar ambas citas en la lista interna. Dos llamadas reales con hechos ficticios, 1 014 tokens de entrada y 300 de salida. El ZIP reprodujo las respuestas, recuperó los dos soportes y reabrió los dos borradores. Se comprobaron en LibreOffice los seis archivos. Suite JS con 1 452 aprobadas y diez omitidas. Ver `artifacts/consulta-r22/`.
 
@@ -93,6 +97,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Permitir que un abogado retome una pregunta del expediente con los soportes y fuentes ya elegidos. Medir una nueva estrategia de detección contextual local en preguntas y anexos inéditos, con atención a indicios por sonidos y acontecimientos y a quién asumió o acredita una obligación. Mantener revisión independiente de la utilidad y la privacidad. Para retorno, cotejar los artículos 97 y 117 en el PDF y sus reformas e integrar la distinción de regímenes a la búsqueda normal.
 
 - Resolver las omisiones en referencias a acontecimientos y lugares descritos por atributos, y la pérdida de la pregunta cuando contiene una parte conocida. Usar nuevos diálogos de valoración con contradicciones y calificarlos antes de ampliar el envío de texto libre. Para el cotejo de fundamentos, obtener revisión de Lorenzo o Pedro sobre el razonamiento, la vigencia y las preguntas documentales.
 

@@ -1,6 +1,7 @@
 // Attest the complete extracted exercise before offering any sentence to a provider.
 // Only the displayed sentence is eligible. Filenames, local labels and line evidence stay local.
 import {createHash} from 'node:crypto';
+import {aliasedDocumentQuestion} from './intake-aliased-question.mjs';
 import {questionLines} from './intake-question-lines.mjs';
 import {caseSources} from '../intake-sources.mjs';
 import {openReviewedDocument} from '../privacy/intake-document-map.mjs';
@@ -60,7 +61,7 @@ export function availableQuestionFacts(saved,sourceIds){
  return rows;
 }
 
-export function selectQuestionFacts(saved,ids){
+export function selectQuestionFacts(saved,ids,question){
  if(!Array.isArray(ids)||ids.length<1||ids.length>4||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'))
   throw Error('Selecciona entre uno y cuatro hechos distintos del ejercicio.');
  const ordinary=ids.filter(id=>!id.startsWith('line:'));
@@ -86,11 +87,14 @@ export function selectQuestionFacts(saved,ids){
  if(items.length!==ids.length)throw Error('Las sustituciones o las líneas seleccionadas cambiaron. Vuelve a revisar la pregunta.');
  if(new Set(items.map(item=>item.evidence.sourceId+'/'+item.evidence.line)).size!==items.length)
   throw Error('Selecciona una sola versión de cada línea.');
- const evidence=Object.freeze({...items[0].evidence,additional:Object.freeze(items.slice(1).map(row=>Object.freeze(row.evidence)))});
+ const inquiry=aliasedDocumentQuestion(saved,question,values);
+ let number=0;
+ const sources=items.map(item=>Object.freeze(inquiry&&item.text?{...item.evidence,factNumber:++number}:item.evidence));
+ const evidence=Object.freeze({...sources[0],additional:Object.freeze(sources.slice(1))});
  const texts=Object.freeze(items.map(item=>item.text).filter(Boolean));
  const discrepancy=texts.includes('El precio pagado incluye el flete.')&&texts.includes('El precio pagado no incluye el flete.')?
   'Si los soportes corresponden a la misma operación, discrepan sobre si el flete ya forma parte del precio pagado. Coteja ambas afirmaciones con los comprobantes.':'';
- const pack=Object.freeze({texts,evidence,discrepancy,aliases:Object.freeze([...values.values()]),localCount});
+ const pack=Object.freeze({texts,evidence,...(inquiry?{inquiry}:{}),discrepancy,aliases:Object.freeze([...values.values()]),localCount});
  verified.add(pack);return pack;
 }
 export function questionFactTexts(pack){

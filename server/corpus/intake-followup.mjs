@@ -119,6 +119,7 @@ export function prepareFollowup(source,ranges,form,focus=[],prior){
  const instruction=period?(form==='carta'?'Prepara opciones de petición al cliente. Inicia cada oración con «Solicitamos» o «Por favor».':'Prepara opciones de cotejo interno. Inicia cada oración con «Cotejar», «Verificar», «Comparar», «Revisar» o «Identificar».'):spec.instruction;
  const prompt='Continúa el trabajo de la nota anterior. '+instruction+(names.length?' Menciona literalmente cada tipo de documento seleccionado por el abogado al menos una vez en las acciones: '+names.join(' y ')+'.':'')+' '+schema+'Limita el texto a solicitudes de documentos o tareas de cotejo. Evita nombres, identificadores, cifras, citas nuevas, plazos y conclusiones jurídicas.\n\nFundamentos seleccionados en el primer borrador\n'+
   quotes.map(({ref,quote,condition,locator})=>ref.id+' · '+(locator?locator+' · ':'')+ref.locator+'\n'+ref.url+'\n'+quote+(ref.remedy?'\n'+ref.summary:'')+(condition?'\nCondición de la fracción I\n'+condition:'')).join('\n\n')+
+  (source.caseFacts?.inquiry?'\n\nPregunta del abogado con referencias sustituidas\n'+source.caseFacts.inquiry:'')+
   (facts.length?'\n\nHechos del ejercicio con sustituciones locales\n'+facts.join('\n'):'')+previous;
  const localContext=source.localTokens?['Proveedor registrado · '+source.localTokens.find(item=>item.publicToken===source.provider).localToken,
   ...facts.map(fact=>fact.replace(/\[\[PARTE_\d+\]\]/gu,marker=>source.localTokens.find(item=>item.publicToken===marker).localToken))].join('\n'):'';

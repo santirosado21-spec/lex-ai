@@ -1,3 +1,4 @@
+import {tradeDocumentAnchorValues} from './privacy/trade-document-structure.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {bindReviewedDocument,openReviewedDocument} from './privacy/intake-document-map.mjs';
 
@@ -14,7 +15,10 @@ export function sourceSummary({id,label,extension,byteHash}){
 }
 export function knownParties(saved){
  return [saved.firm.name,saved.entry.client,saved.entry.title,saved.intake.supplier,
-  ...caseSources(saved.intake).flatMap(row=>row.document.snapshot.entries.map(entry=>entry.text))];
+  ...caseSources(saved.intake).flatMap(row=>{
+   const view=openReviewedDocument(row.document,saved.firm.id,saved.entry.id);
+   return [...view.tokens.map(item=>item.value),...tradeDocumentAnchorValues(view.original)];
+  })];
 }
 export function addCaseSource(store,saved,review,label){
  if(typeof label!=='string'||!label.trim()||label.length>100||/[\p{Cc}\[\]]/u.test(label))throw Error('Escribe un nombre local de hasta 100 caracteres.');

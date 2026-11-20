@@ -1,0 +1,8 @@
+{
+  "sha256": "2d9799e54e19d4e05929d4669be38af5c3fe2cb73921297d3186fc1adb69e669",
+  "response": {
+    "lectura": "El recibo atribuye al vendedor el pago del transporte, mientras que H1 indica que el comprador cubrió el flete por separado. Debe aclararse quién pagó el flete de [[PARTE_1]] y qué comprobante lo acredita.",
+    "cita": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías",
+    "solicitud": "Que comprobante acredita quien pago el flete de PARTE"
+  }
+}

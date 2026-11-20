@@ -1,3 +1,4 @@
+import {tradeDocumentAnchorValues} from './trade-document-structure.mjs';
 import {createHash} from 'node:crypto';
 import {createPseudonymStore} from './pseudonyms.mjs';
 
@@ -9,8 +10,14 @@ const tokenFor=(namespace,i)=>'[[DATO_'+(i+1)+'_'+namespace.slice(0,12)+']]';
 export function bindReviewedDocument(review,workspaceId,matterId) {
  const scope=scopeFor(workspaceId,matterId);
  const entities=[...new Set(review.parts.filter(part=>part.label).map(part=>review.restored.slice(part.start,part.end)))];
+ // The primary spans always take precedence within the vault capacity.
+ const registered=new Set(entities);
+ for(const value of tradeDocumentAnchorValues(review.restored)){
+  if(registered.size>=128)break;
+  if(value.length<=1024&&!value.includes('[[LEX_'))registered.add(value);
+ }
  const vault=createPseudonymStore();
- const {mappingVersion}=vault.protect({scope,entities,messages:[{role:'user',content:''}]});
+ const {mappingVersion}=vault.protect({scope,entities:[...registered],messages:[{role:'user',content:''}]});
  const snapshot=vault.exportSnapshot({scope});
  const marker=new Map(snapshot.entries.map(entry=>[entry.text,entry.marker]));
  const protectedText=review.parts.map(part=>part.label?marker.get(review.restored.slice(part.start,part.end)):part.text).join('');

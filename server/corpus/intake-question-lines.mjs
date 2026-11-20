@@ -1,5 +1,6 @@
 // Project the stored substitutions onto original line offsets, including multiline masks.
 // Per-document proof is checked before the result can supply synthetic cloud context.
+import {tradeDocumentAnchorValues} from '../privacy/trade-document-structure.mjs';
 import {createHash} from 'node:crypto';
 import {caseSources} from '../intake-sources.mjs';
 import {openReviewedDocument} from '../privacy/intake-document-map.mjs';
@@ -22,20 +23,23 @@ function fragments(text,ranges,tokens){
  if(pos<text.length)parts.push({text:text.slice(pos)});
  return parts;
 }
-export function questionLines(saved,sourceId){
- const sources=caseSources(saved?.intake),index=sources.findIndex(row=>row.id===sourceId);
+export function questionLines(saved,sourceId,transient){
+ const sources=caseSources(saved?.intake);
+ if(transient)sources.push(transient);
+ const index=sources.findIndex(row=>row.id===sourceId);
  if(index<0)throw Error('Selecciona un documento de este expediente.');
- const selected=sources[index],tokens=new Map();
+ const selected=sources[index],tokens=new Map(),anchors=new Set();
  let original;
  for(const source of sources){
   const view=openReviewedDocument(source.document,saved.firm.id,saved.entry.id);
+  for(const value of tradeDocumentAnchorValues(view.original))anchors.add(value);
   if(source.id===sourceId)original=view.original;
   for(const {value,token} of view.tokens)if(!tokens.has(value))tokens.set(value,token);
  }
- const ends=new Uint32Array(original.length);
- const values=new Set([...tokens.keys(),saved.firm.name,saved.entry.title,saved.entry.client,saved.intake.supplier]);
+ const ends=new Uint32Array(original.length),anchorEnds=new Uint32Array(original.length);
+ const values=new Set([...tokens.keys(),...anchors,saved.firm.name,saved.entry.title,saved.entry.client,saved.intake.supplier]);
  for(const value of values){
-  if(typeof value==='string'&&value.trim())occurrences(original,value,(start,end)=>{ends[start]=Math.max(ends[start],end);});
+  if(typeof value==='string'&&value.trim())occurrences(original,value,(start,end)=>{ends[start]=Math.max(ends[start],end);if(anchors.has(value))anchorEnds[start]=Math.max(anchorEnds[start],end);});
  }
  const merged=[];
  for(let start=0;start<ends.length;start++){
@@ -43,6 +47,19 @@ export function questionLines(saved,sourceId){
   const previous=merged.at(-1);
   if(previous&&start<previous[1])previous[1]=Math.max(previous[1],ends[start]);
   else merged.push([start,ends[start]]);
+ }
+ // Partition only already hidden ranges. Surrounding words remain hidden
+ // even when the local model marked an entire sentence as identifying.
+ const slices=[];
+ for(const [start,end] of merged){
+  let cursor=start;
+  for(let i=start;i<end;i++){
+   const last=anchorEnds[i];
+   if(last<=i||last>end)continue;
+   if(cursor<i)slices.push([cursor,i]);
+   slices.push([i,last]);cursor=last;i=last-1;
+  }
+  if(cursor<end)slices.push([cursor,end]);
  }
  const certified=certificates.get(sha(original.split('\n').filter(s=>s.trim()).join('\n')));
  let attested=Boolean(certified);
@@ -54,10 +71,10 @@ export function questionLines(saved,sourceId){
  const lines=[];let start=0,firstRange=0;
  for(const [n,text] of original.split('\n').entries()){
   const end=start+text.length;
-  while(firstRange<merged.length&&merged[firstRange][1]<=start)firstRange++;
+  while(firstRange<slices.length&&slices[firstRange][1]<=start)firstRange++;
   const local=[];
-  for(let i=firstRange;i<merged.length&&merged[i][0]<end;i++){
-   const [a,b]=merged[i];
+  for(let i=firstRange;i<slices.length&&slices[i][0]<end;i++){
+   const [a,b]=slices[i];
    local.push([Math.max(a,start)-start,Math.min(b,end)-start]);
   }
   const parts=fragments(text,local,tokens);
@@ -71,4 +88,17 @@ export function questionLines(saved,sourceId){
   start=end+1;
  }
  return lines;
+}
+
+// Keep document indexes first so the lawyer sees each known reference with
+// the same local number in the current question and the selected supports.
+export function maskedMatterQuestion(saved,document,id,original){
+ const rows=questionLines(saved,id,{id,label:'Pregunta',document});
+ const lines=original.split('\n');
+ let count=0;
+ for(const row of rows){
+  lines[row.evidence.line-1]=row.masked;
+  count+=row.parts.filter(part=>part.value!==undefined).length;
+ }
+ return {masked:lines.join('\n'),count};
 }

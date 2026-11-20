@@ -1,0 +1,60 @@
+{
+  "case": "regalias",
+  "client": "Manufacturas Tilo de Ensayo",
+  "entries": [
+    {
+      "kind": "contrato",
+      "text": "Cliente: Manufacturas Tilo de Ensayo\nContrato: LCN-631-E\nLa regalía se calcula sobre las ventas netas.\nLa firma ocurrió durante la velada de las lámparas de caolín.",
+      "private": [
+        "Manufacturas Tilo de Ensayo",
+        "LCN-631-E"
+      ],
+      "clues": [
+        "velada de las lámparas de caolín"
+      ],
+      "facts": [
+        "se calcula sobre las ventas netas"
+      ]
+    },
+    {
+      "kind": "anexo",
+      "text": "Anexo: VOL-308-A\nRemite al contrato LCN-631-E.\nEl porcentaje depende del volumen vendido.\nLa entrega se registró a espaldas del mirador con forma de brújula.",
+      "private": [
+        "VOL-308-A",
+        "LCN-631-E"
+      ],
+      "clues": [
+        "mirador con forma de brújula"
+      ],
+      "facts": [
+        "depende del volumen vendido"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "¿Qué prueba pedirías a Manufacturas Tilo de Ensayo para verificar la base de regalías de LCN-631-E?",
+      "private": [
+        "Manufacturas Tilo de Ensayo",
+        "LCN-631-E"
+      ],
+      "clues": [],
+      "facts": [
+        "Qué prueba pedirías",
+        "verificar la base de regalías"
+      ]
+    },
+    {
+      "kind": "seguimiento",
+      "text": "¿Cómo contrastar el volumen de VOL-308-A con las ventas netas de LCN-631-E?",
+      "private": [
+        "VOL-308-A",
+        "LCN-631-E"
+      ],
+      "clues": [],
+      "facts": [
+        "contrastar el volumen",
+        "con las ventas netas"
+      ]
+    }
+  ]
+}

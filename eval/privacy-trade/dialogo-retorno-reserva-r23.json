@@ -1,0 +1,10 @@
+{
+  "case": "retorno",
+  "client": "Taller Once Abetos de Ensayo",
+  "entries": [
+    {"kind":"orden","text":"Cliente: Taller Once Abetos de Ensayo\nOrden de retorno: RNO-7408\nLas etiquetas indican salida temporal para reparación.\nLos bultos se sellaron en el cobertizo pintado con alas de libélula.","private":["Taller Once Abetos de Ensayo","RNO-7408"],"clues":["cobertizo pintado con alas de libélula"],"facts":["salida temporal para reparación"]},
+    {"kind":"constancia","text":"Factura: CSM-6321\nCorresponde a la orden RNO-7408.\nLa constancia informa la sustitución de una pieza.\nEl vehículo pasó cuando sonaron por última vez las campanas de vidrio azul.","private":["CSM-6321","RNO-7408"],"clues":["campanas de vidrio azul"],"facts":["sustitución de una pieza"]},
+    {"kind":"pregunta","text":"¿Qué evidencia pedirías a Taller Once Abetos de Ensayo para distinguir la reparación de la sustitución en RNO-7408?","private":["Taller Once Abetos de Ensayo","RNO-7408"],"clues":[],"facts":["Qué evidencia pedirías","distinguir la reparación de la sustitución"]},
+    {"kind":"seguimiento","text":"¿Se puede cotejar el retorno de RNO-7408 con la pieza descrita en CSM-6321?","private":["RNO-7408","CSM-6321"],"clues":[],"facts":["cotejar el retorno","con la pieza descrita"]}
+  ]
+}

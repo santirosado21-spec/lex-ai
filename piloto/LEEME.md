@@ -13,6 +13,12 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Preguntar quién pagó el flete
+
+Añade `piloto/carta-porte-practica.txt` y `piloto/recibo-porte-practica.txt` como dos documentos del expediente. En **Consultar con una pregunta propia**, escribe «¿Qué comprobante acredita quién pagó el flete de CPV-904153?». Busca fundamentos y selecciona el artículo 65, fracción I, inciso d), de la Ley Aduanera. En **Elegir líneas de mis documentos**, marca la tercera línea de la carta de porte y la tercera del recibo. Puedes incluir un soporte propio como evidencia local.
+
+Al preparar el mensaje aparece la pregunta con **[[PARTE_1]]** en lugar del folio. Lee el mensaje completo para comprobar que ambas afirmaciones llevan ese mismo marcador. Sólo las preguntas de pago reconocidas y vinculadas a referencias de líneas de práctica acreditadas tienen esta opción. En las demás consultas, la vista previa indica qué enfoque público recibe OpenAI. Al abrir **Datos originales**, coteja el folio y los hechos numerados con sus documentos. Si el proveedor devuelve una pregunta de seguimiento incompleta, la nota distingue la pregunta de cotejo que aporta el despacho.
+
 ### Relacionar dos fundamentos con la factura y el contrato
 
 1. Abre un expediente ficticio. En **Documentos del expediente**, añade `piloto/factura-cotejo-ficticia.txt` y `piloto/contrato-cotejo-ficticio.txt`. Llámalos **Factura de muestra** y **Contrato de muestra**.

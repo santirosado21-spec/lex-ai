@@ -41,7 +41,7 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
    <button className="rp-quiet" disabled={busy||disabled||question.trim().length<10}>{busy?<LoaderCircle className="rp-spin" size={16}/>:<HardDrive size={16}/>}Buscar fundamentos en este equipo</button>
   </form>
   {error&&<p role="alert">{error}</p>}
-  {review&&<div className="rp-reveal"><details className="rp-details"><summary>Pregunta con sustituciones locales · {review.count}</summary><p>{review.masked}</p></details>
+  {review&&<div className="rp-reveal"><details className="rp-details"><summary>Pregunta con sustituciones locales · {review.count}</summary><p>{review.masked}</p>{Boolean(review.sources?.length)&&<p>Los números de los datos coinciden con los de las líneas del expediente.</p>}</details>
    {review.permit&&review.candidates.length>0&&<div className="rp-actions" role="group" aria-label="Tipo de consulta">
     <button type="button" className="rp-quiet" aria-pressed={route==='permit'} disabled={busy||disabled} onClick={()=>setRoute('permit')}>Cotejar pedimento</button>
     <button type="button" className="rp-quiet" aria-pressed={route==='passage'} disabled={busy||disabled} onClick={()=>setRoute('passage')}>Consultar pasaje jurídico</button></div>}

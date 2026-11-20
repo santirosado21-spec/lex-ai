@@ -50,3 +50,12 @@ test('the context pass retains a fully matched documentary clause and masks the 
  assert.equal(result.available,true);assert.equal(result.ranges.length,1);
  assert.equal(text.slice(...result.ranges[0]),'Llegó junto a la torre tornasol con LARGO-9039127392.');
 });
+
+test('spatial and event descriptions are masked while payment questions retain generic legal terms',async()=>{
+ const text='El paquete se descargó frente al arco pintado de ámbar. El contrato se firmó durante la feria de las cometas dobles. ¿Qué comprobante pedirías a Rosa para aclarar quién asumió el seguro de AB-643?';
+ const r=await reviewIntakeDocument({text,originalHash:'a'.repeat(64),fields:['Rosa','AB-643'],suggestions:['comprobante','seguro']});
+ const visible=r.parts.map(x=>x.text??'***').join('');
+ for(const s of ['arco pintado','cometas dobles','Rosa','AB-643'])assert.ok(!visible.includes(s),s);
+ assert.ok(visible.includes('Qué comprobante pedirías')&&visible.includes('quién asumió el seguro'));
+ assert.equal(r.restored,text);
+});

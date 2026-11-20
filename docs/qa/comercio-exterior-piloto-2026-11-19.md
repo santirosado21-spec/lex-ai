@@ -367,3 +367,18 @@ Se probó una pregunta sobre el precio pagado y el flete de una operación ficti
 OpenAI señaló la contradicción y propuso contrastar la factura y los comprobantes del transporte. Un segundo envío generó dos acciones de cotejo. Los dos cuerpos enviados coincidieron con sus vistas previas. El proveedor reportó 520 y 494 tokens de entrada, y 234 y 66 de salida. La primera respuesta dio dos citas literales de 239 y 394 caracteres. La primera versión del validador rechazó ambas por su longitud. Se corrigió el límite para admitir citas literales de hasta 420 caracteres y se reprodujo la respuesta grabada. El seguimiento se generó con una nueva solicitud real. La aceptación comprueba que las citas pertenecen a sus respectivos pasajes. La interpretación requiere validación del abogado.
 
 La nota y la lista interna recuperaron la pregunta, los dos folios y las líneas elegidas. El recuadro del segundo pasaje se probó en Chromium a 320, 390, 768 y 1 280 píxeles. El guion reproducible es `node scripts/check-pilot-two-sources.mjs --replay=fixtures/public-cases/consulta-dos-fundamentos-r22.json`. El cotejo admite dos disposiciones entre los resultados de la búsqueda y conserva la condición del encabezado del artículo 65. Los archivos importados sin acreditación de práctica siguen aportando sus líneas al restituir el documento localmente. La versión normativa aplicable y el trabajo con documentos reales siguen pendientes.
+
+## Pregunta vinculada al folio y evaluación de diálogo · r23
+
+La carta de porte ficticia y el recibo atribuyen el pago del flete a partes distintas. Al seleccionar las dos líneas, Rejon puede reconstruir una pregunta documental sobre el pago con la misma referencia temporal que usa en ambas. La solicitud real a OpenAI incluyó «¿Qué comprobante acredita quién pagó el flete de [[PARTE_1]]?». Los dos nombres de archivo, el folio, el cliente y el tercer soporte privado se comprobaron ausentes del cuerpo del envío. La respuesta relacionó el recibo con la afirmación H1 y conservó el marcador. La pregunta de seguimiento del proveedor salió incompleta.
+
+En la primera ejecución el validador rechazó la lectura porque contenía H1 y la pregunta secundaria estaba mal formada. En la reproducción se comprobó H1 contra los hechos que efectivamente se enviaron y cada cita contra su pasaje. La interfaz identificó como propia la pregunta documental de respaldo. Se restituyeron la referencia en el párrafo del modelo, la pregunta original y los tres soportes. Las tres exportaciones se abrieron e imprimieron con LibreOffice. El comando de reproducción es `node scripts/check-pilot-question-lines.mjs --pregunta-vinculada --replay`.
+
+| Diálogo ficticio, cuatro textos por fila | Menciones privadas cubiertas | Indicios indirectos cubiertos | Fragmentos útiles íntegros | Referencias repetidas con alias estable |
+| --- | ---: | ---: | ---: | ---: |
+| Valoración, caso de desarrollo de r22 | 8/8 | 3/3 | 7/7 | 3/3 |
+| Regalías | 8/8 | 2/2 | 6/6 | 3/3 |
+| Origen | 8/8 | 2/2 | 5/6 | 3/3 |
+| Retorno, reserva posterior a los ajustes | 8/8 | 1/2 | 2/6 | 3/3 |
+
+Los ensayos de privacidad usaron Ollama en el Mac sin llamadas a la nube. El diálogo de retorno quedó congelado después del ajuste, antes de medirlo con r22 y r23. En esa reserva r22 conservó un alias de tres, r23 los tres. Ambas cubrieron los ocho datos directos y un indicio de dos, y conservaron dos de seis expresiones. Las campanas que identificaban la operación siguieron visibles. El ensayo documenta la mejora de las referencias entre documentos y el riesgo residual de la conversación libre. La revisión por un abogado y las pruebas en los equipos de los socios siguen pendientes.
