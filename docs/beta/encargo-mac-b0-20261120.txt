@@ -1,6 +1,6 @@
 ENCARGO PARA CLAUDE/CODEX EN EL MAC DE SANTIAGO (sin nube, sin claves, sin datos reales)
 
-Rama: rejon/comercio-b-20261120 en https://github.com/santirosado21-spec/lex-ai. Fijar el commit del paquete: COMMIT_PAQUETE = ______ (lo rellena quien entregue este texto con el SHA completo ya empujado; no usar HEAD móvil ni main).
+Rama: rejon/comercio-b-20261120 en https://github.com/santirosado21-spec/lex-ai. Fijar el commit del paquete: COMMIT_PAQUETE = 5e8e7c0540c924bc4b457feb1ae7a4d3143139c0 (contiene los casos y el paquete; no usar HEAD móvil ni main).
 
 Capa local verificada por lectura de código (rama 5e8e7c0, antes de este encargo): scripts/measure-intake-dialogue.mjs sólo pasa a inspectLocalDocument un fetch que hace assert de que la URL sea exactamente http://127.0.0.1:11434/api/chat (cualquier otra URL aborta); server/intake-import.mjs sólo llama esa URL con el modelo readerModel = qwen3.5:2b-q4_K_M (server/privacy/local-reader-status.mjs); en server/privacy/*.mjs, intake-sources.mjs y corpus/intake-question-lines.mjs no hay otra llamada de red (grep de fetch( y URLs). "--app=." solo indica la carpeta que importa el código. Repetir ese grep en el commit fijado antes de correr; si aparece otra URL, PARAR.
 
