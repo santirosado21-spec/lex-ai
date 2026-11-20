@@ -1,0 +1,76 @@
+{
+  "annotation_note": "Casos jurídicos ficticios anotados el 2026-11-20 antes de cualquier prueba en el piloto. Respuestas esperadas derivadas del texto de la Ley Aduanera (Cámara, última reforma DOF 19-11-2025, arts. 64 a 66) leído en resources/trade/ley-aduanera-2025.pdf. Sin revisión de abogado. No son asesoría.",
+  "cases": [
+    {
+      "id": "valor-ajustes-b0-20261120-a",
+      "operation_date": "2026-03-10",
+      "question": "Una importadora paga 100 000 USD por lámina galvanizada. Aparte paga: (1) comisión de corretaje al intermediario del vendedor; (2) comisión de compra a su propio agente; (3) flete y seguro hasta la frontera, no incluidos en el precio; (4) flete interno posterior; (5) cuota compensatoria; (6) instalación posterior en planta, desglosada en la factura. ¿Cuáles integran el valor de transacción?",
+      "expected": [
+        {
+          "item": "comisión de corretaje",
+          "effect": "se suma",
+          "source": "art. 65, fracc. I, inciso a)"
+        },
+        {
+          "item": "comisión de compra",
+          "effect": "no se suma",
+          "source": "art. 65, fracc. I, inciso a) (salvedad de comisiones de compra)"
+        },
+        {
+          "item": "flete y seguro hasta que se den los supuestos del art. 56, fracc. I",
+          "effect": "se suma si corre a cargo del importador y no está en el precio",
+          "source": "art. 65, fracc. I, inciso d)"
+        },
+        {
+          "item": "flete posterior",
+          "effect": "no se suma si se distingue del precio",
+          "source": "art. 66, fracc. II, inciso b)"
+        },
+        {
+          "item": "cuota compensatoria",
+          "effect": "no se suma si se distingue del precio",
+          "source": "art. 66, fracc. II, inciso c)"
+        },
+        {
+          "item": "instalación posterior",
+          "effect": "no se suma si se distingue del precio",
+          "source": "art. 66, fracc. II, inciso a)"
+        }
+      ],
+      "traps": [
+        "la lista del art. 65 no incluye todo gasto del importador; la exclusión del 66 exige desglose en el comprobante",
+        "corretaje vs comisión de compra"
+      ]
+    },
+    {
+      "id": "valor-ajustes-b0-20261120-b",
+      "operation_date": "2025-06-15",
+      "question": "Una importadora suministró gratis al vendedor extranjero moldes para producir la mercancía, paga regalías como condición de venta y se compromete a revertir al vendedor parte del producto de la reventa. ¿Qué se suma al precio pagado y bajo qué condiciones?",
+      "expected": [
+        {
+          "item": "moldes suministrados gratuitamente o a precios reducidos",
+          "effect": "se suma su valor repartido, en la medida en que no esté en el precio",
+          "source": "art. 65, fracc. II, inciso b)"
+        },
+        {
+          "item": "regalías pagadas como condición de venta",
+          "effect": "se suman si no están en el precio",
+          "source": "art. 65, fracc. III"
+        },
+        {
+          "item": "parte del producto de la enajenación posterior que revierte al vendedor",
+          "effect": "se suma",
+          "source": "art. 65, fracc. IV"
+        },
+        {
+          "item": "requisito común",
+          "effect": "ajustes sólo con datos objetivos y cuantificables",
+          "source": "art. 65, último párrafo"
+        }
+      ],
+      "traps": [
+        "operación anterior a la reforma del 19-11-2025: la edición en el repositorio es posterior y sólo muestra marcas propias (en estos artículos únicamente 'Párrafo reformado DOF 25-06-2018' en el art. 66); la versión vigente en 2025-06-15 no se verificó"
+      ]
+    }
+  ]
+}

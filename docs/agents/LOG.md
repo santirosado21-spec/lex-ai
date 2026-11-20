@@ -443,3 +443,7 @@ El conjunto de pares fracción/NICO del XLSX informativo de abril de 2024 coinci
 ## 2026-11-20 05:47 — rejon-dev — Vigencia del Reglamento aduanero por fecha de operación
 
 La edición del Reglamento (última reforma DOF 23-02-2026) trae marcas de esa única reforma en 138 de 282 artículos, añade 33 artículos y deroga 10. La biblioteca sólo tiene el texto vigente; para operaciones anteriores al 24-02-2026 no hay versión previa y el piloto sólo avisa de forma genérica. Sin cambio de código. Casos inéditos con varias excepciones y Anexo 22 por fecha siguen sin medir. Ver docs/qa/reglamento-vigencia-por-fecha-20261120.md.
+
+## 2026-11-20 05:55 — rejon-dev — Dos casos legales de valor en aduana anotados sin probar
+
+Casos A y B sobre arts. 65 y 66 de la Ley Aduanera con fecha de operación y respuestas esperadas con inciso, congelados con huella; no probados por falta de public-library.sqlite y del modelo local. Caso anterior a la reforma de 19-11-2025 sin versión previa verificada. Ver docs/qa/casos-legales-valor-aduana-b0-20261120.md.

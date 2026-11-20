@@ -12,6 +12,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- Dos casos legales de valor en aduana (arts. 65 y 66) anotados y congelados, **sin probar**; falta la base `public-library.sqlite` y el modelo local. Ver `docs/qa/casos-legales-valor-aduana-b0-20261120.md`.
+
 - Reglamento aduanero: sólo texto vigente (reforma DOF 23-02-2026 en 138 de 282 artículos); falta versión previa para operaciones anteriores al 24-02-2026 y el piloto sólo avisa de forma genérica. Ver `docs/qa/reglamento-vigencia-por-fecha-20261120.md`.
 
 - Conciliación NICO abril 2024: 11 507 pares coinciden exactamente con el acuerdo de 2022 y sus dos reformas; descripciones, anotaciones y reformas posteriores sin comparar. Ver `docs/qa/conciliacion-nico-abril24-20261120.md`.
