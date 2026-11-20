@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 23:25 por codex: Rejon r26.1 enlaza la pregunta con soportes del expediente e incorpora el Reglamento aduanero
+**Última actualización:** 2026-11-19 23:41 por codex: Rejon r28.1 incorpora el Reglamento completo y reservas del expediente
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r28.1 reúne el Reglamento aduanero completo con búsqueda temática, selección del inciso público, reservas locales por expediente y bloqueo antes del envío. ZIP probado en este Mac, 1 470 pruebas aprobadas, diez omitidas y nueve archivos impresos y cotejados en LibreOffice. [Cotejo del Reglamento](../qa/reglamento-aduanero-completo-r28.md) y [medición de privacidad](../qa/reservas-expediente-r27.md).
 
 - r26.1 entrega el piloto privado con lectura de soportes originales antes de enviar, búsqueda por folio y Reglamento de la Ley Aduanera. La copia extraída del ZIP completó los dos borradores, su reapertura y seis exportaciones verificadas en LibreOffice. Los dos envíos originales a OpenAI contenían material público. [Comprobaciones y límites](../qa/cotejo-expediente-reglamento-r26.md).
 
@@ -103,6 +105,9 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Prioridad de privacidad: en el caso de origen redactado por un segundo modelo local quedaron visibles referencias a región, inmueble y rastros físicos, y sólo se conservaron dos de seis hechos. Evaluar un lector que distinga procedencia técnica del insumo, lugar concreto y vestigios de la operación. Separar desarrollo y una nueva reserva antes de modificar el envío de texto libre.
+- Prioridad jurídica: medir en asuntos inéditos cómo responde a preguntas con varias obligaciones o excepciones del mismo artículo. Ampliar el cotejo del reglamento con reglas, disposiciones transitorias y cambios de vigencia por fecha de operación. La autoridad profesional y las pruebas en las cuentas y equipos de los socios siguen pendientes.
 
 - Medir en expedientes ficticios inéditos si se identifican operaciones con folios compartidos, referencias cruzadas y descripciones indirectas del equipo. Obtener cotejo jurídico de socios, probar el respaldo con su cuenta real y completar la actualización de las fuentes prioritarias por fecha de operación.
 

@@ -1,4 +1,4 @@
-import {regulationTitle,regulationLawId} from './corpus/customs-edition.mjs';
+import {regulationTitle,regulationLawId,customsInstrumentForArticle} from './corpus/customs-edition.mjs';
 import {createIntakeGenerator,createIntakePilot} from './intake-pilot.mjs';
 import {registerTimeBilling} from './time-billing.mjs';
 import jurisdictions from '../resources/mexico-jurisdictions.json' with {type:'json'};
@@ -198,7 +198,9 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     if(!article)return null;
     const normalized=' '+titleKey(query)+' ';
     const candidates=[...pilotLaws,...corpus.map(s=>({title:s.title,lawId:null,jurisdiction:s.jurisdiction})),...(publicLibrary?.status?.().laws??[]).map(s=>({title:s.title,lawId:s.id,jurisdiction:s.jurisdiction}))];
-    const match=candidates.filter(s=>normalized.includes(' '+titleKey(s.title)+' ')).sort((a,b)=>titleKey(b.title).length-titleKey(a.title).length||Number(Boolean(b.lawId))-Number(Boolean(a.lawId)))[0];
+    const instrument=intakePilot?customsInstrumentForArticle(query):null;
+    if(instrument?.unavailable)return {unavailable:true};
+    const match=candidates.filter(s=>instrument?s.lawId===instrument.lawId:normalized.includes(' '+titleKey(s.title)+' ')).sort((a,b)=>titleKey(b.title).length-titleKey(a.title).length||Number(Boolean(b.lawId))-Number(Boolean(a.lawId)))[0];
     const ccfAlias=/\bccf\b/i.test(query);
     const localConstitution=/\bconstitucion\b.*\b(?:cdmx|distrito federal|estado(?!s)|local|ciudad)\b/.test(normalize(query));
     if(!match&&localConstitution)return {unavailable:true};

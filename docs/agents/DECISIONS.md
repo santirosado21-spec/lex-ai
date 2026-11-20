@@ -213,3 +213,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 23:25 — codex — Vincular folios y conservar los soportes de identidad en el equipo
 
 **Por qué:** Un folio permite recuperar documentos, pero no demuestra que volvió el mismo equipo. Las preguntas de identidad se formulan en la nube como una hipótesis normativa. Las líneas elegidas y la consulta original se cotejan y restituyen en el expediente. El Reglamento se consulta por su propio título e identificador para distinguirlo de la Ley.
+
+## 2026-11-19 23:40 — codex — Cotejar artículos completos por página y acotar la cita al inciso reconocido
+
+**Por qué:** En el artículo 6-A, la primera generación citó requisitos generales y pasó por alto el correo electrónico de notificaciones. El texto completo conserva las condiciones y la selección de un fragmento oficial permite cotejar la cita que recibe el abogado. Las reservas del expediente pueden impedir cualquier nuevo envío antes de consultar al proveedor.

@@ -166,3 +166,9 @@ Adjunta los archivos de práctica `piloto/orden-inspeccion-ficticia.txt` y `pilo
 En el expediente abre **Reservas del expediente**. Escribe una expresión ficticia como «espirales de esparto» y pulsa **Guardar reserva**. En las consultas y en **Consultar soporte local**, Rejon oculta las coincidencias incluso en documentos que ya habías guardado. Reconoce cambios de acentos, mayúsculas y espacios. Puedes comprobar el fragmento mediante **Ver texto restituido**.
 
 Antes de cada envío, el servicio local comprueba el mensaje completo. Para probarlo con la nota del artículo 117, reserva temporalmente «territorio nacional». Aparecerá el motivo por el que el mensaje está detenido. Al quitar esa reserva se puede enviar la nota. La lista se guarda dentro del expediente cifrado de tu equipo. Las expresiones que se ocultaron al importar un documento conservan también esa protección propia.
+
+### Consultar por tema el Reglamento de la Ley Aduanera
+
+Abre **Biblioteca federal → Reglamento aduanero**. En **Buscar en el Reglamento** prueba «sello digital correo electrónico avisos de disponibilidad». El resultado del artículo 6-A abarca las páginas 3 y 4 de la edición oficial. Abre **texto del artículo** y compara cada página con el PDF local. La búsqueda admite también números como «78». La ficha señala si el texto aparece derogado en esta edición.
+
+En un expediente ficticio abierto, pulsa **Preparar consulta de este artículo**. Puedes precisar la pregunta y elegir el enfoque. Revisa el mensaje antes de enviarlo. Incluye el artículo oficial completo y, si la consulta coincide con una parte concreta, un fragmento público que señala el punto a estudiar. El equipo comprueba la cita de la respuesta. En **Datos originales** puedes cotejar la pregunta restituida y exportar la nota.

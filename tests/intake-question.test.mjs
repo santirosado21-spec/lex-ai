@@ -72,7 +72,7 @@ test('question review stays on loopback, original restores only within its matte
  const listed=await rpc('inspectQuestion',{text:'Coteja los artículos 97 y 117 de la Ley Aduanera.'});
  assert.deepEqual(new Set(listed.candidates.map(row=>row.citationId)),new Set(['MX-FED-LADUA-97','MX-FED-LADUA-117']));
  const regulation=await rpc('inspectQuestion',{text:'Compara los artículos 150 y 174 del Reglamento de la Ley Aduanera.'});
- assert.deepEqual(new Set(regulation.candidates.map(row=>row.key)),new Set(['reg-aduana-150/0','reg-aduana-174/0']));
+ assert.deepEqual(new Set(regulation.candidates.map(row=>row.key)),new Set(['reg-aduana-150/0','reg-aduana-150/1','reg-aduana-174/0']));
  const single=await rpc('inspectQuestion',{text:'¿Qué dispone el artículo 174 del Reglamento de la Ley Aduanera?'});
  assert.deepEqual(single.candidates.map(r=>r.key),['reg-aduana-174/0']);
  const regulationTask=await rpc('addQuestion',{reviewId:single.id,key:single.candidates[0].key,angle:'documentos'});
@@ -166,4 +166,11 @@ test('manual search uses reviewed lines in this matter and keeps the private doc
  const {status,task}=await rpc('addQuestion',{...choice,factIds:[row.id]});
  const prompt=status.tasks.find(x=>x.id===task).preview;
  assert.ok(!prompt.includes('GSQ-54821')&&!prompt.includes(sentence)&&!prompt.includes('Recibo turquesa'));
+ for(const [text,expected] of [
+  ['¿Cómo se relaciona el artículo 117 de la Ley Aduanera con el Reglamento de la Ley Aduanera?','MX-FED-LADUA-117'],
+  ['¿Cómo se relaciona el artículo 117 del Reglamento de la Ley Aduanera con la Ley Aduanera?','MX-FED-REG-LADUA-117'],
+ ]){
+  const result=await rpc('inspectQuestion',{text});assert.deepEqual(new Set(result.candidates.map(row=>row.citationId)),new Set([expected]));
+ }
+
 });

@@ -1,3 +1,4 @@
+import {regulationSearch,chooseRegulationFocus} from './regulation-search.mjs';
 import {remedySuggestions} from './remedy-index.mjs';
 import {extractReference} from '../retrieval/references.mjs';
 import {verifiedConceptSources} from '../retrieval/thesaurus.mjs';
@@ -5,7 +6,7 @@ import {requestedLegalJurisdiction} from '../assistant-router.mjs';
 // Candidate lookup runs on the device. Only source identifiers and a closed
 // set of research angles are used to reconstruct a question at the cloud boundary.
 import {mentionedConcepts,selectedConcepts} from './question-concepts.mjs';
-import {customsPassage,hasCustomsPassage,regulationLawId,regulationPassage} from './customs-edition.mjs';
+import {customsPassage,hasCustomsPassage,customsInstrumentForArticle,regulationLawId,regulationDirectory,regulationPassage} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
 import {loadTradeReading,suggestTradeReadings} from './intake-trade-reading.mjs';
 
@@ -41,20 +42,33 @@ export function questionCandidates(library,original,parts,reference=null,context
  }
  const customs=(article,priority,regulation=false)=>{
   const {ref,passages}=regulation?regulationPassage(article):customsPassage(article);
-  passages.forEach((p,i)=>display((regulation?'reg-aduana-':'aduana-')+article,i,{...ref,locator:p.locator+' · '+ref.locator},p.quote+(p.condition?'\n\nCondición del encabezado\n'+p.condition:''),priority+rank(p.quote,localTerms),false,p.locator));
+  const source=(regulation?'reg-aduana-':'aduana-')+article;
+  passages.forEach((p,i)=>{
+   const exact=p.reference??ref;
+   display(source,i,{...exact,locator:p.locator+' · '+exact.locator},p.quote+(p.condition?'\n\nCondición del encabezado\n'+p.condition:''),priority+rank(p.quote,localTerms),false,p.locator);
+   if(regulation&&p.full)candidates.get(source+'/'+i).regulationFocus=chooseRegulationFocus(p.quote,working);
+  });
  };
  const ranked=()=>[...candidates.values()].sort((a,b)=>b.score-a.score||a.key.localeCompare(b.key)).slice(0,8);
  const namedArticle=/\b(?:articulos?|arts?[.]?)\s+\d/u.test(normalize(original));
  const jurisdiction=requestedLegalJurisdiction(original);
  if(jurisdiction&&jurisdiction.id!=='MX-FED')return [];
  const named=extractReference(original);
+ const namedRegulation=/\breglamento (?:de la ley aduanera|aduanero)\b/u.test(normalize(original));
+ if(!reference&&namedRegulation&&namedArticle){
+  const explicit=/\b(?:articulo|art[.]?)\s+(\d{1,3}(?:-[a-z])?)\b/u.exec(normalize(original));
+  const instrument=customsInstrumentForArticle(original);
+  if(instrument?.unavailable)return [];
+  if(explicit)reference={lawId:instrument?.lawId??regulationLawId,articleId:explicit[1].toUpperCase(),jurisdiction:'MX-FED'};
+  else return [];
+ }
  if(!reference&&namedArticle&&named.lawId&&named.article&&!named.ambiguous)reference={lawId:named.lawId,articleId:named.article,jurisdiction:'MX-FED'};
  if(reference||namedArticle){
   if(!reference||reference.unavailable||reference.state)return [];
   for(const item of reference.multi?reference.refs:[reference]){
    if(item.jurisdiction!=='MX-FED')return [];
    if(item.lawId===regulationLawId){
-    if(!['150','174'].includes(item.articleId))return [];
+    if(!regulationDirectory().some(row=>row.article===item.articleId))return [];
     customs(item.articleId,60,true);continue;
    }
    if((item.lawId==='MX-FED-LADUA'||item.titleKey==='ley aduanera')&&hasCustomsPassage(item.articleId)){
@@ -64,6 +78,10 @@ export function questionCandidates(library,original,parts,reference=null,context
    if(!row)return [];
    fromLibrary(row.sourceId,60);
   }
+  return ranked();
+ }
+ if(namedRegulation){
+  for(const [i,article] of regulationSearch(working).slice(0,6).entries())customs(article,60-i*4,true);
   return ranked();
  }
  // Match the prior operation as well as the legal event. A product defect

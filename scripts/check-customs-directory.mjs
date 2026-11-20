@@ -38,7 +38,7 @@ try{
    if(passage.endPage){
     const next=await pageText(passage.endPage);
     // PDF.js reads this edition's footer before the body in content-stream order.
-    const headerEnd=passage.endPage+' de 220';
+    const headerEnd=passage.endPage+' de '+pdf.numPages;
     assert.equal(next.split(headerEnd).length,2);
     const right=next.slice(next.indexOf(headerEnd)+headerEnd.length);
     assert.ok(clean(first+' '+right).includes(passage.text),passage.locator);

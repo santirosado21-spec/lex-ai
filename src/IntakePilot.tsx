@@ -46,6 +46,7 @@ export default function IntakePilot() {
   const [inspecting,setInspecting] = useState(false);
   const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'reglamento'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
   const [nicoQuery,setNicoQuery]=useState('');
+  const [articleInquiry,setArticleInquiry]=useState<{text:string}>();
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
   const [client,setClient] = useState('');
@@ -222,7 +223,10 @@ export default function IntakePilot() {
     <button className="rp-quiet" aria-pressed={libraryView==='nico'} onClick={()=>{setNicoQuery('');setLibraryView('nico');}}>Catálogo NICO</button>
     <button className="rp-quiet" aria-pressed={libraryView==='pedimento'} onClick={()=>setLibraryView('pedimento')}>Claves del pedimento</button>
     <button className="rp-quiet" aria-pressed={libraryView==='defensa'} onClick={()=>setLibraryView('defensa')}>Defensa comercial</button></div>
-    {libraryView==='aduana'||libraryView==='reglamento'?<IntakeCustomsLaw key={libraryView} regulation={libraryView==='reglamento'}/>:libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
+    {libraryView==='aduana'||libraryView==='reglamento'?<IntakeCustomsLaw key={libraryView} regulation={libraryView==='reglamento'} onAsk={saved&&pilot?.protectedRecords?(article,topic)=>{
+     const law=libraryView==='reglamento'?'del Reglamento de la Ley Aduanera':'de la Ley Aduanera';
+     setArticleInquiry({text:(topic?'¿Qué debo comprobar sobre '+topic+' según el artículo ':'¿Qué documentos permiten comprobar los requisitos del artículo ')+article+' '+law+'?'});setLibraryOpen(false);
+    }:undefined}/>:libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
       <aside className="rp-context">
         <div className="rp-image"><img src="/brand/lex-cover.webp" alt=""/></div>
@@ -276,7 +280,7 @@ export default function IntakePilot() {
             else if(next.tasks[0])setSelected(next.tasks[0].id);
             setNotice(!ids.length?'Se restableció el soporte inicial.':match?'Cotejo preparado. Revisa las líneas y la hipótesis.':'Los documentos seleccionados no tienen un tema de cotejo en común.');
            }}/>}
-          {pilot?.protectedRecords&&<IntakeQuestion reservationRevision={pilot.reservationRevision??0} disabled={busy||editText!==null} onSelect={chooseQuestion} onPermit={(selection,reviewId)=>saveReference('intake.savePermit',{...selection,reviewId})}/>}
+          {pilot?.protectedRecords&&<IntakeQuestion articleInquiry={articleInquiry} reservationRevision={pilot.reservationRevision??0} disabled={busy||editText!==null} onSelect={chooseQuestion} onPermit={(selection,reviewId)=>saveReference('intake.savePermit',{...selection,reviewId})}/>}
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?(item.comparison.archived?'Cotejo guardado · '+item.title:'Contrastar '+item.comparison.title.toLowerCase()):item.title}</option>)}
           </select></label>

@@ -1,3 +1,4 @@
+import {regulationFocusText} from './regulation-search.mjs';
 import {returnIdentityInquiry} from './return-context.mjs';
 import {remedyReference} from './remedy-index.mjs';
 import {questionFactTexts} from './intake-question-facts.mjs';
@@ -63,13 +64,14 @@ function questionSource(library,sourceId,part){
   const source=sourceId.startsWith('reg-aduana-')?regulationPassage(sourceId.slice(11)):customsPassage(sourceId.slice(7));
   if(!Number.isInteger(part)||part<0||part>=source.passages.length)throw Error('Pasaje aduanero inválido.');
   const passage=source.passages[part];
-  condition=passage.condition;body=passage.quote;
-  ref=Object.freeze({...source.ref,text:passage.quote+(condition?'\n\n'+condition:''),locator:passage.locator+' · '+source.ref.locator});
+  condition=passage.condition;body=passage.full?undefined:passage.quote;
+  const exact=passage.reference??source.ref;
+  ref=Object.freeze({...exact,text:passage.quote+(condition?'\n\n'+condition:''),locator:passage.locator+' · '+exact.locator});
  }else ref=loadResearchPassage(library,sourceId,part).ref;
  return Object.freeze({ref,body,condition});
 }
 
-export function questionPassage(library,{sourceId,part,angle,concepts=[],second,equipmentIdentity=false},caseFacts){
+export function questionPassage(library,{sourceId,part,angle,concepts=[],second,equipmentIdentity=false,regulationFocus},caseFacts){
  if(!Object.hasOwn(angles,angle))throw Error('Selecciona el enfoque jurídico.');
  const first=questionSource(library,sourceId,part);
  const {ref,body,condition}=first;
@@ -81,11 +83,15 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[],second,
  const facts=caseFacts?questionFactTexts(caseFacts):[];
  const identity=equipmentIdentity===true&&sourceId==='aduana-117';
  const identityPrompt=identity?' '+returnIdentityInquiry+' Examina la cuestión como hipótesis. Distingue cambiar una pieza de reemplazar el equipo completo. Propón cómo cotejar la identidad con documentos de salida y de retorno. La coincidencia de folios por sí sola no prueba identidad. No presupongas que hubo exportación ni reparación.':'';
- const responseSpec=identity?'En lectura explica qué evidencia permitiría distinguir esos supuestos en una o dos oraciones de 40 a 300 caracteres sin nombres, cifras ni conclusiones sobre el expediente. Devuelve JSON con lectura, cita':facts.length?'En lectura explica en una o dos oraciones qué permiten comprobar los hechos o qué contradicción requiere aclaración. Escribe de 40 a 300 caracteres sin cifras, nombres, nuevas citas o conclusiones de cumplimiento. Si los hechos no guardan relación con el pasaje, abstente. Devuelve JSON con lectura, cita':'Devuelve JSON con cita';
+ const regulationReading=sourceId.startsWith('reg-aduana-')&&!body;
+ const selectedText=regulationReading?regulationFocusText(ref.text,regulationFocus):'';
+ const publicFocus=selectedText?'\n\nPasaje público relacionado con la pregunta. Copia la cita de este fragmento. Explica qué dato o acto específico exige y cómo comprobarlo. Conserva las condiciones del artículo completo.\n'+selectedText:'';
+ const regulationInstruction='En lectura explica en una o dos oraciones de 40 a 300 caracteres qué permite comprobar la disposición y qué falta acreditar. Respeta sujetos, excepciones y condiciones. Si el artículo figura derogado, indica esa situación y pide verificar la fecha de la operación. Escribe sin cifras ni nombres de partes. Devuelve JSON con lectura, cita';
+ const responseSpec=identity?'En lectura explica qué evidencia permitiría distinguir esos supuestos en una o dos oraciones de 40 a 300 caracteres sin nombres, cifras ni conclusiones sobre el expediente. Devuelve JSON con lectura, cita':facts.length?'En lectura explica en una o dos oraciones qué permiten comprobar los hechos o qué contradicción requiere aclaración. Escribe de 40 a 300 caracteres sin cifras, nombres, nuevas citas o conclusiones de cumplimiento. Si los hechos no guardan relación con el pasaje, abstente. Devuelve JSON con lectura, cita':regulationReading?regulationInstruction:'Devuelve JSON con cita';
  const factBlock=facts.length?'\n\nHechos del ejercicio elegidos por el abogado\n'+facts.map((fact,i)=>'H'+(i+1)+' · '+fact).join('\n'):'';
  const inquiry=caseFacts?.inquiry?'\n\nPregunta del abogado con referencias sustituidas\n'+caseFacts.inquiry+'\nResponde a esa pregunta en la lectura, copia cada marcador de la pregunta y señala qué dato debe aclararse.':'';
  const markerRule=caseFacts?.aliases.length?' En la lectura vincula el pago o la comprobación con al menos una referencia de los hechos. Copia literalmente su marcador, incluidos los corchetes. Si no puedes vincularlos al pasaje, abstente.':'';
- const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'.'+identityPrompt+' Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(ref.remedy?'\nCotejo de alcance y vigencia: '+ref.summary:'')+(condition?'\nCondición del encabezado\n'+condition:'')+inquiry+factBlock+markerRule;
+ const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'.'+identityPrompt+' Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(ref.remedy?'\nCotejo de alcance y vigencia: '+ref.summary:'')+(condition?'\nCondición del encabezado\n'+condition:'')+publicFocus+inquiry+factBlock+markerRule;
  if(other){
   const sources=Object.freeze([first,other]);
   const returnRegimes=sources.some(s=>s.ref.id==='MX-FED-LADUA-97')&&sources.some(s=>s.ref.id==='MX-FED-LADUA-117');
@@ -94,11 +100,11 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[],second,
    ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+ref.text+(ref.remedy?'\n'+ref.summary:''));
   const interpret=facts.length?' En la lectura explica si los hechos seleccionados se contradicen y qué documento permitiría aclararlo.':'';
   const taskFocus=returnRegimes?' Distingue la reparación en el extranjero y la sustitución de una importación definitiva por defecto. Para cada cita copia sólo texto del pasaje elegido.':'';
-  const pairedPrompt='Relaciona dos fundamentos para un abogado mexicano.'+identityPrompt+taskFocus+' Enfoque: '+angles[angle]+focus+'. Explica cómo se complementan o qué diferencia debe comprobar el abogado. Si uno no sustenta la relación, responde {"abstener":true}. Devuelve sólo JSON con cita y segundaCita (una cita literal continua de 24 a 160 caracteres de cada pasaje, en ese orden), lectura (una o dos oraciones de 40 a 300 caracteres sin cifras, nombres ni conclusiones de cumplimiento) y solicitud (una pregunta documental breve entre signos de interrogación). Conserva condiciones y excepciones. No determines vigencia.'+interpret+'\n\n'+blocks.map((block,i)=>'Fuente '+(i+1)+'\n'+block).join('\n\n')+inquiry+factBlock+markerRule;
+  const pairedPrompt='Relaciona dos fundamentos para un abogado mexicano.'+identityPrompt+taskFocus+' Enfoque: '+angles[angle]+focus+'. Explica cómo se complementan o qué diferencia debe comprobar el abogado. Si uno no sustenta la relación, responde {"abstener":true}. Devuelve sólo JSON con cita y segundaCita (una cita literal continua de 24 a 160 caracteres de cada pasaje, en ese orden), lectura (una o dos oraciones de 40 a 300 caracteres sin cifras, nombres ni conclusiones de cumplimiento) y solicitud (una pregunta documental breve entre signos de interrogación). Conserva condiciones y excepciones. No determines vigencia.'+interpret+'\n\n'+blocks.map((block,i)=>'Fuente '+(i+1)+'\n'+block).join('\n\n')+publicFocus+inquiry+factBlock+markerRule;
   const note=Object.freeze({title:'Cotejo · '+ref.id+' y '+other.ref.id,ref,body,condition,angle,...(identity?{equipmentIdentity:true}:{}),sources,refs:Object.freeze(sources.map(s=>s.ref)),prompt:pairedPrompt,...(caseFacts?{caseFacts}:{})});
   verified.add(note);return note;
  }
- const note=Object.freeze({title,ref,body,condition,angle,prompt,...(identity?{equipmentIdentity:true}:{}),...(caseFacts?{caseFacts}:{})});verified.add(note);return note;
+ const note=Object.freeze({title,ref,body,condition,angle,prompt,...(regulationReading?{regulationReading:true,selectedText}:{}),...(identity?{equipmentIdentity:true}:{}),...(caseFacts?{caseFacts}:{})});verified.add(note);return note;
 }
 
 // A follow-up receives only an independently extracted description with a checked source location.
@@ -152,9 +158,10 @@ export function renderResearchNote(raw, note) {
   // Prefer short extracts in the prompt. A complete literal sentence can exceed that target.
   const pairValid=!other||(secondQuote.length>=24&&secondQuote.length<=420&&
     !/\[\[|\]\]/u.test(secondQuote)&&(other.body??other.ref.text).includes(secondQuote));
-  const keys=['cita','solicitud',...(hasFacts||other||note.equipmentIdentity?['lectura']:[]),...(other?['segundaCita']:[])];
-  const valid = pairValid&&(!(hasFacts||other||note.equipmentIdentity)||(goodObservation&&(proposed||(!other&&(note.caseFacts?.inquiry||note.equipmentIdentity)))))&&typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
-    !quote.includes('[[') && !quote.includes(']]') && (note.body??note.ref.text).includes(quote) &&
+  const withReading=hasFacts||other||note.equipmentIdentity||note.regulationReading;
+  const keys=['cita','solicitud',...(withReading?['lectura']:[]),...(other?['segundaCita']:[])];
+  const valid = pairValid&&(!withReading||(goodObservation&&(proposed||(!other&&(note.caseFacts?.inquiry||note.equipmentIdentity||note.regulationReading)))))&&typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
+    !quote.includes('[[') && !quote.includes(']]') && (note.selectedText||note.body||note.ref.text).includes(quote) &&
     Object.keys(result).every(key=>keys.includes(key));
   const question = valid ? proposed : '';
   // A verified substring can stop before a time limit or an exception. For
@@ -168,7 +175,7 @@ export function renderResearchNote(raw, note) {
   return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + (note.angle?'Consulta del abogado\n[[CONSULTA]]\n\n'+angles[note.angle]+'\n':'') + basis + (valid&&note.condition?'\nCondición del encabezado\n'+note.condition:'') +
     (note.caseFacts?.discrepancy?'\n\nDiscrepancia entre soportes\n'+note.caseFacts.discrepancy:'')+
     (valid&&other?'\n\nCita documental ['+other.ref.id+']\n'+(other.body??secondQuote)+(other.condition?'\nCondición del encabezado\n'+other.condition:''):'')+
-    (valid&&(hasFacts||other||note.equipmentIdentity)?'\n\nLectura preliminar de OpenAI\n'+localReading:'')+
+    (valid&&withReading?'\n\nLectura preliminar de OpenAI\n'+localReading:'')+
     (note.caseFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     (other?.ref.remedy?'\n\n'+other.ref.summary:'')+

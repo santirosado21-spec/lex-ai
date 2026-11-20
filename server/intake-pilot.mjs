@@ -1,3 +1,4 @@
+import {regulationSearch} from './corpus/regulation-search.mjs';
 import {reservationKey,hasReservedText} from './privacy/matter-reservations.mjs';
 import {returnContext,isReturnQuestion,returnIdentityInquiry} from './corpus/return-context.mjs';
 import {customsDirectory,regulationDirectory} from './corpus/customs-edition.mjs';
@@ -594,7 +595,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if(!choice)throw Error('Selecciona uno de los pasajes revisados.');
     const other=paired?review.candidates.find(row=>row.key===payload.secondKey):null;
     if(paired&&(!other||other.citationId===choice.citationId))throw Error('Selecciona otra disposición que aparezca en la revisión.');
-    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(review.context?.state==='supported'&&choice.source==='aduana-117'?{equipmentIdentity:true}:{}),...(other?{second:{sourceId:other.source,part:other.part}}:{}),...((choice.source.startsWith('ad29-')||other?.source.startsWith('ad29-'))&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
+    const {intake}=saved,selection={sourceId:choice.source,part:choice.part,angle,concepts:review.concepts,...(choice.regulationFocus!==undefined?{regulationFocus:choice.regulationFocus}:{}),...(review.context?.state==='supported'&&choice.source==='aduana-117'?{equipmentIdentity:true}:{}),...(other?{second:{sourceId:other.source,part:other.part}}:{}),...((choice.source.startsWith('ad29-')||other?.source.startsWith('ad29-'))&&review.defenseDate?{remedyReview:'Fecha consultada · '+review.defenseDate+'\n'+remedyPeriod(review.defenseDate).message}:{}),...(usesFacts?{factIds:payload.factIds}:{})};
     if(usesFacts&&(!Array.isArray(payload.factIds)||!payload.factIds.length||payload.factIds.length>4||new Set(payload.factIds).size!==payload.factIds.length||
        !payload.factIds.every(id=>review.factIds.includes(id))))throw Error('Elige los hechos que aparecen en la revisión de esta pregunta.');
     if(review.refinedLines?.some(id=>!payload.factIds?.includes(id)))throw Error('La búsqueda requiere las líneas elegidas. Vuelve a buscar si cambiaste de soporte.');
@@ -658,6 +659,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    }
    case 'intake.remedyPeriod':
     exactFields(payload,['date']);return remedyPeriod(payload.date);
+   case 'intake.searchRegulation':
+    exactFields(payload,['text']);
+    if(typeof payload.text!=='string'||payload.text.length>180)throw Error('Busca con un máximo de 180 caracteres.');
+    return regulationSearch(payload.text);
    case 'intake.regulationDirectory':
     exactFields(payload,[]);return regulationDirectory();
    case 'intake.customsDirectory':
