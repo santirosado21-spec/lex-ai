@@ -335,3 +335,7 @@ Medición de desarrollo con Ollama real en 38 narraciones: 43/43 identificadores
 ## 2026-11-19 19:00 — codex — Rejon r10 contrasta flete, regalías y acuses con fuentes y tres salidas Office
 
 Dos solicitudes reales de flete y regalías con documentos ficticios, 1179 tokens reportados en total. Se compararon solicitudes idénticas para hechos opuestos. Acuse simulado. LibreOffice abrió nueve exportaciones. Pasaron 109 pruebas dirigidas y dos pruebas de ZIP sintético del Semanario. Paquete r10 probado en macOS con reapertura, respaldo simulado y reproducción de regalías. Pendientes expediente real, cuenta real de Lorenzo, Windows, descarga oficial original y evaluación jurídica.
+
+## 2026-11-19 19:08 — codex — Rejon r11 prueba redacción en dos turnos y restitución en nueve archivos Office
+
+Dos seguimientos de valoración y dos turnos del ejercicio de origen generados con OpenAI. Cuatro solicitudes reales, 1783 tokens reportados. 98 pruebas dirigidas, nueve archivos abiertos en LibreOffice, navegador a cuatro anchos y prueba del ZIP en macOS. Carta y lista se conservan por separado. La segunda cuenta real, Windows, expedientes inéditos y conversación libre siguen pendientes.

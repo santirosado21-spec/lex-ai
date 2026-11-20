@@ -168,3 +168,8 @@
 .rp-comparison label{display:grid;gap:.4rem}
 .rp-comparison select{max-width:100%;min-width:0}
 .rp-comparison p{margin:0;font-size:.86rem;line-height:1.5}
+.rp-followup{border-block-start:1px solid var(--rp-line);padding-block-start:.65rem}
+.rp-followup p{margin:.35rem 0;color:var(--rp-muted);font-size:.9rem;line-height:1.55}
+.rp-followup .rp-actions{flex-wrap:wrap}
+.rp-followup textarea{width:100%;min-width:0;resize:vertical;padding:.65rem .8rem;border:1px solid #aba194;border-radius:5px;background:var(--rp-panel);color:var(--rp-ink);font:400 15px/1.5 'Schibsted Grotesk',sans-serif}
+.rp-shell textarea:focus-visible{outline:3px solid #916725;outline-offset:3px}

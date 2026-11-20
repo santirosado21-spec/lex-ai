@@ -149,3 +149,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:00 — codex — Cotejar en el equipo la hipótesis del asunto
 
 **Por qué:** En el piloto de comercio, una consulta pública común por tema cubre las tres hipótesis. El indicio, el folio original, la elección y las ediciones pertenecen al expediente local cifrado. Las descargas del Semanario se conservan en investigación hasta el cotejo.
+
+## 2026-11-19 19:08 — codex — Generar el seguimiento desde las citas del primer borrador
+
+**Por qué:** El abogado conserva sus ediciones privadas y puede pedir una carta o un control interno. La nube recibe el encargo, las citas reconstruidas desde la fuente y los tipos documentales elegidos. Sólo un ejercicio de procedencia comprobada añade sus hechos protegidos. El soporte y la hoja de trabajo se restituyen en el equipo.

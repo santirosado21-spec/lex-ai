@@ -9,15 +9,15 @@ import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}`;
+type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
-  id: Task; title: string; preview?: string; evidence?:{line:number;excerpt:string;additional?:{line:number;excerpt:string}[]};
+  id: Task; parent?:Task; title: string; preview?: string; evidence?:{line:number;excerpt:string;additional?:{line:number;excerpt:string}[]};
   comparison?:{subject:string;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
-type PilotStatus = {saved: boolean; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; followupParents?:Task[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -33,6 +33,7 @@ export default function IntakePilot() {
   const [pilot,setPilot] = useState<PilotStatus|null>(null);
   const [clientStep,setClientStep] = useState(false);
   const [worksheetDirty,setWorksheetDirty]=useState(false);
+  const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
@@ -125,6 +126,17 @@ export default function IntakePilot() {
       setError(invalidComparison?'La respuesta del contraste necesita cotejo. El borrador sigue pendiente.':comparison?.cached?'No se pudo abrir la consulta guardada en este equipo.':'La consulta terminó sin un borrador. Revisa el uso de OpenAI y las cuentas configuradas en el lanzador.');
       try{setPilot(await api<PilotStatus>('intake.status'));}catch{ /* Preserve the local view if the service is offline. */ }
     }
+    finally {setActivity(null);}
+  }
+  useEffect(()=>{setFocusRequest('');},[task]);
+  async function followup(form:'carta'|'control') {
+    if (!task||busy) return;
+    clearFeedback();setActivity('loading');
+    try {
+      const next=await api<{task:Task;status:PilotStatus}>('intake.addFollowup',{task,form,instruction:focusRequest});
+      setPilot(next.status);setSelected(next.task);setRestored('');
+      requestAnimationFrame(()=>document.querySelector<HTMLElement>('#intake-task')?.focus());
+    } catch(cause) {setError(cause instanceof Error?cause.message:'No se pudo preparar el seguimiento con las fuentes de la nota.');}
     finally {setActivity(null);}
   }
   async function reveal() {
@@ -221,13 +233,14 @@ export default function IntakePilot() {
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?'Contrastar '+item.comparison.title.toLowerCase():item.title}</option>)}
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
+          {activeTask.parent&&<div className="rp-followup"><button type="button" className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setSelected(activeTask.parent!);setRestored('');clearFeedback();}}><ChevronLeft size={15}/> Volver al primer borrador</button><p>La consulta retoma las citas del primer borrador. Las ediciones que escribiste permanecen en tu equipo.</p></div>}
           {comparison&&<section className="rp-comparison" aria-label="Contraste del expediente">
             <label htmlFor="rp-variant">Hipótesis que quieres contrastar<select id="rp-variant" disabled={busy||editText!==null} value={task} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
              {pilot?.tasks.filter(item=>item.comparison?.subject===comparison.subject).map(item=><option key={item.id} value={item.id}>{item.comparison?.label}</option>)}
             </select></label>
             <p>{comparison.conflicting?'El soporte contiene indicios contradictorios.':('Sugerencia local: '+comparison.suggestedLabel+'.')} Revisa las líneas del soporte antes de usar el borrador.</p>
           </section>}
-          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
+          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.parent?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
             <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
             <blockquote>{activeTask.evidence.excerpt}</blockquote>
             {activeTask.evidence.additional?.map(row=><blockquote key={row.line}>Línea {row.line} · {row.excerpt}</blockquote>)}
@@ -243,7 +256,7 @@ export default function IntakePilot() {
           {activeTask.evidence&&!activeTask.preview&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
           {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
           {draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> {comparison?'Ver la consulta común del tema':'Ver el mensaje enviado'}</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
-            <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>{activeTask.evidence?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
+            <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>{activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>
@@ -259,6 +272,12 @@ export default function IntakePilot() {
             <div className="rp-switch" aria-label="Vista del borrador" role="group"><button aria-pressed={!restored} disabled={busy} onClick={()=>setRestored('')}><Cloud size={14}/> Con marcadores</button><button aria-pressed={Boolean(restored)} disabled={busy} onClick={()=>void reveal()}><HardDrive size={14}/> Datos originales</button></div>
             <div className="rp-preview rp-document">{restored||<MarkedText text={draft}/>}</div>
             <button className="rp-quiet" disabled={busy} onClick={()=>{clearFeedback();setRestored('');setEditText(draft);}}>Editar borrador</button>
+            {task&&pilot?.followupParents?.includes(task)&&<section className="rp-followup"><h3>Continuar desde esta nota</h3>
+              <label htmlFor="rp-focus">Documentos que quieres revisar (opcional)<textarea id="rp-focus" rows={2} maxLength={400} value={focusRequest} disabled={busy} onChange={e=>setFocusRequest(e.target.value)} placeholder="Pide la factura y el comprobante de pago"/></label>
+              <p>Rejon identifica hasta dos tipos de documento en tu indicación. Puedes revisar la selección y las citas en el mensaje antes de enviarlo.</p><div className="rp-actions">
+              <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('carta')}>Preparar solicitud al cliente</button>
+              <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('control')}>Preparar lista de cotejo</button>
+            </div></section>}
             <h3>Exportar con datos originales</h3><div className="rp-formats" aria-label="Formato del archivo" role="group">{formats.map(({id,name,Icon})=><button key={id} aria-pressed={format===id} disabled={busy} onClick={()=>setFormat(id)}><Icon size={16}/>{name}</button>)}</div>
             <button className="rp-primary" disabled={busy} onClick={()=>void exportDraft()}><ArrowDownToLine size={16}/>{activity==='export'?'Generando archivo…':'Descargar .'+format}</button></>}
           </section>}

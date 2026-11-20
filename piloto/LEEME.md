@@ -46,3 +46,12 @@ En un ejercicio nuevo, importa `piloto/contraste-ficticio.txt` y guarda el sopor
 Pulsa **Enviar y generar borrador** una vez. En **Datos originales** coteja la hipótesis sugerida con la línea de la licencia y abre el fundamento. También puedes elegir otra hipótesis y pulsar **Preparar esta variante en mi equipo**. Esa acción usa la respuesta guardada para el mismo tema y expediente. Cada variante conserva su propia edición. El archivo de ejemplo permite repetir el ejercicio con el flete y con el acuse del pedimento. Cada tema nuevo requiere su propio envío inicial.
 
 Para repartir la prueba, una persona puede revisar la fuente en Word, otra el monto y moneda en el control de valoración en Excel y otra la nota de seguimiento en PowerPoint. Cada persona usa el mismo archivo ficticio en su propia instalación.
+
+### Continuar después del primer borrador
+
+1. Importa `piloto/contraste-ficticio.txt` en un ejercicio cifrado. Selecciona **Valoración en aduana**, guarda un renglón de flete en **Control de valoración** y genera la primera nota.
+2. En **Continuar desde esta nota**, escribe «Pide la factura y el comprobante de pago». Pulsa **Preparar solicitud al cliente**. Lee la consulta completa. Verás los dos tipos de documento y las citas que sustentaron el borrador original. Pulsa **Enviar y generar borrador** para redactar la carta.
+3. Usa **Volver al primer borrador** y elige **Preparar lista de cotejo**. En **Datos originales** podrás leer la línea del soporte y los renglones que guardaste en el control. Descarga Word, Excel o PowerPoint. El Excel de trabajo conserva los importes en celdas numéricas.
+4. Al reabrir el ejercicio encontrarás la nota, la carta y la lista en **Tarea del despacho**. Cada documento tiene su propia edición. Preparar y reabrir un seguimiento es local. Generar un documento nuevo con OpenAI consume un envío de la sesión.
+
+Puedes preparar estos seguimientos desde una lectura de comercio, un pasaje elegido en la biblioteca o una nota del documento de práctica con cita cotejada. El campo opcional reconoce factura, contrato, pedimento, documento de transporte, comprobante de pago, certificado de origen, acuse, ficha técnica y licencia. La consulta usa como máximo dos tipos. La redacción libre de la indicación queda en este equipo.
