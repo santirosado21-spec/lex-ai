@@ -51,8 +51,7 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
  const titleCandidate=exactSpan(fields?.title,text);
  const data={...(matched ? {scenarioId:matched.scenarioId,scenarioPreview:matched.preview,supplier:text.split('\n')[3].slice('Proveedor: '.length)} : {}),client:exactSpan(fields?.client,text),title:documentaryTitle(titleCandidate,text),documentKind:matched ? 'factura' : kinds.includes(fields?.documentKind) ? fields.documentKind : 'otro'};
  if (!review) return data;
- const context=await reviewContextLocally(text,ask,signal);
- const protection=await reviewIntakeDocument({text,context,originalHash:createHash('sha256').update(bytes).digest('hex'),
+ const protection=await reviewIntakeDocument({text,contextReviewer:parts=>reviewContextLocally(text,ask,signal,parts),originalHash:createHash('sha256').update(bytes).digest('hex'),
   suggestions:fields?.entities,fields:[data.client,data.title,data.supplier??'',...knownIdentities.filter(value=>typeof value==='string'&&value.length>=2&&text.includes(value))],signal});
  if(protection.available&&titleCandidate&&!data.title)protection.needsReview=true;
  return {...data,protection};

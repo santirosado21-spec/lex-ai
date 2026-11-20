@@ -1,8 +1,9 @@
 import {useState,type FormEvent} from 'react';
 import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle} from 'lucide-react';
+import IntakeQuestionLines from './IntakeQuestionLines';
 import {api} from './api';
 
-type Review={id:string;facts?:{id:string;text:string;label:string;line:number}[];masked:string;count:number;suggestedAngle:string;candidates:{key:string;label:string;locator:string;text:string;partial:boolean}[]};
+type Review={id:string;sources?:{id:string;label:string}[];facts?:{id:string;text:string;label:string;line:number}[];masked:string;count:number;suggestedAngle:string;candidates:{key:string;label:string;locator:string;text:string;partial:boolean}[]};
 export type QuestionSelection={reviewId:string;key:string;angle:string;factIds?:string[]};
 
 export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onSelect:(selection:QuestionSelection)=>Promise<void>}){
@@ -43,6 +44,7 @@ export default function IntakeQuestion({disabled,onSelect}:{disabled:boolean;onS
     <p>Elige afirmaciones de la misma operación para que OpenAI las considere. Los nombres de los documentos y sus líneas se conservan en tu equipo.</p>
     {review.facts?.map(fact=><label key={fact.id}><input type="checkbox" checked={factIds.includes(fact.id)} disabled={disabled||busy||(!factIds.includes(fact.id)&&factIds.length>=4)} onChange={e=>setFactIds(e.target.checked?[...factIds,fact.id]:factIds.filter(id=>id!==fact.id))}/><span>{fact.text}<small>{fact.label} · línea {fact.line}</small></span></label>)}
    </fieldset>}
+   <IntakeQuestionLines key={review.id} reviewId={review.id} sources={review.sources??[]} selected={factIds} disabled={busy||disabled} onChange={setFactIds}/>
    <label htmlFor="rp-question-angle">Enfoque jurídico<select id="rp-question-angle" disabled={busy||disabled} value={angle} onChange={e=>setAngle(e.target.value)}><option value="requisitos">Requisitos para aplicar la disposición</option><option value="excepciones">Excepciones y condiciones de aplicación</option><option value="documentos">Documentos para acreditar los hechos</option></select></label>
    <button type="button" className="rp-primary" disabled={busy||disabled} onClick={()=>void choose()}>Preparar mensaje para revisión<ArrowRight size={16}/></button>
   </div>}</div>}

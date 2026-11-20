@@ -295,3 +295,23 @@ Se procesaron en Ollama la factura y el contrato ficticios, además de una pregu
 | Lista interna desde la carta | Conservó el tema y los tipos de documento del turno anterior. Propuso comparar la factura con el comprobante de pago. En el equipo se recuperaron los dos folios originales. | 378 / 62 |
 
 La primera respuesta dejó implícita la contradicción. La versión entregada también muestra una observación local explícita cuando se eligieron las dos cláusulas opuestas de flete. El abogado debe confirmar que corresponden a la misma operación. Se reprodujeron los tres mensajes con las respuestas reales registradas para verificar el cambio sin consumo adicional. La restitución y la distinción entre hechos y fuente jurídica son comprobaciones de software. El juicio profesional sobre la pertinencia de la respuesta permanece abierto. Evidencia en `artifacts/contexto-r16/`. La guía describe cómo repetir el recorrido en un ejercicio propio.
+
+## De la carta de porte a la nota con folio restituido en r17
+
+El abogado puede elegir hasta cuatro líneas de sus documentos y conservar su procedencia en la nota. La pantalla muestra cada línea con las sustituciones del expediente y señala su destino. Las líneas de archivos propios se incorporan como soporte en el equipo. En las dos prácticas nuevas se verifica la huella del texto y la cobertura de los identificadores anotados antes de habilitar un envío. Una referencia repetida en ambas prácticas conserva el mismo alias temporal en el mensaje. El expediente conserva la correspondencia y recupera el folio donde OpenAI usó el alias.
+
+En un ensayo de navegador se cargaron una carta de porte, un recibo de transporte y una anotación del abogado, todos ficticios. La carta y el recibo discrepaban sobre quién pagó. El servidor comparó el mensaje real con la vista previa antes del envío. OpenAI recibió dos líneas y un pasaje del artículo 65 de la Ley Aduanera. Pidió esclarecer quién asumió el pago y usó la referencia protegida en su lectura. El navegador restituyó el folio CPV-904153 dentro de esa lectura y añadió los tres soportes. Word, Excel y PowerPoint se abrieron en LibreOffice y se cotejó el texto de las tres salidas. La llamada a la cuenta principal consumió 446 tokens de entrada y 117 de salida. Se comprobaron cuatro anchos de pantalla entre 320 y 1280 píxeles.
+
+### Protección y utilidad de documentos inéditos
+
+Cada par contiene dos textos ficticios que comparten una operación. Se anotaron los identificadores directos, los indicios contextuales y las afirmaciones jurídicas cuya lectura debe seguir siendo posible. Se midieron por separado la revisión de cada documento y la proyección de las sustituciones de ambos sobre el expediente. En estos conjuntos las dos mediciones dieron los mismos totales. Una prueba de código aparte verifica que un segundo documento puede aportar una identidad omitida en el primero y que entonces se invalida la selección anterior.
+
+| Conjunto | Textos restituidos | Identificadores cubiertos | Indicios cubiertos | Afirmaciones íntegras |
+|---|---:|---:|---:|---:|
+| Desarrollo tras los ajustes | 12/12 | 9/9 | 6/6 | 18/18 |
+| Transferencia usada durante el ajuste | 8/8 | 8/8 | 8/8 | 7/8 |
+| Reserva creada tras el último ajuste del detector | 6/6 | 6/6 | 5/6 | 6/6 |
+
+En el primer recorrido de desarrollo quedó visible un folio de contrato y se conservaron 15 de 18 afirmaciones. En transferencia, la protección llegó a ocultar parte de la declaración «No se detectaron discrepancias en la documentación presentada». En la reserva quedó visible el indicio «la oficina administrativa turno matutino». Ninguna línea de estos 26 documentos se habilitó para OpenAI. En los 38 textos históricos se restituyeron los 38 originales, se cubrieron 43 de 43 identificadores y quedaron íntegras 50 de 66 expresiones.
+
+El modelo local ayudó a redactar los textos de transferencia y reserva. La anotación se hizo en desarrollo. La muestra de reserva es pequeña y todavía requiere una evaluación independiente de abogados, incluida la posibilidad de identificar una operación por una combinación de hechos. Se puede reproducir la medición con `scripts/check-pilot-paired-privacy.mjs`. El ensayo del navegador está en `scripts/check-pilot-question-lines.mjs` y admite `--replay` para repetir el mensaje registrado sin otro cargo.

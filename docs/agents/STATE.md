@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 20:18 por codex: Tres turnos de investigación de flete con OpenAI y restitución local en Rejon r16
+**Última actualización:** 2026-11-19 20:34 por codex: Rejon r17 recupera un folio en la lectura de OpenAI y en tres formatos Office
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r17 permite elegir líneas de cualquier documento como soporte local. Dos archivos de práctica acreditados pueden compartir un alias efímero en la consulta pública. Una generación real recuperó el folio en el párrafo de OpenAI y añadió tres soportes en Word, Excel y PowerPoint. Coste medido en tokens, 446 de entrada y 117 de salida. En 26 documentos ficticios se restituyeron 26 originales, se cubrieron 23/23 identificadores y 19/20 indicios y se conservaron 31/32 hechos anotados. La reserva tuvo seis documentos. Suite de JavaScript, 1438 aprobadas y 10 omitidas. Evidencia en `artifacts/privacidad-r17/`.
 
 - r16 incorpora hasta cuatro hechos sintéticos elegidos en una pregunta con fuente, permite continuar desde la carta y conserva la cita y los soportes. Tres envíos reales de OpenAI, 1,107 tokens de entrada y 227 de salida. Se verificaron los tres mensajes y cinco archivos Office. La suite JS terminó con 1,433 aprobadas, 10 omitidas y cero fallos. Evidencia en `artifacts/contexto-r16/`.
 
@@ -72,7 +74,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Medir primero en captura exclusivamente local qué contexto de documentos inéditos sobrevive a la protección y qué puede identificar a las partes por combinación. Incorporar revisión jurídica de los casos, las pruebas de equipos físicos y la validación de la segunda cuenta real.
+- Evaluar en documentos nuevos los indicios formados por oficina, turno y otras circunstancias compartidas. Recoger un juicio independiente de abogados sobre hechos jurídicos ocultos y riesgo de reidentificación. Para ampliar el corpus de pedimentos, reconciliar la edición, las modificaciones y los transitorios del Anexo 22 del SAT con las publicaciones del DOF antes de presentar resultados por fecha de operación.
 
 - Evaluar con Lorenzo y Pedro si pueden resolver o dejar pendiente una discrepancia realista usando los dos originales ficticios, la fecha de la operación y la cita. Validar cobertura de identificadores indirectos en documentos independientes y los equipos de 8 GB antes de ampliar a asuntos de clientes.
 

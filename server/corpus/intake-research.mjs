@@ -69,7 +69,8 @@ export function questionPassage(library,{sourceId,part,angle,concepts=[]},caseFa
  const facts=caseFacts?questionFactTexts(caseFacts):[];
  const responseSpec=facts.length?'En lectura explica en una o dos oraciones qué permiten comprobar los hechos o qué contradicción requiere aclaración. Escribe de 40 a 300 caracteres sin cifras, nombres, nuevas citas o conclusiones de cumplimiento. Si los hechos no guardan relación con el pasaje, abstente. Devuelve JSON con lectura, cita':'Devuelve JSON con cita';
  const factBlock=facts.length?'\n\nHechos del ejercicio elegidos por el abogado\n'+facts.map((fact,i)=>'H'+(i+1)+' · '+fact).join('\n'):'';
- const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'')+factBlock;
+ const markerRule=caseFacts?.aliases.length?' En la lectura vincula el pago o la comprobación con al menos una referencia de los hechos. Copia literalmente su marcador, incluidos los corchetes. Si no puedes vincularlos al pasaje, abstente.':'';
+ const prompt='Resuelve esta consulta de investigación para un abogado mexicano: '+angles[angle]+focus+'. Identifica qué parte del pasaje atiende ese enfoque y qué hecho del expediente habría que comprobar. '+responseSpec+' (fragmento literal continuo de 24 a 420 caracteres) y solicitud (una pregunta documental concreta de hasta 120 caracteres entre signos de interrogación, sólo letras y espacios). Si el pasaje no fundamenta ese enfoque responde {"abstener":true}. Usa sólo esta fuente; no determines cumplimiento o vigencia.\n'+ref.title+' · '+ref.locator+'\n'+ref.url+'\n'+(body??ref.text)+(condition?'\nCondición del encabezado\n'+condition:'')+factBlock+markerRule;
  const note=Object.freeze({title,ref,body,condition,angle,prompt,...(caseFacts?{caseFacts}:{})});verified.add(note);return note;
 }
 
@@ -105,8 +106,12 @@ export function renderResearchNote(raw, note) {
   try { result = JSON.parse(raw); } catch { result = null; }
   const quote = typeof result?.cita === 'string' ? result.cita.trim() : null;
   const observation=typeof result?.lectura==='string'?result.lectura.trim():'';
-  const hasFacts=Boolean(note.caseFacts);
-  const goodObservation=observation.length>=40&&observation.length<=300&&/^[\p{L}\p{M} ,.:;¿?()«»“”–-]+$/u.test(observation);
+  const hasFacts=Boolean(note.caseFacts?.texts.length);
+  const aliases=new Map((note.caseFacts?.aliases??[]).map(item=>[item.out,item.local]));
+  const checked=observation.replace(/\[\[PARTE_[1-9]\d*\]\]/gu,key=>aliases.has(key)?'referencia':key);
+  const localReading=observation.replace(/\[\[PARTE_[1-9]\d*\]\]/gu,key=>aliases.get(key)??key);
+  const hasRequiredReference=!aliases.size||[...aliases.keys()].some(key=>observation.includes(key));
+  const goodObservation=hasRequiredReference&&observation.length>=40&&observation.length<=300&&/^[\p{L}\p{M} ,.:;¿?()«»“”–-]+$/u.test(checked);
   const proposed=proposedQuestions(result?.solicitud);
   const valid = (!hasFacts||(goodObservation&&proposed))&&typeof quote === 'string' && quote.length >= 24 && quote.length <= 420 &&
     !quote.includes('[[') && !quote.includes(']]') && (note.body??note.ref.text).includes(quote) &&
@@ -121,8 +126,8 @@ export function renderResearchNote(raw, note) {
     'Fundamento pendiente. El modelo no devolvió una cita verificable en el pasaje seleccionado.';
   return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + (note.angle?'Consulta del abogado\n[[CONSULTA]]\n\n'+angles[note.angle]+'\n':'') + basis + (valid&&note.condition?'\nCondición del encabezado\n'+note.condition:'') +
     (note.caseFacts?.discrepancy?'\n\nDiscrepancia entre soportes\n'+note.caseFacts.discrepancy:'')+
-    (valid&&hasFacts?'\n\nLectura preliminar de OpenAI\n'+observation:'')+
-    (hasFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
+    (valid&&hasFacts?'\n\nLectura preliminar de OpenAI\n'+localReading:'')+
+    (note.caseFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     '\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.';
 }

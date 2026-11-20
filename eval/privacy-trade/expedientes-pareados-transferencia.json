@@ -1,0 +1,118 @@
+[
+  {
+    "id": "transferencia-1",
+    "documents": [
+      {
+        "text": "Conocimiento de Embarque N° 4592-B: La carga fue recibida en el puerto de Nebulon. El pago del flete marítimo está completamente liquidado.",
+        "private": [
+          "4592-B"
+        ],
+        "clues": [
+          "puerto de Nebulon"
+        ],
+        "facts": [
+          "El pago del flete marítimo está completamente liquidado."
+        ]
+      },
+      {
+        "text": "Factura de Transporte Aéreo 771-X: Se confirma la recepción de la mercancía en el sector de las Cumbres. El seguro adjunto presenta una omisión notable.",
+        "private": [
+          "771-X"
+        ],
+        "clues": [
+          "sector de las Cumbres"
+        ],
+        "facts": [
+          "El seguro adjunto presenta una omisión notable."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "transferencia-2",
+    "documents": [
+      {
+        "text": "Póliza de Riesgo Astral 9001: La cobertura para el tránsito por el Velo Carmesí es total. No se detectaron discrepancias en la documentación presentada.",
+        "private": [
+          "9001"
+        ],
+        "clues": [
+          "Velo Carmesí"
+        ],
+        "facts": [
+          "No se detectaron discrepancias en la documentación presentada."
+        ]
+      },
+      {
+        "text": "Declaración de Carga Fantástica 112-Z: El envío hacia el Valle Susurrante requiere la tasación final. El comprobante de pago aún no ha sido remitido.",
+        "private": [
+          "112-Z"
+        ],
+        "clues": [
+          "Valle Susurrante"
+        ],
+        "facts": [
+          "El comprobante de pago aún no ha sido remitido."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "transferencia-3",
+    "documents": [
+      {
+        "text": "Manifiesto de Carga Interdimensional 33-G: La mercancía fue despachada desde el portal del Crepúsculo. El documento de inspección final está ausente.",
+        "private": [
+          "33-G"
+        ],
+        "clues": [
+          "portal del Crepúsculo"
+        ],
+        "facts": [
+          "El documento de inspección final está ausente."
+        ]
+      },
+      {
+        "text": "Guía de Despacho Etéreo 88-K: El tránsito a través del Desierto de Cristal fue exitoso. Se certifica la recepción completa de los fondos acordados.",
+        "private": [
+          "88-K"
+        ],
+        "clues": [
+          "Desierto de Cristal"
+        ],
+        "facts": [
+          "Se certifica la recepción completa de los fondos acordados."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "transferencia-4",
+    "documents": [
+      {
+        "text": "Certificado de Tránsito Sombrío 202-R: El paquete cruzó la frontera del Páramo Olvidado. El pago por el servicio de escolta es totalmente satisfactorio.",
+        "private": [
+          "202-R"
+        ],
+        "clues": [
+          "Páramo Olvidado"
+        ],
+        "facts": [
+          "El pago por el servicio de escolta es totalmente satisfactorio."
+        ]
+      },
+      {
+        "text": "Albarán de Entrega Nocturna 55-P: La entrega en la ciudad de las Nieblas fue puntual. Se constató la falta del permiso de tránsito especial.",
+        "private": [
+          "55-P"
+        ],
+        "clues": [
+          "ciudad de las Nieblas"
+        ],
+        "facts": [
+          "Se constató la falta del permiso de tránsito especial."
+        ]
+      }
+    ]
+  }
+]

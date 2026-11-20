@@ -1,0 +1,89 @@
+[
+  {
+    "id": "reserva-1",
+    "documents": [
+      {
+        "text": "ID: IMP-2024-A789. Revisión de embalajes realizada en el muelle de carga turno nocturno. No se adjuntó la fotografía del palet dañado.",
+        "private": [
+          "IMP-2024-A789"
+        ],
+        "clues": [
+          "el muelle de carga turno nocturno"
+        ],
+        "facts": [
+          "No se adjuntó la fotografía del palet dañado."
+        ]
+      },
+      {
+        "text": "ID: IMP-2024-A790. Inspección de embalajes completada en la bodega principal turno diurno. El proveedor asumió el costo del material de relleno extra.",
+        "private": [
+          "IMP-2024-A790"
+        ],
+        "clues": [
+          "la bodega principal turno diurno"
+        ],
+        "facts": [
+          "El proveedor asumió el costo del material de relleno extra."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reserva-2",
+    "documents": [
+      {
+        "text": "ID: IMP-2024-B123. Ajuste de seguro solicitado en la oficina administrativa turno matutino. La póliza original no incluye la cobertura para ese tipo de mercancía.",
+        "private": [
+          "IMP-2024-B123"
+        ],
+        "clues": [
+          "la oficina administrativa turno matutino"
+        ],
+        "facts": [
+          "La póliza original no incluye la cobertura para ese tipo de mercancía."
+        ]
+      },
+      {
+        "text": "ID: IMP-2024-B124. Modificación de cobertura de seguro procesada en el área de logística turno vespertino. No existe comprobante de la cotización inicial.",
+        "private": [
+          "IMP-2024-B124"
+        ],
+        "clues": [
+          "el área de logística turno vespertino"
+        ],
+        "facts": [
+          "No existe comprobante de la cotización inicial."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reserva-3",
+    "documents": [
+      {
+        "text": "ID: IMP-2024-C456. Registro de entrega parcial efectuado en el punto de recepción secundario turno de tarde. El cliente firmó la recepción de la primera remesa.",
+        "private": [
+          "IMP-2024-C456"
+        ],
+        "clues": [
+          "el punto de recepción secundario turno de tarde"
+        ],
+        "facts": [
+          "El cliente firmó la recepción de la primera remesa."
+        ]
+      },
+      {
+        "text": "ID: IMP-2024-C457. Despacho de mercancía incompleta registrado en el almacén central turno nocturno. El transportista indicó que el resto se enviaría en la siguiente ruta.",
+        "private": [
+          "IMP-2024-C457"
+        ],
+        "clues": [
+          "el almacén central turno nocturno"
+        ],
+        "facts": [
+          "El transportista indicó que el resto se enviaría en la siguiente ruta."
+        ]
+      }
+    ]
+  }
+]

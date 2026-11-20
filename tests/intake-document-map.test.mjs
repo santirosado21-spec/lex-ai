@@ -147,3 +147,14 @@ test('a unique party triggers a contextual warning; a generic article alone does
  assert.ok(!protectedForm(result).includes('representante de la fábrica ficticia'));
  assert.equal((await review('El único artículo citado habla de origen.')).contextualCount,0);assert.equal(result.restored,text);
 });
+
+test('document verification phrases survive while declared and repeated party names remain protected',async()=>{
+ const text='Responsable: Dana Pino Inventada\nEl retorno sigue pendiente. El anexo incluye constancia de retorno. El acuse no coincide con el pedimento. El alias del receptor es acuse.';
+ const inspect=fields=>reviewIntakeDocument({text,originalHash:createHash('sha256').update(text).digest('hex'),fields,suggestions:['acuse','constancia de retorno']});
+ const view=await inspect([]);
+ const masked=view.parts.map(p=>p.text??'[oculto]').join('');
+ assert.match(masked,/El retorno sigue pendiente/);assert.match(masked,/incluye constancia de retorno/);assert.match(masked,/El acuse no coincide/);
+ assert.ok(!masked.includes('Dana Pino Inventada')&&!masked.includes('receptor es acuse'));
+ const declared=(await inspect(['acuse'])).parts.map(p=>p.text??'[oculto]').join('');
+ assert.ok(!declared.includes('El acuse no coincide'));
+});

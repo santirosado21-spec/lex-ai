@@ -1,0 +1,8 @@
+{
+  "sha256": "0d45cf03ebcbe6f4a9778f404ab7573ad752c17d77a613b2b4bf286d8a0bc5e8",
+  "response": {
+    "lectura": "La carta de porte permite comprobar si el comprador cubrió el flete por separado. El recibo atribuye el pago al vendedor, por lo que debe aclararse quién soportó el gasto de transporte relacionado con [[PARTE_1]].",
+    "cita": "Los gastos de transporte, seguros y gastos conexos tales como manejo, carga y descarga en que se incurra con motivo del transporte de las mercancías",
+    "solicitud": "¿Qué comprobantes acreditan quién pagó el flete relacionado con la carta de porte?"
+  }
+}

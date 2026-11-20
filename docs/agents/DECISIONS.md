@@ -173,3 +173,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 20:17 — codex — Vincular los hechos de práctica y las fuentes de cada turno sin reenviar la edición privada
 
 **Por qué:** El abogado elige qué hechos verificados hacen falta para su pregunta. El servicio recompone esos hechos y las citas en el equipo para cada turno. Una corrección privada no se convierte en material de nube. Una discrepancia inequívoca del flete se señala también localmente porque el comentario del modelo puede dejarla implícita.
+
+## 2026-11-19 20:34 — codex — Conservar en el equipo la evidencia documental de archivos propios
+
+**Por qué:** Los dos ejercicios verificados pueden enviar líneas elegidas con alias temporales. Los 26 documentos independientes del catálogo dieron 19 de 20 indicios cubiertos y 31 de 32 afirmaciones íntegras. El abogado puede conservar como soporte cualquier línea de sus archivos con referencia local. La ampliación de la salida a expedientes reales sigue pendiente de validación.

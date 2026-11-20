@@ -39,3 +39,14 @@ test('a precise operational time can precede or follow the date; a statute publi
  }
  assert.deepEqual(logisticsReferenceRanges('La ley se publicó el 02/03/2025 a las 10:00.'),[]);
 });
+
+test('the context pass retains a fully matched documentary clause and masks the original range for an actual location',async()=>{
+ const text='Para la carta de porte LARGO-9039127392 el comprador cubrió el flete por separado. Llegó junto a la torre tornasol con LARGO-9039127392.';
+ const value='LARGO-9039127392';
+ const parts=[text.indexOf(value),text.lastIndexOf(value)].map(start=>({label:'Dato 1',start,end:start+value.length}));
+ const result=await reviewContextLocally(text,async(_s,input)=>{
+  assert.match(input,/torre tornasol/);const segments=JSON.parse(input);return {oraciones:segments.map(s=>s.id)};
+ },undefined,parts);
+ assert.equal(result.available,true);assert.equal(result.ranges.length,1);
+ assert.equal(text.slice(...result.ranges[0]),'Llegó junto a la torre tornasol con LARGO-9039127392.');
+});

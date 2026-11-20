@@ -24,14 +24,24 @@ export function formCaptionRanges(text) {
 // interior) and an explicit new documentary action. Re-scan both segments.
 const postalSentence=/\b(?:C\.?\s*P\.?|código postal)\s*:?\s*\d{5}(?:\s*,\s*(?:interior|int\.?|departamento|depto\.?)\s+[\p{L}\d-]+)?[.]\s+(?=(?:se\s+(?:solicita|requiere|adjunta|acompaña)|para\s+(?:la\s+)?(?:revisión|verificación|comprobación)|adjunt(?:ar|e|amos)|remit(?:ir|a|imos)|solicit(?:ar|e|amos)|falta\s+(?:la|el))\b|se\s+(?:solicitan|requieren|adjuntan)\b)/giu;
 export function detectorSegments(text) {
- const fieldLines=/\n(?=[ \t]*(?:cliente|asunto|proveedor|razón social|nombre del proveedor|correo de contacto|contacto|mercancía|operación|constancia|documentación|encargo|país de origen|unidad de medida)\s*:)/giu;
+ const fieldLines=/\n(?=[ \t]*(?:cliente|asunto|proveedor|razón social|nombre del proveedor|correo de contacto|contacto|mercancía|operación|constancia|documentación|encargo|país de origen|unidad de medida|remitente|responsable|licenciante|licenciatari[oa]|carta (?:de )?porte|factura comercial|contrato(?: de (?:compraventa|licencia|transporte))?|orden de retorno)\s*:)/giu;
+ const afterIdentity=/^(?:cliente|proveedor|importador|exportador|responsable|licenciante|licenciatari[oa]|remitente)[ \t]*:[^\n]{2,200}\n(?=(?:El|La) (?:retorno|flete|seguro|envío|pago|acuse|factura|entrega|certificación|regalía) (?:sigue |está |se |no |es |fue |corresponde |incluye ))/gimu;
  const starts=[...new Set([0,...Array.from(text.matchAll(postalSentence),m=>m.index+m[0].length),
-  ...Array.from(text.matchAll(fieldLines),m=>m.index+1)])].sort((a,b)=>a-b);
+  ...Array.from(text.matchAll(fieldLines),m=>m.index+1),...Array.from(text.matchAll(afterIdentity),m=>m.index+m[0].length)])].sort((a,b)=>a-b);
  return starts.map((start,i)=>({start,text:text.slice(start,starts[i+1]??text.length)}));
 }
 
 export function labelledIdentityRanges(text) {
- return Array.from(text.matchAll(/^(?:cliente|asunto|proveedor|razón social|nombre del proveedor|correo de contacto|contacto|exportador|importador)[ \t]*:[ \t]*([^\n;]{2,200})$/dgimu)).filter(m=>!/[.!?]\s+\p{Lu}\p{Ll}{2}/u.test(m[1])).map(m=>m.indices[1]);
+ return Array.from(text.matchAll(/^(?:cliente|asunto|proveedor|razón social|nombre del proveedor|correo de contacto|contacto|exportador|importador|remitente|licenciante|licenciatari[oa]|responsable)[ \t]*:[ \t]*([^\n;]{2,200})$/dgimu)).filter(m=>!/[.!?]\s+\p{Lu}\p{Ll}{2}/u.test(m[1])).map(m=>m.indices[1]);
+}
+
+// Only discount a model suggestion in a grammatical documentary position. A known
+// party, explicit field, contextual redaction or independent detector still takes precedence.
+export function documentaryObjectRanges(text){
+ const noun='(?:constancia de retorno|certificaci[oó]n de origen|comprobante de pago|factura comercial|acuse(?: de transmisi[oó]n)?)';
+ const object=new RegExp('\\b(?:incluye|adjunta|acompaña|falta|carece de) (?:el |la |un |una )?('+noun+')(?=[.,;:]|$)','dgiu');
+ const subject=new RegExp('\\b(?:el|la) ('+noun+') (?:no )?coincide con (?:el|la) (?:pedimento|factura|recibo|contrato)\\b','dgiu');
+ return [...text.matchAll(object),...text.matchAll(subject)].filter(m=>m[1]===m[1].toLocaleLowerCase('es')).map(m=>m.indices[1]);
 }
 
 // Commercial address fields can continue over several PDF lines. Require an
@@ -71,13 +81,16 @@ export function postalBlockRanges(text) {
 
 // Transport and invoice references can identify an operation even when they
 // contain no personal name. Protect the value on later, unlabelled mentions too.
-const referenceLabel=/(?<![\p{L}\p{N}])(?:factura(?: comercial)?|invoice|conocimiento de embarque|bill of lading|b\/l|air waybill|booking(?: reference)?|reserva de embarque|contenedor|container|sello(?: de seguridad)?|seal)(?:[ \t]+(?:n[úu]m(?:ero)?\.?|no\.?|number|id))?[ \t]*[:#][ \t]*([a-z0-9]+(?:[./_-][a-z0-9]+)*)/dgiu;
+const referenceLabel=/(?<![\p{L}\p{N}])(?:contrato(?: de (?:transporte|compraventa|licencia))?|carta (?:de )?porte|orden de retorno|factura(?: comercial)?|invoice|conocimiento de embarque|bill of lading|b\/l|air waybill|booking(?: reference)?|reserva de embarque|contenedor|container|sello(?: de seguridad)?|seal)(?:[ \t]+(?:n[úu]m(?:ero)?\.?|no\.?|number|id))?[ \t]*[:#][ \t]*([a-z0-9]+(?:[./_-][a-z0-9]+)*)/dgiu;
+// Headings such as “Guía de transporte N° 730-K:” identify an individual record.
+// Require a documentary heading, a final code containing a digit, and the colon.
+const documentHeading=/^(?:conocimiento de embarque|carta de porte|factura|p[oó]liza|declaraci[oó]n|manifiesto|gu[ií]a|certificado|albar[aá]n|contrato)(?:[ \t]+[\p{L}]{1,24}){0,6}?[ \t]+(?:n(?:[°.º]|[uú]m(?:ero)?[.]?)?[ \t]+)?([a-z\d][a-z\d._/-]{2,39})[ \t]*:/dgimu;
 const entryNumber=/(?<![\p{L}\p{N}])(?:n[úu]m(?:ero)?\.?[ \t]+(?:de[ \t]+)?)?pedimento[ \t]*[:#][ \t]*(\d{2}[ \t-]+\d{2}[ \t-]+\d{4}[ \t-]+\d{7}|\d{15})(?!\d)/dgiu;
 const containerNumber=/(?<![a-z\d])[a-z]{3}[ujz]\d{7}(?![a-z\d])/giu;
 
 // In prose the cue and code often have no separating colon. Require a digit
 // and a whole bounded token, so an ordinary request for a document stays readable.
-const tradeCode=/(?<![\p{L}\p{N}])(?:lote|batch|lot|precinto|folio|viaje|voyage|orden de compra|purchase order|n[uú]mero de serie|serial number|IMO)(?:[ 	]+(?:n[úu]m(?:ero)?\.?|no\.?|number))?[ 	:#]+([a-z0-9]+(?:[-_/.][a-z0-9]+)*)(?![\p{L}\p{N}_/-])/dgiu;
+const tradeCode=/(?<![\p{L}\p{N}])(?:carta (?:de )?porte|orden de retorno|contrato de transporte|lote|batch|lot|precinto|folio|viaje|voyage|orden de compra|purchase order|n[uú]mero de serie|serial number|IMO)(?:[ 	]+(?:n[úu]m(?:ero)?\.?|no\.?|number))?[ 	:#]+([a-z0-9]+(?:[-_/.][a-z0-9]+)*)(?![\p{L}\p{N}_/-])/dgiu;
 const nameWord=String.raw`[\p{Lu}][\p{L}'’]*(?:-[\p{Lu}][\p{L}'’]*)*`;
 const vesselName=new RegExp('(?:^|[^\\p{L}])(?:[Bb]uque|[Nn]ave|[Vv]essel|[Nn]avío)[ \t]+('+nameWord+'(?:[ \t]+(?:(?:de(?: la|l)?|of(?: the)?)[ \t]+)?'+nameWord+'){0,6})','dgu');
 const datePart=String.raw`(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}-\d{2}-\d{2})`;
@@ -86,6 +99,7 @@ const appointment=new RegExp(String.raw`(?:cita de (?:carga|descarga|entrega)|de
 
 export function logisticsReferenceRanges(text){
  const values=new Set();
+ for(const match of text.matchAll(documentHeading))if(/\d/u.test(match[1]))values.add(match[1]);
  for(const match of text.matchAll(referenceLabel)){
   const value=match[1];
   if(value.length>=4&&value.length<=80&&/\d/u.test(value))values.add(value);
@@ -109,8 +123,14 @@ export function logisticsReferenceRanges(text){
 // or a spatial description. Keep the full clause together for local review.
 const exclusiveParty=/(?<![\p{L}\p{N}])(?:[úu]nic[oa]|sol[oa]|only|sole)[ \t]+(?:persona|emplead[oa]|operador[a]?|representante|responsable|titular|agente|importador[a]?|exportador[a]?|proveedor[a]?|distribuidor[a]?|taller|f[aá]brica|planta|laboratorio|empresa|concesionari[oa]|operator|agent|supplier|plant|laboratory|distributor)\b/giu;
 const facility=/(?<![\p{L}\p{N}])(?:(?:primer[oa]?|segund[oa]|tercer[oa]?|cuart[oa]|quint[oa]|last|first|second|third)[ \t]+)?(?:m[oó]dulo|bodega|muelle|almac[eé]n|nave|patio|caseta|dock|warehouse|shed)[ \t]+(?:detr[aá]s de|al lado de|junto a|frente a|colindante con|behind|next to|beside)\b/giu;
+const specificPlace=new RegExp(String.raw`(?:^|[^\p{L}])(?:en|desde|hacia|hasta|por) (?:el |la )?((?:[Pp]uerto|[Tt]erminal|[Rr]ecinto|[Ss]ector|[Mm]uelle|[Cc]iudad) de(?:l | la | las | los | )`+nameWord+'(?:[ \t]+'+nameWord+'){0,4})','dgu');
+const movement=/\b(?:carga|envío|embarque|mercancía|tránsito|remesa|entrega|recepción|despachad[oa]|descarga)\b/iu;
 export function contextualIdentityRanges(text){
  const ranges=[];
+ for(const sentence of new Intl.Segmenter('es',{granularity:'sentence'}).segment(text)){
+  if(!movement.test(sentence.segment))continue;
+  for(const m of sentence.segment.matchAll(specificPlace))ranges.push(m.indices[1].map(n=>sentence.index+n));
+ }
  for(const cue of [exclusiveParty,facility]){
   for(const match of text.matchAll(cue)){
    const start=match.index;

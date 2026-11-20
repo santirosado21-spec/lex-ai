@@ -2,9 +2,30 @@
 // an existing sentence, never by supplying replacement text or guessed offsets.
 const instructions='Audita exclusivamente la identificación indirecta en un extracto ficticio de comercio. Recibes oraciones numeradas. Selecciona los números de oraciones en que alguien podría reconocer un embarque, parte, recinto o persona por su entorno: función exclusiva o turno distintivo, ubicación relativa o hito local, cita o momento preciso de la operación, combinación poco común o vínculo con un acontecimiento identificable. No marques una oración sólo por datos directos como nombre, folio, lote, buque o un número de serie: ya se procesaron. Una fecha normativa o un hecho genérico no basta. Responde JSON {"oraciones":[...]} con identificadores de la lista, sin texto literal.';
 
-export async function reviewContextLocally(text,ask,signal){
+// A model can mistake an already hidden transport reference for evidence of a
+// distinctive event. Only complete, routine documentary constructions qualify.
+const marker='〔Dato [1-9]\\d*〕';
+const routine=new RegExp('^(?:(?:carta de porte|contrato de transporte|factura comercial): '+marker+'|'+
+ '(?:(?:para|según) (?:la carta de porte|la factura|el contrato) '+marker+'[,]? )?(?:el comprador|el vendedor|el importador) (?:pagó|cubrió|asumió) (?:el flete|el transporte|el seguro)(?: por separado)?|'+
+ '(?:el recibo|la factura|el contrato) atribuye al (?:comprador|vendedor|importador) el pago del (?:flete|transporte|seguro) relacionado con '+marker+'|'+
+ 'se adjunta (?:la carta de porte|la factura|el contrato) '+marker+')[.]?$','iu');
+
+export async function reviewContextLocally(text,ask,signal,parts=[]){
  const segments=Array.from(new Intl.Segmenter('es',{granularity:'sentence'}).segment(text),
   s=>({id:s.index,text:s.segment.trimEnd()})).filter(s=>s.text.trim());
+ const protectedSpans=parts.filter(part=>part.label);
+ const routineIds=new Set();
+ const ends=new Map(segments.map(s=>[s.id,s.id+s.text.length]));
+ for(const segment of segments){
+  const end=ends.get(segment.id);
+  let cursor=segment.id,masked='';
+  for(const part of protectedSpans){
+   if(part.start>=end)break;
+   if(part.end<=cursor)continue;
+   masked+=text.slice(cursor,Math.max(cursor,part.start))+'〔'+part.label+'〕';cursor=Math.min(end,part.end);
+  }
+  if(protectedSpans.length&&routine.test((masked+text.slice(cursor,end)).trim()))routineIds.add(segment.id);
+ }
  const ranges=[];
  let batch=[],size=0;
  async function classify(){
@@ -15,7 +36,7 @@ export async function reviewContextLocally(text,ask,signal){
   const result=await ask(instructions,JSON.stringify(batch),format,256);
   if(!result||Object.keys(result).length!==1||!Array.isArray(result.oraciones)||result.oraciones.length>batch.length||
      new Set(result.oraciones).size!==result.oraciones.length||!result.oraciones.every(id=>allowed.has(id)))throw Error('Resultado ambiguo.');
-  for(const id of result.oraciones)ranges.push([id,id+allowed.get(id).text.length]);
+  for(const id of result.oraciones)if(!routineIds.has(id))ranges.push([id,ends.get(id)]);
  }
  try{
   for(const sentence of segments){

@@ -2,13 +2,13 @@ import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
 import {createPseudonymStore} from './pseudonyms.mjs';
-import {formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
+import {documentaryObjectRanges,formCaptionRanges,detectorSegments,labelledIdentityRanges,postalBlockRanges,logisticsReferenceRanges,contextualIdentityRanges} from './trade-document-structure.mjs';
 
 const incomplete=Object.freeze({available:false,reason:'No se pudo reconstruir y comprobar la vista de protección local.'});
 
 // Local review of extracted text. The temporary map belongs only to this call.
 // The returned view contains originals and is never a cloud request.
-export async function reviewIntakeDocument({text,originalHash,suggestions,fields,signal,context}) {
+export async function reviewIntakeDocument({text,originalHash,suggestions,fields,signal,context,contextReviewer}) {
  if (text.includes('[[LEX_') || !Array.isArray(suggestions) || suggestions.length>96) return incomplete;
  const scope={workspaceId:'local-preview',matterId:randomUUID(),threadId:'document'};
  const registry=createProvenanceRegistry();
@@ -30,14 +30,22 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,fields
   if(detection.category==='person'&&isCaption(start,end))continue;
   ranges.push([start,end]);
  }
- const fieldValues=new Set(fields);
+ const fieldValues=new Set(fields),objects=documentaryObjectRanges(text);
  for (const value of new Set([...fields,...suggestions])) {
   if (value==='') continue;
   if (typeof value!=='string'||value.trim().length<2||value.length>1024||!text.includes(value)) {needsReview=true;continue;}
   for(let start=text.indexOf(value);start!==-1;start=text.indexOf(value,start+value.length)) {
    const end=start+value.length;
-   if(fieldValues.has(value)||!isCaption(start,end))ranges.push([start,end]);
+   if(fieldValues.has(value)||(!isCaption(start,end)&&!objects.some(([a,b])=>a===start&&b===end)))ranges.push([start,end]);
   }
+ }
+ if(contextReviewer){
+  const initial=buildReview(text,ranges,scope,needsReview,contextual.length);
+  if(!initial.available)return initial;
+  context=await contextReviewer(initial.parts);
+  ranges.push(...context.ranges);
+  contextual.push(...context.ranges);
+  needsReview ||= context.ranges.length>0||!context.available;
  }
  const view=buildReview(text,ranges,scope,needsReview,contextual.length);
  return view.available&&context?.available===false?{...view,contextUnavailable:true}:view;

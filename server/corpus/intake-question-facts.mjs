@@ -1,6 +1,7 @@
 // Attest the complete extracted exercise before offering any sentence to a provider.
 // Only the displayed sentence is eligible. Filenames, local labels and line evidence stay local.
 import {createHash} from 'node:crypto';
+import {questionLines} from './intake-question-lines.mjs';
 import {caseSources} from '../intake-sources.mjs';
 import {openReviewedDocument} from '../privacy/intake-document-map.mjs';
 import {protectedPracticeFacts} from './pilot-practice-document.mjs';
@@ -62,14 +63,34 @@ export function availableQuestionFacts(saved,sourceIds){
 export function selectQuestionFacts(saved,ids){
  if(!Array.isArray(ids)||ids.length<1||ids.length>4||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'))
   throw Error('Selecciona entre uno y cuatro hechos distintos del ejercicio.');
- const sourceIds=new Set(ids.map(id=>id.split('/')[0]));
- const items=availableQuestionFacts(saved,sourceIds).filter(row=>ids.includes(row.id));
- if(items.length!==ids.length)throw Error('Los hechos deben proceder del ejercicio verificado en este expediente.');
+ const ordinary=ids.filter(id=>!id.startsWith('line:'));
+ const items=ordinary.length?availableQuestionFacts(saved,new Set(ordinary.map(id=>id.split('/')[0]))).filter(row=>ordinary.includes(row.id)):[];
+ const lineIds=ids.filter(id=>id.startsWith('line:'));
+ const values=new Map();
+ let localCount=0;
+ const lineSources=new Set(lineIds.map(id=>id.slice(5).split('/')[0]));
+ for(const {id:sourceId} of caseSources(saved.intake)){
+  if(!lineSources.has(sourceId))continue;
+  for(const row of questionLines(saved,sourceId).filter(row=>lineIds.includes(row.id))){
+   let text;
+   if(row.cloud)text=row.parts.map(part=>{
+    if(part.text!==undefined)return part.text;
+    if(!part.token)return '[dato protegido]';
+    if(!values.has(part.value))values.set(part.value,Object.freeze({out:'[[PARTE_'+(values.size+1)+']]',local:part.token}));
+    return values.get(part.value).out;
+   }).join('');
+   else localCount++;
+   items.push({id:row.id,text,evidence:row.evidence});
+  }
+ }
+ if(items.length!==ids.length)throw Error('Las sustituciones o las líneas seleccionadas cambiaron. Vuelve a revisar la pregunta.');
+ if(new Set(items.map(item=>item.evidence.sourceId+'/'+item.evidence.line)).size!==items.length)
+  throw Error('Selecciona una sola versión de cada línea.');
  const evidence=Object.freeze({...items[0].evidence,additional:Object.freeze(items.slice(1).map(row=>Object.freeze(row.evidence)))});
- const texts=Object.freeze(items.map(item=>item.text));
+ const texts=Object.freeze(items.map(item=>item.text).filter(Boolean));
  const discrepancy=texts.includes('El precio pagado incluye el flete.')&&texts.includes('El precio pagado no incluye el flete.')?
   'Si los soportes corresponden a la misma operación, discrepan sobre si el flete ya forma parte del precio pagado. Coteja ambas afirmaciones con los comprobantes.':'';
- const pack=Object.freeze({texts,evidence,discrepancy});
+ const pack=Object.freeze({texts,evidence,discrepancy,aliases:Object.freeze([...values.values()]),localCount});
  verified.add(pack);return pack;
 }
 export function questionFactTexts(pack){

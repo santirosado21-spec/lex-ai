@@ -1,3 +1,4 @@
+import {questionLines} from './corpus/intake-question-lines.mjs';
 import {availableQuestionFacts,selectQuestionFacts} from './corpus/intake-question-facts.mjs';
 import {caseSources,sourceSummary,knownParties,addCaseSource,readCaseFile,openedCaseSources,openedComparisonSources} from './intake-sources.mjs';
 import {mentionedConcepts} from './corpus/question-concepts.mjs';
@@ -106,7 +107,7 @@ export function createIntakeGenerator({
  });
  const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading,comparison,followup}={}) => {
   const envelope=followup?followupEnvelope(followup):comparison?comparisonEnvelope(comparison):reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
-  const gate=gateFor(practice||research||reading||comparison||followup ? canonicalJson(envelope) : null,(research&&!research.caseFacts)||reading||comparison||(followup&&!followup.synthetic)?'public':'synthetic');
+  const gate=gateFor(practice||research||reading||comparison||followup ? canonicalJson(envelope) : null,(research&&!research.caseFacts?.texts.length)||reading||comparison||(followup&&!followup.synthetic)?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   if(active)throw Error('Hay una consulta en curso.');
@@ -273,7 +274,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     if (archived) return {id,...archived};
     try {
      const note=sourceFor(selection,saved);
-     return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:true}:{})};
+     return {id,title:note.title,preview:note.prompt,references:[note.ref],...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
    })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
@@ -446,8 +447,16 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const suggestedAngle=/excepci[oó]n|excepciones|salvo|exent[oa]/iu.test(text)?'excepciones':
       /document|prueba|soporte|comprob|acredit/iu.test(text)?'documentos':'requisitos';
 
-    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,
+    return {id,masked:restored.masked,count:review.count,suggestedAngle,facts,sources:caseSources(saved.intake).map(sourceSummary),
      candidates:candidates.map(({key,label,locator,text,partial})=>({key,label,locator,text,partial}))};
+   }
+   case 'intake.questionLines': {
+    exactFields(payload,['reviewId','sourceId']);
+    const saved=current(),review=pendingQuestions.get(payload.reviewId);
+    if(!saved||!store.protectedRecords||!review||review.matter!==saved.entry.id)throw Error('Vuelve a revisar la pregunta en el expediente.');
+    const rows=questionLines(saved,payload.sourceId);
+    review.factIds=[...new Set([...review.factIds,...rows.map(row=>row.id)])];
+    return rows.map(({id,masked,cloud,evidence})=>({id,text:masked,cloud,label:evidence.sourceLabel,line:evidence.line}));
    }
    case 'intake.addQuestion': {
     const usesFacts=Object.hasOwn(payload??{},'factIds');
@@ -633,7 +642,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      else if(practice)text=renderProtectedCase(raw,practice);
      else if(research)text=renderResearchNote(raw,research);
      else if(task==='trade')text=renderTradeDraft(raw,articles);
-     const answer=draftText(text,(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task]);
+     const answer=draftText(text,research?.caseFacts?.aliases.length?caseSources(saved.intake).map(s=>s.document):(practice||followup?.synthetic)?saved.intake.document:null,selection||comparison||followEvidence||research?.caseFacts,saved.intake.questions?.[task]);
      const parentSource=continuation?followupSource(saved,continuation.basisTask??continuation.parent):comparison?.packet||reading||practice||research;
      const ranges=store.protectedRecords&&parentSource?quotedRanges(parentSource,answer):[];
      signal?.throwIfAborted();
@@ -646,7 +655,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
        const title=followup?followup.title+' · '+continuation.parentTitle:comparison?.title??source.title;
        const references=source.refs??[source.ref];
        const evidence=followEvidence??comparison?.evidence??selection?.evidence??research?.caseFacts?.evidence;
-       const note={title,preview:source.prompt,references,...(research?.caseFacts?{usesFacts:true}:{}),...(evidence?{evidence}:{}),
+       const note={title,preview:source.prompt,references,...(research?.caseFacts?{usesFacts:!!research.caseFacts.texts.length,localLines:research.caseFacts.localCount}:{}),...(evidence?{evidence}:{}),
         ...(comparison?{comparison:comparisonInfo(comparison)}:{})};
        snapshot={researchHistory:{...intake.researchHistory,[task]:note}};
       }
