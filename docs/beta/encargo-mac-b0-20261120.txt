@@ -1,0 +1,17 @@
+ENCARGO PARA CLAUDE/CODEX EN EL MAC DE SANTIAGO (sin nube, sin claves, sin datos reales)
+
+Rama: rejon/comercio-b-20261120 en https://github.com/santirosado21-spec/lex-ai (HEAD = el commit más reciente de esa rama; no usar main).
+
+0. Verificación previa, antes de correr nada:
+   - git fetch origin && git checkout rejon/comercio-b-20261120 && git status. Informar el commit.
+   - sha256sum eval/privacy-trade/expediente-turno-oficina-b0-20261120.json eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json eval/legal-b0/*.json. Deben coincidir con docs/qa/medicion-privacidad-reserva-b0-20261120.md y docs/qa/casos-legales-valor-aduana-b0-20261120.md. Si no coinciden, parar e informar.
+   - ollama list debe mostrar qwen3.5:2b-q4_K_M. Si falta, informar; no descargar sin orden del dueño.
+   - ls resources/public-library.sqlite artifacts/legal-library/exports-v1. Informar cuáles existen.
+1. Privacidad (reserva, NO ajustar el detector con estos casos):
+   npm ci && node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-turno-oficina-b0-20261120.json --app=.
+   npm ci && node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json --app=.
+   Pegar la salida completa sin editar. Contar por separado indicios completamente ocultos y hechos completamente legibles. Cero solicitudes a la nube.
+2. Base de biblioteca: SOLO si artifacts/legal-library/exports-v1 ya existe en ese Mac como fuente autorizada, correr node scripts/index-legal-library.mjs y describir el alcance generado (conteos, huella). No generar corpus desde archivos en cuarentena (resources/legal-acquisition-*.json), no adquirir nada, no inferir autorización. Si falta la fuente, informar y parar.
+3. Con la base presente, npm test completo: informar pruebas, aprobadas, fallidas, omitidas y los tests 462, 473 y 476.
+4. Los casos legales de eval/legal-b0 NO se prueban todavía en el piloto sin orden del dueño; sólo verificar huellas.
+Límites: sin push a main, sin claves en logs, sin OpenAI, sin documentos de clientes, no tocar scripts/loop/ ni landing/assets/fonts/provenance 2.json. Informar lo medido y lo no medido por separado.

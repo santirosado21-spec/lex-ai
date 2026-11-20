@@ -447,3 +447,7 @@ La edición del Reglamento (última reforma DOF 23-02-2026) trae marcas de esa �
 ## 2026-11-20 05:55 — rejon-dev — Dos casos legales de valor en aduana anotados sin probar
 
 Casos A y B sobre arts. 65 y 66 de la Ley Aduanera con fecha de operación y respuestas esperadas con inciso, congelados con huella; no probados por falta de public-library.sqlite y del modelo local. Caso anterior a la reforma de 19-11-2025 sin versión previa verificada. Ver docs/qa/casos-legales-valor-aduana-b0-20261120.md.
+
+## 2026-11-20 06:00 — rejon-dev — Caso RGCE de transitorios y vigencia condicionada del Anexo 22
+
+Caso anotado (sin probar) sobre el Transitorio Décimo Primero de las RGCE 2026, reformado el 14-may y el 22-sep-2026, y matriz por fecha. Las claves AL y C1 del apéndice 9 entran en vigor por un aviso de Economía en SNICE, no por fecha; esas fechas no se verificaron. Encargo TXT para el Mac en docs/beta/encargo-mac-b0-20261120.txt.

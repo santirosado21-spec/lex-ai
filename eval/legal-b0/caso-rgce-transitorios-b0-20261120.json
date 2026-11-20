@@ -1,0 +1,38 @@
+{
+  "annotation_note": "Caso y matriz anotados el 2026-11-20 antes de cualquier prueba en el piloto. Fuentes: resources/trade/resolucion-rgce-2026-05-14.pdf y resolucion-rgce-2026-09-22.pdf (texto del DOF en el repositorio) y, para el vigor de las claves AL y C1, los Transitorios Únicos de los acuerdos de Economía vistos en SIDOF (notas 5783929 y 5788843) mediante resultados de búsqueda. Sin revisión de abogado.",
+  "id": "rgce-transitorio-decimo-primero-b0-20261120",
+  "question": "Un importador introduce mercancía a territorio nacional y duda si, en la fecha de su operación, puede cumplir el artículo 59, fracción III de la Ley y la regla 1.5.1 conforme al Transitorio Quinto, segundo párrafo, de las RGCE 2025, y si debe transmitir la documentación del artículo 81, fracciones II, III y IV del Reglamento. ¿Qué cambia según la fecha?",
+  "date_matrix": [
+    {
+      "operation_date": "2026-05-20",
+      "expected": "Aplica el Transitorio Décimo Primero reformado por la Primera Resolución (DOF 14-05-2026, vigor el día siguiente): la opción del Transitorio Quinto de las RGCE 2025 corre 'hasta el 31 de mayo de 2026'. La excepción de transmisión del art. 81 aún no existe en ese texto.",
+      "source": "Primera Resolución, artículo Segundo"
+    },
+    {
+      "operation_date": "2026-09-25",
+      "expected": "Aplica el texto reformado por la Segunda Resolución (DOF 22-09-2026, vigor al día siguiente): la opción corre 'hasta el 30 de septiembre de 2026' y, hasta el 31 de diciembre de 2026, no es necesario transmitir la documentación del art. 81, fracs. II, III y IV del Reglamento si se transmite en términos del art. 36-A de la Ley.",
+      "source": "Segunda Resolución, artículo Segundo"
+    },
+    {
+      "operation_date": "2026-11-20",
+      "expected": "La opción del Transitorio Quinto de las RGCE 2025 ya venció el 30-09-2026 según este texto; sigue la excepción de transmisión hasta el 31-12-2026 con la condición del art. 36-A.",
+      "source": "Segunda Resolución, artículo Segundo"
+    }
+  ],
+  "conditional_vigencia": [
+    {
+      "item": "clave AL, apéndice 9, Anexo 22 (aviso automático de aluminio)",
+      "incorporada_por": "Primera Modificación al Anexo 22, DOF 20-05-2026",
+      "vigor": "no por fecha: el Transitorio Segundo de la Primera Resolución lo remite al Transitorio Único del acuerdo de Economía de 02-04-2026, que entra en vigor hasta que el trámite se libere en la Ventanilla Digital y Economía publique un aviso en SNICE. La fecha de ese aviso no se verificó."
+    },
+    {
+      "item": "clave C1, apéndice 9, Anexo 22",
+      "incorporada_por": "Segunda Modificación al Anexo 22, DOF 22-09-2026",
+      "vigor": "Transitorio Segundo de la Segunda Resolución remite al acuerdo de Economía de 28-05-2026. El acuerdo de esa fecha visto en SIDOF (nota 5788843) trata del permiso previo de importación de azúcar y entra en vigor cuando se libere el trámite y Economía emita un comunicado en SNICE. No se verificó que esa nota sea el acuerdo al que alude la clave C1, ni la fecha del comunicado."
+    }
+  ],
+  "traps": [
+    "no inferir el vigor de las claves AL y C1 por la fecha de publicación del Anexo",
+    "la pregunta no debe responderse con el texto original del Transitorio Décimo Primero (DOF 27-12-2025) que no está en el repositorio"
+  ]
+}

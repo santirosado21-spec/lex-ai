@@ -13,3 +13,10 @@ Cubren los artículos 65 y 66 de la Ley Aduanera (ajustes que se suman al precio
 
 ## Cómo usarlos
 Reserva: no ajustar prompts ni recuperación con estos casos. Cuando existan la biblioteca y el modelo, medir por separado si el piloto (a) recupera los incisos correctos, (b) separa lo que se suma de lo que no y (c) advierte la fecha. Sin respuestas esperadas en el prompt.
+
+## Tercer caso: RGCE 2026, transitorios y vigencia condicionada (Anexo 22)
+`eval/legal-b0/caso-rgce-transitorios-b0-20261120.json`, SHA-256 `85ff917fe7f5bb8b8c2faead3068d5629fde8df5c8f9fc67fb84dcb24871cc32`. Anotado, **no probado**.
+
+- El Transitorio Décimo Primero de las RGCE 2026 (DOF 27-12-2025) se reformó dos veces: 14-may-2026 (plazo hasta 31-may-2026) y 22-sep-2026 (plazo hasta 30-sep-2026 y excepción de transmisión del art. 81 del Reglamento hasta 31-dic-2026 si se transmite conforme al art. 36-A). El texto original de 2025 no está en el repositorio.
+- Las claves AL y C1 del apéndice 9 del Anexo 22 no tienen vigor por fecha: dependen de que la Ventanilla Digital libere el trámite y de un aviso o comunicado de Economía en SNICE. Esas fechas no se verificaron. Leído en SIDOF por resultados de búsqueda: https://sidof.segob.gob.mx/notas/5783929 (aluminio) y https://sidof.segob.gob.mx/notas/5788843 (azúcar, sin confirmar que sea el acuerdo de la clave C1).
+- Consecuencia: una compuerta por fecha de publicación daría resultados incorrectos para AL y C1. No se implementó nada.
