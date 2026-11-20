@@ -12,6 +12,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- Conciliación NICO abril 2024: 11 507 pares coinciden exactamente con el acuerdo de 2022 y sus dos reformas; descripciones, anotaciones y reformas posteriores sin comparar. Ver `docs/qa/conciliacion-nico-abril24-20261120.md`.
+
 - Línea base en Linux de la rama del piloto: build correcto, 1 454 de 1 496 pruebas aprobadas y 3 fallidas por falta del artefacto local `public-library.sqlite`. Dos expedientes ficticios de privacidad (turno y oficina; ruta e incidente vial) están anotados y con huella pero **sin medir**: falta el modelo local. Ver `docs/qa/medicion-privacidad-reserva-b0-20261120.md`.
 
 - r32.1 comprueba el recorrido de dos minutas de café desde la importación hasta la edición con marcador, reapertura y exportación. Se cotejaron doce archivos en LibreOffice. Los 38 documentos históricos se restituyeron íntegros. La cobertura fue de 35/35 identificadores y 31/32 indicios. Se conservaron 47/50 hechos. Las nuevas mediciones y sus límites figuran en el [informe de privacidad y edición](../qa/privacidad-contextual-y-edicion-r32.md).

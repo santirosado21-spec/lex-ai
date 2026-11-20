@@ -435,3 +435,7 @@ El paquete local pasó cuatro recorridos con respuestas grabadas, doce exportaci
 ## 2026-11-20 05:31 — rejon-dev — Línea base en Linux y dos expedientes de privacidad anotados sin medir
 
 Rama local `rejon/comercio-b-20261120` sobre `local/comercio-piloto-20261119` (4ad70b4). `npm ci --ignore-scripts` y build correctos; `npm test`: 1496 pruebas, 1454 aprobadas, 3 fallidas, 39 omitidas. Las 3 fallas (tests 462, 473, 476) fallan por ENOENT de `resources/public-library.sqlite`, archivo ignorado por git que se genera desde `artifacts/legal-library/exports-v1`, ausente aquí; no se reconstruyó ni se modificaron pruebas. Dos expedientes ficticios nuevos anotados y con huella antes de correr; no medidos porque no hay Ollama con el modelo local. Borrador de guía B0 sólo para Santiago. Las entradas STATE/LOG del 12 al 18 de noviembre no estaban en la rama.
+
+## 2026-11-20 05:43 — rejon-dev — Conciliación NICO abril 2024 con acuerdo y reformas
+
+El conjunto de pares fracción/NICO del XLSX informativo de abril de 2024 coincide exactamente con el acuerdo del 22-ago-2022 (11 469) más la reforma de 30-jun-2023 (+53, −18) y la de 22-mar-2024 (+6, −3): 11 507 = 11 507, diferencias 0/0. No se compararon descripciones ni anotaciones ni reformas posteriores. Script `scripts/reconcile-nico-abril24.py`; informe `docs/qa/conciliacion-nico-abril24-20261120.md`.
