@@ -1,7 +1,7 @@
 {
   "case": "turno-oficina-patio-b20261120",
   "client": "Ensayo",
-  "annotation_note": "Anotado antes de cualquier corrida el 2026-11-20. Todos los textos y folios son ficticios. No se usa el examen privacy-v2.",
+  "annotation_note": "Anotado antes de cualquier corrida el 2026-11-20. Todos los textos y folios son ficticios. No se usa el examen privacy-v2. Corregidas 4 anotaciones por coincidencia literal exacta antes de cualquier corrida (prueba sintética de parseo, sin detector).",
   "entries": [
     {
       "kind": "declaracion",
@@ -26,12 +26,12 @@
         "ZQR-40917"
       ],
       "clues": [
-        "el turno de la madrugada, el mismo que cubre la oficina de la ventanilla tres",
+        "El turno de la madrugada, el mismo que cubre la oficina de la ventanilla tres",
         "el tramo en obras donde se atoró la unidad"
       ],
       "facts": [
-        "faltaban dos tarimas de seis",
-        "la fracción 8481.80.99",
+        "Faltaban dos tarimas de seis",
+        "La fracción 8481.80.99",
         "levantó el acta"
       ]
     },

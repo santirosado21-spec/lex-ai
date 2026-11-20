@@ -1,7 +1,7 @@
 {
   "case": "ruta-incidente-vial-b20261120",
   "client": "Ensayo",
-  "annotation_note": "Anotado antes de cualquier corrida el 2026-11-20. Textos ficticios. No se usa el examen privacy-v2.",
+  "annotation_note": "Anotado antes de cualquier corrida el 2026-11-20. Textos ficticios. No se usa el examen privacy-v2. Corregidas 4 anotaciones por coincidencia literal exacta antes de cualquier corrida (prueba sintética de parseo, sin detector).",
   "entries": [
     {
       "kind": "declaracion",
@@ -32,7 +32,7 @@
       "facts": [
         "peso bruto fue de 9 870 kg",
         "neto de 9 400 kg",
-        "el resto de la carga viajaría al día siguiente",
+        "El resto de la carga viajaría por la carretera vieja al día siguiente",
         "no pasó la revisión de frenos"
       ]
     },

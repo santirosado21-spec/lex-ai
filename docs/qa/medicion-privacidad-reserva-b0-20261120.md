@@ -6,8 +6,8 @@
 
 | Archivo | SHA-256 |
 |---|---|
-| `eval/privacy-trade/expediente-turno-oficina-b0-20261120.json` (patio fiscal, báscula, turno y ventanilla, tramo en obras) | `01d3e5665ccfc10994531aa225fa29fc70675b91d9d0ba09874d29de26ab035e` |
-| `eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json` (recinto, puente cerrado, caseta con mural, carretera vieja, revisión de frenos) | `0b4925ec6c2b920eae7e300e167b79cf1c83d75606a70e6225ff545f944ea60a` |
+| `eval/privacy-trade/expediente-turno-oficina-b0-20261120.json` (patio fiscal, báscula, turno y ventanilla, tramo en obras) | `c6d70b4ce96a93db886f67f34676e68d4b7c5cb9e14f25362f8b818312a5db48` |
+| `eval/privacy-trade/expediente-ruta-incidente-b0-20261120.json` (recinto, puente cerrado, caseta con mural, carretera vieja, revisión de frenos) | `676985678db0fc69376afb1131ab167fd8b8a628fee48038ea847e6d223018cc` |
 
 Cada texto trae `private` (folio), `clues` (indicios de lugar, suceso, sonido, olor o rasgo físico) y `facts` (hechos técnicos útiles que deben seguir legibles). Se anotaron antes de cualquier ejecución. Todo es ficticio. No se usa el examen privacy-v2.
 
@@ -28,4 +28,4 @@ node scripts/measure-intake-dialogue.mjs eval/privacy-trade/expediente-ruta-inci
 ```
 
 Pegar la salida completa (sin editar) y el commit. Antes: `sha256sum` de los dos JSON debe coincidir con la tabla.
-Nota: el script usa `kind` = declaracion, inspeccion, pregunta; este formato es el mismo que `dialogo-*-r32.json`. No se verificó aquí que el script acepte el campo extra `annotation_note`; si falla por eso, quitar sólo ese campo y volver a calcular la huella dejando constancia.
+Verificado por lectura de `scripts/measure-intake-dialogue.mjs` y por una comprobación sintética de parseo (sin detector, sin Ollama): el script sólo lee `case`, `client`, `entries[].kind/text/private/clues/facts`; ignora `annotation_note`. Exige que cada término anotado aparezca una sola vez y literal en su texto; esa comprobación pasa en los dos archivos tras corregir 4 anotaciones antes de correr. El script en sí no se ejecutó sobre estas muestras.
