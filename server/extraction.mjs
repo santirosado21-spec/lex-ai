@@ -3,13 +3,13 @@ import { Worker } from 'node:worker_threads';
 export const MAX_BYTES=10*1024*1024;
 export const MAX_TEXT=500_000;
 
-export async function extractDocument(name, base64) {
+export async function extractDocument(name, base64, {spreadsheet=false}={}) {
   if (typeof name!=='string' || !name.trim() || name.length>200 || /[\\/\u0000-\u001f]/.test(name)) throw new Error('Nombre de archivo inválido.');
   if (typeof base64!=='string' || base64.length>Math.ceil(MAX_BYTES/3)*4 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(base64)) throw new Error('Archivo inválido o mayor a 10 MiB.');
   const bytes=Buffer.from(base64,'base64');
   if (!bytes.length || bytes.length>MAX_BYTES) throw new Error('Archivo vacío o mayor a 10 MiB.');
   const extension=extname(name).toLowerCase();
-  if (!['.txt','.md','.docx','.pdf'].includes(extension)) throw new Error('Formato no admitido. Usa PDF, DOCX, TXT o Markdown.');
+  if (!(spreadsheet&&extension==='.xlsx') && !['.txt','.md','.docx','.pdf'].includes(extension)) throw new Error('Formato no admitido. Usa PDF, DOCX, TXT o Markdown.');
   let text;
   if (extension==='.txt'||extension==='.md') {
     try { text=new TextDecoder('utf-8',{fatal:true}).decode(bytes); }
@@ -25,7 +25,7 @@ export async function extractDocument(name, base64) {
 
 function extractInWorker(extension,bytes) {
   return new Promise((resolve,reject)=>{
-    const worker=new Worker(new URL('./extraction-worker.mjs',import.meta.url),{workerData:{extension,bytes},resourceLimits:{maxOldGenerationSizeMb:256}});
+    const worker=new Worker(new URL('./extraction-worker.mjs',import.meta.url),{workerData:{extension,bytes,maxText:MAX_TEXT},resourceLimits:{maxOldGenerationSizeMb:256}});
     let settled=false;
     const finish=(error,value)=>{if(settled)return;settled=true;clearTimeout(timer);void worker.terminate();error?reject(error):resolve(value);};
     const timer=setTimeout(()=>finish(new Error('La extracción excedió 30 segundos.')),30_000);

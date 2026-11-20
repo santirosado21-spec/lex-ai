@@ -1,0 +1,34 @@
+{
+  "case": "origen-empaque-sintetico",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "certificado",
+      "text": "Certificado de composición primaria. Fabricante: Alquimia Industrial S.A. Lote: X-77B-2023. Se usó una matriz de polímeros y un aglutinante basado en sales minerales. El proceso de vulcanización se realizó a una temperatura controlada de 145 °C durante un ciclo de cuatro horas. Los insumos provienen de la instalación ubicada en el sector industrial de Valle del Silencio.",
+      "private": ["Alquimia Industrial S.A.", "X-77B-2023"],
+      "clues": ["sector industrial de Valle del Silencio"],
+      "facts": ["matriz de polímeros", "aglutinante basado en sales minerales", "145 °C durante un ciclo de cuatro horas"]
+    },
+    {
+      "kind": "registro",
+      "text": "Registro de proceso y empaque. Fabricante: Fuerza Materia Ltda. Lote: X-77B-2023. El embalaje final se realizó en contenedores de cartón corrugado con un sello distintivo: un grabado circular que muestra tres picos estilizados y una luna creciente. La operación se llevó a cabo en la planta secundaria, conocida por su sistema de ventilación de chimenea de color óxido.",
+      "private": ["Fuerza Materia Ltda.", "X-77B-2023"],
+      "clues": ["grabado circular que muestra tres picos estilizados y una luna creciente", "sistema de ventilación de chimenea de color óxido"],
+      "facts": ["contenedores de cartón corrugado"]
+    },
+    {
+      "kind": "pregunta",
+      "text": "¿Qué documento sustenta la vulcanización del lote X-77B-2023 y qué valor tiene el grabado de los tres picos y la luna?",
+      "private": ["X-77B-2023"],
+      "clues": ["grabado de los tres picos y la luna"],
+      "facts": ["Qué documento sustenta la vulcanización"]
+    },
+    {
+      "kind": "seguimiento",
+      "text": "¿La temperatura de proceso acredita por sí sola el origen preferencial o falta la declaración del productor?",
+      "private": [],
+      "clues": [],
+      "facts": ["temperatura de proceso acredita por sí sola el origen preferencial", "falta la declaración del productor"]
+    }
+  ]
+}

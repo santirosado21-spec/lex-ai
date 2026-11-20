@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {chromium} from 'playwright';
+import ExcelJS from 'exceljs';
 
 const root=path.resolve(process.argv[2]??'.'),out=path.resolve(process.argv[3]??'artifacts/reglamento-r28');
 const live=process.argv.includes('--openai'),replay=process.argv.find(x=>x.startsWith('--replay='))?.slice(9);
@@ -14,15 +15,18 @@ const mod=name=>import(pathToFileURL(path.join(root,name)));
 const {startServer}=await mod('server/main.mjs'),{createIntakeGenerator}=await mod('server/intake-pilot.mjs');
 const {regulationPassage}=await mod('server/corpus/customs-edition.mjs');
 const client='Taller Capuchino de Ensayo',title='Trámite Cuarzo de Ensayo',privateCode='CXW-71403';
+const matrix=process.argv.includes('--matriz');
+const cells=['Hoja 1 · B2 | AVS-44027','Hoja 1 · C2 | avisos@ejemplo.invalid'];
 const source=regulationPassage('6-A').ref.text,topic='sello digital correo electrónico avisos de disponibilidad';
 await mkdir(out,{recursive:true});
 const dir=await mkdtemp(path.join(tmpdir(),'rejon-reglamento-'));let app,preview,originalQuestion,calls=0;
 const external=[],errors=[];
 const generator=createIntakeGenerator({...(live?{}:{getApiKey:async()=>'sk-'+'s'.repeat(32)}),fetchImpl:async(url,opts)=>{
+ try{
  assert.equal(url,'https://api.openai.com/v1/chat/completions');const req=JSON.parse(opts.body);
  assert.ok(req.store===false&&req.messages.length===1&&req.messages[0].content===preview);
  assert.ok(preview.includes(source)&&preview.includes('Pasaje público relacionado'));
- for(const secret of [client,title,privateCode,originalQuestion])assert.ok(!opts.body.includes(secret));
+ for(const secret of [client,title,privateCode,originalQuestion,...cells,'AVS-44027','avisos@ejemplo.invalid','Nombre local privado'])assert.ok(!opts.body.includes(secret));
  const hash=createHash('sha256').update(opts.body).digest('hex');let response;calls++;
  if(live)response=await fetch(url,opts);
  else if(replay){const stored=JSON.parse(await readFile(path.join(replay,'respuesta.json')));assert.equal(hash,stored.hash);response=Response.json(stored.response);}
@@ -31,6 +35,7 @@ const generator=createIntakeGenerator({...(live?{}:{getApiKey:async()=>'sk-'+'s'
   lectura:'Conviene cotejar el correo registrado para notificaciones y el soporte del trámite electrónico para verificar a quién se dirigen los avisos.',solicitud:'¿Qué constancia acredita el registro del correo electrónico?'})}}]});
  if(response.ok)await writeFile(path.join(out,'respuesta.json'),JSON.stringify({hash,response:await response.clone().json()},null,2));
  return response;
+ }catch(error){console.error(error.message);throw error;}
 }});
 const start=()=>startServer({dataDir:dir,intakePilot:true,intakeGenerate:generator,autoInitialize:false,pilotPassphrase:Buffer.from('frase sintética de la biblioteca local')});
 const browser=await chromium.launch();
@@ -41,6 +46,20 @@ try{
  const open=()=>p.goto(app.connection.url+'/#pilot=intake&token='+app.connection.token);
  const b=name=>p.getByRole('button',{name,exact:true});await open();
  await p.locator('#intake-firm').fill('Despacho de laboratorio');await b('Continuar').click();await p.locator('#intake-client').fill(client);await p.locator('#intake-title').fill(title);await b('Guardar en este equipo').click();
+ if(matrix){
+  const book=new ExcelJS.Workbook();
+  const sheet=book.addWorksheet('Nombre local privado');
+  sheet.addRow(['Trámite','Folio','Correo registrado']);sheet.addRow(['Notificación','AVS-44027','avisos@ejemplo.invalid']);
+  await b('Documentos del expediente (0)').click();await b('Añadir documento').click();
+  const bytes=Buffer.from(await book.xlsx.writeBuffer());
+  await p.locator('input[type=file]').setInputFiles({name:'control.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:bytes});
+  await p.getByText('Revisar protección local',{exact:false}).waitFor({timeout:125000});
+  await p.getByLabel('Nombre en el expediente').fill('Control de avisos');
+  await b('Guardar documento en este equipo').click();await b('Documentos del expediente (1)').waitFor();
+  const sources=await app.service.dispatch('intake.status',{});
+  const file=await app.service.dispatch('intake.downloadSource',{id:sources.sources[0].id});
+  assert.equal(file.base64,bytes.toString('base64'));assert.ok(file.mime.endsWith('spreadsheetml.sheet'));
+ }
  await b('Biblioteca federal').click();await b('Reglamento aduanero').click();const search=p.getByLabel('Buscar en el Reglamento');
  await search.fill('xyzzzyyyy');await b('Buscar artículos').click();await p.getByText('Sin coincidencias.',{exact:false}).waitFor();
  await search.fill(topic);await b('Buscar artículos').click();const select=p.getByLabel('Artículo del Reglamento de la Ley Aduanera');await select.waitFor();
@@ -52,14 +71,21 @@ try{
  originalQuestion=(await inquiry.inputValue()).replace('?',' en el asunto '+privateCode+'?');
  await inquiry.fill(originalQuestion);await b('Buscar fundamentos en este equipo').click();
  const candidate=p.getByLabel('Pasaje que quieres consultar');await candidate.waitFor({timeout:125000});assert.equal(await candidate.inputValue(),'reg-aduana-6-A/0');
+ if(matrix){
+  await b('Elegir líneas de mis documentos').click();
+  const rows=p.locator('.rp-line-options input[type=checkbox]');await rows.nth(5).waitFor();
+  await rows.nth(4).check();await rows.nth(5).check();
+  await p.locator('.rp-question-lines').screenshot({path:path.join(out,'matriz.png')});
+ }
  await p.getByLabel('Enfoque jurídico').selectOption('documentos');await b('Preparar mensaje para revisión').click();
- const show=p.getByText('Leer el mensaje completo');if(await show.isVisible())await show.click();preview=await p.locator('.rp-preview').filter({hasText:'Pasaje público relacionado'}).innerText();
+ const message=p.locator('.rp-preview').filter({hasText:'Pasaje público relacionado'});await message.waitFor({state:'attached'});
+ const show=p.getByText('Leer el mensaje completo');if(await show.isVisible())await show.click();await message.waitFor();preview=await message.innerText();
  const waiting=p.waitForResponse(r=>r.url().endsWith('/api')&&r.request().postDataJSON()?.action==='intake.draft',{timeout:125000});
- await b('Enviar y generar borrador').click();const reply=await waiting;assert.ok(reply.ok());
+ await b('Enviar y generar borrador').click();const reply=await waiting;assert.ok(reply.ok(),JSON.stringify(await reply.json()).slice(0,350));
  await b('Datos originales').click();const area=p.locator('.rp-document').filter({hasText:privateCode});
  const draft=await area.innerText();assert.ok(draft.includes('Lectura preliminar de OpenAI')&&draft.includes('MX-FED-REG-LADUA-6-A')&&!draft.includes('Fundamento pendiente'),draft);
  const reading=draft.split('Lectura preliminar de OpenAI')[1].split('\n\n')[0];assert.match(reading,/correo|notifica|avisos/iu);
- for(const term of [client,title,originalQuestion])assert.ok(draft.includes(term));
+ for(const term of [client,title,originalQuestion,...(matrix?cells:[])])assert.ok(draft.includes(term));
  const task=await p.locator('#intake-task').inputValue();
  for(const [label,ext] of [['Word','docx'],['Excel','xlsx'],['PowerPoint','pptx']]){
   await b(label).click();const ready=p.waitForEvent('download');await b('Descargar .'+ext).click();await(await ready).saveAs(path.join(out,'registro.'+ext));

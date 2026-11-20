@@ -1,3 +1,4 @@
+import {materialDescriptionRanges,originContextRanges} from './origin-evidence.mjs';
 import {randomUUID} from 'node:crypto';
 import {createProvenanceRegistry,privacyTextHash} from './provenance.mjs';
 import {createVariantAwareDetector} from './detector-variants.mjs';
@@ -22,12 +23,14 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,sugges
    extraction:{status:'complete',extractorVersion:'intake-text-v1',originalSha256:originalHash},
    segments});
  const result=await createVariantAwareDetector({provenanceRegistry:registry}).detect({scope,segments:source.segments,signal});
- const contextual=[...contextualIdentityRanges(text),...(context?.ranges??[])];
+ const materials=materialDescriptionRanges(text);
+ const isMaterial=(start,end)=>materials.some(([a,b])=>start>=a&&end<=b);
+ const contextual=[...originContextRanges(text),...contextualIdentityRanges(text),...(context?.ranges??[])];
  let needsReview=result.status!=='complete'||contextual.length>0||context?.available===false;
  const ranges=[...labelledIdentityRanges(text),...postalBlockRanges(text),...logisticsReferenceRanges(text),...contextual];
  for (const detection of result.detections) {
   const offset=offsets.get(detection.segmentId),start=offset+detection.start,end=offset+detection.end;
-  if(detection.category==='person'&&isCaption(start,end))continue;
+  if(detection.category==='person'&&(isCaption(start,end)||isMaterial(start,end)))continue;
   ranges.push([start,end]);
  }
  const fieldValues=new Set(fields),objects=[...documentaryObjectRanges(text),...tradeTermRanges(text)];
@@ -37,7 +40,7 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,sugges
   for(let start=text.indexOf(value);start!==-1;start=text.indexOf(value,start+value.length)) {
    const end=start+value.length;
    if(fieldValues.has(value)){ranges.push([start,end]);continue;}
-   if(isCaption(start,end)||objects.some(([a,b])=>a===start&&b===end))continue;
+   if(isCaption(start,end)||isMaterial(start,end)||objects.some(([a,b])=>a===start&&b===end))continue;
    // In an Incoterm followed by a named place, retain the code and protect the entire destination.
    const term=objects.find(([a,b])=>a===start&&b<end&&/^[A-Z]{3}$/u.test(text.slice(a,b))&&/\s/u.test(text[b]));
    const privateStart=term?term[1]+text.slice(term[1],end).match(/^\s*/u)[0].length:start;

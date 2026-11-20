@@ -415,3 +415,7 @@ Piloto privado reproducido desde el ZIP en Chromium en este Mac. Se abrieron las
 ## 2026-11-19 23:41 — codex — Rejon r28.1 incorpora el Reglamento completo y reservas del expediente
 
 PDF oficial idéntico al archivo empaquetado. Dos extractores cotejaron 282 artículos completos, 338 bloques y 56 continuaciones. Dos generaciones reales sobre el 6-A con material público; la segunda citó el inciso de correo. El ZIP reprodujo ambos recorridos, se verificaron nueve archivos Office con LibreOffice y el respaldo por cuota simulado. Suite con 1470 aprobadas y diez omitidas. En la nueva reserva de origen se restituyeron cuatro textos y se cubrieron 6/6 identificadores directos; quedaron visibles 5/5 indicios y se conservaron 2/6 hechos. Faltan validación jurídica humana, privacidad generalizable, cuenta real secundaria y máquinas de socios.
+
+## 2026-11-19 23:52 — codex — Rejon r29: Anexo 5-A y celdas Excel en el expediente
+
+Se integraron los nueve numerales del anexo del capítulo 5 y su PDF oficial. Poppler y PDF.js coincidieron en las nueve extracciones. Una consulta pública real usó 335 tokens de entrada y 100 de salida. Un libro sintético se restituyó byte a byte. Se verificaron dos recorridos desde el ZIP y seis exportaciones en LibreOffice. Suite de 1473 aprobadas y diez omitidas. En otro expediente de empaque el lector local cubrió sólo uno de cuatro indicios. Pendientes la prueba de los socios, la segunda cuenta real, Windows y 8 GB.

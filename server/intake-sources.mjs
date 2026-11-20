@@ -2,7 +2,7 @@ import {tradeDocumentAnchorValues} from './privacy/trade-document-structure.mjs'
 import {createHash,randomUUID} from 'node:crypto';
 import {bindReviewedDocument,openReviewedDocument} from './privacy/intake-document-map.mjs';
 
-const types={pdf:'application/pdf',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',txt:'text/plain',md:'text/markdown'};
+const types={xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',pdf:'application/pdf',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',txt:'text/plain',md:'text/markdown'};
 const primaryLabels={contrato:'Contrato inicial',factura:'Factura inicial',pedimento:'Pedimento inicial',otro:'Soporte inicial'};
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 

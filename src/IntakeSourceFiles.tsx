@@ -39,7 +39,7 @@ export default function IntakeSourceFiles({sources,pair,disabled,onSave,onCompar
  return <section className="rp-source-files">
   <button type="button" className="rp-quiet" aria-expanded={open} disabled={busy} onClick={()=>setOpen(!open)}><Files size={16}/>Documentos del expediente ({sources.length})</button>
   {open&&<div className="rp-reveal">
-   {!!sources.length&&<ol>{sources.map(s=><li key={s.id}><span>{s.label}</span>{s.hasFile?<button type="button" className="rp-quiet" disabled={busy} onClick={()=>void download(s.id)}><Download size={14}/>Descargar .{s.extension}</button>:<small>Texto del alta</small>}</li>)}</ol>}
+   {!!sources.length&&<ol>{sources.map(s=><li key={s.id}><span>{s.label}</span>{s.hasFile?<button type="button" className="rp-quiet" disabled={busy} onClick={()=>void download(s.id)}><Download size={14}/>Descargar original .{s.extension}</button>:<small>Texto del alta</small>}</li>)}</ol>}
    {!adding?<button type="button" className="rp-quiet" disabled={busy} onClick={()=>{setAdding(true);setMessage('');}}><Plus size={16}/>Añadir documento</button>:
    <div className="rp-source-add"><LocalIntakeImport attachment onReplace={()=>setReview(undefined)} onReviewChange={id=>setReview(id)} onBusyChange={setWorking}
       onExtract={data=>{setReview(data.reviewId);if(!label)setLabel(data.documentKind==='otro'?'':data.documentKind[0].toUpperCase()+data.documentKind.slice(1));}}/>

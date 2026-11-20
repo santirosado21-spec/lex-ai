@@ -1,3 +1,4 @@
+import IntakeOriginAnnex from './IntakeOriginAnnex';
 import IntakeReservations from './IntakeReservations';
 import IntakeCustomsLaw from './IntakeCustomsLaw';
 import IntakeRemedy from './IntakeRemedy';
@@ -44,7 +45,7 @@ export default function IntakePilot() {
   const [worksheetDirty,setWorksheetDirty]=useState(false);
   const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
-  const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'reglamento'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
+  const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'reglamento'|'origen'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
   const [nicoQuery,setNicoQuery]=useState('');
   const [articleInquiry,setArticleInquiry]=useState<{text:string}>();
   const [libraryOpen,setLibraryOpen] = useState(false);
@@ -219,11 +220,12 @@ export default function IntakePilot() {
     <button className="rp-quiet" aria-pressed={libraryView==='leyes'} onClick={()=>setLibraryView('leyes')}>Leyes federales</button>
     <button className="rp-quiet" aria-pressed={libraryView==='aduana'} onClick={()=>setLibraryView('aduana')}>Ley Aduanera</button>
     <button className="rp-quiet" aria-pressed={libraryView==='reglamento'} onClick={()=>setLibraryView('reglamento')}>Reglamento aduanero</button>
+    <button className="rp-quiet" aria-pressed={libraryView==='origen'} onClick={()=>setLibraryView('origen')}>Origen T-MEC</button>
     <button className="rp-quiet" aria-pressed={libraryView==='tarifa'} onClick={()=>setLibraryView('tarifa')}>Tarifa arancelaria</button>
     <button className="rp-quiet" aria-pressed={libraryView==='nico'} onClick={()=>{setNicoQuery('');setLibraryView('nico');}}>Catálogo NICO</button>
     <button className="rp-quiet" aria-pressed={libraryView==='pedimento'} onClick={()=>setLibraryView('pedimento')}>Claves del pedimento</button>
     <button className="rp-quiet" aria-pressed={libraryView==='defensa'} onClick={()=>setLibraryView('defensa')}>Defensa comercial</button></div>
-    {libraryView==='aduana'||libraryView==='reglamento'?<IntakeCustomsLaw key={libraryView} regulation={libraryView==='reglamento'} onAsk={saved&&pilot?.protectedRecords?(article,topic)=>{
+    {libraryView==='origen'?<IntakeOriginAnnex onAsk={saved&&pilot?.protectedRecords?(point,label)=>{setArticleInquiry({text:'¿Qué documentos permiten comprobar el numeral '+point+' del Anexo 5-A del T-MEC sobre '+label+'?'});setLibraryOpen(false);}:undefined}/>:libraryView==='aduana'||libraryView==='reglamento'?<IntakeCustomsLaw key={libraryView} regulation={libraryView==='reglamento'} onAsk={saved&&pilot?.protectedRecords?(article,topic)=>{
      const law=libraryView==='reglamento'?'del Reglamento de la Ley Aduanera':'de la Ley Aduanera';
      setArticleInquiry({text:(topic?'¿Qué debo comprobar sobre '+topic+' según el artículo ':'¿Qué documentos permiten comprobar los requisitos del artículo ')+article+' '+law+'?'});setLibraryOpen(false);
     }:undefined}/>:libraryView==='defensa'?<IntakeRemedy onSave={saved&&pilot?.protectedRecords?(sourceId,point,date)=>saveReference('intake.saveRemedy',{sourceId,point,date}):undefined}/>:libraryView==='pedimento'?<IntakePermit onSave={saved&&pilot?.protectedRecords?selection=>saveReference('intake.savePermit',selection):undefined}/>:libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:libraryView==='nico'?<IntakeNico key={nicoQuery} initial={nicoQuery} onSave={saved&&pilot?.protectedRecords?(code,nico)=>saveReference('intake.addNico',{code,nico}):undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={(code,page)=>saveReference('intake.addTariff',{code,page})} onNico={code=>{setNicoQuery(code);setLibraryView('nico');}}/>}</>}</div>

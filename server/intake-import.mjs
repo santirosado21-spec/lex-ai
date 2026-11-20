@@ -26,9 +26,9 @@ const exactSpan = (value, source) => typeof value === 'string' && value.trim() &
 export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, knownIdentities=[],reservations=[]} = {}) {
  const review=payload?.review===true;
  if (!payload || Object.keys(payload).some(key=>!['base64','extension','review'].includes(key)) ||
-     (Object.hasOwn(payload,'review') && !review) || Object.keys(payload).length !== (review?3:2) || !['pdf','docx','txt','md'].includes(payload.extension) ||
-     typeof payload.base64 !== 'string') throw new Error('Elige un PDF, DOCX, TXT o Markdown.');
- const {text,bytes} = await extractDocument('entrada.' + payload.extension, payload.base64);
+     (Object.hasOwn(payload,'review') && !review) || Object.keys(payload).length !== (review?3:2) || !['pdf','docx','xlsx','txt','md'].includes(payload.extension) ||
+     typeof payload.base64 !== 'string') throw new Error('Elige un PDF, DOCX, XLSX, TXT o Markdown.');
+ const {text,bytes} = await extractDocument('entrada.' + payload.extension, payload.base64, {spreadsheet:true});
  const windows=intakeWindows(text);
  const format=review ? {...shape,required:[...shape.required,'entities'],properties:{...shape.properties,
   entities:{type:'array',maxItems:96,items:{type:'string',minLength:2,maxLength:1024}}}} : shape;

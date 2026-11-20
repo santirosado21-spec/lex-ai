@@ -1,0 +1,75 @@
+[
+  {
+    "point": 1,
+    "label": "Certificación de Origen por el Importador, Exportador o Productor",
+    "pages": [
+      17
+    ],
+    "text": "Indique si el certificador es el exportador, productor o importador de conformidad con el Artículo 5.2 (Solicitudes de Trato Arancelario Preferencial)."
+  },
+  {
+    "point": 2,
+    "label": "Certificador",
+    "pages": [
+      17
+    ],
+    "text": "Proporcione el nombre, cargo, dirección (incluido el país), número telefónico y dirección de correo electrónico del certificador."
+  },
+  {
+    "point": 3,
+    "label": "Exportador",
+    "pages": [
+      17
+    ],
+    "text": "Proporcione el nombre, dirección (incluido el país), dirección de correo electrónico y número telefónico del exportador, de ser distinto del certificador. Esta información no será requerida si el productor está llenando la certificación de origen y desconoce la identidad del exportador. La dirección del exportador será el lugar de exportación de la mercancía en el territorio de una de las Partes."
+  },
+  {
+    "point": 4,
+    "label": "Productor",
+    "pages": [
+      17
+    ],
+    "text": "Proporcione el nombre, dirección (incluido el país), dirección de correo electrónico y, número telefónico del productor, de ser distinto del certificador o exportador o, si hay múltiples productores, indique “Varios” o proporcione una lista de productores. Una persona que desea que esta información se mantenga confidencial podrá indicar “Disponible a solicitud de las autoridades importadoras”. La dirección del productor será el lugar de producción de la mercancía en el territorio de una de las Partes."
+  },
+  {
+    "point": 5,
+    "label": "Importador",
+    "pages": [
+      17
+    ],
+    "text": "Proporcione, de conocerse, el nombre, dirección, dirección de correo electrónico y número telefónico del importador. La dirección del importador será en el territorio de una de las Partes."
+  },
+  {
+    "point": 6,
+    "label": "Descripción y Clasificación Arancelaria de la Mercancía en el SA",
+    "pages": [
+      17,
+      18
+    ],
+    "text": "(a) Proporcione una descripción de la mercancía y la clasificación arancelaria en el SA de la mercancía a nivel de 6 dígitos. La descripción debería ser suficiente para relacionarla con la mercancía amparada por la certificación; y (b) Si la certificación de origen ampara un solo embarque de una mercancía, indique, de conocerse, el número de la factura relacionada con la exportación."
+  },
+  {
+    "point": 7,
+    "label": "Criterio de Origen",
+    "pages": [
+      18
+    ],
+    "text": "Especifique la regla de origen conforme a la cual la mercancía califica, según se establece en el Artículo 4.2 (Mercancías Originarias)."
+  },
+  {
+    "point": 8,
+    "label": "Período Global",
+    "pages": [
+      18
+    ],
+    "text": "Incluya el período si la certificación ampara múltiples embarques de mercancías idénticas para un plazo especificado de hasta 12 meses según se establece en el Artículo 5.2 (Solicitudes de Trato Arancelario Preferencial)."
+  },
+  {
+    "point": 9,
+    "label": "Firma Autorizada y Fecha",
+    "pages": [
+      18
+    ],
+    "text": "La certificación debe ser firmada y fechada por el certificador e ir acompañada de la siguiente declaración: Certifico que las mercancías descritas en este documento califican como originarias y que la información contenida en este documento es verdadera y exacta. Asumo la responsabilidad de comprobar lo aquí declarado y me comprometo a conservar y presentar en caso de ser requerido o a poner a disposición durante una visita de verificación, la documentación necesaria que soporte esta certificación."
+  }
+]

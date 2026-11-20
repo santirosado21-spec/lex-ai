@@ -90,3 +90,13 @@ test('a generic calibration stays readable while added identifying context still
  assert.deepEqual((await reviewContextLocally(routine,all)).ranges,[]);
  assert.deepEqual((await reviewContextLocally(qualified,all)).ranges,[[0,qualified.length]]);
 });
+
+test('origin review separates visible technical composition from marked and reserved values',async()=>{
+ const text='Material: Fibra de vidrio. Fabricada en plantas próximas a la vieja compuerta. Se encontró una mancha ocre en el precinto.';
+ const review=await reviewIntakeDocument({text,originalHash:'c'.repeat(64),suggestions:['Fibra de vidrio'],fields:[]});
+ const masked=review.parts.map(p=>p.text??'***').join('');
+ assert.ok(masked.includes('Fibra de vidrio')&&!masked.includes('compuerta')&&!masked.includes('ocre'));
+ assert.equal(review.restored,text);
+ const field=await reviewIntakeDocument({text,originalHash:'c'.repeat(64),suggestions:[],fields:['Fibra de vidrio']});
+ assert.ok(!field.parts.map(p=>p.text??'***').join('').includes('Fibra de vidrio'));
+});

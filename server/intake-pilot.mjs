@@ -1,3 +1,4 @@
+import {originAnnexDirectory} from './corpus/origin-annex.mjs';
 import {regulationSearch} from './corpus/regulation-search.mjs';
 import {reservationKey,hasReservedText} from './privacy/matter-reservations.mjs';
 import {returnContext,isReturnQuestion,returnIdentityInquiry} from './corpus/return-context.mjs';
@@ -663,6 +664,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     exactFields(payload,['text']);
     if(typeof payload.text!=='string'||payload.text.length>180)throw Error('Busca con un máximo de 180 caracteres.');
     return regulationSearch(payload.text);
+   case 'intake.originAnnex':
+    exactFields(payload,[]);return originAnnexDirectory();
    case 'intake.regulationDirectory':
     exactFields(payload,[]);return regulationDirectory();
    case 'intake.customsDirectory':

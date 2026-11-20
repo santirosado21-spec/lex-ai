@@ -217,3 +217,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 23:40 — codex — Cotejar artículos completos por página y acotar la cita al inciso reconocido
 
 **Por qué:** En el artículo 6-A, la primera generación citó requisitos generales y pasó por alto el correo electrónico de notificaciones. El texto completo conserva las condiciones y la selección de un fragmento oficial permite cotejar la cita que recibe el abogado. Las reservas del expediente pueden impedir cualquier nuevo envío antes de consultar al proveedor.
+
+## 2026-11-19 23:52 — codex — Conservar las celdas aportadas por el abogado en su equipo
+
+**Por qué:** En los documentos de Excel se revisan los valores visibles y los resultados guardados con su dirección. El archivo original se conserva cifrado cuando se adjunta al expediente. El proveedor recibe una consulta reconstruida desde la fuente pública. La muestra de empaque sigue presentando riesgo de identificación indirecta.

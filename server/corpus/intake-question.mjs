@@ -1,3 +1,4 @@
+import {requestsOriginAnnex,originAnnexSuggestions} from './origin-annex.mjs';
 import {regulationSearch,chooseRegulationFocus} from './regulation-search.mjs';
 import {remedySuggestions} from './remedy-index.mjs';
 import {extractReference} from '../retrieval/references.mjs';
@@ -80,6 +81,12 @@ export function questionCandidates(library,original,parts,reference=null,context
   }
   return ranked();
  }
+ for(const [i,ref] of originAnnexSuggestions(original).entries()){
+  const part=ref.point,key=ref.sourceId+'/'+part;
+  candidates.set(key,{key,citationId:ref.id,source:ref.sourceId,part,title:ref.title,label:ref.title+' · numeral '+part,
+   locator:ref.locator,text:ref.text,score:130-i,partial:false});
+ }
+ if(requestsOriginAnnex(original))return ranked();
  if(namedRegulation){
   for(const [i,article] of regulationSearch(working).slice(0,6).entries())customs(article,60-i*4,true);
   return ranked();

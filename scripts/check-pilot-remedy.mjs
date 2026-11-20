@@ -103,7 +103,7 @@ try{
  await p.getByLabel('Nombre en el expediente').fill('Ficha del taller');
  await b('Guardar documento en este equipo').click();await b('Documentos del expediente (1)').waitFor();
  if(long){
-  const downloading=p.waitForEvent('download');await b('Descargar .txt').click();
+  const downloading=p.waitForEvent('download');await b('Descargar original .txt').click();
   const savedPath=await(await downloading).path();assert.deepEqual(await readFile(savedPath),original);
  }
  await b('Documentos del expediente (1)').click();

@@ -254,3 +254,9 @@
 .rp-regulation-text section+section {border-top:1px solid var(--rp-line);margin-top:1rem;padding-top:.6rem}
 .rp-regulation-text section>a {font-size:.82rem}
 .rp-regulation-text section>p {max-width:76ch;margin:.65rem 0;font-size:.94rem;line-height:1.55;color:var(--rp-ink)}
+
+.rp-origin-annex figure{margin:1.25rem 0;padding:clamp(1rem,3vw,1.75rem);border-left:3px solid var(--rp-line);background:var(--rp-paper,#fffcf6)}
+.rp-origin-annex figcaption{font-size:.85rem;font-weight:600;color:var(--rp-ink)}
+.rp-origin-annex blockquote{margin:.65rem 0 0;max-width:70ch;line-height:1.65;overflow-wrap:anywhere}
+.rp-origin-annex .rp-actions{align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.rp-origin-annex>small{display:block;color:var(--rp-ink);line-height:1.5}

@@ -51,7 +51,7 @@ try{
   await p.getByLabel('Nombre en el expediente').fill(label);await button('Guardar documento en este equipo').click();
   await button('Documentos del expediente ('+(index+1)+')').waitFor();
  }
- assert.deepEqual(await download('Descargar .docx','original.docx'),contract);
+ assert.deepEqual(await download('Descargar original .docx','original.docx'),contract);
  await button('Cotejar documentos').click();
  await p.getByText(/Los documentos contienen afirmaciones incompatibles/).waitFor();
  await p.getByText('Líneas del soporte local',{exact:true}).click();
@@ -75,7 +75,7 @@ try{
  }
  await app.close();app=await launch();await open();
  await button('Documentos del expediente (2)').click();
- assert.deepEqual(await download('Descargar .txt','original.txt'),invoice);
+ assert.deepEqual(await download('Descargar original .txt','original.txt'),invoice);
  assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
  await writeFile(path.join(out,'resultado.json'),JSON.stringify({actualOpenAIRequests:0,publicRequestReplay:messages.length,externalBrowserRequests:requests.length,viewports:[320,390,768,1280],quotes,matchedOriginalsAfterImport:true,restored},null,2));
  console.log('Ollama, dos originales, cotejo previo al envío, reproducción pública y exportaciones verificados.');

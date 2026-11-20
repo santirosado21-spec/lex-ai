@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 23:41 por codex: Rejon r28.1 incorpora el Reglamento completo y reservas del expediente
+**Última actualización:** 2026-11-19 23:52 por codex: decisión — Conservar las celdas aportadas por el abogado en su equipo
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r29 incorpora el capítulo 5 del T-MEC y sus nueve elementos del Anexo 5-A, matrices XLSX con dirección de celda y un caso ficticio de productor. En OpenAI se verificó un envío público con la clave principal y la restitución local de dos celdas. En el ZIP se reabrieron dos notas y se imprimieron seis archivos. Suite de 1 473 aprobadas y diez omitidas. [Medición y fuentes](../qa/origen-matriz-r29.md).
 
 - r28.1 reúne el Reglamento aduanero completo con búsqueda temática, selección del inciso público, reservas locales por expediente y bloqueo antes del envío. ZIP probado en este Mac, 1 470 pruebas aprobadas, diez omitidas y nueve archivos impresos y cotejados en LibreOffice. [Cotejo del Reglamento](../qa/reglamento-aduanero-completo-r28.md) y [medición de privacidad](../qa/reservas-expediente-r27.md).
 
@@ -106,7 +108,7 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Siguiente
 
-- Prioridad de privacidad: en el caso de origen redactado por un segundo modelo local quedaron visibles referencias a región, inmueble y rastros físicos, y sólo se conservaron dos de seis hechos. Evaluar un lector que distinga procedencia técnica del insumo, lugar concreto y vestigios de la operación. Separar desarrollo y una nueva reserva antes de modificar el envío de texto libre.
+- Prioridad de privacidad: en el caso de origen usado para desarrollar r29 se ocultaron 5/5 indicios. En un expediente adicional de empaque sólo se ocultó 1/4 y se conservaron 5/7 hechos. Revisar cómo el modelo trata una descripción física e indirecta repetida con otras palabras. Preparar otra muestra antes del siguiente cambio. Las celdas de hojas propias y cualquier texto libre siguen en el equipo.
 - Prioridad jurídica: medir en asuntos inéditos cómo responde a preguntas con varias obligaciones o excepciones del mismo artículo. Ampliar el cotejo del reglamento con reglas, disposiciones transitorias y cambios de vigencia por fecha de operación. La autoridad profesional y las pruebas en las cuentas y equipos de los socios siguen pendientes.
 
 - Medir en expedientes ficticios inéditos si se identifican operaciones con folios compartidos, referencias cruzadas y descripciones indirectas del equipo. Obtener cotejo jurídico de socios, probar el respaldo con su cuenta real y completar la actualización de las fuentes prioritarias por fecha de operación.

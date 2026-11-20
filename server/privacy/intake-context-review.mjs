@@ -1,3 +1,4 @@
+import {describesOriginEvidence,originReviewUnits,isMaterialField} from './origin-evidence.mjs';
 import {describesEquipmentReturn} from './trade-document-structure.mjs';
 // Local model sees numbered sentences. It can add protection only by selecting
 // an existing sentence, never by supplying replacement text or guessed offsets.
@@ -36,9 +37,11 @@ function contextStart(segment,protectedSpans){
 }
 
 export async function reviewContextLocally(text,ask,signal,parts=[]){
- const instruction=contextTask+(describesEquipmentReturn(text)?returnScope:generalScope)+responseFormat;
+ const origin=describesOriginEvidence(text);
+ const originScope='En certificados o consultas de origen distingue cada indicio reconocible de la composición ordinaria. Una huella física, un dibujo distintivo del envase, una referencia ambiental o un hito permiten reconocer el sitio. Una fibra, una resina, un proceso industrial o la pregunta sobre los documentos de origen por sí solos no son indicios. ';
+ const instruction=contextTask+(describesEquipmentReturn(text)?returnScope:origin?originScope:generalScope)+responseFormat;
  const segments=Array.from(new Intl.Segmenter('es',{granularity:'sentence'}).segment(text),
-  s=>({id:s.index,text:s.segment.trimEnd()})).filter(s=>s.text.trim());
+  s=>({id:s.index,text:s.segment.trimEnd()})).filter(s=>s.text.trim()).flatMap(s=>origin?originReviewUnits(s):[s]);
  const protectedSpans=parts.filter(part=>part.label);
  const routineIds=new Set();
  const ends=new Map(segments.map(s=>[s.id,s.id+s.text.length]));
@@ -50,7 +53,7 @@ export async function reviewContextLocally(text,ask,signal,parts=[]){
    if(part.end<=cursor)continue;
    masked+=text.slice(cursor,Math.max(cursor,part.start))+'〔'+part.label+'〕';cursor=Math.min(end,part.end);
   }
-  if(routineDescription.test(segment.text.trim())||equipmentShipment.test(segment.text.trim())||protectedSpans.length&&routine.test((masked+text.slice(cursor,end)).trim()))routineIds.add(segment.id);
+  if(isMaterialField(segment.text)||routineDescription.test(segment.text.trim())||equipmentShipment.test(segment.text.trim())||protectedSpans.length&&routine.test((masked+text.slice(cursor,end)).trim()))routineIds.add(segment.id);
  }
  const ranges=[];
  let batch=[],size=0;
