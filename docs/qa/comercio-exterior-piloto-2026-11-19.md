@@ -189,3 +189,31 @@ En las 14 narraciones, la edición anterior daba 19/19 y conservaba 12/30 expres
 La prueba de interfaz usa Chromium, Ollama real y un proveedor simulado. Oculta dos apariciones del mismo fragmento, deshace la corrección, la vuelve a aplicar por escrito, guarda el expediente, comprueba la restitución y descarga los tres formatos. El evaluador de cuentas y el de valoración siguen disponibles por separado.
 
 Para construir una copia privada desde el checkout ejecuta `python3 scripts/package-local-pilot.py artifacts/Rejon-Comercio-Local-prueba.zip`. Elige un nombre de salida nuevo. Se necesitan Node, npm, Git, zip, Python, la biblioteca SQLite generada y acceso a las dependencias del lockfile o su caché. La construcción compila la interfaz, instala las dependencias de ejecución en un directorio temporal y comprueba los archivos fuente del paquete.
+
+## Contraste de hechos, fundamento y soporte en r10
+
+El documento ficticio de práctica reúne tres decisiones habituales del despacho. Para el flete se examina si el precio pagado ya comprende el gasto y qué tramo cubre. Para las regalías se pide el contrato que sustenta la relación entre pago y venta. Para los anexos se identifica el acuse correspondiente al pedimento. El equipo sugiere una hipótesis cuando encuentra una afirmación expresa. Una contradicción o una expresión de incertidumbre deja el asunto por aclarar. El abogado puede inspeccionar las líneas y preparar una variante diferente.
+
+OpenAI recibe las tres hipótesis de un tema en una sola solicitud con pasajes públicos. La aplicación comprueba que cada selección corresponda a uno de esos pasajes. La edición local inserta la cita, muestra el original del expediente y permite guardar cada borrador. La respuesta para las tres hipótesis se conserva cifrada por asunto y edición de la consulta. El proveedor puede conocer el tema elegido.
+
+Para regalías, se incorporó el registro digital 2013396, jurisprudencia PC.I.A. J/90 A (10a.) del Pleno en Materia Administrativa del Primer Circuito, publicada el 6 de enero de 2017. La ficha conserva registro, órgano, fecha, extracto, enlace y huella de archivo. La aplicación al caso requiere cotejar la resolución, su alcance y los criterios posteriores. [Semanario Judicial de la Federación](https://sjf2.scjn.gob.mx/detalle/tesis/2013396) · [Ley Aduanera, artículo 65](https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf)
+
+| Prueba con documentos ficticios | Resultado |
+|---|---|
+| Flete, una generación real con OpenAI | 378 tokens de entrada y 144 de salida. El cuerpo enviado coincidió byte por byte con el preparado en otro expediente con el hecho opuesto. |
+| Regalías, una generación real con OpenAI | 528 tokens de entrada y 129 de salida. La hipótesis de condición de venta eligió la ficha del Semanario. La hipótesis opuesta escogió el artículo 65, fracción III. |
+| Acuse, proveedor simulado | Se restituyó la línea que identificaba el anexo en los dos casos opuestos. |
+| Navegador y exportaciones | Ollama leyó los Word de prueba. Se comprobaron los anchos de 320, 390, 768 y 1280 píxeles y la reapertura de los borradores. LibreOffice abrió los nueve archivos de los tres temas. Se cotejaron los datos sintéticos y las citas del contenido exportado. |
+
+Las dos llamadas reales usaron la cuenta principal. La segunda operación de cada par reprodujo el resultado mediante una respuesta simulada. El respaldo con la cuenta real de Lorenzo, los equipos de los socios y la evaluación profesional permanecen pendientes.
+
+### Incorporar descargas del Semanario al repositorio de investigación
+
+La SCJN documenta una descarga con archivo de datos y comprobante. El importador admite un ZIP con CSV y recibo PDF, conserva el original y registra la huella, versiones por registro digital y texto buscable en SQLite. Los registros ingresan al área de investigación. Para consultar una muestra desde el repositorio de desarrollo se pueden usar estos comandos. [Manual de descarga de la SCJN](https://bicentenario.scjn.gob.mx/manual-usuario-descarga)
+
+```sh
+python3 scripts/import-sjf-export.py --db investigacion.sqlite --zip descarga.zip
+python3 scripts/import-sjf-export.py --db investigacion.sqlite --buscar 'regalías condición de venta'
+```
+
+Dos pruebas con archivos sintéticos verificaron reimportación, versiones, búsqueda y rechazo de archivos incompletos. Queda pendiente ejecutar el importador con una descarga original del portal y revisar una muestra frente a las fichas oficiales. La ficha 2013396 integrada en la aplicación se cotejó por separado. La cobertura total de una plataforma comercial sigue sin comprobarse.

@@ -163,3 +163,8 @@
 .rp-private-review pre{padding:.8rem;background:#f6f2e9;border:1px solid #d9cfbe;border-radius:6px;line-height:1.75}
 .rp-private-review mark{color:#18423a;background:#d2e5dc;padding:.09em .3em}
 .rp-private-review .rp-masked mark{white-space:nowrap}
+
+.rp-comparison{display:grid;gap:.5rem;padding:1rem;border:1px solid #baccc2;border-radius:6px;background:#f3f7f2}
+.rp-comparison label{display:grid;gap:.4rem}
+.rp-comparison select{max-width:100%;min-width:0}
+.rp-comparison p{margin:0;font-size:.86rem;line-height:1.5}

@@ -331,3 +331,7 @@ Trece pasajes de cuatro artículos cotejados en cuatro páginas reproducidas con
 ## 2026-11-19 18:49 — codex — Rejon r9 prueba dos lecturas locales, correcciones y exportación desde el paquete
 
 Medición de desarrollo con Ollama real en 38 narraciones: 43/43 identificadores anotados cubiertos, 49/66 expresiones útiles intactas y 38/38 restituciones exactas. En seis documentos redactados después del ajuste: 5/5 identificadores y 8/10 expresiones útiles. La serie de 49 direcciones conservó 24/24 y 9/25 negativos totalmente intactos. 105 contratos dirigidos aprobados. Chromium y el lanzador sobre el ZIP comprobaron corrección, deshacer, reapertura, Word, Excel y PowerPoint. Consultas de nube simuladas en este corte. Sin aceptación general para clientes o equipos de los socios.
+
+## 2026-11-19 19:00 — codex — Rejon r10 contrasta flete, regalías y acuses con fuentes y tres salidas Office
+
+Dos solicitudes reales de flete y regalías con documentos ficticios, 1179 tokens reportados en total. Se compararon solicitudes idénticas para hechos opuestos. Acuse simulado. LibreOffice abrió nueve exportaciones. Pasaron 109 pruebas dirigidas y dos pruebas de ZIP sintético del Semanario. Paquete r10 probado en macOS con reapertura, respaldo simulado y reproducción de regalías. Pendientes expediente real, cuenta real de Lorenzo, Windows, descarga oficial original y evaluación jurídica.

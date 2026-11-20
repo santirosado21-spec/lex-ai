@@ -38,3 +38,11 @@ También se sugieren lecturas para menciones de reglas de origen, cupos, restric
 3. Para revisar los anexos, cambia la tarea a **Pedimento y anexos de importación** y abre **Control del pedimento**. Conserva ahí los folios, acuses, referencias y observaciones que quieras incluir en ese control. Cada tarea conserva sus propios renglones.
 4. **Exportar control a Excel** descarga el libro desde el equipo. Funciona antes de generar una nota y sin consumir API. La lectura inicial del archivo requiere el modelo local. Las cantidades quedan en celdas numéricas con la moneda en su propia columna.
 5. En **Fuentes de consulta**, abre la página exacta de la copia local de la Ley Aduanera o el historial de reformas. Para generar preguntas con OpenAI, revisa el mensaje y envíalo con el botón del piloto. Al mostrar **Datos originales** o descargar la nota, Word y PowerPoint incorporan los renglones guardados del control seleccionado. Excel incluye la hoja editable y sus referencias. El despacho debe determinar qué gastos corresponden y qué edición resulta aplicable a los hechos.
+
+### Contrastar el contrato, el flete y el acuse
+
+En un ejercicio nuevo, importa `piloto/contraste-ficticio.txt` y guarda el soporte. En **Tarea del despacho** elige **Contrastar regalías y condición de venta**. Abre **Líneas del soporte local** para ver la frase del contrato y su referencia. En **Leer el mensaje completo** verás las tres hipótesis sobre regalías, los pasajes de la Ley Aduanera y la referencia del Semanario Judicial de la Federación.
+
+Pulsa **Enviar y generar borrador** una vez. En **Datos originales** coteja la hipótesis sugerida con la línea de la licencia y abre el fundamento. También puedes elegir otra hipótesis y pulsar **Preparar esta variante en mi equipo**. Esa acción usa la respuesta guardada para el mismo tema y expediente. Cada variante conserva su propia edición. El archivo de ejemplo permite repetir el ejercicio con el flete y con el acuse del pedimento. Cada tema nuevo requiere su propio envío inicial.
+
+Para repartir la prueba, una persona puede revisar la fuente en Word, otra el monto y moneda en el control de valoración en Excel y otra la nota de seguimiento en PowerPoint. Cada persona usa el mismo archivo ficticio en su propia instalación.

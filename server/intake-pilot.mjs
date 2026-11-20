@@ -1,3 +1,4 @@
+import {comparisonsFor,comparisonEnvelope,readComparisonReply,renderComparison} from './corpus/intake-comparison.mjs';
 import {hasTradeWorksheet,tradeWorksheet,revisedWorksheetRow,worksheetSummary,worksheetProposals} from './intake-trade-worksheet.mjs';
 import {suggestTradeReadings,loadTradeReading,tradeReadingEnvelope,renderTradeReading} from './corpus/intake-trade-reading.mjs';
 import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
@@ -95,9 +96,9 @@ export function createIntakeGenerator({
    return {serialized,scope,destination,policyVersion,reliable:exact,scopeVerified:exact,category:dynamic?dynamicCategory:'synthetic'};
   },
  });
- const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading}={}) => {
-  const envelope=reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
-  const gate=gateFor(practice||research||reading ? canonicalJson(envelope) : null,research||reading?'public':'synthetic');
+ const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading,comparison}={}) => {
+  const envelope=comparison?comparisonEnvelope(comparison):reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+  const gate=gateFor(practice||research||reading||comparison ? canonicalJson(envelope) : null,research||reading||comparison?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
   if(active)throw Error('Hay una consulta en curso.');
@@ -179,6 +180,26 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    return {id,title,preview:reading.prompt,references:reading.refs,evidence};
   }catch{return {id,title,preview:null,references:[],evidence};}
  });
+ const comparisonNotes=saved=>{
+  if(!saved?.intake.document||!store.protectedRecords)return [];
+  const doc=openReviewedDocument(saved.intake.document,saved.firm.id,saved.entry.id);
+  return comparisonsFor(doc.original);
+ };
+ const comparisonInfo=note=>({subject:note.subject,title:note.packet.title,label:note.variant.label,
+  suggested:note.suggested,suggestedLabel:note.suggestedLabel,conflicting:note.conflicting});
+ const comparisonTasks=saved=>{
+  if(!saved)return [];
+  const notes=new Map(comparisonNotes(saved).map(note=>{
+   const {id,title,subject,packet,evidence}=note;
+   const archived=saved.intake.researchHistory?.[id];
+   return [id,{id,title,preview:packet.prompt,references:packet.refs,evidence,...archived,
+    comparison:{...comparisonInfo(note),cached:saved.intake.comparisonReplies?.[subject]?.digest===packet.digest}}];
+  }));
+  for(const [id,archived] of Object.entries(saved.intake.researchHistory??{})){
+   if(id.startsWith('contraste-')&&archived.comparison&&!notes.has(id))notes.set(id,{id,...archived,comparison:{...archived.comparison,cached:false}});
+  }
+  return [...notes.values()];
+ };
  const status = () => {
   const saved=current();
   return {
@@ -188,7 +209,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    hasDocument:Boolean(saved?.intake.document),
    drafts:saved?.intake.drafts??{},
    editedTasks:saved?.intake.editedTasks??[],
-   tasks:[practiceTask(saved)].filter(Boolean).concat(readingTasks(saved),Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
+   tasks:[practiceTask(saved)].filter(Boolean).concat(readingTasks(saved),Object.entries(tasks).filter(([id])=>id!=='trade'||articles).map(([id,{title}])=>({id,title,preview:envelopeFor(id,saved?.intake.documentKind,articles,saved?.intake.scenarioId).messages[0].content,references:id==='trade'?tradeReferences:[]}))).concat(comparisonTasks(saved)).concat(Object.entries(saved?.intake.research??{}).map(([id,selection])=>{
     const archived=saved.intake.researchHistory?.[id];
     if (archived) return {id,...archived};
     try {
@@ -344,7 +365,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const {task}=payload;
     const saved=current();
     const selection=typeof task==='string'&&task.startsWith('lectura-')?readingChoices(saved).find(item=>item.id===task):null;
-    const known=typeof task==='string' && (selection||Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task)||(task==='case-note'&&saved?.intake.practiceSeed));
+    const comparison=typeof task==='string'&&task.startsWith('contraste-')?comparisonNotes(saved).find(note=>note.id===task):null;
+    const known=typeof task==='string' && (comparison||selection||Object.hasOwn(tasks,task)||Object.hasOwn(saved?.intake.research??{},task)||(task==='case-note'&&saved?.intake.practiceSeed));
     if (!known) throw new Error('Selecciona una tarea del piloto.');
     if (!saved) throw new Error('Completa primero el alta del cliente.');
     if (Object.hasOwn(saved.intake.drafts,task)) return status();
@@ -355,16 +377,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const research=noteFor(saved.intake,task);
      const practice=task==='case-note'?practiceFor(saved):null;
      const reading=selection?readingFor(task):null;
-     const raw=await generate(task,{reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
-     const answer=draftText(reading?renderTradeReading(raw,reading):practice?renderProtectedCase(raw,practice):research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw,practice?saved.intake.document:null,selection);
+     let matrix=comparison?saved.intake.comparisonReplies?.[comparison.subject]:null;
+     const reuse=comparison&&matrix?.digest===comparison.packet.digest;
+     const raw=reuse?null:await generate(task,{comparison:comparison?.packet,reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
+     if(comparison&&!reuse)matrix=readComparisonReply(raw,comparison.packet);
+     const answer=draftText(comparison?renderComparison(comparison,matrix):reading?renderTradeReading(raw,reading):practice?renderProtectedCase(raw,practice):research?renderResearchNote(raw,research):task==='trade'?renderTradeDraft(raw,articles):raw,practice?saved.intake.document:null,selection||comparison);
      signal?.throwIfAborted();
      store.transaction(()=>{
       const {intake}=current();
       if (intake.id!==saved.intake.id) throw new Error('Cambió el asunto del piloto.');
-      const source=reading??practice??research;
-      const snapshot=source ? {researchHistory:{...intake.researchHistory,[task]:{title:source.title,preview:source.prompt,references:reading?reading.refs:[source.ref],...(selection?{evidence:{line:selection.line,excerpt:selection.excerpt}}:{})}}} : {};
-      store.put('intake-pilot',{...intake,...snapshot,drafts:{...intake.drafts,[task]:answer}});
-      store.audit('intake.cloud.draft',intake.matterId);
+      const source=comparison?.packet??reading??practice??research;
+      const snapshot=source ? {researchHistory:{...intake.researchHistory,[task]:{title:comparison?.title??source.title,preview:source.prompt,references:comparison?source.refs:reading?reading.refs:[source.ref],...(comparison?{evidence:comparison.evidence,comparison:comparisonInfo(comparison)}:{}),...(selection?{evidence:{line:selection.line,excerpt:selection.excerpt}}:{})}}} : {};
+      store.put('intake-pilot',{...intake,...snapshot,...(comparison&&!reuse?{comparisonReplies:{...intake.comparisonReplies,[comparison.subject]:matrix}}:{}),drafts:{...intake.drafts,[task]:answer}});
+      store.audit(reuse?'intake.local.comparison':'intake.cloud.draft',intake.matterId);
      });
      return status();
     } finally { pending=false; }
@@ -398,7 +423,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const evidence=intake.researchHistory?.[task]?.evidence;
     const text=draftText(intake.drafts[task],intake.document,evidence);
     const originals=new Map([['[[CLIENTE]]',values.CLIENTE],['[[ASUNTO]]',values.ASUNTO]]);
-    if(evidence)originals.set('[[SOPORTE]]','Línea '+evidence.line+' del texto extraído · '+evidence.excerpt);
+    if(evidence)originals.set('[[SOPORTE]]',[evidence,...(evidence.additional??[])].map(row=>'Línea '+row.line+' del texto extraído · '+row.excerpt).join('\n'));
     if(text.includes('[[DATO_')){
      for(const item of openReviewedDocument(intake.document,firm.id,entry.id).tokens)originals.set(item.token,item.value);
     }

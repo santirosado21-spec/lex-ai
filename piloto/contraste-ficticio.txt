@@ -1,0 +1,11 @@
+Cliente: Importadora Lirio de Ensayo
+Asunto: Revisión ficticia de regalías y transporte
+Proveedor: Taller Coral de Ensayo
+Se solicita revisar el valor en aduana y los anexos al pedimento.
+El pago de regalías es condición de venta. Ref. LIC-ENSAYO-041.
+El precio pagado no incluye el flete. Ref. TR-ENSAYO-041.
+Falta el acuse de los anexos del pedimento. Ref. ANX-ENSAYO-041.
+Precio pagado: USD 7900.00
+Flete: USD 480.00
+Regalías: USD 300.00
+Factura comercial: FACT-ENSAYO-041

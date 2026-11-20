@@ -145,3 +145,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 18:49 — codex — Revisar indicios indirectos con una segunda lectura local y un mapa reversible
 
 **Por qué:** En diez documentos ficticios, el primer análisis cubrió 7 de 11 identificadores indirectos. La segunda lectura selecciona sólo oraciones reales del documento y suma protección sin poder retirar sustituciones previas. Las correcciones del abogado tienen revisión y deshacer. El texto libre importado sigue en este equipo mientras se mide el riesgo residual.
+
+## 2026-11-19 19:00 — codex — Cotejar en el equipo la hipótesis del asunto
+
+**Por qué:** En el piloto de comercio, una consulta pública común por tema cubre las tres hipótesis. El indicio, el folio original, la elección y las ediciones pertenecen al expediente local cifrado. Las descargas del Semanario se conservan en investigación hasta el cotejo.
