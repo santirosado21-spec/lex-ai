@@ -343,3 +343,7 @@ Dos seguimientos de valoración y dos turnos del ejercicio de origen generados c
 ## 2026-11-19 19:18 — codex — Rejon r12 integra la tarifa local, sus páginas, fichas y comparativo en Excel
 
 894 páginas, 8183 códigos distintos y 11709 pares de código y página. Dos extractores coincidieron en 8112 renglones y 121 uniones entre páginas. 3371 descripciones admiten seguimiento. Una solicitud real con OpenAI usó 312 tokens. El ZIP arrancó en macOS, 101 pruebas dirigidas pasaron y LibreOffice abrió siete exportaciones. Se descargó para investigación el XLSX NICO de abril de 2024 de SNICE; cotejar vigencia antes de integrarlo.
+
+## 2026-11-19 19:24 — codex — Rejon r13 coteja y exporta la edición NICO de abril de 2024
+
+La reconstrucción de las claves de tres acuerdos coincide con las 11507 combinaciones de 8134 fracciones del SNICE de abril de 2024. Índice reproducido idéntico. Se verificaron 103 pruebas dirigidas, búsqueda en cuatro anchos, apertura de fuente local, guardado de opciones distintas, reapertura cifrada y cuatro descargas desde el navegador del ZIP. LibreOffice abrió los cuatro archivos. El lanzador se probó dos veces en este Mac con respaldo simulado. El catálogo histórico no resuelve vigencia por operación. Quedan la aceptación jurídica y los equipos de los socios.

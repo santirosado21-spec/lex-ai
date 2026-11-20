@@ -157,3 +157,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:18 — codex — Distinguir la mención de una fracción del renglón de la tarifa
 
 **Por qué:** Un código también puede aparecer en el texto de otro renglón o en una lista de un decreto. La ficha guarda el PDF y la página seleccionada. Sólo se muestran columnas donde dos extractores coinciden. Los datos de tarifa son los impresos en esa edición.
+
+## 2026-11-19 19:24 — codex — Conservar edición y NICO de dos dígitos al citar y exportar
+
+**Por qué:** Varias opciones comparten fracción. El libro informativo aporta la descripción y su fila. La clave queda reconciliada con el artículo de creación del DOF. Sólo las descripciones literales cotejadas y de longitud suficiente habilitan un seguimiento. El PDF local permite revisar anotaciones y transitorios.

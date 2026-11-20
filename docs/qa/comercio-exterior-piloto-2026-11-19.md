@@ -251,3 +251,11 @@ Para reproducir los índices en desarrollo se requieren Poppler y PyMuPDF. La pr
 ```sh
 python3 scripts/build-tariff-index.py resources/trade/ligie-2022.pdf /tmp/ligie-paginas.json --candidates /tmp/ligie-renglones.jsonl
 ```
+
+## Identificación comercial por fracción en r13
+
+La biblioteca incorpora las 11,507 combinaciones de fracción y NICO de la hoja «NICO (ÚNICAMENTE)» del SNICE, edición informativa de abril de 2024. Abarcan 8,134 fracciones. Se reconstruyeron las claves del artículo primero del acuerdo de 2022 y se aplicaron, en orden, las creaciones y supresiones de junio de 2023 y marzo de 2024. El conjunto coincide con el del libro. El índice conserva por fila la descripción del SNICE, el acuerdo y la página física donde figura la clave. La aplicación incluye los cuatro originales, comprueba sus huellas al abrirlos y permite buscarlos sin conexión. El corte histórico requiere cotejo para cada operación. [SNICE](https://www.snice.gob.mx/cs/avi/snice/ligie.nico2022.html) · [Publicaciones de la Cámara](https://www.diputados.gob.mx/LeyesBiblio/ref/ligie_2022.htm)
+
+De esas claves, 9,192 tienen además una descripción que coincide con la línea del código en el PDF al normalizar espacios. Los seguimientos usan el control de cita existente. Para los demás renglones se puede leer el PDF, editar la ficha y exportar localmente. Los identificadores `00`, `01` y `99` se guardan como texto en la hoja «NICO consultados». La consulta del catálogo y la generación de esos archivos se realizan en el equipo.
+
+El índice se puede reproducir sin red con Python y Poppler mediante `python3 scripts/build-nico-index.py /tmp/rejon-nico.jsonl` y cotejar con `resources/trade/nico-abril24.jsonl`. Las tablas de correlación del artículo segundo del acuerdo base quedan fuera de la reconstrucción. Para los cambios posteriores se usan el artículo primero de creación y el segundo de supresión.

@@ -25,3 +25,5 @@
 /resources/trade/*.pdf binary
 /resources/trade/*.json text eol=lf
 /resources/trade/*.jsonl text eol=lf
+
+/resources/trade/*.xlsx binary

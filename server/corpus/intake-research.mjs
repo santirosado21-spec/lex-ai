@@ -1,3 +1,4 @@
+import {nicoRow,nicoReference} from './nico-index.mjs';
 // The browser chooses a row and a passage. The local service reads every outbound
 // character from the pinned public index. Search terms and matter fields stay local.
 import {createHash} from 'node:crypto';
@@ -49,6 +50,14 @@ export function tariffResearch(code,page){
  const hit=tariffResult(code,page);
  if(!hit.canFollow)throw Error('El renglón requiere cotejo antes de usarlo en la nube.');
  const note=Object.freeze({ref:tariffReference(code,page)});
+ verified.add(note);
+ return note;
+}
+
+export function nicoResearch(code,nico){
+ const row=nicoRow(code,nico);
+ if(!row.literal)throw Error('La descripción NICO requiere cotejo antes del seguimiento.');
+ const note=Object.freeze({ref:nicoReference(row)});
  verified.add(note);
  return note;
 }

@@ -1,3 +1,4 @@
+import {searchNico,nicoRow,nicoReference,nicoEdition} from './corpus/nico-index.mjs';
 import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
 import {focusFromInstruction,isFollowupForm,quotedRanges,prepareFollowup,followupEnvelope,renderFollowup} from './corpus/intake-followup.mjs';
 import {comparisonsFor,comparisonEnvelope,readComparisonReply,renderComparison} from './corpus/intake-comparison.mjs';
@@ -8,7 +9,7 @@ import {randomUUID} from 'node:crypto';
 import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
-import {tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
+import {nicoResearch,tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
 import {getPilotTradeScenario} from './pilot-trade-scenario.mjs';
@@ -204,6 +205,11 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
  };
  const tariffEvidence=saved=>saved?.intake.document?labeledTariffCodes(openReviewedDocument(saved.intake.document,saved.firm.id,saved.entry.id).original):[];
  const followupSource=(saved,parent)=>{
+  const nico=saved.intake.nicos?.[parent];
+  if(nico){
+   if(nico.edition!==nicoEdition)throw Error('La ficha pertenece a otra edición del NICO.');
+   return nicoResearch(nico.code,nico.nico);
+  }
   const selection=saved.intake.tariffs?.[parent];
   if(selection){
    const source=tariffResearch(selection.code,selection.page);
@@ -247,7 +253,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const note=sourceFor(selection);
      return {id,title:note.title,preview:note.prompt,references:[note.ref]};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
-   })).concat(Object.keys(saved?.intake.tariffs??{}).map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
+   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
  };
 
@@ -391,6 +397,27 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     latestReview=null;
     return savedStatus;
    }
+   case 'intake.searchNico':
+    exactFields(payload,['query','offset']);
+    return searchNico(payload.query,payload.offset);
+   case 'intake.addNico': {
+    exactFields(payload,['code','nico']);
+    const saved=current();
+    if(!saved||!store.protectedRecords)throw Error('Abre un ejercicio cifrado para guardar la referencia.');
+    const {intake}=saved,row=nicoRow(payload.code,payload.nico),ref=nicoReference(row);
+    const id='nico-'+row.code+'-'+row.nico+'-'+row.edition.slice(0,12);
+    if(Object.hasOwn(intake.drafts,id))return {task:id,status:status()};
+    const text=draftText(['Ficha NICO para [[CLIENTE]] · [[ASUNTO]]',ref.locator,
+     'Descripción ['+ref.id+']\n'+ref.text,ref.summary].join('\n\n'),null);
+    const ranges=row.literal?quotedRanges(nicoResearch(row.code,row.nico),text):[];
+    store.transaction(()=>{
+     store.put('intake-pilot',{...intake,nicos:{...intake.nicos,[id]:row},drafts:{...intake.drafts,[id]:text},
+      researchHistory:{...intake.researchHistory,[id]:{title:ref.title,localOnly:true,references:[ref]}},
+      ...(ranges.length?{followupBasis:{...intake.followupBasis,[id]:ranges}}:{})});
+     store.audit('intake.local.nico',saved.entry.id);
+    });
+    return {task:id,status:status()};
+   }
    case 'intake.searchTariff':
     exactFields(payload,['query','offset']);
     return searchTariff(payload.query,payload.offset);
@@ -427,11 +454,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    case 'intake.exportTariffBook': {
     exactFields(payload,[]);
     const saved=current(),tariffs=Object.values(saved?.intake.tariffs??{});
-    if(!saved||!tariffs.length)throw Error('Guarda primero una ficha de la tarifa.');
+    const nicos=Object.values(saved?.intake.nicos??{});
+    if(!saved||(!tariffs.length&&!nicos.length))throw Error('Guarda primero una ficha de la tarifa.');
     const {firm,entry}=saved;
     const answer={question:'Comparativo de fracciones arancelarias',text:'Fichas documentales del expediente. Cotejar las columnas impresas, las notas y la edición aplicable a la operación.',
      citations:[],createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument('xlsx','comparativo-arancelario',{firm,matter:entry,answer,tariffs});
+    const file=await exportIntakeDocument('xlsx','comparativo-arancelario',{firm,matter:entry,answer,tariffs,nicos});
     store.audit('intake.local.exportTariffs',entry.id);
     return file;
    }
@@ -553,7 +581,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const references=storedNote?.references??(task==='trade'?tradeReferences:[]);
     const citations=exportCitations(references);
     const answer={question:storedNote?.title??tasks[task].title,text:payload.format==='xlsx'||payload.format==='pptx'?restored:withWorksheet,citations,createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet,tariffs:intake.tariffs?.[task]?[intake.tariffs[task]]:[]});
+    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet,nicos:intake.nicos?.[task]?[intake.nicos[task]]:[],tariffs:intake.tariffs?.[task]?[intake.tariffs[task]]:[]});
     store.audit('intake.local.export',entry.id);
     return file;
    }

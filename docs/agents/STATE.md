@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 19:18 por codex: Rejon r12 integra la tarifa local, sus páginas, fichas y comparativo en Excel
+**Última actualización:** 2026-11-19 19:24 por codex: decisión — Conservar edición y NICO de dos dígitos al citar y exportar
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r13 incorpora 11,507 NICO de 8,134 fracciones, consultables por ocho o diez dígitos y por descripción. El paquete privado, el navegador, la restauración y los tres formatos Office se comprobaron en este Mac. La edición del SNICE es de abril de 2024. Evidencia local en `artifacts/nico-r13/`.
 
 - r12 incorpora búsqueda local por fracción o descripción, ficha con página fuente, consulta de seguimiento y libro comparativo. Hay 8,112 renglones con acuerdo entre dos extractores y 11,709 pares de código y página. Se probaron el ZIP local, 101 contratos y siete exportaciones. El informe del 19 de noviembre documenta el alcance.
 
@@ -63,6 +65,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Cotejar publicaciones posteriores y anotar vigencia por operación. Validar con el abogado una selección de fracción y NICO que dependa de una anotación. Ampliar los ensayos de privacidad con expedientes sintéticos nuevos y registrar la prueba del piloto en los equipos de los socios.
 
 - Reconciliar el XLSX informativo NICO de abril de 2024 de SNICE con el acuerdo oficial y sus reformas. La captura en investigación está en `artifacts/tarifa-r12/NICO-ABRIL24.xlsx`, con URL y huella en `nico-origen.json`. Separar fechas de operación y edición y medir equivalencia en casos del despacho. Siguen abiertas la conversación libre protegida, la cuenta real de Lorenzo y las pruebas en equipos de los socios.
 

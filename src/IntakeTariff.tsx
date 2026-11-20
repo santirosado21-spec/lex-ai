@@ -5,7 +5,7 @@ import {api} from './api';
 type Hit={code:string;page:number;row:null|{description:string;unit:string;import:string;export:string;continued?:number[];adjacent?:number[]};pages:number[];localUrl:string;historyUrl:string};
 type Result={total:number;results:Hit[]};
 
-export default function IntakeTariff({saved,onSave}:{saved:boolean;onSave:(code:string,page:number)=>Promise<void>}){
+export default function IntakeTariff({saved,onSave,onNico}:{saved:boolean;onNico:(code:string)=>void;onSave:(code:string,page:number)=>Promise<void>}){
  const [query,setQuery]=useState(''),[submitted,setSubmitted]=useState('');
  const [hits,setHits]=useState<Result|null>(null),[offset,setOffset]=useState(0);
  const [suggestions,setSuggestions]=useState<string[]>([]);
@@ -43,6 +43,7 @@ export default function IntakeTariff({saved,onSave}:{saved:boolean;onSave:(code:
    {hit.row&&<dl>{[['Unidad',hit.row.unit],['Importación impresa',hit.row.import],['Exportación impresa',hit.row.export]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
    <div className="rp-actions"><a href={hit.localUrl} target="_blank" rel="noreferrer"><FileText size={15}/>Abrir página {hit.page}</a>
     {(hit.row?.adjacent??[]).map(page=><a key={page} href={hit.localUrl.split('#')[0]+'#page='+page} target="_blank" rel="noreferrer">{hit.row?.continued?.includes(page)?'Continuación':'Cotejar límite'} · página {page}</a>)}
+    <button type="button" className="rp-quiet" disabled={busy} onClick={()=>onNico(hit.code)}>Consultar NICO</button>
     {saved&&<button className="rp-quiet" disabled={busy} onClick={()=>void save(hit)}><BookmarkPlus size={15}/>Guardar ficha</button>}
     {hit.pages.length>1&&submitted!==hit.code&&submitted!==hit.code.replaceAll('.','')&&<button className="rp-quiet" disabled={busy} onClick={()=>void search(hit.code)}>Ver las {hit.pages.length} páginas</button>}</div>
   </article>)}

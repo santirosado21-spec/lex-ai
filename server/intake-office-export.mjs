@@ -24,7 +24,7 @@ function blocks(text, limit) {
   return chunks;
 }
 
-async function workbook({firm, matter, answer, worksheet, tariffs=[]}, task) {
+async function workbook({firm, matter, answer, worksheet, tariffs=[], nicos=[]}, task) {
   const {default: ExcelJS} = await import('exceljs');
   const book = new ExcelJS.Workbook();
   book.creator = 'Rejon.AI';
@@ -83,6 +83,19 @@ async function workbook({firm, matter, answer, worksheet, tariffs=[]}, task) {
       cells.getCell(1).numFmt='@';
     }
     table.autoFilter='A1:I'+table.rowCount;
+  }
+  if(nicos.length){
+    const table=book.addWorksheet('NICO consultados',{pageSetup,views:[{state:'frozen',ySplit:1,xSplit:2}]});
+    table.columns=[18,10,70,22,14,22,26].map(width=>({width}));
+    styleHeader(table.addRow(['Fracción','NICO','Descripción SNICE','Edición del libro','Fila del libro','Libro informativo','Publicación DOF']));
+    for(const item of nicos){
+      const row=table.addRow([item.code,item.nico,item.description,'Abril de 2024',item.excelRow,
+        {text:'Abrir libro SNICE',hyperlink:item.bookUrl},{text:item.date+' · p. '+item.page,hyperlink:item.url}]);
+      row.alignment={vertical:'middle',wrapText:true};
+      row.height=Math.max(42,18*Math.ceil(item.description.length/58));
+      row.getCell(2).numFmt='@';
+    }
+    table.autoFilter='A1:G'+table.rowCount;
   }
   if (worksheet) {
     const control=book.addWorksheet(worksheet.title,{pageSetup,views:[{state:'frozen',ySplit:1}]});
