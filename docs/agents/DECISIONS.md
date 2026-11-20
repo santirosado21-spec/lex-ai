@@ -153,3 +153,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 19:08 — codex — Generar el seguimiento desde las citas del primer borrador
 
 **Por qué:** El abogado conserva sus ediciones privadas y puede pedir una carta o un control interno. La nube recibe el encargo, las citas reconstruidas desde la fuente y los tipos documentales elegidos. Sólo un ejercicio de procedencia comprobada añade sus hechos protegidos. El soporte y la hoja de trabajo se restituyen en el equipo.
+
+## 2026-11-19 19:18 — codex — Distinguir la mención de una fracción del renglón de la tarifa
+
+**Por qué:** Un código también puede aparecer en el texto de otro renglón o en una lista de un decreto. La ficha guarda el PDF y la página seleccionada. Sólo se muestran columnas donde dos extractores coinciden. Los datos de tarifa son los impresos en esa edición.

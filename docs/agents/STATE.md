@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 19:08 por codex: Rejon r11 prueba redacción en dos turnos y restitución en nueve archivos Office
+**Última actualización:** 2026-11-19 19:18 por codex: Rejon r12 integra la tarifa local, sus páginas, fichas y comparativo en Excel
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r12 incorpora búsqueda local por fracción o descripción, ficha con página fuente, consulta de seguimiento y libro comparativo. Hay 8,112 renglones con acuerdo entre dos extractores y 11,709 pares de código y página. Se probaron el ZIP local, 101 contratos y siete exportaciones. El informe del 19 de noviembre documenta el alcance.
 
 - r11 permite redactar la carta al cliente y una lista interna desde las citas de la primera nota. Se completó una práctica de origen con dos turnos reales y restitución del proveedor. Cuatro consultas reales en total, 1783 tokens reportados, nueve archivos Office abiertos en LibreOffice y 98 pruebas dirigidas. El paquete arrancó en macOS.
 
@@ -61,6 +63,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Reconciliar el XLSX informativo NICO de abril de 2024 de SNICE con el acuerdo oficial y sus reformas. La captura en investigación está en `artifacts/tarifa-r12/NICO-ABRIL24.xlsx`, con URL y huella en `nico-origen.json`. Separar fechas de operación y edición y medir equivalencia en casos del despacho. Siguen abiertas la conversación libre protegida, la cuenta real de Lorenzo y las pruebas en equipos de los socios.
 
 - Ampliar la conversación del abogado sobre hechos protegidos y medir qué se recupera o pierde con casos inéditos y revisión independiente. Validar el corpus, la segunda cuenta real y los equipos de los socios.
 

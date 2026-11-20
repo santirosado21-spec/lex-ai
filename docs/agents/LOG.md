@@ -339,3 +339,7 @@ Dos solicitudes reales de flete y regalías con documentos ficticios, 1179 token
 ## 2026-11-19 19:08 — codex — Rejon r11 prueba redacción en dos turnos y restitución en nueve archivos Office
 
 Dos seguimientos de valoración y dos turnos del ejercicio de origen generados con OpenAI. Cuatro solicitudes reales, 1783 tokens reportados. 98 pruebas dirigidas, nueve archivos abiertos en LibreOffice, navegador a cuatro anchos y prueba del ZIP en macOS. Carta y lista se conservan por separado. La segunda cuenta real, Windows, expedientes inéditos y conversación libre siguen pendientes.
+
+## 2026-11-19 19:18 — codex — Rejon r12 integra la tarifa local, sus páginas, fichas y comparativo en Excel
+
+894 páginas, 8183 códigos distintos y 11709 pares de código y página. Dos extractores coincidieron en 8112 renglones y 121 uniones entre páginas. 3371 descripciones admiten seguimiento. Una solicitud real con OpenAI usó 312 tokens. El ZIP arrancó en macOS, 101 pruebas dirigidas pasaron y LibreOffice abrió siete exportaciones. Se descargó para investigación el XLSX NICO de abril de 2024 de SNICE; cotejar vigencia antes de integrarlo.

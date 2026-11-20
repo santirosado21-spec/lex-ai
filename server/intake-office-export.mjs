@@ -24,7 +24,7 @@ function blocks(text, limit) {
   return chunks;
 }
 
-async function workbook({firm, matter, answer, worksheet}, task) {
+async function workbook({firm, matter, answer, worksheet, tariffs=[]}, task) {
   const {default: ExcelJS} = await import('exceljs');
   const book = new ExcelJS.Workbook();
   book.creator = 'Rejon.AI';
@@ -70,6 +70,19 @@ async function workbook({firm, matter, answer, worksheet}, task) {
       row.getCell(3).dataValidation = {type: 'list', allowBlank: true, formulae: ['"Por revisar,Solicitado,Recibido,Revisado,No aplica"']};
     }
     evidence.autoFilter = 'A1:E' + evidence.rowCount;
+  }
+  if(tariffs.length){
+    const table=book.addWorksheet('Tarifa consultada',{pageSetup,views:[{state:'frozen',ySplit:1,xSplit:1}]});
+    table.columns=[19,12,26,70,13,19,19,50,42].map(width=>({width}));
+    styleHeader(table.addRow(['Fracción','Página del código','Otras páginas a cotejar','Descripción en el ejemplar','Unidad','Importación impresa','Exportación impresa','Edición consultada','PDF de la Cámara']));
+    for(const {code,page,row,locator,url} of tariffs){
+      const cells=table.addRow([code,page,row?.adjacent?.join(', ')??'',row?.description??'Mención en la página. Cotejar el original.',
+        row?.unit??'',row?.import??'',row?.export??'',locator,{text:'Abrir página '+page,hyperlink:url}]);
+      cells.alignment={wrapText:true,vertical:'middle'};
+      cells.height=Math.max(58,18*Math.ceil((row?.description.length??0)/58));
+      cells.getCell(1).numFmt='@';
+    }
+    table.autoFilter='A1:I'+table.rowCount;
   }
   if (worksheet) {
     const control=book.addWorksheet(worksheet.title,{pageSetup,views:[{state:'frozen',ySplit:1}]});

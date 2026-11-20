@@ -1,7 +1,7 @@
 // Build the next turn from sources checked again on this machine. User edits,
 // supporting lines, client names, and original filenames stay out of the request.
 import {createHash} from 'node:crypto';
-import {researchEnvelope} from './intake-research.mjs';
+import {checkedResearchReference} from './intake-research.mjs';
 import {tradeReadingEnvelope} from './intake-trade-reading.mjs';
 import {protectedCaseEnvelope} from './pilot-protected-case.mjs';
 
@@ -51,8 +51,7 @@ function sourceContext(source){
   tradeReadingEnvelope(source);
   return {refs:source.refs,facts:[]};
  }
- researchEnvelope(source);
- return {refs:[source.ref],facts:[]};
+ return {refs:[checkedResearchReference(source)],facts:[]};
 }
 
 // Recover only whole quotation lines present in a fresh, model-generated note.

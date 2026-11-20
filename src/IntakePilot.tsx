@@ -1,3 +1,4 @@
+import IntakeTariff from './IntakeTariff';
 import {useEffect, useRef, useState, type FormEvent} from 'react';
 import {ArrowDownToLine, ArrowRight, BookOpen, Check, ChevronLeft, Cloud, ExternalLink, FileText, FolderClosed, HardDrive, LoaderCircle, Monitor, Presentation, Table2} from 'lucide-react';
 import {api, downloadFile} from './api';
@@ -9,11 +10,11 @@ import PublicLibrary from './PublicLibrary';
 import mark from './assets/rejon-mark.svg';
 import './intake-pilot.css';
 
-type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}`;
+type Task = 'case-note' | 'opening' | 'documents' | 'trade' | `research-${string}` | `lectura-${string}` | `contraste-${string}` | `revision-${string}` | `tarifa-${string}`;
 type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type TaskInfo = {
-  id: Task; parent?:Task; title: string; preview?: string; evidence?:{line:number;excerpt:string;additional?:{line:number;excerpt:string}[]};
+  id: Task; parent?:Task; localOnly?:boolean; title: string; preview?: string; evidence?:{line:number;excerpt:string;additional?:{line:number;excerpt:string}[]};
   comparison?:{subject:string;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
@@ -35,6 +36,7 @@ export default function IntakePilot() {
   const [worksheetDirty,setWorksheetDirty]=useState(false);
   const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
+  const [libraryView,setLibraryView]=useState<'leyes'|'tarifa'>('leyes');
   const [libraryOpen,setLibraryOpen] = useState(false);
   const [firm,setFirm] = useState('');
   const [client,setClient] = useState('');
@@ -109,6 +111,11 @@ export default function IntakePilot() {
     } catch {setError('No se pudo guardar el expediente. Revisa los campos y vuelve a intentarlo.');}
     finally {setActivity(null);}
   }
+  async function chooseTariff(code:string,page:number) {
+    const result=await api<{task:Task;status:PilotStatus}>('intake.addTariff',{code,page});
+    setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
+    setLibraryOpen(false);setNotice('Ficha guardada en el expediente.');heading.current?.focus();
+  }
   async function choosePassage(sourceId:string,part:number) {
     const result=await api<{task:Task;status:PilotStatus}>('intake.addPassage',{sourceId,part});
     setPilot(result.status);setSelected(result.task);setRestored('');clearFeedback();
@@ -170,6 +177,13 @@ export default function IntakePilot() {
     } catch {setError('No se pudo guardar la edición. Tus cambios siguen abiertos.');}
     finally {setActivity(null);}
   }
+  async function exportTariffs(){
+    if(busy)return;
+    clearFeedback();setActivity('export');
+    try{downloadFile(await api<{name:string;base64:string;mime:string}>('intake.exportTariffBook',{}));setNotice('Comparativo generado en este equipo.');}
+    catch{setError('No se pudo generar el comparativo de la tarifa.');}
+    finally{setActivity(null);}
+  }
   async function exportDraft() {
     if (busy || !draft || !task) return;
     clearFeedback(); setActivity('export');
@@ -186,7 +200,10 @@ export default function IntakePilot() {
       <div className="rp-tools"><button className="rp-library-button" type="button" aria-controls="rp-law-library" aria-expanded={libraryOpen} disabled={busy||editText!==null} onClick={()=>setLibraryOpen(!libraryOpen)}><BookOpen size={16}/>{libraryOpen?'Cerrar biblioteca':'Biblioteca federal'}</button>
       <span className="rp-local"><Monitor size={15}/> {pilot?.protectedRecords?'Expediente cifrado':'Espacio local'}</span></div>
     </header>
-    <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>}</div>
+    <div id="rp-law-library" hidden={!libraryOpen} className="rp-library-panel">{libraryOpen&&<><div className="rp-library-views" role="group" aria-label="Colección jurídica">
+    <button className="rp-quiet" aria-pressed={libraryView==='leyes'} onClick={()=>setLibraryView('leyes')}>Leyes federales</button>
+    <button className="rp-quiet" aria-pressed={libraryView==='tarifa'} onClick={()=>setLibraryView('tarifa')}>Tarifa arancelaria</button></div>
+    {libraryView==='leyes'?<PublicLibrary onChoosePassage={saved?choosePassage:undefined}/>:<IntakeTariff saved={Boolean(saved&&pilot?.protectedRecords)} onSave={chooseTariff}/>}</>}</div>
     <div className="rp-layout" hidden={libraryOpen}>
       <aside className="rp-context">
         <div className="rp-image"><img src="/brand/lex-cover.webp" alt=""/></div>
@@ -234,13 +251,14 @@ export default function IntakePilot() {
           </select></label>
           {!pilot?.tasks.some(item=>item.id==='trade')&&<p className="rp-availability">La edición cotejada de las fuentes de comercio exterior no está disponible en este equipo.</p>}
           {activeTask.parent&&<div className="rp-followup"><button type="button" className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setSelected(activeTask.parent!);setRestored('');clearFeedback();}}><ChevronLeft size={15}/> Volver al primer borrador</button><p>La consulta retoma las citas del primer borrador. Las ediciones que escribiste permanecen en tu equipo.</p></div>}
+          {task==='lectura-clasificacion'&&<button className="rp-quiet" disabled={busy||editText!==null} onClick={()=>{setLibraryView('tarifa');setLibraryOpen(true);}}>Buscar fracción en la tarifa</button>}
           {comparison&&<section className="rp-comparison" aria-label="Contraste del expediente">
             <label htmlFor="rp-variant">Hipótesis que quieres contrastar<select id="rp-variant" disabled={busy||editText!==null} value={task} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
              {pilot?.tasks.filter(item=>item.comparison?.subject===comparison.subject).map(item=><option key={item.id} value={item.id}>{item.comparison?.label}</option>)}
             </select></label>
             <p>{comparison.conflicting?'El soporte contiene indicios contradictorios.':('Sugerencia local: '+comparison.suggestedLabel+'.')} Revisa las líneas del soporte antes de usar el borrador.</p>
           </section>}
-          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.parent?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
+          {activeTask.evidence&&<details className="rp-details rp-reading-evidence" key={'reading-'+task}><summary><FileText size={16}/> {comparison||activeTask.parent||activeTask.localOnly?'Líneas del soporte local':'Por qué se sugiere esta lectura'}</summary>
             <p>El tema aparece en la línea {activeTask.evidence.line} del texto extraído. Este fragmento se incorpora en tu equipo al mostrar los datos originales o exportar. Puedes quitarlo al editar el borrador.</p>
             <blockquote>{activeTask.evidence.excerpt}</blockquote>
             {activeTask.evidence.additional?.map(row=><blockquote key={row.line}>Línea {row.line} · {row.excerpt}</blockquote>)}
@@ -253,23 +271,23 @@ export default function IntakePilot() {
                 {source.localUrl&&<p><a href={source.localUrl} target="_blank" rel="noreferrer">Abrir la página en la copia local</a> · <a href={source.historyUrl} target="_blank" rel="noreferrer">Historial de reformas</a></p>}
                 {source.text&&<details className="rp-citation"><summary>Texto consultado</summary><blockquote>{source.text}</blockquote>{source.sourceId&&<small>{source.sourceId}</small>}</details>}
               </li>)}</ul></details>:null}
-          {activeTask.evidence&&!activeTask.preview&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
+          {activeTask.evidence&&!activeTask.preview&&!activeTask.localOnly&&<p className="rp-availability">Falta una fuente verificable para esta lectura. Puedes consultar el soporte local o elegir otra tarea.</p>}
           {task==='case-note'&&!activeTask.preview&&<p className="rp-availability">No se pudo verificar la protección, los hechos o la fuente pública de este ejercicio. El soporte permanece disponible en el equipo.</p>}
-          {draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> {comparison?'Ver la consulta común del tema':'Ver el mensaje enviado'}</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
+          {activeTask.localOnly?null:draft?<details className="rp-details" key={'sent-'+task}><summary><Cloud size={16}/> {comparison?'Ver la consulta común del tema':'Ver el mensaje enviado'}</summary><div className="rp-preview"><MarkedText text={activeTask.preview??''}/></div></details>:
             <section className="rp-proof"><h2><Cloud size={17}/> {comparison?.cached?'Consulta guardada en este equipo':'Mensaje para OpenAI'}</h2>{activeTask.evidence&&!activeTask.parent?<><p className="rp-reading-summary">{comparison?(comparison.cached?'Las tres hipótesis ya tienen respuesta. Puedes preparar esta variante en tu equipo.':'OpenAI recibe las tres hipótesis y la fuente jurídica. Tu elección y las líneas del expediente se quedan en este equipo.'):'La consulta incluye el tema y fragmentos de dos artículos federales. El fragmento del expediente permanece en este equipo.'}</p>
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
               <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>
               {!comparison?.cached&&pilot?.cloudUsage?.remaining===0&&<p className="rp-availability">Se usaron los tres envíos de esta sesión. Puedes seguir trabajando con el expediente y los borradores guardados.</p>}
             </section>}
-          {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':'Borrador'}</h2>
+          {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
               <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={1800} rows={6}/></label>
               {pilot?.hasDocument&&<IntakeCaseDocument insert={insertDatum}/>}
               <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/1800</small>
               <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
             </div>:<>
-            <div className="rp-switch" aria-label="Vista del borrador" role="group"><button aria-pressed={!restored} disabled={busy} onClick={()=>setRestored('')}><Cloud size={14}/> Con marcadores</button><button aria-pressed={Boolean(restored)} disabled={busy} onClick={()=>void reveal()}><HardDrive size={14}/> Datos originales</button></div>
+            <div className="rp-switch" aria-label="Vista del borrador" role="group"><button aria-pressed={!restored} disabled={busy} onClick={()=>setRestored('')}>{activeTask.localOnly?<HardDrive size={14}/>:<Cloud size={14}/>} Con marcadores</button><button aria-pressed={Boolean(restored)} disabled={busy} onClick={()=>void reveal()}><HardDrive size={14}/> Datos originales</button></div>
             <div className="rp-preview rp-document">{restored||<MarkedText text={draft}/>}</div>
             <button className="rp-quiet" disabled={busy} onClick={()=>{clearFeedback();setRestored('');setEditText(draft);}}>Editar borrador</button>
             {task&&pilot?.followupParents?.includes(task)&&<section className="rp-followup"><h3>Continuar desde esta nota</h3>
@@ -278,6 +296,7 @@ export default function IntakePilot() {
               <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('carta')}>Preparar solicitud al cliente</button>
               <button type="button" className="rp-quiet" disabled={busy} onClick={()=>void followup('control')}>Preparar lista de cotejo</button>
             </div></section>}
+            {activeTask.localOnly&&<button className="rp-quiet" disabled={busy} onClick={()=>void exportTariffs()}><Table2 size={16}/>Comparar fichas guardadas en Excel</button>}
             <h3>Exportar con datos originales</h3><div className="rp-formats" aria-label="Formato del archivo" role="group">{formats.map(({id,name,Icon})=><button key={id} aria-pressed={format===id} disabled={busy} onClick={()=>setFormat(id)}><Icon size={16}/>{name}</button>)}</div>
             <button className="rp-primary" disabled={busy} onClick={()=>void exportDraft()}><ArrowDownToLine size={16}/>{activity==='export'?'Generando archivo…':'Descargar .'+format}</button></>}
           </section>}

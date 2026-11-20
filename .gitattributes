@@ -20,3 +20,8 @@
 /resources/windows-descendant-classification-diagnostic-v1.json text eol=lf
 /docs/architecture/windows-descendant-classification-diagnostic-v1.md text eol=lf
 /.github/workflows/windows-descendant-classification-diagnostic.yml text eol=lf
+
+# Keep the exact legal source bytes used by the local pilot's SHA-256 checks.
+/resources/trade/*.pdf binary
+/resources/trade/*.json text eol=lf
+/resources/trade/*.jsonl text eol=lf

@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 OFFICIAL = "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIGIE_2022.pdf"
-ROW = re.compile(r"^[ \t]*(\d{4}\.\d{2}\.\d{2})(?=[ \t]|$)")
+CODE = re.compile(r"(?<![\d.])([0-9]{4}\.[0-9]{2}\.[0-9]{2})(?!\d|\.\d)")
 DEFAULT = (Path(__file__).resolve().parents[1] / "artifacts/public-corpus"
            / "comercio-20261119/ligie-2022/acquisitions")
 
@@ -39,14 +39,11 @@ def main():
     output.writerow(["fraccion", "pagina_pdf", "linea_extraida", "sha256", "enlace_publico", "estado"])
     for page, text in enumerate(extracted.split("\f"), 1):
         for number, line in enumerate(text.splitlines(), 1):
-            match = ROW.match(line)
-            if not match:
-                continue
-            code = match[1]
-            if wanted and code.replace(".", "") != wanted.replace(".", ""):
-                continue
-            output.writerow([code, page, number, args.sha256, f"{OFFICIAL}#page={page}",
-                             "localizador_pendiente_de_cotejo"])
+            for code in dict.fromkeys(CODE.findall(line)):
+                if wanted and code.replace(".", "") != wanted.replace(".", ""):
+                    continue
+                output.writerow([code, page, number, args.sha256, f"{OFFICIAL}#page={page}",
+                                 "localizador_pendiente_de_cotejo"])
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+import {searchTariff,labeledTariffCodes,tariffResult,tariffReference} from './corpus/tariff-index.mjs';
 import {focusFromInstruction,isFollowupForm,quotedRanges,prepareFollowup,followupEnvelope,renderFollowup} from './corpus/intake-followup.mjs';
 import {comparisonsFor,comparisonEnvelope,readComparisonReply,renderComparison} from './corpus/intake-comparison.mjs';
 import {hasTradeWorksheet,tradeWorksheet,revisedWorksheetRow,worksheetSummary,worksheetProposals} from './intake-trade-worksheet.mjs';
@@ -7,7 +8,7 @@ import {randomUUID} from 'node:crypto';
 import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
-import {loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
+import {tariffResearch,loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
 import {exportIntakeDocument} from './intake-office-export.mjs';
 import {tradeArticles, supportingReferences, tradeInstruction, renderTradeDraft} from './corpus/trade-pilot-grounding.mjs';
 import {getPilotTradeScenario} from './pilot-trade-scenario.mjs';
@@ -201,7 +202,14 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   }
   return [...notes.values()];
  };
+ const tariffEvidence=saved=>saved?.intake.document?labeledTariffCodes(openReviewedDocument(saved.intake.document,saved.firm.id,saved.entry.id).original):[];
  const followupSource=(saved,parent)=>{
+  const selection=saved.intake.tariffs?.[parent];
+  if(selection){
+   const source=tariffResearch(selection.code,selection.page);
+   if(source.ref.pdfSha256!==selection.pdfSha256)throw Error('La ficha pertenece a otra edición de la tarifa.');
+   return source;
+  }
   if(parent==='case-note')return practiceFor(saved);
   if(parent.startsWith('lectura-'))return readingFor(parent);
   return noteFor(saved.intake,parent);
@@ -239,7 +247,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const note=sourceFor(selection);
      return {id,title:note.title,preview:note.prompt,references:[note.ref]};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
-   })).concat(followupTasks(saved)),
+   })).concat(Object.keys(saved?.intake.tariffs??{}).map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
   };
  };
 
@@ -383,6 +391,50 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     latestReview=null;
     return savedStatus;
    }
+   case 'intake.searchTariff':
+    exactFields(payload,['query','offset']);
+    return searchTariff(payload.query,payload.offset);
+   case 'intake.tariffSuggestions':
+    exactFields(payload,[]);
+    return tariffEvidence(current()).map(({code})=>code);
+   case 'intake.addTariff': {
+    exactFields(payload,['code','page']);
+    const saved=current();
+    if(!saved||!store.protectedRecords)throw Error('Abre un ejercicio cifrado para guardar la referencia.');
+    const hit=tariffResult(payload.code,payload.page),{intake}=saved;
+    const {code,page,row}=hit,ref=tariffReference(code,page);
+    const id='tarifa-'+code+'-'+page+'-'+ref.pdfSha256.slice(0,12);
+    if(Object.hasOwn(intake.drafts,id))return {task:id,status:status()};
+    const match=tariffEvidence(saved).find(item=>item.code===code);
+    const evidence=match?{line:match.line,excerpt:match.excerpt}:null;
+    const copy=row?'Descripción impresa ['+ref.id+']\n'+row.description+
+     '\nUnidad · '+row.unit+'\nImportación, columna impresa · '+row.import+'\nExportación, columna impresa · '+row.export:
+     'Mención del código en la página seleccionada. Cotejar el texto y la función de esta referencia en el original.';
+    const adjacent=(row?.adjacent??[]).filter(p=>!row.continued?.includes(p));
+    const edge=adjacent.length?'Cotejar el límite del renglón con la página '+adjacent.join(' y ')+'.':'';
+    const text=draftText(['Ficha arancelaria para [[CLIENTE]] · [[ASUNTO]]',ref.locator,copy,...(edge?[edge]:[]),
+     ...(evidence?['Soporte del expediente\n[[SOPORTE]]']:[]),ref.summary].join('\n\n'),null,evidence);
+    const ranges=hit.canFollow?quotedRanges(tariffResearch(code,page),text):[];
+    const note={title:ref.title+' · p. '+page,localOnly:true,references:[ref],...(evidence?{evidence}:{})};
+    store.transaction(()=>{
+     store.put('intake-pilot',{...intake,tariffs:{...intake.tariffs,[id]:{code,page,pdfSha256:ref.pdfSha256,row,locator:ref.locator,url:ref.url}},
+      researchHistory:{...intake.researchHistory,[id]:note},drafts:{...intake.drafts,[id]:text},
+      ...(ranges.length?{followupBasis:{...intake.followupBasis,[id]:ranges}}:{})});
+     store.audit('intake.local.tariff',saved.entry.id);
+    });
+    return {task:id,status:status()};
+   }
+   case 'intake.exportTariffBook': {
+    exactFields(payload,[]);
+    const saved=current(),tariffs=Object.values(saved?.intake.tariffs??{});
+    if(!saved||!tariffs.length)throw Error('Guarda primero una ficha de la tarifa.');
+    const {firm,entry}=saved;
+    const answer={question:'Comparativo de fracciones arancelarias',text:'Fichas documentales del expediente. Cotejar las columnas impresas, las notas y la edición aplicable a la operación.',
+     citations:[],createdAt:new Date().toISOString()};
+    const file=await exportIntakeDocument('xlsx','comparativo-arancelario',{firm,matter:entry,answer,tariffs});
+    store.audit('intake.local.exportTariffs',entry.id);
+    return file;
+   }
    case 'intake.addFollowup': {
     const scoped=Object.hasOwn(payload??{},'instruction');
     exactFields(payload,scoped?['task','form','instruction']:['task','form']);
@@ -501,7 +553,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const references=storedNote?.references??(task==='trade'?tradeReferences:[]);
     const citations=exportCitations(references);
     const answer={question:storedNote?.title??tasks[task].title,text:payload.format==='xlsx'||payload.format==='pptx'?restored:withWorksheet,citations,createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet});
+    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet,tariffs:intake.tariffs?.[task]?[intake.tariffs[task]]:[]});
     store.audit('intake.local.export',entry.id);
     return file;
    }

@@ -173,3 +173,17 @@
 .rp-followup .rp-actions{flex-wrap:wrap}
 .rp-followup textarea{width:100%;min-width:0;resize:vertical;padding:.65rem .8rem;border:1px solid #aba194;border-radius:5px;background:var(--rp-panel);color:var(--rp-ink);font:400 15px/1.5 'Schibsted Grotesk',sans-serif}
 .rp-shell textarea:focus-visible{outline:3px solid #916725;outline-offset:3px}
+.rp-library-views{display:flex;gap:.5rem;flex-wrap:wrap;padding:1rem 0}
+.rp-library-views [aria-pressed=true]{background:var(--rp-accent);color:var(--rp-panel)}
+.rp-tariff{margin:0 auto 2rem;max-width:880px;color:var(--rp-ink)}
+.rp-tariff h2{font:400 clamp(2.2rem,5vw,3.7rem)/1 'Newsreader',Georgia,serif;margin:.7rem 0}
+.rp-tariff p{line-height:1.55;overflow-wrap:anywhere}
+.rp-tariff form,.rp-tariff-codes{display:flex;align-items:end;gap:.7rem;flex-wrap:wrap;margin:1.25rem 0}
+.rp-tariff form label{flex:1 1 18rem}
+.rp-tariff-codes span{width:100%;font-size:.84rem;color:var(--rp-muted)}
+.rp-tariff article{border-top:1px solid var(--rp-line);padding:1.15rem 0}
+.rp-tariff h3{display:flex;gap:1rem;align-items:baseline;margin:0;font:500 1.75rem/1.1 'Newsreader',Georgia,serif}
+.rp-tariff h3 small,.rp-tariff dt{font:400 .85rem/1.5 'Schibsted Grotesk',sans-serif;color:var(--rp-muted)}
+.rp-tariff dl{display:flex;flex-wrap:wrap;gap:.65rem 2rem}
+.rp-tariff dd{margin:0;font-variant-numeric:tabular-nums}
+.rp-tariff .rp-actions a{display:inline-flex;align-items:center;gap:.35rem;min-height:42px}
