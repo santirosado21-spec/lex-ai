@@ -18,6 +18,10 @@ const routine=new RegExp('^(?:(?:carta de porte|contrato de transporte|factura c
 // added location, date or distinctive detail still goes through context review.
 const routineDescription=/^(?:(?:las etiquetas|el informe|la constancia|el pedimento|los documentos) (?:indican?|describen?|acreditan?|mencionan?) (?:la )?(?:salida|exportación|importación) temporal para (?:reparación|transformación|elaboración)|(?:la prueba|el ensayo) (?:acústic[oa]|de ruido) (?:detectó|registró|indicó) (?:una vibración|ruido|una falla) en (?:el motor|la pieza|el equipo))[.]?$/iu;
 
+// The whole sentence must describe only the direction and purpose of a
+// shipment. Independently detected names, references and addresses stay masked.
+const equipmentShipment=/^se (?:remitió|envió|mandó|trasladó)(?: al (?:fabricante|proveedor|taller))? (?:un|una|el|la) (?:medidor|equipo|aparato|instrumento|máquina|motor|bomba|válvula) para (?:su )?(?:inspección|calibración|reparación|revisión|ajuste) en el extranjero[.]?$/iu;
+
 // Preserve a generic test description before a location. The selected context
 // still covers the complete spatial clause. A leading folio must already be masked.
 const testAtPlace=/^\s*(?:folio\s+([\p{L}\d./_-]+)\s*:\s*)?(?:el|la) (?:control de (?:rectitud|dureza|calidad)|ensayo de (?:dureza|tracción|composición)|prueba de (?:dureza|resistencia)) se (?:realizó|practicó|efectuó)\s+(?=(?:frente al?|junto al?|detrás del?|al lado del?|en (?:el|la))\b)/diu;
@@ -46,7 +50,7 @@ export async function reviewContextLocally(text,ask,signal,parts=[]){
    if(part.end<=cursor)continue;
    masked+=text.slice(cursor,Math.max(cursor,part.start))+'〔'+part.label+'〕';cursor=Math.min(end,part.end);
   }
-  if(routineDescription.test(segment.text.trim())||protectedSpans.length&&routine.test((masked+text.slice(cursor,end)).trim()))routineIds.add(segment.id);
+  if(routineDescription.test(segment.text.trim())||equipmentShipment.test(segment.text.trim())||protectedSpans.length&&routine.test((masked+text.slice(cursor,end)).trim()))routineIds.add(segment.id);
  }
  const ranges=[];
  let batch=[],size=0;

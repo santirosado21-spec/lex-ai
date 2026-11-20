@@ -1,3 +1,4 @@
+import IntakeReservations from './IntakeReservations';
 import IntakeCustomsLaw from './IntakeCustomsLaw';
 import IntakeRemedy from './IntakeRemedy';
 import IntakeSourceFiles,{type CaseSource} from './IntakeSourceFiles';
@@ -21,11 +22,11 @@ type Format = 'docx' | 'xlsx' | 'pptx';
 type IntakeFields = {reviewId?:string;client:string; title:string; documentKind:string; scenarioId?:string; supplier?:string};
 type SupportLine={line:number;excerpt:string;sourceId?:string;sourceLabel?:string};
 type TaskInfo = {
-  id: Task; parent?:Task; usesFacts?:boolean;aliasedQuestion?:boolean;publicQuestion?:string;localLines?:number; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
+  id: Task; reservationConflict?:boolean; parent?:Task; usesFacts?:boolean;aliasedQuestion?:boolean;publicQuestion?:string;localLines?:number; localOnly?:boolean; title: string; preview?: string; evidence?:SupportLine&{additional?:SupportLine[]};
   comparison?:{subject:string;group?:string;archived?:boolean;title:string;label:string;suggested:boolean;suggestedLabel:string;conflicting:boolean;cached:boolean};
   references?: {id: string; title: string; url: string; locator: string; summary: string; checkedOn: string; text?: string; sourceId?: string;localUrl?:string;historyUrl?:string}[];
 };
-type PilotStatus = {saved: boolean;sources?:CaseSource[];comparisonPair?:string[]|null; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; followupParents?:Task[]; editedTasks?: Task[]};
+type PilotStatus = {saved: boolean;reservationCount?:number;reservationRevision?:number;sources?:CaseSource[];comparisonPair?:string[]|null; cloudUsage?:CloudUsage; protectedRecords?:boolean;hasDocument?:boolean; drafts: Partial<Record<Task,string>>; tasks: TaskInfo[]; followupParents?:Task[]; editedTasks?: Task[]};
 const formats = [
   {id:'docx', name:'Word', Icon:FileText},
   {id:'xlsx', name:'Excel', Icon:Table2},
@@ -264,6 +265,7 @@ export default function IntakePilot() {
         </div>}
         {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
+          {pilot?.protectedRecords&&<IntakeReservations count={pilot.reservationCount??0} disabled={busy||editText!==null} onSave={async(action,payload)=>setPilot(await api<PilotStatus>(action,payload))}/>}
           {pilot?.protectedRecords&&<IntakeSourceFiles sources={pilot.sources??[]} pair={pilot.comparisonPair??null} disabled={busy||editText!==null}
            onSave={async(reviewId,label)=>{const result=await api<{status:PilotStatus;duplicate:boolean}>('intake.addSource',{reviewId,label});setPilot(result.status);setRestored('');return result.duplicate;}}
            onCompare={async ids=>{
@@ -274,7 +276,7 @@ export default function IntakePilot() {
             else if(next.tasks[0])setSelected(next.tasks[0].id);
             setNotice(!ids.length?'Se restableció el soporte inicial.':match?'Cotejo preparado. Revisa las líneas y la hipótesis.':'Los documentos seleccionados no tienen un tema de cotejo en común.');
            }}/>}
-          {pilot?.protectedRecords&&<IntakeQuestion disabled={busy||editText!==null} onSelect={chooseQuestion} onPermit={(selection,reviewId)=>saveReference('intake.savePermit',{...selection,reviewId})}/>}
+          {pilot?.protectedRecords&&<IntakeQuestion reservationRevision={pilot.reservationRevision??0} disabled={busy||editText!==null} onSelect={chooseQuestion} onPermit={(selection,reviewId)=>saveReference('intake.savePermit',{...selection,reviewId})}/>}
           <label htmlFor="intake-task">Tarea del despacho<select id="intake-task" value={task} disabled={busy||editText!==null} onChange={e=>{setSelected(e.target.value as Task);setRestored('');clearFeedback();}}>
             {taskList?.map(item=><option value={item.id} key={item.id}>{item.comparison?(item.comparison.archived?'Cotejo guardado · '+item.title:'Contrastar '+item.comparison.title.toLowerCase()):item.title}</option>)}
           </select></label>
@@ -301,7 +303,7 @@ export default function IntakePilot() {
           </details>}
           {(task==='lectura-valoracion'||task==='lectura-pedimento')&&editText===null&&<IntakeTradeWorksheet key={task} task={task} disabled={activity!==null}
             onDirty={setWorksheetDirty} onSave={()=>{setRestored('');clearFeedback();}}/>}
-          {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument sources={pilot.sources}/>}
+          {pilot?.hasDocument&&editText===null&&<IntakeCaseDocument key={pilot.reservationRevision??0} sources={pilot.sources}/>}
           {activeTask.references?.length ? <details className="rp-details" key={'sources-'+task}><summary><BookOpen size={16}/> Fuentes de consulta ({activeTask.references.length})</summary>
             <ul>{activeTask.references.map(source=><li key={source.id}><a href={source.url} rel="noreferrer" target="_blank">{source.title} <ExternalLink size={12}/></a><p>{source.locator}{source.summary&&' · '+source.summary}</p>
                 {source.localUrl&&<p><a href={source.localUrl} target="_blank" rel="noreferrer">Abrir la página en la copia local</a>{source.historyUrl&&<> · <a href={source.historyUrl} target="_blank" rel="noreferrer">Historial de reformas</a></>}</p>}
@@ -317,13 +319,14 @@ export default function IntakePilot() {
                 {activeTask.usesFacts&&Boolean(activeTask.localLines)&&<p>Las líneas marcadas «Sólo en este equipo» se añadirán al exportar.</p>}
                 <details className="rp-details rp-reading-message" key={'message-'+task}><summary>Leer el mensaje completo</summary><div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div></details></>:
                 <div className="rp-preview"><MarkedText text={activeTask.preview??'Vista previa no disponible.'}/></div>}
-              <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>
+              {activeTask.reservationConflict&&!comparison?.cached&&<p role="status">El mensaje contiene una expresión reservada. Elige otro pasaje o revisa las reservas del expediente.</p>}
+              <button type="button" className="rp-primary" disabled={busy||!activeTask.preview||(!comparison?.cached&&activeTask.reservationConflict)||(!comparison?.cached&&pilot?.cloudUsage?.remaining===0)} onClick={()=>void generate()}>{activity==='cloud'?<><LoaderCircle className="rp-spin" size={16}/> {comparison?.cached?'Preparando borrador…':'Generando borrador…'}</>:<>{comparison?.cached?'Preparar esta variante en mi equipo':'Enviar y generar borrador'} <ArrowRight size={16}/></>}</button>
               {!comparison?.cached&&pilot?.cloudUsage?.remaining===0&&<p className="rp-availability">Se usaron los tres envíos de esta sesión. Puedes seguir trabajando con el expediente y los borradores guardados.</p>}
             </section>}
           {draft&&<section className="rp-proof rp-reveal"><h2><FileText size={17}/> {pilot?.editedTasks?.includes(task!)?'Borrador editado':task?.startsWith('pedimento-')?'Ficha del pedimento':task?.startsWith('ad29-')?'Ficha de defensa comercial':task?.startsWith('nico-')?'Ficha de identificación comercial':activeTask.localOnly?'Ficha de la tarifa':'Borrador'}</h2>
             {editText!==null ? <div className="rp-edit">
               <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={8000} rows={6}/></label>
-              {pilot?.hasDocument&&<IntakeCaseDocument sources={pilot.sources} insert={insertDatum}/>}
+              {pilot?.hasDocument&&<IntakeCaseDocument key={pilot.reservationRevision??0} sources={pilot.sources} insert={insertDatum}/>}
               <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/8000</small>
               <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
             </div>:<>

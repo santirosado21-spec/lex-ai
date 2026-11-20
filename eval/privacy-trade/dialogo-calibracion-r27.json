@@ -1,0 +1,9 @@
+{
+ "case":"calibracion-sintetica","client":"Instrumentación Aguamarina de Ensayo",
+ "entries":[
+  {"kind":"orden","text":"Cliente: Instrumentación Aguamarina de Ensayo\nOrden de servicio: CMQ-52018\nSe envió al fabricante un instrumento para calibración en el extranjero.\nEl mensajero recogió la caja donde los artesanos tiñen las cintas con cera de membrillo antes de abrir sus puestos.","private":["Instrumentación Aguamarina de Ensayo","CMQ-52018"],"clues":["donde los artesanos tiñen las cintas con cera de membrillo antes de abrir sus puestos"],"facts":["instrumento para calibración en el extranjero"]},
+  {"kind":"informe","text":"Factura: HCU-75204\nInforme correspondiente a CMQ-52018.\nEl taller calibró el instrumento y conservó el módulo original.\nLa entrega se hizo en un pasillo reconocible por el olor a resina de pino y madera mojada.","private":["HCU-75204","CMQ-52018"],"clues":["olor a resina de pino y madera mojada"],"facts":["calibró el instrumento","conservó el módulo original"]},
+  {"kind":"pregunta","text":"¿Qué prueba permite a Instrumentación Aguamarina de Ensayo comprobar si el instrumento de CMQ-52018 regresó con su módulo original?","private":["Instrumentación Aguamarina de Ensayo","CMQ-52018"],"clues":[],"facts":["regresó con su módulo original"]},
+  {"kind":"seguimiento","text":"¿HCU-75204 permite cotejar el ajuste de la pieza con la calibración del equipo completo?","private":["HCU-75204"],"clues":[],"facts":["ajuste de la pieza","calibración del equipo completo"]}
+ ]
+}

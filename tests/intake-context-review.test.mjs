@@ -71,3 +71,22 @@ test('a temporal sound cue is protected and generic test descriptions stay reada
  assert.deepEqual((await reviewContextLocally(ordinary,selectAll)).ranges,[]);
  assert.deepEqual((await reviewContextLocally(specific,selectAll)).ranges,[[0,specific.length]]);
 });
+
+test('locative descriptions of a delivery are protected even without a name or a clock time',async()=>{
+ const text='🚚 El camión llegó donde las vecinas izan el gallardete de barro; el vendedor pagó el transporte. El taller cuya puerta tiene remaches de ónix recibió la caja.';
+ const result=await reviewIntakeDocument({text,originalHash:'3'.repeat(64),suggestions:[],fields:[]});
+ const visible=result.parts.map(p=>p.text??'***').join('');
+ assert.ok(!visible.includes('gallardete')&&!visible.includes('remaches'));
+ assert.ok(visible.includes('el vendedor pagó el transporte'));assert.equal(result.restored,text);
+ const paperwork='El mensajero entregó el informe donde consta el pago.';
+ const review=await reviewIntakeDocument({text:paperwork,originalHash:'4'.repeat(64),suggestions:[],fields:[]});
+ assert.ok(review.parts.map(p=>p.text??'***').join('').includes('donde consta el pago'));
+});
+
+test('a generic calibration stays readable while added identifying context still receives full review',async()=>{
+ const routine='Se trasladó al taller una bomba para su calibración en el extranjero.';
+ const qualified=routine.slice(0,-1)+' durante la romería de los faroles.';
+ const all=async(_s,input)=>({oraciones:JSON.parse(input).map(s=>s.id)});
+ assert.deepEqual((await reviewContextLocally(routine,all)).ranges,[]);
+ assert.deepEqual((await reviewContextLocally(qualified,all)).ranges,[[0,qualified.length]]);
+});

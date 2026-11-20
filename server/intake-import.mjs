@@ -1,3 +1,4 @@
+import {reservedRanges} from './privacy/matter-reservations.mjs';
 import {describesEquipmentReturn} from './privacy/trade-document-structure.mjs';
 import {intakeWindows} from './privacy/intake-windows.mjs';
 import {createHash} from 'node:crypto';
@@ -22,7 +23,7 @@ function documentaryTitle(candidate,source){
 const exactSpan = (value, source) => typeof value === 'string' && value.trim() && value.length <= 200 &&
  !/[\p{Cc}\[\]]/u.test(value) && source.includes(value.trim()) ? value.trim() : '';
 
-export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, knownIdentities=[]} = {}) {
+export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, knownIdentities=[],reservations=[]} = {}) {
  const review=payload?.review===true;
  if (!payload || Object.keys(payload).some(key=>!['base64','extension','review'].includes(key)) ||
      (Object.hasOwn(payload,'review') && !review) || Object.keys(payload).length !== (review?3:2) || !['pdf','docx','txt','md'].includes(payload.extension) ||
@@ -65,7 +66,7 @@ export async function inspectLocalDocument(payload, {signal, fetchImpl = fetch, 
  const suggestions=validSuggestions?[...new Set(readings.flatMap(r=>r.fields.entities))]:null;
  const data={...(matched ? {scenarioId:matched.scenarioId,scenarioPreview:matched.preview,supplier:text.split('\n')[3].slice('Proveedor: '.length)} : {}),client,title:documentaryTitle(titleCandidate,text),documentKind:matched ? 'factura' : kinds.includes(fields?.documentKind) ? fields.documentKind : 'otro'};
  if (!review) return data;
- const protection=await reviewIntakeDocument({text,contextReviewer:parts=>reviewContextLocally(text,ask,signal,parts),originalHash:createHash('sha256').update(bytes).digest('hex'),
+ const protection=await reviewIntakeDocument({text,context:{ranges:reservedRanges(text,reservations),available:true},contextReviewer:parts=>reviewContextLocally(text,ask,signal,parts),originalHash:createHash('sha256').update(bytes).digest('hex'),
   suggestions,suggestionBatches:windows.length,fields:[...literalClients,...extraIdentities,data.title,data.supplier??'',...knownIdentities.filter(value=>typeof value==='string'&&value.length>=2&&text.includes(value))],signal});
  if(protection.available&&titleCandidate&&!data.title)protection.needsReview=true;
  return {...data,protection,...(windows.length>1?{reviewedWindows:windows.length}:{})};

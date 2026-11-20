@@ -1,3 +1,4 @@
+import {describedSiteRanges} from './trade-site-description.mjs';
 // These are form captions and ordinary spelling variants. They are public text
 // only at a parsed caption position. The same words can identify a party elsewhere.
 const captions=[
@@ -110,7 +111,7 @@ export function postalBlockRanges(text) {
 
 // Transport and invoice references can identify an operation even when they
 // contain no personal name. Protect the value on later, unlabelled mentions too.
-const referenceLabel=/(?<![\p{L}\p{N}])(?:contrato(?: de (?:transporte|compraventa|licencia))?|carta (?:de )?porte|orden de retorno|factura(?: comercial)?|invoice|conocimiento de embarque|bill of lading|b\/l|air waybill|booking(?: reference)?|reserva de embarque|contenedor|container|sello(?: de seguridad)?|seal)(?:[ \t]+(?:n[úu]m(?:ero)?\.?|no\.?|number|id))?[ \t]*[:#][ \t]*([a-z0-9]+(?:[./_-][a-z0-9]+)*)/dgiu;
+const referenceLabel=/(?<![\p{L}\p{N}])(?:contrato(?: de (?:transporte|compraventa|licencia))?|carta (?:de )?porte|orden de (?:retorno|servicio|reparaci[oó]n)|factura(?: comercial)?|invoice|conocimiento de embarque|bill of lading|b\/l|air waybill|booking(?: reference)?|reserva de embarque|contenedor|container|sello(?: de seguridad)?|seal)(?:[ \t]+(?:n[úu]m(?:ero)?\.?|no\.?|number|id))?[ \t]*[:#][ \t]*([a-z0-9]+(?:[./_-][a-z0-9]+)*)/dgiu;
 // Headings such as “Guía de transporte N° 730-K:” identify an individual record.
 // Require a documentary heading, a final code containing a digit, and the colon.
 const documentHeading=/^(?:conocimiento de embarque|carta de porte|factura|p[oó]liza|declaraci[oó]n|manifiesto|gu[ií]a|certificado|albar[aá]n|contrato)(?:[ \t]+[\p{L}]{1,24}){0,6}?[ \t]+(?:n(?:[°.º]|[uú]m(?:ero)?[.]?)?[ \t]+)?([a-z\d][a-z\d._/-]{2,39})[ \t]*:/dgimu;
@@ -174,6 +175,11 @@ export function contextualIdentityRanges(text){
   }
  }
  for(const sentence of new Intl.Segmenter('es',{granularity:'sentence'}).segment(text)){
+  // Semicolons and line breaks can separate an unrelated technical fact.
+  for(const clause of sentence.segment.matchAll(/[^.;!?\n]+/gu)){
+   const offset=sentence.index+clause.index;
+   for(const [a,b] of describedSiteRanges(clause[0].trimEnd()))ranges.push([offset+a,offset+b]);
+  }
   const practice=sitePractice.exec(sentence.segment);
   if(practice&&exclusive.test(practice[0])){
    const clause=sentence.segment.trimEnd();
@@ -203,7 +209,7 @@ export function tradeDocumentAnchorValues(text){
 
 // Select the vocabulary for the local reader only. This is not a determination of regime.
 export function describesEquipmentReturn(text){
- return /\b(?:reparaci[oó]n|reparad[oa]s?|sustituci[oó]n|reemplazo|retorno de|cambi[oó] (?:una|la) (?:pieza|v[aá]lvula)|volvi[oó] (?:la misma|el mismo))\b/iu.test(text);
+ return /\b(?:reparaci[oó]n|reparad[oa]s?|sustituci[oó]n|reemplazo|retorno de|cambi[oó] (?:una|la) (?:pieza|v[aá]lvula)|(?:volvi[oó]|regres[oó]) (?:la misma|el mismo|con su)|(?:inspecci[oó]n|calibraci[oó]n) en el extranjero)\b/iu.test(text);
 }
 
 // Keep an already concealed branded model name addressable inside a larger

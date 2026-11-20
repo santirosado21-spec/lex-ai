@@ -1,0 +1,9 @@
+{
+ "case":"seguro-transporte-sintetico","client":"Embalajes Añil de Prueba",
+ "entries":[
+  {"kind":"solicitud","text":"Cliente: Embalajes Añil de Prueba\nCarta de porte: ACV-46213\nEl comprador cubrió la prima del seguro.\nEl paquete se recibió en la galería cuyas ventanas alternan rombos de cobre y óvalos de vidrio.","private":["Embalajes Añil de Prueba","ACV-46213"],"clues":["galería cuyas ventanas alternan rombos de cobre y óvalos de vidrio"],"facts":["El comprador cubrió la prima del seguro"]},
+  {"kind":"recibo","text":"Factura: SFQ-31724\nEl recibo menciona ACV-46213.\nEl vendedor pagó el seguro de transporte.\nEl sobre llegó al punto en que las bordadoras estiran sus manteles de henequén contra el viento.","private":["SFQ-31724","ACV-46213"],"clues":["las bordadoras estiran sus manteles de henequén contra el viento"],"facts":["El vendedor pagó el seguro de transporte"]},
+  {"kind":"pregunta","text":"¿Qué comprobante debe pedir Embalajes Añil de Prueba para determinar quién pagó la prima de ACV-46213?","private":["Embalajes Añil de Prueba","ACV-46213"],"clues":[],"facts":["quién pagó la prima"]},
+  {"kind":"seguimiento","text":"¿La factura SFQ-31724 acredita que el vendedor cubrió el seguro o hace falta el recibo de la aseguradora?","private":["SFQ-31724"],"clues":[],"facts":["el vendedor cubrió el seguro","hace falta el recibo de la aseguradora"]}
+ ]
+}

@@ -9,6 +9,7 @@ import {chromium} from 'playwright';
 
 const root=path.resolve(process.argv[2]??'.'),out=path.resolve(process.argv[3]??'artifacts/contexto-r26/simulado');
 const resume=process.argv.find(s=>s.startsWith('--continuar='))?.slice(12);
+const reservations=process.argv.includes('--reservas');
 const live=process.argv.includes('--openai'),replay=process.argv.find(s=>s.startsWith('--replay='))?.slice(9);
 assert.ok(!(live&&replay)&&(!resume||live));
 const mod=file=>import(pathToFileURL(path.join(root,file)));
@@ -67,6 +68,12 @@ try{
   await p.getByText(/Revisar protección local/).waitFor({timeout:125000});await p.getByLabel('Nombre en el expediente').fill(labels[i]);await b('Guardar documento en este equipo').click();
   await b('Documentos del expediente ('+(i+1)+')').waitFor();
  }
+ if(reservations){
+  await b('Reservas del expediente (0)').click();
+  await p.getByLabel('Expresión que quieres reservar').fill('ESPIRALES DE ESPARTO');
+  await b('Guardar reserva').click();await b('Quitar reserva de ESPIRALES DE ESPARTO').waitFor();
+  await b('Reservas del expediente (1)').click();
+ }
  await b('Consultar con una pregunta propia').click();await p.getByLabel('Pregunta del expediente').fill(q);await b('Buscar fundamentos en este equipo').click();
  const region=p.getByRole('region',{name:'Contexto del expediente'});
  const boxes=region.getByRole('checkbox');await boxes.first().waitFor({timeout:125000});
@@ -85,6 +92,15 @@ try{
  await region.screenshot({path:path.join(out,'soportes.png')});
  await b('Volver a ver las sustituciones').click();
  await b('Preparar mensaje para revisión').click();const drafts=[];
+ if(reservations){
+  await b('Reservas del expediente (1)').click();
+  await p.getByLabel('Expresión que quieres reservar').fill('TERRITORIO NACIÓNAL');
+  await b('Guardar reserva').click();await p.getByText('El mensaje contiene una expresión reservada.',{exact:false}).waitFor();
+  assert.ok(await b('Enviar y generar borrador').isDisabled());assert.equal(count,0);
+  await p.getByRole('button',{name:'Reservas del expediente (2)'}).locator('..').screenshot({path:path.join(out,'reservas.png')});
+  await b('Quitar reserva de TERRITORIO NACIÓNAL').click();await b('Reservas del expediente (1)').waitFor();
+  await b('Reservas del expediente (1)').click();
+ }
  for(const name of ['nota','lista']){
   if(name==='lista')await b('Preparar lista de cotejo').click();
   const proof=p.locator('.rp-proof').filter({has:p.getByRole('heading',{name:'Mensaje para OpenAI'})});
@@ -101,6 +117,9 @@ try{
   }
  }
  await app.close();app=await start();await open();
+ if(reservations){
+  await b('Reservas del expediente (1)').click();await b('Quitar reserva de ESPIRALES DE ESPARTO').waitFor();
+ }
  for(const draft of drafts){await p.locator('#intake-task').selectOption(draft.id);await b('Datos originales').click();assert.equal(await p.locator('.rp-document').filter({hasText:q}).innerText(),draft.content);}
  assert.equal(count,2);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
  await writeFile(path.join(out,'resultado.json'),JSON.stringify({real:realCalls,replay:replays,simulated:!live&&!replay?count:0,receipts,errors,external,drafts},null,2));

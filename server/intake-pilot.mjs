@@ -1,3 +1,4 @@
+import {reservationKey,hasReservedText} from './privacy/matter-reservations.mjs';
 import {returnContext,isReturnQuestion,returnIdentityInquiry} from './corpus/return-context.mjs';
 import {customsDirectory,regulationDirectory} from './corpus/customs-edition.mjs';
 import {remedyCatalog,remedyPeriod} from './corpus/remedy-index.mjs';
@@ -96,6 +97,10 @@ function draftText(value,doc,evidence,question,permit) {
  return value;
 }
 
+function requestEnvelope(task,{documentKind,articles,scenarioId,research,practice,reading,comparison,followup}){
+ return followup?followupEnvelope(followup):comparison?comparisonEnvelope(comparison):reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+}
+
 export function createIntakeGenerator({
  getApiKey=createOpenAiKeychain({enabled:true}).getApiKey,
  fetchImpl,onReceipt,onAttempt,usageStatus,
@@ -123,7 +128,7 @@ export function createIntakeGenerator({
   },
  });
  const generate=async (task,{signal,documentKind,articles,scenarioId,research,practice,reading,comparison,followup}={}) => {
-  const envelope=followup?followupEnvelope(followup):comparison?comparisonEnvelope(comparison):reading ? tradeReadingEnvelope(reading) : practice ? protectedCaseEnvelope(practice) : research ? researchEnvelope(research) : envelopeFor(task,documentKind,articles,scenarioId);
+  const envelope=requestEnvelope(task,{documentKind,articles,scenarioId,research,practice,reading,comparison,followup});
   const gate=gateFor(practice||research||reading||comparison||followup ? canonicalJson(envelope) : null,(research&&!research.caseFacts?.texts.length)||reading||comparison||(followup&&!followup.synthetic)?'public':'synthetic');
   // Only the prebuilt envelopes may cross this boundary. No caller can supply
   // intake data, metadata, history, files, or a custom request.
@@ -307,6 +312,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    saved:Boolean(saved),
    ...(generate.usageStatus?{cloudUsage:generate.usageStatus()}:{}),
    protectedRecords:store.protectedRecords===true,
+   reservationCount:saved?.intake.reservations?.length??0,reservationRevision:saved?.intake.reservationRevision??0,
    hasDocument:Boolean(saved?.intake.document),
    sources:caseSources(saved?.intake).map(sourceSummary),comparisonPair:saved?.intake.comparisonPair??null,
    drafts:saved?.intake.drafts??{},
@@ -319,12 +325,46 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const note=sourceFor(selection,saved,saved.intake.questions?.[id]);
      return {id,title:note.title,preview:note.prompt,references:note.refs??[note.ref],...(selection.angle?{aliasedQuestion:!!note.caseFacts?.inquiry,publicQuestion:note.caseFacts?.inquiry??(note.equipmentIdentity?returnIdentityInquiry:undefined)}:{}),...(note.caseFacts?{evidence:note.caseFacts.evidence,usesFacts:!!note.caseFacts.texts.length,localLines:note.caseFacts.localCount}:{})};
     } catch {return {id,title:'Fuente pendiente de comprobación',preview:null,references:[]};}
-   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)),
+   })).concat([...Object.keys(saved?.intake.tariffs??{}),...Object.keys(saved?.intake.nicos??{}),...Object.keys(saved?.intake.permits??{}),...Object.keys(saved?.intake.remedies??{})].map(id=>({id,...saved.intake.researchHistory[id]}))).concat(followupTasks(saved)).map(task=>hasReservedText(task.preview,saved?.intake.reservations)?{...task,reservationConflict:true}:task),
   };
  };
 
  return async (action,payload,{signal}={}) => {
   switch (action) {
+   case 'intake.getReservations': {
+    exactFields(payload,[]);
+    const saved=current();
+    if(!saved||!store.protectedRecords)throw Error('Abre el expediente cifrado.');
+    return {rows:saved.intake.reservations??[],revision:saved.intake.reservationRevision??0};
+   }
+   case 'intake.reserveTerm':
+   case 'intake.removeReservation': {
+    const add=action==='intake.reserveTerm';
+    exactFields(payload,add?['text','revision']:['id','revision']);
+    store.transaction(()=>{
+     const saved=current();
+     if(!saved||!store.protectedRecords)throw Error('Abre el expediente cifrado.');
+     if(pending)throw Error('Hay un envío en curso. Espera para cambiar las reservas.');
+     const {intake}=saved,rows=intake.reservations??[],revision=intake.reservationRevision??0;
+     if(payload.revision!==revision)throw Error('Las reservas cambiaron. Vuelve a abrir la lista.');
+     let next;
+     if(add){
+      const text=typeof payload.text==='string'?payload.text.trim():'';
+      if(typeof text!=='string'||text.length<2||text.length>256||!text.isWellFormed()||/[\p{Cc}\[\]]/u.test(text)||reservationKey(text).length<2)
+       throw Error('Escribe entre 2 y 256 caracteres de la expresión.');
+      if(rows.some(r=>reservationKey(r.text)===reservationKey(text)))return;
+      if(rows.length>=64)throw Error('El expediente admite hasta 64 expresiones reservadas.');
+      next=[...rows,{id:randomUUID(),text}];
+     }else{
+      if(!rows.some(r=>r.id===payload.id))throw Error('La reserva ya cambió. Abre la lista otra vez.');
+      next=rows.filter(r=>r.id!==payload.id);
+     }
+     store.put('intake-pilot',{...intake,reservations:next,reservationRevision:revision+1});
+     store.audit('intake.local.reservations',saved.entry.id);
+     pendingQuestions.clear();latestReview=null;inspectionRevision++;
+    });
+    return status();
+   }
    case 'intake.createPractice':
    case 'intake.inspectSource':
    case 'intake.inspectLocal': {
@@ -340,7 +380,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     }
     const revision=++inspectionRevision;
     latestReview=null;
-    const data=await inspectLocalDocument(payload,{signal,knownIdentities:attach?knownParties(saved):[]});
+    const data=await inspectLocalDocument(payload,{signal,knownIdentities:attach?knownParties(saved):[],reservations:attach?saved.intake.reservations:[]});
     if(revision===inspectionRevision&&(attach?current()?.entry.id===saved.entry.id:!workspace())&&store.protectedRecords&&data.protection?.available){
      const id=randomUUID();
      latestReview={id,protection:data.protection,practiceSeed,history:[],...(attach?{matterId:saved.entry.id,base64:payload.base64,extension:payload.extension,documentKind:data.documentKind}:{})};
@@ -463,7 +503,12 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     exactFields(payload,selected?['id']:[]);
     const saved=current();
     const doc=selected?caseSources(saved?.intake).find(row=>row.id===payload.id)?.document:saved?.intake.document;
-    return openReviewedDocument(doc,saved?.firm.id,saved?.entry.id);
+    const view=openReviewedDocument(doc,saved?.firm.id,saved?.entry.id);
+    if(!saved.intake.reservations?.length)return view;
+    const id=selected?payload.id:caseSources(saved.intake)[0].id;
+    const lines=view.original.split('\n');
+    for(const row of questionLines(saved,id))lines[row.evidence.line-1]=row.masked;
+    return {...view,masked:lines.join('\n')};
    }
    case 'intake.status':
     exactFields(payload,[]);
@@ -480,9 +525,9 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
       reserved.some(s=>typeof s!=='string'||s.length<2||s.length>256||!s.trim()||!s.isWellFormed()||!text.trim().includes(s)))
      throw Error('Cada dato adicional debe coincidir con un fragmento de la pregunta.');
     const knownIdentities=[...knownParties(saved),...reserved];
-    const data=await inspectLocalDocument({extension:'txt',base64:Buffer.from(text).toString('base64'),review:true},{signal,knownIdentities});
+    const data=await inspectLocalDocument({extension:'txt',base64:Buffer.from(text).toString('base64'),review:true},{signal,knownIdentities,reservations:saved.intake.reservations});
     if(!data.protection?.available||data.protection.contextUnavailable)throw Error('No se completó la revisión local de la pregunta.');
-    if(current()?.intake.id!==saved.intake.id)throw Error('Cambió el expediente.');
+    if(current()?.intake.id!==saved.intake.id||current()?.intake.reservationRevision!==saved.intake.reservationRevision)throw Error('Cambió el expediente. Repite la revisión.');
     const review=data.protection,document=bindReviewedDocument(review,saved.firm.id,saved.entry.id);
     const restored=openReviewedDocument(document,saved.firm.id,saved.entry.id);
     if(restored.original!==text.replace(/\r\n/gu,'\n').trim())throw Error('La pregunta no se pudo restituir.');
@@ -774,7 +819,10 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const reuse=comparison&&matrix?.digest===comparison.packet.digest;
      const followup=continuation?followupFor(saved,continuation):null;
      const followEvidence=continuation?.form==='control'?saved.intake.researchHistory?.[continuation.basisTask??continuation.parent]?.evidence:null;
-     const raw=reuse?null:await generate(task,{followup,comparison:comparison?.packet,reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId});
+     const options={followup,comparison:comparison?.packet,reading,practice,research,signal,documentKind:saved.intake.documentKind,articles,scenarioId:saved.intake.scenarioId};
+     if(!reuse&&saved.intake.reservations?.length&&requestEnvelope(task,options).messages.some(m=>hasReservedText(m.content,saved.intake.reservations)))
+      throw Error('El mensaje contiene una expresión reservada del expediente. Elige otro pasaje o revisa las reservas.');
+     const raw=reuse?null:await generate(task,options);
      if(comparison&&!reuse)matrix=readComparisonReply(raw,comparison.packet);
      let text=raw;
      if(followup)text=renderFollowup(raw,followup,{evidence:Boolean(followEvidence)});

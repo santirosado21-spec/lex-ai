@@ -1,4 +1,4 @@
-import {useState,type FormEvent} from 'react';
+import {useEffect,useState,type FormEvent} from 'react';
 import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle,ShieldPlus,X} from 'lucide-react';
 import IntakePermit,{type PermitHint,type PermitSelection} from './IntakePermit';
 import IntakeQuestionLines from './IntakeQuestionLines';
@@ -16,7 +16,7 @@ const contextText:Record<Context['state'],string>={
 type Review={id:string;context?:Context|null;permit?:PermitHint;sources?:{id:string;label:string}[];facts?:{id:string;text:string;label:string;line:number}[];masked:string;count:number;suggestedAngle:string;candidates:{key:string;citationId:string;label:string;locator:string;text:string;partial:boolean}[]};
 export type QuestionSelection={reviewId:string;key:string;angle:string;secondKey?:string;factIds?:string[]};
 
-export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:boolean;onPermit:(selection:PermitSelection,reviewId:string)=>Promise<void>;onSelect:(selection:QuestionSelection)=>Promise<void>}){
+export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRevision}:{disabled:boolean;reservationRevision:number;onPermit:(selection:PermitSelection,reviewId:string)=>Promise<void>;onSelect:(selection:QuestionSelection)=>Promise<void>}){
  const [open,setOpen]=useState(false),[question,setQuestion]=useState('');
  const [reserved,setReserved]=useState<string[]>([]);
  const [selection,setSelection]=useState('');
@@ -37,6 +37,9 @@ export default function IntakeQuestion({disabled,onSelect,onPermit}:{disabled:bo
   finally{setBusy(false);}
  }
  const [refined,setRefined]=useState<string[]>([]);
+ useEffect(()=>{
+  setReview(null);setOriginals(null);setRefined([]);setFactIds([]);setSecondKey('');setError('');
+ },[reservationRevision]);
  const lineIds=factIds.filter(id=>id.startsWith('line:'));
  const stale=refined.length>0&&(lineIds.length!==refined.length||refined.some(id=>!lineIds.includes(id)));
  const comparison=review?.candidates.find(row=>row.key===secondKey);

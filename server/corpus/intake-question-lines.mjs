@@ -1,3 +1,4 @@
+import {reservedRanges} from '../privacy/matter-reservations.mjs';
 // Project the stored substitutions onto original line offsets, including multiline masks.
 // Per-document proof is checked before the result can supply synthetic cloud context.
 import {isProductAlias,tradeDocumentAnchorValues} from '../privacy/trade-document-structure.mjs';
@@ -44,6 +45,7 @@ export function questionLines(saved,sourceId,transient){
  for(const value of values){
   if(typeof value==='string'&&value.trim())occurrences(original,value,(start,end)=>{ends[start]=Math.max(ends[start],end);if(anchors.has(value))anchorEnds[start]=Math.max(anchorEnds[start],end);});
  }
+ for(const [a,b] of reservedRanges(original,saved.intake.reservations))ends[a]=Math.max(ends[a],b);
  const merged=[];
  for(let start=0;start<ends.length;start++){
   if(!ends[start])continue;

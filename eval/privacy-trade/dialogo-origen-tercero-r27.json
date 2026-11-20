@@ -1,0 +1,60 @@
+{
+  "case": "origen-materiales-sintetico",
+  "client": "Ensayo",
+  "entries": [
+    {
+      "kind": "certificado",
+      "text": "Certificado de Origen - Lote 44B. Material: Fibra de Algodón Pima. Proceso de hilado realizado en la región del Bajío, utilizando maquinaria de la serie 'Tierra Fértil'. Folio: OF-2023-9871. Se observa un residuo de tierra rojiza en el borde del sello de inspección.",
+      "private": [
+        "44B",
+        "Tierra Fértil",
+        "OF-2023-9871"
+      ],
+      "clues": [
+        "región del Bajío",
+        "residuo de tierra rojiza en el borde del sello de inspección"
+      ],
+      "facts": [
+        "Fibra de Algodón Pima",
+        "Proceso de hilado"
+      ]
+    },
+    {
+      "kind": "declaracion",
+      "text": "Declaración de Proveedor - Insumo Secundario. Material: Resina Epóxica Tipo 'Sol del Poniente'. Fabricada en instalaciones cercanas al antiguo molino de la ribera, con fecha de lote 11/2022. Folio: PR-2022-3309. El empaque presenta una ligera pátina de humedad, típica de climas costeros.",
+      "private": [
+        "Sol del Poniente",
+        "11/2022",
+        "PR-2022-3309"
+      ],
+      "clues": [
+        "antiguo molino de la ribera",
+        "pátina de humedad, típica de climas costeros"
+      ],
+      "facts": [
+        "Resina Epóxica"
+      ]
+    },
+    {
+      "kind": "pregunta",
+      "text": "¿El certificado de origen acredita la procedencia de la fibra de algodón Pima, considerando el indicio del residuo en el sello?",
+      "private": [],
+      "clues": [
+        "indicio del residuo en el sello"
+      ],
+      "facts": [
+        "certificado de origen acredita la procedencia",
+        "fibra de algodón Pima"
+      ]
+    },
+    {
+      "kind": "seguimiento",
+      "text": "¿La declaración del proveedor sustenta el origen de la resina epóxica, tomando en cuenta la descripción del empaque?",
+      "private": [],
+      "clues": [],
+      "facts": [
+        "declaración del proveedor sustenta el origen de la resina epóxica"
+      ]
+    }
+  ]
+}
