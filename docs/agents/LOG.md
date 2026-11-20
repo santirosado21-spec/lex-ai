@@ -375,3 +375,7 @@ Dos consultas reales con material público y un asunto ficticio, 1249 tokens en 
 ## 2026-11-19 21:02 — codex — Rejon r19 conserva la fuente elegida del despacho en los tres formatos
 
 Probados la pregunta y dos originales ficticios en Chromium, el ZIP extraído y el lanzador de macOS con cuentas simuladas. Ambas solicitudes coincidieron byte por byte con la llamada pública anterior. Se imprimieron en LibreOffice los seis archivos en cada instalación. Suite de JavaScript: 1445 aprobadas, diez omitidas, cero fallos. Faltan validación profesional, segundo acceso real y equipos físicos de los socios.
+
+## 2026-11-19 21:02 — codex — Captura oficial de tres etapas de una investigación antidumping
+
+AD_29-24: tres fichas de publicación y tres textos del SIDOF verificados en investigación. La preliminar fija cuatro meses y la final entra en vigor el 05/09/2026. Falta cotejo con edición digitalizada, actos intermedios y posteriores, prueba con operaciones y revisión profesional. Sin conexión al generador del piloto.

@@ -1,0 +1,72 @@
+{
+  "expediente": "AD_29-24",
+  "uso": "investigación",
+  "actos": [
+    {
+      "etapa": "inicio",
+      "publicacion": "2025-03-05",
+      "entradaSegunTransitorio": "2025-03-06",
+      "puntos": [
+        183,
+        191
+      ],
+      "documento": {
+        "url": "https://sidof.segob.gob.mx/notas/docFuente/5750993",
+        "archivo": "5750993.html",
+        "bytes": 403407,
+        "sha256": "3d801989c070ead984482b00244ff0c24c939d2f6133d4f115cd421a960a5b89"
+      },
+      "ficha": {
+        "url": "https://sidof.segob.gob.mx/notas/5750993",
+        "archivo": "5750993.ficha.html",
+        "bytes": 69037,
+        "sha256": "19c84ba5d68cd746f8763e1bee6207aae980024f10c00c32a1515354d324ee3a"
+      }
+    },
+    {
+      "etapa": "preliminar",
+      "publicacion": "2025-12-29",
+      "entradaSegunTransitorio": "2025-12-30",
+      "puntos": [
+        296,
+        298,
+        301,
+        306
+      ],
+      "documento": {
+        "url": "https://sidof.segob.gob.mx/notas/docFuente/5777408",
+        "archivo": "5777408.html",
+        "bytes": 3195582,
+        "sha256": "bee05fdc1b472c1b3369adfd9b3447758fbf8e743bbb59984e5361b281e7f73f"
+      },
+      "ficha": {
+        "url": "https://sidof.segob.gob.mx/notas/5777408",
+        "archivo": "5777408.ficha.html",
+        "bytes": 68281,
+        "sha256": "7891c76d36857daa752b4a87a763439f94a8e0144cf17c553fb34ef2c42d6544"
+      }
+    },
+    {
+      "etapa": "final",
+      "publicacion": "2026-09-04",
+      "entradaSegunTransitorio": "2026-09-05",
+      "puntos": [
+        381,
+        383,
+        386
+      ],
+      "documento": {
+        "url": "https://sidof.segob.gob.mx/notas/docFuente/5797943",
+        "archivo": "5797943.html",
+        "bytes": 667707,
+        "sha256": "cd78d2c16eca524a10122b50a9511c9cfb472e6abc75527a859e734d20f587b6"
+      },
+      "ficha": {
+        "url": "https://sidof.segob.gob.mx/notas/5797943",
+        "archivo": "5797943.ficha.html",
+        "bytes": 68268,
+        "sha256": "8a3be2867d05f6fce8bb9ccbfcf896f384c3777cfc2f6935d831be10ea5e2ba8"
+      }
+    }
+  ]
+}

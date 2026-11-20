@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 21:02 por codex: decisión — Confirmar la mercancía para C1 de Economía y la fecha documental para el cotejo
+**Última actualización:** 2026-11-19 21:02 por codex: Captura oficial de tres etapas de una investigación antidumping
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- Defensa comercial en investigación. Se verificaron tres resoluciones sobre perfiles y barras de aluminio del expediente AD_29-24, con tres fichas de portada, localizadores y huellas. Ver `docs/research/defensa-comercial-AD_29-24.md`.
 
 - r19 abre el cotejo del pedimento desde una pregunta y conserva la línea documental de la fecha, la clave, el régimen y la fracción con NICO. En Chromium se probaron dos fechas, cuatro anchos y la reapertura. Las dos solicitudes reprodujeron exactamente la misma llamada pública de r18. LibreOffice abrió e imprimió los seis archivos de ambos recorridos, también desde el ZIP. Lanzador macOS con cuentas simuladas. Suite JS con 1,445 aprobadas y diez omitidas. Evidencia en `artifacts/pregunta-r19/`.
 
@@ -79,6 +81,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Para AD_29-24, cotejar las ediciones digitalizadas y reconstruir el intervalo entre la medida provisional y la definitiva. Probar alcance y origen de dos mercancías ficticias antes de incorporarlo a una tarea de defensa comercial.
 
 - Ampliar el cotejo por fecha, autoridad y mercancía a otros supuestos y probar preguntas con operaciones múltiples. Medir en expedientes ficticios inéditos si la protección local preserva los hechos y las relaciones entre partes necesarios para una conversación de varias vueltas. Revisar la respuesta frente a los documentos con un abogado independiente. Para los equipos de los socios y la segunda cuenta real sigue pendiente la prueba física.
 
