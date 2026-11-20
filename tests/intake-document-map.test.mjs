@@ -94,3 +94,56 @@ test('transport references are substituted at each occurrence and ordinary docum
  const missing='Se requiere la factura comercial. Invoice: pending.';
  assert.ok(protectedForm(await review(missing)).includes('pending'));
 });
+
+test('a local correction covers exact repeats, preserves earlier protections, survives saving and supports undo',async t=>{
+ const {addReviewSelection}=await import('../server/privacy/intake-document-review.mjs');
+ const original='🚢 El taller del faro consta en el contrato. El taller del faro espera el certificado.';
+ const first=await review(original);
+ const literal='taller del faro',start=original.indexOf(literal),end=start+literal.length;
+ const changed=addReviewSelection(first,start,end);
+ assert.equal(changed.restored,original);
+ assert.ok(!protectedForm(changed).includes(literal));assert.ok(protectedForm(changed).includes('certificado'));
+ assert.throws(()=>addReviewSelection(changed,start,end),/ya está oculto/);
+ assert.throws(()=>addReviewSelection(first,1,4),/completo/);
+ assert.throws(()=>addReviewSelection(first,-1,3),/Selecciona/);
+ const dir=await mkdtemp(path.join(os.tmpdir(),'rejon-revision-'));
+ t.after(()=>rm(dir,{recursive:true,force:true}));
+ const app=await startServer({dataDir:dir,autoInitialize:false,intakePilot:true,pilotPassphrase:Buffer.from('frase temporal sólo de prueba')});
+ t.after(()=>app.close());
+ const api=(action,payload={})=>app.service.dispatch(action,payload);
+ const realFetch=globalThis.fetch;
+ globalThis.fetch=async url=>{
+  assert.equal(url,'http://127.0.0.1:11434/api/chat');
+  return Response.json({message:{content:JSON.stringify({entities:[],client:'',title:'',documentKind:'otro'})}});
+ };
+ let initial;
+ try{initial=await api('intake.inspectLocal',{extension:'txt',base64:Buffer.from(original).toString('base64'),review:true});}
+ finally{globalThis.fetch=realFetch;}
+ const selection={start,end,reviewId:initial.reviewId};
+ const applied=await api('intake.protectSelection',selection);
+ assert.deepEqual(await api('intake.protectSelection',selection),applied);
+ assert.ok(applied.canUndo);
+ const undone=await api('intake.undoSelection',{reviewId:applied.reviewId});
+ assert.ok(!undone.canUndo);assert.deepEqual(undone.protection.parts,initial.protection.parts);
+ await assert.rejects(api('intake.protectSelection',selection));
+ const final=await api('intake.protectSelection',{...selection,reviewId:undone.reviewId});
+ const fields={firm:'Ensayo',client:'Cliente ficticio',title:'Alta ficticia',jurisdiction:'MX-FED'};
+ await assert.rejects(api('intake.save',{...fields,reviewId:undone.reviewId}));
+ await api('intake.save',{...fields,reviewId:final.reviewId});
+ await assert.rejects(api('intake.undoSelection',{reviewId:final.reviewId}));
+ const saved=await api('intake.readDocument');assert.equal(saved.original,original);assert.ok(!saved.masked.includes(literal));
+});
+
+test('documentary identifiers are masked in narrative text without local model suggestions',async()=>{
+ const text='On vessel Fuchsia Bay, voyage X8B2, purchase order BB-729. El lote K-531 y el precinto X-896 respaldan la factura comercial.';
+ const r=await review(text);const masked=protectedForm(r);
+ for(const literal of ['Fuchsia Bay','X8B2','BB-729','K-531','X-896'])assert.ok(!masked.includes(literal),literal);
+ assert.ok(masked.includes('factura comercial'));assert.equal(r.restored,text);
+});
+
+test('a unique party triggers a contextual warning; a generic article alone does not trigger the new cue',async()=>{
+ const text='La única representante de la fábrica ficticia pidió los comprobantes. El único artículo citado habla de origen.';
+ const result=await review(text);assert.equal(result.contextualCount,1);assert.ok(result.needsReview);
+ assert.ok(!protectedForm(result).includes('representante de la fábrica ficticia'));
+ assert.equal((await review('El único artículo citado habla de origen.')).contextualCount,0);assert.equal(result.restored,text);
+});

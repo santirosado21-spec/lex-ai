@@ -48,3 +48,16 @@ test('local review masks repeated literals and rule-only email, restores the ful
  const broken=await run(null);
  assert.equal(broken.protection.available,false);
 });
+
+test('a copied narrative is not a title and a truncated model reply cannot produce a reviewed document',async()=>{
+ const convert=(text,title,extra={})=>inspectLocalDocument({extension:'txt',review:true,base64:Buffer.from(text).toString('base64')},{
+  fetchImpl:async()=>Response.json({message:{content:JSON.stringify({client:'',title,documentKind:'otro',entities:[]})},...extra}),
+ });
+ const text='Se requiere factura comercial para el lote TG-9314.';
+ const read=await convert(text,text);
+ assert.equal(read.title,'');assert.ok(read.protection.needsReview);
+ const visible=read.protection.parts.map(x=>x.label??x.text).join('');
+ assert.match(visible,/factura comercial/);assert.ok(!visible.includes('TG-9314'));
+ assert.equal((await convert('Asunto: Consulta interna\nEntregar la factura.','Consulta interna')).title,'Consulta interna');
+ await assert.rejects(convert(text,'',{done:true,done_reason:'length'}));
+});

@@ -46,6 +46,11 @@ test('origin and quota cases pass only with their exact generated text, complete
    const draft=renderProtectedCase(JSON.stringify({...response,proveedor:privateCountry.provider,hecho:privateCountry.facts[0]}),privateCountry);
    assert.match(draft,/ensambladas en \[\[DATO_/);
    assert.ok(!draft.includes('[[PARTE_'));
+   const phrase=example.facts[0].split('importación de ')[1].slice(0,-1);
+   const compound=await reviewIntakeDocument({text:example.text,originalHash:createHash('sha256').update(example.text).digest('hex'),fields:[],suggestions:[phrase]});
+   const reduced=prepareProtectedCase(seed,bindReviewedDocument(compound,'w','m'),'w','m',library);
+   assert.ok(!reduced.prompt.includes(phrase));assert.match(reduced.facts[0],/importación de \[\[PARTE_/);
+
   }
   const clear=bindReviewedDocument({restored:example.text,parts:[{text:example.text}],needsReview:false},'w','m');
   assert.throws(()=>prepareProtectedCase(seed,clear,'w','m',library),/identidad/);

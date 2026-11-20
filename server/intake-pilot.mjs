@@ -2,6 +2,7 @@ import {hasTradeWorksheet,tradeWorksheet,revisedWorksheetRow,worksheetSummary,wo
 import {suggestTradeReadings,loadTradeReading,tradeReadingEnvelope,renderTradeReading} from './corpus/intake-trade-reading.mjs';
 import {newPracticeSeed,practiceDocument,prepareProtectedCase,protectedCaseEnvelope,renderProtectedCase} from './corpus/pilot-protected-case.mjs';
 import {randomUUID} from 'node:crypto';
+import {addReviewSelection} from './privacy/intake-document-review.mjs';
 import {inspectLocalDocument} from './intake-import.mjs';
 import {bindReviewedDocument,documentTokens,openReviewedDocument} from './privacy/intake-document-map.mjs';
 import {loadResearchPassage, researchEnvelope, renderResearchNote} from './corpus/intake-research.mjs';
@@ -215,10 +216,27 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const data=await inspectLocalDocument(payload,{signal});
     if(revision===inspectionRevision&&!workspace()&&store.protectedRecords&&data.protection?.available){
      const id=randomUUID();
-     latestReview={id,protection:data.protection,practiceSeed};
+     latestReview={id,protection:data.protection,practiceSeed,history:[]};
      return {...data,reviewId:id};
     }
     return data;
+   }
+   case 'intake.protectSelection':
+   case 'intake.undoSelection': {
+    const add=action==='intake.protectSelection';
+    exactFields(payload,add?['reviewId','start','end']:['reviewId']);
+    if(!store.protectedRecords||workspace()||!latestReview)throw Error('Abre de nuevo el documento antes de corregirlo.');
+    const prior=latestReview.retry;
+    const result=()=>({reviewId:latestReview.id,protection:latestReview.protection,canUndo:latestReview.history.length>0});
+    if(prior&&prior.id===payload.reviewId&&prior.action===action&&prior.start===payload.start&&prior.end===payload.end)return result();
+    if(latestReview.id!==payload.reviewId)throw Error('La revisión del documento cambió.');
+    const history=latestReview.history;
+    if(add&&history.length>=24)throw Error('La revisión admite hasta 24 correcciones.');
+    if(!add&&!history.length)throw Error('No hay una corrección pendiente para deshacer.');
+    const protection=add?addReviewSelection(latestReview.protection,payload.start,payload.end):history.at(-1);
+    latestReview={...latestReview,protection,id:randomUUID(),history:add?[...history,latestReview.protection]:history.slice(0,-1),
+     retry:{id:payload.reviewId,action,start:payload.start,end:payload.end}};
+    return result();
    }
    case 'intake.readWorksheet':
    case 'intake.saveWorksheetRow': {
@@ -314,7 +332,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      const entry=createMatter({client:payload.client,title:payload.title,jurisdiction:payload.jurisdiction});
      const id=`intake-${firm.id}`;
      const document=keepDocument?bindReviewedDocument(latestReview.protection,firm.id,entry.id):null;
-     store.put('intake-pilot',{id,...(document?{document,practiceSeed:latestReview.practiceSeed??null}:{}),workspaceId:firm.id,matterId:entry.id,documentKind:payload.documentKind??null,scenarioId:payload.scenarioId??null,supplier:hasSupplier?payload.supplier.trim():null,drafts:{}});
+     store.put('intake-pilot',{id,...(document?{document,practiceSeed:latestReview.practiceSeed??null}:{}),workspaceId:firm.id,matterId:entry.id,documentKind:payload.documentKind??null,scenarioId:latestReview?.history.length?null:payload.scenarioId??null,supplier:hasSupplier&&!latestReview?.history.length?payload.supplier.trim():null,drafts:{}});
      store.audit('intake.local.save',entry.id);
      return status();
     });

@@ -168,3 +168,24 @@ El lanzador ofrece cuatro modos. Principal y Lorenzo fijan una cuenta. Alternar 
 El panel Uso de OpenAI muestra los recibos guardados en el expediente por cuenta y los envíos disponibles durante la sesión. Los tokens son los que reportó el proveedor. Se identifican los envíos sin desglose completo. Los recibos históricos anteriores a r8 sólo cubren respuestas completadas. Las sumas pertenecen a este ejercicio y equipo.
 
 Se verificó el recorrido en Chromium con dos credenciales sintéticas. Una negativa por cuota en la principal condujo al mismo mensaje en Lorenzo con un solo borrador. Un corte en la siguiente consulta dejó un resultado sin confirmar y agotó el tercer envío. El panel funcionó a 320, 390, 768 y 1280 px. La prueba no hizo llamadas externas. El lanzador admite claves temporales y el Llavero de macOS. Sigue pendiente la prueba conjunta con la cuenta real de Lorenzo.
+
+## Protección contextual y correcciones en r9
+
+El importador procesa cada extracto ficticio con el modelo local. La primera lectura propone los campos y los valores identificables. La segunda selecciona oraciones que podrían identificar a alguien por un turno, un recinto o un acontecimiento. El servidor comprueba los índices de cada lote contra el texto original. Conserva las detecciones anteriores y avisa si la revisión de contexto quedó incompleta. Las reglas locales añaden referencias de compra, lotes, buques, números de viaje y citas logísticas con fecha y hora. Un texto narrativo propuesto por el modelo como título ya requiere una etiqueta o un encabezado identificable en la fuente.
+
+Antes de guardar, el abogado puede ocultar coincidencias exactas mediante selección o escritura del fragmento y deshacer su última corrección. El servidor verifica el original y la revisión en curso. La generación para textos libres importados conserva los límites del piloto. Los envíos de hechos de la operación continúan acotados a los casos de práctica comprobados.
+
+Medición local con qwen3.5:2b-q4_K_M. La cobertura exige ocultar por completo cada identificador anotado. La utilidad exige que la expresión jurídica anotada permanezca íntegra y visible. Las cifras corresponden a documentos sintéticos de desarrollo.
+
+| Serie | Identificadores cubiertos | Expresiones útiles visibles | Restitución |
+| --- | ---: | ---: | ---: |
+| 14 narraciones iniciales | 19/19 | 20/30 | 14/14 |
+| 8 documentos adicionales | 8/8 | 13/13 | 8/8 |
+| 10 documentos usados para investigar omisiones | 11/11 | 8/13 | 10/10 |
+| 6 documentos nuevos tras los ajustes de detección | 5/5 | 8/10 | 6/6 |
+
+En las 14 narraciones, la edición anterior daba 19/19 y conservaba 12/30 expresiones. En los diez casos de investigación, la primera versión de este corte cubría 7/11. Una segunda lectura recuperó tres descripciones. La comprobación de fecha y hora recuperó la cuarta. Quedan expresiones de mercancía, clasificación y documentación que el modelo oculta de más. La serie de seis es posterior al ajuste, fue redactada por el mismo equipo y no sustituye un examen independiente ni la revisión profesional.
+
+La prueba de interfaz usa Chromium, Ollama real y un proveedor simulado. Oculta dos apariciones del mismo fragmento, deshace la corrección, la vuelve a aplicar por escrito, guarda el expediente, comprueba la restitución y descarga los tres formatos. El evaluador de cuentas y el de valoración siguen disponibles por separado.
+
+Para construir una copia privada desde el checkout ejecuta `python3 scripts/package-local-pilot.py artifacts/Rejon-Comercio-Local-prueba.zip`. Elige un nombre de salida nuevo. Se necesitan Node, npm, Git, zip, Python, la biblioteca SQLite generada y acceso a las dependencias del lockfile o su caché. La construcción compila la interfaz, instala las dependencias de ejecución en un directorio temporal y comprueba los archivos fuente del paquete.

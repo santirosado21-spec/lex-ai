@@ -23,8 +23,13 @@ if(process.argv.includes('--direcciones')){
   useful:row.kind==='negative'?[row.text]:[],
  })));
 }
-if(process.argv.includes('--referencias')){
- const file=await readFile(new URL('../eval/privacy-trade/document-references-dev.jsonl',import.meta.url),'utf8');
+const datasets={
+ '--referencias':'document-references-dev','--indirectos':'indirect-logistics-dev',
+ '--transferencia':'indirect-logistics-transfer','--control':'indirect-logistics-check','--seguimiento':'indirect-logistics-followup',
+};
+const dataset=Object.entries(datasets).find(([flag])=>process.argv.includes(flag))?.[1];
+if(dataset){
+ const file=await readFile(new URL('../eval/privacy-trade/'+dataset+'.jsonl',import.meta.url),'utf8');
  cases.splice(0,cases.length,...file.trim().split('\n').map(line=>JSON.parse(line)));
 }
 for (const row of cases) {

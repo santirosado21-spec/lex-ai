@@ -13,6 +13,10 @@ El navegador se comunica con un proceso en loopback. La aplicación no publica u
 
 Abre **Uso de OpenAI** para ver los envíos y los tokens reportados de cada cuenta en este ejercicio. La sesión indica los intentos disponibles. El archivo local `uso-openai.jsonl` conserva los recibos. Un envío sin desglose completo se señala como tal. Las versiones anteriores registraban únicamente respuestas completadas. La facturación se consulta en la cuenta de OpenAI.
 
+### Corregir una sustitución antes de guardar
+
+Al importar un documento ficticio, abre **Revisar protección local** y lee las sustituciones. Comprueba si un turno, un lugar, un acontecimiento o la combinación de varios datos permite reconocer a alguien. En **Ocultar otro dato** puedes seleccionar el fragmento en el original o escribirlo exactamente. **Ocultar coincidencias exactas** cubre sus repeticiones, con las mismas mayúsculas y acentos. Puedes deshacer la última corrección. Al guardar el soporte, la corrección queda en el expediente cifrado y el original sigue disponible para la exportación. Estas correcciones se hacen durante el alta. El texto libre de un documento importado permanece en el equipo.
+
 ### Investigar otro artículo
 
 Una vez guardado un expediente, abre **Biblioteca federal**. Para probar una pregunta sobre cupos, escribe «cupo», elige la Ley de Comercio Exterior y abre el artículo 23. Para investigar otra operación, cambia los términos y elige el artículo que el abogado considere pertinente. En «Usar en el expediente» puedes leer y seleccionar un pasaje, incluso en artículos extensos. Pulsa **Preparar nota con este pasaje** y revisa el texto antes de generar. La búsqueda se queda en el equipo. El servidor compone el mensaje con el pasaje público y su edición. La nota guarda la referencia utilizada y se puede volver a abrir, editar y exportar. Revisa el artículo completo, sus transitorios y la fecha de aplicación.

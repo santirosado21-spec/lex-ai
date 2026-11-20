@@ -141,3 +141,7 @@ Solo se añade al final. Cada decisión lleva su motivo para que otro agente no 
 ## 2026-11-19 18:07 — codex — Limitar el respaldo automático a rechazos expresos de la cuenta principal
 
 **Por qué:** Para el piloto de Rejon, el mismo sobre se vuelve a autorizar una sola vez con otra clave únicamente ante clave inválida o cuota insuficiente explícitas. Ambos envíos conservan el presupuesto común. Un corte, límite por frecuencia o generación incompleta deja el resultado para revisión y evita repetir el envío.
+
+## 2026-11-19 18:49 — codex — Revisar indicios indirectos con una segunda lectura local y un mapa reversible
+
+**Por qué:** En diez documentos ficticios, el primer análisis cubrió 7 de 11 identificadores indirectos. La segunda lectura selecciona sólo oraciones reales del documento y suma protección sin poder retirar sustituciones previas. Las correcciones del abogado tienen revisión y deshacer. El texto libre importado sigue en este equipo mientras se mide el riesgo residual.

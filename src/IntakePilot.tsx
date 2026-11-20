@@ -40,6 +40,7 @@ export default function IntakePilot() {
   const [documentKind,setDocumentKind] = useState('otro');
   const [scenarioId,setScenarioId] = useState<string>();
   const [reviewId,setReviewId] = useState<string>();
+  const [extraProtection,setExtraProtection]=useState(false);
   const [keepDocument,setKeepDocument] = useState(true);
   const editBox=useRef<HTMLTextAreaElement>(null);
   const [supplier,setSupplier] = useState('');
@@ -74,12 +75,8 @@ export default function IntakePilot() {
     setScenarioId(undefined);
     setSupplier('');
   }
-  function importActivity(busy:boolean) {
-    setInspecting(busy);
-    if (busy) {clearScenario();setReviewId(undefined);}
-  }
   function applyExtract(fields:IntakeFields) {
-    setReviewId(fields.reviewId);setKeepDocument(true);
+    setExtraProtection(false);setReviewId(fields.reviewId);setKeepDocument(true);
     setClient(fields.client);
     setTitle(fields.title);
     setDocumentKind(fields.documentKind);
@@ -94,7 +91,7 @@ export default function IntakePilot() {
     if (!clientStep) {setClientStep(true); return;}
     setActivity('save');
     try {
-      const invoice = scenarioId==='factura-origen-v1' && documentKind==='factura';
+      const invoice = !extraProtection && scenarioId==='factura-origen-v1' && documentKind==='factura';
       const data=await api<PilotStatus>('intake.save',{
         firm:firm.trim(),client:client.trim(),title:title.trim(),jurisdiction:'MX-FED',documentKind,
         ...(invoice ? {scenarioId} : {}),
@@ -197,11 +194,11 @@ export default function IntakePilot() {
         </div>
         {activity==='loading'&&<p role="status">Abriendo el espacio local…</p>}
         {pilot&&!saved&&<div key={clientStep?'client':'firm'} className="rp-reveal">
-          {clientStep&&<LocalIntakeImport ciphered={pilot.protectedRecords} onBusyChange={importActivity} onExtract={applyExtract}/>}
+          {clientStep&&<LocalIntakeImport ciphered={pilot.protectedRecords} onBusyChange={setInspecting} onReviewChange={(id,corrected)=>{setReviewId(id);setExtraProtection(corrected);}} onReplace={()=>{clearScenario();setExtraProtection(false);setReviewId(undefined);}} onExtract={applyExtract}/>}
           <form className="rp-form" onSubmit={save}>
             {!clientStep?<label htmlFor="intake-firm">Nombre del despacho<input id="intake-firm" autoComplete="off" required maxLength={120} value={firm} onChange={e=>setFirm(e.target.value)} placeholder="Nombre del despacho ficticio"/></label>:<>
               <label htmlFor="intake-client">Cliente<input id="intake-client" autoComplete="off" required maxLength={200} disabled={busy} value={client} onChange={e=>setClient(e.target.value)}/></label>
-              {documentKind==='factura'&&scenarioId==='factura-origen-v1'&&<label htmlFor="intake-supplier">Proveedor<input id="intake-supplier" autoComplete="off" maxLength={200} disabled={busy} value={supplier} onChange={e=>setSupplier(e.target.value)}/></label>}
+              {!extraProtection&&documentKind==='factura'&&scenarioId==='factura-origen-v1'&&<label htmlFor="intake-supplier">Proveedor<input id="intake-supplier" autoComplete="off" maxLength={200} disabled={busy} value={supplier} onChange={e=>setSupplier(e.target.value)}/></label>}
               <label htmlFor="intake-title">Asunto<input id="intake-title" autoComplete="off" required maxLength={200} disabled={busy} value={title} onChange={e=>setTitle(e.target.value)}/></label>
               <label htmlFor="intake-kind">Tipo de documento<select id="intake-kind" disabled={busy} value={documentKind} onChange={e=>{setDocumentKind(e.target.value);clearScenario();}}><option value="otro">Otro</option><option value="pedimento">Pedimento</option><option value="factura">Factura</option><option value="contrato">Contrato</option></select></label>
               {reviewId&&<label className="rp-keep-document"><input type="checkbox" checked={keepDocument} onChange={event=>setKeepDocument(event.target.checked)}/> Guardar el texto revisado y sus sustituciones en este expediente cifrado</label>}

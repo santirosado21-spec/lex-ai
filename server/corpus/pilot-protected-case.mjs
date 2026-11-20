@@ -51,17 +51,21 @@ export function prepareProtectedCase(seed,document,firmId,matterId,library) {
   if(!roles.has(original)||lines[index]!==caption+': '+roles.get(original)||outbound.includes(original))
    throw Error('Quedó una identidad sin cubrir en el ejercicio.');
  }
- // A country or product can stay hidden while the operation and evidence
- // remain intelligible. Admit only the exact protected sentence from this case.
- const facts=example.facts.map(fact=>{
-  let protectedFact=fact;
-  for(const term of [...homes,...goods]){
-   if(roles.has(term))protectedFact=protectedFact.replaceAll(term,roles.get(term));
-  }
-  return protectedFact;
+ // Match the actual protected sentences against the locally generated originals.
+ // A partial mask can cover more than a product or country. Keep it while
+ // requiring enough visible information to discuss both the operation and its evidence.
+ const captions=['Operación: ','Constancia: '];
+ const cues=example.article==='9'?[/importación|ensambladas/u,/insumos|fabricación/u]:[/cupo|importar/u,/asignación/u];
+ const byPublicToken=new Map(entries.map((entry,i)=>[localTokens[i].publicToken,entry.text]));
+ if(lines.length!==6)throw Error('Faltan hechos de la operación después de la sustitución.');
+ const facts=captions.map((caption,i)=>{
+  const line=lines[4+i];
+  if(!line.startsWith(caption))throw Error('Faltan hechos de la operación después de la sustitución.');
+  const fact=line.slice(caption.length);
+  const restored=fact.replace(/\[\[PARTE_\d+\]\]/g,token=>byPublicToken.get(token)??'');
+  if(restored!==example.facts[i]||!cues[i].test(fact))throw Error('Faltan hechos de la operación después de la sustitución.');
+  return fact;
  });
- if(lines.length!==6||lines[4]!=='Operación: '+facts[0]||lines[5]!=='Constancia: '+facts[1])
-  throw Error('Faltan hechos de la operación después de la sustitución.');
  const source=library?.lookupArticle({lawId:'MX-FED-LCE',articleId:example.article});
  const passage=loadResearchPassage(library,source?.sourceId,0);
  const prompt='Prepara una primera nota documental para un abogado mexicano a partir del expediente de práctica protegido y del pasaje oficial. Devuelve sólo JSON con proveedor, hecho, cita y solicitud. En proveedor copia exactamente el marcador que figura en la línea Proveedor. En hecho copia literalmente una oración completa de Operación o Constancia, sin la etiqueta. En cita copia un fragmento continuo de 24 a 320 caracteres del artículo. En solicitud escribe una pregunta documental breve, entre ¿ y ?, con letras y espacios, que ayude a revisar el hecho. Evita conclusiones sobre vigencia, trato o tasas.\n\n'+outbound+'\n\n'+passage.ref.title+' · '+passage.ref.locator+'\n'+passage.ref.url+'\n'+passage.ref.text;

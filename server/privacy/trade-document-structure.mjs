@@ -75,18 +75,50 @@ const referenceLabel=/(?<![\p{L}\p{N}])(?:factura(?: comercial)?|invoice|conocim
 const entryNumber=/(?<![\p{L}\p{N}])(?:n[úu]m(?:ero)?\.?[ \t]+(?:de[ \t]+)?)?pedimento[ \t]*[:#][ \t]*(\d{2}[ \t-]+\d{2}[ \t-]+\d{4}[ \t-]+\d{7}|\d{15})(?!\d)/dgiu;
 const containerNumber=/(?<![a-z\d])[a-z]{3}[ujz]\d{7}(?![a-z\d])/giu;
 
+// In prose the cue and code often have no separating colon. Require a digit
+// and a whole bounded token, so an ordinary request for a document stays readable.
+const tradeCode=/(?<![\p{L}\p{N}])(?:lote|batch|lot|precinto|folio|viaje|voyage|orden de compra|purchase order|n[uú]mero de serie|serial number|IMO)(?:[ 	]+(?:n[úu]m(?:ero)?\.?|no\.?|number))?[ 	:#]+([a-z0-9]+(?:[-_/.][a-z0-9]+)*)(?![\p{L}\p{N}_/-])/dgiu;
+const nameWord=String.raw`[\p{Lu}][\p{L}'’]*(?:-[\p{Lu}][\p{L}'’]*)*`;
+const vesselName=new RegExp('(?:^|[^\\p{L}])(?:[Bb]uque|[Nn]ave|[Vv]essel|[Nn]avío)[ \t]+('+nameWord+'(?:[ \t]+(?:(?:de(?: la|l)?|of(?: the)?)[ \t]+)?'+nameWord+'){0,6})','dgu');
+const datePart=String.raw`(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}-\d{2}-\d{2})`;
+const timePart=String.raw`(?:[01]?\d|2[0-3]):[0-5]\d`;
+const appointment=new RegExp(String.raw`(?:cita de (?:carga|descarga|entrega)|delivery appointment|(?:la )?(?:descarga|carga|entrega) se (?:program[oó]|realiz[oó]|confirm[oó]))[^.!?\n]{0,130}?(${datePart}[ \t]+(?:a las|at)[ \t]+${timePart}|${timePart}[ \t]+(?:del?|on)[ \t]+${datePart})`,'dgiu');
+
 export function logisticsReferenceRanges(text){
  const values=new Set();
  for(const match of text.matchAll(referenceLabel)){
   const value=match[1];
   if(value.length>=4&&value.length<=80&&/\d/u.test(value))values.add(value);
  }
+ for(const match of text.matchAll(tradeCode)){
+  if(match[1].length>=3&&match[1].length<=80&&/\d/u.test(match[1]))values.add(match[1]);
+ }
+ for(const match of text.matchAll(vesselName))values.add(match[1]);
+ for(const match of text.matchAll(appointment))values.add(match[1]);
  for(const match of text.matchAll(entryNumber))values.add(match[1]);
  const ranges=Array.from(text.matchAll(containerNumber),match=>[match.index,match.index+match[0].length]);
  for(const value of values){
   const literal=value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   const repeated=new RegExp('(?<![a-z0-9])'+literal+'(?![a-z0-9])','giu');
   for(const match of text.matchAll(repeated))ranges.push([match.index,match.index+match[0].length]);
+ }
+ return ranges;
+}
+
+// A person, company or facility can be identifiable through an exclusive role
+// or a spatial description. Keep the full clause together for local review.
+const exclusiveParty=/(?<![\p{L}\p{N}])(?:[úu]nic[oa]|sol[oa]|only|sole)[ \t]+(?:persona|emplead[oa]|operador[a]?|representante|responsable|titular|agente|importador[a]?|exportador[a]?|proveedor[a]?|distribuidor[a]?|taller|f[aá]brica|planta|laboratorio|empresa|concesionari[oa]|operator|agent|supplier|plant|laboratory|distributor)\b/giu;
+const facility=/(?<![\p{L}\p{N}])(?:(?:primer[oa]?|segund[oa]|tercer[oa]?|cuart[oa]|quint[oa]|last|first|second|third)[ \t]+)?(?:m[oó]dulo|bodega|muelle|almac[eé]n|nave|patio|caseta|dock|warehouse|shed)[ \t]+(?:detr[aá]s de|al lado de|junto a|frente a|colindante con|behind|next to|beside)\b/giu;
+export function contextualIdentityRanges(text){
+ const ranges=[];
+ for(const cue of [exclusiveParty,facility]){
+  for(const match of text.matchAll(cue)){
+   const start=match.index;
+   const tail=text.slice(start+match[0].length);
+   const boundary=tail.search(/[.!?;\n]/u);
+   const end=start+match[0].length+(boundary<0?tail.length:boundary);
+   ranges.push([start,end]);
+  }
  }
  return ranges;
 }

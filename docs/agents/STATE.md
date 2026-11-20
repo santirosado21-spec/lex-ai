@@ -1,6 +1,6 @@
 # Estado compartido — Rejon.AI
 
-**Última actualización:** 2026-11-19 18:08 por codex: Rejon r8 incorpora respaldo por cuenta y consumo visible en el expediente
+**Última actualización:** 2026-11-19 18:49 por codex: Rejon r9 prueba dos lecturas locales, correcciones y exportación desde el paquete
 
 ## Objetivo y autoridad vigentes
 
@@ -11,6 +11,8 @@ El dueño pidió continuar las fases sin parar entre entregas ordinarias. Dos ta
 El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-forward desde `68eb716` sin divergencia, rama de integración **experimental**; [PR #1](https://github.com/santirosado21-spec/lex-ai/pull/1) conserva el historial contra `rescate-0.4.13`. No convertirlo en release ni activar rutas privadas por este push. Preservar archivos ajenos `scripts/loop/` y `landing/assets/fonts/provenance 2.json`.
 
 ## Ahora
+
+- r9 incorpora segunda lectura de contexto en Ollama, reglas de logística y corrección local de coincidencias con deshacer. En 38 narraciones sintéticas cubrió 43/43 identificadores anotados y conservó 49/66 términos útiles. Se probó desde el ZIP y pasaron 105 contratos dirigidos. No se ha establecido anonimización general.
 
 - r8 añade consumo local por cuenta y respaldo tras un rechazo explícito de la principal. Compilación, 98 pruebas dirigidas, navegador en cuatro anchos y lanzador desde ZIP verificados con claves ficticias. El historial conserva los tokens reportados y distingue resultados inciertos.
 
@@ -55,6 +57,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 **Restricción nueva de ejecución:** NO compilar nuevas dependencias H5/age ni ejecutar sus pruebas en el Mac del dueño. Cuatro sondas locales mostraron acceso a argv/env de un helper sintético pese a file/network deny. No se leyó ningún secreto real; no generalizar aislamiento. Se usa VM efímera estándar pública macos-15, entorno limpio y sin documentos/credenciales del dueño. Compilar no autoriza18tests: cada etapa tiene freeze/revisión propios. Fuentes e intentos fallidos preservados.
 
 ## Siguiente
+
+- Medir con documentos nuevos de autor independiente la identificación por combinación entre pasajes, pérdida de hechos útiles y coste en equipo físico de 8 GB. Desarrollar el análisis de hechos minimizados desde más tipos de asuntos y comprobar el mensaje completo antes de ampliar el envío de texto libre.
 
 - Medir pertinencia de las sugerencias y preguntas sobre expedientes nuevos. El respaldo por cuota ya está probado con respuestas simuladas. Queda la prueba con las dos cuentas reales. Quedan pendientes el flujo libre protegido y la validación profesional.
 

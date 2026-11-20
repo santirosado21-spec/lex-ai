@@ -11,3 +11,7 @@
 - Route "token leak" ignores address tokens shorter than 4 characters (for example UK postcode halves such as "BS1" "4XY"), so it undercounts leakage. Strict span coverage is the primary metric.
 - Negatives through the route are reported in three groups: sent unchanged, sent altered by masking (damaged document text) and blocked.
 - Set written by one author, small, one style per country. Measurement only, not acceptance.
+
+The Spanish/English indirect-logistics development files are synthetic. The 14 first cases measure whole-identifier concealment and whether legally useful expressions survive. The 8 additional cases include distinctive roles and locations. Those cases informed a subsequent fix. Both sets are visible development material. Run the actual local importer with `node scripts/check-pilot-local-privacy.mjs --indirectos` or `--transferencia`. Report exact restoration separately from detectability, privacy of the cloud envelope, and legal quality.
+
+The 10 `--control` examples were subsequently used to diagnose omissions and improve local review. The 6 `--seguimiento` examples were written after that adjustment. They have the same author and are not an independent acceptance exam. All values are fictitious.
