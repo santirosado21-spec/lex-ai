@@ -1,6 +1,7 @@
+import {tmpdir} from 'node:os';
 // Isolated DOF HTML review adapter. Not imported by server/main or public-library.
 import {DatabaseSync} from 'node:sqlite';
-import {readFileSync,mkdirSync,renameSync,rmSync} from 'node:fs';
+import {readFileSync,mkdirSync,renameSync,rmSync,mkdtempSync,writeFileSync,lstatSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 export const PURPOSE='dof-html-development-review-only';
@@ -47,10 +48,19 @@ export function buildDofReviewIndex({candidateFile,htmlFile,cleanFile,outFile}){
 export function openDofReviewIndex({file,expectedIndexSha256}){
  // expectedIndexSha256 must come from a separately reviewed artifact for persisted deployment.
  // A same-process build/open roundtrip checks disk continuity only, not independent approval.
- safeOut(file);if(sha(readFileSync(file))!==expectedIndexSha256)throw Error('Index integrity mismatch');const db=new DatabaseSync(file,{readOnly:true});db.exec('PRAGMA query_only=ON;PRAGMA trusted_schema=OFF');
- const meta=JSON.parse(db.prepare("SELECT value FROM meta WHERE key='review'").get().value);if(meta.purpose!==PURPOSE||meta.published!==false||meta.productionIndexed!==false){db.close();throw Error('Not a review index');}
+ safeOut(file);
+ // Reject sidecars, then open a private snapshot of the exact bytes hashed.
+ // Never let SQLite consult mutable original-path WAL/journal files.
+ for(const suffix of ['-wal','-shm','-journal']){try{lstatSync(file+suffix);throw Error('Unexpected SQLite auxiliary sidecar');}catch(e){if(e.code!=='ENOENT')throw e;}}
+ const bytes=readFileSync(file);if(sha(bytes)!==expectedIndexSha256)throw Error('Index integrity mismatch');
+ const snapshot=mkdtempSync(path.join(tmpdir(),'rejon-dof-snapshot-'));let db;
+ try{const snapshotFile=path.join(snapshot,'review.sqlite');writeFileSync(snapshotFile,bytes,{mode:0o400,flag:'wx'});db=new DatabaseSync(snapshotFile,{readOnly:true});db.exec('PRAGMA query_only=ON;PRAGMA trusted_schema=OFF');
+ }catch(e){db?.close();rmSync(snapshot,{recursive:true,force:true});throw e;}
+ const close=()=>{try{db.close();}finally{rmSync(snapshot,{recursive:true,force:true});}};
+ let meta;try{meta=JSON.parse(db.prepare("SELECT value FROM meta WHERE key='review'").get().value);if(meta.purpose!==PURPOSE||meta.published!==false||meta.productionIndexed!==false){throw Error('Not a review index');}
  const persisted=db.prepare('SELECT payload FROM records').all().map(row=>JSON.parse(row.payload));
- if(persisted.length!==9||new Set(persisted.map(r=>r.id)).size!==9||persisted.some(r=>!validRecordConditions(r))){db.close();throw Error('Persisted review conditions mismatch');}
+ if(persisted.length!==9||new Set(persisted.map(r=>r.id)).size!==9||persisted.some(r=>!validRecordConditions(r))){throw Error('Persisted review conditions mismatch');}
+ }catch(e){close();throw e;}
  function check(purpose){if(purpose!=='source-review')throw Error('Review only, no legal search or consolidated output');}
- return {meta,search({query,purpose}){check(purpose);if(typeof query!=='string'||query.length>200)throw Error('Invalid query');const words=query.match(/[\p{L}\p{N}]+/gu)?.slice(0,12);if(!words?.length)return[];return db.prepare('SELECT r.payload FROM fts JOIN records r ON r.id=fts.id WHERE fts MATCH ? LIMIT 9').all(words.map(w=>'"'+w+'"').join(' AND ')).map(x=>JSON.parse(x.payload));},get({id,purpose}){check(purpose);const r=db.prepare('SELECT payload FROM records WHERE id=?').get(id);return r?{...JSON.parse(r.payload),sourceUrl:meta.sourceUrl,warning:'Fuente para revisión. No es texto consolidado ni aplicabilidad certificada.'}:null;},close(){db.close();}};
+ return {meta,search({query,purpose}){check(purpose);if(typeof query!=='string'||query.length>200)throw Error('Invalid query');const words=query.match(/[\p{L}\p{N}]+/gu)?.slice(0,12);if(!words?.length)return[];return db.prepare('SELECT r.payload FROM fts JOIN records r ON r.id=fts.id WHERE fts MATCH ? LIMIT 9').all(words.map(w=>'"'+w+'"').join(' AND ')).map(x=>JSON.parse(x.payload));},get({id,purpose}){check(purpose);const r=db.prepare('SELECT payload FROM records WHERE id=?').get(id);return r?{...JSON.parse(r.payload),sourceUrl:meta.sourceUrl,warning:'Fuente para revisión. No es texto consolidado ni aplicabilidad certificada.'}:null;},close};
 }

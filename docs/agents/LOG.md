@@ -436,3 +436,8 @@ El paquete local pasó cuatro recorridos con respuestas grabadas, doce exportaci
 ## 2026-11-24, corte local DOF + Taller verificado
 
 Base 4ad70b4. Incorporación selectiva del Taller de Pedro (b05069a), sin copiar su App antiguo, y revisión documental DOF opt-in con pin exacto. Regresión de importación JSON lenta corregida. Build/48 pruebas seleccionadas/tres smokes reproducidos por revisión independiente. Suite completa propia en clon Git:1521,1477pass,3fail,41skip. Tres fallos preexistentes ENOENT public-library.sqlite, reproducidos en worktree base; detalles en VERIFIED-CUT-RECONCILIATION.md. No Mac, GLM, corpus activo ni publicación. Rama/commit solo local; main retenido por instrucción original20nov. Captura GET pública sin token, API Bearer; texto limpio solo fixture preparación/tests y fuera del pin runtime.
+
+
+## 2026-11-24, consolidado local Muse/Grok y WAL
+
+Muse motivó aclarar conteo de coincidencias vs9fragmentos y parcialidad MVE, sin inventar vigencia. Grok motivó pruebas sintéticas: WAL con main restaurado bypassaba pin de archivo; corregido rechazando auxiliares y abriendo snapshot privado read-only de bytes verificados. Captura postarranque y coexistencia bibliotecas no fallaron. Retest independiente Linux comunicado13:25:53/53+build+3smokes, antes2/5 después5/5, limpieza/hashes conservados. Ver MUSE-GROK-CONSOLIDATED.md. MacChrome delta pendiente, main retenido, sin activación/GLM.

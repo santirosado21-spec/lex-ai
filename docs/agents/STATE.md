@@ -12,6 +12,8 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- 24nov13:25: delta consolidado UX+WAL verificado independientemente en Linux53/53/build/3smokes. Ver MUSE-GROK-CONSOLIDATED.md. Snapshot privado evita auxiliares SQLite; pin de artefactos intacto. Retest Chrome Mac del delta pendiente; no confundir con Mac del corte previo. Sin publicación/main/activación.
+
 - 24nov: corte local DOF + Taller, base4ad70b4, verificado para desarrollo. Ver VERIFIED-CUT-RECONCILIATION.md en raíz: alcance independiente,48seleccionadas, suite completa1477pass/3fail/41skip. No publicado/instalado ni corpus activado; publicación retenida hasta aprobación bajo instrucción20nov. Taller original Pedro más adaptación selectiva y arreglo carrera JSON. Mac/GLM intactos.
 
 
