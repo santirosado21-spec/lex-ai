@@ -1,3 +1,5 @@
+import ToolWorkshopView from './ToolWorkshopView';
+import DofReview from './DofReview';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -13,4 +15,4 @@ import './tailwind.css';
 import './macos.css';
 import './design-system.css';
 const pilot = new URLSearchParams(window.location.hash.slice(1)).get('pilot') === 'intake';
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode>{pilot?<IntakePilot/>:<App/>}</React.StrictMode>);
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode>{new URLSearchParams(window.location.hash.slice(1)).get('review')==='dof'?<DofReview/>:new URLSearchParams(window.location.hash.slice(1)).get('preview')==='workshop'?<ToolWorkshopView/>:pilot?<IntakePilot/>:<App/>}</React.StrictMode>);

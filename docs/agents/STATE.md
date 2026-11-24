@@ -12,6 +12,9 @@ El dueño autorizó push a `main` para colaboración. `main` avanzó por fast-fo
 
 ## Ahora
 
+- 24nov: corte local DOF + Taller, base4ad70b4, verificado para desarrollo. Ver VERIFIED-CUT-RECONCILIATION.md en raíz: alcance independiente,48seleccionadas, suite completa1477pass/3fail/41skip. No publicado/instalado ni corpus activado; publicación retenida hasta aprobación bajo instrucción20nov. Taller original Pedro más adaptación selectiva y arreglo carrera JSON. Mac/GLM intactos.
+
+
 - r32.1 comprueba el recorrido de dos minutas de café desde la importación hasta la edición con marcador, reapertura y exportación. Se cotejaron doce archivos en LibreOffice. Los 38 documentos históricos se restituyeron íntegros. La cobertura fue de 35/35 identificadores y 31/32 indicios. Se conservaron 47/50 hechos. Las nuevas mediciones y sus límites figuran en el [informe de privacidad y edición](../qa/privacidad-contextual-y-edicion-r32.md).
 
 - r31.1 añade 1 032 referencias del Anexo 4-B y 507 extractos con código y página cotejados. La prueba del ZIP recuperó las notas de cacao y café y sus seis archivos en LibreOffice. La reserva inédita de café cubrió 3/3 folios y 0/3 indicios, conservó 4/8 hechos y se restituyó entera. [Resultados y límites](../qa/reglas-producto-tmec-r31.md).
