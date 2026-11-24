@@ -2,3 +2,9 @@
 .dof-review{width:100%;min-width:0}.dof-review section.grid{grid-template-columns:330px minmax(0,1fr)}.dof-review article,.dof-review aside{min-width:0;overflow-wrap:anywhere}.dof-review ul{line-height:1.65;padding-left:22px}.dof-review li{margin:10px 0}@media(max-width:750px){.dof-review section.grid{grid-template-columns:minmax(0,1fr)}.dof-review main{padding:0 16px}.dof-review input{width:100%}.dof-review header{padding:22px 16px}}.dof-review header h1{color:#fff}.dof-review button:focus-visible,.dof-review a:focus-visible,.dof-review input:focus-visible,.dof-review summary:focus-visible{outline:3px solid #b27013;outline-offset:3px}
 .dof-review button:hover,.dof-review button:active{background:#173b3b;color:#fff}.dof-review button.result:hover,.dof-review button.result:active{background:#edf3ef;color:#203b39}
 .dof-review button:hover:not(:disabled){background:#173b3b;color:#fff}.dof-review button.result:hover:not(:disabled){background:#edf3ef;color:#203b39}
+/* Review is a self-contained light document surface, not the app theme.
+   Pair explicit foregrounds with its fixed backgrounds in every host appearance. */
+.dof-review{color-scheme:light}
+.dof-review h2,.dof-review h3{color:#222b30}
+.dof-review input{background:#fff;color:#222b30;caret-color:#222b30}
+.dof-review input::placeholder{color:#536763;opacity:1}

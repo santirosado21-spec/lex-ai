@@ -23,6 +23,25 @@ async function getConnection() {
   })();
   return connection;
 }
+// The capture is public source HTML, never a token-bearing URL. Keep this
+// resolver narrow: status cannot turn an arbitrary path into an outbound link.
+export async function dofReviewCaptureUrl(sourcePath: string): Promise<string> {
+  if (sourcePath !== '/dev/dof-review/source') throw new Error('Ruta de captura no permitida.');
+  const { url } = await getConnection();
+  const base = new URL(url || window.location.origin);
+  if (base.protocol !== 'http:' || !['127.0.0.1', 'localhost'].includes(base.hostname) ||
+      base.username || base.password || base.pathname !== '/' || base.search || base.hash) {
+    throw new Error('Origen de captura local no permitido.');
+  }
+  return new URL(sourcePath, base).href;
+}
+// Desktop opens a fixed native destination. Browser keeps the narrow same-origin URL resolver.
+export function isDesktopCapture() { return '__TAURI_INTERNALS__' in window; }
+export async function openDofReviewCapture(): Promise<void> {
+  if (!isDesktopCapture()) throw new Error('El visor nativo no está disponible.');
+  const { invoke } = await import('@tauri-apps/api/core');
+  await invoke('open_review_capture');
+}
 async function request(path: string, body: unknown, signal?: AbortSignal) {
   const { url, token } = await getConnection();
   if (!token) throw new Error('No se recibió la clave de esta sesión. Abre Rejon.AI desde su lanzador local.');
