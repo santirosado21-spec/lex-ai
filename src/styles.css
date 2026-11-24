@@ -409,18 +409,18 @@ button,input,select,textarea,.button{border-radius:6px}.primary{background:var(-
 .app-cover figcaption{font-size:12px;line-height:1.6;color:#f5f5f4;background:#4D3533;padding:17px 25px}
 .onboarding-with-cover .onboarding-content{padding:clamp(28px,3.5vw,58px);align-self:center;min-width:0}
 .onboarding-with-cover .onboarding-intro{padding-top:0}
-.onboarding-with-cover .onboarding-intro h1{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(30px,2.7vw,42px);font-weight:400;line-height:1.2;letter-spacing:-.01em;color:#4D3533;margin:0 0 18px;max-width:17ch}
-.onboarding-with-cover .onboarding-intro>p{font-size:14px;line-height:1.75;max-width:58ch;color:#4D3533;margin-bottom:0}
+.onboarding-with-cover .onboarding-intro h1{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(30px,2.7vw,42px);font-weight:400;line-height:1.2;letter-spacing:-.01em;color:var(--seal);margin:0 0 18px;max-width:17ch}
+.onboarding-with-cover .onboarding-intro>p{font-size:14px;line-height:1.75;max-width:58ch;color:var(--seal);margin-bottom:0}
 .app-cover-steps{list-style:none;display:flex;align-items:flex-start;gap:18px;padding:0;margin:25px 0 29px;color:var(--ink-2)}
 .app-cover-steps li{flex:1;display:flex;gap:7px;align-items:flex-start;font-size:11px;line-height:1.6}
 .app-cover-steps li>span{font-variant-numeric:tabular-nums;flex:0 0 18px;display:inline-flex;justify-content:center;align-items:center;height:18px;border:1px solid #bfbfba;border-radius:50%;font-size:10px}
-.app-cover-steps li[aria-current=step]{color:#4D3533;font-weight:500}.app-cover-steps li[aria-current=step]>span{background:#4D3533;border-color:#4D3533;color:white}
+.app-cover-steps li[aria-current=step]{color:var(--seal);font-weight:500}.app-cover-steps li[aria-current=step]>span{background:#4D3533;border-color:#4D3533;color:white}
 .onboarding-with-cover .onboarding-form{padding:25px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
 .onboarding-with-cover .onboarding-form h2{font-size:18px;margin:0 0 20px;font-weight:500}
 .onboarding-with-cover .onboarding-form>.primary{margin-top:6px;background:#4D3533;border-color:#4D3533;min-height:43px}
 .onboarding-with-cover .onboarding-form>.primary:hover:not(:disabled){background:#3a2826;border-color:#3a2826}
 .onboarding-with-cover .onboarding-form .privacy-caption{font-size:11px;color:var(--ink-2);margin-bottom:0}
-.onboarding-with-cover :is(input,button):focus-visible{outline:2px solid #4D3533;outline-offset:3px}
+.onboarding-with-cover :is(input,button):focus-visible{outline:2px solid var(--seal);outline-offset:3px}
 @media(max-width:1150px){.onboarding.onboarding-with-cover{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}.onboarding-with-cover .onboarding-content{padding:30px}.app-cover-steps{gap:10px}.onboarding-with-cover .practice-options{gap:8px}.app-cover>img{min-height:720px}}
 @media(max-width:900px){.onboarding.onboarding-with-cover{display:flex;flex-direction:column;min-height:0}.app-cover{height:240px;flex:none}.app-cover>img{min-height:0;height:205px;object-position:25% 53%}.app-cover figcaption{padding:8px 24px;font-size:11px}.onboarding-with-cover .onboarding-content{padding:30px;align-self:stretch}.onboarding-with-cover .onboarding-intro h1{max-width:22ch;font-size:34px}.onboarding-with-cover .onboarding-intro>p{max-width:60ch}}
 @media(max-width:480px){.onboarding-with-cover .onboarding-content{padding:25px 20px}.onboarding-with-cover .onboarding-intro h1{font-size:29px}.app-cover{height:205px}.app-cover>img{height:170px}.app-cover figcaption{padding-inline:20px}.app-cover-steps{flex-direction:column;gap:8px;margin-block:22px}.app-cover-steps li{font-size:12px}.onboarding-with-cover .practice-options{grid-template-columns:1fr}.onboarding-with-cover .onboarding-form .privacy-caption{line-height:1.7}}
@@ -518,6 +518,8 @@ body .app-shell.macos-workspace>.sidebar .sidebar-bottom>p{color:var(--rail-mute
 :root[data-theme='dark'] .onboarding-with-cover .onboarding-intro>p,:root[data-theme='dark'] .app-cover-steps,:root[data-theme='dark'] .onboarding-with-cover .onboarding-form .privacy-caption{color:var(--ink-2)}
 :root[data-theme='dark'] .app-cover-steps li[aria-current=step]{color:var(--ink)}
 :root[data-theme='dark'] .onboarding-with-cover .onboarding-form{border-top-color:var(--line)}
+:root[data-theme='dark'] .onboarding-with-cover{--focus:var(--seal)}
+@media(prefers-color-scheme:dark){:root:not([data-theme='light']) .onboarding-with-cover{--focus:var(--seal)}}
 
 /* Welcome layout: no empty sidebar gutter before a workspace exists; the cover is one viewport tall and stays put while the form scrolls. */
 .app-shell.no-workspace.macos-workspace>.app-content{margin-left:0;width:100%}
