@@ -5,7 +5,7 @@ import {locateDirectoryArticle} from './article-locator';
 
 type PassageHit={article:string;part:number;page:number;locator:string;text:string;localUrl:string;condition:string|null;warning:string};
 
-type Entry={article:string;page:number;repealed?:boolean;localUrl:string;passages:{page:number;endPage?:number;pageTexts?:{page:number;paragraphs:string[]}[];locator:string;text:string}[]};
+type Entry={article:string;page:number;warning?:string|null;repealed?:boolean;localUrl:string;passages:{page:number;endPage?:number;pageTexts?:{page:number;paragraphs:string[]}[];locator:string;text:string;condition?:string|null}[]};
 
 export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:boolean;onAsk?:(article:string,topic:string)=>void}){
  const title=regulation?'Reglamento de la Ley Aduanera':'Ley Aduanera';
@@ -80,11 +80,14 @@ export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:b
    {visible.length>0&&<label>{regulation?'Artículo del Reglamento de la Ley Aduanera':'Artículo de la Ley Aduanera'}<select value={article} onChange={e=>{setArticle(e.target.value);setPassagePart(null);}}>
     {visible.map(row=><option value={row.article} key={row.article}>{row.article.replaceAll('-BIS',' bis').replaceAll('-TER',' ter').replace(/(bis)-(\d+)/,'$1 $2')} · página {row.page}</option>)}
    </select></label>}
-   {current&&<article key={article} className="rp-reveal"><h3>Artículo {article}</h3>{current.repealed&&<p>Derogado en esta edición.</p>}
+   {current&&<article key={article} className="rp-reveal"><h3>Artículo {article}</h3>{current.warning&&<p>{current.warning}</p>}{current.repealed&&<p>Derogado en esta edición.</p>}
     <a href={current.localUrl} target="_blank" rel="noreferrer"><FileText size={16}/>Abrir página {current.page} en la copia local</a>
     {current.passages.map((p,index)=><details className="rp-details" open={passagePart===index?true:undefined} key={p.locator}><summary>{p.locator} · {p.endPage?'pp. '+p.page+'–'+p.endPage:'p. '+p.page}</summary>{p.pageTexts?<div className="rp-regulation-text">{p.pageTexts.map(block=><section key={block.page} aria-label={'Página '+block.page}>
       <a href={current.localUrl.split('#')[0]+'#page='+block.page} target="_blank" rel="noreferrer">Página {block.page}</a>
-      {block.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}</section>)}</div>:<p>{p.text}</p>}</details>)}
+      {block.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}</section>)}</div>:<p>{p.text}</p>}
+     {p.condition&&<p>Condición del pasaje: {p.condition}</p>}
+     {!regulation&&<a href={current.localUrl.split('#')[0]+'#page='+p.page} target="_blank" rel="noreferrer">Abrir página {p.page} del pasaje</a>}
+    </details>)}
     {!current.passages.length&&<p>No hay pasajes cotejados para preparar una consulta de este artículo. Puedes abrir su página en la copia local.</p>}
     {onAsk&&current.passages.length>0&&<button className="rp-quiet" onClick={()=>onAsk(article,topic)}>Preparar consulta de este artículo</button>}
    </article>}
