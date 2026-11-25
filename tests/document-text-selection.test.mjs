@@ -23,7 +23,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access, mkdir } from 'node:fs/promises';
+import { access, mkdir,readFile } from 'node:fs/promises';
 import { chromium, expect } from '@playwright/test';
 import { createServer } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -120,9 +120,38 @@ test('DocumentText selection does not go stale on deselect, external selection, 
     assert.equal(await extractCount(), beforeSwap,
       'Ctrl+Shift+A sent the previous document\'s excerpt after the text prop changed to a new document');
 
+    // Search offsets must remain in the original source despite expanding lowercase.
+    const unicode='İSTANBUL. El contrato termina mañana. Otro CONTRATO. İ';
+    await page.evaluate(next=>window.__setText(next),unicode);
+    const search=page.getByLabel('Buscar dentro del documento');await search.fill('contrato');
+    await expect(reading.locator('mark')).toHaveText(['contrato','CONTRATO']);
+    assert.equal(await reading.textContent(),unicode);
+    await expect(reading.locator('mark[data-current=true]')).toHaveText('contrato');
+    await page.getByRole('button',{name:'Siguiente coincidencia'}).click();await expect(reading.locator('mark[data-current=true]')).toHaveText('CONTRATO');
+    await page.getByRole('button',{name:'Siguiente coincidencia'}).click();await expect(reading.locator('mark[data-current=true]')).toHaveText('contrato');
+    await page.getByRole('button',{name:'Coincidencia anterior'}).click();await expect(reading.locator('mark[data-current=true]')).toHaveText('CONTRATO');
+    await selectWithin('mark[data-current=true]');await page.getByRole('button',{name:'Preguntar al Asistente'}).click();assert.equal(await lastExtract(),'CONTRATO');
+    const offsets=await reading.evaluate(el=>{const r=window.getSelection().getRangeAt(0),prefix=document.createRange();prefix.selectNodeContents(el);prefix.setEnd(r.startContainer,r.startOffset);return {start:prefix.toString().length,end:prefix.toString().length+r.toString().length};});
+    assert.deepEqual(offsets,{start:unicode.indexOf('CONTRATO'),end:unicode.indexOf('CONTRATO')+8});assert.equal(unicode.slice(offsets.start,offsets.end),await lastExtract());
+    await deselectAll();await search.fill('İ');await expect(reading.locator('mark')).toHaveText(['İ','İ']);assert.equal(await reading.textContent(),unicode);
+    await page.evaluate(()=>window.__setText('İSTANBUL. El contrato termina mañana.'));
+    await search.fill('contrato');
+    if(process.env.SELECTION_SCREENSHOT_DIR){await mkdir(process.env.SELECTION_SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:process.env.SELECTION_SCREENSHOT_DIR+'/unicode-after.png',fullPage:true});}
+    await page.evaluate(()=>window.__setText('Contrato '.repeat(501)));await search.fill('contrato');await expect(reading.locator('mark')).toHaveCount(500);await expect(page.getByRole('status')).toHaveText('1/500+');
+    await page.getByRole('button',{name:'Coincidencia anterior'}).click();await expect(page.getByRole('status')).toHaveText('500/500+');assert.equal(await reading.textContent(),'Contrato '.repeat(501));
     assert.deepEqual(exceptions, [], 'no browser runtime exceptions');
   } finally {
     await browser?.close();
     await viteServer.close();
   }
+});
+
+// The helper is shared by the real component, tested without a browser too.
+test('folded search preserves original UTF16 spans, accents, literals and complete expansion boundaries',async()=>{
+ const ts=(await import('typescript')).default,source=await readFile(new URL('../src/document-text-matches.ts',import.meta.url),'utf8');
+ const {documentTextMatches:m}=await import('data:text/javascript;base64,'+Buffer.from(ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext}}).outputText).toString('base64'));
+ assert.deepEqual(m('İ😀PAGO pagó','pago'),[{start:3,end:7}]);
+ assert.deepEqual(m('İİ','İ'),[{start:0,end:1},{start:1,end:2}]);assert.deepEqual(m('İ','i'),[],'do not highlight a partial lowercase expansion');
+ for(const [text,q,expected] of [['.* İ .*','.*',['.*','.*']],['ΟΣ ΟΣ','ος',['ΟΣ','ΟΣ']],['é É','é',['é','É']],['😀😀','😀',['😀','😀']]])assert.deepEqual(m(text,q).map(({start,end})=>text.slice(start,end)),expected);
+ assert.deepEqual(m('texto','   '),[]);assert.equal(m('İ '+'a'.repeat(501),'a').length,500);assert.deepEqual(m('aaaa','aa'),[{start:0,end:2},{start:2,end:4}]);
 });
