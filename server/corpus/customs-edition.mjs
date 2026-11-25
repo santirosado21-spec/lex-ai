@@ -35,8 +35,11 @@ export function customsDirectory(){
  if(!directory){
   const excerpts=loadEdition();
   const index=JSON.parse(checkedFile('ley-aduanera-indice.json','08ef2d304544fb3e1b5d1ed12ea0bd138301e886cb18718d4850d91173b40ad0'));
-  directory=Object.entries(index).map(([article,page])=>({article,page,
-   localUrl:customsPdfPath+'#page='+page,passages:excerpts[article]??[]}))
+  directory=Object.entries(index).map(([article,page])=>{
+   const source=Object.hasOwn(excerpts,article)?customsPassage(article):null;
+   return {article,page,warning:source?.ref.summary??null,
+    localUrl:customsPdfPath+'#page='+page,passages:(excerpts[article]??[]).map((p,i)=>({...p,condition:source.passages[i].condition??null}))};
+  })
    .sort((a,b)=>a.page-b.page||a.article.localeCompare(b.article,'es',{numeric:true}));
  }
  return directory;

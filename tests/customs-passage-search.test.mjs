@@ -8,7 +8,7 @@ test('search uses pinned selected passages and preserves exact text, locator, pa
  for(const hit of hits){
   const row=customsDirectory().find(r=>r.article===hit.article),source=customsPassage(hit.article);
   assert.equal(hit.text,row.passages[hit.part].text);assert.equal(hit.page,row.passages[hit.part].page);
-  assert.equal(hit.locator,source.passages[hit.part].locator);assert.equal(hit.warning,source.ref.summary);
+  assert.equal(hit.locator,source.passages[hit.part].locator);assert.equal(hit.warning,source.ref.summary);assert.equal(row.warning,source.ref.summary);assert.equal(row.passages[hit.part].condition,source.passages[hit.part].condition??null);
   assert.ok(hit.localUrl.endsWith('#page='+hit.page));
  }
  const transport=searchCustomsPassages('gastos transporte').find(h=>h.article==='65');
@@ -67,4 +67,18 @@ test('valuation articles66 and67 retain all controlling context in local search 
 test('adding explicit valuation sources leaves automatic valuation reading restricted to64 and65',async()=>{
  const {loadTradeReading}=await import('../server/corpus/intake-trade-reading.mjs');
  assert.deepEqual(loadTradeReading(null,'lectura-valoracion').refs.map(r=>r.article),['64','65']);
+});
+
+test('every direct directory passage carries its exact condition and edition warning, not only search hits',()=>{
+ let withCondition=0,withPassages=0;
+ for(const row of customsDirectory()){
+  if(!row.passages.length){assert.equal(row.warning,null);continue;}
+  withPassages++;const source=customsPassage(row.article);assert.equal(row.warning,source.ref.summary);
+  assert.equal(row.passages.length,source.passages.length);
+  for(const [part,p] of row.passages.entries()){
+   assert.equal(p.text,source.passages[part].quote);assert.equal(p.condition,source.passages[part].condition??null);
+   if(p.condition)withCondition++;
+  }
+ }
+ assert.equal(withPassages,9);assert.ok(withCondition>=14);
 });
