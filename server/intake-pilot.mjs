@@ -539,6 +539,7 @@ export function createIntakePilot({legalSources=[],nativePilotPreparation=false,
    }
    case 'intake.reviewMaterials':
    case 'intake.reviewCards':
+   case 'intake.exportReviewCard':
    case 'intake.saveReviewCard':return reviewCards.dispatch(action,payload);
    case 'intake.loadNativePractice':
     exactFields(payload,[]);if(!nativePilotPreparation)throw Error('Práctica disponible solo en la preparación nativa.');
