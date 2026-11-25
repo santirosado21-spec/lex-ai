@@ -64,7 +64,9 @@ export function validateModelOutput(raw,evidence) {
   }
   const refs=[...parsed.analysis.matchAll(/\[([^\]\n]+)\]/g)].map(m=>m[1]);
   if(!refs.length || refs.some(id=>!citations.some(c=>c.id===id)))throw new Error('El análisis usa identificadores de cita no autorizados.');
-  const paragraphs=parsed.analysis.split(/\n\s*\n/).map(p=>p.trim()).filter(p=>p.length>60);
+  // The generation contract requires a reference in every nonempty paragraph.
+  // Short legal claims cannot borrow a citation from a longer paragraph.
+  const paragraphs=parsed.analysis.split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean);
   if(paragraphs.some(p=>!refs.some(id=>p.includes(`[${id}]`))))throw new Error('Hay párrafos sin referencia verificable.');
   return {text:parsed.analysis,citations,validation:{status:'source-checked',citationIntegrity:true,formatNormalization,legalAccuracy:'not-evaluated',requiresLawyerReview:true,checks:['source IDs belong to retrieved evidence','quoted text appears in source','substantive paragraphs carry a reference']}};
 }
