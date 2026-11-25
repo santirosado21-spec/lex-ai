@@ -1,6 +1,7 @@
 import {useRef,useState} from 'react';
 import {ClipboardList} from 'lucide-react';
 import {api,downloadFile} from './api';
+import {worksheetProgress} from './worksheet-progress';
 
 type Values={status:string;amount:string;currency:string;reference:string;note:string};
 type Row=Values&{id:string;base:string;revision:number;label:string;check:string;source:string};
@@ -24,6 +25,7 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
  const values=editing??row;
  const candidates=sheet?.proposals[row?.base??selected]??[];
  const proposal=candidates[candidate];
+ const progress=sheet?worksheetProgress(sheet.rows):null;
  const title=task==='lectura-valoracion'?'Control de valoración':'Control del pedimento';
 
  async function load(){
@@ -65,6 +67,16 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
    onClick={()=>{if(open){setOpen(false);setError('');}else void load();}}><ClipboardList size={16}/> {title}</button>
   {open&&sheet&&row&&values&&<fieldset disabled={pending||disabled}>
    <legend>Datos locales para la exportación</legend>
+   {progress&&<section aria-label="Seguimiento documental">
+    <h3>Seguimiento documental</h3>
+    <p role="status">Por atender: {progress.pending.length} de {progress.total} renglones · Cotejados: {progress.checked} · No aplica: {progress.notApplicable}.</p>
+    <small>Estados guardados por el usuario. No acreditan cumplimiento jurídico ni validación automática.</small>
+    {editing&&<p>Hay cambios sin guardar. El resumen muestra la última versión guardada.</p>}
+    {progress.unknown>0&&<p role="alert">{progress.unknown} renglones tienen un estado no reconocido. Revisa el control antes de exportar.</p>}
+    {progress.pending.length>0?<details><summary>Ver renglones por atender</summary><ul>
+     {progress.pending.map(item=><li key={item.id}><button type="button" className="rp-quiet" disabled={!!editing} onClick={()=>{setSelected(item.id);setCandidate(0);setMessage('');setError('');}}>{item.label} · {item.status}</button></li>)}
+    </ul></details>:progress.total>0&&progress.unknown===0?<p>Sin renglones por atender según los estados guardados.</p>:null}
+   </section>}
    <label>Concepto<select value={selected} disabled={!!editing} onChange={e=>{setSelected(e.target.value);setCandidate(0);setMessage('');setError('');}}>
     {sheet.rows.map(item=><option key={item.id} value={item.id}>{item.label}</option>)}
    </select></label>
