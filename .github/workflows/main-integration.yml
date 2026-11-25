@@ -34,6 +34,8 @@ jobs:
             tests/worksheet-progress.test.mjs \
             tests/worksheet-progress-ui.test.mjs \
             tests/draft-edit-safety-ui.test.mjs \
+            tests/support-text-search.test.mjs \
+            tests/support-text-search-ui.test.mjs \
             tests/article-locator.test.mjs \
             tests/customs-article-locator-ui.test.mjs
       # Local OCR fallback (extractor v29): tesseract + poppler render scanned

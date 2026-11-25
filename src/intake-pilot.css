@@ -299,3 +299,5 @@
 @media(prefers-reduced-motion:no-preference){
  .rp-private-review mark {transition:background-color .14s ease,color .14s ease}
 }
+.rp-support-search{display:grid;gap:.5rem;margin-top:.8rem}
+.rp-private-review mark[aria-current=true]{outline:2px solid #705131;background:#f2dfb9;color:#35291e}
