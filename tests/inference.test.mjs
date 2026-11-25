@@ -13,7 +13,7 @@ const hash=b=>createHash('sha256').update(b).digest('hex');
 const json=x=>new Response(JSON.stringify(x));
 const stream=items=>new Response(items.map(x=>JSON.stringify(x)).join('\n')+'\n');
 async function settled(engine){for(let n=0;n<300;n++){const s=await engine.status();if(['ready','error','stopped'].includes(s.state))return s;await new Promise(r=>setTimeout(r,5));}throw Error('test timed out');}
-async function fixture(t,{installed=true,fetch:override,hardware,freeMemory,disk,rss,manifestLayout}={}){
+async function fixture(t,{installed=true,fetch:override,hardware,freeMemory,disk,rss,manifestLayout,dependencyOverrides={}}={}){
  const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-runtime-'));t.after(()=>rm(dataDir,{recursive:true,force:true}));
  const body=Buffer.from('synthetic weights');const layer={mediaType:'application/vnd.ollama.image.model',digest:`sha256:${hash(body)}`,size:body.length};
  const manifest=Buffer.from(JSON.stringify({schemaVersion:2,config:{...layer,mediaType:'application/vnd.docker.container.image.v1+json'},layers:[layer]}));
@@ -24,8 +24,9 @@ async function fixture(t,{installed=true,fetch:override,hardware,freeMemory,disk
  if(installed)await install();
  const calls=[],children=[];
  const dependencies={rss:rss|| (async()=>100*1024**2),hardware:()=>hardware||{platform:'darwin',arch:'arm64',memoryGB:8},freeMemory:()=>freeMemory??4*1024**3,statfs:async()=>({bavail:disk??8*1024**3,bsize:1}),freePort:async()=>12345,
- spawn:(bin,args,options)=>{const child=new EventEmitter();child.exitCode=null;child.stderr=new EventEmitter();child.kills=[];child.kill=s=>{child.kills.push(s);child.exitCode=0;child.emit('exit',0);};children.push({child,options});return child;},
+ spawn:(bin,args,options)=>{const child=new EventEmitter();child.exitCode=null;child.stderr=new EventEmitter();child.kills=[];child.kill=s=>{child.kills.push(s);child.exitCode=0;child.emit('exit',0);return true;};children.push({child,options});return child;},
  fetch:async(url,opts={})=>{const body=opts.body?JSON.parse(opts.body):null;calls.push({url,opts,body});const custom=await override?.({url,opts,body,install,layer,manifest});if(custom)return custom;if(url.includes('registry.ollama.ai/v2/'))return new Response(manifest);if(url.endsWith('/api/version'))return json({version:'test'});if(url.endsWith('/api/tags'))return json({models:installed?[{name:modelCatalog.id}]:[]});if(url.endsWith('/api/pull')){await install();return stream([{digest:layer.digest,total:layer.size,completed:layer.size},{status:'success'}]);}if(url.endsWith('/api/chat'))return stream([{message:{content:'{"analysis":"synthetic"}'}},{done:true}]);if(url.endsWith('/api/generate'))return json({done:true});throw Error('Unexpected route');}};
+ Object.assign(dependencies,dependencyOverrides);
  const engine=createInference({dataDir,runtimePath:process.execPath,modelCatalog,dependencies});t.after(()=>engine.stop());return {engine,calls,children,modelCatalog,manifestPath,modelRoot,layer};
 }
 test('local runtime and H1 mock share message, character, format and schema boundaries',async t=>{
@@ -139,3 +140,33 @@ test('plain conversation omits JSON format while grounded requests preserve thei
 });
 test('RSS over 3 GiB or unmeasurable fails closed before chat',async t=>{for(const rss of [async()=>3*1024**3+1,async()=>{throw Error('ps denied');}]){const f=await fixture(t,{rss});await f.engine.initialize();await settled(f.engine);await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/memoria/);assert(!f.calls.some(c=>c.url.endsWith('/api/chat')));assert.equal((await f.engine.status()).state,'error');assert(f.children[0].child.kills.includes('SIGTERM'));}});
 test('RSS is sampled during active generation and aborts on excessive growth',async t=>{let samples=0;const f=await fixture(t,{rss:async()=>++samples===1?100:4*1024**3,fetch:({url,opts})=>url.endsWith('/api/chat')?new Promise((resolve,reject)=>opts.signal.addEventListener('abort',()=>reject(new DOMException('aborted','AbortError')),{once:true})):null});await f.engine.initialize();await settled(f.engine);await assert.rejects(async()=>{for await(const _ of f.engine.generate([{role:'user',content:'synthetic'}])){}},/3 GiB/);assert(samples>=2);assert.equal((await f.engine.status()).state,'error');});
+test('legacy generate cannot resume after stop while awaiting memory preflight',async t=>{
+ let release,entered;const started=new Promise(r=>entered=r);let hold=false;
+ const f=await fixture(t,{dependencyOverrides:{memory:async()=>{if(hold){entered();await new Promise(r=>release=r);}return {freeBytes:4*1024**3,availableBytes:4*1024**3};}}});await f.engine.initialize();await settled(f.engine);hold=true;
+ const generation=f.engine.generate([{role:'user',content:'synthetic'}]).next();await started;await f.engine.stop();release();await assert.rejects(generation,/detenido/);assert.ok(!f.calls.some(c=>c.url.endsWith('/api/chat')));
+});
+test('late rejected legacy RSS sample cannot kill a replacement runtime',async t=>{
+ let release,entered;const started=new Promise(r=>entered=r);
+ const f=await fixture(t,{rss:()=>{entered();return new Promise((_,reject)=>release=reject);}});await f.engine.initialize();await settled(f.engine);
+ const generation=f.engine.generate([{role:'user',content:'synthetic'}]).next();await started;await f.engine.stop();await f.engine.initialize();await settled(f.engine);release(Error('late ps failure'));await assert.rejects(generation);assert.equal(f.children.length,2);assert.deepEqual(f.children[1].child.kills,[]);assert.equal((await f.engine.status()).state,'ready');
+});
+test('suspended legacy yield neither samples replacement PID nor returns buffered old text',async t=>{
+ let samples=0;const f=await fixture(t,{rss:async()=>{samples++;return 100;},fetch:({url})=>url.endsWith('/api/chat')?stream([{message:{content:'first'}},{message:{content:'stale'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);const generation=f.engine.generate([{role:'user',content:'synthetic'}]);assert.equal((await generation.next()).value,'first');await f.engine.stop();await f.engine.initialize();await settled(f.engine);const count=samples;await new Promise(r=>setTimeout(r,550));assert.equal(samples,count);await assert.rejects(generation.next(),/cancelada/);assert.equal((await f.engine.status()).state,'ready');
+});
+test('late cancelled startup memory never overwrites replacement warning or readings',async t=>{
+ let entered,resolveOld;const started=new Promise(r=>entered=r);let n=0;
+ const f=await fixture(t,{dependencyOverrides:{memory:()=>{if(++n===1){entered();return new Promise(r=>resolveOld=r);}return Promise.resolve({freeBytes:4*1024**3,availableBytes:4*1024**3,method:'current'});}}});await f.engine.initialize();await started;await f.engine.stop();await f.engine.initialize();await settled(f.engine);resolveOld({freeBytes:1,availableBytes:1,method:'stale'});await new Promise(r=>setImmediate(r));const status=await f.engine.status();assert.equal(status.memoryWarning,undefined);assert.equal(status.memoryAvailabilityMethod,'current');
+});
+test('stop cancels uncooperative legacy pull body',async t=>{
+ let entered,cancels=0;const started=new Promise(r=>entered=r);
+ const f=await fixture(t,{installed:false,fetch:({url})=>url.endsWith('/api/pull')?new Response(new ReadableStream({pull(){entered();},cancel(){cancels++;}})):null});await f.engine.initialize();await started;await new Promise(r=>setImmediate(r));await Promise.race([f.engine.stop(),new Promise((_,reject)=>setTimeout(()=>reject(Error('stop hung')),250))]);assert.equal(cancels,1);assert.equal((await f.engine.status()).state,'stopped');
+});
+test('legacy pending body is cancelled on stop and replacement can generate',async t=>{
+ let cancels=0,chats=0;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')&&++chats===1?new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode(JSON.stringify({message:{content:'first'}})+'\n'));},cancel(){cancels++;}})):null});await f.engine.initialize();await settled(f.engine);const old=f.engine.generate([{role:'user',content:'synthetic'}]);await old.next();const pending=old.next();await f.engine.stop();await assert.rejects(pending);assert.equal(cancels,1);await f.engine.initialize();await settled(f.engine);for await(const _ of f.engine.generate([{role:'user',content:'new'}])){}assert.equal(chats,2);
+});
+test('caller abort after yield refuses second buffered chunk and terminal done record',async t=>{
+ for(const items of [[{message:{content:'first'}},{message:{content:'stale'}},{done:true}],[{message:{content:'first'},done:true}]]){const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?stream(items):null});await f.engine.initialize();await settled(f.engine);const abort=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:abort.signal});await g.next();abort.abort();await assert.rejects(g.next());}
+});
+test('NDJSON parse error and early return cancel the underlying stream',async t=>{
+ for(const malformed of [true,false]){let cancels=0;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode(malformed?'{\n':JSON.stringify({message:{content:'first'}})+'\n'));},cancel(){cancels++;}})):null});await f.engine.initialize();await settled(f.engine);const g=f.engine.generate([{role:'user',content:'synthetic'}]);if(malformed)await assert.rejects(g.next());else{await g.next();await g.return();}assert.equal(cancels,1);}
+});
