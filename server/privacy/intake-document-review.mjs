@@ -9,7 +9,7 @@ const incomplete=Object.freeze({available:false,reason:'No se pudo reconstruir y
 
 // Local review of extracted text. The temporary map belongs only to this call.
 // The returned view contains originals and is never a cloud request.
-export async function reviewIntakeDocument({text,originalHash,suggestions,suggestionBatches=1,fields,signal,context,contextReviewer}) {
+export async function reviewIntakeDocument({text,originalHash,suggestions,suggestionBatches=1,fields,signal,context,contextReviewer,includeTypedRanges=false}) {
  if (text.includes('[[LEX_') || !Array.isArray(suggestions) || suggestions.length>Math.min(96*suggestionBatches,768)) return incomplete;
  const scope={workspaceId:'local-preview',matterId:randomUUID(),threadId:'document'};
  const registry=createProvenanceRegistry();
@@ -23,6 +23,7 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,sugges
    extraction:{status:'complete',extractorVersion:'intake-text-v1',originalSha256:originalHash},
    segments});
  const result=await createVariantAwareDetector({provenanceRegistry:registry}).detect({scope,segments:source.segments,signal});
+ const typedRanges=result.detections.map(d=>({start:offsets.get(d.segmentId)+d.start,end:offsets.get(d.segmentId)+d.end,category:d.category}));
  const materials=materialDescriptionRanges(text);
  const isMaterial=(start,end)=>materials.some(([a,b])=>start>=a&&end<=b);
  const contextual=[...originContextRanges(text),...contextualIdentityRanges(text),...(context?.ranges??[])];
@@ -59,7 +60,7 @@ export async function reviewIntakeDocument({text,originalHash,suggestions,sugges
  if(!view.available)return view;
  const hidden=view.parts.filter(part=>part.label);
  const aliases=[...new Set([...fields,...suggestions])].filter(value=>isProductAlias(value)&&hidden.some(part=>text.slice(part.start,part.end).includes(value)));
- return {...view,...(aliases.length?{productAliases:aliases}:{}),...(context?.available===false?{contextUnavailable:true}:{})};
+ return {...view,...(includeTypedRanges?{typedRanges,typedStatus:result.status}:{}),...(aliases.length?{productAliases:aliases}:{}),...(context?.available===false?{contextUnavailable:true}:{})};
 }
 
 function buildReview(text,ranges,scope,needsReview,contextualCount) {
