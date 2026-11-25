@@ -15,7 +15,11 @@ type Exported={name:string;base64:string;mime:string};
 
 const money=(centavos:number)=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(centavos/100);
 const hours=(minutes:number)=>`${Math.floor(minutes/60)} h ${minutes%60} min`;
-const fmtDate=(value:string)=>new Intl.DateTimeFormat('es-MX',{dateStyle:'medium'}).format(new Date(value));
+// A resolution date is a civil day, not an instant at midnight UTC.
+const fmtDate=(value:string)=>/^\d{4}-\d{2}-\d{2}$/.test(value)
+  ?new Intl.DateTimeFormat('es-MX',{dateStyle:'medium',timeZone:'UTC'}).format(new Date(`${value}T12:00:00Z`))
+  :new Intl.DateTimeFormat('es-MX',{dateStyle:'medium'}).format(new Date(value));
+const today=()=>{const date=new Date();return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;};
 const emptyReport:Report={rows:[],totals:{minutes:0,amountCentavos:0,unbilledCentavos:0,billedCentavos:0}};
 
 export default function TimeBillingView({matter,matters=[],api=defaultApi}:{matter?:Matter;matters?:Matter[];api?:ApiCall}) {
@@ -33,7 +37,7 @@ export default function TimeBillingView({matter,matters=[],api=defaultApi}:{matt
   const [minutes,setMinutes]=useState('6');
   const [billable,setBillable]=useState(true);
   const [outcome,setOutcome]=useState<NonNullable<Resolution['outcome']>>('otro');
-  const [resolutionDate,setResolutionDate]=useState(()=>new Date().toISOString().slice(0,10));
+  const [resolutionDate,setResolutionDate]=useState(today);
   const [notes,setNotes]=useState('');
   const [busy,setBusy]=useState('');
   const [error,setError]=useState('');
