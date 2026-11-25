@@ -32,6 +32,7 @@ jobs:
             tests/reasoning-role-ui.test.mjs \
             tests/document-text-selection.test.mjs \
             tests/question-lines-isolation.test.mjs \
+            tests/question-reference-scope-ui.test.mjs \
             tests/worksheet-progress.test.mjs \
             tests/worksheet-progress-ui.test.mjs \
             tests/draft-edit-safety-ui.test.mjs \

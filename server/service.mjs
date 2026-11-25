@@ -156,6 +156,9 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       .replace(/\bccf\b/g,'codigo civil federal').replace(/\bcpeum\b/g,'constitucion politica de los estados unidos mexicanos')
       .replace(/\bconstitucion\b(?! politica)/g,'constitucion politica de los estados unidos mexicanos');
     const num='\\d{1,6}(?:\\s*-\\s*[a-zñ]\\b|\\s+(?:bis|ter|quater|quinquies)\\b)?';
+    // A range is not a list: never bind just its first provision.
+    const rangeRe=new RegExp('\\b(?:articulos?|arts?[.]?)\\s+'+num+'(?:\\s*(?:,|\\by\\b|\\be\\b)\\s*'+num+')*\\s*(?:[-–—]|\\ba\\b|\\bal\\b|\\bhasta\\b)\\s*'+num+'\\b');
+    if(rangeRe.test(text))throw Error('Los rangos de artículos no están disponibles. Escribe un solo artículo o una lista explícita breve, por ejemplo artículos 97 y 117 de la Ley Aduanera.');
     const groupRe=new RegExp('\\b(articulos?|arts?[.]?)\\s+('+num+'(?:\\s*(?:,|\\by\\b|\\be\\b)\\s*'+num+')*)','g');
     const groups=[...text.matchAll(groupRe)].map(m=>({plural:/s$/.test(m[1])||/^arts\b/.test(m[1]),start:m.index,end:m.index+m[0].length,
       items:[...m[2].matchAll(new RegExp(num,'g'))].map(x=>x[0].replace(/\s*-\s*/,'-').replace(/\s+/g,'-').toUpperCase())}));

@@ -80,6 +80,7 @@ export function questionCandidates(library,original,parts,reference=null,context
    if(!row)return [];
    fromLibrary(row.sourceId,60);
   }
+  if(candidates.size>8)throw Error('Los artículos indicados reúnen más de ocho pasajes. Consulta un artículo o una lista más breve; no se seleccionó un subconjunto.');
   return ranked();
  }
  if(requestsProductOrigin(original)){
