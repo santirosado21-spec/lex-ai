@@ -1,0 +1,106 @@
+name: Main experimental integration
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: main-integration-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  portable-contracts-and-build:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22.23.5'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - name: Install Chromium for synthetic UI regressions
+        run: npx playwright install --with-deps chromium
+      - name: Intake UI regressions (synthetic real-component browser harnesses)
+        run: |
+          node --test \
+            tests/reasoning-role-ui.test.mjs \
+            tests/document-text-selection.test.mjs \
+            tests/question-lines-isolation.test.mjs \
+            tests/worksheet-progress.test.mjs \
+            tests/worksheet-progress-ui.test.mjs \
+            tests/draft-edit-safety-ui.test.mjs \
+            tests/support-text-search.test.mjs \
+            tests/support-text-search-ui.test.mjs \
+            tests/support-text-search-long-ui.test.mjs \
+            tests/article-locator.test.mjs \
+            tests/customs-article-locator-ui.test.mjs \
+            tests/customs-passage-search-ui.test.mjs \
+            tests/native-pilot-preview-ui.test.mjs \
+            tests/contract-review-card-ui.test.mjs \
+            tests/intake-version-comparison-ui.test.mjs
+      # Local OCR fallback (extractor v29): tesseract + poppler render scanned
+      # PDFs offline; Pillow builds the synthetic scanned fixture.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core antiword
+      # Fresh clones omit generated public-library.sqlite and model research assets.
+      # Node pinned >=22.23: earlier 22.x builds of node:sqlite lack FTS5, which
+      # buildPublicLibrary and the API workflow smoke require. Keep this gate explicit.
+      - name: Portable source contracts from a clean checkout
+        # The extractor already runs up to three OCR pages concurrently. Bound
+        # OpenMP per tesseract process to avoid nested CPU oversubscription.
+        env:
+          OMP_THREAD_LIMIT: '1'
+        run: |
+          # Score-only tolerance is explicit; no frozen-float test exclusion.
+          node --test \
+            tests/reasoning-role.test.mjs \
+            tests/http.test.mjs \
+            tests/office-https.test.mjs \
+            tests/landing-downloads.test.mjs \
+            tests/desktop-target.test.mjs \
+            tests/runtime-source-inventory.test.mjs \
+            tests/privacy-nym-int8-decoder.test.mjs \
+            tests/privacy-nym-float-parity-portable.test.mjs \
+            tests/intake-contractual-candidate-contract.test.mjs \
+            tests/intake-contractual-candidate.test.mjs \
+            tests/intake-contractual-ollama.test.mjs \
+            tests/intake-owned-runtime.test.mjs \
+            tests/owned-runtime-linux-diagnostic.test.mjs \
+            tests/inference.test.mjs \
+            tests/privacy-nym-int8-decoder-v2.test.mjs \
+            tests/privacy-nym-int8-decoder-v3.test.mjs \
+            tests/openrouter-provider.test.mjs \
+            tests/openrouter-keychain.test.mjs \
+            tests/windows-descendant-classification-diagnostic.test.mjs \
+            tests/windows-owned-tree-bootstrap-diagnostic.test.mjs \
+            tests/legal-library.test.mjs \
+            tests/mixed-topic-library.test.mjs \
+            tests/document-date-zone.test.mjs \
+            tests/short-paragraph-citations.test.mjs \
+            tests/docx-citations.test.mjs \
+            tests/customs-passage-search.test.mjs \
+            tests/intake-version-comparison.test.mjs \
+            tests/native-pilot-session.test.mjs \
+            tests/native-pilot-practice.test.mjs \
+            tests/contract-review-card.test.mjs \
+            tests/native-pilot-pipe.test.mjs \
+            tests/native-pilot-integration.test.mjs \
+            tests/native-pilot-connection.test.mjs \
+            tests/followup-transport-focus.test.mjs \
+            tests/customs-edition-warning.test.mjs \
+            tests/extractor-format-variants.test.mjs \
+            tests/extractor-non-article-classes.test.mjs \
+            tests/nuevo-leon-extraction.test.mjs \
+            tests/privacy-token-ner.test.mjs \
+            tests/word-extraction.test.mjs \
+            tests/extractor-ocr-fallback.test.mjs
+      # Real product HTTP rejects unavailable reasoning, then exercises export and
+      # feedback/proposals on synthetic history from an isolated legacy service.
+      # No product bypass; never evidence of model quality or active reasoning.
+      - name: API workflow smoke (reasoning unavailable, synthetic history)
+        run: node scripts/api-workflow-smoke.mjs
