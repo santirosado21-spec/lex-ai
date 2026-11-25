@@ -60,7 +60,7 @@ function isFollowUpQuestion(value) {
   return /^(?:y|tambien|entonces|sobre lo anterior|respecto de lo anterior|el articulo anterior|esa|ese|esto|aquello)\b/.test(compact);
 }
 
-export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City',intakePilot=false,intakeGenerate,pilotPassphrase}) {
+export async function createService({dataDir,corpusPath,inference,stt:injectedStt,mailTransport,schedulerEnabled=process.env.LEX_DESKTOP==='1',publicLibrary=null,stateLibrary=createStateLibrary(),openFile=null,clock=()=>new Date(),plannerTimeZone='America/Mexico_City',intakePilot=false,nativePilotPreparation=false,intakeGenerate,pilotPassphrase}) {
   if(pilotPassphrase!==undefined&&!intakePilot)throw Error('El almacenamiento cifrado está disponible para el piloto.');
   const store=createStore(dataDir,{pilotPassphrase});
   const stt=injectedStt||createStt({dataDir});
@@ -402,7 +402,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
 
   const timeBilling=registerTimeBilling({requireWorkspace,matter,listMatters,clock:plannerNow},store);
   const intake=intakePilot
-    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,timeZone:plannerTimeZone,generate:intakeGenerate??createIntakeGenerator()})
+    ?createIntakePilot({nativePilotPreparation,store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,timeZone:plannerTimeZone,generate:intakeGenerate??createIntakeGenerator()})
     :null;
   async function dispatch(action,p={},{signal}={}) {
     if(typeof action==='string'&&action.startsWith('intake.')){

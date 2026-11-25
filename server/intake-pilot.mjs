@@ -1,3 +1,4 @@
+import {installNativePractice} from './native-pilot-practice.mjs';
 import {compareTexts} from './doc-compare.mjs';
 import {searchCustomsPassages} from './corpus/customs-search.mjs';
 import {exportWorksheetPending} from './worksheet-pending-export.mjs';
@@ -165,7 +166,7 @@ export function createIntakeGenerator({
  return generate;
 }
 
-export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference,timeZone='America/Mexico_City'}) {
+export function createIntakePilot({nativePilotPreparation=false,store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference,timeZone='America/Mexico_City'}) {
  let articles;
  try { articles=tradeArticles(publicLibrary); } catch { articles=null; }
  const tradeReferences=articles?[...articles,...supportingReferences]:[];
@@ -317,6 +318,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
   const saved=current();
   return {
    saved:Boolean(saved),
+   nativePractice:saved?.intake.nativePractice??null,
    ...(generate.usageStatus?{cloudUsage:generate.usageStatus()}:{}),
    protectedRecords:store.protectedRecords===true,
    reservationCount:saved?.intake.reservations?.length??0,reservationRevision:saved?.intake.reservationRevision??0,
@@ -533,6 +535,9 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      part.text??('〔'+(labels.get(part.value)??'Dato oculto')+'〕')).join('');
     return {...view,masked:lines.join('\n')};
    }
+   case 'intake.loadNativePractice':
+    exactFields(payload,[]);if(!nativePilotPreparation)throw Error('Práctica disponible solo en la preparación nativa.');
+    return installNativePractice({store,workspace,createWorkspace,createMatter});
    case 'intake.status':
     exactFields(payload,[]);
     return status();

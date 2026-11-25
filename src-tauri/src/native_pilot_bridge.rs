@@ -6,7 +6,7 @@ const ERROR:&str="No se pudo completar la operación nativa.";
 pub struct ChildOwner {child:Mutex<Child>,input:Mutex<Option<ChildStdin>>,terminal:AtomicBool,closing:AtomicBool,outcome:Mutex<Option<StopOutcome>>,finished:Condvar}
 impl ChildOwner {
  pub fn new(child:Child,input:ChildStdin)->Arc<Self>{Arc::new(Self{child:Mutex::new(child),input:Mutex::new(Some(input)),terminal:AtomicBool::new(false),closing:AtomicBool::new(false),outcome:Mutex::new(None),finished:Condvar::new()})}
- pub fn outcome(&self)->Option<StopOutcome>{*self.outcome.lock().unwrap_or_else(|e|e.into_inner())}
+ #[cfg(test)]pub fn outcome(&self)->Option<StopOutcome>{*self.outcome.lock().unwrap_or_else(|e|e.into_inner())}
  pub fn terminal(&self)->bool{self.terminal.load(Ordering::SeqCst)}
  pub fn stop(&self)->StopOutcome{self.stop_with_grace(Duration::from_secs(5))}
  fn stop_with_grace(&self,grace:Duration)->StopOutcome{
@@ -72,6 +72,7 @@ impl Drop for Bridge {fn drop(&mut self){self.stop();}}
  #[test]fn actual_node_entry_closes_vault_and_reopens_integrity(){
   let repo=std::path::Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
   let root=std::env::temp_dir().join(format!("rejon-rust-vault-{}-{}",std::process::id(),std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()));std::fs::create_dir(&root).unwrap();let root=root.canonicalize().unwrap();
+  struct Cleanup(std::path::PathBuf);impl Drop for Cleanup{fn drop(&mut self){let _=std::fs::remove_dir_all(&self.0);}}let _cleanup=Cleanup(root.clone());
   let spawn_entry=||{let mut c=Command::new("node").arg(repo.join("tests/fixtures/native-pilot-rust/entry.mjs")).arg(&root).current_dir(repo).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null()).spawn().unwrap();let input=c.stdin.take().unwrap();let stdout=c.stdout.take().unwrap();Bridge::new(ChildOwner::new(c,input),stdout,Duration::from_secs(5))};
   for(mode,op)in[("save","create"),("read","unlock")]{let mut b=spawn_entry();assert_eq!(b.request(op).unwrap()["state"],"unlocked");let conn=b.connection.clone().unwrap();let mut check=Command::new("node").arg(repo.join("tests/fixtures/native-pilot-rust/vault-check.mjs")).stdin(Stdio::piped()).stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();let payload=json!({"url":conn["url"],"token":conn["token"],"mode":mode,"root":root});check.stdin.take().unwrap().write_all(payload.to_string().as_bytes()).unwrap();assert!(check.wait().unwrap().success());assert_eq!(b.stop(),StopOutcome::Graceful);assert!(b.owner.gone());assert_eq!(b.owner.outcome(),Some(StopOutcome::Graceful));}
   std::fs::remove_dir_all(root).unwrap();

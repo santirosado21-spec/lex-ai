@@ -69,6 +69,7 @@ jobs:
             tests/customs-passage-search.test.mjs \
             tests/intake-version-comparison.test.mjs \
             tests/native-pilot-session.test.mjs \
+            tests/native-pilot-practice.test.mjs \
             tests/native-pilot-pipe.test.mjs \
             tests/native-pilot-integration.test.mjs \
             tests/native-pilot-connection.test.mjs \

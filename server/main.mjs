@@ -36,7 +36,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  // H4: every product generation goes through the gateway. Remote destinations
  // stay disabled by default; the local route is a pure passthrough.
  inference = createGenerationGateway({local: inference});
- try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,intakeGenerate,pilotPassphrase});}catch(e){publicLibrary?.close();throw e;}
+ try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,nativePilotPreparation,intakeGenerate,pilotPassphrase});}catch(e){publicLibrary?.close();throw e;}
  let officeBridge=null, officeStarting=null;
  async function enableOffice() {
   if (officeBridge) return officeBridge;
@@ -78,7 +78,7 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     let count=0;const chunks=[];for await(const b of req){count+=b.length;if(count>MAX_BODY){json(res,413,{error:'El archivo supera el límite.'});return;}chunks.push(b);}
     let body;try{body=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{json(res,400,{error:'JSON inválido.'});return;}
     if(!body||typeof body!=='object'||Array.isArray(body)){json(res,400,{error:'Solicitud inválida.'});return;}
-    if(nativePilotPreparation&&(pathname!=='/api'||!['state','intake.status','intake.save','intake.readDocument','intake.downloadSource','intake.compareVersions'].includes(body.action))){
+    if(nativePilotPreparation&&(pathname!=='/api'||!['state','intake.status','intake.save','intake.readDocument','intake.downloadSource','intake.compareVersions','intake.loadNativePractice'].includes(body.action))){
      json(res,403,{error:'Operación fuera de la preparación nativa sin inferencia.'});return;
     }
     if(intakePilot && (pathname!=='/api' || typeof body.action!=='string' ||
