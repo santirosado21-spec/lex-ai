@@ -199,6 +199,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
   initialize:async()=>{if(stopPromise)await stopPromise;if(terminal)throw Error('Runtime terminal: cierre requerido o no confirmado.');if(initializing||state.state==='ready')return {...state};shutdown=false;stopping=false;initController=new AbortController();initializing=true;set({state:'starting',message:'Iniciando motor local…',progress:0});bootTask=boot();return {...state};},
   async *generate(messages,{signal,outputSchema,responseFormat='json'}={}){
    if(readerOnly)throw Error('Runtime reservado para privacidad.');
+   if(signal!=null&&!(signal instanceof AbortSignal))throw new TypeError('Señal de cancelación inválida.');
    if(state.state!=='ready')throw Error('Prepara Rejon.AI antes de analizar documentos.');
    if(busy)throw Error('Ya hay un análisis en curso.');
    if(!['json','text'].includes(responseFormat)||responseFormat==='text'&&outputSchema)throw Error('Formato de respuesta no admitido.');
