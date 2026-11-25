@@ -756,4 +756,4 @@ ${grounded ? 'Devuelve SOLO JSON: {"paragraphs":[{"sourceId":"ID recibido","quot
     return dispatch(action,p);
   }
   return {dispatch,agentChannel,analyze,close:()=>{if(schedulerTimer)clearInterval(schedulerTimer);proactive.close();email.close();store.close();}};
-                                                                                                                                                                                                                                                         }
+}
