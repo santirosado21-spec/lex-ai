@@ -320,3 +320,6 @@
 .rp-review-cards textarea {display:block;width:100%;box-sizing:border-box;min-height:90px;padding:.65rem;border:1px solid #b9ad9b;border-radius:5px;font:inherit;font-weight:400;background:#fffdf8;}
 .rp-review-cards .document-reading {max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:.75rem;background:#fffdf8;border:1px solid #d5ccbd;}
 .rp-review-cards blockquote {padding:.7rem;margin:1rem 0;border-left:3px solid #b9ad9b;}
+
+/* Preview stays cream in every app/system theme. Do not inherit dark headings. */
+.rp-native-preview :is(h1,h2,h3,h4) {color:var(--rp-ink)}

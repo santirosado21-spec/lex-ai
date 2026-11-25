@@ -22,7 +22,7 @@ export default function NativePilotPreview(){
   catch{setState('failed');setError('No se confirmó el cierre. No abras otra sesión hasta revisar el proceso local.');}
  }
  async function read(){const current=generation.current;setText('');try{const data=await api<{original:string}>('intake.readDocument',{id:first});if(current===generation.current)setText(data.original);}catch{if(current===generation.current)setError('No se pudo abrir el texto local.');}}
- return <main className="rp-shell" style={{maxWidth:900,margin:'24px auto',padding:24}}><h1>Piloto cifrado nativo</h1><p>Vista de preparación aislada. Sin importación, modelos ni nube. No es una revisión jurídica ni una versión distribuible.</p>
+ return <main className="rp-shell rp-native-preview" style={{maxWidth:900,margin:'24px auto',padding:24}}><h1>Piloto cifrado nativo</h1><p>Vista de preparación aislada. Sin importación, modelos ni nube. No es una revisión jurídica ni una versión distribuible.</p>
   {error&&<p role="alert">{error}</p>}
   {state==='locked'&&<section aria-label="Expediente bloqueado"><h2>Expediente bloqueado</h2><p>La frase se pide en un diálogo del sistema. No la escribas aquí.</p><button className="rp-primary" onClick={()=>void open(false)}>Abrir expediente</button> <button className="rp-quiet" onClick={()=>void open(true)}>Crear expediente cifrado</button></section>}
   {state==='busy'&&<p role="status">Esperando la operación local. El texto permanece oculto.</p>}
