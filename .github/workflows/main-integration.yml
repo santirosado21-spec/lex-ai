@@ -62,6 +62,7 @@ jobs:
         run: |
           # Score-only tolerance is explicit; no frozen-float test exclusion.
           node --test \
+            tests/honorarios-http.test.mjs \
             tests/time-billing.test.mjs \
             tests/reasoning-role.test.mjs \
             tests/http.test.mjs \
