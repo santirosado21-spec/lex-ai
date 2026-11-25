@@ -17,6 +17,10 @@ export function mountAssistant(host, readSelection, insertDraft) {
   document.getElementById('workspace').prepend(section);
   const get = selector => section.querySelector(selector);
   const status = get('[role=status]');
+  const dirtyEditors=new Set();let editRevision=0,pendingEdits=0;
+  const hasUnsaved=()=>dirtyEditors.size>0;
+  const discardEdits=()=>!hasUnsaved()||window.confirm('Hay cambios sin guardar. ¿Descartarlos y recargar la conversación del asunto?');
+  window.addEventListener('beforeunload',event=>{if(hasUnsaved()||pendingEdits){event.preventDefault();event.returnValue='';}});
   function action(selector, run) {
     const button = get(selector);
     button.onclick = async () => {
@@ -42,19 +46,23 @@ export function mountAssistant(host, readSelection, insertDraft) {
     const editor=document.createElement('textarea');
     editor.rows=7; editor.value=answer.text; editor.readOnly=true; label.append(editor);
     const edit=document.createElement('button');
-    edit.textContent='Editar versión'; let draft;
+    edit.textContent='Editar versión'; let draft,savedText;
+    function updateDirty(){if(draft&&editor.value!==savedText)dirtyEditors.add(editor);else dirtyEditors.delete(editor);}
+    editor.addEventListener('input',()=>{editRevision++;updateDirty();if(dirtyEditors.has(editor))status.textContent='Cambios sin guardar. Guarda esta versión antes de salir.';});
     edit.onclick=async()=>{
-      edit.disabled=true;
+      edit.disabled=true;pendingEdits++;
       try{
         if(!draft){
           draft=await bridge.request('/v1/draft',{replyId:answer.id});
-          editor.value=draft.text;editor.readOnly=false;
+          editor.value=draft.text;savedText=draft.text;editor.readOnly=false;updateDirty();
           edit.textContent='Guardar versión en el asunto';editor.focus();
         }else{
-          draft=await bridge.request('/v1/draft/save',{draftId:draft.id,expectedVersion:draft.version,title:draft.title,text:editor.value});
-          status.textContent='Versión '+draft.version+' guardada. Las fuentes corresponden al original.';
+          const submitted=editor.value;
+          draft=await bridge.request('/v1/draft/save',{draftId:draft.id,expectedVersion:draft.version,title:draft.title,text:submitted});
+          savedText=submitted;updateDirty();
+          status.textContent='Versión '+draft.version+' guardada. Las fuentes corresponden al original.'+(dirtyEditors.has(editor)?' Se conserva tu edición posterior, aún sin guardar.':'');
         }
-      }catch(error){status.textContent=error.message;}finally{edit.disabled=false;}
+      }catch(error){status.textContent=error.message+(dirtyEditors.has(editor)?' Se conserva tu edición sin guardar.':'');}finally{pendingEdits--;edit.disabled=false;}
     };
     const sources=document.createElement('p');sources.className='sources';
     sources.textContent=(answer.citations||[]).map(c=>c.title||c.name||c.sourceId).filter(Boolean).join('; ');
@@ -72,8 +80,13 @@ export function mountAssistant(host, readSelection, insertDraft) {
     }
   }
   action('[data-history]',async()=>{
+    if(pendingEdits){status.textContent='Espera a que termine la apertura o el guardado de la versión. Se conserva la conversación.';return;}
+    if(!discardEdits()){status.textContent='Se conserva tu edición sin guardar.';return;}
+    const revision=editRevision;
     const thread=await bridge.request('/v1/thread',{});
-    get('[data-replies]').replaceChildren();
+    if(pendingEdits){status.textContent='Hay una versión en proceso. Se conserva la conversación; vuelve a intentar cuando termine.';return;}
+    if(revision!==editRevision&&!discardEdits()){status.textContent='Se conserva tu edición sin guardar.';return;}
+    dirtyEditors.clear();get('[data-replies]').replaceChildren();
     thread.forEach(renderReply);
     status.textContent=thread.length?'Conversación del asunto cargada.':'Este asunto aún no tiene mensajes.';
   });
