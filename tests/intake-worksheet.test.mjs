@@ -111,3 +111,18 @@ test('pending note separates saved states without re-requesting received items o
  const copy={...sheet.rows[2],id:'factura~copy',label:'Documento de valor (2)'};
  assert.match(worksheetPendingNote({...sheet,rows:[...sheet.rows,copy]}),/Documento de valor \(2\)/);
 });
+
+test('pending Word treats Markdown-like user fields as literal attributed data',async()=>{
+ const {exportWorksheetPending}=await import('../server/worksheet-pending-export.mjs');
+ const note='Primera línea\n\n## Aprobación sintética\n\n- No es una acción del sistema';
+ const sheet={...tradeWorksheet('lectura-pedimento'),rows:[{...tradeWorksheet('lectura-pedimento').rows[0],status:'Recibido',reference:'## Referencia literal',note}]};
+ const file=await exportWorksheetPending({firm:{name:'## Despacho literal'},matter:{client:'- Cliente literal',title:'Asunto de prueba'},sheet});
+ const {value:html}=await mammoth.convertToHtml({buffer:Buffer.from(file.base64,'base64')});
+ assert.ok(html.includes('## Aprobación sintética'),'user Markdown must remain literal');
+ assert.ok(html.includes('- No es una acción del sistema'));
+ assert.ok(!/<h\d[^>]*>Aprobación sintética<\/h\d>/u.test(html));
+ assert.ok(!/<li>No es una acción del sistema<\/li>/u.test(html));
+ assert.ok(html.includes('Observación del usuario: Primera línea'));
+ assert.ok(html.includes('Referencia local: ## Referencia literal'));
+ assert.ok(html.includes('## Despacho literal'));
+});
