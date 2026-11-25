@@ -21,7 +21,7 @@ export default function CloudDemoSettings() {
  return <section className="settings-section">
   <div>
    <h2>Modo nube de prueba</h2>
-   <p>Envía a OpenAI un mensaje ficticio predefinido. Las consultas y documentos del despacho se procesan localmente.</p>
+   <p>Envía a OpenAI un mensaje ficticio predefinido. No envía tus consultas ni documentos. El razonamiento del despacho sigue sin activar.</p>
   </div>
   <div className="settings-panel">
    <button className="secondary" type="button" disabled={busy} onClick={() => void run()}>Probar modo nube</button>

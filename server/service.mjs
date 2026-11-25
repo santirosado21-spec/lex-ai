@@ -234,7 +234,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       .map(s=>({source:s,score:terms.reduce((n,t)=>n+(normalize(`${s.title} ${s.article} ${s.text}`).includes(t)?1:0),0)}))
       .filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5).map(x=>({...x.source,relevance:x.score}));
   }
-  function state(){const w=workspace(),matters=store.list('matter');return {workspace:w,matters,documents:store.list('document').map(({text:_,...d})=>d),answers:drafts.presentMany(store.list('answer')),chatTurns:drafts.presentMany(chat.list()),drafts:drafts.list(),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),reminders:w?matters.flatMap(m=>store.listReminders(w.id,m.id)):[],skills,sources:corpus};}
+  function state(){const w=workspace(),matters=store.list('matter');return {...(inference?.reasoningStatus?{reasoning:inference.reasoningStatus}:{}),workspace:w,matters,documents:store.list('document').map(({text:_,...d})=>d),answers:drafts.presentMany(store.list('answer')),chatTurns:drafts.presentMany(chat.list()),drafts:drafts.list(),feedback:store.list('feedback'),proposals:store.list('proposal'),tasks:store.list('task'),reminders:w?matters.flatMap(m=>store.listReminders(w.id,m.id)):[],skills,sources:corpus};}
   function listMatters(){const w=requireWorkspace();return store.list('matter').filter(item=>item.workspaceId===w.id);}
   function matterCounterparties(value){
     if(!Array.isArray(value)||value.length>10)throw new Error('Contrapartes: proporciona entre 0 y 10 nombres.');
@@ -611,6 +611,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
   }
 
   async function analyze(payload,onToken=()=>{},{signal}={}) {
+    if(inference?.reasoningStatus?.available===false)throw Object.assign(new Error(inference.reasoningStatus.message),{code:inference.reasoningStatus.code});
     if(payload?.mode==='auto'||payload?.skillId==='auto'){
       if(!payload||typeof payload!=='object'||Array.isArray(payload)||Object.keys(payload).some(key=>!['mode','question','matterId','skillId','threadId'].includes(key))||payload.mode!==undefined&&payload.mode!=='auto')throw Error('Solicitud de asistente inválida.');
       const threadId=validThread(payload.threadId);

@@ -29,6 +29,7 @@ jobs:
       - name: Intake UI regressions (synthetic real-component browser harnesses)
         run: |
           node --test \
+            tests/reasoning-role-ui.test.mjs \
             tests/document-text-selection.test.mjs \
             tests/question-lines-isolation.test.mjs \
             tests/worksheet-progress.test.mjs \
@@ -57,6 +58,9 @@ jobs:
         run: |
           # Score-only tolerance is explicit; no frozen-float test exclusion.
           node --test \
+            tests/reasoning-role.test.mjs \
+            tests/http.test.mjs \
+            tests/office-https.test.mjs \
             tests/landing-downloads.test.mjs \
             tests/desktop-target.test.mjs \
             tests/runtime-source-inventory.test.mjs \
@@ -92,8 +96,8 @@ jobs:
             tests/privacy-token-ner.test.mjs \
             tests/word-extraction.test.mjs \
             tests/extractor-ocr-fallback.test.mjs
-      # Full product workflow over the REAL HTTP server with explicitly mocked
-      # inference (import -> analyze -> export DOCX -> feedback/proposal lifecycle).
-      # Synthetic fixtures only; never evidence of model quality.
-      - name: API workflow smoke (mocked inference, synthetic data)
+      # Real product HTTP rejects unavailable reasoning, then exercises export and
+      # feedback/proposals on synthetic history from an isolated legacy service.
+      # No product bypass; never evidence of model quality or active reasoning.
+      - name: API workflow smoke (reasoning unavailable, synthetic history)
         run: node scripts/api-workflow-smoke.mjs

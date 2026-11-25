@@ -16,7 +16,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { createService } from './service.mjs';
 import { createInference } from './inference.mjs';
 import { createOpenAIInference } from './inference-openai.mjs';
-import { createGenerationGateway } from './generation-gateway.mjs';
+import { createReasoningBoundary } from './reasoning-boundary.mjs';
 import { createCloudDemo } from './cloud-demo.mjs';
 import { publicMonitorStatus } from './public-monitor.mjs';
 import { trainingStatus } from './training-status.mjs';
@@ -33,9 +33,9 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  try{publicLibrary=await openPublicLibrary(libraryPath);}catch(e){let absent=false;if(e.code==='ENOENT'){try{await access(libraryPath);}catch(missing){absent=missing.code==='ENOENT';}}if(!absent)libraryUnavailable={available:false,reason:'invalid-index',error:'La biblioteca pública no supera la comprobación de integridad o lectura. Reconstruye el índice.'};}
  const openFile=process.platform==='darwin'&&process.env.LEX_DESKTOP==='1'?createLocalFileOpener({dataDir}):null;
  inference ||= process.env.LEX_INFERENCE_BACKEND==='openai-local'?createOpenAIInference():createInference({dataDir});
- // H4: every product generation goes through the gateway. Remote destinations
- // stay disabled by default; the local route is a pure passthrough.
- inference = createGenerationGateway({local: inference});
+ // The desktop reasoning surface must not use the anonymization engine.
+ // Intake keeps its separate, gated generation pipeline; no cloud route is enabled.
+ inference = createReasoningBoundary(inference);
  try{service ||= await createService({dataDir,corpusPath:path.join(root,'resources/legal-corpus.json'),inference,publicLibrary,openFile,intakePilot,nativePilotPreparation,intakeGenerate,pilotPassphrase});}catch(e){publicLibrary?.close();throw e;}
  let officeBridge=null, officeStarting=null;
  async function enableOffice() {
@@ -158,9 +158,9 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
  server.requestTimeout=30_000;server.headersTimeout=10_000;
  try{await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,'127.0.0.1',resolve);});}catch(e){try{await officeBridge?.close();service.close?.();}finally{review?.close();publicLibrary?.close();}throw e;}
  const connection={url:`http://127.0.0.1:${server.address().port}`,token};
- // Desktop initialization installs only the small verified model from the
- // bundle, starts its private daemon, and never loads weights until a query.
- if(autoInitialize)void inference.initialize().catch(()=>{});
+ // No engine auto-start from the reasoning workspace.
+ // Local reasoning is disabled. Opening the workspace must not start a model.
+ // autoInitialize is retained for API compatibility, not executed here.
  return {connection,service,inference,officeBridge,async close(){if(closing)return;closing=true;try{await officeBridge?.close();await inference.stop();server.closeAllConnections();await new Promise(r=>server.close(r));service.close?.();}finally{review?.close();publicLibrary?.close();}}};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){

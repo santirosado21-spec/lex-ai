@@ -1,11 +1,9 @@
-/** Full product workflow through the REAL HTTP server with explicitly mocked
- * inference: workspace -> matter -> document.import -> /analyze (NDJSON) ->
- * answer.export (DOCX) -> feedback -> proposal lifecycle (create/evaluate/
- * approve/rollback). Closes the gap between service-level unit tests and the
- * Mac-only real-inference e2e (scripts/e2e.mjs): route registration, auth,
- * payload serialization and dispatch for these actions are exercised here.
- * Synthetic data only; never evidence of model quality. */
+/** Product HTTP workflow with unavailable reasoning plus an explicitly isolated
+ * legacy service double to construct synthetic historical work for downstream
+ * export/feedback/proposal checks. No product inference bypass and no model or
+ * network inference. Never evidence of current reasoning availability or quality. */
 import { startServer } from '../server/main.mjs';
+import {createService} from '../server/service.mjs';
 import { buildPublicLibrary } from '../server/public-library.mjs';
 import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, writeFile, readFile } from 'node:fs/promises';
@@ -40,8 +38,10 @@ const inference={
  }
 };
 
-const app=await startServer({dataDir,inference,monitorDir:path.join(dataDir,'monitor'),libraryPath});
-const report={mode:'Full product workflow over real HTTP server, explicitly mocked inference',syntheticData:true,checks:[],startedAt:new Date().toISOString()};
+let productGenerateCalls=0;
+const productInference={async status(){return {state:'ready'};},async initialize(){throw Error('Product must not initialize local reasoning');},async stop(){},async *generate(){productGenerateCalls++;throw Error('Product must not generate local reasoning');}};
+const app=await startServer({dataDir,inference:productInference,monitorDir:path.join(dataDir,'monitor'),libraryPath});
+const report={mode:'Product HTTP workflow: reasoning unavailable; synthetic historical work from isolated legacy service double',syntheticData:true,checks:[],startedAt:new Date().toISOString()};
 await mkdir('artifacts',{recursive:true});
 try{
  const api=async(action,payload={})=>{const response=await fetch(app.connection.url+'/api',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${app.connection.token}`},body:JSON.stringify({action,payload})});assert.equal(response.status,200,`${action} HTTP ${response.status}`);return response.json();};
@@ -59,12 +59,21 @@ try{
  const analyzeResponse=await fetch(app.connection.url+'/analyze',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${app.connection.token}`},body:JSON.stringify({matterId:matter.id,skillId:'contract-reviewer',question:'Analiza la cláusula que permite modificar unilateralmente el precio y la fecha. ¿Qué riesgo contractual identificas? Cita un pasaje del contrato y uno de la ley aportada.'})});
  assert.equal(analyzeResponse.status,200,'/analyze HTTP status');
  const frames=(await analyzeResponse.text()).trim().split('\n').map(line=>JSON.parse(line));
- const result=frames.find(frame=>frame.type==='result')?.data;
- assert.ok(result,'/analyze NDJSON carries a result frame');
- assert.ok(result.validation.citationIntegrity,'citation integrity over HTTP');
- assert.ok(result.citations.some(c=>c.url),'official source citation with URL');
- assert.ok(result.text.length>100,'grounded analysis text');
- report.checks.push('/analyze NDJSON stream: result frame, citation integrity, official source');
+ assert.ok(frames.some(frame=>frame.type==='error'&&/razonamiento|anonimizar/.test(frame.message)),'/analyze explains unavailable reasoning');
+ assert.ok(frames.every(frame=>!['result','token'].includes(frame.type)),'unavailable product reasoning emits neither result nor token');
+ assert.equal(productGenerateCalls,0);assert.equal((await api('state')).answers.length,0);
+ report.checks.push('/analyze NDJSON rejects unavailable reasoning, no tokens/results/saved answer/local generation');
+
+ // Isolated legacy algorithm contract, not a product route or provider override.
+ // Its stored result represents historical synthetic work for downstream checks.
+ const historicalService=await createService({dataDir,corpusPath:path.resolve('resources/legal-corpus.json'),inference,schedulerEnabled:false});
+ let result;
+ try{result=await historicalService.analyze({matterId:matter.id,skillId:'contract-reviewer',question:'Analiza la cláusula que permite modificar unilateralmente el precio y la fecha. ¿Qué riesgo contractual identificas? Cita un pasaje del contrato y uno de la ley aportada.'});}finally{historicalService.close();}
+ assert.ok(result.validation.citationIntegrity,'isolated historical fixture citation integrity');
+ assert.ok(result.citations.some(c=>c.url),'historical fixture contains official source citation with URL');
+ assert.ok(result.text.length>100);
+ assert.ok((await api('state')).answers.some(answer=>answer.id===result.id),'product reads historical synthetic work');
+ report.checks.push('isolated legacy service creates validated synthetic history; product only reads the stored work');
 
  const exported=await api('answer.export',{matterId:matter.id,answerId:result.id});
  const docx=Buffer.from(exported.base64,'base64');
@@ -79,6 +88,6 @@ try{
  await api('proposal.rollback',{proposalId:proposal.id});
  report.checks.push('feedback + proposal lifecycle (create/evaluate/approve/rollback) over HTTP');
 
- report.status='PASS';
+ assert.equal(productGenerateCalls,0);report.status='PASS';
 }catch(e){report.status='FAIL';report.error=e.message;process.exitCode=1;}
 finally{await app.close();report.finishedAt=new Date().toISOString();await writeFile('artifacts/api-workflow-smoke.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));}

@@ -12,6 +12,7 @@ const states:Record<string,{label:string;message:string}>={
  unsupported:{label:'Equipo no compatible',message:'Esta versión requiere macOS con Apple Silicon y al menos 8 GB de memoria. Rendimiento en el equipo mínimo pendiente de medición.'},
 };
 export function assistantPresentation(engine:EngineStatus){
+ if(engine.reasoning&&typeof engine.reasoning==='object'&&(engine.reasoning as {available?:boolean}).available===false)return {state:'unavailable',label:'Razonamiento sin activar',message:String((engine.reasoning as {message?:string}).message||'El modelo local solo anonimiza. La ruta de razonamiento aún no está operativa.')};
  const state=engine.state||engine.status||(engine.ready?'ready':'stopped');
  return {state,...(states[state]||{label:'Estado no disponible',message:'Actualiza el estado de Rejon.AI para comprobar su disponibilidad.'})};
 }

@@ -7,8 +7,9 @@ import https from 'node:https';
 import path from 'node:path';
 import os from 'node:os';
 import {startServer} from '../server/main.mjs';
+import {createStore} from '../server/store.mjs';
 
-test('HTTPS panel pairs a real matter, imports text, asks, edits and revokes without leaking the other matter',async t=>{
+test('HTTPS panel pairs a real matter, imports text, rejects reasoning, edits history and revokes without leaking the other matter',async t=>{
  const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-office-integration-'));
  t.after(()=>rm(dataDir,{force:true,recursive:true}));
  execFileSync(process.execPath,['scripts/office-cert.mjs','--data-dir',dataDir]);
@@ -20,7 +21,7 @@ test('HTTPS panel pairs a real matter, imports text, asks, edits and revokes wit
  const previous=process.env.LEX_OFFICE_PORT;
  process.env.LEX_OFFICE_PORT=String(port);
  t.after(()=>{if(previous===undefined)delete process.env.LEX_OFFICE_PORT;else process.env.LEX_OFFICE_PORT=previous;});
- const app=await startServer({dataDir,autoInitialize:false,inference:{async *generate(){yield 'Borrador sintético de la reunión.';},async stop(){}}});
+ let localCalls=0;const app=await startServer({dataDir,autoInitialize:false,inference:{async *generate(){localCalls++;throw Error('No debe invocarse generación local.');},async stop(){}}});
  t.after(()=>app.close());
  async function desktop(action,payload){
    const response=await fetch(app.connection.url+'/api',{method:'POST',headers:{Authorization:'Bearer '+app.connection.token,'Content-Type':'application/json'},body:JSON.stringify({action,payload})});
@@ -38,12 +39,14 @@ test('HTTPS panel pairs a real matter, imports text, asks, edits and revokes wit
  await desktop('workspace.create',{name:'Despacho sintético',practiceAreas:['civil']});
  const matter=await desktop('matter.create',{title:'Uno',client:'Persona ficticia',jurisdiction:'MX-FED'});
  const other=await desktop('matter.create',{title:'Dos',client:'Cliente ficticio',jurisdiction:'MX-FED'});
- await app.service.analyze({mode:'auto',matterId:other.id,question:'Hola, soy NOMBRE_RESERVADO.'});
+ const seed=createStore(dataDir);const workspace=(await desktop('state')).workspace;
+ for(const m of [matter,other])seed.put('chat',{id:'history-'+m.id,workspaceId:workspace.id,matterId:m.id,question:m.id===other.id?'NOMBRE_RESERVADO':'Agenda sintética',text:'Borrador histórico sintético de la reunión.',citations:[],createdAt:'2026-11-24T12:00:00Z',validation:{citationIntegrity:false}});seed.close();
  const {code}=await desktop('office.pair',{matterId:matter.id});
  const {token}=(await panel('/v1/pair',{code})).data;
  const saved=await panel('/v1/selection',{host:'Word',text:'Convenio sintético de revisión.'},token);
  assert.equal(saved.status,200);
- const reply=(await panel('/v1/ask',{question:'Hola, prepara una agenda.'},token)).data;
+ const denied=await panel('/v1/ask',{question:'Hola, prepara una agenda.'},token);assert.notEqual(denied.status,200);assert.match(denied.data.error,/anonimizar|razonamiento/);
+ const reply={id:'history-'+matter.id,text:'Borrador histórico sintético de la reunión.'};
  const history=(await panel('/v1/thread',{},token)).data;
  assert.equal(history.length,1);assert.equal(history[0].id,reply.id);
  assert.equal((await panel('/v1/ask',{question:'Hola',matterId:other.id},token)).status,403);
@@ -58,5 +61,5 @@ test('HTTPS panel pairs a real matter, imports text, asks, edits and revokes wit
  assert.match((await panel('/sharepoint.html?tenant=https://otro.sharepoint.com')).headers['content-security-policy'],/frame-ancestors 'none'$/);
  assert.equal((await panel('/v1/pair',{code:share.code,tenant})).status,200);
  await desktop('office.revoke',{matterId:matter.id});
- assert.equal((await panel('/v1/thread',{},token)).status,401);
+ assert.equal((await panel('/v1/thread',{},token)).status,401);assert.equal(localCalls,0);
 });

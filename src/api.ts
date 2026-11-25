@@ -7,7 +7,8 @@ export interface Feedback { id: string; answerId: string; matterId: string; rati
 export interface Proposal { history?: {event:string;at:string}[]; matterId?: string; id: string; feedbackId: string; status: string; text?: string; content?: string; candidate?: string; version?: number; evaluation?: Record<string, unknown>; createdAt?: string }
 export interface Skill { id: string; name: string; description: string; version?: string; supportedJurisdictions?: string[]; jurisdictions?: string[] }
 export interface ReplyDraftSummary {id:string;replyId:string;matterId:string;version:number;current:{title:string;text:string}}
-export interface AppState { workspace: null | { id: string; name: string; practiceAreas: string[] }; matters: Matter[]; documents: DocumentRecord[]; answers: Answer[]; chatTurns: Answer[]; drafts?: ReplyDraftSummary[]; feedback: Feedback[]; proposals: Proposal[]; tasks: MatterTask[]; skills: Skill[]; sources: Source[] }
+export interface ReasoningStatus { available:boolean;code:string;message:string }
+export interface AppState { reasoning?:ReasoningStatus; workspace: null | { id: string; name: string; practiceAreas: string[] }; matters: Matter[]; documents: DocumentRecord[]; answers: Answer[]; chatTurns: Answer[]; drafts?: ReplyDraftSummary[]; feedback: Feedback[]; proposals: Proposal[]; tasks: MatterTask[]; skills: Skill[]; sources: Source[] }
 export interface EngineStatus { state?: string; status?: string; model?: string; message?: string; error?: string; progress?: number | string; supported?: boolean; ready?: boolean; hardware?: { platform?: string; arch?: string; memoryGB?: number; totalMemoryGB?: number }; [key: string]: unknown }
 export const emptyState: AppState = { workspace: null, matters: [], documents: [], answers: [], chatTurns: [], feedback: [], proposals: [], tasks: [], skills: [], sources: [] };
 let connection: Promise<{ url: string; token: string }> | null = null;
