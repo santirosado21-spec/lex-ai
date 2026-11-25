@@ -30,3 +30,34 @@ test('trade readings and local follow-up rendering retain one source warning wit
  assert.equal(output.split(warning).length-1,1);
  assert.equal(JSON.stringify(followupEnvelope(follow)),before);
 });
+
+test('actual encrypted pilot export retains both edition warning and its source table',async t=>{
+ const {mkdtemp,rm,writeFile,mkdir}=await import('node:fs/promises');
+ const {tmpdir}=await import('node:os');const path=await import('node:path');
+ const {startServer}=await import('../server/main.mjs');
+ const {emptyLocalReading}=await import('./helpers/local-reader.mjs');
+ const {default:mammoth}=await import('mammoth');
+ const dir=await mkdtemp(path.join(tmpdir(),'rejon-edition-export-'));
+ const app=await startServer({dataDir:dir,intakePilot:true,autoInitialize:false,libraryPath:path.join(dir,'absent.sqlite'),pilotPassphrase:Buffer.from('frase sintética para probar'),
+  intakeGenerate:async()=>JSON.stringify({cita:customsPassage('65').passages[1].quote.slice(0,90),solicitud:'¿Qué documento acredita los gastos de transporte?'})});
+ t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});
+ t.mock.method(globalThis,'fetch',async(url,opts)=>{
+  assert.equal(url,'http://127.0.0.1:11434/api/chat');const request=JSON.parse(opts.body);
+  return Response.json({message:{content:JSON.stringify(emptyLocalReading(request.format.properties))}});
+ });
+ const call=(action,payload)=>app.service.dispatch('intake.'+action,payload);
+ await call('save',{firm:'Despacho sintético',client:'Cliente sintético',title:'Expediente de práctica',jurisdiction:'MX-FED'});
+ const review=await call('inspectQuestion',{text:'¿Qué documentos acreditan el flete según el artículo 65 de la Ley Aduanera?'});
+ assert.ok(review.candidates.some(row=>row.key==='aduana-65/1'));
+ const {task}=await call('addQuestion',{reviewId:review.id,key:'aduana-65/1',angle:'documentos'});
+ await call('draft',{task});
+ const file=await call('export',{task,format:'docx'}),buffer=Buffer.from(file.base64,'base64');
+ const text=(await mammoth.extractRawText({buffer})).value;
+ assert.ok(text.includes(warning));assert.ok(text.includes('Fuentes recuperadas'));
+ assert.ok(text.includes('Ley Aduanera'));assert.ok(text.includes('65'));
+ assert.ok(!text.includes('No se recuperaron fuentes para este borrador.'));
+ if(process.env.REJON_EDITION_EVIDENCE_DIR){
+  await mkdir(process.env.REJON_EDITION_EVIDENCE_DIR,{recursive:true});
+  await writeFile(path.join(process.env.REJON_EDITION_EVIDENCE_DIR,'pilot-export.docx'),buffer);
+ }
+});
