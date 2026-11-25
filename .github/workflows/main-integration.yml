@@ -32,7 +32,9 @@ jobs:
             tests/document-text-selection.test.mjs \
             tests/question-lines-isolation.test.mjs \
             tests/worksheet-progress.test.mjs \
-            tests/worksheet-progress-ui.test.mjs
+            tests/worksheet-progress-ui.test.mjs \
+            tests/article-locator.test.mjs \
+            tests/customs-article-locator-ui.test.mjs
       # Local OCR fallback (extractor v29): tesseract + poppler render scanned
       # PDFs offline; Pillow builds the synthetic scanned fixture.
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core antiword
