@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';
+test('native preview invalidation rejects a late response body and uses only renewed credentials',async t=>{
+ const previous=globalThis.window;globalThis.window={__TAURI_INTERNALS__:{},location:{hash:'#pilot=intake&native=preview'}};t.after(()=>{globalThis.window=previous;});
+ const source=ts.transpileModule(readFileSync('src/api.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;const api=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ let release,started;const ready=new Promise(r=>{started=r;});t.mock.method(globalThis,'fetch',async(_url,options)=>{assert.equal(options.headers.Authorization,'Bearer first');return {ok:true,json:()=>new Promise(r=>{release=r;started();})};});api.resetNativePilotConnection({url:'http://127.0.0.1:50000',token:'first'});const pending=api.api('intake.status');await ready;api.resetNativePilotConnection();release({original:'old text'});await assert.rejects(pending,/sesión local cambió/);
+ t.mock.method(globalThis,'fetch',async(_url,options)=>{assert.equal(options.headers.Authorization,'Bearer second');return {ok:true,json:async()=>({saved:true})};});api.resetNativePilotConnection({url:'http://127.0.0.1:50001',token:'second'});assert.deepEqual(await api.api('intake.status'),{saved:true});
+});

@@ -11,9 +11,10 @@ test('fixed hidden native dialog keeps secrets out of argv/env and clears captur
 test('private pipe creates real encrypted session, rotates connection and confirms lock before replying',async t=>{
  const buffers=[],prompts=[];const p=await setup(t,async kind=>{prompts.push(kind);const b=secret();buffers.push(b);return b;});p.send('status');assert.equal((await p.next()).result.state,'locked');assert.deepEqual(await readdir(p.root),[]);
  p.send('create');const first=(await p.next(2)).result;assert.equal(first.state,'unlocked');assert.ok(buffers.every(b=>b.every(x=>x===0)));assert.deepEqual(prompts,['create','confirm']);assert.ok(!JSON.stringify(p.rows).includes(secret().toString()));
- p.send('lock');assert.equal((await p.next(3)).result.state,'locked');await assert.rejects(fetch(first.connection.url+'/api'));
- p.send('unlock');const second=(await p.next(4)).result;assert.notEqual(second.connection.token,first.connection.token);
- p.send('dispose');assert.equal((await p.next(5)).result.state,'disposed');assert.deepEqual(await p.done,{closed:true,failed:false});await assert.rejects(fetch(second.connection.url+'/api'));
+ p.send('unlock');assert.equal((await p.next(3)).ok,false);assert.deepEqual(prompts,['create','confirm']);
+ p.send('lock');assert.equal((await p.next(4)).result.state,'locked');await assert.rejects(fetch(first.connection.url+'/api'));
+ p.send('unlock');const second=(await p.next(5)).result;assert.notEqual(second.connection.token,first.connection.token);
+ p.send('dispose');assert.equal((await p.next(6)).result.state,'disposed');assert.deepEqual(await p.done,{closed:true,failed:false});await assert.rejects(fetch(second.connection.url+'/api'));
 });
 test('protocol rejects malformed, extra, duplicate, unknown operations without invoking hidden input',async t=>{
  let calls=0;const p=await setup(t,async()=>{calls++;return secret();});

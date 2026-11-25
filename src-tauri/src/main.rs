@@ -27,6 +27,11 @@ fn connection_origin(u:&tauri::Url)->bool {
  && matches!(u.host_str(),Some("localhost")|Some("127.0.0.1")) && u.port()==Some(1420)
  && u.username().is_empty() && u.password().is_none())
 }
+#[cfg(feature="native-pilot-preview")]
+mod native_pilot;
+#[cfg(feature="native-pilot-preview")]
+fn main(){native_pilot::run();}
+#[cfg(not(feature="native-pilot-preview"))]
 fn main() {
  let app = tauri::Builder::default().setup(|app| {
   let base = app.path().resource_dir()?.join("app");

@@ -11,11 +11,17 @@ export interface AppState { workspace: null | { id: string; name: string; practi
 export interface EngineStatus { state?: string; status?: string; model?: string; message?: string; error?: string; progress?: number | string; supported?: boolean; ready?: boolean; hardware?: { platform?: string; arch?: string; memoryGB?: number; totalMemoryGB?: number }; [key: string]: unknown }
 export const emptyState: AppState = { workspace: null, matters: [], documents: [], answers: [], chatTurns: [], feedback: [], proposals: [], tasks: [], skills: [], sources: [] };
 let connection: Promise<{ url: string; token: string }> | null = null;
+let nativeEpoch=0;
+function nativePreview(){return '__TAURI_INTERNALS__' in window&&window.location.hash==='#pilot=intake&native=preview';}
+export function resetNativePilotConnection(value?:{url:string;token:string}){
+ if(!nativePreview())throw new Error('Vista nativa no disponible.');
+ nativeEpoch++;connection=value?Promise.resolve(value):null;
+}
 async function getConnection() {
   if (!connection) connection = (async () => {
     if ('__TAURI_INTERNALS__' in window) {
       const { invoke } = await import('@tauri-apps/api/core');
-      return invoke<{url: string; token: string}>('connection');
+      return invoke<{url: string; token: string}>(nativePreview()?'native_connection':'connection');
     }
     const hash = window.location.hash.slice(1);
     const token = new URLSearchParams(hash).get('token') || (hash && !hash.includes('=') ? hash : '');
@@ -43,9 +49,12 @@ export async function openDofReviewCapture(): Promise<void> {
   await invoke('open_review_capture');
 }
 async function request(path: string, body: unknown, signal?: AbortSignal) {
+  const epoch=nativeEpoch;
   const { url, token } = await getConnection();
+  if(epoch!==nativeEpoch)throw new Error('La sesión local cambió.');
   if (!token) throw new Error('No se recibió la clave de esta sesión. Abre Rejon.AI desde su lanzador local.');
   const response = await fetch(`${url}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(body), signal });
+  if(epoch!==nativeEpoch)throw new Error('La sesión local cambió.');
   if (!response.ok) {
     const error = await response.json().catch(() => ({})) as { error?: string; message?: string };
     throw new Error(error.error || error.message || `El servicio local respondió con el código ${response.status}.`);
@@ -53,7 +62,8 @@ async function request(path: string, body: unknown, signal?: AbortSignal) {
   return response;
 }
 export async function api<T = unknown>(action: string, payload: unknown = {}, signal?: AbortSignal): Promise<T> {
-  try { return await (await request('/api', { action, payload }, signal)).json() as T; }
+  const epoch=nativeEpoch;
+  try { const value=await (await request('/api', { action, payload }, signal)).json() as T;if(epoch!==nativeEpoch)throw new Error('La sesión local cambió.');return value; }
   catch (error) {
     // Keep runtime diagnostics out of product UI, including errors thrown during setup.
     if (action.startsWith('engine.')) throw new Error('No se pudo completar la operación de Rejon.AI. Actualiza el estado y vuelve a intentarlo.');

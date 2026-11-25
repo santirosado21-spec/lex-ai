@@ -1,0 +1,6 @@
+{
+  "identifier": "mx.lexai.nativepilot.preview",
+  "productName": "Rejon Piloto Preview",
+  "bundle": {"active": false},
+  "app": {"windows": [{"label":"main","title":"Rejon Piloto Preview","width":1100,"height":800,"minWidth":390,"minHeight":650,"url":"index.html#pilot=intake&native=preview"}]}
+}

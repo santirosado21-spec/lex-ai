@@ -15,6 +15,7 @@ export async function runNativePilotPipe({input,output,root,exercise,readSecret=
   let passphrase,confirmation;
   try{
    if(op==='create'||op==='unlock'){
+    if(session.status().state!=='locked')throw Error('invalid_state');
     passphrase=await readSecret(op==='create'?'create':'unlock',{signal:abort.signal});
     if(ended)throw Error('closed');
     if(op==='create')confirmation=await readSecret('confirm',{signal:abort.signal});
