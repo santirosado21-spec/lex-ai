@@ -539,3 +539,5 @@ body .app-shell.macos-workspace>.sidebar .sidebar-bottom>p{color:var(--rail-mute
 @media (prefers-color-scheme:dark){:root:not([data-theme='light']){--rail-bg:#2A201F;--rail-strong:#F6F2EF;--rail-text:#D9CCC7;--rail-muted:#B5A7A3;--rail-hover:rgba(246,242,239,.06);--rail-active:rgba(246,242,239,.12);--rail-line:#4A3A38;--rail-focus:#EBDDD7}}
 .warning-text{color:var(--warn)!important;font-weight:500}
 .monitor-badge.warning{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+
+.setup-next{margin:20px auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:20px;max-width:960px}.setup-next .app-cover-steps{margin:0 0 14px}.setup-next h2{margin:0 0 8px}.setup-next p{max-width:72ch}.setup-next .app-cover-steps li{flex-wrap:wrap}.setup-next .app-cover-steps small{font-size:10px}
