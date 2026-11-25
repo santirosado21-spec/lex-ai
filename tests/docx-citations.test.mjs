@@ -30,3 +30,30 @@ test('DOCX uses real Word styles, footnotes, source table, headers and preserved
  for(const citation of citations){assert.ok(footnotes.includes(citation.url),'official URL retained in footnote');assert.ok(footnotes.includes(citation.version));assert.ok(footnotes.includes(citation.retrievedAt));assert.ok(footnotes.includes(citation.status));assert.ok(xml.includes(citation.title));assert.ok(relationships.includes(citation.url),'table contains an actual hyperlink target');}
  assert.match(xml,/Borrador sujeto a revisión profesional/);assert.match(xml,/No sustituye el análisis del abogado responsable/);const reopened=await mammoth.extractRawText({buffer:bytes});assert.equal(reopened.messages.length,0);assert.match(reopened.value,/Fuentes recuperadas/);assert.match(reopened.value,/Borrador sujeto a revisión profesional/);assert.deepEqual((await service.dispatch('state')).answers.find(item=>item.id===answer.id),original,'export does not mutate stored answer or source identifiers');
 });
+
+test('heading citations become footnotes while heading styles and literal unknown brackets survive',async()=>{
+ const {buildAnswerDocx}=await import('../server/docx-export.mjs');
+ const answer={question:'Comprobar referencias en encabezados',createdAt:'2026-11-24T20:00:00Z',text:'# Alcance [S1]\n## Cotejo [S1]\n### Pendiente [S2]\n## Encabezado literal [sin-cita]\nRevisar el soporte [S2].',citations:[
+  {id:'S1',title:'Fuente sintética uno',url:'https://www.diputados.gob.mx/test-only',version:'muestra-uno',retrievedAt:'2026-11-24'},
+  {id:'S2',title:'Fuente sintética dos',url:'https://www.diputados.gob.mx/test-only-two',version:'muestra-dos',retrievedAt:'2026-11-24'},
+ ]};
+ const before=structuredClone(answer);
+ const buffer=await buildAnswerDocx({firm:{name:'Despacho sintético'},matter:{title:'Cotejo de encabezados'},answer});
+ const zip=await unzip(buffer),xml=decode(zip.get('word/document.xml')),footnotes=decode(zip.get('word/footnotes.xml'));
+ const paragraphs=[...xml.matchAll(/<w:p(?: [^>]*)?>[\s\S]*?<\/w:p>/g)].map(m=>m[0]);
+ for(const [label,level,id] of [['Alcance',1,1],['Cotejo',2,2],['Pendiente',3,3]]){
+  const paragraph=paragraphs.find(p=>p.includes('w:pStyle w:val="Heading'+level+'"')&&p.includes('>'+label));
+  assert.ok(paragraph);assert.match(paragraph,new RegExp('w:pStyle w:val="Heading'+level+'"'));
+  assert.ok(paragraph.includes('w:footnoteReference w:id="'+id+'"'));
+  assert.ok(!/\[S[12]\]/.test(paragraph));
+  assert.ok(!paragraph.includes('w:sz')&&!paragraph.includes('w:rFonts'),'heading runs inherit the existing heading style');
+ }
+ assert.ok(xml.includes('[sin-cita]'));
+ assert.equal((xml.match(/<w:footnoteReference /g)??[]).length,4);
+ assert.ok(footnotes.includes('muestra-uno')&&footnotes.includes('muestra-dos')&&footnotes.includes('Ibíd.'));
+ assert.deepEqual(answer,before);
+ if(process.env.REJON_HEADING_EVIDENCE_DIR){
+  const {mkdir,writeFile}=await import('node:fs/promises');const {join}=await import('node:path');
+  await mkdir(process.env.REJON_HEADING_EVIDENCE_DIR,{recursive:true});await writeFile(join(process.env.REJON_HEADING_EVIDENCE_DIR,'heading.docx'),buffer);
+ }
+});

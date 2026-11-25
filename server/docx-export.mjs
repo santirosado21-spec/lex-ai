@@ -59,16 +59,16 @@ export async function buildAnswerDocx({firm,matter,answer,timeZone='America/Mexi
     footnotes[id]={children:lines.map(([text,bold,color],i)=>new Paragraph({spacing:{after:i===lines.length-1?0:45,line:210},children:[new TextRun({text,font:BODY_FONT,size:18,bold,color})]}))};
     return id;
   };
-  const citationRuns=text=>{
+  const citationRuns=(text,run=bodyRun)=>{
     const runs=[];let cursor=0;
     for(const match of text.matchAll(/\[([^\]\n]+)\]/g)){
       const index=match.index??0,id=match[1],citationNumber=citationNumbers.get(id);
-      if(index>cursor)runs.push(new TextRun({...bodyRun,text:text.slice(cursor,index)}));
+      if(index>cursor)runs.push(new TextRun({...run,text:text.slice(cursor,index)}));
       if(citationNumber)runs.push(new FootnoteReferenceRun(registerFootnote(citationNumber)));
-      else runs.push(new TextRun({...bodyRun,text:match[0]}));
+      else runs.push(new TextRun({...run,text:match[0]}));
       cursor=index+match[0].length;
     }
-    if(cursor<text.length||!runs.length)runs.push(new TextRun({...bodyRun,text:text.slice(cursor)}));
+    if(cursor<text.length||!runs.length)runs.push(new TextRun({...run,text:text.slice(cursor)}));
     return runs;
   };
   let listInstance=0,prevNumbered=false;
@@ -91,7 +91,7 @@ export async function buildAnswerDocx({firm,matter,answer,timeZone='America/Mexi
     const heading=/^(#{1,3})\s+(.+)$/u.exec(line);
     if(heading){
       const levels=[HeadingLevel.HEADING_1,HeadingLevel.HEADING_2,HeadingLevel.HEADING_3];
-      analysisParagraphs.push(new Paragraph({text:heading[2],heading:levels[heading[1].length-1]}));
+      analysisParagraphs.push(new Paragraph({heading:levels[heading[1].length-1],children:citationRuns(heading[2],{})}));
       continue;
     }
     analysisParagraphs.push(new Paragraph({...bodyParagraph,children:citationRuns(line)}));
