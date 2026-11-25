@@ -1,3 +1,4 @@
+import {compareTexts} from './doc-compare.mjs';
 import {searchCustomsPassages} from './corpus/customs-search.mjs';
 import {exportWorksheetPending} from './worksheet-pending-export.mjs';
 import {productOriginLookup} from './corpus/product-origin.mjs';
@@ -488,6 +489,19 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      store.put('intake-pilot',{...saved.intake,comparisonPair:ids.length?all.filter(row=>ids.includes(row.id)).map(row=>row.id):null});
      return status();
     });
+   }
+   case 'intake.compareVersions': {
+    exactFields(payload,['ids']);
+    const saved=current(),ids=payload.ids;
+    if(!saved||!store.protectedRecords||!Array.isArray(ids)||ids.length!==2||new Set(ids).size!==2||!ids.every(id=>typeof id==='string'))
+     throw Error('Selecciona dos documentos distintos del expediente cifrado.');
+    const sources=caseSources(saved.intake);
+    const selected=ids.map(id=>{const row=sources.find(item=>item.id===id);if(!row)throw Error('Documento fuera de este expediente.');return row;});
+    const opened=selected.map(row=>openReviewedDocument(row.document,saved.firm.id,saved.entry.id).original);
+    const documents=selected.map((row,i)=>({id:row.id,label:row.label,sha256:createHash('sha256').update(opened[i]).digest('hex'),characters:opened[i].length}));
+    const result=compareTexts(opened[0],opened[1]);
+    store.audit('intake.local.compareVersions',saved.entry.id);
+    return {documents,result};
    }
    case 'intake.exportSourceComparison': {
     exactFields(payload,[]);

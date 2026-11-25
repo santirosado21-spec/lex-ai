@@ -1,3 +1,4 @@
+import IntakeVersionComparison from './IntakeVersionComparison';
 import {useState} from 'react';
 import {Download,Files,Plus} from 'lucide-react';
 import LocalIntakeImport from './LocalIntakeImport';
@@ -52,6 +53,7 @@ export default function IntakeSourceFiles({sources,pair,disabled,onSave,onCompar
      <label>Segundo documento<select value={second} disabled={busy} onChange={e=>setRight(e.target.value)}>{options}</select></label></div>
     <div className="rp-actions"><button type="button" className="rp-primary" disabled={busy||!first||!second||first===second} onClick={()=>void compare([first,second])}>Cotejar documentos</button>
      {pair&&<button type="button" className="rp-quiet" disabled={busy} onClick={()=>void compare([])}>Volver al soporte inicial</button>}</div>
+    <IntakeVersionComparison key={JSON.stringify([first,second])} first={first} second={second} disabled={busy}/>
    </fieldset>}
    {message&&<p role="status">{message}</p>}
   </div>}

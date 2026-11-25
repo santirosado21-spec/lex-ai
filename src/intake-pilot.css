@@ -301,3 +301,12 @@
 }
 .rp-support-search{display:grid;gap:.5rem;margin-top:.8rem}
 .rp-private-review mark[aria-current=true]{outline:2px solid #705131;background:#f2dfb9;color:#35291e}
+
+.rp-version-comparison code{overflow-wrap:anywhere}
+.rp-version-paragraph{border-top:1px solid var(--rp-line);padding:.5rem 0}
+.rp-version-paragraph p{white-space:pre-wrap;overflow-wrap:anywhere}
+.rp-version-paragraph ins{background:#e3f2e5;color:#174322;text-decoration:underline}
+.rp-version-paragraph del{background:#f8e5e5;color:#7b2525;text-decoration:line-through}
+
+.rp-version-title{font-size:1.35rem;margin:1rem 0 .5rem}
+.rp-version-comparison{margin-top:1rem}
