@@ -29,11 +29,17 @@ test('law passage search reaches pinned evidence, its article and existing quest
   const article=heading.locator('..');await expect(article.locator('details[open]')).toContainText(hit.text);
   await article.getByRole('button',{name:'Preparar consulta de este artículo'}).click();
   await expect(page.getByLabel('Consulta preparada')).toHaveText(JSON.stringify({article:hit.article,topic:''}));
+  await query.fill('vinculación');await query.press('Enter');
+  await expect(results).toContainText('Artículo 67');await expect(results).toContainText('siempre que concurran');await expect(results).toContainText('artículo 71');
+  await results.getByRole('button',{name:'Ver pasaje en el artículo 67',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Artículo 67',exact:true})).toBeVisible();
+  await page.getByRole('heading',{name:'Artículo 67',exact:true}).locator('..').getByRole('button',{name:'Preparar consulta de este artículo'}).click();
+  await expect(page.getByLabel('Consulta preparada')).toHaveText(JSON.stringify({article:'67',topic:''}));
   const evidence=process.env.REJON_UI_EVIDENCE_DIR||path.join(tmpdir(),'rejon-customs-search');await mkdir(evidence,{recursive:true});
   await page.screenshot({path:path.join(evidence,'search-desktop.png'),fullPage:true});
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(evidence,'search-narrow.png'),fullPage:true});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await query.fill('zzzterminoinexistente');await query.press('Enter');await expect(results.getByRole('status')).toContainText('No demuestra ausencia en la ley');
-  assert.deepEqual(errors,[]);assert.deepEqual(calls,['intake.customsDirectory','intake.searchCustomsPassages','intake.searchCustomsPassages']);
+  assert.deepEqual(errors,[]);assert.deepEqual(calls,['intake.customsDirectory','intake.searchCustomsPassages','intake.searchCustomsPassages','intake.searchCustomsPassages']);
  }finally{await browser.close();await server.close();}
 });
