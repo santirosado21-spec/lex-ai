@@ -31,3 +31,24 @@ test('billing real component never renders delayed matter A resolution inside se
  const evidence=process.env.REJON_UI_EVIDENCE_DIR;if(evidence){await mkdir(evidence,{recursive:true});await page.screenshot({path:path.join(evidence,'billing-scope-desktop.png'),fullPage:true});await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(evidence,'billing-scope-narrow.png'),fullPage:true});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
  }finally{for(const release of manualReleases)release();releaseA?.();releaseWrite?.();await browser?.close();await server?.close();await rm(cacheDir,{recursive:true,force:true});}
 });
+
+for(const [timezoneId,expectedDay] of [['America/Mexico_City','2026-11-24'],['Asia/Tokyo','2026-11-25']])test(`billing civil dates remain exact and default follows browser day in ${timezoneId}`,async()=>{
+ const root=fileURLToPath(new URL('..',import.meta.url)),cacheDir=await mkdtemp(path.join(tmpdir(),'billing-date-'));let server,browser;
+ try{
+ server=await createServer({root,cacheDir,configFile:false,plugins:[react()],optimizeDeps:{entries:['tests/fixtures/billing-scope/index.html']},server:{host:'127.0.0.1',port:0,fs:{allow:[root,await realpath(path.join(root,'node_modules'))]}},logLevel:'error'});await server.listen();let options={headless:true};try{await access(chromium.executablePath());}catch{options.channel='chrome';}browser=await chromium.launch(options);const page=await browser.newPage({viewport:{width:1280,height:900},timezoneId}),writes=[];
+ await page.clock.install({time:new Date('2026-11-25T02:30:00Z')});
+ const report={rows:[],totals:{minutes:0,amountCentavos:0,unbilledCentavos:0,billedCentavos:0}};
+ await page.route('**/api',async route=>{const {action,payload}=route.request().postDataJSON();let result;
+ if(action==='time.active')result=null;else if(action==='time.list')result=[{id:'date-entry',matterId:'a',matterTitle:'Asunto A sintético',client:'Cliente A',description:'Registro instantáneo',durationMinutes:1,billedMinutes:1,amountCentavos:0,rateCentavos:0,currency:'MXN',billingStatus:'unbilled',createdAt:'2026-11-25T02:30:00Z',source:'manual'}];else if(action==='billing.report')result=report;else if(action==='statistics.get')result={byStatus:{abierto:1,'en-espera':0,resuelto:1},byOutcome:{acuerdo:1},averageDurationDays:1,pendingOpen:0,pendingTasks:0,pendingReminders:0};
+ else if(action==='billing.arrangement.get')result={arrangement:'hourly',hourlyRateCentavos:12000,billingIncrementMinutes:6};
+ else if(action==='resolution.get')result=payload.matterId==='a'?{status:'resuelto',outcome:'acuerdo',resolutionDate:'2026-11-24',notes:'Fecha civil elegida'}:{status:'abierto',outcome:null,resolutionDate:null,notes:null};
+ else if(action==='resolution.close'){writes.push(payload);result={};}else throw Error('Unexpected action '+action);await route.fulfill({json:result});});
+ await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/tests/fixtures/billing-scope/index.html#token=synthetic`);
+ const civil=page.getByText('Fecha civil elegida',{exact:false});await expect(civil).toContainText('24 nov 2026');
+ // An instant is still rendered in the browser timezone, unlike a civil date.
+ const instantLabel=expectedDay==='2026-11-24'?'24 nov 2026':'25 nov 2026';await expect(page.getByRole('row').filter({hasText:'Registro instantáneo'})).toContainText(instantLabel);
+ await page.getByRole('combobox',{name:/^Asunto/}).selectOption('b');const date=page.locator('input[type=date]');await expect(date).toHaveValue(expectedDay);await expect(page.getByRole('button',{name:'Registrar resolución',exact:true})).toBeEnabled();
+ await date.fill('2024-02-29');await page.getByRole('button',{name:'Registrar resolución',exact:true}).click();await expect.poll(()=>writes.length).toBe(1);assert.equal(writes[0].date,'2024-02-29');assert.equal(writes[0].matterId,'b');
+ const evidence=process.env.REJON_UI_EVIDENCE_DIR;if(evidence){await mkdir(evidence,{recursive:true});await page.getByRole('combobox',{name:/^Asunto/}).selectOption('a');await expect(civil).toContainText('24 nov 2026');await page.screenshot({path:path.join(evidence,`billing-date-${timezoneId.replaceAll('/','-')}.png`),fullPage:true});}
+ }finally{await browser?.close();await server?.close();await rm(cacheDir,{recursive:true,force:true});}
+});
