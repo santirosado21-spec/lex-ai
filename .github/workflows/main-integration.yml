@@ -50,6 +50,10 @@ jobs:
       # Node pinned >=22.23: earlier 22.x builds of node:sqlite lack FTS5, which
       # buildPublicLibrary and the API workflow smoke require. Keep this gate explicit.
       - name: Portable source contracts from a clean checkout
+        # The extractor already runs up to three OCR pages concurrently. Bound
+        # OpenMP per tesseract process to avoid nested CPU oversubscription.
+        env:
+          OMP_THREAD_LIMIT: '1'
         run: |
           # Score-only tolerance is explicit; no frozen-float test exclusion.
           node --test \
