@@ -17,10 +17,12 @@ test('worksheet shows saved manual progress and pending navigation, updating onl
  try{
   const page=await browser.newPage({viewport:{width:1280,height:900},reducedMotion:'reduce'}),errors=[];
   page.on('pageerror',error=>errors.push(error.message));
+  let failSave=false,failRead=false;
   const statuses=['Por revisar','Solicitado','Recibido','Cotejado','No aplica'];
   let sheet={title:'Control de valoración',monetary:true,statuses,proposals:{},rows:statuses.map((status,i)=>({id:String(i),base:String(i),revision:0,label:'Concepto sintético '+i,check:'Revisión documental de prueba.',source:'Fuente sintética',status,amount:'',currency:'',reference:'',note:''}))};
   await page.route('**/api',async route=>{
    const {action,payload}=route.request().postDataJSON();
+   if((action==='intake.saveWorksheetRow'&&failSave)||(action==='intake.readWorksheet'&&failRead)){await route.fulfill({status:500,json:{error:'Fallo sintético de control.'}});return;}
    if(action==='intake.saveWorksheetRow') sheet={...sheet,rows:sheet.rows.map(row=>row.id===payload.id?{...row,...payload.values,revision:row.revision+1}:row)};
    else assert.equal(action,'intake.readWorksheet');
    await route.fulfill({json:sheet});
@@ -32,11 +34,32 @@ test('worksheet shows saved manual progress and pending navigation, updating onl
   await page.getByText('Ver renglones por atender',{exact:true}).click();
   await page.getByRole('button',{name:'Concepto sintético 2 · Recibido'}).click();
   await expect(page.getByRole('combobox').nth(0)).toHaveValue('2');
+  const blocked=()=>page.evaluate(()=>{const e=new Event('beforeunload',{cancelable:true});window.dispatchEvent(e);return e.defaultPrevented;});
+  await expect.poll(blocked).toBe(false);
   await page.getByRole('combobox').nth(1).selectOption('Cotejado');
+  await expect.poll(blocked).toBe(true);
+  const reloadDialog=page.waitForEvent('dialog');
+  const reload=page.reload({timeout:1000}).catch(error=>assert.match(error.message,/ERR_ABORTED|Timeout 1000ms exceeded/));
+  const dialog=await reloadDialog;assert.equal(dialog.type(),'beforeunload');await dialog.dismiss();await reload;
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.getByRole('button',{name:'Descartar y recargar'}).click();
+  await expect(page.getByRole('combobox').nth(1)).toHaveValue('Cotejado');
+  failSave=true;
+  await page.getByRole('button',{name:'Guardar renglón',exact:true}).click();
+  await expect(page.getByRole('alert')).toContainText('Fallo sintético');
+  await expect.poll(blocked).toBe(true);failSave=false;
+  const dirtyEvidence=process.env.REJON_UI_EVIDENCE_DIR||path.join(tmpdir(),'rejon-worksheet-evidence');
+  await mkdir(dirtyEvidence,{recursive:true});
+  await page.screenshot({path:path.join(dirtyEvidence,'dirty-desktop.png'),fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(dirtyEvidence,'dirty-narrow.png'),fullPage:true});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.setViewportSize({width:1280,height:900});
   await expect(progress).toContainText('Por atender: 3');
   await expect(progress).toContainText('Hay cambios sin guardar');
   await expect(page.getByRole('button',{name:'Concepto sintético 0 · Por revisar'})).toBeDisabled();
   await page.getByRole('button',{name:'Guardar renglón',exact:true}).click();
+  await expect.poll(blocked).toBe(false);
   await expect(progress).toContainText('Por atender: 2 de 5 renglones · Cotejados: 2 · No aplica: 1.');
   await expect(progress).not.toContainText('Hay cambios sin guardar');
   await page.getByRole('button',{name:'Control de valoración',exact:true}).click();
@@ -50,6 +73,22 @@ test('worksheet shows saved manual progress and pending navigation, updating onl
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:path.join(evidence,'progress-narrow.png'),fullPage:true});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.getByRole('combobox').nth(1).selectOption('Por revisar');
+  failRead=true;
+  page.once('dialog',dialog=>dialog.accept());
+  await page.getByRole('button',{name:'Descartar y recargar'}).click();
+  await expect(page.getByRole('alert')).toContainText('No se pudo abrir');
+  await expect(page.getByRole('combobox').nth(1)).toHaveValue('Por revisar');
+  await expect.poll(blocked).toBe(true);
+  failRead=false;
+  page.once('dialog',dialog=>dialog.accept());
+  await page.getByRole('button',{name:'Descartar y recargar'}).click();
+  await expect(page.getByRole('combobox').nth(1)).toHaveValue('Cotejado');
+  await expect.poll(blocked).toBe(false);
+  await page.getByRole('combobox').nth(1).selectOption('Recibido');
+  await expect.poll(blocked).toBe(true);
+  await page.getByRole('combobox').nth(1).selectOption('Cotejado');
+  await expect.poll(blocked).toBe(false);
   assert.deepEqual(errors,[]);
  }finally{await browser.close();await server.close();}
 });

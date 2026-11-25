@@ -1,4 +1,4 @@
-import {useRef,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {ClipboardList} from 'lucide-react';
 import {api,downloadFile} from './api';
 import {worksheetProgress} from './worksheet-progress';
@@ -27,6 +27,18 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
  const proposal=candidates[candidate];
  const progress=sheet?worksheetProgress(sheet.rows):null;
  const title=task==='lectura-valoracion'?'Control de valoración':'Control del pedimento';
+
+ useEffect(()=>{
+  if(!editing)return;
+  const protectEdit=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue='';};
+  window.addEventListener('beforeunload',protectEdit);
+  return ()=>window.removeEventListener('beforeunload',protectEdit);
+ },[editing]);
+
+ function discard(){
+  if(editing&&!window.confirm('¿Descartar los cambios sin guardar de este renglón y recargar el control?'))return;
+  void load();
+ }
 
  async function load(){
   setPending(true);setError('');
@@ -71,7 +83,7 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
     <h3>Seguimiento documental</h3>
     <p role="status">Por atender: {progress.pending.length} de {progress.total} renglones · Cotejados: {progress.checked} · No aplica: {progress.notApplicable}.</p>
     <small>Estados guardados por el usuario. No acreditan cumplimiento jurídico ni validación automática.</small>
-    {editing&&<p>Hay cambios sin guardar. El resumen muestra la última versión guardada.</p>}
+    {editing&&<p>Hay cambios sin guardar. Guarda antes de cerrar o recargar esta ventana. El resumen muestra la última versión guardada.</p>}
     {progress.unknown>0&&<p role="alert">{progress.unknown} renglones tienen un estado no reconocido. Revisa el control antes de exportar.</p>}
     {progress.pending.length>0?<details><summary>Ver renglones por atender</summary><ul>
      {progress.pending.map(item=><li key={item.id}><button type="button" className="rp-quiet" disabled={!!editing} onClick={()=>{setSelected(item.id);setCandidate(0);setMessage('');setError('');}}>{item.label} · {item.status}</button></li>)}
@@ -97,7 +109,7 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
    <label>Observación<input maxLength={300} value={values.note} onChange={e=>change('note',e.target.value)}/></label>
    <div className="rp-actions"><button className="secondary" type="button" disabled={!editing} onClick={()=>void save()}>Guardar renglón</button>
     {editing&&row.revision>0&&<button type="button" className="secondary" onClick={()=>void save(true)}>Guardar como otro renglón</button>}
-    {editing&&<button type="button" className="rp-quiet" onClick={()=>void load()}>Descartar y recargar</button>}</div>
+    {editing&&<button type="button" className="rp-quiet" onClick={discard}>Descartar y recargar</button>}</div>
    <button className="rp-quiet" type="button" disabled={!!editing} onClick={()=>void download()}>Exportar control a Excel</button>
    {message&&<small role="status">{message}</small>}
   </fieldset>}
