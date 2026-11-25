@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 const root=new URL('../../resources/trade/',import.meta.url);
 const pdfName='ley-aduanera-2025.pdf';
 const pdfHash='43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d';
-const passageHash='300144a3d2f557b8ae2ff6ff286b87d4f4df4295eafdd79de1a93bc9991145d5';
+const passageHash='4f7b300740c0a5a661b1cac30c6dd83bfa631b4ca2079e31ba7b3a706563146a';
 const official='https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf';
 export const customsPdfPath='/fuentes/'+pdfHash+'.pdf';
 export const customsLawId='MX-FED-LADUA';
@@ -54,9 +54,12 @@ export function customsPassage(article){
   text:passages.map(p=>'P. '+p.page+' · '+p.locator+'\n'+p.text).join('\n\n'),
   summary:'La Cámara registra una reforma posterior publicada el 23-10-2026. Coteja los transitorios y la fecha de la operación.'});
  const firstFraction=article==='65'?passages.find(p=>p.locator==='fracción I, encabezado'):null;
+ const valuationContext=['66','67'].includes(article)?[passages[0].text,passages.at(-1).text].join('\n\n'):null;
+ const excludedHeading=article==='66'?passages.find(p=>p.locator==='fracción II, encabezado').text:null;
  return {ref,passages:passages.map(p=>({quote:p.text,locator:p.locator+(p.endPage?' · pp. '+p.page+'–'+p.endPage:' · p. '+p.page),
   ...(['97','117'].includes(article)&&p!==passages[0]?{condition:passages[0].text}:{}),
-  ...(firstFraction&&p.locator==='fracción I, inciso d)'?{condition:firstFraction.text}:{})}))};
+  ...(firstFraction&&p.locator==='fracción I, inciso d)'?{condition:firstFraction.text}:{}),
+  ...(valuationContext?{condition:valuationContext+(excludedHeading&&p.locator.startsWith('fracción II, inciso')?'\n\n'+excludedHeading:'')}:{})}))};
 }
 
 const regulationHash='bcdfcd9073014aec4aefbacc01c9dd5b1f97f0da0c4556f0f506d20f12d77812';

@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-11-25T18:48:15.875109+00:00",
+  "purpose": "source comparison only; no legal applicability determination",
+  "installedPdfSha256": "43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d",
+  "observedPdfSha256": "c7338696813eb8b3bd875340cd97e8c37d7c5eb9e8708df4d60341b8fd4c3ac9",
+  "sourceUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf",
+  "historyUrl": "https://www.diputados.gob.mx/LeyesBiblio/ref/ladua.htm",
+  "decreeUrl": "https://www.diputados.gob.mx/LeyesBiblio/ref/ladua/LAdua_ref21_23oct26.pdf",
+  "comparisonNormalization": "Poppler layout; article headings to next article; remove running header and page footer; collapse whitespace. No text paraphrase.",
+  "articles": [
+    {
+      "article": "64",
+      "installedSha256": "d61daf6ed42d1e7e5a9f6a843def987e97a98f2a35980f44796a0c623b513bd0",
+      "installedPage": 46,
+      "currentSha256": "d61daf6ed42d1e7e5a9f6a843def987e97a98f2a35980f44796a0c623b513bd0",
+      "currentPage": 46,
+      "same": true
+    },
+    {
+      "article": "65",
+      "installedSha256": "66f20654143c13b25f3f3e37b766ca79a94fe61d130f649b9f47248331acc0e7",
+      "installedPage": 46,
+      "currentSha256": "66f20654143c13b25f3f3e37b766ca79a94fe61d130f649b9f47248331acc0e7",
+      "currentPage": 46,
+      "same": true
+    },
+    {
+      "article": "66",
+      "installedSha256": "0f5aa310a56382d02007ac0b3eb4a3a966c65bccae9032b531b62d1362feba39",
+      "installedPage": 47,
+      "currentSha256": "0f5aa310a56382d02007ac0b3eb4a3a966c65bccae9032b531b62d1362feba39",
+      "currentPage": 47,
+      "same": true
+    },
+    {
+      "article": "67",
+      "installedSha256": "6e48dd0eb2f4558b6f5403c9b950dac8f28e5d90d7b6993b662b239c5dee8654",
+      "installedPage": 48,
+      "currentSha256": "6e48dd0eb2f4558b6f5403c9b950dac8f28e5d90d7b6993b662b239c5dee8654",
+      "currentPage": 48,
+      "same": true
+    }
+  ]
+}

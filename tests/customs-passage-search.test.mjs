@@ -42,3 +42,29 @@ test('a found article remains available to the existing question-source preparat
  const note=questionPassage(null,{sourceId:selected.source,part:selected.part,angle:'documentos'});
  assert.equal(note.body,hit.text);assert.equal(note.ref.summary,hit.warning);
 });
+
+test('valuation articles66 and67 retain all controlling context in local search and explicit preparation',async()=>{
+ const {questionCandidates}=await import('../server/corpus/intake-question.mjs');
+ const {questionPassage}=await import('../server/corpus/intake-research.mjs');
+ for(const article of ['66','67']){
+  const source=customsPassage(article),row=customsDirectory().find(r=>r.article===article);
+  assert.equal(row.passages.length,article==='66'?8:6);
+  assert.equal(source.ref.pdfSha256,'43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d');
+  for(const [part,p] of source.passages.entries()){
+   assert.ok(p.condition.includes(row.passages[0].text));assert.ok(p.condition.includes(row.passages.at(-1).text));
+   if(article==='66'&&p.locator.startsWith('fracción II, inciso'))assert.ok(p.condition.includes('siempre que se distingan del precio pagado'));
+   const text='Artículo '+article+' de la Ley Aduanera';
+   const candidates=questionCandidates(null,text,[{text}]);assert.ok(candidates.some(r=>r.source==='aduana-'+article&&r.part===part));
+   const prepared=questionPassage(null,{sourceId:'aduana-'+article,part,angle:'documentos'});
+   assert.equal(prepared.body,p.quote);assert.equal(prepared.condition,p.condition);
+   assert.match(prepared.ref.locator,/edición impresa 19-11-2025/);assert.match(prepared.ref.summary,/reforma posterior/);
+  }
+ }
+ assert.ok(searchCustomsPassages('posterioridad').some(r=>r.article==='66'));
+ assert.ok(searchCustomsPassages('vinculación').some(r=>r.article==='67'));
+});
+
+test('adding explicit valuation sources leaves automatic valuation reading restricted to64 and65',async()=>{
+ const {loadTradeReading}=await import('../server/corpus/intake-trade-reading.mjs');
+ assert.deepEqual(loadTradeReading(null,'lectura-valoracion').refs.map(r=>r.article),['64','65']);
+});
