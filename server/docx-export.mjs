@@ -6,27 +6,31 @@ const RULE='D9D9D9';
 const NAVY='18324A';
 
 const safeText=(value,fallback='')=>typeof value==='string'&&value.trim()?value.trim():fallback;
-const dateForDocument=value=>{
+const dateForDocument=(value,timeZone)=>{
+  // A date-only value is already a calendar date, not midnight UTC to shift.
+  if(typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value))return new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(value+'T12:00:00Z'));
   const date=new Date(value);
   if(Number.isNaN(date.getTime()))return safeText(value,'Fecha no disponible');
-  return new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'long',year:'numeric',timeZone:'UTC'}).format(date);
+  return new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'long',year:'numeric',timeZone}).format(date);
 };
 const officialUrl=value=>{
   try {const url=new URL(value);return url.protocol==='https:'?url.href:null;} catch {return null;}
 };
 const sourceLabel=(citation,index)=>`[${index+1}] ${safeText(citation.title,'Fuente recuperada')}${citation.article?` — Artículo ${citation.article}`:''}`;
-const sourceDetails=(citation,answer)=>[
+const sourceDetails=(citation,answer,timeZone)=>[
   `Versión: ${safeText(citation.version,'copia recuperada')}`,
-  `Fecha: ${safeText(citation.retrievedAt,dateForDocument(answer.createdAt))}`,
+  `Fecha: ${safeText(citation.retrievedAt,dateForDocument(answer.createdAt,timeZone))}`,
   `Estado: ${safeText(citation.status,'vigencia no evaluada')}`,
 ].join(' · ');
 
-export async function buildAnswerDocx({firm,matter,answer}) {
+export async function buildAnswerDocx({firm,matter,answer,timeZone='America/Mexico_City'}) {
   const {
     AlignmentType,BorderStyle,Document,ExternalHyperlink,Footer,FootnoteReferenceRun,
     Header,HeadingLevel,LevelFormat,Packer,PageNumber,Paragraph,ShadingType,
     Table,TableCell,TableLayoutType,TableRow,TextRun,VerticalAlign,WidthType,
   }=await import('docx');
+  // Validate explicit configuration even when input is date-only.
+  new Intl.DateTimeFormat('es-MX',{timeZone});
   const citations=Array.isArray(answer.citations)?answer.citations:[];
   const citationNumbers=new Map(citations.map((citation,index)=>[citation.id,index+1]));
   const bodyRun={font:BODY_FONT,size:22,color:INK};
@@ -50,7 +54,7 @@ export async function buildAnswerDocx({firm,matter,answer}) {
     const citation=citations[citationNumber-1],id=++footnoteCount,repeat=firstFootnote.get(citationNumber);
     if(repeat===undefined)firstFootnote.set(citationNumber,id);
     const lines=repeat===undefined
-      ?[[sourceLabel(citation,citationNumber-1),true],[sourceDetails(citation,answer),false],[officialUrl(citation.url)??'Enlace oficial no disponible',false,'0563C1']]
+      ?[[sourceLabel(citation,citationNumber-1),true],[sourceDetails(citation,answer,timeZone),false],[officialUrl(citation.url)??'Enlace oficial no disponible',false,'0563C1']]
       :[[`Ibíd. (véase nota ${repeat}): ${sourceLabel(citation,citationNumber-1)}`,false]];
     footnotes[id]={children:lines.map(([text,bold,color],i)=>new Paragraph({spacing:{after:i===lines.length-1?0:45,line:210},children:[new TextRun({text,font:BODY_FONT,size:18,bold,color})]}))};
     return id;
@@ -106,7 +110,7 @@ export async function buildAnswerDocx({firm,matter,answer}) {
     sourceRows.push(new TableRow({cantSplit:true,children:[
       cell([tableText(sourceLabel(citation,index))],{width:2800}),
       cell([tableText(citation.article,{alignment:AlignmentType.CENTER})],{width:900}),
-      cell([tableText(`${safeText(citation.version,'copia recuperada')}\n${safeText(citation.retrievedAt,dateForDocument(answer.createdAt))}\n${safeText(citation.status,'vigencia no evaluada')}`)],{width:2200}),
+      cell([tableText(`${safeText(citation.version,'copia recuperada')}\n${safeText(citation.retrievedAt,dateForDocument(answer.createdAt,timeZone))}\n${safeText(citation.status,'vigencia no evaluada')}`)],{width:2200}),
       cell([linkParagraph],{width:3300}),
     ]}));
   }
@@ -116,7 +120,7 @@ export async function buildAnswerDocx({firm,matter,answer}) {
     new Paragraph({text:safeText(firm.name,'Despacho'),style:'FirmName'}),
     new Paragraph({text:'Análisis jurídico',heading:HeadingLevel.TITLE}),
     new Paragraph({text:safeText(matter.title,'Asunto sin título'),style:'MatterName'}),
-    new Paragraph({text:`Fecha: ${dateForDocument(answer.createdAt)}`,style:'MatterMeta'}),
+    new Paragraph({text:`Fecha: ${dateForDocument(answer.createdAt,timeZone)}`,style:'MatterMeta'}),
     new Paragraph({text:'Borrador sujeto a revisión profesional',style:'ReviewNotice'}),
     new Paragraph({text:'Consulta',heading:HeadingLevel.HEADING_1}),
     new Paragraph({...bodyParagraph,children:[new TextRun({...bodyRun,text:safeText(answer.question,'Consulta no disponible')})]}),

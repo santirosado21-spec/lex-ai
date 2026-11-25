@@ -6,7 +6,7 @@ const id=value=>typeof value==='string'&&/^[a-zA-Z0-9-]{1,100}$/.test(value);
 const fields=(p,allowed)=>{if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>!allowed.includes(key)))throw Error('Parámetros de escrito inválidos.');};
 const bounded=(value,label,max)=>{if(typeof value!=='string'||!value.trim()||value.length>max||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(value))throw Error(`${label} inválido.`);return value.trim();};
 
-export function createReplyDrafts({store,workspace,matter,openFile,clock=()=>new Date()}){
+export function createReplyDrafts({store,workspace,matter,openFile,clock=()=>new Date(),timeZone='America/Mexico_City'}){
  const stamp=()=>new Date(clock()).toISOString();
  const owner=()=>{const w=workspace();if(!w)throw Error('Primero crea el espacio del despacho.');return w;};
  function source(p){
@@ -58,7 +58,7 @@ export function createReplyDrafts({store,workspace,matter,openFile,clock=()=>new
   const selected=p.version===undefined?snapshot.current:snapshot.versions.find(v=>v.version===p.version);if(!selected)throw Error('Versión no encontrada.');
   const edited=selected.version!==1;
   const answer={...reply,question:selected.title,text:(edited?'BORRADOR EDITADO POR EL USUARIO. Las referencias conservadas pertenecen a la respuesta original; el texto modificado no ha sido comprobado nuevamente.\n\n':'')+selected.text,citations:draft.original.citations,validation:{status:edited?'edited-draft-unverified':reply.validation?.status,citationIntegrity:!edited&&reply.validation?.citationIntegrity===true,requiresLawyerReview:true}};
-  const bytes=await buildAnswerDocx({firm:w,matter:m||{title:'Conversación general del despacho'},answer});
+  const bytes=await buildAnswerDocx({firm:w,matter:m||{title:'Conversación general del despacho'},answer,timeZone});
   store.audit('draft.export',draft.id);return {name:`Rejon-AI-escrito-v${selected.version}.docx`,mime:DOCX_MIME,base64:bytes.toString('base64')};
  }
  function presentMany(replies){

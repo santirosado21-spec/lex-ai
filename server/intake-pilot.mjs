@@ -163,7 +163,7 @@ export function createIntakeGenerator({
  return generate;
 }
 
-export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference}) {
+export function createIntakePilot({store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference,timeZone='America/Mexico_City'}) {
  let articles;
  try { articles=tradeArticles(publicLibrary); } catch { articles=null; }
  const tradeReferences=articles?[...articles,...supportingReferences]:[];
@@ -937,7 +937,7 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const references=storedNote?.references??(task==='trade'?tradeReferences:[]);
     const citations=exportCitations(references);
     const answer={question:storedNote?.title??tasks[task].title,text:payload.format==='xlsx'||payload.format==='pptx'?restored:withWorksheet,citations,createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,worksheet:sheet,support:text.includes('[[SOPORTE]]')&&evidence?.sourceId?[evidence,...evidence.additional??[]]:[],nicos:intake.nicos?.[task]?[intake.nicos[task]]:[],tariffs:intake.tariffs?.[task]?[intake.tariffs[task]]:[]});
+    const file=await exportIntakeDocument(hasFormat?payload.format:'docx',task,{firm,matter:entry,answer,timeZone,worksheet:sheet,support:text.includes('[[SOPORTE]]')&&evidence?.sourceId?[evidence,...evidence.additional??[]]:[],nicos:intake.nicos?.[task]?[intake.nicos[task]]:[],tariffs:intake.tariffs?.[task]?[intake.tariffs[task]]:[]});
     store.audit('intake.local.export',entry.id);
     return file;
    }

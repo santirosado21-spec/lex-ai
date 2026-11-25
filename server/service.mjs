@@ -102,7 +102,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     });
   }
   const chat=createConversation({store,workspace,matter,record:rememberTurn,inference,historyProvider:(scope,threadId,limit=4)=>unifiedHistory(scope,Math.min(64,limit),threadId),memoryProvider:threadMemory.read});
-  const drafts=createReplyDrafts({store,workspace,matter,openFile,clock:plannerNow});
+  const drafts=createReplyDrafts({store,workspace,matter,openFile,clock:plannerNow,timeZone:plannerTimeZone});
   const email=createLocalEmail({store,workspace,matter,transport:mailTransport,clock:plannerNow,schedulerEnabled:false});
   const proactive=createProactiveDrafts({store,workspace,matter,inference,record,clock:plannerNow});
   async function schedulerTick(){return {email:await email.tick(),proactive:await proactive.tick()};}
@@ -312,7 +312,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
     void m;store.audit('answer.export',answer.id);
     return {name:`LEX-analisis-${answer.id.slice(0,8)}.docx`,base64:buffer.toString('base64'),mime:DOCX_MIME};
   }
-  function exportAnswer(p){const answer=scoped('answer',p.answerId,p.matterId);const shown=drafts.presentMany([answer])[0];if(shown.editedDraft)return drafts.export({draftId:shown.editedDraft.id,matterId:p.matterId});const m=matter(p.matterId);return buildAnswerDocx({firm:workspace(),matter:m,answer}).then(buffer=>finishExportAnswer(p,buffer));}
+  function exportAnswer(p){const answer=scoped('answer',p.answerId,p.matterId);const shown=drafts.presentMany([answer])[0];if(shown.editedDraft)return drafts.export({draftId:shown.editedDraft.id,matterId:p.matterId});const m=matter(p.matterId);return buildAnswerDocx({firm:workspace(),matter:m,answer,timeZone:plannerTimeZone}).then(buffer=>finishExportAnswer(p,buffer));}
   function comparedDocuments(p,auditAction='document.compare'){
     if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(key=>!['matterId','documentIdA','documentIdB'].includes(key)))throw new Error('Parámetros de comparación inválidos.');
     const m=matter(p.matterId),a=scoped('document',p.documentIdA,m.id),b=scoped('document',p.documentIdB,m.id);
@@ -380,7 +380,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
       let prepared=null;
       validateAgentRequest({matterId:proposal.matterId,action:proposal.action,args:proposal.args,origin:proposal.origin});
       if(proposal.action==='document.import')prepared=await extractDocument(proposal.args.name,proposal.args.base64);
-      if(proposal.action==='answer.export'){const answer=scoped('answer',proposal.args.answerId,proposal.matterId);prepared=await buildAnswerDocx({firm:workspace(),matter:matter(proposal.matterId),answer});}
+      if(proposal.action==='answer.export'){const answer=scoped('answer',proposal.args.answerId,proposal.matterId);prepared=await buildAnswerDocx({firm:workspace(),matter:matter(proposal.matterId),answer,timeZone:plannerTimeZone});}
       return store.transaction(()=>{
         proposal=store.getAgentProposal(p.proposalId);
         if(!proposal||proposal.workspaceId!==w.id)throw new Error('Propuesta de agente no encontrada.');
@@ -402,7 +402,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
 
   const timeBilling=registerTimeBilling({requireWorkspace,matter,listMatters,clock:plannerNow},store);
   const intake=intakePilot
-    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,generate:intakeGenerate??createIntakeGenerator()})
+    ?createIntakePilot({store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,timeZone:plannerTimeZone,generate:intakeGenerate??createIntakeGenerator()})
     :null;
   async function dispatch(action,p={},{signal}={}) {
     if(typeof action==='string'&&action.startsWith('intake.')){
