@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-25T08:09:55.925190+00:00",
+  "scope": [
+    "MX-CCF-1796",
+    "MX-CCF-1797",
+    "MX-CCF-1832"
+  ],
+  "result": "same-official-edition-observed-not-legal-validity",
+  "officialPdfUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCF.pdf",
+  "officialReformsUrl": "https://www.diputados.gob.mx/LeyesBiblio/ref/ccf.htm",
+  "latestDecreeUrl": "https://www.diputados.gob.mx/LeyesBiblio/ref/ccf/CCF_ref60_14nov25.pdf",
+  "declaredLastReform": "2025-11-14",
+  "pdfSha256": "4d4090f60137ce0d82bf321c24c962f698c407910fc94ebeb34b49d0a4236a76",
+  "pdfMatchesInstalled": true,
+  "articles": [
+    {
+      "id": "MX-CCF-1796",
+      "pdfPage": [
+        175
+      ],
+      "installedPages": [
+        175
+      ],
+      "textEqualAfterWhitespace": true,
+      "installedTextSha256": "3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b",
+      "officialNormalizedSha256": "3bb8233f30339ce6c93452d555b2b0d8bd2751844b4b45a1402775e86fb5ee7b"
+    },
+    {
+      "id": "MX-CCF-1797",
+      "pdfPage": [
+        175
+      ],
+      "installedPages": [
+        175
+      ],
+      "textEqualAfterWhitespace": true,
+      "installedTextSha256": "b3c00a20af5471f7da32c75634ceae74741e23e2437ca4f073ee2941c56f1134",
+      "officialNormalizedSha256": "b3c00a20af5471f7da32c75634ceae74741e23e2437ca4f073ee2941c56f1134"
+    },
+    {
+      "id": "MX-CCF-1832",
+      "pdfPage": [
+        178
+      ],
+      "installedPages": [
+        178
+      ],
+      "textEqualAfterWhitespace": true,
+      "installedTextSha256": "bf7bba2477191a86675deb729d826aa6f3165871202bdb704b6b8474470b2b8e",
+      "officialNormalizedSha256": "bf7bba2477191a86675deb729d826aa6f3165871202bdb704b6b8474470b2b8e"
+    }
+  ],
+  "doesNotEstablish": [
+    "legal-validity",
+    "case-applicability",
+    "jurisdiction",
+    "effective-procedural-regime"
+  ],
+  "historicalCitationPolicy": "No text, edition, source retrieval date or saved citation changed by this recheck."
+}
