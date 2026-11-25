@@ -10,7 +10,7 @@ import {requestedLegalJurisdiction} from '../assistant-router.mjs';
 import {mentionedConcepts,selectedConcepts} from './question-concepts.mjs';
 import {customsPassage,hasCustomsPassage,customsInstrumentForArticle,regulationLawId,regulationDirectory,regulationPassage} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
-import {loadTradeReading,suggestTradeReadings} from './intake-trade-reading.mjs';
+import {loadTradeReading,suggestTradeReadings,tradeReadingNeedsLibrary} from './intake-trade-reading.mjs';
 
 const normalize=value=>value.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
 const ignored=new Set('que quien quienes cuyo cuya con sin los las del una uno unos unas por sus son ser sea hay han mis ese esa entre segun cuanto cuantos para como esta este estos estas debe deben puedo puede pueden sobre tiene tenemos cuando donde revisar acredita acreditar necesito cliente expediente saber corresponde cuales cual aplican aplicar aplicable requisitos excepciones documentos solicita solicitar verificar pregunta deberia documento debo permite permiten comprobar'.split(' '));
@@ -125,6 +125,7 @@ export function questionCandidates(library,original,parts,reference=null,context
  }
  const topics=new Set([...suggestTradeReadings(working).map(t=>t.id),...concepts.map(c=>'lectura-'+c.topic)]);
  for(const topic of topics){
+  if(!library&&tradeReadingNeedsLibrary(topic))continue;
   const reading=loadTradeReading(library,topic);
   for(const ref of reading.refs){
    if(named.lawId&&!ref.id.startsWith(named.lawId+'-'))continue;

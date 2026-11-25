@@ -72,6 +72,14 @@ function citationChoices(text,prefix){
  return Object.freeze(choices);
 }
 
+// Absence of the optional general index is distinct from a corrupt or wrong
+// source. This only describes dependencies; loadTradeReading still verifies them.
+export function tradeReadingNeedsLibrary(task){
+ const topic=topics.find(item=>'lectura-'+item.key===task);
+ if(!topic)throw Error('Tema de revisión desconocido.');
+ return topic.articles.some(([lawId])=>lawId!==customsLawId);
+}
+
 export function loadTradeReading(library,task) {
  const topic=topics.find(item=>'lectura-'+item.key===task);
  if(!topic)throw Error('Tema de revisión desconocido.');
