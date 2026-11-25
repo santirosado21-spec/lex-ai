@@ -3,6 +3,8 @@ import {FileText} from 'lucide-react';
 import {api} from './api';
 import {locateDirectoryArticle} from './article-locator';
 
+type PassageHit={article:string;part:number;page:number;locator:string;text:string;localUrl:string;condition:string|null;warning:string};
+
 type Entry={article:string;page:number;repealed?:boolean;localUrl:string;passages:{page:number;endPage?:number;pageTexts?:{page:number;paragraphs:string[]}[];locator:string;text:string}[]};
 
 export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:boolean;onAsk?:(article:string,topic:string)=>void}){
@@ -16,7 +18,14 @@ export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:b
   const result=locateDirectoryArticle(articleQuery,entries);
   if(result.status==='invalid'){setLocatorNotice('Escribe un número de artículo, por ejemplo 97 o 36-A.');return;}
   if(result.status==='missing'){setLocatorNotice('Artículo '+result.article+' no localizado en este índice. No se concluye que no exista en otra edición.');return;}
-  setArticle(result.article);setLocatorNotice('Artículo '+result.article+' localizado en la copia local. Comprueba la edición aplicable.');
+  setArticle(result.article);setPassagePart(null);setLocatorNotice('Artículo '+result.article+' localizado en la copia local. Comprueba la edición aplicable.');
+ }
+ const [hits,setHits]=useState<PassageHit[]|null>(null),[passagePart,setPassagePart]=useState<number|null>(null);
+ async function searchPassages(){
+  setSearchError('');setHits(null);setBusy(true);
+  try{const found=await api<PassageHit[]>('intake.searchCustomsPassages',{text:term.trim()});setHits(found);setTopic('');setPassagePart(null);}
+  catch(e){setSearchError(e instanceof Error?e.message:'La búsqueda local no se completó.');}
+  finally{setBusy(false);}
  }
  const [term,setTerm]=useState(''),[ids,setIds]=useState<string[]|null>(null),[busy,setBusy]=useState(false);
  async function search(){
@@ -48,6 +57,19 @@ export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:b
     <small>Busca por número en el índice de esta copia. No busca palabras en el texto íntegro.</small>
     {locatorNotice&&<p role="status">{locatorNotice}</p>}
    </form>}
+   {!regulation&&<form className="rp-regulation-search" onSubmit={e=>{e.preventDefault();void searchPassages();}}>
+    <label>Buscar palabras en pasajes cotejados<input type="search" value={term} maxLength={180} disabled={busy} onChange={e=>setTerm(e.target.value)} placeholder="Ej. regalías o gastos transporte"/></label>
+    <button className="rp-quiet" disabled={busy||!term.trim()} type="submit">Buscar pasajes</button>
+    <small>Selección parcial de la Ley Aduanera, no texto íntegro. Todas las palabras deben aparecer en el mismo pasaje; sin equivalencias automáticas.</small>
+    {searchError&&<p role="alert">{searchError}</p>}
+    {hits!==null&&<div aria-label="Resultados de pasajes cotejados"><p role="status">{hits.length?hits.length+(hits.length===1?' pasaje cotejado con coincidencias.':' pasajes cotejados con coincidencias.'):'Sin coincidencias en la selección cotejada. No demuestra ausencia en la ley; busca el artículo o consulta el PDF.'}</p>
+     <button className="rp-quiet" type="button" onClick={()=>{setHits(null);setTerm('');setPassagePart(null);}}>Cerrar resultados</button>
+     {hits.map(hit=><article className="rp-details" key={hit.article+'/'+hit.part}><h3>Artículo {hit.article} · {hit.locator}</h3><p>{hit.text}</p>
+      {hit.condition&&<p>Condición del pasaje: {hit.condition}</p>}<small>{hit.warning}</small>
+      <div className="rp-actions"><button type="button" className="rp-quiet" onClick={()=>{setArticle(hit.article);setPassagePart(hit.part);setTopic('');}}>Ver pasaje en el artículo {hit.article}</button>
+      <a href={hit.localUrl} target="_blank" rel="noreferrer">Abrir página {hit.page} del pasaje</a></div></article>)}
+    </div>}
+   </form>}
    {regulation&&<form className="rp-regulation-search" onSubmit={e=>{e.preventDefault();void search();}}>
     <label>Buscar en el Reglamento<input type="search" value={term} maxLength={180} disabled={busy} onChange={e=>setTerm(e.target.value)} placeholder="Tema, término o número de artículo"/></label>
     <div className="rp-actions"><button className="rp-quiet" disabled={busy} type="submit">Buscar artículos</button>
@@ -55,12 +77,12 @@ export default function IntakeCustomsLaw({regulation=false,onAsk}:{regulation?:b
     {ids!==null&&<p role="status">{ids.length?ids.length+' artículos con coincidencias.':'Sin coincidencias. Prueba otro término o el número de artículo.'}</p>}
     {searchError&&<p role="alert">{searchError}</p>}
    </form>}
-   {visible.length>0&&<label>{regulation?'Artículo del Reglamento de la Ley Aduanera':'Artículo de la Ley Aduanera'}<select value={article} onChange={e=>setArticle(e.target.value)}>
+   {visible.length>0&&<label>{regulation?'Artículo del Reglamento de la Ley Aduanera':'Artículo de la Ley Aduanera'}<select value={article} onChange={e=>{setArticle(e.target.value);setPassagePart(null);}}>
     {visible.map(row=><option value={row.article} key={row.article}>{row.article.replaceAll('-BIS',' bis').replaceAll('-TER',' ter').replace(/(bis)-(\d+)/,'$1 $2')} · página {row.page}</option>)}
    </select></label>}
    {current&&<article key={article} className="rp-reveal"><h3>Artículo {article}</h3>{current.repealed&&<p>Derogado en esta edición.</p>}
     <a href={current.localUrl} target="_blank" rel="noreferrer"><FileText size={16}/>Abrir página {current.page} en la copia local</a>
-    {current.passages.map(p=><details className="rp-details" key={p.locator}><summary>{p.locator} · {p.endPage?'pp. '+p.page+'–'+p.endPage:'p. '+p.page}</summary>{p.pageTexts?<div className="rp-regulation-text">{p.pageTexts.map(block=><section key={block.page} aria-label={'Página '+block.page}>
+    {current.passages.map((p,index)=><details className="rp-details" open={passagePart===index?true:undefined} key={p.locator}><summary>{p.locator} · {p.endPage?'pp. '+p.page+'–'+p.endPage:'p. '+p.page}</summary>{p.pageTexts?<div className="rp-regulation-text">{p.pageTexts.map(block=><section key={block.page} aria-label={'Página '+block.page}>
       <a href={current.localUrl.split('#')[0]+'#page='+block.page} target="_blank" rel="noreferrer">Página {block.page}</a>
       {block.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}</section>)}</div>:<p>{p.text}</p>}</details>)}
     {!current.passages.length&&<p>No hay pasajes cotejados para preparar una consulta de este artículo. Puedes abrir su página en la copia local.</p>}

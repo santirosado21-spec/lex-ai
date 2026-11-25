@@ -1,3 +1,4 @@
+import {searchCustomsPassages} from './corpus/customs-search.mjs';
 import {exportWorksheetPending} from './worksheet-pending-export.mjs';
 import {productOriginLookup} from './corpus/product-origin.mjs';
 import {localReaderStatus} from './privacy/local-reader-status.mjs';
@@ -670,6 +671,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
    }
    case 'intake.remedyPeriod':
     exactFields(payload,['date']);return remedyPeriod(payload.date);
+   case 'intake.searchCustomsPassages':
+    exactFields(payload,['text']);return searchCustomsPassages(payload.text);
    case 'intake.searchRegulation':
     exactFields(payload,['text']);
     if(typeof payload.text!=='string'||payload.text.length>180)throw Error('Busca con un máximo de 180 caracteres.');

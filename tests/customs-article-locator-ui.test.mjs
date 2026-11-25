@@ -25,7 +25,7 @@ test('directory locator changes the real article view without claiming full-text
    ]});
   });
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/tests/fixtures/customs-article-locator/index.html#token=synthetic`);
-  const input=page.getByRole('searchbox'),go=page.getByRole('button',{name:'Localizar artículo'});
+  const input=page.getByRole('searchbox',{name:'Ir al artículo de la Ley Aduanera'}),go=page.getByRole('button',{name:'Localizar artículo'});
   await expect(page.getByRole('heading',{name:'Artículo 97',exact:true})).toBeVisible();
   await input.fill('36-a');await go.click();
   await expect(page.getByRole('heading',{name:'Artículo 36-A',exact:true})).toBeVisible();
