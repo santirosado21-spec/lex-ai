@@ -25,7 +25,8 @@ import { createLocalFileOpener } from './local-files.mjs';
 import { createOfficeBridge } from './office-bridge.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const MAX_BODY=15*1024*1024;
-export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),intakePilot=false,intakeGenerate,pilotPassphrase,autoInitialize=process.env.LEX_DESKTOP==='1',dofReview,libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path.join(os.homedir(),'Library/Application Support/Rejon.AI'),inference,service,monitorDir,cloudDemo=createCloudDemo(),intakePilot=false,nativePilotPreparation=false,intakeGenerate,pilotPassphrase,autoInitialize=process.env.LEX_DESKTOP==='1',dofReview,libraryPath=process.env.LEX_PUBLIC_LIBRARY_PATH||path.join(root,'resources/public-library.sqlite')}={}){
+ if(nativePilotPreparation&&(!intakePilot||!Buffer.isBuffer(pilotPassphrase)||autoInitialize||service))throw Error('Preparación nativa requiere piloto cifrado sin inicialización.');
  if(pilotPassphrase!==undefined&&(!intakePilot||service))throw Error('La frase local requiere el servicio integrado del piloto.');
  process.umask(0o077);await mkdir(dataDir,{recursive:true,mode:0o700});
  let publicLibrary=null;let libraryUnavailable={available:false,reason:'not-indexed'};
@@ -77,6 +78,9 @@ export async function startServer({port=0,dataDir=process.env.LEX_DATA_DIR||path
     let count=0;const chunks=[];for await(const b of req){count+=b.length;if(count>MAX_BODY){json(res,413,{error:'El archivo supera el límite.'});return;}chunks.push(b);}
     let body;try{body=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{json(res,400,{error:'JSON inválido.'});return;}
     if(!body||typeof body!=='object'||Array.isArray(body)){json(res,400,{error:'Solicitud inválida.'});return;}
+    if(nativePilotPreparation&&(pathname!=='/api'||!['state','intake.status','intake.save','intake.readDocument','intake.downloadSource','intake.compareVersions'].includes(body.action))){
+     json(res,403,{error:'Operación fuera de la preparación nativa sin inferencia.'});return;
+    }
     if(intakePilot && (pathname!=='/api' || typeof body.action!=='string' ||
        !(body.action.startsWith('intake.') || body.action.startsWith('library.') || body.action==='state'))) {
      json(res,403,{error:'Esta operación pertenece al espacio de trabajo completo.'});return;
