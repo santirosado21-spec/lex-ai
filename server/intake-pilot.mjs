@@ -1,3 +1,4 @@
+import {createContractReviewCards} from './contract-review-card.mjs';
 import {installNativePractice} from './native-pilot-practice.mjs';
 import {compareTexts} from './doc-compare.mjs';
 import {searchCustomsPassages} from './corpus/customs-search.mjs';
@@ -166,7 +167,7 @@ export function createIntakeGenerator({
  return generate;
 }
 
-export function createIntakePilot({nativePilotPreparation=false,store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference,timeZone='America/Mexico_City'}) {
+export function createIntakePilot({legalSources=[],nativePilotPreparation=false,store,workspace,matter,createWorkspace,createMatter,generate,publicLibrary,explicitArticleReference,timeZone='America/Mexico_City'}) {
  let articles;
  try { articles=tradeArticles(publicLibrary); } catch { articles=null; }
  const tradeReferences=articles?[...articles,...supportingReferences]:[];
@@ -182,6 +183,7 @@ export function createIntakePilot({nativePilotPreparation=false,store,workspace,
   if (entry.workspaceId!==intake.workspaceId) throw new Error('El asunto no corresponde al piloto.');
   return {firm,entry,intake};
  };
+ const reviewCards=createContractReviewCards({store,current,legalSources});
  const sourceFor = (selection,saved,question,reviewing=false) => {
   if(!selection.angle)return loadResearchPassage(publicLibrary,selection.sourceId,selection.part);
   const facts=selection.factIds?selectQuestionFacts(saved,selection.factIds,(selection.aliasedQuestion||reviewing)?question:null,{localOnly:selection.compareProducers===true}):null;
@@ -535,6 +537,9 @@ export function createIntakePilot({nativePilotPreparation=false,store,workspace,
      part.text??('〔'+(labels.get(part.value)??'Dato oculto')+'〕')).join('');
     return {...view,masked:lines.join('\n')};
    }
+   case 'intake.reviewMaterials':
+   case 'intake.reviewCards':
+   case 'intake.saveReviewCard':return reviewCards.dispatch(action,payload);
    case 'intake.loadNativePractice':
     exactFields(payload,[]);if(!nativePilotPreparation)throw Error('Práctica disponible solo en la preparación nativa.');
     return installNativePractice({store,workspace,createWorkspace,createMatter});

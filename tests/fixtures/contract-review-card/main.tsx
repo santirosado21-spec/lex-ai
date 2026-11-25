@@ -1,0 +1,3 @@
+import {createRoot} from 'react-dom/client';import {useState} from 'react';import IntakeReviewCards from '../../../src/IntakeReviewCards';import '../../../src/styles.css';import '../../../src/intake-pilot.css';
+function Harness(){const [disabled,setDisabled]=useState(false);return <main className="rp-shell" style={{maxWidth:950,margin:'24px auto',padding:24}}><button type="button" onClick={()=>setDisabled(!disabled)}>Alternar bloqueo de edición del harness</button><IntakeReviewCards disabled={disabled} onDirty={()=>{}}/></main>;}
+createRoot(document.getElementById('root')!).render(<Harness/>);

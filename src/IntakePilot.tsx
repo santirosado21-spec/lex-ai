@@ -1,3 +1,4 @@
+import IntakeReviewCards from './IntakeReviewCards';
 import IntakeProductOrigin from './IntakeProductOrigin';
 import IntakeOriginAnnex from './IntakeOriginAnnex';
 import IntakeReservations from './IntakeReservations';
@@ -44,6 +45,7 @@ export default function IntakePilot() {
   const [pilot,setPilot] = useState<PilotStatus|null>(null);
   const [clientStep,setClientStep] = useState(false);
   const [worksheetDirty,setWorksheetDirty]=useState(false);
+  const [reviewDirty,setReviewDirty]=useState(false);
   const [focusRequest,setFocusRequest]=useState('');
   const [inspecting,setInspecting] = useState(false);
   const [libraryView,setLibraryView]=useState<'leyes'|'aduana'|'reglamento'|'reglas'|'origen'|'tarifa'|'nico'|'pedimento'|'defensa'>('leyes');
@@ -77,7 +79,7 @@ export default function IntakePilot() {
   const taskList=pilot?.tasks.filter(item=>!item.comparison||item.id===task||item.comparison.archived||(group(item.comparison)!==group(comparison)&&item.comparison.suggested));
   const draft = task && pilot?.drafts[task];
   const draftDirty = editText !== null && editText !== (draft || '');
-  const busy = activity!==null || inspecting || worksheetDirty;
+  const busy = activity!==null || inspecting || worksheetDirty || reviewDirty;
   const stage = !saved ? 0 : draft ? 2 : 1;
 
   useEffect(()=>{
@@ -286,6 +288,7 @@ export default function IntakePilot() {
           </form>
         </div>}
         {pilot?.cloudUsage&&<IntakeCloudUsage usage={pilot.cloudUsage}/>}
+        {saved&&pilot?.protectedRecords&&<IntakeReviewCards disabled={activity!==null||inspecting||worksheetDirty} onDirty={setReviewDirty}/>}
         {saved&&activeTask&&<div className="rp-reveal rp-editor">
           {pilot?.protectedRecords&&<IntakeReservations count={pilot.reservationCount??0} disabled={busy||editText!==null} onSave={async(action,payload)=>setPilot(await api<PilotStatus>(action,payload))}/>}
           {pilot?.protectedRecords&&<IntakeSourceFiles onAsk={text=>setArticleInquiry({text})} sources={pilot.sources??[]} pair={pilot.comparisonPair??null} disabled={busy||editText!==null}

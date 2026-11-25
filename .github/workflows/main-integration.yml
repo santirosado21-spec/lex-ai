@@ -41,6 +41,7 @@ jobs:
             tests/customs-article-locator-ui.test.mjs \
             tests/customs-passage-search-ui.test.mjs \
             tests/native-pilot-preview-ui.test.mjs \
+            tests/contract-review-card-ui.test.mjs \
             tests/intake-version-comparison-ui.test.mjs
       # Local OCR fallback (extractor v29): tesseract + poppler render scanned
       # PDFs offline; Pillow builds the synthetic scanned fixture.
@@ -70,6 +71,7 @@ jobs:
             tests/intake-version-comparison.test.mjs \
             tests/native-pilot-session.test.mjs \
             tests/native-pilot-practice.test.mjs \
+            tests/contract-review-card.test.mjs \
             tests/native-pilot-pipe.test.mjs \
             tests/native-pilot-integration.test.mjs \
             tests/native-pilot-connection.test.mjs \

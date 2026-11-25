@@ -402,7 +402,7 @@ export async function createService({dataDir,corpusPath,inference,stt:injectedSt
 
   const timeBilling=registerTimeBilling({requireWorkspace,matter,listMatters,clock:plannerNow},store);
   const intake=intakePilot
-    ?createIntakePilot({nativePilotPreparation,store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,timeZone:plannerTimeZone,generate:intakeGenerate??createIntakeGenerator()})
+    ?createIntakePilot({legalSources:corpus,nativePilotPreparation,store,workspace,matter,createWorkspace,createMatter,publicLibrary,explicitArticleReference,timeZone:plannerTimeZone,generate:intakeGenerate??createIntakeGenerator()})
     :null;
   async function dispatch(action,p={},{signal}={}) {
     if(typeof action==='string'&&action.startsWith('intake.')){
