@@ -30,6 +30,7 @@ import ReplyDraftEditor,{type EmailSeed} from './ReplyDraftEditor';
 import LocalEmailView from './LocalEmailView';
 import VoiceInput, {type SttStatus} from './VoiceInput';
 import { analyze, api, downloadFile, downloadText, emptyState, fileBase64, type DocumentRecord, type Answer, type AppState, type EngineStatus, type Feedback, type Matter, type Proposal, type Source } from './api';
+import { validateOfficialSourceUrl } from './sourceUrl';
 
 const Dashboard = lazy(()=>import('./components/ui/app-1'));
 
@@ -67,7 +68,7 @@ function Empty({icon: Icon = FolderOpen, title, children, action}: {icon?: typeo
 function Badge({children, tone='neutral'}: {children:ReactNode; tone?:string}) { return <span className={`badge ${tone}`}>{children}</span>; }
 function OfficialSource({source, compact=false}: {source:Source; compact?:boolean}) {
   const official = Boolean(source.url);
-  const url = source.url && /^https:\/\//i.test(source.url) ? source.url : undefined;
+  const url = validateOfficialSourceUrl(source.url) ?? undefined;
   return <article className={`source-card citation-seal ${compact ? 'compact' : ''}`} tabIndex={-1} id={`source-${source.id || source.sourceId}`}>
     <div className="source-label"><span className="source-seal-mark" aria-label="Pasaje fuente">§</span><Badge tone={official?'blue':'bronze'}>{official?<BookOpen size={12}/>:<FileText size={12}/>} {official?'Fuente oficial':'Documento del asunto'}</Badge>{source.article && <span>{/^art/i.test(source.article)?source.article:`Art. ${source.article}`}</span>}</div>
     <h3>{source.title || source.name || source.id || source.sourceId}</h3>

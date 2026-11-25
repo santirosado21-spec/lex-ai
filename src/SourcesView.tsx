@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertCircle, BookOpen, ChevronDown, Clock3, Database, ExternalLink, RefreshCw, ShieldCheck } from 'lucide-react';
 import { api, type SourceSyncEntry, type SourcesStatus } from './api';
+import { validateOfficialSourceUrl } from './sourceUrl';
 
 const dateTime = (value?: string) => {
   if (!value || Number.isNaN(Date.parse(value))) return 'Sin registro';
@@ -75,7 +76,7 @@ export default function SourcesView() {
       <div className="source-filter-tabs" aria-label="Filtrar por estado">{[{id:'all',label:'Todas'},{id:'review',label:'Pendientes de revisión'},{id:'error',label:'Con errores'},{id:'pending',label:'Sin completar'}].map(tab=><button key={tab.id} aria-pressed={statusFilter===tab.id} onClick={()=>setStatusFilter(tab.id)}>{tab.label}</button>)}</div>
       <div className="source-monitor-list">{entries.map(entry=>{
         const record=status.sync?.sources.find(source=>source.id===entry.id);
-        const url=/^https:\/\//i.test(entry.url)?entry.url:undefined;
+        const url=validateOfficialSourceUrl(entry.url)??undefined;
         return <article className="source-monitor-row" key={entry.id}>
           <BookOpen size={19}/><div className="source-monitor-main"><div className="source-monitor-heading"><h3>{entry.title}</h3><span className={`monitor-badge ${isFailure(record?.state)||record?.reviewStatus==='quarantined'?'warning':''}`}>{record ? record.reviewStatus==='quarantined'&&!isFailure(record.state)?'Pendiente de revisión':sourceStateLabels[record.state] || record.state : 'Sin consultar'}</span></div>
           <p>{entry.jurisdiction==='MX-FED'?'Federal':entry.jurisdiction==='MX-CMX'?'Ciudad de México':entry.jurisdiction}{url && <a href={url} target="_blank" rel="noopener noreferrer">Fuente oficial <ExternalLink size={12}/></a>}</p>
