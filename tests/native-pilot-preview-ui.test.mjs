@@ -1,7 +1,12 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {chromium,expect} from '@playwright/test';import {createServer} from 'vite';import react from '@vitejs/plugin-react';import path from 'node:path';import {tmpdir} from 'node:os';import {mkdir,access} from 'node:fs/promises';import {fileURLToPath} from 'node:url';
+import test from 'node:test';import assert from 'node:assert/strict';import {chromium,expect} from '@playwright/test';import {createServer} from 'vite';import react from '@vitejs/plugin-react';import path from 'node:path';import {tmpdir} from 'node:os';import {mkdir,access,mkdtemp,rm} from 'node:fs/promises';import {fileURLToPath} from 'node:url';
 test('native preview clears originals immediately at lock, rotates connection, blocks after close failure',async()=>{
- const root=fileURLToPath(new URL('..',import.meta.url));const server=await createServer({root,configFile:false,plugins:[react()],resolve:{alias:{'@tauri-apps/api/core':path.join(root,'tests/fixtures/native-pilot-preview/ipc.ts')}},server:{host:'127.0.0.1',port:0},logLevel:'error'});await server.listen();let browser;
- try{let options={headless:true};try{await access(chromium.executablePath());}catch{options.channel='chrome';}browser=await chromium.launch(options);const page=await browser.newPage({viewport:{width:1280,height:900}}),tokens=[];
+ const root=fileURLToPath(new URL('..',import.meta.url));
+ // This harness aliases Tauri IPC. Never share optimizer files with another
+ // Vite server whose resolver uses the real Tauri package (or scan its HTML).
+ const cacheDir=await mkdtemp(path.join(tmpdir(),'rejon-native-preview-vite-'));
+ const server=await createServer({root,cacheDir,optimizeDeps:{entries:['tests/fixtures/native-pilot-preview/index.html']},configFile:false,plugins:[react()],resolve:{alias:{'@tauri-apps/api/core':path.join(root,'tests/fixtures/native-pilot-preview/ipc.ts')}},server:{host:'127.0.0.1',port:0},logLevel:'error'});await server.listen();let browser;
+ try{let options={headless:true};try{await access(chromium.executablePath());}catch{options.channel='chrome';}browser=await chromium.launch(options);const page=await browser.newPage({viewport:{width:1280,height:900}}),tokens=[],pageErrors=[];
+ page.on('pageerror',error=>pageErrors.push(error.message));
  await page.route('**/api',async route=>{tokens.push(route.request().headers().authorization);const {action}=route.request().postDataJSON();await route.fulfill({json:action==='intake.status'?{sources:[{id:'a',label:'Contrato sintético A'},{id:'b',label:'Contrato sintético B'}]}:{original:'Texto original sintético reservado. Plazo de 20 días.'}});});
  await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/tests/fixtures/native-pilot-preview/index.html#pilot=intake&native=preview`);await expect(page.getByRole('heading',{name:'Expediente bloqueado'})).toBeVisible();assert.equal(await page.locator('input[type=password]').count(),0);
  await page.getByRole('button',{name:'Abrir expediente',exact:true}).click();await page.getByRole('button',{name:'Leer texto original local'}).click();await expect(page.locator('pre')).toContainText('reservado');
@@ -11,5 +16,6 @@ test('native preview clears originals immediately at lock, rotates connection, b
  await page.evaluate(()=>{window.testNative.fail=true;});await page.getByRole('button',{name:'Bloquear y retirar texto'}).click();await page.evaluate(()=>window.testNative.release());await expect(page.getByText('No se confirmó el cierre.',{exact:false})).toBeVisible();await expect(page.getByRole('button',{name:'Abrir expediente',exact:true})).toHaveCount(0);await expect(page.locator('pre')).toHaveCount(0);
  await page.addInitScript(()=>{window.previewInitialState='unlocked';});await page.reload();await expect(page.getByRole('button',{name:'Bloquear sesión abierta'})).toBeVisible();await expect(page.getByRole('button',{name:'Abrir expediente',exact:true})).toHaveCount(0);await expect(page.locator('pre')).toHaveCount(0);await page.getByRole('button',{name:'Bloquear sesión abierta'}).click();await page.evaluate(()=>window.testNative.release());await expect(page.getByRole('heading',{name:'Expediente bloqueado'})).toBeVisible();
  await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(evidence,'failed-narrow.png'),fullPage:true});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
- }finally{await browser?.close();await server.close();}
+ assert.deepEqual(pageErrors,[]);
+ }finally{await browser?.close();await server.close();await rm(cacheDir,{recursive:true,force:true});}
 });
