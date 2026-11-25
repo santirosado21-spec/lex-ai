@@ -69,6 +69,8 @@ jobs:
             tests/intake-contractual-candidate-contract.test.mjs \
             tests/intake-contractual-candidate.test.mjs \
             tests/intake-contractual-ollama.test.mjs \
+            tests/intake-owned-runtime.test.mjs \
+            tests/inference.test.mjs \
             tests/privacy-nym-int8-decoder-v2.test.mjs \
             tests/privacy-nym-int8-decoder-v3.test.mjs \
             tests/openrouter-provider.test.mjs \
