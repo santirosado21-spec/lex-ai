@@ -29,6 +29,7 @@ jobs:
       - name: Intake UI regressions (synthetic real-component browser harnesses)
         run: |
           node --test \
+            tests/word-safe-apply-ui.test.mjs \
             tests/reasoning-role-ui.test.mjs \
             tests/document-text-selection.test.mjs \
             tests/question-lines-isolation.test.mjs \
