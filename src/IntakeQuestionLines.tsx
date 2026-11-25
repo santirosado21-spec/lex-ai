@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {FileText} from 'lucide-react';
 import {api} from './api';
 
@@ -6,17 +6,25 @@ const fold=(s:string)=>s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
 type Source={id:string;label:string};
 type Row={id:string;text:string;cloud:boolean;label:string;line:number};
 type Props={onCompareProducers?:(ids:string[])=>void;reviewId:string;sources:Source[];selected:string[];disabled:boolean;onChange:(ids:string[])=>void};
-export default function IntakeQuestionLines({reviewId,sources,selected,disabled,onChange,onCompareProducers}:Props){
+// A cached row belongs to one reviewed snapshot, never just a reusable source ID.
+export default function IntakeQuestionLines(props:Props){
+ return <ReviewQuestionLines key={JSON.stringify([props.reviewId,props.sources.map(source=>source.id)])} {...props}/>;
+}
+function ReviewQuestionLines({reviewId,sources,selected,disabled,onChange,onCompareProducers}:Props){
+ const active=useRef(true);
+ const request=useRef<AbortController|null>(null);
+ useEffect(()=>{active.current=true;return()=>{active.current=false;request.current?.abort();};},[]);
  const [open,setOpen]=useState(false),[source,setSource]=useState(sources[0]?.id??'');
  const [certification,setCertification]=useState('');
  const [page,setPage]=useState(0),[filter,setFilter]=useState('');
  const [cache,setCache]=useState<Record<string,Row[]>>({}),[busy,setBusy]=useState(false),[error,setError]=useState('');
  async function load(id:string){
   setSource(id);setPage(0);setFilter('');setError('');if(cache[id])return;
+  const controller=new AbortController();request.current=controller;
   setBusy(true);
-  try{const rows=await api<Row[]>('intake.questionLines',{reviewId,sourceId:id});setCache(current=>({...current,[id]:rows}));}
-  catch(cause){setError(cause instanceof Error?cause.message:'No se pudieron revisar las líneas.');}
-  finally{setBusy(false);}
+  try{const rows=await api<Row[]>('intake.questionLines',{reviewId,sourceId:id},controller.signal);if(active.current)setCache(current=>({...current,[id]:rows}));}
+  catch(cause){if(active.current)setError(cause instanceof Error?cause.message:'No se pudieron revisar las líneas.');}
+  finally{if(active.current)setBusy(false);}
  }
  if(!sources.length)return null;
  const rows=cache[source]??[],pageSize=12,start=page*pageSize;
