@@ -187,5 +187,101 @@
       "text": "Al retorno de las mercancías se pagará el impuesto general de importación que correspondan al valor de las materias primas o mercancías extranjeras incorporadas, así como el precio de los servicios prestados en el extranjero para su transformación, elaboración o reparación, de conformidad con la clasificación arancelaria de la mercancía retornada.",
       "endPage": 80
     }
+  ],
+  "68": [
+    {
+      "page": 48,
+      "locator": "encabezado y fracción I",
+      "text": "Se considera que existe vinculación entre personas para los efectos de esta Ley, en los siguientes casos: I. Si una de ellas ocupa cargos de dirección o responsabilidad en una empresa de la otra."
+    },
+    {
+      "page": 48,
+      "locator": "fracción II",
+      "text": "Si están legalmente reconocidas como asociadas en negocios."
+    },
+    {
+      "page": 48,
+      "locator": "fracción III",
+      "text": "Si tienen una relación de patrón y trabajador."
+    },
+    {
+      "page": 48,
+      "locator": "fracción IV",
+      "text": "Si una persona tiene directa o indirectamente la propiedad, el control o la posesión del 5% o más de las acciones, partes sociales, aportaciones o títulos en circulación y con derecho a voto en ambas."
+    },
+    {
+      "page": 48,
+      "locator": "fracción V",
+      "text": "Si una de ellas controla directa o indirectamente a la otra."
+    },
+    {
+      "page": 48,
+      "locator": "fracción VI",
+      "text": "Si ambas personas están controladas directa o indirectamente por una tercera persona."
+    },
+    {
+      "page": 48,
+      "locator": "fracción VII",
+      "text": "Si juntas controlan directa o indirectamente a una tercera persona."
+    },
+    {
+      "page": 48,
+      "locator": "fracción VIII",
+      "text": "Si son de la misma familia."
+    }
+  ],
+  "69": [
+    {
+      "page": 48,
+      "locator": "párrafo primero",
+      "text": "En una venta entre personas vinculadas, se examinarán las circunstancias de la venta y se aceptará el valor de transacción cuando la vinculación no haya influido en el precio."
+    },
+    {
+      "page": 49,
+      "locator": "párrafo segundo, encabezado",
+      "text": "Para los efectos de este artículo, se considerará que la vinculación no ha influido en el precio, cuando se demuestre que:"
+    },
+    {
+      "page": 49,
+      "locator": "fracción I",
+      "text": "El precio se ajustó conforme a las prácticas normales de fijación de precios seguidas por la rama de producción de que se trate o con la manera en que el vendedor ajusta los precios de venta a compradores no vinculados con él."
+    },
+    {
+      "page": 49,
+      "locator": "fracción II",
+      "text": "Con el precio se alcanza a recuperar todos los costos y se logra un beneficio congruente con los beneficios globales obtenidos por la empresa en un periodo representativo en las ventas de mercancías de la misma especie o clase."
+    }
+  ],
+  "70": [
+    {
+      "page": 49,
+      "locator": "encabezado",
+      "text": "En una venta entre personas vinculadas se aceptará el valor de transacción cuando el importador demuestre que dicho valor se aproxima mucho a alguno de los valores criterio de los que a continuación se señalan, vigentes en el mismo momento o en un momento aproximado y se haya manifestado en la declaración a que se refiere el artículo 81 de esta Ley, que existe vinculación con el vendedor de las mercancías y que ésta no influyó en su precio:"
+    },
+    {
+      "page": 49,
+      "locator": "fracción I",
+      "text": "El valor de transacción en las ventas de mercancías idénticas o similares efectuadas a importadores no vinculados con el vendedor, para ser exportadas con destino a territorio nacional."
+    },
+    {
+      "page": 49,
+      "locator": "fracción II",
+      "text": "El valor en aduana de mercancías idénticas o similares, determinado en los términos del artículo 74 de esta Ley."
+    },
+    {
+      "page": 49,
+      "locator": "fracción III",
+      "text": "El valor en aduana de mercancías idénticas o similares, determinado conforme a lo dispuesto en el artículo 77 de esta Ley."
+    },
+    {
+      "page": 49,
+      "locator": "párrafo segundo",
+      "text": "En la aplicación de los criterios anteriores, deberán tenerse en cuenta las diferencias demostradas de nivel comercial y de cantidad, los elementos enumerados en el artículo 65 de esta Ley y los costos que soporte el vendedor en las ventas a importadores no vinculados con él, y que no soporte en las ventas a importadores con los que tiene vinculación."
+    },
+    {
+      "page": 49,
+      "locator": "párrafo final",
+      "text": "La Secretaría establecerá mediante reglas, los criterios conforme a los cuales se determinará que un valor se aproxima mucho a otro."
+    }
   ]
 }
