@@ -10,7 +10,7 @@ import {startServer} from '../server/main.mjs';
 import {createIntakeGenerator} from '../server/intake-pilot.mjs';
 import {customsPdfPath,customsPassage} from '../server/corpus/customs-edition.mjs';
 import {loadTradeReading,renderTradeReading} from '../server/corpus/intake-trade-reading.mjs';
-import {tradeWorksheet,revisedWorksheetRow,worksheetProposals} from '../server/intake-trade-worksheet.mjs';
+import {tradeWorksheet,revisedWorksheetRow,worksheetProposals,worksheetPendingNote} from '../server/intake-trade-worksheet.mjs';
 
 test('each customs choice keeps its printed page and subsection and fits the draft editor',()=>{
  for(const key of ['lectura-valoracion','lectura-pedimento']){
@@ -71,6 +71,15 @@ test('local worksheet edits are versioned, encrypted, excluded from cloud messag
  assert.equal((await call('intake.readWorksheet',{task:other})).rows.every(x=>!x.revision),true);
  const worksheetFile=await call('intake.exportWorksheet',{task});
  assert.equal(worksheetFile.name,'Rejon-control-valoracion.xlsx');
+ const pendingFile=await call('intake.exportWorksheetPending',{task});
+ const pendingText=(await mammoth.extractRawText({buffer:Buffer.from(pendingFile.base64,'base64')})).value;
+ assert.equal(pendingFile.name,'Rejon-pendientes-valoracion.docx');
+ assert.ok(pendingText.includes('Por revisar: definir el siguiente paso'));
+ assert.ok(!pendingText.includes('Análisis jurídico'));
+ assert.ok(!pendingText.includes('Fuentes recuperadas'));
+ assert.ok(pendingText.includes('No es una solicitud al cliente.'));
+ assert.ok(!pendingText.includes(values.note));
+ await assert.rejects(call('intake.exportWorksheetPending',{task:'trade'}),/control/);
  assert.equal(sent.length,0);
  await call('intake.draft',{task});
  assert.equal(sent.length,1);assert.equal(JSON.parse(sent[0]).messages[0].content,preview);
@@ -86,4 +95,19 @@ test('local worksheet edits are versioned, encrypted, excluded from cloud messag
  assert.equal(row.getCell(4).value,3780.5);assert.equal(row.getCell(5).value,'USD');assert.equal(row.getCell(6).type,ExcelJS.ValueType.String);assert.equal(row.getCell(6).value,values.reference);assert.equal(row.getCell(7).value,values.note);
  const doc=await call('intake.export',{task,format:'docx'});
  assert.ok((await mammoth.extractRawText({buffer:Buffer.from(doc.base64,'base64')})).value.includes(values.note));
+});
+
+test('pending note separates saved states without re-requesting received items or inventing a legal result',()=>{
+ const base=tradeWorksheet('lectura-pedimento');
+ const states=['Por revisar','Solicitado','Recibido','Cotejado','No aplica'];
+ const sheet={...base,rows:base.rows.map((row,i)=>({...row,status:states[i],reference:i===2?'Línea 18 · soporte local':'',note:i===2?'Dato del usuario':''}))};
+ const text=worksheetPendingNote(sheet);
+ assert.match(text,/Recibido: cotejo pendiente/);assert.match(text,/Referencia local: Línea 18/);
+ assert.match(text,/Observación del usuario: Dato del usuario/);
+ assert.ok(!text.includes('Qué cotejar: '+sheet.rows[3].check));
+ assert.ok(!text.includes('Qué cotejar: '+sheet.rows[4].check));
+ assert.match(worksheetPendingNote({...sheet,rows:sheet.rows.map(row=>({...row,status:'Cotejado'}))}),/Sin pendientes según los estados guardados/);
+ assert.throws(()=>worksheetPendingNote({...sheet,rows:[{...sheet.rows[0],status:'Aprobado'}]}),/no reconocidos/);
+ const copy={...sheet.rows[2],id:'factura~copy',label:'Documento de valor (2)'};
+ assert.match(worksheetPendingNote({...sheet,rows:[...sheet.rows,copy]}),/Documento de valor \(2\)/);
 });

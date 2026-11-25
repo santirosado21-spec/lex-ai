@@ -68,9 +68,9 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
   }catch(e){setError(e instanceof Error?e.message:'No se pudo guardar.');}
   finally{setPending(false);}
  }
- async function download(){
+ async function download(pendingNote=false){
   setPending(true);setError('');
-  try{downloadFile(await api<{name:string;base64:string;mime:string}>('intake.exportWorksheet',{task}));setMessage('Control exportado a Excel.');}
+  try{downloadFile(await api<{name:string;base64:string;mime:string}>(pendingNote?'intake.exportWorksheetPending':'intake.exportWorksheet',{task}));setMessage(pendingNote?'Lista interna de pendientes exportada a Word.':'Control exportado a Excel.');}
   catch{setError('No se pudo exportar el control.');}
   finally{setPending(false);}
  }
@@ -111,6 +111,8 @@ export default function IntakeTradeWorksheet({task,disabled,onDirty,onSave}:{
     {editing&&row.revision>0&&<button type="button" className="secondary" onClick={()=>void save(true)}>Guardar como otro renglón</button>}
     {editing&&<button type="button" className="rp-quiet" onClick={discard}>Descartar y recargar</button>}</div>
    <button className="rp-quiet" type="button" disabled={!!editing} onClick={()=>void download()}>Exportar control a Excel</button>
+   <button className="rp-quiet" type="button" disabled={!!editing} onClick={()=>void download(true)}>Descargar pendientes en Word</button>
+   <small>Lista interna con los estados guardados: por revisar, solicitado y recibido sin cotejar. No es una carta al cliente ni una conclusión jurídica.</small>
    {message&&<small role="status">{message}</small>}
   </fieldset>}
   {error&&<p role="alert">{error}</p>}

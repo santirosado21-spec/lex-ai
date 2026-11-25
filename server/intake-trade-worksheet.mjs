@@ -99,3 +99,30 @@ export function worksheetProposals(task,original){
  }
  return proposals;
 }
+
+// A work list from saved manual states, not a legal opinion or client letter.
+export function worksheetPendingNote(sheet){
+ const groups=[
+  ['Por revisar: definir el siguiente paso','Por revisar'],
+  ['Solicitado: dar seguimiento','Solicitado'],
+  ['Recibido: cotejo pendiente','Recibido'],
+ ];
+ if(sheet.rows.some(row=>!statuses.includes(row.status)))throw Error('Revisa los estados no reconocidos antes de preparar los pendientes.');
+ const lines=['# Pendientes del control documental',sheet.title,
+  'Lista interna preparada en este equipo a partir de los estados guardados por el usuario. No acredita cumplimiento jurídico ni suficiencia de los documentos. No es una solicitud al cliente.',
+  'Los estados Cotejado y No aplica se omiten. Un documento Recibido conserva el cotejo pendiente.'];
+ let count=0;
+ for(const [title,status] of groups){
+  const rows=sheet.rows.filter(row=>row.status===status);
+  if(!rows.length)continue;
+  lines.push('## '+title);
+  for(const row of rows){
+   count++;
+   lines.push('- '+row.label+' · '+row.status,'Qué cotejar: '+row.check,
+    ...(row.reference?['Referencia local: '+row.reference]:[]),
+    ...(row.note?['Observación del usuario: '+row.note]:[]));
+  }
+ }
+ if(!count)lines.push('Sin pendientes según los estados guardados. Esto no equivale a una conclusión de cumplimiento.');
+ return lines.join('\n\n');
+}

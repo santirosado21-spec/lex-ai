@@ -1,3 +1,4 @@
+import {exportWorksheetPending} from './worksheet-pending-export.mjs';
 import {productOriginLookup} from './corpus/product-origin.mjs';
 import {localReaderStatus} from './privacy/local-reader-status.mjs';
 import {originAnnexDirectory,originAnnexId} from './corpus/origin-annex.mjs';
@@ -446,7 +447,8 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
      return {...tradeWorksheet(task,rows),proposals};
     });
    }
-   case 'intake.exportWorksheet': {
+   case 'intake.exportWorksheet':
+   case 'intake.exportWorksheetPending': {
     exactFields(payload,['task']);
     const {task}=payload,saved=current();
     if(!store.protectedRecords||!hasTradeWorksheet(task)||!readingChoices(saved).some(choice=>choice.id===task))
@@ -454,10 +456,11 @@ export function createIntakePilot({store,workspace,matter,createWorkspace,create
     const sheet=tradeWorksheet(task,saved.intake.worksheets?.[task]);
     let refs=saved.intake.researchHistory?.[task]?.references;
     if(!refs){try{refs=readingFor(task).refs;}catch{refs=[];}}
-    const answer={question:sheet.title,text:'Hoja de trabajo local para el cotejo documental. Revisar los soportes y la edición aplicable.',citations:exportCitations(refs),createdAt:new Date().toISOString()};
-    const file=await exportIntakeDocument('xlsx',task,{firm:saved.firm,matter:saved.entry,answer,worksheet:sheet});
-    store.audit('intake.local.exportWorksheet',saved.entry.id);
-    return {...file,name:'Rejon-control-'+task.slice(8)+'.xlsx'};
+    const pending=action==='intake.exportWorksheetPending';
+    const answer={question:sheet.title,text:'Hoja de trabajo local para el cotejo documental. Revisar los soportes y la edición aplicable.',citations:pending?[]:exportCitations(refs),createdAt:new Date().toISOString()};
+    const file=pending?await exportWorksheetPending({firm:saved.firm,matter:saved.entry,sheet}):await exportIntakeDocument('xlsx',task,{firm:saved.firm,matter:saved.entry,answer,worksheet:sheet});
+    store.audit(pending?'intake.local.exportWorksheetPending':'intake.local.exportWorksheet',saved.entry.id);
+    return {...file,name:'Rejon-'+(pending?'pendientes-':'control-')+task.slice(8)+(pending?'.docx':'.xlsx')};
    }
    case 'intake.addSource': {
     exactFields(payload,['reviewId','label']);
