@@ -170,3 +170,12 @@ test('caller abort after yield refuses second buffered chunk and terminal done r
 test('NDJSON parse error and early return cancel the underlying stream',async t=>{
  for(const malformed of [true,false]){let cancels=0;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode(malformed?'{\n':JSON.stringify({message:{content:'first'}})+'\n'));},cancel(){cancels++;}})):null});await f.engine.initialize();await settled(f.engine);const g=f.engine.generate([{role:'user',content:'synthetic'}]);if(malformed)await assert.rejects(g.next());else{await g.next();await g.return();}assert.equal(cancels,1);}
 });
+test('invalid caller signal rejects before claiming busy and leaves next generation usable',async t=>{
+ const f=await fixture(t);await f.engine.initialize();await settled(f.engine);const messages=[{role:'user',content:'synthetic'}];
+ for(const signal of [{},{aborted:false,throwIfAborted(){}},'invalid',true]){
+  const before=f.calls.length;await assert.rejects(async()=>{for await(const _ of f.engine.generate(messages,{signal})){}},TypeError);
+  assert.equal((await f.engine.status()).busy,false);assert.equal(f.calls.length,before);
+  let text='';for await(const chunk of f.engine.generate(messages,{signal:new AbortController().signal}))text+=chunk;
+  assert.ok(text.includes('synthetic'));assert.equal((await f.engine.status()).busy,false);
+ }
+});
