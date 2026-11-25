@@ -2,7 +2,41 @@
 
 `server/public-library.mjs` crea y abre un índice SQLite + FTS5 independiente. No lee bases de firmas, asuntos, documentos privados ni el corpus aprobado de 21 artículos. Es un artefacto distribuible para consulta pública; construirlo no lo activa automáticamente en producción.
 
-## Construcción y publicación
+## Restauración del artefacto distribuible congelado
+
+El índice que espera esta edición está fijado por
+`resources/public-library.sqlite.manifest.json`: 153,014,272 bytes,
+SHA-256 `ec944a19d40be5faa0bd0ee081e906145038446aa8df394b706adc2daddd1588`,
+corpus `e97adb6bda336c1dac25c0369a6553977fae3993384bdb20c9acbeaf6f052c11`.
+Es el snapshot federal v2 de 35,452 artículos y 303 instrumentos, no v1.
+La base está excluida de Git; el manifiesto está versionado. Un clon limpio no
+contiene por eso el índice real. No se afirma que exista hoy una copia accesible
+en alguna ubicación concreta.
+
+Restaurar significa recuperar el archivo exacto desde una copia revisada ya
+existente y ponerlo en `resources/public-library.sqlite`, sin sustituir el
+manifiesto ni tocar corpus, citas o ediciones. El generador de inventario y
+`prepare-desktop` exigen la pareja por rutas exactas, archivos regulares,
+tamaño/hash coincidentes y entradas revisadas en `sourceFiles`. Además fija
+en código el hash del manifiesto versionado, corpus, índice y tamaño de esta
+edición; no basta cambiar ambos archivos por otra pareja autoconsistente. No
+hay override por CLI ni variable de entorno. Rechazan su
+omisión y no descargan ni reconstruyen nada. El staging vuelve a comprobar
+la pareja copiada antes de reemplazar el payload anterior. El inventario
+generado sigue sin aprobar runtimes. Después falta verificar el paquete real
+con `verify-package.mjs`, sin activar su opción de chat/modelo para estas
+comprobaciones. Las pruebas sintéticas de staging no acreditan que la biblioteca
+real exista, abra correctamente o conserve todos sus textos.
+
+## Construcción de un índice de investigación, no restauración
+
+Los comandos siguientes conservan su comportamiento histórico: usan v1 y
+escriben en `artifacts`, no en la ruta activa de `resources`. No deben usarse
+para tapar la ausencia del artefacto congelado de esta distribución. Construir
+un índice incorpora una nueva fecha de construcción y puede cambiar el hash
+binario aun con el mismo corpus. Adoptar otra pareja es un cambio separado y
+no forma parte de la reparación del empaquetado.
+
 
 ```sh
 node --max-old-space-size=512 scripts/index-legal-library.mjs

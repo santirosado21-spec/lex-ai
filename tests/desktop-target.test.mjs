@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {createHash} from 'node:crypto';
 import {desktopTarget,desktopPlan,targetFromEnvironment,requireBuildHost,targetTauriConfig,checkBinaryArch,approvedRuntimeInventory,sourceInventory,assertInventoryPaths,copyInventory,fileDigest} from '../server/desktop-target.mjs';
+import {createFrozenLibraryVerifier} from '../server/frozen-library-artifact.mjs';
 import {prepareDesktop} from '../scripts/prepare-desktop.mjs';
 const host={platform:'darwin',arch:'arm64'};
 async function fixture(t){const root=await realpath(await mkdtemp(path.join(os.tmpdir(),'lex-target-')));t.after(()=>rm(root,{recursive:true,force:true}));return root;}
@@ -57,19 +58,34 @@ test('offline staging failure preserves prior payload; successful staging stays 
  const root=await fixture(t),artifactRoot=path.join(root,'artifacts'),plan=desktopPlan('mac-arm64',{root});
  const tracked=['server/main.mjs','resources/model-catalog.json','office-addin/word.html'];
  for(const file of [...tracked,'package.json','package-lock.json']){await mkdir(path.dirname(path.join(root,file)),{recursive:true});await writeFile(path.join(root,file),'{}');}
+ const db='resources/public-library.sqlite',sidecar=db+'.manifest.json';
+ const database='synthetic frozen index only';const libraryManifest=JSON.stringify({schemaVersion:1,kind:'public-legal-library',privateDocumentsIncluded:false,status:'structurally-verified-currentness-unverified',corpusSha256:hash('synthetic corpus'),indexSha256:hash(database),bytes:Buffer.byteLength(database)});
+ await writeFile(path.join(root,db),database);await writeFile(path.join(root,sidecar),libraryManifest);
+ const verifyFrozenLibrary=createFrozenLibraryVerifier({manifestSha256:hash(libraryManifest),indexSha256:hash(database),corpusSha256:hash('synthetic corpus'),bytes:Buffer.byteLength(database)});
  const files=['runtime/node','resources/runtime/ollama'];
  for(const file of files){await mkdir(path.dirname(path.join(artifactRoot,file)),{recursive:true});await writeFile(path.join(artifactRoot,file),'binary');}
  const manifest={schemaVersion:1,target:plan.id,files:files.map(p=>({path:p,bytes:6,sha256:hash('binary'),executable:true}))};
  manifest.sourceFiles=[...tracked,'package.json','package-lock.json'].map(p=>({path:p,bytes:2,sha256:hash('{}')}));
+ manifest.sourceFiles.push({path:db,bytes:Buffer.byteLength(database),sha256:hash(database)},{path:sidecar,bytes:Buffer.byteLength(libraryManifest),sha256:hash(libraryManifest)});
  const inventory=path.join(root,'inventory.json');await writeFile(inventory,JSON.stringify(manifest));
  const env={LEX_DESKTOP_TARGET:plan.id,LEX_RUNTIME_INVENTORY:inventory,LEX_RUNTIME_ARTIFACTS:artifactRoot};
  await mkdir(path.join(plan.output,'resources'),{recursive:true});await writeFile(path.join(plan.output,'resources/runtime-manifest.json'),JSON.stringify({schemaVersion:2,target:plan.id}));await writeFile(path.join(plan.output,'sentinel'),'old');
  let failInstall=true;const commands=[];
  const run=(command,args,options)=>{commands.push([command,args]);if(command==='/usr/bin/lipo')return {status:0,stdout:'arm64'};if(command==='git')return {status:0,stdout:tracked.join('\0')};if(command==='npm'&&args[0]==='--version')return {status:0,stdout:'10'};assert.equal(command,'npm');assert.ok(args.includes('--offline'));assert.ok(args.includes('--ignore-scripts'));assert.ok(args.includes('--bin-links=false'));assert.notEqual(options.cwd,plan.output);return {status:failInstall?1:0};};
- await assert.rejects(()=>prepareDesktop({root,env,host,run}),/offline/);
+ await assert.rejects(()=>prepareDesktop({root,env,host,run}),/edición congelada/);
+ const complete=structuredClone(manifest);
+ for(const omitted of [db,sidecar]){manifest.sourceFiles=complete.sourceFiles.filter(f=>f.path!==omitted);await writeFile(inventory,JSON.stringify(manifest));await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/Falta fuente/);assert.equal(await readFile(path.join(plan.output,'sentinel'),'utf8'),'old');}
+ manifest.sourceFiles=complete.sourceFiles;await writeFile(inventory,JSON.stringify(manifest));
+ await rm(path.join(root,db));await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/ENOENT/);await writeFile(path.join(root,db),database);
+ await writeFile(path.join(root,db),'altered');await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/Fuente distinta/);await writeFile(path.join(root,db),database);
+ await rm(path.join(root,db));await symlink(path.join(root,'package.json'),path.join(root,db));await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/enlaces/);await rm(path.join(root,db));await writeFile(path.join(root,db),database);
+ const inconsistent=libraryManifest.replace(hash(database),'0'.repeat(64));await writeFile(path.join(root,sidecar),inconsistent);manifest.sourceFiles=complete.sourceFiles.map(f=>f.path===sidecar?{...f,sha256:hash(inconsistent)}:f);await writeFile(inventory,JSON.stringify(manifest));await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/edición congelada/);await writeFile(path.join(root,sidecar),libraryManifest);manifest.sourceFiles=complete.sourceFiles;await writeFile(inventory,JSON.stringify(manifest));
  assert.equal(await readFile(path.join(plan.output,'sentinel'),'utf8'),'old');assert.deepEqual(await readdir(path.dirname(plan.output)),['app']);
- failInstall=false;assert.equal((await prepareDesktop({root,env,host,run})).output,plan.output);
+ await assert.rejects(()=>prepareDesktop({root,env,host,run,verifyFrozenLibrary}),/offline/);
+ assert.equal(await readFile(path.join(plan.output,'sentinel'),'utf8'),'old');assert.deepEqual(await readdir(path.dirname(plan.output)),['app']);
+ failInstall=false;assert.equal((await prepareDesktop({root,env,host,run,verifyFrozenLibrary})).output,plan.output);
  const staged=JSON.parse(await readFile(path.join(plan.output,'resources/runtime-manifest.json'),'utf8'));
+ assert.equal(await readFile(path.join(plan.output,db),'utf8'),database);assert.equal(await readFile(path.join(plan.output,sidecar),'utf8'),libraryManifest);
  assert.equal(staged.target,plan.id);assert.equal(staged.bundledModel,null);assert.equal(staged.validationStatus,'staged-not-platform-validated');
  assert.equal(await readFile(path.join(plan.output,'runtime/node'),'utf8'),'binary');
  assert.equal(commands.some(([command])=>/brew|whisper|curl/.test(command)),false);
