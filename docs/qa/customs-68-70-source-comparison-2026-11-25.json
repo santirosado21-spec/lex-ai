@@ -1,0 +1,134 @@
+{
+  "officialUrl": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LAdua.pdf",
+  "historyUrl": "https://www.diputados.gob.mx/LeyesBiblio/ref/ladua.htm",
+  "checkedOn": "2026-11-25",
+  "pinnedPdfSha256": "43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d",
+  "currentPdfSha256": "c7338696813eb8b3bd875340cd97e8c37d7c5eb9e8708df4d60341b8fd4c3ac9",
+  "method": "pdftotext-layout; remove repeating headers/footer; normalize whitespace only; each selected passage literal substring; physical pages48–49 visually inspected",
+  "articles": [
+    {
+      "article": "68",
+      "sameNormalizedText": true,
+      "pinned": "Se considera que existe vinculación entre personas para los efectos de esta Ley, en los siguientes casos: I. Si una de ellas ocupa cargos de dirección o responsabilidad en una empresa de la otra. II. Si están legalmente reconocidas como asociadas en negocios. III. Si tienen una relación de patrón y trabajador. IV. Si una persona tiene directa o indirectamente la propiedad, el control o la posesión del 5% o más de las acciones, partes sociales, aportaciones o títulos en circulación y con derecho a voto en ambas. V. Si una de ellas controla directa o indirectamente a la otra. VI. Si ambas personas están controladas directa o indirectamente por una tercera persona. VII. Si juntas controlan directa o indirectamente a una tercera persona. VIll. Si son de la misma familia.",
+      "current": "Se considera que existe vinculación entre personas para los efectos de esta Ley, en los siguientes casos: I. Si una de ellas ocupa cargos de dirección o responsabilidad en una empresa de la otra. II. Si están legalmente reconocidas como asociadas en negocios. III. Si tienen una relación de patrón y trabajador. IV. Si una persona tiene directa o indirectamente la propiedad, el control o la posesión del 5% o más de las acciones, partes sociales, aportaciones o títulos en circulación y con derecho a voto en ambas. V. Si una de ellas controla directa o indirectamente a la otra. VI. Si ambas personas están controladas directa o indirectamente por una tercera persona. VII. Si juntas controlan directa o indirectamente a una tercera persona. VIll. Si son de la misma familia.",
+      "pinnedPages": [
+        48
+      ],
+      "passages": [
+        {
+          "locator": "encabezado y fracción I",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción II",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción III",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción IV",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción V",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción VI",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción VII",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción VIII",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        }
+      ]
+    },
+    {
+      "article": "69",
+      "sameNormalizedText": true,
+      "pinned": "En una venta entre personas vinculadas, se examinarán las circunstancias de la venta y se aceptará el valor de transacción cuando la vinculación no haya influido en el precio. Para los efectos de este artículo, se considerará que la vinculación no ha influido en el precio, cuando se demuestre que: I. El precio se ajustó conforme a las prácticas normales de fijación de precios seguidas por la rama de producción de que se trate o con la manera en que el vendedor ajusta los precios de venta a compradores no vinculados con él. II. Con el precio se alcanza a recuperar todos los costos y se logra un beneficio congruente con los beneficios globales obtenidos por la empresa en un periodo representativo en las ventas de mercancías de la misma especie o clase.",
+      "current": "En una venta entre personas vinculadas, se examinarán las circunstancias de la venta y se aceptará el valor de transacción cuando la vinculación no haya influido en el precio. Para los efectos de este artículo, se considerará que la vinculación no ha influido en el precio, cuando se demuestre que: I. El precio se ajustó conforme a las prácticas normales de fijación de precios seguidas por la rama de producción de que se trate o con la manera en que el vendedor ajusta los precios de venta a compradores no vinculados con él. II. Con el precio se alcanza a recuperar todos los costos y se logra un beneficio congruente con los beneficios globales obtenidos por la empresa en un periodo representativo en las ventas de mercancías de la misma especie o clase.",
+      "pinnedPages": [
+        48
+      ],
+      "passages": [
+        {
+          "locator": "párrafo primero",
+          "page": 48,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "párrafo segundo, encabezado",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción I",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción II",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        }
+      ]
+    },
+    {
+      "article": "70",
+      "sameNormalizedText": true,
+      "pinned": "En una venta entre personas vinculadas se aceptará el valor de transacción cuando el importador demuestre que dicho valor se aproxima mucho a alguno de los valores criterio de los que a continuación se señalan, vigentes en el mismo momento o en un momento aproximado y se haya manifestado en la declaración a que se refiere el artículo 81 de esta Ley, que existe vinculación con el vendedor de las mercancías y que ésta no influyó en su precio: I. El valor de transacción en las ventas de mercancías idénticas o similares efectuadas a importadores no vinculados con el vendedor, para ser exportadas con destino a territorio nacional. II. El valor en aduana de mercancías idénticas o similares, determinado en los términos del artículo 74 de esta Ley. III. El valor en aduana de mercancías idénticas o similares, determinado conforme a lo dispuesto en el artículo 77 de esta Ley. En la aplicación de los criterios anteriores, deberán tenerse en cuenta las diferencias demostradas de nivel comercial y de cantidad, los elementos enumerados en el artículo 65 de esta Ley y los costos que soporte el vendedor en las ventas a importadores no vinculados con él, y que no soporte en las ventas a importadores con los que tiene vinculación. La Secretaría establecerá mediante reglas, los criterios conforme a los cuales se determinará que un valor se aproxima mucho a otro.",
+      "current": "En una venta entre personas vinculadas se aceptará el valor de transacción cuando el importador demuestre que dicho valor se aproxima mucho a alguno de los valores criterio de los que a continuación se señalan, vigentes en el mismo momento o en un momento aproximado y se haya manifestado en la declaración a que se refiere el artículo 81 de esta Ley, que existe vinculación con el vendedor de las mercancías y que ésta no influyó en su precio: I. El valor de transacción en las ventas de mercancías idénticas o similares efectuadas a importadores no vinculados con el vendedor, para ser exportadas con destino a territorio nacional. II. El valor en aduana de mercancías idénticas o similares, determinado en los términos del artículo 74 de esta Ley. III. El valor en aduana de mercancías idénticas o similares, determinado conforme a lo dispuesto en el artículo 77 de esta Ley. En la aplicación de los criterios anteriores, deberán tenerse en cuenta las diferencias demostradas de nivel comercial y de cantidad, los elementos enumerados en el artículo 65 de esta Ley y los costos que soporte el vendedor en las ventas a importadores no vinculados con él, y que no soporte en las ventas a importadores con los que tiene vinculación. La Secretaría establecerá mediante reglas, los criterios conforme a los cuales se determinará que un valor se aproxima mucho a otro.",
+      "pinnedPages": [
+        49
+      ],
+      "passages": [
+        {
+          "locator": "encabezado",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción I",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción II",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "fracción III",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "párrafo segundo",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        },
+        {
+          "locator": "párrafo final",
+          "page": 49,
+          "exactNormalizedSubstring": true
+        }
+      ]
+    }
+  ],
+  "limit": "Comparison does not establish effective law or applicability. Product keeps historical PDF and warning."
+}
