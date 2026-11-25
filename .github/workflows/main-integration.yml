@@ -24,6 +24,10 @@ jobs:
           package-manager-cache: false
       - run: npm ci
       - run: npm run build
+      - name: Install Chromium for document selection regression
+        run: npx playwright install --with-deps chromium
+      - name: Document selection regression (synthetic real-component browser harness)
+        run: node --test tests/document-text-selection.test.mjs
       # Local OCR fallback (extractor v29): tesseract + poppler render scanned
       # PDFs offline; Pillow builds the synthetic scanned fixture.
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-spa poppler-utils python3-pil fonts-dejavu-core antiword

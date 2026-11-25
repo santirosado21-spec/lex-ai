@@ -2,7 +2,8 @@ import { useEffect,useRef,useState } from 'react';
 import { ArrowDown,ArrowUp,Search,X } from 'lucide-react';
 export default function DocumentText({text,onExtract,extractLabel='Preguntar al Asistente'}:{text:string;extractLabel?:string;onExtract:(excerpt:string)=>void}){
  const [query,setQuery]=useState(''),[active,setActive]=useState(0),[selection,setSelection]=useState('');const reading=useRef<HTMLPreElement>(null);
- useEffect(()=>{const changed=()=>{const selected=window.getSelection();if(selected?.rangeCount&&reading.current?.contains(selected.anchorNode)&&reading.current?.contains(selected.focusNode))setSelection(selected.toString().trim());};document.addEventListener('selectionchange',changed);return()=>document.removeEventListener('selectionchange',changed);},[]);
+ useEffect(()=>{const changed=()=>{const selected=window.getSelection();const inside=Boolean(selected?.rangeCount)&&Boolean(reading.current?.contains(selected?.anchorNode??null))&&Boolean(reading.current?.contains(selected?.focusNode??null));setSelection(inside&&selected?selected.toString().trim():'');};document.addEventListener('selectionchange',changed);return()=>document.removeEventListener('selectionchange',changed);},[]);
+ useEffect(()=>{setSelection('');},[text]);
  useEffect(()=>{const shortcut=(event:KeyboardEvent)=>{if((event.metaKey||event.ctrlKey)&&event.shiftKey&&event.key.toLowerCase()==='a'&&selection){event.preventDefault();onExtract(selection);}};window.addEventListener('keydown',shortcut);return()=>window.removeEventListener('keydown',shortcut);},[selection,onExtract]);
  const positions:number[]=[];if(query.trim()){const lower=text.toLocaleLowerCase('es'),needle=query.toLocaleLowerCase('es');let from=0;while(positions.length<500){const next=lower.indexOf(needle,from);if(next<0)break;positions.push(next);from=next+needle.length;}}
  const selected=positions.length?Math.min(active,positions.length-1):0;

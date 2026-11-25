@@ -1,0 +1,11 @@
+<!doctype html>
+<!-- Synthetic, throwaway harness for tests/document-text-selection.test.mjs.
+     Mounts the REAL src/DocumentText.tsx with synthetic text; not part of the app. -->
+<html lang="es">
+<head><meta charset="utf-8"/><title>DocumentText selection harness (synthetic, test-only)</title></head>
+<body>
+<div id="outside-text">TEXTO FUERA DEL CONTENEDOR. Seleccionar esto nunca debe producirse como extracto del documento.</div>
+<div id="root"></div>
+<script type="module" src="./main.tsx"></script>
+</body>
+</html>
