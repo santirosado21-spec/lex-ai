@@ -112,6 +112,13 @@ export function createStore(dataDir,{pilotPassphrase}={}) {
       updated_at TEXT NOT NULL,
       PRIMARY KEY(workspace_id,matter_id)
     );`);
+  // Add exact paused time without rewriting existing entries or the schema marker.
+  // Older timers have only rounded minutes; their lost sub-minute history is unknown.
+  if(!db.prepare('PRAGMA table_info(active_timers)').all().some(column=>column.name==='accumulated_milliseconds')){
+    db.exec('BEGIN IMMEDIATE');
+    try{db.exec('ALTER TABLE active_timers ADD COLUMN accumulated_milliseconds INTEGER CHECK(accumulated_milliseconds >= 0); UPDATE active_timers SET accumulated_milliseconds=accumulated_minutes*60000; COMMIT');}
+    catch(error){db.exec('ROLLBACK');throw error;}
+  }
   const schemaVersion=db.prepare('PRAGMA user_version').get().user_version;
   const legacyMatters=db.prepare("SELECT id,payload FROM records WHERE kind='matter'").all()
     .filter(row=>{try{return !Object.hasOwn(JSON.parse(row.payload),'counterparties');}catch{return false;}});
@@ -236,11 +243,11 @@ export function createStore(dataDir,{pilotPassphrase}={}) {
       return result.changes;
     },
     getActiveTimer(workspaceId,userId) {
-      return db.prepare('SELECT workspace_id AS workspaceId,user_id AS userId,matter_id AS matterId,started_at AS startedAt,accumulated_minutes AS accumulatedMinutes,paused_at AS pausedAt,state,rate_centavos AS rateCentavos,billable,description,currency FROM active_timers WHERE workspace_id=? AND user_id=?').get(workspaceId,userId) ?? null;
+      return db.prepare('SELECT workspace_id AS workspaceId,user_id AS userId,matter_id AS matterId,started_at AS startedAt,accumulated_minutes AS accumulatedMinutes,accumulated_milliseconds AS accumulatedMilliseconds,paused_at AS pausedAt,state,rate_centavos AS rateCentavos,billable,description,currency FROM active_timers WHERE workspace_id=? AND user_id=?').get(workspaceId,userId) ?? null;
     },
     putActiveTimer(timer) {
-      db.prepare(`INSERT INTO active_timers (workspace_id,user_id,matter_id,started_at,accumulated_minutes,paused_at,state,rate_centavos,billable,description,currency)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(workspace_id,user_id) DO UPDATE SET matter_id=excluded.matter_id,started_at=excluded.started_at,accumulated_minutes=excluded.accumulated_minutes,paused_at=excluded.paused_at,state=excluded.state,rate_centavos=excluded.rate_centavos,billable=excluded.billable,description=excluded.description,currency=excluded.currency`).run(timer.workspaceId,timer.userId,timer.matterId,timer.startedAt,timer.accumulatedMinutes,timer.pausedAt,timer.state,timer.rateCentavos,timer.billable?1:0,timer.description,timer.currency);
+      db.prepare(`INSERT INTO active_timers (workspace_id,user_id,matter_id,started_at,accumulated_minutes,accumulated_milliseconds,paused_at,state,rate_centavos,billable,description,currency)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(workspace_id,user_id) DO UPDATE SET matter_id=excluded.matter_id,started_at=excluded.started_at,accumulated_minutes=excluded.accumulated_minutes,accumulated_milliseconds=excluded.accumulated_milliseconds,paused_at=excluded.paused_at,state=excluded.state,rate_centavos=excluded.rate_centavos,billable=excluded.billable,description=excluded.description,currency=excluded.currency`).run(timer.workspaceId,timer.userId,timer.matterId,timer.startedAt,timer.accumulatedMinutes,timer.accumulatedMilliseconds??timer.accumulatedMinutes*60000,timer.pausedAt,timer.state,timer.rateCentavos,timer.billable?1:0,timer.description,timer.currency);
       return timer;
     },
     deleteActiveTimer(workspaceId,userId) {
