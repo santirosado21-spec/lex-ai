@@ -116,3 +116,9 @@ export function customsInstrumentForArticle(query){
  const before=titles.filter(t=>t.index<a.index&&/^\s*[,:(]?\s*$/u.test(text.slice(t.index+t[0].length,a.index))).at(-1);
  return before?{lawId:id(before)}:{unavailable:true};
 }
+
+// Preserve an existing, pinned source warning in local documents. This does
+// not fetch reforms, establish current law or change any provider envelope.
+export function customsEditionWarnings(refs){
+ return [...new Set(refs.filter(ref=>ref?.id?.startsWith(customsLawId+'-')&&typeof ref.summary==='string').map(ref=>ref.summary))];
+}

@@ -60,6 +60,7 @@ jobs:
             tests/windows-owned-tree-bootstrap-diagnostic.test.mjs \
             tests/legal-library.test.mjs \
             tests/mixed-topic-library.test.mjs \
+            tests/customs-edition-warning.test.mjs \
             tests/extractor-format-variants.test.mjs \
             tests/extractor-non-article-classes.test.mjs \
             tests/nuevo-leon-extraction.test.mjs \

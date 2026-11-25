@@ -1,7 +1,7 @@
 // Research topics are public and identical for every matter. Text matching and
 // documentary evidence stay in the local process. Only the two pinned passages
 // and the chosen public topic are available to the cloud request builder.
-import {customsLawId,customsPassage} from './customs-edition.mjs';
+import {customsLawId,customsPassage,customsEditionWarnings} from './customs-edition.mjs';
 import {loadResearchPassage} from './intake-research.mjs';
 import {proposedQuestions} from './trade-pilot-grounding.mjs';
 
@@ -120,5 +120,5 @@ export function renderTradeReading(raw,reading){
   const question=proposedQuestions(pair.solicitud);
   return title+(choice.locator?' · '+choice.locator:'')+'\n'+quote+(choice.condition?'\nCondición de la fracción I\n'+choice.condition:'')+(question?'\n'+(choice.locator?question.split('\n')[0]:question):'');
  });
- return reading.title+' para [[CLIENTE]] · [[ASUNTO]]\n\nSoporte del expediente\n[[SOPORTE]]\n\n'+sections.join('\n\n')+'\n\nRevisar la edición aplicable y los transitorios a la fecha de la operación.';
+ return reading.title+' para [[CLIENTE]] · [[ASUNTO]]\n\nSoporte del expediente\n[[SOPORTE]]\n\n'+sections.join('\n\n')+customsEditionWarnings(reading.refs).map(text=>'\n\nAdvertencia de la copia consultada\n'+text).join('')+'\n\nRevisar la edición aplicable y los transitorios a la fecha de la operación.';
 }
