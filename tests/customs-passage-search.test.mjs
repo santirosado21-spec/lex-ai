@@ -80,5 +80,33 @@ test('every direct directory passage carries its exact condition and edition war
    if(p.condition)withCondition++;
   }
  }
- assert.equal(withPassages,9);assert.ok(withCondition>=14);
+ assert.equal(withPassages,12);assert.ok(withCondition>=14);
+});
+
+
+test('linkage68–70 selections preserve complete controlling context and exact page for manual preparation',async()=>{
+ const {questionCandidates}=await import('../server/corpus/intake-question.mjs');
+ const {questionPassage}=await import('../server/corpus/intake-research.mjs');
+ for(const article of ['68','69','70']){
+  const source=customsPassage(article),row=customsDirectory().find(r=>r.article===article);
+  assert.equal(row.passages.length,{'68':8,'69':4,'70':6}[article]);
+  assert.equal(source.ref.pdfSha256,'43927095d22ff7bc7780e78132d2160b5050b5f76026b539daec32be09d7341d');
+  assert.match(source.ref.summary,/reforma posterior/);
+  const text='Artículo '+article+' de la Ley Aduanera',rows=questionCandidates(null,text,[{text}]);
+  for(const [part,p] of source.passages.entries()){
+   assert.ok(rows.some(r=>r.source==='aduana-'+article&&r.part===part));
+   const prepared=questionPassage(null,{sourceId:'aduana-'+article,part,angle:'documentos'});
+   assert.equal(prepared.body,p.quote);assert.equal(prepared.condition,p.condition);
+   assert.ok(p.condition.includes(article==='68'?row.passages[0].text.slice(0,row.passages[0].text.indexOf(':')+1):row.passages[0].text));
+   if(article==='69')assert.ok(p.condition.includes(row.passages[1].text));
+   if(article==='70')for(const tail of row.passages.slice(-2))assert.ok(p.condition.includes(tail.text));
+   assert.equal(row.passages[part].page,article==='68'||article==='69'&&part===0?48:49);
+  }
+ }
+ assert.match(customsPassage('68').passages[3].quote,/5% o más/);
+ assert.match(customsPassage('68').passages[7].quote,/misma familia/);
+ assert.match(customsPassage('70').passages[0].quote,/artículo 81/);
+ const hits=searchCustomsPassages('costos beneficio');assert.equal(hits.length,1);assert.equal(hits[0].article,'69');assert.equal(hits[0].page,49);
+ assert.match(hits[0].condition,/cuando se demuestre/);
+ assert.ok(searchCustomsPassages('valores criterio').some(h=>h.article==='70'));
 });

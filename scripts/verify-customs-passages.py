@@ -64,6 +64,30 @@ SELECTION = {
         (79, "párrafo primero", "Se autoriza la salida del territorio nacional de mercancías para someterse", "que establezca el Reglamento."),
         ((79, 80), "párrafo segundo", "Al retorno de las mercancías se pagará", "clasificación arancelaria de la mercancía retornada."),
     ],
+    "68": [
+        (48, "encabezado y fracción I", "Se considera que existe vinculación entre personas para los efectos de esta", "de dirección o responsabilidad en una empresa de la otra."),
+        (48, "fracción II", "Si están legalmente reconocidas como asociadas en negocios.", "Si están legalmente reconocidas como asociadas en negocios."),
+        (48, "fracción III", "Si tienen una relación de patrón y trabajador.", "Si tienen una relación de patrón y trabajador."),
+        (48, "fracción IV", "Si una persona tiene directa o indirectamente la propiedad, el control o", "títulos en circulación y con derecho a voto en ambas."),
+        (48, "fracción V", "Si una de ellas controla directa o indirectamente a la otra.", "una de ellas controla directa o indirectamente a la otra."),
+        (48, "fracción VI", "Si ambas personas están controladas directa o indirectamente por una tercera persona.", "personas están controladas directa o indirectamente por una tercera persona."),
+        (48, "fracción VII", "Si juntas controlan directa o indirectamente a una tercera persona.", "Si juntas controlan directa o indirectamente a una tercera persona."),
+        (48, "fracción VIII", "Si son de la misma familia.", "Si son de la misma familia."),
+    ],
+    "69": [
+        (48, "párrafo primero", "En una venta entre personas vinculadas, se examinarán las circunstancias de la", "transacción cuando la vinculación no haya influido en el precio."),
+        (49, "párrafo segundo, encabezado", "Para los efectos de este artículo, se considerará que la vinculación no", "no ha influido en el precio, cuando se demuestre que:"),
+        (49, "fracción I", "El precio se ajustó conforme a las prácticas normales de fijación de", "los precios de venta a compradores no vinculados con él."),
+        (49, "fracción II", "Con el precio se alcanza a recuperar todos los costos y se", "las ventas de mercancías de la misma especie o clase."),
+    ],
+    "70": [
+        (49, "encabezado", "En una venta entre personas vinculadas se aceptará el valor de transacción", "las mercancías y que ésta no influyó en su precio:"),
+        (49, "fracción I", "El valor de transacción en las ventas de mercancías idénticas o similares", "el vendedor, para ser exportadas con destino a territorio nacional."),
+        (49, "fracción II", "El valor en aduana de mercancías idénticas o similares, determinado en los", "determinado en los términos del artículo 74 de esta Ley."),
+        (49, "fracción III", "El valor en aduana de mercancías idénticas o similares, determinado conforme a", "a lo dispuesto en el artículo 77 de esta Ley."),
+        (49, "párrafo segundo", "En la aplicación de los criterios anteriores, deberán tenerse en cuenta las", "en las ventas a importadores con los que tiene vinculación."),
+        (49, "párrafo final", "La Secretaría establecerá mediante reglas, los criterios conforme a los cuales se", "se determinará que un valor se aproxima mucho a otro."),
+    ],
 }
 
 
