@@ -1,0 +1,7 @@
+# Condiciones en lectura directa de Ley Aduanera
+
+Basec192adc. La ruta por número mostraba el texto de un pasaje pero no su condición asociada ni el aviso específico de reforma posterior. Búsqueda y preparación sí los conservaban. Regresión antes falla en artículo67/fracciónIV por ausencia de encabezado/final; después pasa.
+
+El directorio reutiliza customsPassage para entregar condición por pasaje y aviso por artículo sin reescribir recursos. Lector muestra el aviso del artículo y condición dentro de cada pasaje abierto. Cada pasaje tiene enlace a su página en el mismo PDF fijado, que puede diferir de la página inicial del artículo. No cambia PDF, hashes de fuente, textos seleccionados, lectura automática, preparación ni envelopes. Reglamento conserva su presentación existente. No se agrega fuente ni inferencia ni verificación de vigencia.
+
+12/12 focales PASS y build PASS. UI real: entrada directa67, IV conserva encabezado/final y enlace48;66IIb conserva encabezados general/específico y comprobante; regalías65 mantiene enlace47 aunque artículo inicia46.390/1280 capturas inspeccionadas, sin overflow, edición histórica y aviso legibles. No Tauri/Mac ni consulta real. Aserción Node recorre todos los pasajes del directorio, incluidos los ausentes de búsqueda; mutación condition:null falla y se restaura código. Workflow final PASS:56 archivos,362 tests,359 PASS/3 SKIP/0 FAIL. API smoke PASS.
