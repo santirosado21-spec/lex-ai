@@ -19,7 +19,7 @@ export default function IntakeCaseDocument({insert,sources=[]}:{sources?:CaseSou
  const activeMatch=useRef<HTMLElement|null>(null);
  const text=doc?(original?doc.original:doc.masked):'';
  const matches=supportTextMatches(text,submitted);
- useEffect(()=>{activeMatch.current?.scrollIntoView({block:'nearest'});},[match,submitted]);
+ useEffect(()=>{activeMatch.current?.scrollIntoView({block:'center'});},[match,submitted]);
  function clearSearch(){setQuery('');setSubmitted('');setMatch(0);}
  function search(){setSubmitted(query);setMatch(0);}
  function documentText(){

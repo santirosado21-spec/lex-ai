@@ -9,3 +9,7 @@ La consulta se borra al cambiar soporte, alternar entre marcadores y originales 
 Pruebas: helper con límites, puntuación literal, acentos, mayúsculas, emojis y coincidencias no superpuestas; componente real con dos soportes sintéticos, cambio de vista, limpieza al cerrar/reabrir, navegación, texto inalterado y solo tres llamadas intake.readDocument sin consulta. Pruebas conectadas al paso Chromium existente. Capturas desktop y 390 px inspeccionadas, sin overflow y con la coincidencia activa distinguible.
 
 Límites: solo el texto visible ya extraído, no el PDF original; distinciones Unicode sin normalización; máximo 200 resaltados; cierre nativo Tauri y datos reales no probados.
+
+## Regresión de soporte largo
+
+Fixture permanente de 400 líneas sintéticas con coincidencias distantes en líneas 21, 201 y 381. Navegación a las tres y regreso, a 1280 y 390 px: la coincidencia activa permanece visible y a menos de 30 px del centro del visor. Antes con block nearest falla ese criterio; con block center pasa. El texto no cambia y solo se lee el documento una vez por ancho. Capturas inspeccionadas muestran contexto antes y después de la coincidencia, incluso cuando se parte en dos líneas a 390 px.
