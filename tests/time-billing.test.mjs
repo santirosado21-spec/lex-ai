@@ -3,6 +3,7 @@ import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import test from 'node:test';
+import {DatabaseSync} from 'node:sqlite';
 import {createStore} from '../server/store.mjs';
 import {amountCentavos,csvSafeCell,registerTimeBilling,roundBillingMinutes,toCsv} from '../server/time-billing.mjs';
 
@@ -24,7 +25,7 @@ function fixture(t) {
   };
   const billing=registerTimeBilling(service,store);
   t.after(()=>{store.close();rmSync(dir,{recursive:true,force:true});});
-  return {store,billing,setClock:value=>{current=new Date(value);},matters,workspace};
+  return {store,billing,dir,service,setClock:value=>{current=new Date(value);},matters,workspace};
 }
 
 test('additive migration creates isolated time and billing tables without changing the existing schema marker',t=>{
@@ -109,4 +110,33 @@ test('CSV is UTF-8 BOM-ready and prevents spreadsheet formula interpretation',t=
   assert.ok(csv.startsWith('\ufeff'));assert.match(csv,/'=SUM\(A1:A2\)/);
   assert.equal(csvSafeCell('+malicioso'),"'+malicioso");
   assert.match(toCsv([]),/^\ufeffFecha/);
+});
+
+for(const seconds of [29,31])test(`pause/resume does not change total time or billed amount for four ${seconds}s segments`,t=>{
+ const {billing,setClock}=fixture(t),call=(action,payload={})=>billing.dispatch(action,payload),base=Date.parse('2026-02-01T09:00:00Z');
+ call('billing.arrangement.set',{matterId:'matter-1',arrangement:'hourly',hourlyRateCentavos:12000,billingIncrementMinutes:1});
+ call('time.start',{matterId:'matter-1',description:'Tramos sintéticos'});
+ let now=base;
+ for(let segment=0;segment<4;segment++){now+=seconds*1000;setClock(new Date(now));if(segment<3){call('time.pause',{matterId:'matter-1'});now+=60000;setClock(new Date(now));call('time.resume',{matterId:'matter-1'});}}
+ const fragmented=call('time.stop',{matterId:'matter-1'});
+ setClock(new Date(base));call('time.start',{matterId:'matter-1',description:'Mismo trabajo continuo'});setClock(new Date(base+4*seconds*1000));const continuous=call('time.stop',{matterId:'matter-1'});
+ assert.equal(fragmented.durationMinutes,continuous.durationMinutes);assert.equal(fragmented.billedMinutes,continuous.billedMinutes);assert.equal(fragmented.amountCentavos,continuous.amountCentavos);
+});
+
+
+test('exact paused milliseconds survive store restart, failed stop rollback, and exclude paused wall time',t=>{
+ const {store,billing,dir,service,setClock}=fixture(t),base=Date.parse('2026-02-01T09:00:00Z');
+ billing.dispatch('time.start',{matterId:'matter-1',description:'Persistencia sintética'});
+ setClock(new Date(base+29000));billing.dispatch('time.pause',{matterId:'matter-1'});
+ assert.equal(store.getActiveTimer('workspace-1','local-user').accumulatedMilliseconds,29000);store.close();store.close=()=>{};
+ const reopened=createStore(dir);store.close=()=>reopened.close();const again=registerTimeBilling(service,reopened);
+ assert.equal(again.dispatch('time.active',{}).runningMinutes,0);setClock(new Date(base+3600000));again.dispatch('time.resume',{matterId:'matter-1'});setClock(new Date(base+3600000+29000));
+ const original=reopened.createTimeEntry;reopened.createTimeEntry=()=>{throw Error('synthetic write failure');};assert.throws(()=>again.dispatch('time.stop',{matterId:'matter-1'}),/synthetic write failure/);assert.ok(reopened.getActiveTimer('workspace-1','local-user'));reopened.createTimeEntry=original;
+ const entry=again.dispatch('time.stop',{matterId:'matter-1'});assert.equal(entry.durationMinutes,1);assert.equal(again.dispatch('time.active',{}),null);assert.equal(again.dispatch('time.list',{matterId:'matter-1'}).length,1);
+});
+
+test('legacy timer migration preserves known rounded minutes and is idempotent',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'lex-legacy-timer-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));const db=new DatabaseSync(join(dir,'lex.sqlite'));
+ db.exec("CREATE TABLE active_timers(workspace_id TEXT,user_id TEXT,matter_id TEXT,started_at TEXT,accumulated_minutes INTEGER,paused_at TEXT,state TEXT,rate_centavos INTEGER,billable INTEGER,description TEXT,currency TEXT,PRIMARY KEY(workspace_id,user_id)); INSERT INTO active_timers VALUES('w','u','m','2026-02-01T09:00:00Z',3,'2026-02-01T09:03:00Z','paused',12000,1,'Legacy','MXN');");db.close();
+ for(let pass=0;pass<2;pass++){const store=createStore(dir);const timer=store.getActiveTimer('w','u');assert.equal(timer.accumulatedMinutes,3);assert.equal(timer.accumulatedMilliseconds,180000);assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,3);store.close();}
 });
