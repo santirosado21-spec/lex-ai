@@ -76,6 +76,7 @@ export default function IntakePilot() {
   const group=(item:TaskInfo['comparison'])=>item?.group??item?.subject;
   const taskList=pilot?.tasks.filter(item=>!item.comparison||item.id===task||item.comparison.archived||(group(item.comparison)!==group(comparison)&&item.comparison.suggested));
   const draft = task && pilot?.drafts[task];
+  const draftDirty = editText !== null && editText !== (draft || '');
   const busy = activity!==null || inspecting || worksheetDirty;
   const stage = !saved ? 0 : draft ? 2 : 1;
 
@@ -89,6 +90,18 @@ export default function IntakePilot() {
   useEffect(()=>{
     if (clientStep || saved) heading.current?.focus();
   },[clientStep,saved]);
+
+  useEffect(()=>{
+    if(!draftDirty)return;
+    const protectEdit=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue='';};
+    window.addEventListener('beforeunload',protectEdit);
+    return ()=>window.removeEventListener('beforeunload',protectEdit);
+  },[draftDirty]);
+
+  function discardEdit(){
+    if(draftDirty&&!window.confirm('¿Descartar los cambios sin guardar de este borrador?'))return;
+    setEditText(null);clearFeedback();
+  }
 
   function clearFeedback() { setError(''); setNotice(''); }
   function clearScenario() {
@@ -336,8 +349,9 @@ export default function IntakePilot() {
             {editText!==null ? <div className="rp-edit">
               <label htmlFor="intake-edit">Editar en este equipo<textarea ref={editBox} id="intake-edit" autoFocus disabled={busy} value={editText} onChange={e=>setEditText(e.target.value)} maxLength={8000} rows={6}/></label>
               {pilot?.hasDocument&&<IntakeCaseDocument key={pilot.reservationRevision??0} sources={pilot.sources} insert={insertDatum}/>}
+              <p role="status">{draftDirty?'Cambios sin guardar. Guarda antes de cerrar o recargar esta ventana.':'Sin cambios pendientes en esta edición.'}</p>
               <small>Conserva [[CLIENTE]] y [[ASUNTO]] para recuperar los originales al exportar. {editText.length}/8000</small>
-              <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={()=>{setEditText(null);clearFeedback();}}>Descartar edición</button></div>
+              <div className="rp-actions"><button className="rp-primary" disabled={busy} onClick={()=>void saveEdit()}>Guardar cambios</button><button className="rp-quiet" disabled={busy} onClick={discardEdit}>Descartar edición</button></div>
             </div>:<>
             <div className="rp-switch" aria-label="Vista del borrador" role="group"><button aria-pressed={!restored} disabled={busy} onClick={()=>setRestored('')}>{activeTask.localOnly?<HardDrive size={14}/>:<Cloud size={14}/>} Con marcadores</button><button aria-pressed={Boolean(restored)} disabled={busy} onClick={()=>void reveal()}><HardDrive size={14}/> Datos originales</button></div>
             <div className="rp-preview rp-document">{restored||<MarkedText text={draft}/>}</div>
