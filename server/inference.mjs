@@ -65,6 +65,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
  const hardware=deps.hardware();
  const supported=hardware.platform===catalog.platform&&(catalog.supportedArchs||[catalog.arch]).includes(hardware.arch)&&hardware.memoryGB>=catalog.minMemoryGB;
  let state={state:'stopped',model:'Rejon.AI',modelId:catalog.id,supported,hardware,message:supported?'Inicializa el modelo local para comenzar.':`Requiere una Mac compatible y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`,downloadGB:catalog.downloadGB,downloadBytes:catalog.downloadBytes,license:catalog.license,licenseUrl:catalog.licenseUrl,progress:0,contextLength:catalog.contextLength,outputTokens:catalog.outputTokens,memoryEstimateGB:catalog.memoryEstimateGB,memoryMeasured:false,minMemoryGB:catalog.minMemoryGB,minFreeMemoryGB:catalog.minFreeMemoryGB,minFreeDiskGB:catalog.minFreeDiskGB,validationStatus:catalog.validationStatus};
+ let generationCleanup;
  let cleanupTask,cleanupFailed=false,terminal=false;const signalledChildren=new WeakSet();
  let child,base,controller,initializing=false,busy=false,stopping=false,shutdown=false,initController,bootTask,stopPromise;
  const modelRoot=modelsDir||path.join(dataDir,'models');
@@ -196,7 +197,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
  return {
   outputContract:'paragraph-citations-v1',
   status:async()=>({...state,hardware:{...hardware},busy}),
-  initialize:async()=>{if(stopPromise)await stopPromise;if(terminal)throw Error('Runtime terminal: cierre requerido o no confirmado.');if(initializing||state.state==='ready')return {...state};shutdown=false;stopping=false;initController=new AbortController();initializing=true;set({state:'starting',message:'Iniciando motor local…',progress:0});bootTask=boot();return {...state};},
+  initialize:async()=>{if(generationCleanup)await generationCleanup;if(stopPromise)await stopPromise;if(terminal)throw Error('Runtime terminal: cierre requerido o no confirmado.');if(initializing||state.state==='ready')return {...state};shutdown=false;stopping=false;initController=new AbortController();initializing=true;set({state:'starting',message:'Iniciando motor local…',progress:0});bootTask=boot();return {...state};},
   async *generate(messages,{signal,outputSchema,responseFormat='json'}={}){
    if(readerOnly)throw Error('Runtime reservado para privacidad.');
    if(signal!=null&&!(signal instanceof AbortSignal))throw new TypeError('Señal de cancelación inválida.');
@@ -206,6 +207,26 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
    if(!Array.isArray(messages)||!messages.length||messages.length>16||messages.some(m=>!['system','user','assistant'].includes(m.role)||typeof m.content!=='string')||messages.reduce((n,m)=>n+m.content.length,0)>catalog.maxInputCharacters||JSON.stringify(outputSchema||{}).length>16000)throw Error('El contexto excede el presupuesto local. Acota tu pregunta y las fuentes.');
    const generationChild=child,generationInit=initController;await checkMemory();if(shutdown||terminal||state.state!=='ready'||child!==generationChild||initController!==generationInit)throw Error('Motor detenido durante preparación.');if(busy)throw Error('Ya hay un análisis en curso.');busy=true;controller=new AbortController();const active=controller;const generationSignal=AbortSignal.any([active.signal,...(signal?[signal]:[])]);const timer=setTimeout(()=>active.abort(),180_000);
    let rssTimer,rssChecking=false,guardError;const clearGenerationTimers=()=>{clearTimeout(timer);clearInterval(rssTimer);};generationSignal.addEventListener('abort',clearGenerationTimers,{once:true});
+   let cancelledCleanup;
+   const closeCancelledGeneration=()=>{
+    if(cancelledCleanup)return cancelledCleanup;
+    if(child!==generationChild||controller!==active)return Promise.resolve();
+    set({state:'stopping',message:'Cancelando análisis local.'});active.abort();
+    cancelledCleanup=(async()=>{
+     try{
+      if(!shutdown&&child===generationChild&&controller===active){
+       try{const released=await request('/api/generate',{model:catalog.id,keep_alive:0,stream:false},3000,null);const result=JSON.parse(await boundedBytes(released,65536,AbortSignal.timeout(3000)));if(result.done!==true)throw Error('No se confirmó la liberación.');if(!shutdown&&child===generationChild&&controller===active)set({state:'ready',message:'Motor local listo.'});}
+       catch{if(!shutdown&&child===generationChild&&controller===active){shutdown=true;initController?.abort();const closed=await killOwned();if(closed&&!cleanupFailed)set({state:'stopped',message:'Motor detenido tras cancelación no confirmada.'});}}
+      }
+     }finally{if(controller===active){controller=null;busy=false;}}
+    })();
+    const current=cancelledCleanup;generationCleanup=current;
+    const clear=()=>{if(generationCleanup===current)generationCleanup=undefined;};void current.then(clear,clear);
+    return current;
+   };
+   const onGenerationAbort=()=>{void closeCancelledGeneration();};
+   generationSignal.addEventListener('abort',onGenerationAbort,{once:true});
+   if(generationSignal.aborted)onGenerationAbort();
    const sampleRss=async()=>{if(rssChecking||shutdown||!child||child!==generationChild||controller!==active||active.signal.aborted)return;rssChecking=true;try{const rss=await deps.rss(generationChild.pid);if(controller!==active||active.signal.aborted||child!==generationChild)return;if(!Number.isFinite(rss)||rss<0)throw Error('Medición RSS inválida.');set({runtimeRssGB:rss/GiB,runtimeRssLimitGB:3});if(rss>3*GiB)throw Error('Rejon.AI superó el límite de memoria de 3 GiB. Motor detenido.');}catch(e){if(controller!==active||active.signal.aborted||child!==generationChild)return;guardError=Error(e.message?.includes('3 GiB')?e.message:'No se pudo supervisar la memoria del motor.');active.abort();await killOwned();set({state:'error',message:guardError.message});}finally{rssChecking=false;}};
    try{
     await sampleRss();if(guardError)throw guardError;if(active.signal.aborted||shutdown||child!==generationChild)throw Error('Generación cancelada.');rssTimer=setInterval(()=>void sampleRss(),500);
@@ -215,7 +236,8 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
     generationSignal.throwIfAborted();if(!done)throw Error('La respuesta local se interrumpió.');
    }catch(e){if(guardError)throw guardError;if(e.name==='AbortError'||e.name==='TimeoutError')throw Error('Análisis cancelado o tiempo máximo excedido.');throw e;}
    finally{
-    clearGenerationTimers();generationSignal.removeEventListener('abort',clearGenerationTimers);active.abort();
+    clearGenerationTimers();generationSignal.removeEventListener('abort',clearGenerationTimers);generationSignal.removeEventListener('abort',onGenerationAbort);active.abort();
+    if(cancelledCleanup)await cancelledCleanup;
     // Explicit unload also covers cancelled streams, where keep_alive alone may not finish.
     if(!shutdown&&child===generationChild&&controller===active){try{const released=await request('/api/generate',{model:catalog.id,keep_alive:0,stream:false},3000,null);const result=JSON.parse(await boundedBytes(released,65536));if(result.done!==true)throw Error('No se confirmó la liberación.');}catch{if(child===generationChild&&controller===active){await killOwned();if(!cleanupFailed)set({state:'stopped',message:'Motor detenido para liberar memoria.'});}}}
     if(controller===active){controller=null;busy=false;}
