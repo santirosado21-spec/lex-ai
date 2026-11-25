@@ -170,6 +170,35 @@ test('caller abort after yield refuses second buffered chunk and terminal done r
 test('NDJSON parse error and early return cancel the underlying stream',async t=>{
  for(const malformed of [true,false]){let cancels=0;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?new Response(new ReadableStream({start(c){c.enqueue(new TextEncoder().encode(malformed?'{\n':JSON.stringify({message:{content:'first'}})+'\n'));},cancel(){cancels++;}})):null});await f.engine.initialize();await settled(f.engine);const g=f.engine.generate([{role:'user',content:'synthetic'}]);if(malformed)await assert.rejects(g.next());else{await g.next();await g.return();}assert.equal(cancels,1);}
 });
+test('caller abort while consumer stays suspended unloads and releases busy without next',async t=>{
+ const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/chat')?stream([{message:{content:'first'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);
+ const c=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:c.signal});await g.next();c.abort();c.abort();
+ for(let i=0;i<100&&(await f.engine.status()).busy;i++)await new Promise(r=>setTimeout(r,5));
+ assert.equal((await f.engine.status()).busy,false);assert.deepEqual(f.children[0].child.kills,[]);assert.equal((await f.engine.status()).state,'ready');
+ await f.engine.initialize();await settled(f.engine);await assert.rejects(g.next());assert.equal((await f.engine.status()).state,'ready');assert.equal(f.children.length,1);assert.deepEqual(f.children[0].child.kills,[]);
+});
+test('suspended cancellation retains unconfirmed child and cannot restart on false signals',async t=>{
+ const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/generate')?json({done:false}):url.endsWith('/api/chat')?stream([{message:{content:'first'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);
+ const owned=f.children[0].child;let kills=0;owned.kill=()=>{kills++;return false;};const c=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:c.signal});await g.next();c.abort();
+ for(let i=0;i<650&&(await f.engine.status()).busy;i++)await new Promise(r=>setTimeout(r,5));
+ assert.equal((await f.engine.status()).busy,false);assert.equal((await f.engine.status()).state,'error');assert.equal((await f.engine.status()).cleanup,'unconfirmed');assert.equal(kills,2);await assert.rejects(f.engine.initialize());
+ // Cleanup remains explicitly unconfirmed; restore fixture method for test teardown.
+ owned.kill=s=>{owned.exitCode=0;owned.emit('exit',0);return true;};await assert.rejects(g.next());
+});
+test('initialize waits pending cancellation unload and never advertises false ready',async t=>{
+ let release;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/generate')?new Promise(r=>release=r):url.endsWith('/api/chat')?stream([{message:{content:'first'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);
+ const c=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:c.signal});await g.next();c.abort();let finished=false;const initialize=f.engine.initialize().then(s=>{finished=true;return s;});await new Promise(r=>setTimeout(r,20));assert.equal(finished,false);assert.equal((await f.engine.status()).state,'stopping');release(json({done:true}));assert.equal((await initialize).state,'ready');assert.equal(f.children.length,1);await assert.rejects(g.next());
+});
+test('initialize waits cancellation fallback close then starts a new child',async t=>{
+ const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/generate')?json({done:false}):url.endsWith('/api/chat')?stream([{message:{content:'first'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);
+ const child=f.children[0].child;child.kill=s=>{child.kills.push(s);setTimeout(()=>{child.exitCode=0;child.emit('exit',0);},40);return true;};
+ const c=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:c.signal});await g.next();c.abort();await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert.equal(f.children.length,2);await assert.rejects(g.next());assert.deepEqual(f.children[1].child.kills,[]);
+});
+test('stop during suspended cancellation unload cannot late-ready a replacement',async t=>{
+ let release;const f=await fixture(t,{fetch:({url})=>url.endsWith('/api/generate')?new Promise(r=>release=r):url.endsWith('/api/chat')?stream([{message:{content:'first'}},{done:true}]):null});await f.engine.initialize();await settled(f.engine);
+ const c=new AbortController(),g=f.engine.generate([{role:'user',content:'synthetic'}],{signal:c.signal});await g.next();c.abort();await f.engine.stop();release(json({done:true}));await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert.equal(f.children.length,2);await assert.rejects(g.next());assert.deepEqual(f.children[1].child.kills,[]);
+});
+
 test('invalid caller signal rejects before claiming busy and leaves next generation usable',async t=>{
  const f=await fixture(t);await f.engine.initialize();await settled(f.engine);const messages=[{role:'user',content:'synthetic'}];
  for(const signal of [{},{aborted:false,throwIfAborted(){}},'invalid',true]){
