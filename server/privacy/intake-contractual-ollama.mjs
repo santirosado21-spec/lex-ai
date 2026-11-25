@@ -4,11 +4,13 @@ import {readerModel} from './local-reader-status.mjs';
 import {copyPrivacyJson,exactFields} from './operational-v2.mjs';
 import {createIntakeContractualCandidate} from './intake-contractual-candidate.mjs';
 const MAX_RESPONSE=262144;
+// Requested values, not observed effective runtime behavior.
+export const CONTRACTUAL_OLLAMA_OPTIONS=Object.freeze({temperature:0,presence_penalty:0,top_k:20,top_p:0.95,num_ctx:8192});
 export function createIntakeContractualOllama({fetchImpl=fetch}={}){
  if(typeof fetchImpl!=='function')throw Error('local_transport_required');
  async function ask(system,input,format,numPredict,{signal}={}){
   signal?.throwIfAborted();
-  const response=await fetchImpl('http://127.0.0.1:11434/api/chat',{method:'POST',redirect:'error',signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({model:readerModel,stream:false,think:false,format,keep_alive:'30s',options:{temperature:0,num_predict:numPredict,num_ctx:8192},messages:[{role:'system',content:system},{role:'user',content:input}]})});
+  const response=await fetchImpl('http://127.0.0.1:11434/api/chat',{method:'POST',redirect:'error',signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({model:readerModel,stream:false,think:false,format,keep_alive:'30s',options:{...CONTRACTUAL_OLLAMA_OPTIONS,num_predict:numPredict},messages:[{role:'system',content:system},{role:'user',content:input}]})});
   if(!response.ok||!response.body)throw Error('local_transport_failed');
   const reader=response.body.getReader();let size=0;const chunks=[];
   try{for(;;){signal?.throwIfAborted();const {value,done}=await reader.read();if(done)break;size+=value.byteLength;if(size>MAX_RESPONSE)throw Error('local_response_capacity');chunks.push(value);}}catch(error){await reader.cancel().catch(()=>{});throw error;}finally{reader.releaseLock();}

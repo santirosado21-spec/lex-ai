@@ -62,3 +62,40 @@ transporte conserva CRLF/NUL/espacios y comprueba la misma señal en ambas etapa
 Contrato propuesto de spec sigue siendo plan original, no afirmación de que
 todos sus pasos estén completos. En particular no hay ejecución/scorer record,
 freeze, identidad runtime, integración cloud-route ni validación de privacidad.
+
+## Ajuste de CI y parámetros (base 7bd7214)
+
+Los15tests nuevos no figuraban en el workflow del primer commit; su CIverde no
+los ejecutó. Ahora se añaden explícitamente los3archivos contractual al paso
+Portable source contracts. Medición local del ajuste:15/15PASS, sin modelo/red;
+la ejecución real de CI corresponde al conductor tras revisión/publicación.
+
+Se fijan en cada POST los valores SOLICITADOS: temperature0,
+presence_penalty0 (anula el default instalado1.5), top_k20, top_p0.95,
+num_ctx8192; num_predict4096 para detección y256 para revisión contextual.
+keep_alive30s/thinkfalse/streamfalse permanecen explícitos. El test compara todo
+el objeto options exacto de ambas etapas, no solo temperature. No se afirman
+parámetros efectivos observados, calidad ni determinismo del runtime.
+
+Identidad, evidencia reportada por conductor en lectura de archivos instalada:
+GGUF de modelo SHA256
+20cb277f0967ace47b0b5d5658e5e494a88937f7378b74b5a266496400938f4c
+(1274396992bytes) y projector
+5ddf560e34046fd958b2576324f2a9b57d70f297afe6526958d60a23f3bfc20b
+(671372768bytes), ambos comparados con sus digests. Ollama0.40.6, binario SHA256
+69fcb23ae7b95af30b5184998751f6158df84d0071f930670ee5c22db667c2ff.
+No se volvió a leer/cargar modelo en este ajuste.
+
+Si el tokenizer está contenido en ese GGUF, su identidad de BYTES queda cubierta
+por el hash del contenedor, sin extraerlo ni duplicarlo. El inventario reportado
+no parseó GGUF: no prueba qué metadata/tokenizer contiene ni cuál usa el runner.
+No se afirma identidad semántica o uso efectivo del tokenizer. Aún faltan runner/
+llama.cpp y dependencias dinámicas efectivas, entorno OLLAMA_* y aplicación de
+parámetros/template/parser del runtime. Un contenedor identificado no acredita
+el pipeline completo. No hay freeze ni record elegible.
+
+Techo incremental1GiB y total4GiB del protocolo permanecen SIN cambios. Pesos en
+disco no equivalen a RSS, pero sus tamaños hacen probable incompatibilidad con
+1GiB al cargar; no se ejecutó para averiguarlo. No hay permiso implícito para
+cargar, relajar techo o evaluar. Node/ICU de host y CI deben quedar distinguidos
+en una futura medición, no considerados equivalentes por pasar tests de formato.

@@ -56,6 +56,9 @@ jobs:
             tests/landing-downloads.test.mjs \
             tests/privacy-nym-int8-decoder.test.mjs \
             tests/privacy-nym-float-parity-portable.test.mjs \
+            tests/intake-contractual-candidate-contract.test.mjs \
+            tests/intake-contractual-candidate.test.mjs \
+            tests/intake-contractual-ollama.test.mjs \
             tests/privacy-nym-int8-decoder-v2.test.mjs \
             tests/privacy-nym-int8-decoder-v3.test.mjs \
             tests/openrouter-provider.test.mjs \
