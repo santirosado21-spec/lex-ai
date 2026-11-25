@@ -63,6 +63,7 @@ jobs:
             tests/document-date-zone.test.mjs \
             tests/short-paragraph-citations.test.mjs \
             tests/docx-citations.test.mjs \
+            tests/followup-transport-focus.test.mjs \
             tests/customs-edition-warning.test.mjs \
             tests/extractor-format-variants.test.mjs \
             tests/extractor-non-article-classes.test.mjs \

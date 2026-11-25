@@ -22,7 +22,7 @@ const documentTypes=[
  ['factura','factura comercial',/\bfacturas?\b/u],
  ['contrato','contrato',/\bcontratos?\b/u],
  ['pedimento','pedimento',/\bpedimentos?\b/u],
- ['transporte','documento de transporte',/\b(?:fletes?|guias? aereas?|conocimientos? de embarque|documentos? de transporte)\b/u],
+ ['transporte','documento de transporte',/\b(?:fletes?|cartas? de porte|guias? aereas?|conocimientos? de embarque|documentos? de transporte)\b/u],
  ['pago','comprobante de pago',/\b(?:comprobantes?|constancias?|justificantes?) de pago\b/u],
  ['origen','certificación de origen',/\b(?:certificados?|certificacion(?:es)?) de origen\b/u],
  ['acuse','acuse de transmisión',/\bacuses?\b/u],
