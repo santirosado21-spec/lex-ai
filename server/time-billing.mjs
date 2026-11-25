@@ -26,11 +26,14 @@ export function amountCentavos(minutes,rateCentavos) {
   return roundHalfUp(minutes*rateCentavos,60);
 }
 
-export function elapsedWholeMinutes(start,end) {
+function elapsedMilliseconds(start,end) {
   const startMs=instant(start).getTime(),endMs=instant(end).getTime();
   if(endMs<startMs)throw new Error('El temporizador no puede terminar antes de iniciar.');
-  return roundHalfUp(endMs-startMs,60_000);
+  return endMs-startMs;
 }
+
+export function elapsedWholeMinutes(start,end) {return roundHalfUp(elapsedMilliseconds(start,end),60_000);}
+const accumulatedMilliseconds=timer=>timer.accumulatedMilliseconds??timer.accumulatedMinutes*60_000;
 
 export function csvSafeCell(value) {
   const raw=String(value??'');
@@ -95,8 +98,8 @@ export function registerTimeBilling(service,store) {
   }
   function timerView(timer) {
     if(!timer)return null;
-    const current=clock(),started=instant(timer.startedAt),elapsed=timer.state==='running'?elapsedWholeMinutes(started,current):0;
-    return {...timer,billable:Boolean(timer.billable),runningMinutes:timer.accumulatedMinutes+elapsed,stale:timer.state==='running'&&current.getTime()-started.getTime()>STALE_TIMER_MS};
+    const current=clock(),started=instant(timer.startedAt),elapsed=timer.state==='running'?elapsedMilliseconds(started,current):0;
+    return {...timer,billable:Boolean(timer.billable),runningMinutes:roundHalfUp(accumulatedMilliseconds(timer)+elapsed,60_000),stale:timer.state==='running'&&current.getTime()-started.getTime()>STALE_TIMER_MS};
   }
   function entryFor({m,userId,source,description,billable,durationMinutes,startedAt=null,endedAt=null,manualMinutes=null,rateCentavos}) {
     const arrangement=arrangementFor(m),billedMinutes=billable?roundBillingMinutes(durationMinutes,arrangement.billingIncrementMinutes):0;
@@ -108,11 +111,11 @@ export function registerTimeBilling(service,store) {
   }
   function stopTimer(m,userId,descriptionOverride,{recovery=false}={}) {
     const timer=assertTimerScope(store.getActiveTimer(m.workspaceId,userId),m,userId);
-    const end=clock(),extra=timer.state==='running'?elapsedWholeMinutes(timer.startedAt,end):0;
+    const end=clock(),extra=timer.state==='running'?elapsedMilliseconds(timer.startedAt,end):0;
     const stale=timer.state==='running'&&end.getTime()-instant(timer.startedAt).getTime()>STALE_TIMER_MS;
     if(stale&&!recovery)throw new Error('El temporizador requiere recuperación explícita antes de guardarse.');
-    const cappedExtra=recovery?Math.min(extra,elapsedWholeMinutes(timer.startedAt,new Date(instant(timer.startedAt).getTime()+STALE_TIMER_MS))):extra;
-    const duration=timer.accumulatedMinutes+cappedExtra;
+    const cappedExtra=recovery?Math.min(extra,STALE_TIMER_MS):extra;
+    const duration=roundHalfUp(accumulatedMilliseconds(timer)+cappedExtra,60_000);
     const description=descriptionOverride===undefined?timer.description:text(descriptionOverride,'Descripción',600);
     const entry=entryFor({m,userId,source:'timer',description,billable:Boolean(timer.billable),durationMinutes:duration,startedAt:timer.startedAt,endedAt:end.toISOString(),rateCentavos:timer.rateCentavos});
     return store.transaction(()=>{store.deleteActiveTimer(m.workspaceId,userId);store.createTimeEntry(entry);audit('time.stop',entry.id);return entry;});
@@ -152,12 +155,13 @@ export function registerTimeBilling(service,store) {
       case 'time.start': {
         fields(p,['matterId','userId','description','billable'],'Parámetros de temporizador');const m=matter(id(p.matterId,'Asunto')),userId=optionalUser(p.userId),w=workspace();
         if(p.billable!==undefined&&typeof p.billable!=='boolean')throw new Error('Indicador facturable inválido.');if(store.getActiveTimer(w.id,userId))throw new Error('Ya hay un temporizador activo o pausado. Recupéralo antes de iniciar otro.');
-        const timer={workspaceId:w.id,userId,matterId:m.id,startedAt:stamp(clock),accumulatedMinutes:0,pausedAt:null,state:'running',rateCentavos:rateFor(m),billable:p.billable??true,description:text(p.description,'Descripción',600),currency:CURRENCY};
+        const timer={workspaceId:w.id,userId,matterId:m.id,startedAt:stamp(clock),accumulatedMinutes:0,accumulatedMilliseconds:0,pausedAt:null,state:'running',rateCentavos:rateFor(m),billable:p.billable??true,description:text(p.description,'Descripción',600),currency:CURRENCY};
         return store.transaction(()=>{store.putActiveTimer(timer);audit('time.start',m.id);return timerView(timer);});
       }
       case 'time.pause': {
         fields(p,['matterId','userId'],'Parámetros de temporizador');const m=matter(id(p.matterId,'Asunto')),userId=optionalUser(p.userId),timer=assertTimerScope(store.getActiveTimer(m.workspaceId,userId),m,userId);if(timer.state==='paused')return timerView(timer);
-        const paused={...timer,accumulatedMinutes:timer.accumulatedMinutes+elapsedWholeMinutes(timer.startedAt,clock()),pausedAt:stamp(clock),state:'paused'};return store.transaction(()=>{store.putActiveTimer(paused);audit('time.pause',m.id);return timerView(paused);});
+        const total=accumulatedMilliseconds(timer)+elapsedMilliseconds(timer.startedAt,clock());
+        const paused={...timer,accumulatedMilliseconds:total,accumulatedMinutes:roundHalfUp(total,60_000),pausedAt:stamp(clock),state:'paused'};return store.transaction(()=>{store.putActiveTimer(paused);audit('time.pause',m.id);return timerView(paused);});
       }
       case 'time.resume': {
         fields(p,['matterId','userId'],'Parámetros de temporizador');const m=matter(id(p.matterId,'Asunto')),userId=optionalUser(p.userId),timer=assertTimerScope(store.getActiveTimer(m.workspaceId,userId),m,userId);if(timer.state==='running')return timerView(timer);
