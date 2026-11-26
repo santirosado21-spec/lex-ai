@@ -10,7 +10,7 @@ export const REVIEWERS={
 export const LIMIT='Solo prepara pedidos. Los revisores responden a mano; ninguna respuesta es aprobacion del usuario ni veredicto de fusion.';
 const SHA=/^[0-9a-f]{40}$/;
 const sha256=b=>crypto.createHash('sha256').update(b).digest('hex');
-const git=(repo,args)=>execFileSync('git',['-c','core.hooksPath=/dev/null','-C',repo,...args],{encoding:'buffer',maxBuffer:64*1024*1024,env:{PATH:process.env.PATH,GIT_CONFIG_NOSYSTEM:'1',GIT_NO_REPLACE_OBJECTS:'1',HOME:'/nonexistent'}});
+const git=(repo,args,maxBuffer=64*1024*1024)=>execFileSync('git',['-c','core.hooksPath=/dev/null','-C',repo,...args],{encoding:'buffer',maxBuffer,env:{PATH:process.env.PATH,GIT_CONFIG_NOSYSTEM:'1',GIT_NO_REPLACE_OBJECTS:'1',GIT_CONFIG_GLOBAL:'/dev/null',HOME:'/nonexistent'}});
 function exact(repo,label,value){
  if(!SHA.test(value||''))throw new Error(`${label}: se requiere un SHA completo de 40 hex`);
  let resolved;try{resolved=git(repo,['rev-parse','--verify','--quiet',`${value}^{commit}`]).toString().trim();}catch{throw new Error(`${label}: el commit ${value} no existe en el repositorio`);}
@@ -21,7 +21,7 @@ export const MAX_PATCH_BYTES=8*1024*1024;
 const plain=p=>{const st=fs.lstatSync(p,{throwIfNoEntry:false});if(st&&!st.isFile())throw new Error('ruta no permitida (no es archivo regular): '+path.basename(p));return st;};
 export function prepare({repo,base,head,out,maxBytes=MAX_PATCH_BYTES}){
  exact(repo,'base',base);exact(repo,'head',head);
- const patch=git(repo,['diff','--binary','--no-ext-diff','--no-textconv',base,head]);
+ let patch;try{patch=git(repo,['diff','--binary','--no-ext-diff','--no-textconv',base,head],maxBytes+1);}catch(e){if(e?.code==='ENOBUFS')throw new Error(`el diff supera el limite de ${maxBytes} bytes`);throw e;}
  if(!patch.length)throw new Error('el diff base..head esta vacio');
  if(patch.length>maxBytes)throw new Error(`el diff supera el limite de ${maxBytes} bytes`);
  const patchSha256=sha256(patch);
@@ -44,22 +44,30 @@ export function prepare({repo,base,head,out,maxBytes=MAX_PATCH_BYTES}){
   return {manifest,status:'sin cambios'};
  }
  if(lo&&fs.readdirSync(out).length)throw new Error('la carpeta de salida no esta vacia ni es de este despachador');
- const tmp=`${out}.tmp-${process.pid}`;fs.rmSync(tmp,{recursive:true,force:true});fs.mkdirSync(tmp,{recursive:true});
+ fs.mkdirSync(path.dirname(path.resolve(out)),{recursive:true});
+ const tmp=fs.mkdtempSync(path.resolve(out)+'.tmp-');
  for(const [name,bytes] of Object.entries(files))fs.writeFileSync(path.join(tmp,name),bytes,{flag:'wx'});
  fs.renameSync(tmp,out);
  return {manifest,status:'creado'};
 }
-const readManifest=out=>JSON.parse(fs.readFileSync(path.join(out,'manifest.json'),'utf8'));
+const MAX_SMALL=1024*1024;
+const small=p=>{const st=plain(p);if(!st)throw new Error('falta '+path.basename(p));if(st.size>MAX_SMALL)throw new Error('archivo demasiado grande: '+path.basename(p));return fs.readFileSync(p,'utf8');};
+const validFindings=r=>Array.isArray(r.findings)&&typeof r.notRun==='string'&&r.findings.every(f=>f&&typeof f==='object'&&['BLOCKER','RISK'].includes(f.severity)&&typeof f.file==='string'&&typeof f.text==='string'&&f.text.trim());
+function readManifest(out){
+ const m=JSON.parse(small(path.join(out,'manifest.json')));
+ const ids=Object.keys(m.reviewers||{});
+ if(ids.length!==Object.keys(REVIEWERS).length||!ids.every(id=>Object.hasOwn(REVIEWERS,id)))throw new Error('manifiesto invalido: revisores inesperados');
+ return m;
+}
 export function record(out,id,file){
  const m=readManifest(out);
  if(!Object.hasOwn(REVIEWERS,id)||!m.reviewers[id])throw new Error('revisor desconocido: '+id);
- plain(path.join(out,'manifest.json'));
- const bytes=fs.readFileSync(file);let r;
+ const bytes=Buffer.from(small(file));let r;
  try{r=JSON.parse(bytes.toString('utf8'));}catch{throw new Error('la respuesta debe ser JSON estructurado');}
  if(r.reviewer!==id)throw new Error('el campo reviewer no coincide');
  if(r.patchSha256!==m.patchSha256)throw new Error('la respuesta es de otro parche (SHA distinto)');
- if(!Array.isArray(r.findings)||typeof r.notRun!=='string')throw new Error('faltan findings o notRun');
- for(const f of r.findings)if(!['BLOCKER','RISK'].includes(f?.severity)||typeof f.file!=='string'||typeof f.text!=='string'||!f.text.trim())throw new Error('hallazgo invalido');
+ if(!r||!Array.isArray(r.findings)||typeof r.notRun!=='string')throw new Error('faltan findings o notRun');
+ if(!validFindings(r))throw new Error('hallazgo invalido');
  const dest=path.join(out,`response-${id}.json`);
  if(fs.lstatSync(dest,{throwIfNoEntry:false}))throw new Error('ya registrado: '+id);
  const clean=Buffer.from(JSON.stringify({reviewer:r.reviewer,patchSha256:r.patchSha256,findings:r.findings.map(f=>({severity:f.severity,file:f.file,text:f.text})),notRun:r.notRun},null,1)+'\n');
@@ -71,8 +79,8 @@ export function status(out){
  const lines=Object.keys(m.reviewers).map(id=>{
   const p=path.join(out,`response-${id}.json`);
   if(!fs.lstatSync(p,{throwIfNoEntry:false}))return `${id}: pendiente`;
-  plain(p);let r;try{r=JSON.parse(fs.readFileSync(p,'utf8'));}catch{return `${id}: respuesta invalida`;}
-  if(r.reviewer!==id||r.patchSha256!==m.patchSha256||!Array.isArray(r.findings))return `${id}: respuesta invalida (no corresponde a este parche)`;
+  let r;try{r=JSON.parse(small(p));}catch{return `${id}: respuesta invalida`;}
+  if(!r||r.reviewer!==id||r.patchSha256!==m.patchSha256||!validFindings(r))return `${id}: respuesta invalida (no corresponde a este parche)`;
   return `${id}: respondio (BLOCKER ${r.findings.filter(f=>f.severity==='BLOCKER').length}, RISK ${r.findings.filter(f=>f.severity==='RISK').length}) sha ${sha256(fs.readFileSync(p)).slice(0,12)}`;
  });
  return [`base ${m.base}`,`head ${m.head}`,`parche ${m.patchSha256}`,...lines,m.limit].join('\n');

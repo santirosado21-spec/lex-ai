@@ -53,7 +53,7 @@ test('respuesta estructurada validada: parche ajeno, revisor ajeno, formato, dob
 test('workflow: permisos minimos, sin secretos, sin pull_request_target, script de la base, sin forks',()=>{
  const y=fs.readFileSync(new URL('../.github/workflows/board-dispatch.yml',import.meta.url),'utf8');
  assert.match(y,/permissions:\n  contents: read\n/);assert.ok(!/pull_request_target/.test(y));assert.ok(!/secrets\./.test(y));assert.ok(!/contents: write|id-token|pull-requests: write/.test(y));
- assert.match(y,/ref: \$\{\{ github\.event\.pull_request\.base\.sha \|\| github\.event\.before \}\}\n          path: trusted/);assert.ok(y.includes('BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}'));assert.match(y,/ref: \$\{\{ github\.event\.pull_request\.head\.sha \|\| github\.sha \}\}\n          path: data/);assert.ok(y.includes('head.repo.full_name == github.repository'));
+ assert.match(y,/ref: \$\{\{ github\.event\.pull_request\.base\.sha \|\| github\.event\.before \}\}\n          path: trusted/);assert.ok(y.includes('BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}'));assert.match(y,/ref: \$\{\{ github\.event\.pull_request\.head\.sha \|\| github\.sha \}\}\n          path: data/);assert.ok(y.includes('head.repo.full_name == github.repository')&&y.includes("github.event.before != '"+'0'.repeat(40)+"'"));
  assert.equal((y.match(/persist-credentials: false/g)||[]).length,2);assert.ok(!/npm (ci|install)/.test(y));
  for(const m of y.matchAll(/uses: (\S+)/g))assert.match(m[1],/@[0-9a-f]{40}$/);
 });
@@ -69,7 +69,7 @@ test('confinamiento: enlaces simbolicos, carpeta ajena, revisor con ruta, limite
  assert.throws(()=>prepare({repo:d,base,head,out}),/no es archivo regular/);
  const mf=JSON.parse(fs.readFileSync(path.join(out,'manifest.json')));mf.reviewers['../x']=mf.reviewers.muse;fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(mf));
  const f=path.join(d,'r.json');fs.writeFileSync(f,JSON.stringify({reviewer:'../x',patchSha256:m.patchSha256,findings:[],notRun:''}));
- assert.throws(()=>record(out,'../x',f),/desconocido/);assert.equal(fs.readFileSync(victim,'utf8'),'intacto');
+ assert.throws(()=>record(out,'../x',f),/inesperados/);assert.equal(fs.readFileSync(victim,'utf8'),'intacto');
  fs.writeFileSync(path.join(out,'response-hermes.json'),'{"reviewer":"hermes","patchSha256":"x","findings":[]}');
  assert.match(status(out),/hermes: respuesta invalida/);
 });
@@ -83,4 +83,19 @@ test('refs de reemplazo del repo no alteran los objetos leidos',()=>{
  const {d,base,head,out}=repo();const real=prepare({repo:d,base,head,out}).manifest.patchSha256;
  sh(d,'replace',head,base);const out2=out+'-2';
  assert.equal(prepare({repo:d,base,head,out:out2}).manifest.patchSha256,real);
+});
+
+test('status valida estructura (hallazgo nulo, notRun ausente) y manifiesto con revisores ajenos; tope de lectura',()=>{
+ const {d,base,head,out}=repo();const {manifest:m}=prepare({repo:d,base,head,out});
+ fs.writeFileSync(path.join(out,'response-dot.json'),JSON.stringify({reviewer:'dot',patchSha256:m.patchSha256,findings:[null],notRun:''}));
+ fs.writeFileSync(path.join(out,'response-muse.json'),JSON.stringify({reviewer:'muse',patchSha256:m.patchSha256,findings:[]}));
+ const s=status(out);assert.match(s,/dot: respuesta invalida/);assert.match(s,/muse: respuesta invalida/);
+ fs.writeFileSync(path.join(out,'response-grok.json'),' '.repeat(1024*1024+1));assert.match(status(out),/grok: respuesta invalida/);
+ const mf=JSON.parse(fs.readFileSync(path.join(out,'manifest.json')));mf.reviewers['../x']={};fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(mf));
+ assert.throws(()=>status(out),/revisores inesperados/);
+});
+test('limite de tamano corta en git y el temporal no borra contenido previo',()=>{
+ const {d,base,head,out}=repo();fs.writeFileSync(path.join(d,'a.txt'),'x'.repeat(5000));sh(d,'commit','-qam','grande');const big=sh(d,'rev-parse','HEAD');
+ assert.throws(()=>prepare({repo:d,base,head:big,out,maxBytes:1000}),/limite/);
+ const pre=out+'.tmp-123';fs.mkdirSync(pre);fs.writeFileSync(path.join(pre,'k'),'k');prepare({repo:d,base,head,out});assert.ok(fs.existsSync(path.join(pre,'k')));
 });
