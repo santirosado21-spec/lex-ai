@@ -1,3 +1,4 @@
+import {renderedRegulationReadingNotes} from './regulation-reading-notes.mjs';
 import {productOriginId,productOriginRef} from './product-origin.mjs';
 import {producerPrompt,producerNote} from './producer-comparison.mjs';
 import {originAnnexId,originAnnexRef} from './origin-annex.mjs';
@@ -201,6 +202,7 @@ export function renderResearchNote(raw, note) {
     (note.caseFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     (other?.ref.remedy?'\n\n'+other.ref.summary:'')+
+    renderedRegulationReadingNotes(other?[note.ref,other.ref]:[note.ref]).map(text=>'\n\n'+text).join('')+
     customsEditionWarnings(other?[note.ref,other.ref]:[note.ref]).map(text=>'\n\nAdvertencia de la copia consultada\n'+text).join('')+
     (note.ref.remedy||note.ref.sourceId===originAnnexId||note.ref.sourceId===productOriginId?'\n\n'+note.ref.summary:'\n\nRevisar el artículo completo, los transitorios y la versión aplicable en la fecha de la operación.');
 }
