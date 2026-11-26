@@ -5,7 +5,7 @@ import http from 'node:http';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 const execute=promisify(execFile);
-const failure=()=>Error('No se pudo verificar la conexión del motor propio.');
+const failure=cause=>Object.assign(Error('No se pudo verificar la conexión del motor propio.',cause?{cause}:undefined),{code:'ERR_OWNED_ENDPOINT_UNVERIFIED'});
 export function parseOwnedConnections(text){
  const rows=[];let pid=null,current=null;
  for(const line of text.split('\n')){
@@ -35,16 +35,16 @@ export async function createOwnedEndpointFetch({child,platform=process.platform,
   init.signal?.throwIfAborted();
   const agent=new http.Agent({keepAlive:false,maxSockets:1});let connected;
   agent.createConnection=(_options,callback)=>{
-   const socket=connectImpl({host:'127.0.0.1',port:Number(address.port)});connected=socket;let finished=false;
+   const socket=connectImpl({host:'127.0.0.1',port:Number(address.port)});connected=socket;let finished=false,hasConnected=false;
    const done=(error)=>{if(finished)return;finished=true;socket.off('error',onError);socket.off('connect',verify);if(error){socket.destroy();callback(error);}else callback(null,socket);};
-   const onError=()=>done(failure());
-   const verify=async()=>{try{
+   const onError=error=>done(!hasConnected&&error?.code==='ECONNREFUSED'?Object.assign(Error('El motor propio aún no acepta conexiones.'),{code:'ERR_OWNED_ENDPOINT_NOT_READY'}):failure(error));
+   const verify=async()=>{hasConnected=true;try{
     if(await identity()!==initial)throw failure();
     const tuple={localAddress:socket.localAddress,localPort:socket.localPort,remoteAddress:socket.remoteAddress,remotePort:socket.remotePort};
     const {stdout}=await executeImpl(lsof,['-nP','-a','-p',String(pid),'-iTCP','-FpnT'],options);
     if(!hasOwnedConnection(stdout,pid,tuple)||await identity()!==initial||socket.destroyed||!alive())throw failure();
     init.signal?.throwIfAborted();done();
-   }catch{done(failure());}};
+   }catch(error){done(failure(error));}};
    socket.once('error',onError);socket.once('connect',verify);
    // Agent must wait for callback. Returning the socket here would let Node send early.
   };
