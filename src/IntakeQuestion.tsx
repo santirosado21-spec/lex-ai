@@ -1,4 +1,4 @@
-import {useEffect,useState,type FormEvent} from 'react';
+import {useEffect,useRef,useState,type FormEvent} from 'react';
 import {ArrowRight,ChevronDown,FileSearch,HardDrive,LoaderCircle,ShieldPlus,X} from 'lucide-react';
 import IntakePermit,{type PermitHint,type PermitSelection} from './IntakePermit';
 import IntakeQuestionLines from './IntakeQuestionLines';
@@ -17,6 +17,9 @@ type Review={id:string;context?:Context|null;permit?:PermitHint;sources?:{id:str
 export type QuestionSelection={reviewId:string;key:string;angle:string;secondKey?:string;factIds?:string[];compareProducers?:true};
 
 export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRevision,articleInquiry}:{articleInquiry?:{text:string};disabled:boolean;reservationRevision:number;onPermit:(selection:PermitSelection,reviewId:string)=>Promise<void>;onSelect:(selection:QuestionSelection)=>Promise<void>}){
+ const inspection=useRef<{epoch:number;controller:AbortController|null}>({epoch:0,controller:null});
+ function invalidateInspection(){inspection.current.epoch++;inspection.current.controller?.abort();inspection.current.controller=null;}
+ useEffect(()=>()=>invalidateInspection(),[]);
  const [open,setOpen]=useState(false),[question,setQuestion]=useState('');
  const [reserved,setReserved]=useState<string[]>([]);
  const [selection,setSelection]=useState('');
@@ -38,10 +41,12 @@ export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRe
  }
  const [refined,setRefined]=useState<string[]>([]);
  useEffect(()=>{
+  invalidateInspection();setBusy(false);
   setReview(null);setOriginals(null);setRefined([]);setFactIds([]);setSecondKey('');setError('');
  },[reservationRevision]);
  useEffect(()=>{
   if(!articleInquiry)return;
+  invalidateInspection();setBusy(false);
   setQuestion(articleInquiry.text);setOpen(true);setReview(null);setReserved([]);setSelection('');setOriginals(null);setRefined([]);setFactIds([]);setSecondKey('');setError('');
   const frame=requestAnimationFrame(()=>document.getElementById('rp-question-text')?.focus());
   return ()=>cancelAnimationFrame(frame);
@@ -52,12 +57,15 @@ export default function IntakeQuestion({disabled,onSelect,onPermit,reservationRe
  const candidate=review?.candidates.find(row=>row.key===key);
  const alternatives=review?.candidates.filter(row=>row.citationId!==candidate?.citationId)??[];
  async function inspect(event:FormEvent){
-  event.preventDefault();setOriginals(null);setBusy(true);setReview(null);setSecondKey('');setRefined([]);setFactIds([]);setError('');
+  event.preventDefault();invalidateInspection();const epoch=inspection.current.epoch,controller=new AbortController();inspection.current.controller=controller;
+  const current=()=>inspection.current.epoch===epoch&&!controller.signal.aborted;
+  setOriginals(null);setBusy(true);setReview(null);setSecondKey('');setRefined([]);setFactIds([]);setError('');
   try{
-   const result=await api<Review>('intake.inspectQuestion',{text:question.trim(),...(reserved.length?{reserved}:{})});
+   const result=await api<Review>('intake.inspectQuestion',{text:question.trim(),...(reserved.length?{reserved}:{})},controller.signal);
+   if(!current())return;
    setReview(result);setKey(result.candidates[0]?.key??'');setRoute(result.permit&&!result.candidates[0]?.key.startsWith('ad29-')?'permit':'passage');setAngle(result.suggestedAngle);
-  }catch(cause){setError(cause instanceof Error?cause.message:'No se pudo revisar la consulta local.');}
-  finally{setBusy(false);}
+  }catch(cause){if(current())setError(cause instanceof Error?cause.message:'No se pudo revisar la consulta local.');}
+  finally{if(current()){inspection.current.controller=null;setBusy(false);}}
  }
  async function refine(){
   if(!review||!lineIds.length)return;
