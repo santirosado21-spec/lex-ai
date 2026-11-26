@@ -129,3 +129,10 @@ test('fully pending registry produces an explicit empty acquisition rather than 
   const input=registry();input.documents.forEach(document=>{document.status='pending';});
   const plan=buildAcquisitionPlan(input,{now:capture});assert.deepEqual(plan.documents,[]);assert.equal(plan.blockedDocuments.length,3);assert.deepEqual(verifyAcquisitionPlan(clone(plan)),plan);
 });
+
+test('pinned Reglamento layout is explicit and canonical only for exact source and Poppler',()=>{
+ const input=registry();const doc=input.documents[0];doc.url='https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf';doc.textLayer='poppler';doc.textLayout='regulation-pinned-v1';
+ const plan=buildAcquisitionPlan(input,{now:capture});assert.equal(plan.documents[0].textLayout,'regulation-pinned-v1');
+ const other=clone(input);delete other.documents[0].textLayout;assert.notEqual(buildAcquisitionPlan(other,{now:capture}).sha256,plan.sha256);
+ for(const change of [d=>delete d.textLayer,d=>{d.url='https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf';},d=>{d.textLayout='generic';},d=>{d.forceOcr=true;}]){const r=clone(input);change(r.documents[0]);assert.throws(()=>buildAcquisitionPlan(r,{now:capture}));}
+});

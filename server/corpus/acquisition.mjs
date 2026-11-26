@@ -1,3 +1,4 @@
+import {REGULATION_LAYOUT} from '../regulation-layout.mjs';
 // Opt-in public acquisition worker. Never imported by the end-user application.
 import {mkdir,readFile,writeFile,rename,open,unlink,lstat,readdir} from 'node:fs/promises';
 import {constants} from 'node:fs';
@@ -177,7 +178,7 @@ export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchI
         budget.check();ledger.documents[document.id]??={url:document.url,sourceId:document.sourceId};
         const sourceRecord=verified.registry.sources.find(source=>source.id===document.sourceId);
         const source={...document,id:document.id,lawId:`${document.jurisdiction}-${document.id.toUpperCase()}`,authority:sourceRecord?.title??null,reuseBasis:sourceRecord?.rightsReview??null};
-        const extractionConfigHash=hash(JSON.stringify({configSha256:configHash,document,source:sourceRecord}));entry.extractionConfigSha256=extractionConfigHash;
+        const extractionConfigHash=hash(JSON.stringify({configSha256:configHash,document,source:sourceRecord,...(document.textLayout?{layoutPolicyRevision:REGULATION_LAYOUT.revision}:{})}));entry.extractionConfigSha256=extractionConfigHash;
         const docSignal=AbortSignal.any([budget.signal,AbortSignal.timeout(verified.limits.timeoutMs)]);
         if(mode==='live'){
           let wrapperError=null;const boundedFetch=budget.fetchFor(document,fetchImpl,receipt=>entry.requests.push(receipt));

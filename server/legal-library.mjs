@@ -1,3 +1,4 @@
+import {regulationLayoutReceipt} from './regulation-layout.mjs';
 import {regulationPostBody} from './regulation-postbody.mjs';
 import {readFile,writeFile,mkdir,rename,open,unlink,statfs,mkdtemp,readdir,rm} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
@@ -793,16 +794,17 @@ export async function ingestLibrary({catalog,outputDir,limit=40,download=true,fe
 
 if(!isMainThread&&workerData?.kind==='extract-legal-library'){
   try{const {default:pdf}=await import('pdf-parse/lib/pdf-parse.js');const bytes=await readFile(workerData.file);if(bytes.length>20*1024*1024)throw new Error('PDF too large');const pages=[];
+    const layout=regulationLayoutReceipt(workerData.source??{},workerData.metadata,bytes);
     const poppler=workerData.source?.textLayer==='poppler';let popplerInfo=null;
     const result=poppler?{numpages:-1}:await pdf(new Uint8Array(bytes),{max:EXTRACTOR_MAX_PAGES,pagerender:async page=>{const content=await page.getTextContent({normalizeWhitespace:false,disableCombineTextItems:false});let text='',lastY;for(const item of content.items){text+=(lastY===undefined||lastY===item.transform[5]?'':'\n')+item.str;lastY=item.transform[5];}pages.push({number:page.pageNumber,text});return text;}});
     if(poppler){const execFileAsync=promisify(execFile);
       // v36: registry-flagged alternate text layer (Poppler pdftotext) for PDFs whose pdf-parse text layer is defective (glued headings, corrupt flate). Provenance recorded in coverage.parser; the pdf-parse extraction is never replaced silently.
-      const {stdout}=await execFileAsync('pdftotext',['-enc','UTF-8',workerData.file,'-'],{maxBuffer:1<<28,timeout:60000});
+      const {stdout}=await execFileAsync('pdftotext',[...(layout?['-layout']:[]),'-enc','UTF-8',workerData.file,'-'],{maxBuffer:1<<28,timeout:60000});
       const {stdout:ver,stderr:verr}=await execFileAsync('pdftotext',['-v'],{timeout:10000}).catch(e=>({stdout:'',stderr:String(e.stderr??'')}));
       const chunks=stdout.split('\f');if(chunks.at(-1)==='')chunks.pop();
       if(!chunks.length||chunks.length>EXTRACTOR_MAX_PAGES)throw new Error('Poppler page coverage incomplete');
       chunks.forEach((text,i)=>pages.push({number:i+1,text}));
-      popplerInfo={engine:'poppler-pdftotext',version:(String(verr||ver).split('\n')[0]||'unknown').trim(),pages:pages.length};
+      popplerInfo={engine:'poppler-pdftotext',version:(String(verr||ver).split('\n')[0]||'unknown').trim(),pages:pages.length,...(layout?{layout:{...layout,rawTextSha256:createHash('sha256').update(stdout).digest('hex')}}: {})};
     }else{
     if(result.numpages>EXTRACTOR_MAX_PAGES||pages.length!==result.numpages)throw new Error('PDF page coverage incomplete');}pages.sort((a,b)=>a.number-b.number);
     let ocr=null;
