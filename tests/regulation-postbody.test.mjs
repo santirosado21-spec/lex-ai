@@ -36,3 +36,31 @@ test('raw post-body text and page provenance are partitioned without loss',()=>{
  assert.equal(r.transitories.length,11);assert.ok(!r.transitories.some(t=>/firma|Residencia/.test(t.text)));
  assert.throws(()=>regulationPostBody(pages.map((p,i)=>i===88?{...p,text:'changed boundary'}:p),source,{...meta,versionId:'test-version',lines}),/boundaries/);
 });
+
+for(const textLayer of ['default','poppler'])test('normalized post-body is independent of abbreviated catalog title '+textLayer,async()=>{
+ const file=new URL('../resources/trade/reglamento-aduanero-2026.pdf',import.meta.url).pathname;
+ const layer=textLayer==='poppler'?{textLayer}:{};
+ const canonical=await parsePdfInWorker(file,{...source,...layer},meta);
+ const abbreviated=await parsePdfInWorker(file,{...source,title:'R',...layer},meta);
+ assert.deepEqual(abbreviated.transitories,canonical.transitories);
+ assert.deepEqual(abbreviated.postBodyRecords,canonical.postBodyRecords);
+ const second=abbreviated.transitories.find(t=>t.group==='decreto-reforma-2026-02-23'&&t.ordinal==='SEGUNDO');
+ assert.deepEqual(second.sourcePages,[89]);
+ assert.ok(second.text.endsWith('gasto de operación y servicios personales.'));
+ assert.equal(second.textSha256,'c5e9ed63224c0e8c788afeffbe572e98661b8147379be1caee67797041eab495');
+ assert.ok(abbreviated.transitories.every(t=>!t.text.includes('REGLAMENTO DE LA LEY ADUANERA')));
+ const exclusions=abbreviated.coverage.postBodyNormalizationExclusions;
+ assert.ok(exclusions.some(l=>l.page===90&&l.text==='REGLAMENTO DE LA LEY ADUANERA'&&l.rawLineIndices.length===1));
+ assert.ok(exclusions.every(l=>l.reason==='pinned-running-title'&&l.rawLineIndices.length>0));
+ assert.ok(abbreviated.postBodyRecords.at(-1).pageTexts.find(p=>p.page===90).text.includes('REGLAMENTO DE LA LEY ADUANERA'));
+ assert.deepEqual(canonical.coverage.postBodyNormalizationExclusions,[]);
+});
+
+test('normalized and raw boundary guards reject missing or duplicate markers',()=>{
+ const pages=Array.from({length:90},(_,i)=>({number:i+1,text:'page '+(i+1)}));
+ pages[80].text='TRANSITORIOS';pages[88].text='ARTÍCULO ÚNICO TRANSITORIOS';
+ const options={...meta,versionId:'test-version',lines:[]};
+ assert.throws(()=>regulationPostBody(pages,source,options),/normalized transitory boundary/);
+ assert.throws(()=>regulationPostBody(pages,source,{...options,lines:[{page:89,text:'TRANSITORIOS'},{page:90,text:'TRANSITORIOS'}]}),/normalized transitory boundary/);
+ for(const page of [80,88])assert.throws(()=>regulationPostBody(pages.map((p,i)=>i===page?{...p,text:p.text+' TRANSITORIOS'}:p),source,options),/boundaries ambiguous/);
+});

@@ -656,6 +656,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApp
     transitories=classified.transitories;postBodyRecords=classified.postBodyRecords;
     coverage.transitoryRecords=transitories.length;
     coverage.postBodyRecords=postBodyRecords.length;
+    coverage.postBodyNormalizationExclusions=classified.normalizationExclusions;
     documentAnomalies.push('document-specific-post-body-classification:reg-ladua-2026');
   }
   coverage.prefaceRecordsPreserved=prefaceRecords.length;
