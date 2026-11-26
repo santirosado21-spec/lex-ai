@@ -1,3 +1,4 @@
+import {regulationPostBody} from './regulation-postbody.mjs';
 import {readFile,writeFile,mkdir,rename,open,unlink,statfs,mkdtemp,readdir,rm} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import {createRequire} from 'node:module';
@@ -626,7 +627,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApp
   }
   if(!ended){finish();documentAnomalies.push('no-explicit-transitory-boundary');}
   // v36: transitory provisions are captured as SEPARATE records (never mixed into operative articles) with page provenance and the decree group they sit under. Ordinal segmentation only; unrecognized text stays in the group's unsegmented remainder.
-  const transitories=[];
+  let transitories=[];let postBodyRecords;
   if(ended&&Number.isInteger(coverage.transitoryStartLine)){
     const ORD=/^(?:ART[IÍ]CULOS?\s+)?(PRIMERO|SEGUNDO|TERCERO|CUARTO|QUINTO|SEXTO|S[ÉE]PTIMO|OCTAVO|NOVENO|D[ÉE]CIMO(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)?|DECIMO\w*|VIG[ÉE]SIMO(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)?|[ÚU]NICO)\s*(?:\.-|[.\-–:])\s*/i;
     const DECREE=/^(?:DECRETO\s*(?:No\.?|#|N[ÚU]M\.?)?\s*[\w\-\/]+|ART[IÍ]CULOS?\s+TRANSITORIOS?\s+DE\s+.*)$/i;
@@ -650,6 +651,13 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApp
     flush();
     coverage.transitoryRecords=transitories.length;
   }
+  const classified=regulationPostBody(pages,source,{pdfSha256,versionId,lines});
+  if(classified){
+    transitories=classified.transitories;postBodyRecords=classified.postBodyRecords;
+    coverage.transitoryRecords=transitories.length;
+    coverage.postBodyRecords=postBodyRecords.length;
+    documentAnomalies.push('document-specific-post-body-classification:reg-ladua-2026');
+  }
   coverage.prefaceRecordsPreserved=prefaceRecords.length;
   coverage.operativeArticleCandidates=records.length;
   if(!records.length){
@@ -659,7 +667,7 @@ export function extractArticles(pages,source,{pdfSha256,retrievedAt,furnitureApp
   }
   if(documentAnomalies.length)for(const record of records){record.quality.status='quarantined';record.quality.anomalies.push(...documentAnomalies);}
   coverage.exportableArticles=records.filter(r=>r.quality.status==='structurally-verified').length;
-  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records,transitories,prefaceRecords};
+  return {schemaVersion:1,extractorVersion:EXTRACTOR_VERSION,lawId:source.lawId,versionId,pdfSha256,sourceUrl:source.url,retrievedAt,declaredAmendedAt,coverage,documentAnomalies,records,transitories,prefaceRecords,...(postBodyRecords?{postBodyRecords}:{})};
 }
 
 let ocrToolsCache;
