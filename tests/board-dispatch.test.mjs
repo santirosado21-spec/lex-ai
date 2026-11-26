@@ -71,7 +71,7 @@ test('confinamiento: enlaces simbolicos, carpeta ajena, revisor con ruta, limite
  const f=path.join(d,'r.json');fs.writeFileSync(f,JSON.stringify({reviewer:'../x',patchSha256:m.patchSha256,findings:[],notRun:''}));
  assert.throws(()=>record(out,'../x',f),/inesperados/);assert.equal(fs.readFileSync(victim,'utf8'),'intacto');
  fs.writeFileSync(path.join(out,'response-hermes.json'),'{"reviewer":"hermes","patchSha256":"x","findings":[]}');
- assert.match(status(out),/hermes: respuesta invalida/);
+ assert.throws(()=>status(out),/inesperados/);
 });
 test('la respuesta registrada descarta campos extra (p. ej. aprobacion)',()=>{
  const {d,base,head,out}=repo();const {manifest:m}=prepare({repo:d,base,head,out});const f=path.join(d,'r.json');
