@@ -160,6 +160,28 @@ export async function loadPublicAcquisitionReport({outputDir}={}){
   const root=path.resolve(outputDir);await safePath(root,'',{directory:true});await checkTree(root);return readJson(root,'report.json',null);
 }
 
+// Read-only integrity check for audit consumers. Hash consistency is not an
+// authenticated signature or legal/current-law approval.
+export async function verifyPublicAcquisitionIntegrity({outputDir}={}){
+ const root=path.resolve(outputDir);await safePath(root,'',{directory:true});await checkTree(root);
+ const owner=await readJson(root,'owner.json',null),ledger=await readJson(root,'integrity.json',null),report=await readJson(root,'report.json',null);
+ if(owner?.kind!=='lex-public-acquisition'||owner.schemaVersion!==1||!ledger||report?.kind!=='public-acquisition-report'||report.schemaVersion!==1||!Array.isArray(report.documents)||!report.documents.length)throw fail('integrity-error');
+ if(!ledger.files?.['acquisitions/manifest.json'])throw fail('integrity-error');
+ await verifyLedger(root,ledger,[],()=>{});
+ const selected=report.documents.filter(document=>document.state==='quarantined');
+ if(!selected.length)throw fail('integrity-error');
+ const seen=new Set();
+ for(const document of selected){
+  if(!ID.test(document.id)||seen.has(document.id)||!HASH.test(document.pdfSha256))throw fail('integrity-error');seen.add(document.id);
+  if(typeof document.extractionPath!=='string'||!document.extractionPath.startsWith('extractions/'+document.id+'/'+document.pdfSha256+'/')||!ledger.files[document.extractionPath]||!ledger.files[document.versionEvidencePath])throw fail('integrity-error');
+  const evidence=await readJson(root,document.versionEvidencePath,null);
+  if(evidence?.documentId!==document.id||evidence.pdfSha256!==document.pdfSha256||evidence.sourceUrl!==ledger.documents[document.id]?.url)throw fail('integrity-error');
+  const extraction=await readJson(root,document.extractionPath,null);
+  if(extraction?.documentId!==document.id||extraction.pdfSha256!==document.pdfSha256||extraction.sourceUrl!==ledger.documents[document.id]?.url||!Array.isArray(extraction.records)||!extraction.records.length||extraction.status!=='quarantined'||extraction.published!==false||extraction.indexed!==false)throw fail('integrity-error');
+ }
+ return report;
+}
+
 export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchImpl=fetch,extractor=defaultExtractor,signal,sleep=abortableSleep,parserVersion=`legal-library-${EXTRACTOR_VERSION}-postbody-2`,policyVersion=ACQUISITION_POLICY_VERSION}={}){
   const verified=verifyAcquisitionPlan(plan);if(!['live','offline'].includes(mode))throw new Error('mode must be live or offline');
   if(verified.documents.some(document=>RESERVED_IDS.has(document.id)))throw fail('integrity-error');
