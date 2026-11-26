@@ -99,3 +99,12 @@ test('limite de tamano corta en git y el temporal no borra contenido previo',()=
  assert.throws(()=>prepare({repo:d,base,head:big,out,maxBytes:1000}),/limite/);
  const pre=out+'.tmp-123';fs.mkdirSync(pre);fs.writeFileSync(path.join(pre,'k'),'k');prepare({repo:d,base,head,out});assert.ok(fs.existsSync(path.join(pre,'k')));
 });
+
+test('manifiesto sin patchSha256 valido se rechaza y la respuesta reformateada tiene tope',()=>{
+ const {d,base,head,out}=repo();const {manifest:m}=prepare({repo:d,base,head,out});
+ const f=path.join(d,'r.json');fs.writeFileSync(f,JSON.stringify({...resp(m,'dot',{findings:[{severity:'RISK',file:'a',text:'y'.repeat(900*1024)},{severity:'RISK',file:'a',text:'z'.repeat(200*1024)}]})}));
+ assert.throws(()=>record(out,'dot',f),/demasiado grande/);assert.ok(!fs.existsSync(path.join(out,'response-dot.json')));
+ const mf=JSON.parse(fs.readFileSync(path.join(out,'manifest.json')));delete mf.patchSha256;fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(mf));
+ fs.writeFileSync(f,JSON.stringify({reviewer:'dot',findings:[],notRun:''}));
+ assert.throws(()=>record(out,'dot',f),/patchSha256/);
+});

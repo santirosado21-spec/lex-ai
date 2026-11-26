@@ -55,6 +55,7 @@ const small=p=>{const st=plain(p);if(!st)throw new Error('falta '+path.basename(
 const validFindings=r=>Array.isArray(r.findings)&&typeof r.notRun==='string'&&r.findings.every(f=>f&&typeof f==='object'&&['BLOCKER','RISK'].includes(f.severity)&&typeof f.file==='string'&&typeof f.text==='string'&&f.text.trim());
 function readManifest(out){
  const m=JSON.parse(small(path.join(out,'manifest.json')));
+ if(!/^[0-9a-f]{64}$/.test(m.patchSha256||''))throw new Error('manifiesto invalido: patchSha256');
  const ids=Object.keys(m.reviewers||{});
  if(ids.length!==Object.keys(REVIEWERS).length||!ids.every(id=>Object.hasOwn(REVIEWERS,id)))throw new Error('manifiesto invalido: revisores inesperados');
  return m;
@@ -71,6 +72,7 @@ export function record(out,id,file){
  const dest=path.join(out,`response-${id}.json`);
  if(fs.lstatSync(dest,{throwIfNoEntry:false}))throw new Error('ya registrado: '+id);
  const clean=Buffer.from(JSON.stringify({reviewer:r.reviewer,patchSha256:r.patchSha256,findings:r.findings.map(f=>({severity:f.severity,file:f.file,text:f.text})),notRun:r.notRun},null,1)+'\n');
+ if(clean.length>MAX_SMALL)throw new Error('respuesta demasiado grande');
  fs.writeFileSync(dest,clean,{flag:'wx'});
  return {reviewer:id,responseSha256:sha256(clean),blockers:r.findings.filter(f=>f.severity==='BLOCKER').length,risks:r.findings.filter(f=>f.severity==='RISK').length};
 }
@@ -79,9 +81,9 @@ export function status(out){
  const lines=Object.keys(m.reviewers).map(id=>{
   const p=path.join(out,`response-${id}.json`);
   if(!fs.lstatSync(p,{throwIfNoEntry:false}))return `${id}: pendiente`;
-  let r;try{r=JSON.parse(small(p));}catch{return `${id}: respuesta invalida`;}
+  let r,raw;try{raw=small(p);r=JSON.parse(raw);}catch{return `${id}: respuesta invalida`;}
   if(!r||r.reviewer!==id||r.patchSha256!==m.patchSha256||!validFindings(r))return `${id}: respuesta invalida (no corresponde a este parche)`;
-  return `${id}: respondio (BLOCKER ${r.findings.filter(f=>f.severity==='BLOCKER').length}, RISK ${r.findings.filter(f=>f.severity==='RISK').length}) sha ${sha256(fs.readFileSync(p)).slice(0,12)}`;
+  return `${id}: respondio (BLOCKER ${r.findings.filter(f=>f.severity==='BLOCKER').length}, RISK ${r.findings.filter(f=>f.severity==='RISK').length}) sha ${sha256(Buffer.from(raw)).slice(0,12)}`;
  });
  return [`base ${m.base}`,`head ${m.head}`,`parche ${m.patchSha256}`,...lines,m.limit].join('\n');
 }
