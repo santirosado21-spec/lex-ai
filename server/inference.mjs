@@ -1,3 +1,4 @@
+import {createOwnedEndpointFetch} from './owned-endpoint-fetch.mjs';
 import { availableMemory, processTreeRss } from './runtime-memory.mjs';
 import { CONTRACTUAL_OLLAMA_OPTIONS } from './privacy/intake-contractual-options.mjs';
 import { generationOptions } from './generation-options.mjs';
@@ -67,6 +68,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
  let state={state:'stopped',model:'Rejon.AI',modelId:catalog.id,supported,hardware,message:supported?'Inicializa el modelo local para comenzar.':`Requiere una Mac compatible y al menos ${catalog.minMemoryGB} GB de RAM; compatibilidad pendiente de medición.`,downloadGB:catalog.downloadGB,downloadBytes:catalog.downloadBytes,license:catalog.license,licenseUrl:catalog.licenseUrl,progress:0,contextLength:catalog.contextLength,outputTokens:catalog.outputTokens,memoryEstimateGB:catalog.memoryEstimateGB,memoryMeasured:false,minMemoryGB:catalog.minMemoryGB,minFreeMemoryGB:catalog.minFreeMemoryGB,minFreeDiskGB:catalog.minFreeDiskGB,validationStatus:catalog.validationStatus};
  let generationCleanup;
  let cleanupTask,cleanupFailed=false,terminal=false;const signalledChildren=new WeakSet();
+ let ownedFetch;
  let child,base,controller,initializing=false,busy=false,stopping=false,shutdown=false,initController,bootTask,stopPromise;
  const modelRoot=modelsDir||path.join(dataDir,'models');
  const set=s=>{state={...state,...s};};
@@ -77,7 +79,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
   let onAbort;
   const aborted=new Promise((_,reject)=>{onAbort=()=>reject(combined.reason||Error('Petición cancelada.'));combined.addEventListener('abort',onAbort,{once:true});if(combined.aborted)onAbort();});
   const work=(async()=>{
-   const r=await deps.fetch(base+route,{method:body?'POST':'GET',redirect:'error',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:combined});
+   const r=await (readerOnly?ownedFetch:deps.fetch)(base+route,{method:body?'POST':'GET',redirect:'error',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:combined});
    if(combined.aborted){await r.body?.cancel().catch(()=>{});combined.throwIfAborted();}
    if(!r.ok)throw Error(`Motor local: HTTP ${r.status}`);
    if(!readerOnly)return r;
@@ -157,6 +159,7 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
   const owned=child;owned.stderr.on('data',()=>{});
   owned.once('error',e=>set({state:'error',message:`No se pudo iniciar el motor: ${e.code||'error'}`}));
   owned.once('exit',()=>{if(!stopping&&child===owned){if(readerOnly)terminal=true;initController?.abort();controller?.abort();set({state:'error',message:'El motor local se detuvo.'});}});
+  if(readerOnly)ownedFetch=await abortable((dependencies.createOwnedEndpointFetch||createOwnedEndpointFetch)({child:owned}),initController.signal);
   for(let n=0;n<100;n++){cancelled();if(child?.exitCode!=null||child?.signalCode!=null)throw Error('El motor no pudo conservar el puerto propio.');try{await request('/api/version',null,1000);return;}catch{cancelled();await new Promise(r=>setTimeout(r,100));}}
   throw Error('El motor no respondió al iniciar.');
  }
