@@ -190,7 +190,7 @@ export function renderResearchNote(raw, note) {
   // manually delimited customs provisions, print the entire selected provision.
   const fullQuote=note.body??quote;
   const basis = valid ? 'Cita documental [' + note.ref.id + ']\n' + fullQuote :
-    result?.abstener===true?'Fundamento pendiente. OpenAI indicó que el pasaje no basta para responder. Puedes revisar otra fuente.':
+    result?.abstener===true?'Fundamento pendiente. La respuesta indicó que el pasaje no basta para responder. Puedes revisar otra fuente.':
     other?'Fundamento pendiente. Comprueba ambas citas y la relación propuesta antes de continuar.':
     note.ref.sourceId===productOriginId&&quote&&(note.body??note.ref.text).includes(quote)?'Fundamento pendiente. La cita aparece en la edición, pero el formato de la lectura o de la pregunta requiere revisión.':
     hasFacts?'Fundamento pendiente. La respuesta necesita una lectura, una cita comprobable y una pregunta documental.':
@@ -198,7 +198,7 @@ export function renderResearchNote(raw, note) {
   return 'Nota para [[CLIENTE]] · [[ASUNTO]]\n\n' + (note.angle?'Consulta del abogado\n[[CONSULTA]]\n\n'+angles[note.angle]+'\n':'') + basis + (!valid&&note.ref.sourceId===productOriginId?'\n\nFuente elegida en este equipo ['+note.ref.id+']\n'+note.ref.text:'') + (valid&&note.condition?'\nCondición del encabezado\n'+note.condition:'') +
     (note.caseFacts?.discrepancy?'\n\nDiscrepancia entre soportes\n'+note.caseFacts.discrepancy:'')+
     (valid&&other?'\n\nCita documental ['+other.ref.id+']\n'+(other.body??secondQuote)+(other.condition?'\nCondición del encabezado\n'+other.condition:''):'')+
-    (valid&&withReading?'\n\nLectura preliminar de OpenAI\n'+localReading:'')+
+    (valid&&withReading?'\n\nLectura preliminar para revisión\n'+localReading:'')+
     (note.caseFacts?'\n\nSoportes elegidos en el expediente\n[[SOPORTE]]':'')+
     (question ? '\n\nPregunta para revisión\n' + question : '\n\nPregunta de cotejo del despacho\n¿Qué documento del expediente acredita los hechos descritos en este pasaje?') +
     (other?.ref.remedy?'\n\n'+other.ref.summary:'')+

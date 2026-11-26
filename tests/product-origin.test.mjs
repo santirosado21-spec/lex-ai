@@ -38,7 +38,7 @@ test('private inquiry selects only verified public text, with a literal citation
     assert.deepEqual(productOriginSuggestions(s+' del Anexo 4-B del T-MEC'),[]);
   }
   const abstention=renderResearchNote('{"abstener":true}',note);
-  assert.match(abstention,/Fundamento pendiente/);assert.ok(abstention.includes(note.ref.text));assert.ok(!abstention.includes('Lectura preliminar de OpenAI'));
+  assert.match(abstention,/Fundamento pendiente/);assert.ok(abstention.includes(note.ref.text));assert.ok(!abstention.includes('Lectura preliminar para revisión'));
   assert.deepEqual(productOriginSuggestions('partida 09.01 del Anexo 4-B de otro acuerdo'),[]);
 });
 

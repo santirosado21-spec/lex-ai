@@ -32,14 +32,14 @@ test('new synthetic document lines share reversible temporary references while o
  assert.ok(draft.includes(facts.aliases[0].local)&&!draft.includes('[[PARTE_1]]')&&draft.includes('[[SOPORTE]]'));
  for(const wrong of ['[[PARTE_2]]','[[CLIENTE]]','[[PARTE_01]]']){
   const bad=renderResearchNote(JSON.stringify({...reply(source),lectura:reply(source).lectura.replace('[[PARTE_1]]',wrong)}),source);
-  assert.match(bad,/Fundamento pendiente/);assert.doesNotMatch(bad,/Lectura preliminar de OpenAI/);
+  assert.match(bad,/Fundamento pendiente/);assert.doesNotMatch(bad,/Lectura preliminar para revisión/);
  }
  const follow=prepareFollowup(source,quotedRanges(source,draft),'control');
  assert.ok(follow.prompt.includes('[[PARTE_1]]')&&!follow.prompt.includes('JAS-71928'));
  const onlyPrivate=selectQuestionFacts(matter,[picks[2].id]),publicSource=questionPassage(null,selection,onlyPrivate);
  assert.equal(publicSource.prompt,questionPassage(null,selection).prompt);
  const publicNote=renderResearchNote(JSON.stringify({cita:source.body,solicitud:reply(source).solicitud}),publicSource);
- assert.ok(publicNote.includes('[[SOPORTE]]')&&!publicNote.includes('Lectura preliminar de OpenAI'));
+ assert.ok(publicNote.includes('[[SOPORTE]]')&&!publicNote.includes('Lectura preliminar para revisión'));
  assert.ok(!prepareFollowup(publicSource,quotedRanges(publicSource,publicNote),'control').synthetic);
  const modified=saved(await doc((await sample('carta-porte')).replace('por separado','en la venta'),'carta'));
  assert.ok(questionLines(modified,'carta').every(r=>!r.cloud));assert.throws(()=>selectQuestionFacts(modified,[picks[0].id]));
@@ -101,7 +101,7 @@ test('a verified reference to a selected fact survives when the proposed follow-
  const answer={...reply(note),lectura:'El hecho H1 permite contrastar el pago del flete de [[PARTE_1]] con los comprobantes.',solicitud:'texto incompleto'};
  assert.equal(packet.evidence.factNumber,1);
  const rendered=renderResearchNote(JSON.stringify(answer),note);
- assert.match(rendered,/Lectura preliminar de OpenAI/);assert.match(rendered,/Pregunta de cotejo del despacho/);assert.doesNotMatch(rendered,/texto incompleto/);
+ assert.match(rendered,/Lectura preliminar para revisión/);assert.match(rendered,/Pregunta de cotejo del despacho/);assert.doesNotMatch(rendered,/texto incompleto/);
  for(const invalid of [answer.lectura.replace('H1','H2'),answer.lectura.replace('H1','H12'),answer.lectura.replace('[[PARTE_1]]','[[PARTE_9]]')]){
   assert.match(renderResearchNote(JSON.stringify({...answer,lectura:invalid}),note),/Fundamento pendiente/);
  }
