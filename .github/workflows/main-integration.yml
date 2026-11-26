@@ -26,6 +26,8 @@ jobs:
       - run: npm run build
       - name: Install Chromium for synthetic UI regressions
         run: npx playwright install --with-deps chromium
+      - name: Dictation UI smoke (fake microphone/STT, reasoning OFF)
+        run: node scripts/ui-voice-smoke.mjs
       - name: Writing/email history smoke (reasoning OFF, synthetic Mail only)
         run: node scripts/ui-writing-email-smoke.mjs
       - name: Intake UI regressions (synthetic real-component browser harnesses)

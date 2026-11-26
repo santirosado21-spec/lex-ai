@@ -1,19 +1,37 @@
-/** Browser smoke only: fake microphone frames and fake local dictation transport. It never records real audio. */
-import {chromium,expect} from '@playwright/test';
-import {mkdtemp} from 'node:fs/promises';
-import os from 'node:os';
-import path from 'node:path';
-import assert from 'node:assert/strict';
-import {startServer} from '../server/main.mjs';
-
-const dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-voice-ui-'));
-const inference={async status(){return {state:'ready',supported:true};},async initialize(){return {state:'ready',supported:true};},async stop(){return {state:'stopped',supported:true};},async *generate(){yield JSON.stringify({analysis:'Respuesta sintética.',citations:[]});}};
-const app=await startServer({dataDir,inference});let browser;
+/** Real dictation UI, synthetic microphone frames and fake STT responses. No real audio or model is used. */
+import {chromium,expect} from '@playwright/test';import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,rm,writeFile,access,realpath} from 'node:fs/promises';import os from 'node:os';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import {createServer} from 'vite';import react from '@vitejs/plugin-react';import {startServer} from '../server/main.mjs';
+const root=fileURLToPath(new URL('..',import.meta.url)),dataDir=await mkdtemp(path.join(os.tmpdir(),'lex-voice-ui-')),cache=await mkdtemp(path.join(os.tmpdir(),'lex-voice-vite-')),evidence=process.env.REJON_UI_EVIDENCE_DIR||path.resolve('artifacts/ui-voice');
+let starts=0,generations=0,analyzeRequests=0;const transcriptions=[],errors=[];
+const inference={async status(){return {state:'ready',supported:true};},async initialize(){starts++;throw Error('Unexpected model start');},async stop(){},async *generate(){generations++;throw Error('Unexpected generation');}};
+const app=await startServer({dataDir,inference,libraryPath:path.join(dataDir,'missing.sqlite')});let browser,vite;
+const api=async(action,payload={})=>{const response=await fetch(app.connection.url+'/api',{method:'POST',headers:{Authorization:'Bearer '+app.connection.token,'Content-Type':'application/json'},body:JSON.stringify({action,payload})});assert.equal(response.status,200);return response.json();};
+const report={mode:'real dictation UI; fake mic frames and STT; product reasoning OFF; no real audio/model',checks:[]};
 try{
- browser=await chromium.launch({headless:true,args:['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']});const context=await browser.newContext();await context.addInitScript(()=>{
-  class Port {onmessage;postMessage(){}}class Node {constructor(){this.port=new Port();}connect(){}disconnect(){}}class Context {sampleRate=48000;audioWorklet={addModule:async()=>{}};createMediaStreamSource(){return {connect:node=>setTimeout(()=>node.port.onmessage?.({data:new Float32Array(480).fill(.08).buffer}),0)};}close(){return Promise.resolve();}}
-  Object.defineProperty(navigator,'mediaDevices',{value:{getUserMedia:async()=>({getTracks:()=>[{stop(){}}]})},configurable:true});Object.defineProperty(window,'AudioContext',{value:Context,configurable:true});Object.defineProperty(window,'AudioWorkletNode',{value:Node,configurable:true});
- });const page=await context.newPage();await page.route('**/api',async route=>{const request=route.request();let body;try{body=request.postDataJSON();}catch{return route.continue();}if(body?.action==='stt.status')return route.fulfill({json:{state:'ready',ready:true,installed:true,message:'Dictado listo en este equipo.'}});if(body?.action==='stt.transcribe')return route.fulfill({json:{text:'Texto de dictado sintético para revisar.'}});return route.continue();});
- await page.goto(`${app.connection.url}/#token=${app.connection.token}`);await page.getByLabel('Nombre del despacho').fill('Despacho sintético');await page.getByRole('button',{name:'Crear espacio privado'}).click();await page.getByRole('button',{name:'Asuntos',exact:true}).click();await page.getByRole('button',{name:'Nuevo asunto',exact:true}).click();await page.getByLabel('Nombre del asunto').fill('Asunto de dictado');await page.getByLabel('Cliente',{exact:true}).fill('Cliente sintético');await page.getByRole('button',{name:'Crear asunto'}).click();await page.getByRole('button',{name:'Asistente',exact:true}).click();
- await page.getByRole('button',{name:'Dictar texto'}).click();await expect(page.getByRole('button',{name:'Finalizar dictado'})).toBeVisible();await page.getByRole('button',{name:'Finalizar dictado'}).click();await expect(page.getByLabel('Pregunta sobre el asunto')).toHaveValue(/Texto de dictado sintético/);assert.equal(await page.getByRole('button',{name:'Preguntar',exact:true}).isEnabled(),true);console.log('Voice UI smoke passed: transcript is inserted and remains unsent.');
-}finally{await browser?.close();await app.close();}
+ await mkdir(evidence,{recursive:true});await api('workspace.create',{name:'Despacho sintético voz',practiceAreas:['civil']});const matter=await api('matter.create',{title:'Asunto sintético dictado',client:'Cliente ficticio',jurisdiction:'MX-FED'});
+ vite=await createServer({root,cacheDir:cache,configFile:false,plugins:[react()],logLevel:'error',server:{host:'127.0.0.1',port:0,fs:{allow:[root,await realpath(path.join(root,'node_modules'))]}}});await vite.listen();
+ const options={headless:true};try{await access(chromium.executablePath());}catch{options.channel='chrome';}browser=await chromium.launch(options);const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+ await context.addInitScript(()=>{
+  window.__fakeMic={opens:0,stops:0,closes:0,frames:0};
+  class Port {onmessage;postMessage(){}}class Node {constructor(){this.port=new Port();}connect(){}disconnect(){}}
+  class Context {sampleRate=48000;audioWorklet={addModule:async()=>{}};createMediaStreamSource(){return {connect:node=>setTimeout(()=>{window.__fakeMic.frames++;node.port.onmessage?.({data:new Float32Array(480).fill(.08).buffer});},0)};}close(){window.__fakeMic.closes++;return Promise.resolve();}}
+  Object.defineProperty(navigator,'mediaDevices',{value:{getUserMedia:async()=>{window.__fakeMic.opens++;return {getTracks:()=>[{stop(){window.__fakeMic.stops++;}}]};}},configurable:true});Object.defineProperty(window,'AudioContext',{value:Context,configurable:true});Object.defineProperty(window,'AudioWorkletNode',{value:Node,configurable:true});
+ });
+ const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/api',async route=>{const body=route.request().postDataJSON();if(body.action==='stt.status')return route.fulfill({json:{state:'ready',ready:true,installed:true,message:'Dictado sintético listo.'}});if(body.action==='stt.transcribe'){
+  transcriptions.push(body.payload);const wav=Buffer.from(body.payload.audioBase64,'base64');assert.equal(wav.toString('ascii',0,4),'RIFF');assert.equal(wav.toString('ascii',8,12),'WAVE');assert.equal(wav.readUInt32LE(24),16000);assert.equal(wav.readUInt16LE(22),1);assert.equal(wav.readUInt16LE(34),16);assert.ok(wav.length>44);assert.equal(wav.readUInt32LE(40),wav.length-44);
+  return route.fulfill({json:{text:'Texto de dictado sintético para revisar.'}});
+ }const response=await route.fetch({url:app.connection.url+'/api',headers:{Authorization:'Bearer '+app.connection.token,'Content-Type':'application/json'}});await route.fulfill({response});});
+ await page.route('**/analyze',async route=>{analyzeRequests++;await route.abort();});
+ await page.goto('http://127.0.0.1:'+vite.httpServer.address().port+'/#token=synthetic');await page.getByRole('button',{name:'Asistente',exact:true}).click();await page.getByRole('combobox',{name:'Asunto activo',exact:true}).selectOption(matter.id);
+ assert.equal((await api('state')).reasoning.available,false);assert.equal((await api('engine.status')).reasoning.available,false);
+ const question=page.getByLabel('Pregunta sobre el asunto'),send=page.getByRole('button',{name:'Preguntar',exact:true});await question.fill('Nota previa.');
+ await page.getByRole('button',{name:'Dictar texto',exact:true}).click();await expect(page.getByRole('button',{name:'Finalizar dictado',exact:true})).toBeVisible();await expect.poll(()=>page.evaluate(()=>window.__fakeMic.frames)).toBe(1);await page.getByRole('button',{name:'Finalizar dictado',exact:true}).click();await expect(question).toHaveValue('Nota previa. Texto de dictado sintético para revisar.');assert.equal(transcriptions.length,1);await expect(send).toBeDisabled();
+ await question.fill('Texto revisado manualmente.');await question.press('Enter');await expect(question).toHaveValue('Texto revisado manualmente.');await expect(send).toBeDisabled();assert.equal((await api('state')).chatTurns.length,0);assert.equal((await api('state')).answers.length,0);
+ report.checks.push('fake microphone frames become a mono 16kHz 16-bit WAV; one fake STT response appends to existing input; manual editing and Enter preserve input while Preguntar remains disabled');
+ await page.getByRole('button',{name:'Dictar texto',exact:true}).click();await expect(page.getByRole('button',{name:'Finalizar dictado',exact:true})).toBeVisible();await expect.poll(()=>page.evaluate(()=>window.__fakeMic.frames)).toBe(2);await page.getByRole('button',{name:'Descartar dictado',exact:true}).click();await expect(page.getByRole('button',{name:'Dictar texto',exact:true})).toBeVisible();await expect(question).toHaveValue('Texto revisado manualmente.');assert.equal(transcriptions.length,1);
+ const mic=await page.evaluate(()=>window.__fakeMic);assert.equal(mic.opens,2);assert.equal(mic.stops,2);assert.equal(mic.closes,2);
+ for(const width of [1280,390]){await page.setViewportSize({width,height:900});await question.scrollIntoViewIfNeeded();await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);await page.screenshot({path:path.join(evidence,`voice-${width}.png`)});}
+ assert.deepEqual(errors,[]);assert.equal(starts,0);assert.equal(generations,0);assert.equal(analyzeRequests,0);report.counters={starts,generations,analyzeRequests,transcriptions:transcriptions.length,mic};report.checks.push('discard closes fake mic/context without another transcription or text loss; zero model starts/generation/analyze and no history created; desktop/mobile no horizontal overflow');report.status='PASS';
+}catch(error){report.status='FAIL';report.error=error.stack;process.exitCode=1;}finally{await browser?.close();await vite?.close();await app.close();await rm(dataDir,{recursive:true,force:true});await rm(cache,{recursive:true,force:true});await writeFile(path.join(evidence,'smoke.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));}
