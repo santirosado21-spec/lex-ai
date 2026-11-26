@@ -33,9 +33,9 @@ test('a checked complete synthetic source authorizes individual retained clauses
  assert.ok(!availableQuestionFacts(hidden).some(f=>f.text.includes('flete')));
  const reply={lectura:'El soporte indica que el precio pagado excluye el flete y se requiere cotejar el gasto con su comprobante.',cita:source.body,solicitud:'¿Qué comprobante acredita el gasto de transporte?'};
  const rendered=renderResearchNote(JSON.stringify(reply),source);
- for(const term of ['Lectura preliminar de OpenAI',reply.lectura,'[[SOPORTE]]',source.condition])assert.ok(rendered.includes(term));
+ for(const term of ['Lectura preliminar para revisión',reply.lectura,'[[SOPORTE]]',source.condition])assert.ok(rendered.includes(term));
  for(const defective of [{...reply,cita:'Un texto distinto al artículo.'},{...reply,lectura:{trim:'incorrecto'}},{...reply,lectura:'[[CLIENTE]]'},{abstener:true}]){
-  const draft=renderResearchNote(JSON.stringify(defective),source);assert.ok(draft.includes('Fundamento pendiente')&&!draft.includes('Lectura preliminar de OpenAI'));
+  const draft=renderResearchNote(JSON.stringify(defective),source);assert.ok(draft.includes('Fundamento pendiente')&&!draft.includes('Lectura preliminar para revisión'));
   assert.deepEqual(quotedRanges(source,draft),[]);
  }
  const follow=prepareFollowup(source,quotedRanges(source,rendered),'control',['pago'],{form:'carta',focus:['factura']});
