@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
+import {regulationReadingNotes} from './regulation-reading-notes.mjs';
 
 const root=new URL('../../resources/trade/',import.meta.url);
 const pdfName='ley-aduanera-2025.pdf';
@@ -103,7 +104,7 @@ export function regulationPassage(article){
   return Object.freeze({id:regulationLawId+'-'+article,title:regulationTitle,article,
    locator:'Artículo '+article+' · '+p.locator+' · '+location+' · edición 23-02-2026',checkedOn:'2026-11-19',
    pdfSha256:regulationHash,localUrl,url:'https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf#page='+page,
-   text:p.text,summary:entry.repealed?'La edición identifica este artículo como derogado. Comprueba la versión aplicable en la fecha de la operación.':'Comprueba la fecha de la operación y las disposiciones transitorias del Reglamento.'});
+   text:p.text,...(article==='117'?{readingNotes:regulationReadingNotes(article,p.text)}:{}),summary:entry.repealed?'La edición identifica este artículo como derogado. Comprueba la versión aplicable en la fecha de la operación.':'Comprueba la fecha de la operación y las disposiciones transitorias del Reglamento.'});
  });
  return {ref:refs[0],passages:passages.map((p,i)=>({quote:p.text,reference:refs[i],full:p.full===true,
   locator:p.locator+(p.endPage?' · pp. '+p.page+'–'+p.endPage:' · p. '+p.page)}))};

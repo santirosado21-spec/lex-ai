@@ -1,3 +1,4 @@
+import {renderedRegulationReadingNotes} from './regulation-reading-notes.mjs';
 import {customsEditionWarnings} from './customs-edition.mjs';
 import {returnIdentityInquiry} from './return-context.mjs';
 import {permitReferences} from './pedimento-index.mjs';
@@ -164,5 +165,6 @@ export function renderFollowup(raw,note,{evidence=false}={}){
   ...(note.discrepancy&&note.form==='control'?[note.discrepancy]:[]),
   ...(evidence&&note.form==='control'?['Soporte del expediente\n[[SOPORTE]]']:[]),
   'Fundamento de la revisión\n'+basis,
+  ...renderedRegulationReadingNotes(note.refs),
   ...customsEditionWarnings(note.refs).map(text=>'Advertencia de la copia consultada\n'+text)].join('\n\n');
 }
