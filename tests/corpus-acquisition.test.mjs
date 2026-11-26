@@ -190,3 +190,15 @@ test('acquisition script failure reports the real reason (wrong registry or unkn
   const run=promisify(execFile)(process.execPath,['scripts/legal-acquisition.mjs','--live','--documents','no-such-document'],{cwd:path.resolve('.')});
   await assert.rejects(run,error=>{const out=JSON.parse(error.stderr);return out.errorCategory==='invalid-or-failed-acquisition'&&/unknown or not approved/.test(out.detail)&&out.detail.length<=200;});
 });
+
+test('post-body preservation sidecar survives quarantine without entering article records',async t=>{
+ const rawText='ANEXO de cantidades.\nArtículo 144. Tabla sintética.\n';
+ const sidecar={recordKind:'rgce-amount-annex',rawText,textSha256:digest(rawText),sourcePages:[2],pageTexts:[{page:2,text:rawText}],quality:{status:'quarantined'}};
+ const options=await setup(t,{extractor:async(...args)=>({...await extractor(...args),postBodyRecords:[sidecar]})});
+ const report=await runPublicAcquisition(options);const saved=await read(options.outputDir,report.documents[0].extractionPath);
+ assert.equal(saved.records.length,1);assert.equal(saved.postBodyRecords.length,1);assert.equal(saved.postBodyRecords[0].rawText,rawText);
+ for(const key of ['published','indexed'])assert.equal(saved.postBodyRecords[0][key],false);
+ assert.equal(saved.postBodyRecords[0].status,'quarantined');
+ const invalid=await setup(t,{extractor:async(...args)=>({...await extractor(...args),postBodyRecords:[{...sidecar,rawText:rawText+'tamper'}]})});
+ const failed=await runPublicAcquisition(invalid);assert.equal(failed.documents[0].errorCategory,'extraction-invalid');
+});

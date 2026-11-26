@@ -129,8 +129,13 @@ function quarantine(result,document,version,configHash){
     if(typeof record.text!=='string'||!record.text.trim()||hash(record.text)!==record.textSha256||!Array.isArray(record.sourcePages)||!record.sourcePages.length||record.sourcePages.some(page=>!Number.isInteger(page)||page<1))throw fail('extraction-invalid');
     return {id:`${versionId}:record:${index+1}`,sourceId:document.sourceId,documentId:document.id,versionId,pdfSha256:version.sha256,sourceUrl:document.url,finalUrl:version.finalUrl,articleId:record.articleId??null,recordKind:record.recordKind??'articulo',ordinalLabel:record.ordinalLabel??null,headingTitle:record.headingTitle??null,text:record.text,textSha256:hash(record.text),sourcePages:record.sourcePages,pageReferencesSha256:hash(JSON.stringify(record.sourcePages)),declaredAmendedAt:record.declaredAmendedAt??null,effectiveAt:null,capturedAt:version.retrievedAt,extractionDiagnostics:{parserStatus:record.quality?.status??'unknown',anomalies:record.quality?.anomalies??[],editorialNotes:record.editorialNotes??[]},textReview:'pending',legalReview:'pending',status:'quarantined',published:false,indexed:false};
   });
+  // Preservation sidecar only, never searchable/exportable article records.
+  const postBodyRecords=Array.isArray(result.postBodyRecords)?result.postBodyRecords.map(record=>{
+    if(typeof record.rawText!=='string'||hash(record.rawText)!==record.textSha256||!Array.isArray(record.pageTexts)||record.pageTexts.map(p=>p.text).join('')!==record.rawText||!Array.isArray(record.sourcePages)||JSON.stringify(record.pageTexts.map(p=>p.page))!==JSON.stringify(record.sourcePages))throw fail('extraction-invalid');
+    return {...record,status:'quarantined',published:false,indexed:false};
+  }):undefined;
   const coverage=result.coverage?{...result.coverage,structuralCandidateCount:result.coverage.exportableArticles??null}:null;if(coverage)delete coverage.exportableArticles;
-  return {schemaVersion:1,kind:'quarantined-public-extraction',configSha256:configHash,documentId:document.id,sourceId:document.sourceId,versionId,pdfSha256:version.sha256,sourceUrl:document.url,finalUrl:version.finalUrl,capturedAt:version.retrievedAt,declaredAmendedAt:result.declaredAmendedAt??null,effectiveAt:null,declaredPublicationAt:document.declaredPublicationAt??null,declaredPublicationAtBasis:document.declaredPublicationAt?'official-index-fecha-de-publicacion':null,legalDateBasis:'unknown-unless-declared-in-source',textReview:'pending',legalReview:'pending',status:'quarantined',published:false,indexed:false,documentAnomalies:Array.isArray(result.documentAnomalies)?result.documentAnomalies:[],coverage,records};
+  return {schemaVersion:1,kind:'quarantined-public-extraction',configSha256:configHash,documentId:document.id,sourceId:document.sourceId,versionId,pdfSha256:version.sha256,sourceUrl:document.url,finalUrl:version.finalUrl,capturedAt:version.retrievedAt,declaredAmendedAt:result.declaredAmendedAt??null,effectiveAt:null,declaredPublicationAt:document.declaredPublicationAt??null,declaredPublicationAtBasis:document.declaredPublicationAt?'official-index-fecha-de-publicacion':null,legalDateBasis:'unknown-unless-declared-in-source',textReview:'pending',legalReview:'pending',status:'quarantined',published:false,indexed:false,documentAnomalies:Array.isArray(result.documentAnomalies)?result.documentAnomalies:[],coverage,records,...(postBodyRecords?{postBodyRecords}:{})};
 }
 
 async function verifyLedger(root,ledger,documents,check){
@@ -154,7 +159,7 @@ export async function loadPublicAcquisitionReport({outputDir}={}){
   const root=path.resolve(outputDir);await safePath(root,'',{directory:true});await checkTree(root);return readJson(root,'report.json',null);
 }
 
-export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchImpl=fetch,extractor=defaultExtractor,signal,sleep=abortableSleep,parserVersion=`legal-library-${EXTRACTOR_VERSION}`,policyVersion=ACQUISITION_POLICY_VERSION}={}){
+export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchImpl=fetch,extractor=defaultExtractor,signal,sleep=abortableSleep,parserVersion=`legal-library-${EXTRACTOR_VERSION}-postbody-1`,policyVersion=ACQUISITION_POLICY_VERSION}={}){
   const verified=verifyAcquisitionPlan(plan);if(!['live','offline'].includes(mode))throw new Error('mode must be live or offline');
   if(verified.documents.some(document=>RESERVED_IDS.has(document.id)))throw fail('integrity-error');
   if(typeof parserVersion!=='string'||!parserVersion||typeof policyVersion!=='string'||!policyVersion)throw new Error('Explicit parser/policy versions required');
