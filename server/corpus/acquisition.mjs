@@ -159,7 +159,7 @@ export async function loadPublicAcquisitionReport({outputDir}={}){
   const root=path.resolve(outputDir);await safePath(root,'',{directory:true});await checkTree(root);return readJson(root,'report.json',null);
 }
 
-export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchImpl=fetch,extractor=defaultExtractor,signal,sleep=abortableSleep,parserVersion=`legal-library-${EXTRACTOR_VERSION}-postbody-1`,policyVersion=ACQUISITION_POLICY_VERSION}={}){
+export async function runPublicAcquisition({plan,outputDir,mode='offline',fetchImpl=fetch,extractor=defaultExtractor,signal,sleep=abortableSleep,parserVersion=`legal-library-${EXTRACTOR_VERSION}-postbody-2`,policyVersion=ACQUISITION_POLICY_VERSION}={}){
   const verified=verifyAcquisitionPlan(plan);if(!['live','offline'].includes(mode))throw new Error('mode must be live or offline');
   if(verified.documents.some(document=>RESERVED_IDS.has(document.id)))throw fail('integrity-error');
   if(typeof parserVersion!=='string'||!parserVersion||typeof policyVersion!=='string'||!policyVersion)throw new Error('Explicit parser/policy versions required');
