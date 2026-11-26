@@ -124,3 +124,38 @@ test('accepted signal from prior failed attempt cannot certify false-signal retr
  // Further retry observes an already-exited child. It can confirm only that fact.
  await f.engine.stop();assert.equal((await f.engine.status()).cleanup,'confirmed-child-exit');await assert.rejects(f.engine.initialize());
 });
+test('startup fails promptly with original attestation cause and no repeated HTTP attempts',async t=>{
+ let attempts=0;const f=await fixture(t,{dependencyOverrides:{createOwnedEndpointFetch:async()=>async()=>{attempts++;throw Object.assign(Error('No se pudo verificar la conexión del motor propio.'),{code:'ERR_OWNED_ENDPOINT_UNVERIFIED'});}}});
+ await f.engine.initialize();const state=await settled(f.engine);assert.equal(attempts,1);assert.equal(state.state,'error');assert.equal(state.message,'No se pudo verificar la conexión del motor propio.');assert.deepEqual(f.children[0].child.kills,['SIGTERM']);assert.equal(f.calls.length,0);
+});
+test('startup retries only connection not ready, then succeeds on the same verified factory',async t=>{
+ let attempts=0;const f=await fixture(t,{dependencyOverrides:{createOwnedEndpointFetch:async()=>async(url)=>{attempts++;if(attempts<3)throw Object.assign(Error('not listening'),{code:'ERR_OWNED_ENDPOINT_NOT_READY'});return url.endsWith('/api/version')?json({version:'synthetic'}):json({models:[{name:catalog.id}]});}}});
+ await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert.equal(attempts,4);
+});
+test('owned startup budget permits verification above one second without retrying it',async t=>{
+ let attempts=0;const f=await fixture(t,{dependencyOverrides:{createOwnedEndpointFetch:async()=>async(url,{signal})=>{attempts++;if(url.endsWith('/api/version')){await new Promise(r=>setTimeout(r,1150));signal.throwIfAborted();return json({version:'synthetic'});}return json({models:[{name:catalog.id}]});}}});
+ await f.engine.initialize();assert.equal((await settled(f.engine)).state,'ready');assert.equal(attempts,2);
+});
+test('persistent connection refusal exhausts finite startup attempts with no reader request',{timeout:14000},async t=>{
+ let attempts=0;const f=await fixture(t,{dependencyOverrides:{createOwnedEndpointFetch:async()=>async()=>{attempts++;throw Object.assign(Error('not listening'),{code:'ERR_OWNED_ENDPOINT_NOT_READY'});}}});
+ await f.engine.initialize();const end=Date.now()+12500;let state;
+ do{state=await f.engine.status();if(state.state==='error')break;await new Promise(r=>setTimeout(r,25));}while(Date.now()<end);
+ assert.equal(attempts,100);assert.equal(state.state,'error');assert.equal(state.message,'El motor no respondió al iniciar.');assert.deepEqual(f.children[0].child.kills,['SIGTERM']);assert.equal(f.calls.length,0);
+});
+test('production startup budgets pin 15000ms attempt and 30000ms overall',async()=>{
+ const source=await readFile(new URL('../server/inference.mjs',import.meta.url),'utf8');assert.match(source,/readerOnly\?15000:1000/);assert.match(source,/readerOnly\?AbortSignal\.timeout\(30000\):null/);
+});
+test('actual transport inventory failure reaches startup stable user message with no HTTP',async t=>{
+ const {fork}=await import('node:child_process'),{once}=await import('node:events');
+ const child=fork(new URL('./fixtures/owned-endpoint/server.mjs',import.meta.url),[],{stdio:['ignore','ignore','pipe','ipc']});const [{port}]=await once(child,'message');t.after(()=>{if(child.exitCode===null)child.kill('SIGKILL');});
+ const realExecute=(await import('node:util')).promisify((await import('node:child_process')).execFile);
+ const {createOwnedEndpointFetch}=await import('../server/owned-endpoint-fetch.mjs');
+ const f=await fixture(t,{dependencyOverrides:{spawn:()=>child,freePort:async()=>port,createOwnedEndpointFetch:options=>createOwnedEndpointFetch({...options,executeImpl:async(...args)=>{if(args[0].endsWith('lsof'))throw Error('PRIVATE_LSOF_PATH');return realExecute(...args);}})}});
+ await f.engine.initialize();const state=await settled(f.engine);assert.equal(state.state,'error');assert.equal(state.message,'No se pudo verificar la conexión del motor propio.');assert.ok(!JSON.stringify(state).includes('PRIVATE_LSOF_PATH'));assert.equal(child.signalCode,'SIGTERM');
+});
+test('slow not-ready attempts cannot extend startup beyond overall 30 second deadline',{timeout:36000},async t=>{
+ let attempts=0;const f=await fixture(t,{dependencyOverrides:{createOwnedEndpointFetch:async()=>async()=>{attempts++;await new Promise(r=>setTimeout(r,5000));throw Object.assign(Error('not ready'),{code:'ERR_OWNED_ENDPOINT_NOT_READY'});}}});
+ const started=Date.now();await f.engine.initialize();let state;
+ do{state=await f.engine.status();if(state.state==='error')break;await new Promise(r=>setTimeout(r,25));}while(Date.now()-started<34000);
+ assert.equal(state.state,'error');assert.equal(state.message,'El motor propio agotó el plazo de arranque.');assert.ok(attempts<=6);assert.ok(Date.now()-started<34000);
+});

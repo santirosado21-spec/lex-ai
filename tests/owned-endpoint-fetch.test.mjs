@@ -102,3 +102,29 @@ test('raw 205 has actual wire bytes and large body is bounded before bodyless co
  await assert.rejects(fetch(url+'/bodyless-large'),error=>error.code==='ERR_OWNED_RESPONSE_LIMIT');
  assert.equal(await (await fetch(url+'/200')).text(),'synthetic');
 });
+test('only an actual refused connection is classified as not ready; inventory errors stay unverified',async t=>{
+ const {child}=await fixture(t);const {EventEmitter}=await import('node:events');
+ const fetch=await createOwnedEndpointFetch({child,connectImpl:()=>{const socket=new EventEmitter();socket.destroy=()=>socket;queueMicrotask(()=>socket.emit('error',Object.assign(Error('refused'),{code:'ECONNREFUSED'})));return socket;}});await assert.rejects(fetch('http://127.0.0.1:12345/api/version'),error=>error.code==='ERR_OWNED_ENDPOINT_NOT_READY');
+ const realFetch=await createOwnedEndpointFetch({child});
+ const other=await fixture(t);await assert.rejects(realFetch('http://127.0.0.1:'+other.port+'/api/version'),error=>error.code==='ERR_OWNED_ENDPOINT_UNVERIFIED');assert.deepEqual(await counts(other.child),{requests:0,bytes:0,wireBytes:0});
+});
+test('non-refused socket error remains unverified and is never retried by transport',async t=>{
+ const {child,port}=await fixture(t);const {EventEmitter}=await import('node:events');let connections=0,destroyed=0;
+ const fetch=await createOwnedEndpointFetch({child,connectImpl:()=>{
+  connections++;const socket=new EventEmitter();socket.destroy=()=>{destroyed++;socket.destroyed=true;return socket;};
+  queueMicrotask(()=>socket.emit('error',Object.assign(Error('synthetic socket denied'),{code:'EACCES'})));return socket;
+ }});
+ await assert.rejects(fetch('http://127.0.0.1:'+port+'/api/version'),error=>error.code==='ERR_OWNED_ENDPOINT_UNVERIFIED');
+ assert.equal(connections,1);assert.ok(destroyed>=1);assert.deepEqual(await counts(child),{requests:0,bytes:0,wireBytes:0});
+});
+test('inventory failure retains private cause but exposes stable verification message',async t=>{
+ const {child,port}=await fixture(t);const realExecute=(await import('node:util')).promisify((await import('node:child_process')).execFile);const diagnostic=Error('PRIVATE_SYNTHETIC_LSOF_DETAIL');
+ const fetch=await createOwnedEndpointFetch({child,executeImpl:async(...args)=>{if(args[0].endsWith('lsof'))throw diagnostic;return realExecute(...args);}});
+ await assert.rejects(fetch('http://127.0.0.1:'+port+'/api/version'),error=>error.code==='ERR_OWNED_ENDPOINT_UNVERIFIED'&&error.cause===diagnostic&&error.message==='No se pudo verificar la conexión del motor propio.');
+ assert.deepEqual(await counts(child),{requests:0,bytes:0,wireBytes:0});
+});
+test('refused error after connect is unverified, not startup retryable',async t=>{
+ const {child}=await fixture(t);const {EventEmitter}=await import('node:events');let reads=0;
+ const fetch=await createOwnedEndpointFetch({child,executeImpl:async()=>{reads++;if(reads===1)return {stdout:child.pid+' synthetic start'};return new Promise(()=>{});},connectImpl:()=>{const socket=new EventEmitter();socket.destroy=()=>socket;queueMicrotask(()=>{socket.emit('connect');socket.emit('error',Object.assign(Error('post-connect refused'),{code:'ECONNREFUSED'}));});return socket;}});
+ await assert.rejects(fetch('http://127.0.0.1:12345/api/version'),error=>error.code==='ERR_OWNED_ENDPOINT_UNVERIFIED');
+});

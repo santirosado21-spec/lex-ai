@@ -160,7 +160,8 @@ function createRuntime({dataDir,runtimePath=process.env.LEX_OLLAMA_BIN,modelsDir
   owned.once('error',e=>set({state:'error',message:`No se pudo iniciar el motor: ${e.code||'error'}`}));
   owned.once('exit',()=>{if(!stopping&&child===owned){if(readerOnly)terminal=true;initController?.abort();controller?.abort();set({state:'error',message:'El motor local se detuvo.'});}});
   if(readerOnly)ownedFetch=await abortable((dependencies.createOwnedEndpointFetch||createOwnedEndpointFetch)({child:owned}),initController.signal);
-  for(let n=0;n<100;n++){cancelled();if(child?.exitCode!=null||child?.signalCode!=null)throw Error('El motor no pudo conservar el puerto propio.');try{await request('/api/version',null,1000);return;}catch{cancelled();await new Promise(r=>setTimeout(r,100));}}
+  const startupDeadline=readerOnly?AbortSignal.timeout(30000):null;
+  for(let n=0;n<100;n++){cancelled();if(child?.exitCode!=null||child?.signalCode!=null)throw Error('El motor no pudo conservar el puerto propio.');try{startupDeadline?.throwIfAborted();await request('/api/version',null,readerOnly?15000:1000,readerOnly?AbortSignal.any([initController.signal,startupDeadline]):initController.signal);return;}catch(error){cancelled();if(startupDeadline?.aborted)throw Error('El motor propio agotó el plazo de arranque.');if(readerOnly&&error.code!=='ERR_OWNED_ENDPOINT_NOT_READY')throw error;await new Promise(r=>setTimeout(r,100));}}
   throw Error('El motor no respondió al iniciar.');
  }
  async function boot(){
