@@ -30,6 +30,7 @@ jobs:
         run: |
           node --test \
             tests/onboarding-next-ui.test.mjs \
+            tests/billing-editor-ui.test.mjs \
             tests/billing-matter-scope-ui.test.mjs \
             tests/office-draft-preservation-ui.test.mjs \
             tests/word-safe-apply-ui.test.mjs \
