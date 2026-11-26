@@ -55,9 +55,12 @@ export async function createOwnedEndpointFetch({child,platform=process.platform,
    if(init.signal?.aborted){abort();return;}
    req=http.request(address,{method:init.method||'GET',headers:init.headers,agent},res=>{
     const parts=[];let size=0;
-    res.on('data',part=>{size+=part.length;if(size>262144){res.destroy(failure());return;}parts.push(part);});
+    res.on('data',part=>{size+=part.length;if(size>262144){const error=Object.assign(Error('Respuesta local demasiado grande.'),{code:'ERR_OWNED_RESPONSE_LIMIT'});finish();reject(error);res.destroy(error);return;}parts.push(part);});
     res.once('error',error=>{finish();reject(error);});res.once('aborted',()=>{finish();reject(failure());});
-    res.once('end',()=>{finish();resolve(new Response(Buffer.concat(parts),{status:res.statusCode,headers:res.headers}));});
+    res.once('end',()=>{finish();try{
+     const noBody=init.method?.toUpperCase()==='HEAD'||[204,205,304].includes(res.statusCode);
+     resolve(new Response(noBody?null:Buffer.concat(parts),{status:res.statusCode,headers:res.headers}));
+    }catch(error){reject(error);}});
    });
    req.once('error',error=>{finish();reject(error);});req.end(init.body);
   });}finally{connected?.destroy();agent.destroy();}
