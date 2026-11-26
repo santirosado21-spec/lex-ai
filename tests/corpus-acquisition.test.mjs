@@ -202,3 +202,13 @@ test('post-body preservation sidecar survives quarantine without entering articl
  const invalid=await setup(t,{extractor:async(...args)=>({...await extractor(...args),postBodyRecords:[{...sidecar,rawText:rawText+'tamper'}]})});
  const failed=await runPublicAcquisition(invalid);assert.equal(failed.documents[0].errorCategory,'extraction-invalid');
 });
+
+test('layout option changes immutable extraction cache key, preserved without reinterpreting old cache',async t=>{
+ const r=registry();r.documents[0].url='https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAdua.pdf';r.documents[0].textLayer='poppler';
+ let calls=0;const mock=async(...args)=>{calls++;return extractor(...args);};
+ const opts=await setup(t,{plan:buildAcquisitionPlan(r,{now:capture}),extractor:mock});
+ const old=await runPublicAcquisition(opts);assert.equal(old.summary.extracted,1);const oldPath=old.documents[0].extractionPath;const oldBytes=await readFile(path.join(opts.outputDir,oldPath));
+ r.documents[0].textLayout='regulation-pinned-v1';const plan=buildAcquisitionPlan(r,{now:capture});
+ const fresh=await runPublicAcquisition({...opts,plan,mode:'offline'});assert.equal(fresh.summary.cached,0);assert.equal(calls,2);assert.notEqual(fresh.documents[0].extractionPath,oldPath);assert.deepEqual(await readFile(path.join(opts.outputDir,oldPath)),oldBytes);
+ const replay=await runPublicAcquisition({...opts,plan,mode:'offline'});assert.equal(replay.summary.cached,1);assert.equal(calls,2);assert.match(replay.config.parserVersion,/postbody-2$/);
+});
