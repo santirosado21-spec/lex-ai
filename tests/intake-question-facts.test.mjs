@@ -8,7 +8,6 @@ import {availableQuestionFacts,selectQuestionFacts} from '../server/corpus/intak
 import {questionPassage,researchEnvelope,renderResearchNote} from '../server/corpus/intake-research.mjs';
 import {quotedRanges,prepareFollowup} from '../server/corpus/intake-followup.mjs';
 import {practiceDocument} from '../server/corpus/pilot-protected-case.mjs';
-import {openPublicLibrary} from '../server/public-library.mjs';
 
 const firm={id:'firm-r16'},entry={id:'matter-r16'};
 const withDocument=async(text,hide,extra)=>{
@@ -44,8 +43,9 @@ test('a checked complete synthetic source authorizes individual retained clauses
  assert.throws(()=>prepareFollowup(source,quotedRanges(source,rendered),'control',[],{form:'carta',focus:['Nombre local']}));
 });
 
-test('a generated exercise projects protected facts while restored source evidence stays local',async t=>{
- const lib=await openPublicLibrary('resources/public-library.sqlite');t.after(()=>lib.close());
+test('a generated exercise projects protected facts while restored source evidence stays local',async()=>{
+ // aduana-65 resolves its pinned public passage without the optional SQLite library.
+ const lib=new Proxy({},{get(){throw Error('This exercise must not read the optional public library.');}});
  const seed='00'.repeat(12),sample=practiceDocument(seed);
  const text=sample.text;
  const fields=[sample.client,sample.title,sample.supplier,sample.email].map(value=>({value}));
